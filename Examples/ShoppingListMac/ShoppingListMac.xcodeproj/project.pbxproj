@@ -1,0 +1,482 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		382390CA136086030068EB37 /* TICDSTypesAndEnums.m in Sources */ = {isa = PBXBuildFile; fileRef = 382390C9136086030068EB37 /* TICDSTypesAndEnums.m */; };
+		382390CE136087850068EB37 /* TICDSLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 382390CD136087850068EB37 /* TICDSLog.m */; };
+		382390D213608A1D0068EB37 /* TICDSApplicationRegistrationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 382390D113608A1D0068EB37 /* TICDSApplicationRegistrationOperation.m */; };
+		382390D513608AAF0068EB37 /* TICDSError.m in Sources */ = {isa = PBXBuildFile; fileRef = 382390D413608AAE0068EB37 /* TICDSError.m */; };
+		388A3E80135707CA00824C88 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 388A3E7F135707CA00824C88 /* Cocoa.framework */; };
+		388A3E8A135707CA00824C88 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 388A3E88135707CA00824C88 /* InfoPlist.strings */; };
+		388A3E8D135707CA00824C88 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 388A3E8C135707CA00824C88 /* main.m */; };
+		388A3E90135707CA00824C88 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 388A3E8E135707CA00824C88 /* Credits.rtf */; };
+		388A3E93135707CA00824C88 /* MyDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 388A3E92135707CA00824C88 /* MyDocument.m */; };
+		388A3E96135707CA00824C88 /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 388A3E94135707CA00824C88 /* MyDocument.xib */; };
+		388A3E99135707CA00824C88 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 388A3E97135707CA00824C88 /* MainMenu.xib */; };
+		389F86B313608C7900004CA4 /* TICDSOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 389F86B213608C7900004CA4 /* TICDSOperation.m */; };
+		389F86BB1360902900004CA4 /* DropboxBoth.png in Resources */ = {isa = PBXBuildFile; fileRef = 389F86B51360902900004CA4 /* DropboxBoth.png */; };
+		389F86BC1360902900004CA4 /* DropboxText.png in Resources */ = {isa = PBXBuildFile; fileRef = 389F86B61360902900004CA4 /* DropboxText.png */; };
+		389F86BD1360902900004CA4 /* DropboxLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 389F86B71360902900004CA4 /* DropboxLogo.png */; };
+		389F86BE1360902900004CA4 /* TISLSynchronizationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 389F86B91360902900004CA4 /* TISLSynchronizationController.m */; };
+		389F86BF1360902900004CA4 /* TISLSynchronizationWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 389F86BA1360902900004CA4 /* TISLSynchronizationWindow.xib */; };
+		389F86C31360911B00004CA4 /* TICDSLocalDropboxApplicationSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 389F86C21360911B00004CA4 /* TICDSLocalDropboxApplicationSyncManager.m */; };
+		389F86C6136092D900004CA4 /* TICDSUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 389F86C5136092D900004CA4 /* TICDSUtilities.m */; };
+		389F86C81360933F00004CA4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389F86C71360933F00004CA4 /* QuartzCore.framework */; };
+		389F86CA1360934800004CA4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389F86C91360934700004CA4 /* SystemConfiguration.framework */; };
+		389F86CD136093D800004CA4 /* TISLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 389F86CC136093D800004CA4 /* TISLAppDelegate.m */; };
+		38FF6075135708F100D12E6D /* ShoppingList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 38FF6074135708F100D12E6D /* ShoppingList.xcdatamodeld */; };
+		38FFACBD1360439F004758EE /* TICDSApplicationSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 38FFACBC1360439F004758EE /* TICDSApplicationSyncManager.m */; };
+		38FFACC113604B8A004758EE /* NSObject+TIDelegateCommunications.m in Sources */ = {isa = PBXBuildFile; fileRef = 38FFACC013604B8A004758EE /* NSObject+TIDelegateCommunications.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		382390C8136086030068EB37 /* TICDSTypesAndEnums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSTypesAndEnums.h; sourceTree = "<group>"; };
+		382390C9136086030068EB37 /* TICDSTypesAndEnums.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSTypesAndEnums.m; sourceTree = "<group>"; };
+		382390CC136087850068EB37 /* TICDSLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSLog.h; sourceTree = "<group>"; };
+		382390CD136087850068EB37 /* TICDSLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSLog.m; sourceTree = "<group>"; };
+		382390D013608A1D0068EB37 /* TICDSApplicationRegistrationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSApplicationRegistrationOperation.h; sourceTree = "<group>"; };
+		382390D113608A1D0068EB37 /* TICDSApplicationRegistrationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSApplicationRegistrationOperation.m; sourceTree = "<group>"; };
+		382390D313608AAE0068EB37 /* TICDSError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSError.h; sourceTree = "<group>"; };
+		382390D413608AAE0068EB37 /* TICDSError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSError.m; sourceTree = "<group>"; };
+		388A3E7B135707CA00824C88 /* ShoppingListMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShoppingListMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		388A3E7F135707CA00824C88 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		388A3E82135707CA00824C88 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		388A3E83135707CA00824C88 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		388A3E84135707CA00824C88 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		388A3E87135707CA00824C88 /* ShoppingListMac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ShoppingListMac-Info.plist"; sourceTree = "<group>"; };
+		388A3E89135707CA00824C88 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		388A3E8B135707CA00824C88 /* ShoppingListMac-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ShoppingListMac-Prefix.pch"; sourceTree = "<group>"; };
+		388A3E8C135707CA00824C88 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		388A3E8F135707CA00824C88 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		388A3E91135707CA00824C88 /* MyDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyDocument.h; sourceTree = "<group>"; };
+		388A3E92135707CA00824C88 /* MyDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyDocument.m; sourceTree = "<group>"; };
+		388A3E95135707CA00824C88 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MyDocument.xib; sourceTree = "<group>"; };
+		388A3E98135707CA00824C88 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		389F86B113608C7900004CA4 /* TICDSOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSOperation.h; sourceTree = "<group>"; };
+		389F86B213608C7900004CA4 /* TICDSOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSOperation.m; sourceTree = "<group>"; };
+		389F86B51360902900004CA4 /* DropboxBoth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DropboxBoth.png; sourceTree = "<group>"; };
+		389F86B61360902900004CA4 /* DropboxText.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DropboxText.png; sourceTree = "<group>"; };
+		389F86B71360902900004CA4 /* DropboxLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DropboxLogo.png; sourceTree = "<group>"; };
+		389F86B81360902900004CA4 /* TISLSynchronizationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TISLSynchronizationController.h; sourceTree = "<group>"; };
+		389F86B91360902900004CA4 /* TISLSynchronizationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TISLSynchronizationController.m; sourceTree = "<group>"; };
+		389F86BA1360902900004CA4 /* TISLSynchronizationWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TISLSynchronizationWindow.xib; sourceTree = "<group>"; };
+		389F86C11360911B00004CA4 /* TICDSLocalDropboxApplicationSyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSLocalDropboxApplicationSyncManager.h; sourceTree = "<group>"; };
+		389F86C21360911B00004CA4 /* TICDSLocalDropboxApplicationSyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSLocalDropboxApplicationSyncManager.m; sourceTree = "<group>"; };
+		389F86C4136092D900004CA4 /* TICDSUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSUtilities.h; sourceTree = "<group>"; };
+		389F86C5136092D900004CA4 /* TICDSUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSUtilities.m; sourceTree = "<group>"; };
+		389F86C71360933F00004CA4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		389F86C91360934700004CA4 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		389F86CB136093D800004CA4 /* TISLAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TISLAppDelegate.h; sourceTree = "<group>"; };
+		389F86CC136093D800004CA4 /* TISLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TISLAppDelegate.m; sourceTree = "<group>"; };
+		38FF6070135708E900D12E6D /* ShoppingList.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = ShoppingList.xcdatamodel; sourceTree = "<group>"; };
+		38FF6076135708F100D12E6D /* ShoppingList 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ShoppingList 2.xcdatamodel"; sourceTree = "<group>"; };
+		38FFACB513604102004758EE /* TICoreDataSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICoreDataSync.h; sourceTree = "<group>"; };
+		38FFACB713604232004758EE /* TICDSClassesAndProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSClassesAndProtocols.h; sourceTree = "<group>"; };
+		38FFACB9136042D3004758EE /* TICDSAllClassHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSAllClassHeaders.h; sourceTree = "<group>"; };
+		38FFACBB1360439F004758EE /* TICDSApplicationSyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSApplicationSyncManager.h; sourceTree = "<group>"; };
+		38FFACBC1360439F004758EE /* TICDSApplicationSyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSApplicationSyncManager.m; sourceTree = "<group>"; };
+		38FFACBF13604B8A004758EE /* NSObject+TIDelegateCommunications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TIDelegateCommunications.h"; sourceTree = "<group>"; };
+		38FFACC013604B8A004758EE /* NSObject+TIDelegateCommunications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TIDelegateCommunications.m"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		388A3E78135707CA00824C88 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				389F86CA1360934800004CA4 /* SystemConfiguration.framework in Frameworks */,
+				389F86C81360933F00004CA4 /* QuartzCore.framework in Frameworks */,
+				388A3E80135707CA00824C88 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		382390CB1360874B0068EB37 /* 04 Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				382390CC136087850068EB37 /* TICDSLog.h */,
+				382390CD136087850068EB37 /* TICDSLog.m */,
+				382390D313608AAE0068EB37 /* TICDSError.h */,
+				382390D413608AAE0068EB37 /* TICDSError.m */,
+				389F86C4136092D900004CA4 /* TICDSUtilities.h */,
+				389F86C5136092D900004CA4 /* TICDSUtilities.m */,
+			);
+			path = "04 Utilities";
+			sourceTree = "<group>";
+		};
+		382390CF136089F40068EB37 /* Generic Operations */ = {
+			isa = PBXGroup;
+			children = (
+				389F86B113608C7900004CA4 /* TICDSOperation.h */,
+				389F86B213608C7900004CA4 /* TICDSOperation.m */,
+				382390D013608A1D0068EB37 /* TICDSApplicationRegistrationOperation.h */,
+				382390D113608A1D0068EB37 /* TICDSApplicationRegistrationOperation.m */,
+			);
+			path = "Generic Operations";
+			sourceTree = "<group>";
+		};
+		388A3E70135707CA00824C88 = {
+			isa = PBXGroup;
+			children = (
+				38FF6074135708F100D12E6D /* ShoppingList.xcdatamodeld */,
+				38FFACB413604068004758EE /* TICoreDataSync */,
+				388A3E85135707CA00824C88 /* ShoppingListMac */,
+				388A3E7E135707CA00824C88 /* Frameworks */,
+				388A3E7C135707CA00824C88 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		388A3E7C135707CA00824C88 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				388A3E7B135707CA00824C88 /* ShoppingListMac.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		388A3E7E135707CA00824C88 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				389F86C91360934700004CA4 /* SystemConfiguration.framework */,
+				389F86C71360933F00004CA4 /* QuartzCore.framework */,
+				388A3E7F135707CA00824C88 /* Cocoa.framework */,
+				388A3E81135707CA00824C88 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		388A3E81135707CA00824C88 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				388A3E82135707CA00824C88 /* AppKit.framework */,
+				388A3E83135707CA00824C88 /* CoreData.framework */,
+				388A3E84135707CA00824C88 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		388A3E85135707CA00824C88 /* ShoppingListMac */ = {
+			isa = PBXGroup;
+			children = (
+				389F86B41360900F00004CA4 /* Synchronization */,
+				388A3E91135707CA00824C88 /* MyDocument.h */,
+				388A3E92135707CA00824C88 /* MyDocument.m */,
+				388A3E94135707CA00824C88 /* MyDocument.xib */,
+				388A3E97135707CA00824C88 /* MainMenu.xib */,
+				389F86CB136093D800004CA4 /* TISLAppDelegate.h */,
+				389F86CC136093D800004CA4 /* TISLAppDelegate.m */,
+				388A3E86135707CA00824C88 /* Supporting Files */,
+			);
+			path = ShoppingListMac;
+			sourceTree = "<group>";
+		};
+		388A3E86135707CA00824C88 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				388A3E87135707CA00824C88 /* ShoppingListMac-Info.plist */,
+				388A3E88135707CA00824C88 /* InfoPlist.strings */,
+				388A3E8B135707CA00824C88 /* ShoppingListMac-Prefix.pch */,
+				388A3E8C135707CA00824C88 /* main.m */,
+				388A3E8E135707CA00824C88 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		389F86B41360900F00004CA4 /* Synchronization */ = {
+			isa = PBXGroup;
+			children = (
+				389F86B51360902900004CA4 /* DropboxBoth.png */,
+				389F86B61360902900004CA4 /* DropboxText.png */,
+				389F86B71360902900004CA4 /* DropboxLogo.png */,
+				389F86B81360902900004CA4 /* TISLSynchronizationController.h */,
+				389F86B91360902900004CA4 /* TISLSynchronizationController.m */,
+				389F86BA1360902900004CA4 /* TISLSynchronizationWindow.xib */,
+			);
+			name = Synchronization;
+			sourceTree = "<group>";
+		};
+		389F86C0136090EA00004CA4 /* Local Dropbox Sync */ = {
+			isa = PBXGroup;
+			children = (
+				389F86C11360911B00004CA4 /* TICDSLocalDropboxApplicationSyncManager.h */,
+				389F86C21360911B00004CA4 /* TICDSLocalDropboxApplicationSyncManager.m */,
+			);
+			path = "Local Dropbox Sync";
+			sourceTree = "<group>";
+		};
+		38FFACB413604068004758EE /* TICoreDataSync */ = {
+			isa = PBXGroup;
+			children = (
+				38FFACB513604102004758EE /* TICoreDataSync.h */,
+				38FFACB6136041ED004758EE /* 01 Headers and Constants */,
+				38FFACBA1360435B004758EE /* 02 Primary Classes */,
+				382390CB1360874B0068EB37 /* 04 Utilities */,
+				38FFACBE13604B38004758EE /* 06 External Sources */,
+			);
+			name = TICoreDataSync;
+			path = ../../TICoreDataSync;
+			sourceTree = SOURCE_ROOT;
+		};
+		38FFACB6136041ED004758EE /* 01 Headers and Constants */ = {
+			isa = PBXGroup;
+			children = (
+				38FFACB9136042D3004758EE /* TICDSAllClassHeaders.h */,
+				38FFACB713604232004758EE /* TICDSClassesAndProtocols.h */,
+				382390C8136086030068EB37 /* TICDSTypesAndEnums.h */,
+				382390C9136086030068EB37 /* TICDSTypesAndEnums.m */,
+			);
+			path = "01 Headers and Constants";
+			sourceTree = "<group>";
+		};
+		38FFACBA1360435B004758EE /* 02 Primary Classes */ = {
+			isa = PBXGroup;
+			children = (
+				389F86C0136090EA00004CA4 /* Local Dropbox Sync */,
+				382390CF136089F40068EB37 /* Generic Operations */,
+				38FFACBB1360439F004758EE /* TICDSApplicationSyncManager.h */,
+				38FFACBC1360439F004758EE /* TICDSApplicationSyncManager.m */,
+			);
+			path = "02 Primary Classes";
+			sourceTree = "<group>";
+		};
+		38FFACBE13604B38004758EE /* 06 External Sources */ = {
+			isa = PBXGroup;
+			children = (
+				38FFACBF13604B8A004758EE /* NSObject+TIDelegateCommunications.h */,
+				38FFACC013604B8A004758EE /* NSObject+TIDelegateCommunications.m */,
+			);
+			path = "06 External Sources";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		388A3E7A135707CA00824C88 /* ShoppingListMac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 388A3E9F135707CA00824C88 /* Build configuration list for PBXNativeTarget "ShoppingListMac" */;
+			buildPhases = (
+				388A3E77135707CA00824C88 /* Sources */,
+				388A3E78135707CA00824C88 /* Frameworks */,
+				388A3E79135707CA00824C88 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShoppingListMac;
+			productName = ShoppingListMac;
+			productReference = 388A3E7B135707CA00824C88 /* ShoppingListMac.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		388A3E72135707CA00824C88 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Tim Isted";
+			};
+			buildConfigurationList = 388A3E75135707CA00824C88 /* Build configuration list for PBXProject "ShoppingListMac" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 388A3E70135707CA00824C88;
+			productRefGroup = 388A3E7C135707CA00824C88 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				388A3E7A135707CA00824C88 /* ShoppingListMac */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		388A3E79135707CA00824C88 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				388A3E8A135707CA00824C88 /* InfoPlist.strings in Resources */,
+				388A3E90135707CA00824C88 /* Credits.rtf in Resources */,
+				388A3E96135707CA00824C88 /* MyDocument.xib in Resources */,
+				388A3E99135707CA00824C88 /* MainMenu.xib in Resources */,
+				389F86BB1360902900004CA4 /* DropboxBoth.png in Resources */,
+				389F86BC1360902900004CA4 /* DropboxText.png in Resources */,
+				389F86BD1360902900004CA4 /* DropboxLogo.png in Resources */,
+				389F86BF1360902900004CA4 /* TISLSynchronizationWindow.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		388A3E77135707CA00824C88 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				388A3E8D135707CA00824C88 /* main.m in Sources */,
+				388A3E93135707CA00824C88 /* MyDocument.m in Sources */,
+				38FF6075135708F100D12E6D /* ShoppingList.xcdatamodeld in Sources */,
+				38FFACBD1360439F004758EE /* TICDSApplicationSyncManager.m in Sources */,
+				38FFACC113604B8A004758EE /* NSObject+TIDelegateCommunications.m in Sources */,
+				382390CA136086030068EB37 /* TICDSTypesAndEnums.m in Sources */,
+				382390CE136087850068EB37 /* TICDSLog.m in Sources */,
+				382390D213608A1D0068EB37 /* TICDSApplicationRegistrationOperation.m in Sources */,
+				382390D513608AAF0068EB37 /* TICDSError.m in Sources */,
+				389F86B313608C7900004CA4 /* TICDSOperation.m in Sources */,
+				389F86BE1360902900004CA4 /* TISLSynchronizationController.m in Sources */,
+				389F86C31360911B00004CA4 /* TICDSLocalDropboxApplicationSyncManager.m in Sources */,
+				389F86C6136092D900004CA4 /* TICDSUtilities.m in Sources */,
+				389F86CD136093D800004CA4 /* TISLAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		388A3E88135707CA00824C88 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				388A3E89135707CA00824C88 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		388A3E8E135707CA00824C88 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				388A3E8F135707CA00824C88 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		388A3E94135707CA00824C88 /* MyDocument.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				388A3E95135707CA00824C88 /* en */,
+			);
+			name = MyDocument.xib;
+			sourceTree = "<group>";
+		};
+		388A3E97135707CA00824C88 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				388A3E98135707CA00824C88 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		388A3E9D135707CA00824C88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		388A3E9E135707CA00824C88 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		388A3EA0135707CA00824C88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ShoppingListMac/ShoppingListMac-Prefix.pch";
+				INFOPLIST_FILE = "ShoppingListMac/ShoppingListMac-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		388A3EA1135707CA00824C88 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ShoppingListMac/ShoppingListMac-Prefix.pch";
+				INFOPLIST_FILE = "ShoppingListMac/ShoppingListMac-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		388A3E75135707CA00824C88 /* Build configuration list for PBXProject "ShoppingListMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				388A3E9D135707CA00824C88 /* Debug */,
+				388A3E9E135707CA00824C88 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		388A3E9F135707CA00824C88 /* Build configuration list for PBXNativeTarget "ShoppingListMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				388A3EA0135707CA00824C88 /* Debug */,
+				388A3EA1135707CA00824C88 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		38FF6074135708F100D12E6D /* ShoppingList.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				38FF6070135708E900D12E6D /* ShoppingList.xcdatamodel */,
+				38FF6076135708F100D12E6D /* ShoppingList 2.xcdatamodel */,
+			);
+			currentVersion = 38FF6070135708E900D12E6D /* ShoppingList.xcdatamodel */;
+			name = ShoppingList.xcdatamodeld;
+			path = ShoppingListMac/ShoppingList.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 388A3E72135707CA00824C88 /* Project object */;
+}

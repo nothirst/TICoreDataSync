@@ -1,0 +1,46 @@
+#TICoreDataSync Plan
+
+Two types of Sync Manager: Application and Document
+
+##Application Sync Manager
+
+Responsible for anything that isn't related to a single document
+
+###Application Registration - AppRegQueue
+
+* Check whether remote directory structure exist
+  * If not, create
+* Check whether local directory structure exists
+  * If not, create
+* Check whether remote device-specific directories exist
+  * If not, create
+
+###List of Available Documents - AppDocQueue
+
+* Fetch a list of available document sync ids and descriptions
+* Including the date they were last sync'd
+
+###Document Download Operation - AppDocQueue
+
+* Download a given document
+
+##Document Sync Manager
+
+Responsible for anything that's directly related to a single document
+
+###Document Registration - DocRegQueue
+
+* Check whether remote directory structure exists
+  * If not, create
+* Check whether local directory structure exists
+  * If not, create
+* Check whether remote device-specific directories exist
+  * If not, create
+  
+###Whole Store Upload - WholeStoreQueue
+
+* Upload the whole store directory for this document
+
+###Synchronization - SyncQueue
+
+* Do the sync
