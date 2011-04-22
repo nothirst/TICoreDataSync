@@ -22,3 +22,8 @@ NSString * const kTICDSDocumentName = @"kTICDSDocumentName";
 
 NSString * const kTICDSUtilitiesFileStructureClientDeviceUID = @"kTICDSUtilitiesFileStructureClientDeviceUID";
 NSString * const kTICDSUtilitiesFileStructureDocumentUID = @"kTICDSUtilitiesFileStructureDocumentUID";
+NSString * const kTICDSUnappliedChangesDirectoryName = @"UnappliedSyncChanges";
+NSString * const kTICDSSyncChangesToPushDirectoryName = @"SyncChangesToPush";
+
+NSString * const TICDSApplicationSyncManagerDidRegisterSuccessfullyNotification = @"TICDSApplicationSyncManagerDidRegisterSuccessfullyNotification";
+NSString * const TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification = @"TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification";

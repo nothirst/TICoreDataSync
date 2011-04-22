@@ -14,6 +14,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
+    /*[[self syncController] performSelector:@selector(enableSynchronizationIfEnabledOrShowSyncConfigViewIfDisabled) withObject:nil afterDelay:5.0];*/
     [[self syncController] enableSynchronizationIfEnabledOrShowSyncConfigViewIfDisabled];
 }
 

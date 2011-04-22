@@ -100,7 +100,7 @@
 
 #pragma mark -
 #pragma mark Requesting Boolean Values
-- (BOOL)ti_optimisticBoolFromDelegateSelector:(SEL)aSelector, ...
+- (BOOL)ti_optimisticBoolFromDelegateWithSelector:(SEL)aSelector, ...
 {
     BOOL result = YES;
     
@@ -113,7 +113,7 @@
     return result;
 }
 
-- (BOOL)ti_boolFromDelegateSelector:(SEL)aSelector, ...
+- (BOOL)ti_boolFromDelegateWithSelector:(SEL)aSelector, ...
 {
     BOOL result = NO;
     

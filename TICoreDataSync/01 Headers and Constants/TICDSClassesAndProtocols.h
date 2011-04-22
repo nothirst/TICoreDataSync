@@ -9,14 +9,18 @@
 #pragma mark -
 #pragma mark PRIMARY CLASSES
 @class TICDSApplicationSyncManager;
-
-#pragma mark File Manager-Based
-@class TICDSFileManagerBasedApplicationSyncManager;
-@class TICDSFileManagerBasedApplicationRegistrationOperation;
+@class TICDSDocumentSyncManager;
+@class TICDSSynchronizedManagedObjectContext;
 
 #pragma mark Operations
 @class TICDSOperation;
 @class TICDSApplicationRegistrationOperation;
+@class TICDSDocumentRegistrationOperation;
+
+#pragma mark File Manager-Based
+@class TICDSFileManagerBasedApplicationSyncManager;
+@class TICDSFileManagerBasedDocumentSyncManager;
+@class TICDSFileManagerBasedApplicationRegistrationOperation;
 
 #pragma mark -
 #pragma mark DELEGATE PROTOCOLS
@@ -30,6 +34,24 @@
 // end of registration
 - (void)syncManagerFailedToRegister:(TICDSApplicationSyncManager *)aSyncManager;
 - (void)syncManagerDidRegisterSuccessfully:(TICDSApplicationSyncManager *)aSyncManager;
+
+@end
+
+#pragma mark Document Sync Manager
+@protocol TICDSDocumentSyncManagerDelegate <NSObject>
+
+@optional
+// REGISTRATION PHASE
+- (void)syncManagerDidStartDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager;
+- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredDocumentRegistrationError:(NSError *)anError;
+// additional setup
+@required
+- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription;
+@optional
+- (void)syncManagerDidResumeRegistration:(TICDSDocumentSyncManager *)aSyncManager;
+// end of registration
+- (void)syncManagerFailedToRegisterDocument:(TICDSDocumentSyncManager *)aSyncManager;
+- (void)syncManagerDidRegisterDocumentSuccessfully:(TICDSDocumentSyncManager *)aSyncManager;
 
 @end
 

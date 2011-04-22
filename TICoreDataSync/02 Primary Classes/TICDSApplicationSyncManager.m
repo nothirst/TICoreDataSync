@@ -24,18 +24,18 @@
 
 #pragma mark -
 #pragma mark REGISTRATION
-- (void)registerWithDelegate:(id <TICDSApplicationSyncManagerDelegate>)aDelegate globalAppIdentifier:(NSString *)anAppIdentifier uniqueClientIdentifier:(NSString *)aClientIdentifier description:(NSString *)aClientDescription userInfo:(NSDictionary *)userInfo
+- (void)registerWithDelegate:(id <TICDSApplicationSyncManagerDelegate>)aDelegate globalAppIdentifier:(NSString *)anAppIdentifier uniqueClientIdentifier:(NSString *)aClientIdentifier description:(NSString *)aClientDescription userInfo:(NSDictionary *)someUserInfo
 {
     [self setState:TICDSApplicationSyncManagerStateRegistering];
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to register application sync manager");
     
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Registration Information:\n   Delegate: %@,\n   Global App ID: %@,\n   Client ID: %@,\n   Description: %@\nUser Info: %@", aDelegate, anAppIdentifier, aClientIdentifier, aClientDescription, userInfo);
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Registration Information:\n   Delegate: %@,\n   Global App ID: %@,\n   Client ID: %@,\n   Description: %@\nUser Info: %@", aDelegate, anAppIdentifier, aClientIdentifier, aClientDescription, someUserInfo);
     
     [self setDelegate:aDelegate];
     [self setAppIdentifier:anAppIdentifier];
     [self setClientIdentifier:aClientIdentifier];
     [self setClientDescription:aClientDescription];
-    [self setUserInfo:userInfo];
+    [self setUserInfo:someUserInfo];
     
     NSError *anyError = nil;
     BOOL shouldContinue = [self startRegistrationProcess:&anyError];
@@ -96,6 +96,8 @@
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Resuming Operation Queues");
     [[self otherTasksQueue] setSuspended:NO];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:TICDSApplicationSyncManagerDidRegisterSuccessfullyNotification object:self];
 }
 
 - (void)applicationRegistrationOperationWasCancelled:(TICDSApplicationRegistrationOperation *)anOperation
@@ -191,7 +193,7 @@ id gTICDSDefaultApplicationSyncManager = nil;
     // Create Registration Queue (ready to roll)
     _registrationQueue = [[NSOperationQueue alloc] init];
     
-    // Create Synchronization Queue (suspended until registration completes)
+    // Create Other Tasks Queue (suspended until registration completes)
     _otherTasksQueue = [[NSOperationQueue alloc] init];
     [_otherTasksQueue setSuspended:YES];
     

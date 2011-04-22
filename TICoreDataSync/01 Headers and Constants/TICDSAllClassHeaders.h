@@ -9,14 +9,18 @@
 #pragma mark -
 #pragma mark Primary Classes
 #import "TICDSApplicationSyncManager.h"
-
-#pragma mark File Manager-Based
-#import "TICDSFileManagerBasedApplicationSyncManager.h"
-#import "TICDSFileManagerBasedApplicationRegistrationOperation.h"
+#import "TICDSDocumentSyncManager.h"
+#import "TICDSSynchronizedManagedObjectContext.h"
 
 #pragma mark Operations
 #import "TICDSOperation.h"
 #import "TICDSApplicationRegistrationOperation.h"
+#import "TICDSDocumentRegistrationOperation.h"
+
+#pragma mark File Manager-Based
+#import "TICDSFileManagerBasedApplicationSyncManager.h"
+#import "TICDSFileManagerBasedDocumentSyncManager.h"
+#import "TICDSFileManagerBasedApplicationRegistrationOperation.h"
 
 #pragma mark -
 #pragma mark Utilities

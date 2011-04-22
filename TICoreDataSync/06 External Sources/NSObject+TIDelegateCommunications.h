@@ -34,10 +34,10 @@
 - (id)ti_objectFromDelegateWithSelector:(SEL)aSelector, ...;
 
 /** Returns a BOOL value from a given delegate selector. If the delegate does not respond to the selector, YES is returned. */
-- (BOOL)ti_optimisticBoolFromDelegateSelector:(SEL)aSelector, ...;
+- (BOOL)ti_optimisticBoolFromDelegateWithSelector:(SEL)aSelector, ...;
 
 /** Returns a BOOL value from a given delegate selector. If the delegate does not respond to the selector, NO is returned. */
-- (BOOL)ti_boolFromDelegateSelector:(SEL)aSelector, ...;
+- (BOOL)ti_boolFromDelegateWithSelector:(SEL)aSelector, ...;
 
 /** Alerts a delegate with a given selector and provided arguments */
 - (void)ti_alertDelegateWithSelector:(SEL)aSelector, ...;

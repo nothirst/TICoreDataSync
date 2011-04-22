@@ -6,9 +6,31 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
-@interface MyDocument : NSPersistentDocument {
-@private
+#import "TICoreDataSync.h"
 
+
+@interface MyDocument : NSPersistentDocument <TICDSDocumentSyncManagerDelegate> {
+@private
+    BOOL _syncEnabled;
+    NSString *_documentSyncIdentifier;
+    TICDSDocumentSyncManager *_documentSyncManager;
+    TICDSSynchronizedManagedObjectContext *_synchronizedManagedObjectContext;
+    NSTextField *_synchronizationStatusLabel;
+    NSProgressIndicator *_synchronizingProgressIndicator;
+    NSButton *_enableSynchronizationButton;
+    NSUInteger _synchronizationActivity;
 }
+
+//- (IBAction)initiateSynchronization:(id)sender;
+- (IBAction)configureSynchronization:(id)sender;
+- (void)registerSyncManagerForDownloadedStoreWithIdentifier:(NSString *)anIdentifier;
+
+@property (nonatomic, assign, getter=isSyncEnabled) BOOL syncEnabled;
+@property (nonatomic, retain) NSString *documentSyncIdentifier;
+@property (nonatomic, retain) TICDSDocumentSyncManager *documentSyncManager;
+@property (nonatomic, retain) TICDSSynchronizedManagedObjectContext *synchronizedManagedObjectContext;
+@property (nonatomic, assign) IBOutlet NSTextField *synchronizationStatusLabel;
+@property (nonatomic, assign) IBOutlet NSProgressIndicator *synchronizingProgressIndicator;
+@property (nonatomic, assign) IBOutlet NSButton *enableSynchronizationButton;
 
 @end

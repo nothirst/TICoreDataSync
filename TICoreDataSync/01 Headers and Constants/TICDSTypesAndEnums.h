@@ -19,6 +19,23 @@ typedef enum _TICDSApplicationSyncManagerState {
     TICDSApplicationSyncManagerStateRegistering = -110,
 } TICDSApplicationSyncManagerState;
 
+typedef enum _TICDSDocumentSyncManagerState {
+    TICDSDocumentSyncManagerStateUnknown = 0,
+    
+    TICDSDocumentSyncManagerStateAbleToSync = 1,
+    
+    // Registration Phase
+    TICDSDocumentSyncManagerStateNotYetRegistered = -100,
+    TICDSDocumentSyncManagerStateRegistering = -110,
+    
+    // Helper Files
+    TICDSDocumentSyncManagerStateUnableToSyncBecauseDelegateProvidedHelperFileDirectoryDoesNotExist = -162,
+    TICDSDocumentSyncManagerStateFailedToCreateDefaultHelperFileDirectory = -167,
+    
+    // Synchronization
+    TICDSDocumentSyncManagerStateSynchronizing = -400
+} TICDSDocumentSyncManagerState;
+
 #pragma mark Existence
 typedef enum _TICDSRemoteFileStructureExistsResponseType {
     
@@ -78,3 +95,9 @@ extern NSString * const kTICDSDocumentName;
 
 extern NSString * const kTICDSUtilitiesFileStructureClientDeviceUID;
 extern NSString * const kTICDSUtilitiesFileStructureDocumentUID;
+
+extern NSString * const kTICDSUnappliedChangesDirectoryName;
+extern NSString * const kTICDSSyncChangesToPushDirectoryName;
+
+extern NSString * const TICDSApplicationSyncManagerDidRegisterSuccessfullyNotification;
+extern NSString * const TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification;
