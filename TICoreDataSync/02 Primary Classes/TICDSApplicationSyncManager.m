@@ -67,9 +67,10 @@
         return NO;
     }
     
-    /*[operation setAppIdentifier:[self appIdentifier]];
+    [operation setAppIdentifier:[self appIdentifier]];
     [operation setClientDescription:[self clientDescription]];
-    [operation setClientIdentifier:[self clientIdentifier]];*/
+    [operation setClientIdentifier:[self clientIdentifier]];
+    [operation setUserInfo:[self userInfo]];
     
     [[self registrationQueue] addOperation:operation];
     
@@ -92,6 +93,9 @@
     
     // Registration Complete
     [self ti_alertDelegateWithSelector:@selector(syncManagerDidRegisterSuccessfully:)];
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Resuming Operation Queues");
+    [[self otherTasksQueue] setSuspended:NO];
 }
 
 - (void)applicationRegistrationOperationWasCancelled:(TICDSApplicationRegistrationOperation *)anOperation
@@ -159,6 +163,23 @@ id gTICDSDefaultApplicationSyncManager = nil;
 }
 
 #pragma mark -
+#pragma mark Relative Paths
+- (NSString *)relativePathToClientDevicesDirectory
+{
+    return @"ClientDevices";
+}
+
+- (NSString *)relativePathToDocumentsDirectory
+{
+    return @"Documents";
+}
+
+- (NSString *)relativePathToThisClientDeviceDirectory
+{
+    return [[self relativePathToClientDevicesDirectory] stringByAppendingPathComponent:[self clientIdentifier]];
+}
+
+#pragma mark -
 #pragma mark Initialization and Deallocation
 - (id)init
 {
@@ -171,8 +192,8 @@ id gTICDSDefaultApplicationSyncManager = nil;
     _registrationQueue = [[NSOperationQueue alloc] init];
     
     // Create Synchronization Queue (suspended until registration completes)
-    _synchronizationQueue = [[NSOperationQueue alloc] init];
-    [_synchronizationQueue setSuspended:YES];
+    _otherTasksQueue = [[NSOperationQueue alloc] init];
+    [_otherTasksQueue setSuspended:YES];
     
     return self;
 }
@@ -184,7 +205,7 @@ id gTICDSDefaultApplicationSyncManager = nil;
     [_clientDescription release], _clientDescription = nil;
     [_userInfo release], _userInfo = nil;
     [_registrationQueue release], _registrationQueue = nil;
-    [_synchronizationQueue release], _synchronizationQueue = nil;
+    [_otherTasksQueue release], _otherTasksQueue = nil;
     
     [super dealloc];
 }
@@ -198,6 +219,6 @@ id gTICDSDefaultApplicationSyncManager = nil;
 @synthesize clientDescription = _clientDescription;
 @synthesize userInfo = _userInfo;
 @synthesize registrationQueue = _registrationQueue;
-@synthesize synchronizationQueue = _synchronizationQueue;
+@synthesize otherTasksQueue = _otherTasksQueue;
 
 @end

@@ -19,6 +19,15 @@ typedef enum _TICDSApplicationSyncManagerState {
     TICDSApplicationSyncManagerStateRegistering = -110,
 } TICDSApplicationSyncManagerState;
 
+#pragma mark Existence
+typedef enum _TICDSRemoteFileStructureExistsResponseType {
+    
+    TICDSRemoteFileStructureExistsResponseTypeError = 0,
+    TICDSRemoteFileStructureExistsResponseTypeDoesNotExist = -1,
+    TICDSRemoteFileStructureExistsResponseTypeDoesExist = 1,
+    
+} TICDSRemoteFileStructureExistsResponseType;
+
 #pragma mark Logging
 typedef enum _TICDSLogVerbosity {
     TICDSLogVerbosityNoLogging = 0,
@@ -62,6 +71,10 @@ extern NSString * const TICDSErrorClassAndMethod;
 extern NSString * const TICDSErrorDomain;
 
 extern NSString * const kTICDSClientDeviceDescription;
+extern NSString * const kTICDSClientDeviceUserInfo;
 extern NSString * const kTICDSLastSyncDate;
 extern NSString * const kTICDSDocumentIdentifier;
 extern NSString * const kTICDSDocumentName;
+
+extern NSString * const kTICDSUtilitiesFileStructureClientDeviceUID;
+extern NSString * const kTICDSUtilitiesFileStructureDocumentUID;

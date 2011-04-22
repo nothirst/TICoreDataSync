@@ -20,7 +20,7 @@
     NSDictionary *_userInfo;
     
     NSOperationQueue *_registrationQueue;
-    NSOperationQueue *_synchronizationQueue;
+    NSOperationQueue *_otherTasksQueue;
 }
 
 /** Returns an application-wide Sync Manager */
@@ -44,6 +44,9 @@
 @property (nonatomic, readonly, retain) NSString *clientDescription;
 @property (nonatomic, readonly, retain) NSDictionary *userInfo;
 @property (nonatomic, retain) NSOperationQueue *registrationQueue;
-@property (nonatomic, retain) NSOperationQueue *synchronizationQueue;
+@property (nonatomic, retain) NSOperationQueue *otherTasksQueue;
+@property (nonatomic, readonly) NSString *relativePathToClientDevicesDirectory;
+@property (nonatomic, readonly) NSString *relativePathToDocumentsDirectory;
+@property (nonatomic, readonly) NSString *relativePathToThisClientDeviceDirectory;
 
 @end

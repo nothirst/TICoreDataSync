@@ -18,13 +18,17 @@
 		388A3E93135707CA00824C88 /* MyDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 388A3E92135707CA00824C88 /* MyDocument.m */; };
 		388A3E96135707CA00824C88 /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 388A3E94135707CA00824C88 /* MyDocument.xib */; };
 		388A3E99135707CA00824C88 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 388A3E97135707CA00824C88 /* MainMenu.xib */; };
+		389D767E1361A577007F19DC /* TICDSFileManagerBasedApplicationRegistrationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 389D767D1361A577007F19DC /* TICDSFileManagerBasedApplicationRegistrationOperation.m */; };
+		389D76831361AA8A007F19DC /* deviceInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 389D76801361AA8A007F19DC /* deviceInfo.plist */; };
+		389D76841361AA8A007F19DC /* documentInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 389D76811361AA8A007F19DC /* documentInfo.plist */; };
+		389D76851361AA8A007F19DC /* ReadMe.txt in Resources */ = {isa = PBXBuildFile; fileRef = 389D76821361AA8A007F19DC /* ReadMe.txt */; };
+		389D76881361AB84007F19DC /* TICDSFileManagerBasedApplicationSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 389D76871361AB84007F19DC /* TICDSFileManagerBasedApplicationSyncManager.m */; };
 		389F86B313608C7900004CA4 /* TICDSOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 389F86B213608C7900004CA4 /* TICDSOperation.m */; };
 		389F86BB1360902900004CA4 /* DropboxBoth.png in Resources */ = {isa = PBXBuildFile; fileRef = 389F86B51360902900004CA4 /* DropboxBoth.png */; };
 		389F86BC1360902900004CA4 /* DropboxText.png in Resources */ = {isa = PBXBuildFile; fileRef = 389F86B61360902900004CA4 /* DropboxText.png */; };
 		389F86BD1360902900004CA4 /* DropboxLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 389F86B71360902900004CA4 /* DropboxLogo.png */; };
 		389F86BE1360902900004CA4 /* TISLSynchronizationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 389F86B91360902900004CA4 /* TISLSynchronizationController.m */; };
 		389F86BF1360902900004CA4 /* TISLSynchronizationWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 389F86BA1360902900004CA4 /* TISLSynchronizationWindow.xib */; };
-		389F86C31360911B00004CA4 /* TICDSLocalDropboxApplicationSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 389F86C21360911B00004CA4 /* TICDSLocalDropboxApplicationSyncManager.m */; };
 		389F86C6136092D900004CA4 /* TICDSUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 389F86C5136092D900004CA4 /* TICDSUtilities.m */; };
 		389F86C81360933F00004CA4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389F86C71360933F00004CA4 /* QuartzCore.framework */; };
 		389F86CA1360934800004CA4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389F86C91360934700004CA4 /* SystemConfiguration.framework */; };
@@ -57,6 +61,13 @@
 		388A3E92135707CA00824C88 /* MyDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyDocument.m; sourceTree = "<group>"; };
 		388A3E95135707CA00824C88 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		388A3E98135707CA00824C88 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		389D767C1361A577007F19DC /* TICDSFileManagerBasedApplicationRegistrationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSFileManagerBasedApplicationRegistrationOperation.h; sourceTree = "<group>"; };
+		389D767D1361A577007F19DC /* TICDSFileManagerBasedApplicationRegistrationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSFileManagerBasedApplicationRegistrationOperation.m; sourceTree = "<group>"; };
+		389D76801361AA8A007F19DC /* deviceInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = deviceInfo.plist; sourceTree = "<group>"; };
+		389D76811361AA8A007F19DC /* documentInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = documentInfo.plist; sourceTree = "<group>"; };
+		389D76821361AA8A007F19DC /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
+		389D76861361AB83007F19DC /* TICDSFileManagerBasedApplicationSyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSFileManagerBasedApplicationSyncManager.h; sourceTree = "<group>"; };
+		389D76871361AB84007F19DC /* TICDSFileManagerBasedApplicationSyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSFileManagerBasedApplicationSyncManager.m; sourceTree = "<group>"; };
 		389F86B113608C7900004CA4 /* TICDSOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSOperation.h; sourceTree = "<group>"; };
 		389F86B213608C7900004CA4 /* TICDSOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSOperation.m; sourceTree = "<group>"; };
 		389F86B51360902900004CA4 /* DropboxBoth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DropboxBoth.png; sourceTree = "<group>"; };
@@ -65,8 +76,6 @@
 		389F86B81360902900004CA4 /* TISLSynchronizationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TISLSynchronizationController.h; sourceTree = "<group>"; };
 		389F86B91360902900004CA4 /* TISLSynchronizationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TISLSynchronizationController.m; sourceTree = "<group>"; };
 		389F86BA1360902900004CA4 /* TISLSynchronizationWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TISLSynchronizationWindow.xib; sourceTree = "<group>"; };
-		389F86C11360911B00004CA4 /* TICDSLocalDropboxApplicationSyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSLocalDropboxApplicationSyncManager.h; sourceTree = "<group>"; };
-		389F86C21360911B00004CA4 /* TICDSLocalDropboxApplicationSyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSLocalDropboxApplicationSyncManager.m; sourceTree = "<group>"; };
 		389F86C4136092D900004CA4 /* TICDSUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSUtilities.h; sourceTree = "<group>"; };
 		389F86C5136092D900004CA4 /* TICDSUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSUtilities.m; sourceTree = "<group>"; };
 		389F86C71360933F00004CA4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -189,6 +198,27 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		389D767B1361A53D007F19DC /* File Manager-Based Sync */ = {
+			isa = PBXGroup;
+			children = (
+				389D767C1361A577007F19DC /* TICDSFileManagerBasedApplicationRegistrationOperation.h */,
+				389D767D1361A577007F19DC /* TICDSFileManagerBasedApplicationRegistrationOperation.m */,
+				389D76861361AB83007F19DC /* TICDSFileManagerBasedApplicationSyncManager.h */,
+				389D76871361AB84007F19DC /* TICDSFileManagerBasedApplicationSyncManager.m */,
+			);
+			path = "File Manager-Based Sync";
+			sourceTree = "<group>";
+		};
+		389D767F1361AA64007F19DC /* 05 File Structure */ = {
+			isa = PBXGroup;
+			children = (
+				389D76801361AA8A007F19DC /* deviceInfo.plist */,
+				389D76811361AA8A007F19DC /* documentInfo.plist */,
+				389D76821361AA8A007F19DC /* ReadMe.txt */,
+			);
+			path = "05 File Structure";
+			sourceTree = "<group>";
+		};
 		389F86B41360900F00004CA4 /* Synchronization */ = {
 			isa = PBXGroup;
 			children = (
@@ -202,15 +232,6 @@
 			name = Synchronization;
 			sourceTree = "<group>";
 		};
-		389F86C0136090EA00004CA4 /* Local Dropbox Sync */ = {
-			isa = PBXGroup;
-			children = (
-				389F86C11360911B00004CA4 /* TICDSLocalDropboxApplicationSyncManager.h */,
-				389F86C21360911B00004CA4 /* TICDSLocalDropboxApplicationSyncManager.m */,
-			);
-			path = "Local Dropbox Sync";
-			sourceTree = "<group>";
-		};
 		38FFACB413604068004758EE /* TICoreDataSync */ = {
 			isa = PBXGroup;
 			children = (
@@ -218,6 +239,7 @@
 				38FFACB6136041ED004758EE /* 01 Headers and Constants */,
 				38FFACBA1360435B004758EE /* 02 Primary Classes */,
 				382390CB1360874B0068EB37 /* 04 Utilities */,
+				389D767F1361AA64007F19DC /* 05 File Structure */,
 				38FFACBE13604B38004758EE /* 06 External Sources */,
 			);
 			name = TICoreDataSync;
@@ -238,7 +260,7 @@
 		38FFACBA1360435B004758EE /* 02 Primary Classes */ = {
 			isa = PBXGroup;
 			children = (
-				389F86C0136090EA00004CA4 /* Local Dropbox Sync */,
+				389D767B1361A53D007F19DC /* File Manager-Based Sync */,
 				382390CF136089F40068EB37 /* Generic Operations */,
 				38FFACBB1360439F004758EE /* TICDSApplicationSyncManager.h */,
 				38FFACBC1360439F004758EE /* TICDSApplicationSyncManager.m */,
@@ -313,6 +335,9 @@
 				389F86BC1360902900004CA4 /* DropboxText.png in Resources */,
 				389F86BD1360902900004CA4 /* DropboxLogo.png in Resources */,
 				389F86BF1360902900004CA4 /* TISLSynchronizationWindow.xib in Resources */,
+				389D76831361AA8A007F19DC /* deviceInfo.plist in Resources */,
+				389D76841361AA8A007F19DC /* documentInfo.plist in Resources */,
+				389D76851361AA8A007F19DC /* ReadMe.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,9 +359,10 @@
 				382390D513608AAF0068EB37 /* TICDSError.m in Sources */,
 				389F86B313608C7900004CA4 /* TICDSOperation.m in Sources */,
 				389F86BE1360902900004CA4 /* TISLSynchronizationController.m in Sources */,
-				389F86C31360911B00004CA4 /* TICDSLocalDropboxApplicationSyncManager.m in Sources */,
 				389F86C6136092D900004CA4 /* TICDSUtilities.m in Sources */,
 				389F86CD136093D800004CA4 /* TISLAppDelegate.m in Sources */,
+				389D767E1361A577007F19DC /* TICDSFileManagerBasedApplicationRegistrationOperation.m in Sources */,
+				389D76881361AB84007F19DC /* TICDSFileManagerBasedApplicationSyncManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,4 +14,12 @@
 /** Returns a globally unique string */
 + (NSString *)uuidString;
 
+/** Returns a dictionary containing the basic file structure for synchronization */
+/** String Keys are names of sub-directories */
++ (NSDictionary *)remoteGlobalAppFileStructure;
+
+/** Returns a dictionary containing the basic client device file structure for synchronization */
+/** Keys etc as above, with exception of ClientDeviceUID etc keys */
++ (NSDictionary *)remoteClientDeviceFileStructure;
+
 @end

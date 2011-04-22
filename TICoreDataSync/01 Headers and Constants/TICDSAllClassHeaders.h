@@ -10,8 +10,9 @@
 #pragma mark Primary Classes
 #import "TICDSApplicationSyncManager.h"
 
-#pragma mark Local Dropbox
-#import "TICDSLocalDropboxApplicationSyncManager.h"
+#pragma mark File Manager-Based
+#import "TICDSFileManagerBasedApplicationSyncManager.h"
+#import "TICDSFileManagerBasedApplicationRegistrationOperation.h"
 
 #pragma mark Operations
 #import "TICDSOperation.h"

@@ -10,8 +10,9 @@
 #pragma mark PRIMARY CLASSES
 @class TICDSApplicationSyncManager;
 
-#pragma mark Local Dropbox
-@class TICDSLocalDropboxApplicationSyncManager;
+#pragma mark File Manager-Based
+@class TICDSFileManagerBasedApplicationSyncManager;
+@class TICDSFileManagerBasedApplicationRegistrationOperation;
 
 #pragma mark Operations
 @class TICDSOperation;

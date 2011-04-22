@@ -15,6 +15,10 @@ NSString * const TICDSErrorClassAndMethod = @"TICDSErrorClassAndMethod";
 NSString * const TICDSErrorDomain = @"com.timisted.ticoredatasync";
 
 NSString * const kTICDSClientDeviceDescription = @"kTICDSClientDeviceDescription";
+NSString * const kTICDSClientDeviceUserInfo = @"kTICDSClientDeviceUserInfo";
 NSString * const kTICDSLastSyncDate = @"kTICDSLastSyncDate";
 NSString * const kTICDSDocumentIdentifier = @"kTICDSDocumentIdentifier";
 NSString * const kTICDSDocumentName = @"kTICDSDocumentName";
+
+NSString * const kTICDSUtilitiesFileStructureClientDeviceUID = @"kTICDSUtilitiesFileStructureClientDeviceUID";
+NSString * const kTICDSUtilitiesFileStructureDocumentUID = @"kTICDSUtilitiesFileStructureDocumentUID";

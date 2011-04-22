@@ -11,16 +11,8 @@
 
 @implementation TICDSOperation
 
-- (BOOL)isConcurrent
-{
-    return YES;
-}
-
-- (BOOL)needsMainThread
-{
-    return NO;
-}
-
+#pragma mark -
+#pragma mark Primary Operation
 - (void)start
 {
     if( [self needsMainThread] && ![NSThread isMainThread])
@@ -34,9 +26,26 @@
     
     [self operationDidStart];
     
+    [self main];
+}
+
+- (void)main
+{
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
     
     [self operationDidFailToComplete];
+}
+
+#pragma mark -
+#pragma mark Operation Settings
+- (BOOL)isConcurrent
+{
+    return YES;
+}
+
+- (BOOL)needsMainThread
+{
+    return NO;
 }
 
 #pragma mark -
@@ -107,7 +116,7 @@
 {
     [_error release], _error = nil;
     [_clientIdentifier release], _clientIdentifier = nil;
-    
+
     [super dealloc];
 }
 

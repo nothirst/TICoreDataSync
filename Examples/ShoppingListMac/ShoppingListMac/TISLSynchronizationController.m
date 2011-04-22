@@ -41,7 +41,7 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
 + (void)initialize
 {
     // Set Logging Verbosity (DEBUG must be #defined to see logs, regardless of verbosity setting)
-    //[TICDSLog setVerbosity:TICDSLogVerbosityEveryStep];
+    [TICDSLog setVerbosity:TICDSLogVerbosityEveryStep];
 }
 
 - (void)enableSynchronizationIfNecessaryShouldOpenViewIfDisabled:(BOOL)shouldOpenView
@@ -67,11 +67,11 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
 {
     // Fetch the default sync manager (will be created by this call)
     // This application uses only one global sync manager for any sync'd documents
-    TICDSApplicationSyncManager *syncManager = [TICDSLocalDropboxApplicationSyncManager defaultApplicationSyncManager];
+    TICDSApplicationSyncManager *syncManager = [TICDSFileManagerBasedApplicationSyncManager defaultApplicationSyncManager];
     
     NSURL *dropboxLocation = [NSURL fileURLWithPath:[[NSUserDefaults standardUserDefaults] valueForKey:kTISLUserDropboxLocation]];
     
-    [(TICDSLocalDropboxApplicationSyncManager *)syncManager setLocalDropboxLocation:dropboxLocation];
+    [(TICDSFileManagerBasedApplicationSyncManager *)syncManager setLocalApplicationContainingDirectoryLocation:dropboxLocation];
     
     // Get a unique client ID for this client from user defaults, generating one if it doesn't already exist
     NSString *clientUuid = [[NSUserDefaults standardUserDefaults] stringForKey:kTISLSynchronizationClientIdentifier];
@@ -182,7 +182,7 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
     
     NSString *itemIdentifier = [[[self dropboxListOfAvailableDocumentsArray] objectAtIndex:selectedRow] valueForKey:kTICDSDocumentIdentifier];
     
-    TICDSApplicationSyncManager *syncManager = [TICDSLocalDropboxApplicationSyncManager defaultApplicationSyncManager];
+    TICDSApplicationSyncManager *syncManager = [TICDSFileManagerBasedApplicationSyncManager defaultApplicationSyncManager];
     
     [syncManager requestDownloadOfDocumentStoreWithIdentifier:itemIdentifier toFileLocation:fileLocation];
 }
