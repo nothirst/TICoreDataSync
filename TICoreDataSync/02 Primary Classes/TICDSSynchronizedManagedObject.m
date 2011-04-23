@@ -20,7 +20,46 @@
 @implementation TICDSSynchronizedManagedObject
 
 #pragma mark -
-#pragma mark Sync Change Creation
+#pragma mark Primary Sync Change Creation
+- (void)createSyncChangeForInsertion
+{
+    // changedAttributes = a dictionary containing the values of _all_ the object's attributes at time it was saved
+    // this method also creates extra sync changes for _all_ the object's relationships 
+    
+    TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeObjectInserted];
+    
+    [syncChange setChangedAttributes:[self dictionaryOfAllAttributes]];
+    [self createSyncChangesForAllRelationships];
+}
+
+- (void)createSyncChangeForDeletion
+{
+    // nothing is stored in changedAttributes or changedRelationships at this time
+    // if a conflict is encountered, the deletion will have to take precedent, resurrection is not possible
+    [self createSyncChangeForChangeType:TICDSSyncChangeTypeObjectDeleted];
+}
+
+- (void)createSyncChangesForChangedProperties
+{
+    // separate sync changes are created for each property change, whether it be relationship or 
+    NSDictionary *changedValues = [self changedValues];
+    
+    for( NSString *eachPropertyName in changedValues ) {
+        id eachValue = [changedValues valueForKey:eachPropertyName];
+        
+        NSRelationshipDescription *relationship = [[[self entity] relationshipsByName] valueForKey:eachPropertyName];
+        if( relationship ) {
+            [self createSyncChangeIfApplicableForRelationship:relationship];
+        } else {
+            TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeAttributeChanged];
+            [syncChange setRelevantKey:eachPropertyName];
+            [syncChange setChangedAttributes:eachValue];
+        }
+    }
+}
+
+#pragma mark -
+#pragma mark Sync Change Helper Methods
 - (TICDSSyncChange *)createSyncChangeForChangeType:(TICDSSyncChangeType)aType
 {
     TICDSSyncChange *syncChange = [TICDSSyncChange syncChangeOfType:aType inManagedObjectContext:[self syncChangesMOC]];
@@ -108,45 +147,6 @@
     }
     
     return attributeValues;
-}
-
-#pragma mark -
-#pragma mark Sync Change Creation
-- (void)createSyncChangeForInsertion
-{
-    // changedAttributes = a dictionary containing the values of _all_ the object's attributes at time it was saved
-    // this method also creates extra sync changes for _all_ the object's relationships 
-    
-    TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeObjectInserted];
-    
-    [syncChange setChangedAttributes:[self dictionaryOfAllAttributes]];
-    [self createSyncChangesForAllRelationships];
-}
-
-- (void)createSyncChangeForDeletion
-{
-    // nothing is stored in changedAttributes or changedRelationships at this time
-    // if a conflict is encountered, the deletion will have to take precedent, resurrection is not possible
-    [self createSyncChangeForChangeType:TICDSSyncChangeTypeObjectDeleted];
-}
-
-- (void)createSyncChangesForChangedProperties
-{
-    // separate sync changes are created for each property change, whether it be relationship or 
-    NSDictionary *changedValues = [self changedValues];
-    
-    for( NSString *eachPropertyName in changedValues ) {
-        id eachValue = [changedValues valueForKey:eachPropertyName];
-        
-        NSRelationshipDescription *relationship = [[[self entity] relationshipsByName] valueForKey:eachPropertyName];
-        if( relationship ) {
-            [self createSyncChangeIfApplicableForRelationship:relationship];
-        } else {
-            TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeAttributeChanged];
-            [syncChange setRelevantKey:eachPropertyName];
-            [syncChange setChangedAttributes:eachValue];
-        }
-    }
 }
 
 #pragma mark -
