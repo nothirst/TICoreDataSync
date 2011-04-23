@@ -89,7 +89,7 @@
 {
     TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeObjectInserted];
     
-    [syncChange setChangedValue:[self dictionaryOfAllAttributes]];
+    [syncChange setChangedAttributes:[self dictionaryOfAllAttributes]];
 }
 
 - (void)createSyncChangeForDeletion

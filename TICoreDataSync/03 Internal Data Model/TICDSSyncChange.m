@@ -31,7 +31,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"\n%@\nCHANGED VALUE\n%@", [super description], [self changedValue]];
+    return [NSString stringWithFormat:@"\n%@\nCHANGED ATTRIBUTES\n%@\nCHANGED RELATIONSHIPS\n%@", [super description], [self changedAttributes], [self changedRelationships]];
 }
 
 #pragma mark -
@@ -45,9 +45,8 @@
 @synthesize relevantManagedObject = _relevantManagedObject;
 @dynamic objectEntityName;
 @dynamic objectSyncID;
-@dynamic changedValue;
+@dynamic changedAttributes;
 @dynamic changedRelationships;
-@dynamic relatedObjectSyncID;
 @dynamic relevantKey;
 @dynamic localTimeStamp;
 @dynamic relatedObjectEntityName;

@@ -20,10 +20,9 @@
 @property (nonatomic, retain) NSString * objectEntityName;
 @property (nonatomic, retain) NSString * objectSyncID;
 @property (nonatomic, retain) NSString * relevantKey;
-@property (nonatomic, retain) id changedValue;
+@property (nonatomic, retain) id changedAttributes;
 @property (nonatomic, retain) id changedRelationships;
 @property (nonatomic, retain) NSString * relatedObjectEntityName;
-@property (nonatomic, retain) NSString * relatedObjectSyncID;
 @property (nonatomic, retain) NSDate * localTimeStamp;
 
 @end
