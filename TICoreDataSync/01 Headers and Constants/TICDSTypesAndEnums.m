@@ -13,9 +13,7 @@ NSString * const TICDSSyncChangeTypeNames[] = {
     @"Inserted",
     @"Deleted",
     @"Attribute Changed",
-    @"To One Relationship Changed",
-    @"To Many Relationship Added",
-    @"To Many Relationship Removed",
+    @"Relationship Changed",
 };
 
 NSString * const TICDSErrorUserInfoKey = @"TICDSErrorUserInfoKey";

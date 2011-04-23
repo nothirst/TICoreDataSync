@@ -86,9 +86,7 @@ typedef enum _TICDSSyncChangeType {
     TICDSSyncChangeTypeObjectInserted = 1,
     TICDSSyncChangeTypeObjectDeleted = 2,
     TICDSSyncChangeTypeAttributeChanged = 3,
-    TICDSSyncChangeTypeToOneRelationshipChanged = 4,
-    TICDSSyncChangeTypeToManyRelationshipAdded = 5,
-    TICDSSyncChangeTypeToManyRelationshipRemoved = 6,
+    TICDSSyncChangeTypeRelationshipChanged = 4,
 } TICDSSyncChangeType;
 
 #pragma mark -
