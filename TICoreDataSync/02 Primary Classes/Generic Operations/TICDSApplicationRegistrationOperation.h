@@ -28,8 +28,8 @@
 /** Methods overridden by subclasses */
 - (void)checkWhetherRemoteGlobalAppFileStructureExists;
 - (void)createRemoteGlobalAppFileStructure;
-- (void)checkWhetherRemoteGlobalAppClientDeviceFileStructureExists;
-- (void)createRemoteGlobalAppClientDeviceFileStructure;
+- (void)checkWhetherRemoteGlobalAppThisClientDeviceFileStructureExists;
+- (void)createRemoteGlobalAppThisClientDeviceFileStructure;
 
 @property (nonatomic, retain) NSString *appIdentifier;
 @property (nonatomic, retain) NSString *clientDescription;

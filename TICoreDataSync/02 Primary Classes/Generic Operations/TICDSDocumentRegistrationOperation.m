@@ -127,10 +127,10 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Starting to check for remote document client device file structure");
     
-    [self checkWhetherRemoteDocumentClientDeviceFileStructureExists];
+    [self checkWhetherRemoteDocumentSyncChangesThisClientFileStructureExists];
 }
 
-- (void)discoveredStatusOfRemoteDocumentClientDeviceFileStructure:(TICDSRemoteFileStructureExistsResponseType)status
+- (void)discoveredStatusOfRemoteDocumentSyncChangesThisClientFileStructure:(TICDSRemoteFileStructureExistsResponseType)status
 {
     if( status == TICDSRemoteFileStructureExistsResponseTypeError ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error checking for remote document client device file structure");
@@ -141,13 +141,13 @@
     } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesNotExist ) {
         TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Creating remote document client device file structure");
         
-        [self createRemoteDocumentClientDeviceFileStructure];
+        [self createRemoteDocumentSyncChangesThisClientFileStructure];
     }
     
     [self checkForCompletion];
 }
 
-- (void)createdRemoteDocumentClientDeviceFileStructureWithSuccess:(BOOL)success
+- (void)createdRemoteDocumentSyncChangesThisClientFileStructureWithSuccess:(BOOL)success
 {
     if( !success ) {
         TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Failed to create remote document client device file structure");
@@ -161,16 +161,16 @@
 }
 
 #pragma mark Overridden Methods
-- (void)checkWhetherRemoteDocumentClientDeviceFileStructureExists
+- (void)checkWhetherRemoteDocumentSyncChangesThisClientFileStructureExists
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self discoveredStatusOfRemoteDocumentClientDeviceFileStructure:TICDSRemoteFileStructureExistsResponseTypeError];
+    [self discoveredStatusOfRemoteDocumentSyncChangesThisClientFileStructure:TICDSRemoteFileStructureExistsResponseTypeError];
 }
 
-- (void)createRemoteDocumentClientDeviceFileStructure
+- (void)createRemoteDocumentSyncChangesThisClientFileStructure
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self createdRemoteDocumentClientDeviceFileStructureWithSuccess:NO];
+    [self createdRemoteDocumentSyncChangesThisClientFileStructureWithSuccess:NO];
 }
 
 #pragma mark -

@@ -88,7 +88,7 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Starting to check for remote device file structure");
     
-    [self checkWhetherRemoteGlobalAppClientDeviceFileStructureExists];    
+    [self checkWhetherRemoteGlobalAppThisClientDeviceFileStructureExists];    
 }
 
 - (void)discoveredStatusOfRemoteClientDeviceFileStructure:(TICDSRemoteFileStructureExistsResponseType)status
@@ -102,7 +102,7 @@
     } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesNotExist ) {
         TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Creating remote client device file structure");
         
-        [self createRemoteGlobalAppClientDeviceFileStructure];
+        [self createRemoteGlobalAppThisClientDeviceFileStructure];
     }
     
     [self checkForCompletion];
@@ -123,13 +123,13 @@
 
 #pragma mark Overridden Methods
 
-- (void)checkWhetherRemoteGlobalAppClientDeviceFileStructureExists
+- (void)checkWhetherRemoteGlobalAppThisClientDeviceFileStructureExists
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
     [self discoveredStatusOfRemoteClientDeviceFileStructure:TICDSRemoteFileStructureExistsResponseTypeError];
 }
 
-- (void)createRemoteGlobalAppClientDeviceFileStructure
+- (void)createRemoteGlobalAppThisClientDeviceFileStructure
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
     [self createdRemoteClientDeviceFileStructureSuccessfully:NO];

@@ -30,14 +30,14 @@
 /** Overridden Methods */
 - (void)checkWhetherRemoteDocumentFileStructureExists;
 - (void)createRemoteDocumentFileStructure;
-- (void)checkWhetherRemoteDocumentClientDeviceFileStructureExists;
-- (void)createRemoteDocumentClientDeviceFileStructure;
+- (void)checkWhetherRemoteDocumentSyncChangesThisClientFileStructureExists;
+- (void)createRemoteDocumentSyncChangesThisClientFileStructure;
 
 /** Callbacks */
 - (void)discoveredStatusOfRemoteDocumentFileStructure:(TICDSRemoteFileStructureExistsResponseType)status;
 - (void)createdRemoteDocumentFileStructureWithSuccess:(BOOL)success;
-- (void)discoveredStatusOfRemoteDocumentClientDeviceFileStructure:(TICDSRemoteFileStructureExistsResponseType)status;
-- (void)createdRemoteDocumentClientDeviceFileStructureWithSuccess:(BOOL)success;
+- (void)discoveredStatusOfRemoteDocumentSyncChangesThisClientFileStructure:(TICDSRemoteFileStructureExistsResponseType)status;
+- (void)createdRemoteDocumentSyncChangesThisClientFileStructureWithSuccess:(BOOL)success;
 
 @property (assign, getter = isPaused) BOOL paused;
 @property (assign) BOOL shouldCreateDocumentFileStructure;

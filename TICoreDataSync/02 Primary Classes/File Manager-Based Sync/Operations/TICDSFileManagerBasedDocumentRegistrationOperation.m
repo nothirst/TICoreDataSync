@@ -98,10 +98,10 @@
 }
 
 #pragma mark Document Client Device
-- (void)checkWhetherRemoteDocumentClientDeviceFileStructureExists
+- (void)checkWhetherRemoteDocumentSyncChangesThisClientFileStructureExists
 {
     if( ![[self fileManager] fileExistsAtPath:[self thisDocumentSyncChangesThisClientDirectoryPath]] ) {
-        [self discoveredStatusOfRemoteDocumentClientDeviceFileStructure:TICDSRemoteFileStructureExistsResponseTypeDoesNotExist];
+        [self discoveredStatusOfRemoteDocumentSyncChangesThisClientFileStructure:TICDSRemoteFileStructureExistsResponseTypeDoesNotExist];
         return;
     }
     
@@ -110,20 +110,20 @@
     
     if( !contents ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [self discoveredStatusOfRemoteDocumentClientDeviceFileStructure:TICDSRemoteFileStructureExistsResponseTypeError];
+        [self discoveredStatusOfRemoteDocumentSyncChangesThisClientFileStructure:TICDSRemoteFileStructureExistsResponseTypeError];
         return;
     } else { // there may not be any contents, but as long as the array is !nil, the directory exists
-        [self discoveredStatusOfRemoteDocumentClientDeviceFileStructure:TICDSRemoteFileStructureExistsResponseTypeDoesExist];
+        [self discoveredStatusOfRemoteDocumentSyncChangesThisClientFileStructure:TICDSRemoteFileStructureExistsResponseTypeDoesExist];
         return;
     }
     
     // Currently won't get here until we make a better check that the entire directory structure exists
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeUnexpectedOrIncompleteDirectoryStructure classAndMethod:__PRETTY_FUNCTION__]];
     
-    [self discoveredStatusOfRemoteDocumentClientDeviceFileStructure:TICDSRemoteFileStructureExistsResponseTypeError];
+    [self discoveredStatusOfRemoteDocumentSyncChangesThisClientFileStructure:TICDSRemoteFileStructureExistsResponseTypeError];
 }
 
-- (void)createRemoteDocumentClientDeviceFileStructure
+- (void)createRemoteDocumentSyncChangesThisClientFileStructure
 {
     // Just create a directory with this client's UID in the doc's SyncChanges directory
     NSString *pathToDirectory = [self thisDocumentSyncChangesThisClientDirectoryPath];
@@ -135,7 +135,7 @@
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
     }
     
-    [self createdRemoteDocumentClientDeviceFileStructureWithSuccess:success];
+    [self createdRemoteDocumentSyncChangesThisClientFileStructureWithSuccess:success];
 }
 
 #pragma mark -
