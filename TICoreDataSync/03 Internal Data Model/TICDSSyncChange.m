@@ -31,7 +31,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"\n%@\nCHANGED VALUES\n%@", [super description], [self changedValue]];
+    return [NSString stringWithFormat:@"\n%@\nCHANGED VALUE\n%@", [super description], [self changedValue]];
 }
 
 #pragma mark -
