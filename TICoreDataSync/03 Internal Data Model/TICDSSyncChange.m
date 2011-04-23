@@ -46,6 +46,7 @@
 @dynamic objectEntityName;
 @dynamic objectSyncID;
 @dynamic changedValue;
+@dynamic changedRelationships;
 @dynamic relatedObjectSyncID;
 @dynamic relevantKey;
 @dynamic localTimeStamp;
