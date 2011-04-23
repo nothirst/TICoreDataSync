@@ -11,14 +11,44 @@
 
 @interface TICDSDocumentRegistrationOperation : TICDSOperation {
 @private
+    BOOL _paused;
+    BOOL _shouldCreateDocumentFileStructure;
+    
     NSString *_documentIdentifier;
     NSString *_documentDescription;
     NSString *_clientDescription;
     NSDictionary *_userInfo;
+    
+    BOOL _documentHasBeenSynchronizedByAnyClient;
+    BOOL _documentHasBeenSynchronizedByThisClient;
+    
+    BOOL _completionInProgress;
+    TICDSOperationPhaseStatus _documentFileStructureStatus;
+    TICDSOperationPhaseStatus _documentClientDeviceFileStructureStatus;
 }
 
-@property (nonatomic, retain) NSString *documentIdentifier;
-@property (nonatomic, retain) NSString *documentDescription;
-@property (nonatomic, retain) NSString *clientDescription;
-@property (nonatomic, retain) NSDictionary *userInfo;
+/** Overridden Methods */
+- (void)checkWhetherRemoteDocumentFileStructureExists;
+- (void)createRemoteDocumentFileStructure;
+- (void)checkWhetherRemoteDocumentClientDeviceFileStructureExists;
+- (void)createRemoteDocumentClientDeviceFileStructure;
+
+/** Callbacks */
+- (void)discoveredStatusOfRemoteDocumentFileStructure:(TICDSRemoteFileStructureExistsResponseType)status;
+- (void)createdRemoteDocumentFileStructureWithSuccess:(BOOL)success;
+- (void)discoveredStatusOfRemoteDocumentClientDeviceFileStructure:(TICDSRemoteFileStructureExistsResponseType)status;
+- (void)createdRemoteDocumentClientDeviceFileStructureWithSuccess:(BOOL)success;
+
+@property (assign, getter = isPaused) BOOL paused;
+@property (assign) BOOL shouldCreateDocumentFileStructure;
+@property (retain) NSString *documentIdentifier;
+@property (retain) NSString *documentDescription;
+@property (retain) NSString *clientDescription;
+@property (retain) NSDictionary *userInfo;
+@property (assign) BOOL documentHasBeenSynchronizedByAnyClient;
+@property (assign) BOOL documentHasBeenSynchronizedByThisClient;
+@property (nonatomic, assign) BOOL completionInProgress;
+@property (nonatomic, assign) TICDSOperationPhaseStatus documentFileStructureStatus;
+@property (nonatomic, assign) TICDSOperationPhaseStatus documentClientDeviceFileStructureStatus;
+
 @end

@@ -97,6 +97,27 @@
     return YES;
 }
 
+#pragma mark Asking if Should Create Remote Document File Structure
+- (void)registrationOperationPausedToFindOutWhetherToCreateRemoteDocumentStructure:(TICDSDocumentRegistrationOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Registration operation paused to find out whether to create document structure");
+    [self ti_alertDelegateWithSelector:@selector(syncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self userInfo]];
+}
+
+- (void)registrationOperationResumedFollowingDocumentStructureCreationInstruction:(TICDSDocumentRegistrationOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Registration operation resumed after finding out whether to create document structure");
+    [self ti_alertDelegateWithSelector:@selector(syncManagerDidResumeRegistration:)];
+}
+
+
+- (void)continueRegistrationByCreatingRemoteFileStructure:(BOOL)shouldCreateFileStructure
+{
+    // Just start the sync operation again
+    [(TICDSDocumentRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setShouldCreateDocumentFileStructure:shouldCreateFileStructure];
+    [(TICDSDocumentRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setPaused:NO];
+}
+
 #pragma mark Operation Generation
 - (TICDSDocumentRegistrationOperation *)documentRegistrationOperation
 {
@@ -181,7 +202,7 @@
 {
     NSError *anyError = nil;
     
-    NSString *unappliedSyncChangesPath = [[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:kTICDSUnappliedChangesDirectoryName];
+    NSString *unappliedSyncChangesPath = [[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSUnappliedChangesDirectoryName];
     if( ![[self fileManager] fileExistsAtPath:unappliedSyncChangesPath] ) {
         BOOL success = [[self fileManager] createDirectoryAtPath:unappliedSyncChangesPath withIntermediateDirectories:YES attributes:nil error:&anyError];
         if( !success ) {
@@ -192,7 +213,7 @@
         }
     }
     
-    NSString *syncChangesToPushPath = [[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:kTICDSSyncChangesToPushDirectoryName];
+    NSString *syncChangesToPushPath = [[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSSyncChangesToPushDirectoryName];
     if( ![[self fileManager] fileExistsAtPath:syncChangesToPushPath] ) {
         BOOL success = [[self fileManager] createDirectoryAtPath:syncChangesToPushPath withIntermediateDirectories:YES attributes:nil error:&anyError];
         if( !success ) {
@@ -235,7 +256,7 @@
     
     [self setHelperFileDirectoryLocation:[self defaultHelperFileLocation]];
     if( [[self fileManager] fileExistsAtPath:[[self defaultHelperFileLocation] path]] ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Default helper file location exists, so using it: %@", [self helperFileDirectoryLocation]);
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Default helper file location exists, so using it");
         return [self createHelperFileDirectoryFileStructure:outError];
     }
     
@@ -361,5 +382,25 @@
 @synthesize registrationQueue = _registrationQueue;
 @synthesize synchronizationQueue = _synchronizationQueue;
 @synthesize otherTasksQueue = _otherTasksQueue;
+
+- (NSString *)relativePathToDocumentsDirectory
+{
+    return TICDSDocumentsDirectoryName; 
+}
+
+- (NSString *)relativePathToThisDocumentDirectory
+{
+    return [[self relativePathToDocumentsDirectory] stringByAppendingPathComponent:[self documentIdentifier]];
+}
+
+- (NSString *)relativePathToThisDocumentSyncChangesDirectory
+{
+    return [[self relativePathToThisDocumentDirectory] stringByAppendingPathComponent:TICDSSyncChangesDirectoryName];
+}
+
+- (NSString *)relativePathToThisDocumentSyncChangesThisClientDirectory
+{
+    return [[self relativePathToThisDocumentSyncChangesDirectory] stringByAppendingPathComponent:[self clientIdentifier]];
+}
 
 @end

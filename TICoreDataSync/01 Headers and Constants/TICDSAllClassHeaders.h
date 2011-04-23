@@ -21,6 +21,7 @@
 #import "TICDSFileManagerBasedApplicationSyncManager.h"
 #import "TICDSFileManagerBasedDocumentSyncManager.h"
 #import "TICDSFileManagerBasedApplicationRegistrationOperation.h"
+#import "TICDSFileManagerBasedDocumentRegistrationOperation.h"
 
 #pragma mark -
 #pragma mark Utilities

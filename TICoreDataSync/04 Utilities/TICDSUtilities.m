@@ -40,4 +40,18 @@
     return dictionary;
 }
 
++ (NSDictionary *)remoteDocumentFileStructure
+{
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    
+    [dictionary setValue:[NSDictionary dictionaryWithObjectsAndKeys:
+                          [NSDictionary dictionary], @"WholeStore",
+                          [NSDictionary dictionary], @"SyncChanges",
+                          [NSDictionary dictionary], @"RecentSyncs",
+                          nil]
+                  forKey:kTICDSUtilitiesFileStructureDocumentUID];
+    
+    return dictionary;
+}
+
 @end

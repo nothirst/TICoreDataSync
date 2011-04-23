@@ -38,6 +38,10 @@
 /** Call this method before using the sync manager for any other purpose */
 - (void)registerWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo;
 
+/** Continue the document registration operation by creating (YES or NO) the file structure */
+/** If no, registration will fail with an error */
+- (void)continueRegistrationByCreatingRemoteFileStructure:(BOOL)shouldCreateFileStructure;
+
 #pragma mark -
 #pragma mark Methods Overridden by Subclasses
 - (TICDSDocumentRegistrationOperation *)documentRegistrationOperation;
@@ -49,9 +53,11 @@
 @property (nonatomic, readonly, retain) NSString *documentDescription;
 @property (nonatomic, readonly, retain) NSString *clientIdentifier;
 @property (nonatomic, readonly, retain) NSDictionary *userInfo;
-/*@property (nonatomic, readonly) NSString *relativePathToDocumentsDirectory;
+@property (nonatomic, readonly) NSString *relativePathToDocumentsDirectory;
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentDirectory;
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentSyncChangesDirectory;
+@property (nonatomic, readonly) NSString *relativePathToThisDocumentSyncChangesThisClientDirectory;
+/*@property (nonatomic, readonly) NSString *relativePathToThisDocumentSyncChangesDirectory;
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentClientDeviceDirectory;
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreDirectory;
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreThisClientDeviceDirectory;

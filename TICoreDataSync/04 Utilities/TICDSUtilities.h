@@ -22,4 +22,7 @@
 /** Keys etc as above, with exception of ClientDeviceUID etc keys */
 + (NSDictionary *)remoteClientDeviceFileStructure;
 
+/** Returns a dictionary containing the basic file structure for a synchronized document */
++ (NSDictionary *)remoteDocumentFileStructure;
+
 @end

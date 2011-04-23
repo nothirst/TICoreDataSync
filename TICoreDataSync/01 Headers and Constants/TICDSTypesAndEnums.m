@@ -19,11 +19,18 @@ NSString * const kTICDSClientDeviceUserInfo = @"kTICDSClientDeviceUserInfo";
 NSString * const kTICDSLastSyncDate = @"kTICDSLastSyncDate";
 NSString * const kTICDSDocumentIdentifier = @"kTICDSDocumentIdentifier";
 NSString * const kTICDSDocumentName = @"kTICDSDocumentName";
+NSString * const kTICDSDocumentUserInfo = @"kTICDSDocumentUserInfo";
+NSString * const kTICDSOriginalDeviceDescription = @"kTICDSOriginalDeviceDescription";
+NSString * const kTICDSOriginalDeviceIdentifier = @"kTICDSOriginalDeviceIdentifier";
 
 NSString * const kTICDSUtilitiesFileStructureClientDeviceUID = @"kTICDSUtilitiesFileStructureClientDeviceUID";
 NSString * const kTICDSUtilitiesFileStructureDocumentUID = @"kTICDSUtilitiesFileStructureDocumentUID";
-NSString * const kTICDSUnappliedChangesDirectoryName = @"UnappliedSyncChanges";
-NSString * const kTICDSSyncChangesToPushDirectoryName = @"SyncChangesToPush";
+
+NSString * const TICDSClientDevicesDirectoryName = @"ClientDevices";
+NSString * const TICDSDocumentsDirectoryName = @"Documents";
+NSString * const TICDSSyncChangesDirectoryName = @"SyncChanges";
+NSString * const TICDSUnappliedChangesDirectoryName = @"UnappliedSyncChanges";
+NSString * const TICDSSyncChangesToPushDirectoryName = @"SyncChangesToPush";
 
 NSString * const TICDSApplicationSyncManagerDidRegisterSuccessfullyNotification = @"TICDSApplicationSyncManagerDidRegisterSuccessfullyNotification";
 NSString * const TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification = @"TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification";

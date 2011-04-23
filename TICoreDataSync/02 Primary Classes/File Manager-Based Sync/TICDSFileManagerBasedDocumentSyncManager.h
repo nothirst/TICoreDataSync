@@ -11,7 +11,12 @@
 
 @interface TICDSFileManagerBasedDocumentSyncManager : TICDSDocumentSyncManager {
 @private
-    
+    NSURL *_applicationDirectoryLocation;
 }
+
+@property (nonatomic, retain) NSURL *applicationDirectoryLocation;
+@property (nonatomic, readonly) NSString *documentsDirectoryPath;
+@property (nonatomic, readonly) NSString *thisDocumentDirectoryPath;
+@property (nonatomic, readonly) NSString *thisDocumentSyncChangesThisClientDirectoryPath;
 
 @end

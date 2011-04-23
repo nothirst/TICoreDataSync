@@ -82,9 +82,11 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     [self increaseActivity];
 }
 
-- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription
+- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo
 {
     [self decreaseActivity];
+    
+    [aSyncManager continueRegistrationByCreatingRemoteFileStructure:YES];
 }
 
 - (void)syncManagerDidResumeRegistration:(TICDSDocumentSyncManager *)aSyncManager

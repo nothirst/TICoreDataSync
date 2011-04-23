@@ -27,6 +27,7 @@
 		389D76981361D51A007F19DC /* TICDSSynchronizedManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 389D76971361D519007F19DC /* TICDSSynchronizedManagedObjectContext.m */; };
 		389D769B1361D731007F19DC /* TICDSDocumentRegistrationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 389D769A1361D730007F19DC /* TICDSDocumentRegistrationOperation.m */; };
 		389D769E1361DC21007F19DC /* TICDSFileManagerBasedDocumentSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 389D769D1361DC21007F19DC /* TICDSFileManagerBasedDocumentSyncManager.m */; };
+		389D76A71363055F007F19DC /* TICDSFileManagerBasedDocumentRegistrationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 389D76A61363055F007F19DC /* TICDSFileManagerBasedDocumentRegistrationOperation.m */; };
 		389F86B313608C7900004CA4 /* TICDSOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 389F86B213608C7900004CA4 /* TICDSOperation.m */; };
 		389F86BB1360902900004CA4 /* DropboxBoth.png in Resources */ = {isa = PBXBuildFile; fileRef = 389F86B51360902900004CA4 /* DropboxBoth.png */; };
 		389F86BC1360902900004CA4 /* DropboxText.png in Resources */ = {isa = PBXBuildFile; fileRef = 389F86B61360902900004CA4 /* DropboxText.png */; };
@@ -80,6 +81,8 @@
 		389D769A1361D730007F19DC /* TICDSDocumentRegistrationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSDocumentRegistrationOperation.m; sourceTree = "<group>"; };
 		389D769C1361DC21007F19DC /* TICDSFileManagerBasedDocumentSyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSFileManagerBasedDocumentSyncManager.h; sourceTree = "<group>"; };
 		389D769D1361DC21007F19DC /* TICDSFileManagerBasedDocumentSyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSFileManagerBasedDocumentSyncManager.m; sourceTree = "<group>"; };
+		389D76A51363055F007F19DC /* TICDSFileManagerBasedDocumentRegistrationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSFileManagerBasedDocumentRegistrationOperation.h; sourceTree = "<group>"; };
+		389D76A61363055F007F19DC /* TICDSFileManagerBasedDocumentRegistrationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSFileManagerBasedDocumentRegistrationOperation.m; sourceTree = "<group>"; };
 		389F86B113608C7900004CA4 /* TICDSOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSOperation.h; sourceTree = "<group>"; };
 		389F86B213608C7900004CA4 /* TICDSOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSOperation.m; sourceTree = "<group>"; };
 		389F86B51360902900004CA4 /* DropboxBoth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DropboxBoth.png; sourceTree = "<group>"; };
@@ -221,6 +224,8 @@
 				389D76871361AB84007F19DC /* TICDSFileManagerBasedApplicationSyncManager.m */,
 				389D769C1361DC21007F19DC /* TICDSFileManagerBasedDocumentSyncManager.h */,
 				389D769D1361DC21007F19DC /* TICDSFileManagerBasedDocumentSyncManager.m */,
+				389D76A51363055F007F19DC /* TICDSFileManagerBasedDocumentRegistrationOperation.h */,
+				389D76A61363055F007F19DC /* TICDSFileManagerBasedDocumentRegistrationOperation.m */,
 			);
 			path = "File Manager-Based Sync";
 			sourceTree = "<group>";
@@ -387,6 +392,7 @@
 				389D76981361D51A007F19DC /* TICDSSynchronizedManagedObjectContext.m in Sources */,
 				389D769B1361D731007F19DC /* TICDSDocumentRegistrationOperation.m in Sources */,
 				389D769E1361DC21007F19DC /* TICDSFileManagerBasedDocumentSyncManager.m in Sources */,
+				389D76A71363055F007F19DC /* TICDSFileManagerBasedDocumentRegistrationOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

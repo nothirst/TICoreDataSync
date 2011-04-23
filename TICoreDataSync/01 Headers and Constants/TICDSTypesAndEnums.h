@@ -92,12 +92,18 @@ extern NSString * const kTICDSClientDeviceUserInfo;
 extern NSString * const kTICDSLastSyncDate;
 extern NSString * const kTICDSDocumentIdentifier;
 extern NSString * const kTICDSDocumentName;
+extern NSString * const kTICDSDocumentUserInfo;
+extern NSString * const kTICDSOriginalDeviceDescription;
+extern NSString * const kTICDSOriginalDeviceIdentifier;
 
 extern NSString * const kTICDSUtilitiesFileStructureClientDeviceUID;
 extern NSString * const kTICDSUtilitiesFileStructureDocumentUID;
 
-extern NSString * const kTICDSUnappliedChangesDirectoryName;
-extern NSString * const kTICDSSyncChangesToPushDirectoryName;
+extern NSString * const TICDSClientDevicesDirectoryName;
+extern NSString * const TICDSDocumentsDirectoryName;
+extern NSString * const TICDSSyncChangesDirectoryName;
+extern NSString * const TICDSUnappliedChangesDirectoryName;
+extern NSString * const TICDSSyncChangesToPushDirectoryName;
 
 extern NSString * const TICDSApplicationSyncManagerDidRegisterSuccessfullyNotification;
 extern NSString * const TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification;
