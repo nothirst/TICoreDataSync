@@ -98,6 +98,17 @@
 }
 
 #pragma mark -
+#pragma mark Lazy Accessors
+- (NSFileManager *)fileManager
+{
+    if( _fileManager ) return _fileManager;
+    
+    _fileManager = [[NSFileManager alloc] init];
+    
+    return _fileManager;
+}
+
+#pragma mark -
 #pragma mark Initialization and Deallocation
 - (id)initWithDelegate:(NSObject <TICDSOperationDelegate> *)aDelegate
 {
@@ -129,14 +140,5 @@
 @synthesize fileManager = _fileManager;
 @synthesize helperFileDirectoryLocation = _helperFileDirectoryLocation;
 @synthesize clientIdentifier = _clientIdentifier;
-
-- (NSFileManager *)fileManager
-{
-    if( _fileManager ) return _fileManager;
-    
-    _fileManager = [[NSFileManager alloc] init];
-    
-    return _fileManager;
-}
 
 @end

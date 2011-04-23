@@ -165,7 +165,7 @@ id gTICDSDefaultApplicationSyncManager = nil;
 }
 
 #pragma mark -
-#pragma mark Relative Paths
+#pragma mark Paths
 - (NSString *)relativePathToDocumentsDirectory
 {
     return TICDSDocumentsDirectoryName;

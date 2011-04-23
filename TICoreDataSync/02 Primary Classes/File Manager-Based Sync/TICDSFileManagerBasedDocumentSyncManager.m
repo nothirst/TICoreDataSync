@@ -37,18 +37,7 @@
 }
 
 #pragma mark -
-#pragma mark Initialization and Deallocation
-- (void)dealloc
-{
-    [_applicationDirectoryPath release], _applicationDirectoryPath = nil;
-    
-    [super dealloc];
-}
-
-#pragma mark -
-#pragma mark Properties
-@synthesize applicationDirectoryPath = _applicationDirectoryPath;
-
+#pragma mark Paths
 - (NSString *)documentsDirectoryPath
 {
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToDocumentsDirectory]];
@@ -63,5 +52,18 @@
 {
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentSyncChangesThisClientDirectory]];
 }
+
+#pragma mark -
+#pragma mark Initialization and Deallocation
+- (void)dealloc
+{
+    [_applicationDirectoryPath release], _applicationDirectoryPath = nil;
+    
+    [super dealloc];
+}
+
+#pragma mark -
+#pragma mark Properties
+@synthesize applicationDirectoryPath = _applicationDirectoryPath;
 
 @end

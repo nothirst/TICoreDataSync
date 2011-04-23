@@ -26,18 +26,7 @@
 }
 
 #pragma mark -
-#pragma mark Initialization and Deallocation
-- (void)dealloc
-{
-    [_applicationContainingDirectoryLocation release], _applicationContainingDirectoryLocation = nil;
-
-    [super dealloc];
-}
-
-#pragma mark -
-#pragma mark Properties
-@synthesize applicationContainingDirectoryLocation = _applicationContainingDirectoryLocation;
-
+#pragma mark Paths
 - (NSString *)applicationDirectoryPath
 {
     return [[[self applicationContainingDirectoryLocation] path] stringByAppendingPathComponent:[self appIdentifier]];
@@ -57,5 +46,18 @@
 {
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToClientDevicesThisClientDeviceDirectory]];
 }
+
+#pragma mark -
+#pragma mark Initialization and Deallocation
+- (void)dealloc
+{
+    [_applicationContainingDirectoryLocation release], _applicationContainingDirectoryLocation = nil;
+
+    [super dealloc];
+}
+
+#pragma mark -
+#pragma mark Properties
+@synthesize applicationContainingDirectoryLocation = _applicationContainingDirectoryLocation;
 
 @end
