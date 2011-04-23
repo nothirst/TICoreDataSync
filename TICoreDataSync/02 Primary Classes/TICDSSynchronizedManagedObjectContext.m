@@ -6,8 +6,6 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
-#import "TICDSSynchronizedManagedObjectContext.h"
-
 #import "TICoreDataSync.h"
 
 @implementation TICDSSynchronizedManagedObjectContext

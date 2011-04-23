@@ -6,7 +6,6 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
-#import "TICDSUtilities.h"
 #import "TICoreDataSync.h"
 
 @implementation TICDSUtilities

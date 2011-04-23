@@ -6,7 +6,6 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
-#import "TICDSDocumentSyncManager.h"
 #import "TICoreDataSync.h"
 
 @interface TICDSDocumentSyncManager ()

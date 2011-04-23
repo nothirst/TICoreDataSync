@@ -6,7 +6,7 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
-#import "TICDSLog.h"
+#import "TICoreDataSync.h"
 
 NSInteger gTICDSLogVerbosity = 0;
 

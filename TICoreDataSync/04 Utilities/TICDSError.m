@@ -6,7 +6,7 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
-#import "TICDSError.h"
+#import "TICoreDataSync.h"
 
 NSString *gTICDSErrorStrings[] = {
     @"No error",
