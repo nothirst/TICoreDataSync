@@ -23,6 +23,9 @@
 @class TICDSFileManagerBasedApplicationRegistrationOperation;
 @class TICDSFileManagerBasedDocumentRegistrationOperation;
 
+#pragma mark External Classes
+@class TICoreDataFactory;
+
 #pragma mark -
 #pragma mark DELEGATE PROTOCOLS
 #pragma mark Application Sync Manager
@@ -53,6 +56,13 @@
 // end of registration
 - (void)syncManagerFailedToRegisterDocument:(TICDSDocumentSyncManager *)aSyncManager;
 - (void)syncManagerDidRegisterDocumentSuccessfully:(TICDSDocumentSyncManager *)aSyncManager;
+
+// HELPER FILE LOCATIONS
+- (NSURL *)syncManager:(TICDSDocumentSyncManager *)aSyncManager helperFileDirectoryLocationForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo;
+
+// MOC SAVING
+- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didBeginProcessingAfterMOCDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc;
+- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager failedToProcessAfterMOCDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc;
 
 @end
 

@@ -31,6 +31,9 @@ NSString * const TICDSDocumentsDirectoryName = @"Documents";
 NSString * const TICDSSyncChangesDirectoryName = @"SyncChanges";
 NSString * const TICDSUnappliedChangesDirectoryName = @"UnappliedSyncChanges";
 NSString * const TICDSSyncChangesToPushDirectoryName = @"SyncChangesToPush";
+NSString * const TICDSUnsynchronizedSyncChangesStoreName = @"UnsynchronizedSyncChanges.sqlite";
+
+NSString * const TICDSSyncChangeDataModelName = @"TICDSSyncChange";
 
 NSString * const TICDSApplicationSyncManagerDidRegisterSuccessfullyNotification = @"TICDSApplicationSyncManagerDidRegisterSuccessfullyNotification";
 NSString * const TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification = @"TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification";

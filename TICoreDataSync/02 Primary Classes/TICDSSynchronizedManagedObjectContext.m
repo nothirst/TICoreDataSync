@@ -8,8 +8,31 @@
 
 #import "TICDSSynchronizedManagedObjectContext.h"
 
+#import "TICoreDataSync.h"
 
 @implementation TICDSSynchronizedManagedObjectContext
+
+#pragma mark -
+#pragma mark Saving
+- (BOOL)save:(NSError **)outError
+{
+    [[self documentSyncManager] synchronizedMOCWillSave:self];
+    
+    NSError *anyError = nil; // only used if no error is supplied
+    BOOL success = [super save:outError ? outError : &anyError];
+    
+    if( [[self documentSyncManager] state] != TICDSDocumentSyncManagerStateAbleToSync ) {
+        return success;
+    }
+    
+    if( success ) {
+        [[self documentSyncManager] synchronizedMOCDidSave:self];
+    } else {
+        [[self documentSyncManager] synchronizedMOCFailedToSave:self withError:outError ? *outError : anyError];
+    }
+    
+    return success;
+}
 
 #pragma mark -
 #pragma mark Initialization and Deallocation

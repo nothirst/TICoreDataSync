@@ -32,3 +32,4 @@
 #pragma mark -
 #pragma mark External Sources
 #import "NSObject+TIDelegateCommunications.h"
+#import "TICoreDataFactory.h"

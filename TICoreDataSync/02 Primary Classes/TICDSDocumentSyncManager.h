@@ -26,7 +26,7 @@
     NSURL *_helperFileDirectoryLocation;
     
     TICDSSynchronizedManagedObjectContext *_primaryDocumentMOC;
-    //TICoreDataFactory *_coreDataFactory;
+    TICoreDataFactory *_coreDataFactory;
     NSManagedObjectContext *_syncChangesMOC;
     
     NSOperationQueue *_registrationQueue;
@@ -46,6 +46,12 @@
 #pragma mark Methods Overridden by Subclasses
 - (TICDSDocumentRegistrationOperation *)documentRegistrationOperation;
 
+#pragma mark -
+#pragma mark MOC Saving
+- (void)synchronizedMOCWillSave:(TICDSSynchronizedManagedObjectContext *)aMoc;
+- (void)synchronizedMOCDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc;
+- (void)synchronizedMOCFailedToSave:(TICDSSynchronizedManagedObjectContext *)aMoc withError:(NSError *)anError;
+
 @property (nonatomic, assign) id <TICDSDocumentSyncManagerDelegate> delegate;
 @property (nonatomic, assign) TICDSDocumentSyncManagerState state;
 @property (nonatomic, retain) TICDSApplicationSyncManager *applicationSyncManager;
@@ -57,6 +63,9 @@
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentDirectory;
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentSyncChangesDirectory;
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentSyncChangesThisClientDirectory;
+
+@property (nonatomic, readonly) NSString * unsynchronizedSyncChangesStorePath;
+
 /*@property (nonatomic, readonly) NSString *relativePathToThisDocumentSyncChangesDirectory;
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentClientDeviceDirectory;
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreDirectory;
@@ -66,7 +75,7 @@
 @property (nonatomic, retain) NSFileManager *fileManager;
 @property (retain) NSURL *helperFileDirectoryLocation;
 @property (nonatomic, retain) TICDSSynchronizedManagedObjectContext *primaryDocumentMOC;
-//@property (nonatomic, retain) TICoreDataFactory *coreDataFactory;
+@property (nonatomic, retain) TICoreDataFactory *coreDataFactory;
 @property (nonatomic, retain) NSManagedObjectContext *syncChangesMOC;
 @property (nonatomic, retain) NSOperationQueue *registrationQueue;
 @property (nonatomic, retain) NSOperationQueue *synchronizationQueue;

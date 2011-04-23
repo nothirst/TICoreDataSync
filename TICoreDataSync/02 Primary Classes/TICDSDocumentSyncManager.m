@@ -130,18 +130,16 @@
     // Primary Registration Complete from Operation
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Document Registration Operation Completed");
     
-    /*// setup the syncChangesMOC
+    // setup the syncChangesMOC
     TICDSLog(TICDSLogVerbosityEveryStep, @"Creating SyncChangesMOC");
     [self setSyncChangesMOC:[[self coreDataFactory] managedObjectContext]];
     if( ![self syncChangesMOC] ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create sync changes MOC");
-        [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToRegisterDocument:)];
-        
         [self bailFromRegistrationProcess];
         return;
     }
     TICDSLog(TICDSLogVerbosityEveryStep, @"Finished creating SyncChangesMOC");
-    */
+    
     [self setState:TICDSDocumentSyncManagerStateAbleToSync];
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Finished registering document sync manager");
     
@@ -230,7 +228,7 @@
 - (BOOL)checkForHelperFileDirectoryOrCreateIfNecessary:(NSError **)outError
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Asking delegate for location of helper file directory");
-    NSURL *finalURL = [self ti_objectFromDelegateWithSelector:@selector(syncManagerURLForDocumentHelperFileDirectory:)];
+    NSURL *finalURL = [self ti_objectFromDelegateWithSelector:@selector(syncManager:helperFileDirectoryLocationForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self userInfo]];
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Checking that delegate-provided helper file directory exists");
     
@@ -284,7 +282,54 @@
 }
 
 #pragma mark -
-#pragma mark Notifications
+#pragma mark MANAGED OBJECT CONTEXT DID SAVE BEHAVIOR
+- (void)synchronizedMOCWillSave:(TICDSSynchronizedManagedObjectContext *)aMoc
+{
+    // Do anything here that's needed before the application context is saved
+}
+
+- (void)synchronizedMOCDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"MOC saved, so beginning post-save processing");
+    [self ti_alertDelegateWithSelector:@selector(syncManager:didBeginProcessingAfterMOCDidSave:), aMoc];
+    
+    NSError *anyError = nil;
+    
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Sync Manager will save Sync Changes context");
+    
+    BOOL success = [[self syncChangesMOC] save:&anyError];
+    
+    if( !success ) {
+        NSError *ticdsError = [TICDSError errorWithCode:TICDSErrorCodeFailedToSaveSyncChangesMOC underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__];
+        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredSynchronizationError:), ticdsError];
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Sync Manager failed to save Sync Changes context with error: %@", anyError);
+        
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Sync Manager cannot continue processing any further, so bailing");
+        [self ti_alertDelegateWithSelector:@selector(syncManager:failedToProcessAfterMOCDidSave:), aMoc];
+        
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Sync Manager saved Sync Changes context successfully");
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Asking delegate if we should sync after saving");
+    BOOL shouldSync = [self ti_boolFromDelegateWithSelector:@selector(syncManagerShouldInitiateSynchronizationAfterSave:)];
+    if( !shouldSync ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate denied synchronization after saving");
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate allowed synchronization after saving");
+    [self initiateSynchronization];
+}
+
+- (void)synchronizedMOCFailedToSave:(TICDSSynchronizedManagedObjectContext *)aMoc withError:(NSError *)anError
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Synchronized context failed to save with error: %@", anError);
+}
+
+#pragma mark -
+#pragma mark NOTIFICATIONS
 - (void)appSyncManagerDidRegister:(NSNotification *)aNotification
 {
     [[self registrationQueue] setSuspended:NO];
@@ -311,6 +356,13 @@
     if( [anOperation isKindOfClass:[TICDSDocumentRegistrationOperation class]] ) {
         [self documentRegistrationOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     }
+}
+
+#pragma mark -
+#pragma mark TICoreDataFactory Delegate
+- (void)coreDataFactory:(TICoreDataFactory *)aFactory encounteredError:(NSError *)anError
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"TICoreDataFactory error: %@", anError);
 }
 
 #pragma mark -
@@ -348,6 +400,7 @@
     [_helperFileDirectoryLocation release], _helperFileDirectoryLocation = nil;
     [_primaryDocumentMOC release], _primaryDocumentMOC = nil;
     [_syncChangesMOC release], _syncChangesMOC = nil;
+    [_coreDataFactory release], _coreDataFactory = nil;
     [_registrationQueue release], _registrationQueue = nil;
     [_synchronizationQueue release], _synchronizationQueue = nil;
     [_otherTasksQueue release], _otherTasksQueue = nil;
@@ -366,22 +419,20 @@
     return _fileManager;
 }
 
+- (TICoreDataFactory *)coreDataFactory
+{
+    if( _coreDataFactory ) return _coreDataFactory;
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Creating Core Data Factory (TICoreDataFactory)");
+    _coreDataFactory = [[TICoreDataFactory alloc] initWithMomdName:TICDSSyncChangeDataModelName];
+    [_coreDataFactory setDelegate:self];
+    [_coreDataFactory setPersistentStoreDataPath:[self unsynchronizedSyncChangesStorePath]];
+    
+    return _coreDataFactory;
+}
+
 #pragma mark -
-#pragma mark Properties
-@synthesize delegate = _delegate;
-@synthesize state = _state;
-@synthesize applicationSyncManager = _applicationSyncManager;
-@synthesize documentIdentifier = _documentIdentifier;
-@synthesize documentDescription = _documentDescription;
-@synthesize clientIdentifier = _clientIdentifier;
-@synthesize userInfo = _userInfo;
-@synthesize fileManager = _fileManager;
-@synthesize helperFileDirectoryLocation = _helperFileDirectoryLocation;
-@synthesize primaryDocumentMOC = _primaryDocumentMOC;
-@synthesize syncChangesMOC = _syncChangesMOC;
-@synthesize registrationQueue = _registrationQueue;
-@synthesize synchronizationQueue = _synchronizationQueue;
-@synthesize otherTasksQueue = _otherTasksQueue;
+#pragma mark Paths
 
 - (NSString *)relativePathToDocumentsDirectory
 {
@@ -402,5 +453,28 @@
 {
     return [[self relativePathToThisDocumentSyncChangesDirectory] stringByAppendingPathComponent:[self clientIdentifier]];
 }
+
+- (NSString *)unsynchronizedSyncChangesStorePath
+{
+    return [[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSUnsynchronizedSyncChangesStoreName];
+}
+
+#pragma mark -
+#pragma mark Properties
+@synthesize delegate = _delegate;
+@synthesize state = _state;
+@synthesize applicationSyncManager = _applicationSyncManager;
+@synthesize documentIdentifier = _documentIdentifier;
+@synthesize documentDescription = _documentDescription;
+@synthesize clientIdentifier = _clientIdentifier;
+@synthesize userInfo = _userInfo;
+@synthesize fileManager = _fileManager;
+@synthesize helperFileDirectoryLocation = _helperFileDirectoryLocation;
+@synthesize primaryDocumentMOC = _primaryDocumentMOC;
+@synthesize coreDataFactory = _coreDataFactory;
+@synthesize syncChangesMOC = _syncChangesMOC;
+@synthesize registrationQueue = _registrationQueue;
+@synthesize synchronizationQueue = _synchronizationQueue;
+@synthesize otherTasksQueue = _otherTasksQueue;
 
 @end

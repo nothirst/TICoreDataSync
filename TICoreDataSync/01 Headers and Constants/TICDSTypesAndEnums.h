@@ -104,6 +104,9 @@ extern NSString * const TICDSDocumentsDirectoryName;
 extern NSString * const TICDSSyncChangesDirectoryName;
 extern NSString * const TICDSUnappliedChangesDirectoryName;
 extern NSString * const TICDSSyncChangesToPushDirectoryName;
+extern NSString * const TICDSUnsynchronizedSyncChangesStoreName;
+
+extern NSString * const TICDSSyncChangeDataModelName;
 
 extern NSString * const TICDSApplicationSyncManagerDidRegisterSuccessfullyNotification;
 extern NSString * const TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification;

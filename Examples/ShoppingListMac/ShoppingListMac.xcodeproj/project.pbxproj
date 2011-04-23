@@ -28,6 +28,9 @@
 		389D769B1361D731007F19DC /* TICDSDocumentRegistrationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 389D769A1361D730007F19DC /* TICDSDocumentRegistrationOperation.m */; };
 		389D769E1361DC21007F19DC /* TICDSFileManagerBasedDocumentSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 389D769D1361DC21007F19DC /* TICDSFileManagerBasedDocumentSyncManager.m */; };
 		389D76A71363055F007F19DC /* TICDSFileManagerBasedDocumentRegistrationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 389D76A61363055F007F19DC /* TICDSFileManagerBasedDocumentRegistrationOperation.m */; };
+		389D76B113632294007F19DC /* TICoreDataFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 389D76B013632294007F19DC /* TICoreDataFactory.m */; };
+		389D76B413632544007F19DC /* TICDSyncChange.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 389D76B313632544007F19DC /* TICDSyncChange.xcdatamodel */; };
+		389D76B713632643007F19DC /* TICDSyncChange.m in Sources */ = {isa = PBXBuildFile; fileRef = 389D76B613632643007F19DC /* TICDSyncChange.m */; };
 		389F86B313608C7900004CA4 /* TICDSOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 389F86B213608C7900004CA4 /* TICDSOperation.m */; };
 		389F86BB1360902900004CA4 /* DropboxBoth.png in Resources */ = {isa = PBXBuildFile; fileRef = 389F86B51360902900004CA4 /* DropboxBoth.png */; };
 		389F86BC1360902900004CA4 /* DropboxText.png in Resources */ = {isa = PBXBuildFile; fileRef = 389F86B61360902900004CA4 /* DropboxText.png */; };
@@ -83,6 +86,11 @@
 		389D769D1361DC21007F19DC /* TICDSFileManagerBasedDocumentSyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSFileManagerBasedDocumentSyncManager.m; sourceTree = "<group>"; };
 		389D76A51363055F007F19DC /* TICDSFileManagerBasedDocumentRegistrationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSFileManagerBasedDocumentRegistrationOperation.h; sourceTree = "<group>"; };
 		389D76A61363055F007F19DC /* TICDSFileManagerBasedDocumentRegistrationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSFileManagerBasedDocumentRegistrationOperation.m; sourceTree = "<group>"; };
+		389D76AF13632294007F19DC /* TICoreDataFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICoreDataFactory.h; sourceTree = "<group>"; };
+		389D76B013632294007F19DC /* TICoreDataFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICoreDataFactory.m; sourceTree = "<group>"; };
+		389D76B313632544007F19DC /* TICDSyncChange.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TICDSyncChange.xcdatamodel; sourceTree = "<group>"; };
+		389D76B513632643007F19DC /* TICDSyncChange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSyncChange.h; sourceTree = "<group>"; };
+		389D76B613632643007F19DC /* TICDSyncChange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSyncChange.m; sourceTree = "<group>"; };
 		389F86B113608C7900004CA4 /* TICDSOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSOperation.h; sourceTree = "<group>"; };
 		389F86B213608C7900004CA4 /* TICDSOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSOperation.m; sourceTree = "<group>"; };
 		389F86B51360902900004CA4 /* DropboxBoth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DropboxBoth.png; sourceTree = "<group>"; };
@@ -218,14 +226,11 @@
 		389D767B1361A53D007F19DC /* File Manager-Based Sync */ = {
 			isa = PBXGroup;
 			children = (
-				389D767C1361A577007F19DC /* TICDSFileManagerBasedApplicationRegistrationOperation.h */,
-				389D767D1361A577007F19DC /* TICDSFileManagerBasedApplicationRegistrationOperation.m */,
+				389D76A813632201007F19DC /* Operations */,
 				389D76861361AB83007F19DC /* TICDSFileManagerBasedApplicationSyncManager.h */,
 				389D76871361AB84007F19DC /* TICDSFileManagerBasedApplicationSyncManager.m */,
 				389D769C1361DC21007F19DC /* TICDSFileManagerBasedDocumentSyncManager.h */,
 				389D769D1361DC21007F19DC /* TICDSFileManagerBasedDocumentSyncManager.m */,
-				389D76A51363055F007F19DC /* TICDSFileManagerBasedDocumentRegistrationOperation.h */,
-				389D76A61363055F007F19DC /* TICDSFileManagerBasedDocumentRegistrationOperation.m */,
 			);
 			path = "File Manager-Based Sync";
 			sourceTree = "<group>";
@@ -238,6 +243,27 @@
 				389D76821361AA8A007F19DC /* ReadMe.txt */,
 			);
 			path = "05 File Structure";
+			sourceTree = "<group>";
+		};
+		389D76A813632201007F19DC /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				389D767C1361A577007F19DC /* TICDSFileManagerBasedApplicationRegistrationOperation.h */,
+				389D767D1361A577007F19DC /* TICDSFileManagerBasedApplicationRegistrationOperation.m */,
+				389D76A51363055F007F19DC /* TICDSFileManagerBasedDocumentRegistrationOperation.h */,
+				389D76A61363055F007F19DC /* TICDSFileManagerBasedDocumentRegistrationOperation.m */,
+			);
+			path = Operations;
+			sourceTree = "<group>";
+		};
+		389D76B2136324F0007F19DC /* 03 Internal Data Model */ = {
+			isa = PBXGroup;
+			children = (
+				389D76B313632544007F19DC /* TICDSyncChange.xcdatamodel */,
+				389D76B513632643007F19DC /* TICDSyncChange.h */,
+				389D76B613632643007F19DC /* TICDSyncChange.m */,
+			);
+			path = "03 Internal Data Model";
 			sourceTree = "<group>";
 		};
 		389F86B41360900F00004CA4 /* Synchronization */ = {
@@ -259,6 +285,7 @@
 				38FFACB513604102004758EE /* TICoreDataSync.h */,
 				38FFACB6136041ED004758EE /* 01 Headers and Constants */,
 				38FFACBA1360435B004758EE /* 02 Primary Classes */,
+				389D76B2136324F0007F19DC /* 03 Internal Data Model */,
 				382390CB1360874B0068EB37 /* 04 Utilities */,
 				389D767F1361AA64007F19DC /* 05 File Structure */,
 				38FFACBE13604B38004758EE /* 06 External Sources */,
@@ -296,6 +323,8 @@
 		38FFACBE13604B38004758EE /* 06 External Sources */ = {
 			isa = PBXGroup;
 			children = (
+				389D76AF13632294007F19DC /* TICoreDataFactory.h */,
+				389D76B013632294007F19DC /* TICoreDataFactory.m */,
 				38FFACBF13604B8A004758EE /* NSObject+TIDelegateCommunications.h */,
 				38FFACC013604B8A004758EE /* NSObject+TIDelegateCommunications.m */,
 			);
@@ -393,6 +422,9 @@
 				389D769B1361D731007F19DC /* TICDSDocumentRegistrationOperation.m in Sources */,
 				389D769E1361DC21007F19DC /* TICDSFileManagerBasedDocumentSyncManager.m in Sources */,
 				389D76A71363055F007F19DC /* TICDSFileManagerBasedDocumentRegistrationOperation.m in Sources */,
+				389D76B113632294007F19DC /* TICoreDataFactory.m in Sources */,
+				389D76B413632544007F19DC /* TICDSyncChange.xcdatamodel in Sources */,
+				389D76B713632643007F19DC /* TICDSyncChange.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
