@@ -132,13 +132,15 @@
 
 - (void)createSyncChangesForChangedProperties
 {
+    // separate sync changes are created for each property change, whether it be relationship or 
     NSDictionary *changedValues = [self changedValues];
     
     for( NSString *eachPropertyName in changedValues ) {
         id eachValue = [changedValues valueForKey:eachPropertyName];
         
-        if( [eachValue isKindOfClass:[NSManagedObject class]] || [eachValue isKindOfClass:[NSSet class]] ) { 
-            [self createSyncChangeIfApplicableForRelationship:[[[self entity] relationshipsByName] valueForKey:eachPropertyName]];
+        NSRelationshipDescription *relationship = [[[self entity] relationshipsByName] valueForKey:eachPropertyName];
+        if( relationship ) {
+            [self createSyncChangeIfApplicableForRelationship:relationship];
         } else {
             TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeAttributeChanged];
             [syncChange setRelevantKey:eachPropertyName];
