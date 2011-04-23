@@ -65,8 +65,8 @@
     // a) a one-to-many relationship
     // b) the alphabetical lowest end of a many-to-many relationship
     // c) the alphabetical lowest end of a one-to-one relationship
-    // d) edge-case 1: a self-referential many-to-many relationship (twice)
-    // e) edge-case 2: a self-referential one-to-one relationship (twice)
+    // d) edge-case 1: a self-referential many-to-many relationship (will currently create 2 sync changes)
+    // e) edge-case 2: a self-referential one-to-one relationship (will currently create 2 sync changes)
     
     TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeRelationshipChanged];
     
