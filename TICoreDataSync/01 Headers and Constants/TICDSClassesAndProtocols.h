@@ -11,6 +11,7 @@
 @class TICDSApplicationSyncManager;
 @class TICDSDocumentSyncManager;
 @class TICDSSynchronizedManagedObjectContext;
+@class TICDSSynchronizedManagedObject;
 
 #pragma mark Operations
 @class TICDSOperation;
@@ -25,7 +26,7 @@
 
 #pragma mark -
 #pragma mark INTERNAL DATA MODEL
-@class TICDSyncChange;
+@class TICDSSyncChange;
 
 #pragma mark -
 #pragma mark EXTERNAL CLASSES

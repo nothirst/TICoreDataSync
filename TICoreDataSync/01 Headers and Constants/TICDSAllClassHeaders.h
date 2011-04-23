@@ -11,6 +11,7 @@
 #import "TICDSApplicationSyncManager.h"
 #import "TICDSDocumentSyncManager.h"
 #import "TICDSSynchronizedManagedObjectContext.h"
+#import "TICDSSynchronizedManagedObject.h"
 
 #pragma mark Operations
 #import "TICDSOperation.h"
@@ -25,7 +26,7 @@
 
 #pragma mark -
 #pragma mark Internal Data Model
-#import "TICDSyncChange.h"
+#import "TICDSSyncChange.h"
 
 #pragma mark -
 #pragma mark Utilities

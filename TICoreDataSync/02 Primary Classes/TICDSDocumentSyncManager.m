@@ -276,7 +276,7 @@
         return NO;
     }
     
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Created default helper file directory: %@", [self helperFileDirectoryLocation]);
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Created default helper file directory");
     
     return YES;
 }

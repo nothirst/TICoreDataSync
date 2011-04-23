@@ -8,7 +8,7 @@
 
 #import "TICoreDataSync.h"
 
-@implementation TICDSyncChange
+@implementation TICDSSyncChange
 
 - (NSString *)description
 {

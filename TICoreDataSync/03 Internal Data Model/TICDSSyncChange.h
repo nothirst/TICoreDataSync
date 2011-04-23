@@ -7,7 +7,7 @@
 //
 
 
-@interface TICDSyncChange : NSManagedObject {
+@interface TICDSSyncChange : NSManagedObject {
 @private
 }
 @property (nonatomic, retain) NSNumber * changeType;

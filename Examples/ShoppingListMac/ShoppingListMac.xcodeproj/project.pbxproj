@@ -29,8 +29,8 @@
 		389D769E1361DC21007F19DC /* TICDSFileManagerBasedDocumentSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 389D769D1361DC21007F19DC /* TICDSFileManagerBasedDocumentSyncManager.m */; };
 		389D76A71363055F007F19DC /* TICDSFileManagerBasedDocumentRegistrationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 389D76A61363055F007F19DC /* TICDSFileManagerBasedDocumentRegistrationOperation.m */; };
 		389D76B113632294007F19DC /* TICoreDataFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 389D76B013632294007F19DC /* TICoreDataFactory.m */; };
-		389D76B413632544007F19DC /* TICDSyncChange.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 389D76B313632544007F19DC /* TICDSyncChange.xcdatamodel */; };
-		389D76B713632643007F19DC /* TICDSyncChange.m in Sources */ = {isa = PBXBuildFile; fileRef = 389D76B613632643007F19DC /* TICDSyncChange.m */; };
+		389D76B413632544007F19DC /* TICDSSyncChange.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 389D76B313632544007F19DC /* TICDSSyncChange.xcdatamodel */; };
+		389D76B713632643007F19DC /* TICDSSyncChange.m in Sources */ = {isa = PBXBuildFile; fileRef = 389D76B613632643007F19DC /* TICDSSyncChange.m */; };
 		389D76B9136329BC007F19DC /* DocumentSyncChangesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 389D76B8136329BC007F19DC /* DocumentSyncChangesWindow.xib */; };
 		389F86B313608C7900004CA4 /* TICDSOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 389F86B213608C7900004CA4 /* TICDSOperation.m */; };
 		389F86BB1360902900004CA4 /* DropboxBoth.png in Resources */ = {isa = PBXBuildFile; fileRef = 389F86B51360902900004CA4 /* DropboxBoth.png */; };
@@ -43,6 +43,7 @@
 		389F86CA1360934800004CA4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389F86C91360934700004CA4 /* SystemConfiguration.framework */; };
 		389F86CD136093D800004CA4 /* TISLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 389F86CC136093D800004CA4 /* TISLAppDelegate.m */; };
 		38C0B62F13632A8600B63589 /* TIDocumentSyncChangesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C0B62E13632A8600B63589 /* TIDocumentSyncChangesWindowController.m */; };
+		38C0B63C136333D100B63589 /* TICDSSynchronizedManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C0B63B136333D100B63589 /* TICDSSynchronizedManagedObject.m */; };
 		38FF6075135708F100D12E6D /* ShoppingList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 38FF6074135708F100D12E6D /* ShoppingList.xcdatamodeld */; };
 		38FFACBD1360439F004758EE /* TICDSApplicationSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 38FFACBC1360439F004758EE /* TICDSApplicationSyncManager.m */; };
 		38FFACC113604B8A004758EE /* NSObject+TIDelegateCommunications.m in Sources */ = {isa = PBXBuildFile; fileRef = 38FFACC013604B8A004758EE /* NSObject+TIDelegateCommunications.m */; };
@@ -90,9 +91,9 @@
 		389D76A61363055F007F19DC /* TICDSFileManagerBasedDocumentRegistrationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSFileManagerBasedDocumentRegistrationOperation.m; sourceTree = "<group>"; };
 		389D76AF13632294007F19DC /* TICoreDataFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICoreDataFactory.h; sourceTree = "<group>"; };
 		389D76B013632294007F19DC /* TICoreDataFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICoreDataFactory.m; sourceTree = "<group>"; };
-		389D76B313632544007F19DC /* TICDSyncChange.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TICDSyncChange.xcdatamodel; sourceTree = "<group>"; };
-		389D76B513632643007F19DC /* TICDSyncChange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSyncChange.h; sourceTree = "<group>"; };
-		389D76B613632643007F19DC /* TICDSyncChange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSyncChange.m; sourceTree = "<group>"; };
+		389D76B313632544007F19DC /* TICDSSyncChange.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TICDSSyncChange.xcdatamodel; sourceTree = "<group>"; };
+		389D76B513632643007F19DC /* TICDSSyncChange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSyncChange.h; sourceTree = "<group>"; };
+		389D76B613632643007F19DC /* TICDSSyncChange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSyncChange.m; sourceTree = "<group>"; };
 		389D76B8136329BC007F19DC /* DocumentSyncChangesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DocumentSyncChangesWindow.xib; sourceTree = "<group>"; };
 		389F86B113608C7900004CA4 /* TICDSOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSOperation.h; sourceTree = "<group>"; };
 		389F86B213608C7900004CA4 /* TICDSOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSOperation.m; sourceTree = "<group>"; };
@@ -110,6 +111,8 @@
 		389F86CC136093D800004CA4 /* TISLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TISLAppDelegate.m; sourceTree = "<group>"; };
 		38C0B62D13632A8600B63589 /* TIDocumentSyncChangesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TIDocumentSyncChangesWindowController.h; sourceTree = "<group>"; };
 		38C0B62E13632A8600B63589 /* TIDocumentSyncChangesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TIDocumentSyncChangesWindowController.m; sourceTree = "<group>"; };
+		38C0B63A136333D100B63589 /* TICDSSynchronizedManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSynchronizedManagedObject.h; sourceTree = "<group>"; };
+		38C0B63B136333D100B63589 /* TICDSSynchronizedManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSynchronizedManagedObject.m; sourceTree = "<group>"; };
 		38FF6070135708E900D12E6D /* ShoppingList.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = ShoppingList.xcdatamodel; sourceTree = "<group>"; };
 		38FF6076135708F100D12E6D /* ShoppingList 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ShoppingList 2.xcdatamodel"; sourceTree = "<group>"; };
 		38FFACB513604102004758EE /* TICoreDataSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICoreDataSync.h; sourceTree = "<group>"; };
@@ -267,9 +270,9 @@
 		389D76B2136324F0007F19DC /* 03 Internal Data Model */ = {
 			isa = PBXGroup;
 			children = (
-				389D76B313632544007F19DC /* TICDSyncChange.xcdatamodel */,
-				389D76B513632643007F19DC /* TICDSyncChange.h */,
-				389D76B613632643007F19DC /* TICDSyncChange.m */,
+				389D76B313632544007F19DC /* TICDSSyncChange.xcdatamodel */,
+				389D76B513632643007F19DC /* TICDSSyncChange.h */,
+				389D76B613632643007F19DC /* TICDSSyncChange.m */,
 			);
 			path = "03 Internal Data Model";
 			sourceTree = "<group>";
@@ -324,6 +327,8 @@
 				389D76941361CBDB007F19DC /* TICDSDocumentSyncManager.m */,
 				389D76961361D519007F19DC /* TICDSSynchronizedManagedObjectContext.h */,
 				389D76971361D519007F19DC /* TICDSSynchronizedManagedObjectContext.m */,
+				38C0B63A136333D100B63589 /* TICDSSynchronizedManagedObject.h */,
+				38C0B63B136333D100B63589 /* TICDSSynchronizedManagedObject.m */,
 			);
 			path = "02 Primary Classes";
 			sourceTree = "<group>";
@@ -432,9 +437,10 @@
 				389D769E1361DC21007F19DC /* TICDSFileManagerBasedDocumentSyncManager.m in Sources */,
 				389D76A71363055F007F19DC /* TICDSFileManagerBasedDocumentRegistrationOperation.m in Sources */,
 				389D76B113632294007F19DC /* TICoreDataFactory.m in Sources */,
-				389D76B413632544007F19DC /* TICDSyncChange.xcdatamodel in Sources */,
-				389D76B713632643007F19DC /* TICDSyncChange.m in Sources */,
+				389D76B413632544007F19DC /* TICDSSyncChange.xcdatamodel in Sources */,
+				389D76B713632643007F19DC /* TICDSSyncChange.m in Sources */,
 				38C0B62F13632A8600B63589 /* TIDocumentSyncChangesWindowController.m in Sources */,
+				38C0B63C136333D100B63589 /* TICDSSynchronizedManagedObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

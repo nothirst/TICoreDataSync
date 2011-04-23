@@ -119,6 +119,7 @@ extern NSString * const TICDSUnappliedChangesDirectoryName;
 extern NSString * const TICDSSyncChangesToPushDirectoryName;
 extern NSString * const TICDSUnsynchronizedSyncChangesStoreName;
 
+extern NSString * const TICDSSyncIDAttributeName;
 extern NSString * const TICDSSyncChangeDataModelName;
 
 extern NSString * const TICDSApplicationSyncManagerDidRegisterSuccessfullyNotification;
