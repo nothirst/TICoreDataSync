@@ -381,6 +381,7 @@
     // Create Other Queues (suspended until registration completes)
     _synchronizationQueue = [[NSOperationQueue alloc] init];
     [_synchronizationQueue setSuspended:YES];
+    [_synchronizationQueue setMaxConcurrentOperationCount:1];
     
     _otherTasksQueue = [[NSOperationQueue alloc] init];
     [_otherTasksQueue setSuspended:YES];
