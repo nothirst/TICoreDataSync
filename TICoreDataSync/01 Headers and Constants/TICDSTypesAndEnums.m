@@ -35,7 +35,9 @@ NSString * const kTICDSUtilitiesFileStructureDocumentUID = @"kTICDSUtilitiesFile
 
 NSString * const TICDSClientDevicesDirectoryName = @"ClientDevices";
 NSString * const TICDSDocumentsDirectoryName = @"Documents";
+NSString * const TICDSWholeStoreDirectoryName = @"WholeStore";
 NSString * const TICDSSyncChangesDirectoryName = @"SyncChanges";
+NSString * const TICDSRecentSyncsDirectoryName = @"RecentSyncs";
 NSString * const TICDSUnappliedChangesDirectoryName = @"UnappliedSyncChanges";
 NSString * const TICDSSyncChangesToPushDirectoryName = @"SyncChangesToPush";
 NSString * const TICDSUnsynchronizedSyncChangesStoreName = @"UnsynchronizedSyncChanges.sqlite";

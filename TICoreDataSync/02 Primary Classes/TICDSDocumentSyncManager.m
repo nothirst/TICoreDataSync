@@ -190,7 +190,7 @@
 
 - (NSURL *)defaultHelperFileLocation
 {
-    NSString *location = [[self applicationSupportDirectory] stringByAppendingPathComponent:@"Documents"];
+    NSString *location = [[self applicationSupportDirectory] stringByAppendingPathComponent:TICDSDocumentsDirectoryName];
     location = [location stringByAppendingPathComponent:[self documentIdentifier]];
     
     return [NSURL fileURLWithPath:location];

@@ -38,7 +38,7 @@
 #pragma mark TIManagedObjectExtensions
 + (NSString *)ti_entityName
 {
-    return @"TICDSSyncChange";
+    return NSStringFromClass([self class]);
 }
 
 @dynamic changeType;

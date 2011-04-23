@@ -24,9 +24,9 @@
 {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     
-    [dictionary setValue:[NSDictionary dictionary] forKey:@"ClientDevices"];
+    [dictionary setValue:[NSDictionary dictionary] forKey:TICDSClientDevicesDirectoryName];
     
-    [dictionary setValue:[NSDictionary dictionary] forKey:@"Documents"];
+    [dictionary setValue:[NSDictionary dictionary] forKey:TICDSDocumentsDirectoryName];
     
     return dictionary;
 }
@@ -45,9 +45,9 @@
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     
     [dictionary setValue:[NSDictionary dictionaryWithObjectsAndKeys:
-                          [NSDictionary dictionary], @"WholeStore",
-                          [NSDictionary dictionary], @"SyncChanges",
-                          [NSDictionary dictionary], @"RecentSyncs",
+                          [NSDictionary dictionary], TICDSWholeStoreDirectoryName,
+                          [NSDictionary dictionary], TICDSSyncChangesDirectoryName,
+                          [NSDictionary dictionary], TICDSRecentSyncsDirectoryName,
                           nil]
                   forKey:kTICDSUtilitiesFileStructureDocumentUID];
     
