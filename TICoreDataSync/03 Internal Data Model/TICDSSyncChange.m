@@ -10,18 +10,45 @@
 
 @implementation TICDSSyncChange
 
-- (NSString *)description
+#pragma mark -
+#pragma mark Helper Methods
++ (id)syncChangeOfType:(TICDSSyncChangeType)aType inManagedObjectContext:(NSManagedObjectContext *)aMoc
+{
+    TICDSSyncChange *syncChange = [self ti_objectInManagedObjectContext:aMoc];
+    
+    [syncChange setLocalTimeStamp:[NSDate date]];
+    [syncChange setChangeType:[NSNumber numberWithInt:aType]];
+    
+    return syncChange;
+}
+
+#pragma mark -
+#pragma mark Inspection
+- (NSString *)shortDescription
 {
     return [NSString stringWithFormat:@"%@ %@", TICDSSyncChangeTypeNames[ [[self changeType] unsignedIntValue] ], [self objectEntityName]];
 }
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%@: \n%@", [super description], [self changedValue]];
+}
+
+#pragma mark -
+#pragma mark TIManagedObjectExtensions
++ (NSString *)ti_entityName
+{
+    return @"TICDSSyncChange";
+}
+
+@dynamic changeType;
+@synthesize relevantManagedObject = _relevantManagedObject;
+@dynamic objectEntityName;
 @dynamic objectSyncID;
 @dynamic changedValue;
 @dynamic relatedObjectSyncID;
 @dynamic relevantKey;
 @dynamic localTimeStamp;
 @dynamic relatedObjectEntityName;
-@dynamic objectEntityName;
-@dynamic changeType;
 
 @end

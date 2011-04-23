@@ -44,6 +44,8 @@
 		389F86CD136093D800004CA4 /* TISLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 389F86CC136093D800004CA4 /* TISLAppDelegate.m */; };
 		38C0B62F13632A8600B63589 /* TIDocumentSyncChangesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C0B62E13632A8600B63589 /* TIDocumentSyncChangesWindowController.m */; };
 		38C0B63C136333D100B63589 /* TICDSSynchronizedManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C0B63B136333D100B63589 /* TICDSSynchronizedManagedObject.m */; };
+		38C0B641136338BC00B63589 /* TIKQDirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C0B63E136338BC00B63589 /* TIKQDirectoryWatcher.m */; };
+		38C0B642136338BC00B63589 /* TIManagedObjectExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C0B640136338BC00B63589 /* TIManagedObjectExtensions.m */; };
 		38FF6075135708F100D12E6D /* ShoppingList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 38FF6074135708F100D12E6D /* ShoppingList.xcdatamodeld */; };
 		38FFACBD1360439F004758EE /* TICDSApplicationSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 38FFACBC1360439F004758EE /* TICDSApplicationSyncManager.m */; };
 		38FFACC113604B8A004758EE /* NSObject+TIDelegateCommunications.m in Sources */ = {isa = PBXBuildFile; fileRef = 38FFACC013604B8A004758EE /* NSObject+TIDelegateCommunications.m */; };
@@ -113,6 +115,10 @@
 		38C0B62E13632A8600B63589 /* TIDocumentSyncChangesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TIDocumentSyncChangesWindowController.m; sourceTree = "<group>"; };
 		38C0B63A136333D100B63589 /* TICDSSynchronizedManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSynchronizedManagedObject.h; sourceTree = "<group>"; };
 		38C0B63B136333D100B63589 /* TICDSSynchronizedManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSynchronizedManagedObject.m; sourceTree = "<group>"; };
+		38C0B63D136338BC00B63589 /* TIKQDirectoryWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TIKQDirectoryWatcher.h; sourceTree = "<group>"; };
+		38C0B63E136338BC00B63589 /* TIKQDirectoryWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TIKQDirectoryWatcher.m; sourceTree = "<group>"; };
+		38C0B63F136338BC00B63589 /* TIManagedObjectExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TIManagedObjectExtensions.h; sourceTree = "<group>"; };
+		38C0B640136338BC00B63589 /* TIManagedObjectExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TIManagedObjectExtensions.m; sourceTree = "<group>"; };
 		38FF6070135708E900D12E6D /* ShoppingList.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = ShoppingList.xcdatamodel; sourceTree = "<group>"; };
 		38FF6076135708F100D12E6D /* ShoppingList 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ShoppingList 2.xcdatamodel"; sourceTree = "<group>"; };
 		38FFACB513604102004758EE /* TICoreDataSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICoreDataSync.h; sourceTree = "<group>"; };
@@ -336,6 +342,10 @@
 		38FFACBE13604B38004758EE /* 06 External Sources */ = {
 			isa = PBXGroup;
 			children = (
+				38C0B63D136338BC00B63589 /* TIKQDirectoryWatcher.h */,
+				38C0B63E136338BC00B63589 /* TIKQDirectoryWatcher.m */,
+				38C0B63F136338BC00B63589 /* TIManagedObjectExtensions.h */,
+				38C0B640136338BC00B63589 /* TIManagedObjectExtensions.m */,
 				389D76AF13632294007F19DC /* TICoreDataFactory.h */,
 				389D76B013632294007F19DC /* TICoreDataFactory.m */,
 				38FFACBF13604B8A004758EE /* NSObject+TIDelegateCommunications.h */,
@@ -441,6 +451,8 @@
 				389D76B713632643007F19DC /* TICDSSyncChange.m in Sources */,
 				38C0B62F13632A8600B63589 /* TIDocumentSyncChangesWindowController.m in Sources */,
 				38C0B63C136333D100B63589 /* TICDSSynchronizedManagedObject.m in Sources */,
+				38C0B641136338BC00B63589 /* TIKQDirectoryWatcher.m in Sources */,
+				38C0B642136338BC00B63589 /* TIManagedObjectExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

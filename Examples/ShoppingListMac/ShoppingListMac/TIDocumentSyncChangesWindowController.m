@@ -12,6 +12,15 @@
 
 @implementation TIDocumentSyncChangesWindowController
 
+#pragma mark -
+#pragma mark Notifications
+- (void)tableViewSelectionDidChange:(NSNotification *)aNotification
+{
+    NSLog(@"%@", [[[self arrayController] selectedObjects] lastObject]);
+}
+
+#pragma mark -
+#pragma mark Initialization and Deallocation
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)aMoc
 {
     self = [super initWithWindowNibName:@"DocumentSyncChangesWindow"];
@@ -24,15 +33,9 @@
     return self;
 }
 
-- (void)windowDidLoad
-{
-    [super windowDidLoad];
-    
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-}
-
 #pragma mark -
 #pragma mark Properties
 @synthesize managedObjectContext = _managedObjectContext;
+@synthesize arrayController = _arrayController;
 
 @end

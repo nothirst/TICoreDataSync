@@ -10,8 +10,8 @@
 
 NSString * const TICDSSyncChangeTypeNames[] = {
     @"Unknown",
-    @"Object Inserted",
-    @"Object Deleted",
+    @"Inserted",
+    @"Deleted",
     @"Attribute Changed",
     @"To One Relationship Changed",
     @"To Many Relationship Added",

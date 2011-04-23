@@ -12,10 +12,40 @@
 @implementation TICDSSynchronizedManagedObject
 
 #pragma mark -
+#pragma mark Helper Methods
+- (TICDSSyncChange *)createSyncChangeForChangeType:(TICDSSyncChangeType)aType
+{
+    TICDSSyncChange *syncChange = [TICDSSyncChange syncChangeOfType:aType inManagedObjectContext:[self syncChangesMOC]];
+    
+    [syncChange setObjectSyncID:[self valueForKey:TICDSSyncIDAttributeName]];
+    [syncChange setObjectEntityName:[[self entity] name]];
+    [syncChange setLocalTimeStamp:[NSDate date]];
+    [syncChange setRelevantManagedObject:self];
+    
+    return syncChange;
+}
+
+#pragma mark -
+#pragma mark Dictionaries
+- (NSDictionary *)dictionaryOfAllAttributes
+{
+    NSDictionary *objectAttributeNames = [[self entity] attributesByName];
+    
+    NSMutableDictionary *attributeValues = [NSMutableDictionary dictionaryWithCapacity:[objectAttributeNames count]];
+    for( NSString *eachAttributeName in [objectAttributeNames allKeys] ) {
+        [attributeValues setValue:[self valueForKey:eachAttributeName] forKey:eachAttributeName];
+    }
+    
+    return attributeValues;
+}
+
+#pragma mark -
 #pragma mark Sync Change Creation
 - (void)createSyncChangeForInsertion
 {
-     
+    TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeObjectInserted];
+    
+    [syncChange setChangedValue:[self dictionaryOfAllAttributes]];
 }
 
 - (void)createSyncChangeForDeletion

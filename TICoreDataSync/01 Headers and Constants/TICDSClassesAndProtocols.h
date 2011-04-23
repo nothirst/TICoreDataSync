@@ -31,6 +31,7 @@
 #pragma mark -
 #pragma mark EXTERNAL CLASSES
 @class TICoreDataFactory;
+@class TIKQDirectoryWatcher;
 
 #pragma mark -
 #pragma mark DELEGATE PROTOCOLS

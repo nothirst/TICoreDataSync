@@ -49,7 +49,7 @@
 			<object class="NSWindowTemplate" id="275939982">
 				<int key="NSWindowStyleMask">15</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{133, 303}, {467, 374}}</string>
+				<string key="NSWindowRect">{{0, 1204}, {467, 374}}</string>
 				<int key="NSWTFlags">1886912512</int>
 				<string key="NSWindowTitle">Window</string>
 				<string key="NSWindowClass">NSWindow</string>
@@ -663,19 +663,20 @@
 								<reference key="NSTextColor" ref="590573322"/>
 							</object>
 						</object>
-						<object class="NSButton" id="238579922">
+						<object class="NSButton" id="802085104">
 							<reference key="NSNextResponder" ref="568628114"/>
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{428, 17}, {19, 19}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
-							<object class="NSButtonCell" key="NSCell" id="193504321">
+							<object class="NSButtonCell" key="NSCell" id="580926172">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134348800</int>
 								<string key="NSContents"/>
 								<reference key="NSSupport" ref="26"/>
-								<reference key="NSControlView" ref="238579922"/>
+								<reference key="NSControlView" ref="802085104"/>
 								<int key="NSButtonFlags">-2042347265</int>
 								<int key="NSButtonFlags2">134</int>
 								<object class="NSCustomResource" key="NSNormalImage">
@@ -694,7 +695,7 @@
 							<string key="NSFrame">{{357, 10}, {96, 32}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
+							<reference key="NSNextKeyView" ref="802085104"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="461958442">
 								<int key="NSCellFlags">67239424</int>
@@ -1096,7 +1097,7 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">showSyncChangesWindow:</string>
 						<reference key="source" ref="512844837"/>
-						<reference key="destination" ref="238579922"/>
+						<reference key="destination" ref="802085104"/>
 					</object>
 					<int key="connectionID">100134</int>
 				</object>
@@ -1144,7 +1145,7 @@
 							<reference ref="432477745"/>
 							<reference ref="30359018"/>
 							<reference ref="331519866"/>
-							<reference ref="238579922"/>
+							<reference ref="802085104"/>
 						</object>
 						<reference key="parent" ref="275939982"/>
 					</object>
@@ -1448,17 +1449,17 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">100132</int>
-						<reference key="object" ref="238579922"/>
+						<reference key="object" ref="802085104"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="193504321"/>
+							<reference ref="580926172"/>
 						</object>
 						<reference key="parent" ref="568628114"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">100133</int>
-						<reference key="object" ref="193504321"/>
-						<reference key="parent" ref="238579922"/>
+						<reference key="object" ref="580926172"/>
+						<reference key="parent" ref="802085104"/>
 					</object>
 				</object>
 			</object>

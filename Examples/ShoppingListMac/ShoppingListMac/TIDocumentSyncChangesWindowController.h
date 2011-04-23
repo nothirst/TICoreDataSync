@@ -9,10 +9,12 @@
 @interface TIDocumentSyncChangesWindowController : NSWindowController {
 @private
     NSManagedObjectContext *_managedObjectContext;
+    NSArrayController *_arrayController;
 }
 
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)aMoc;
 
 @property (nonatomic, assign) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, assign) IBOutlet NSArrayController *arrayController;
 
 @end
