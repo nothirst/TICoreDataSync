@@ -113,6 +113,9 @@
 #pragma mark Sync Change Creation
 - (void)createSyncChangeForInsertion
 {
+    // changedAttributes = a dictionary containing the values of _all_ the object's attributes at time it was saved
+    // this method also creates extra sync changes for _all_ the object's relationships 
+    
     TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeObjectInserted];
     
     [syncChange setChangedAttributes:[self dictionaryOfAllAttributes]];
@@ -121,7 +124,9 @@
 
 - (void)createSyncChangeForDeletion
 {
-    
+    // nothing is stored in changedAttributes or changedRelationships at this time
+    // if a conflict is encountered, the deletion will have to take precedent, resurrection is not possible
+    [self createSyncChangeForChangeType:TICDSSyncChangeTypeObjectDeleted];
 }
 
 - (void)createSyncChangesForChangedProperties
