@@ -20,7 +20,7 @@
 
 /** Returns a dictionary containing the basic client device file structure for synchronization */
 /** Keys etc as above, with exception of ClientDeviceUID etc keys */
-+ (NSDictionary *)remoteClientDeviceFileStructure;
++ (NSDictionary *)remoteGlobalAppClientDeviceFileStructure;
 
 /** Returns a dictionary containing the basic file structure for a synchronized document */
 + (NSDictionary *)remoteDocumentFileStructure;

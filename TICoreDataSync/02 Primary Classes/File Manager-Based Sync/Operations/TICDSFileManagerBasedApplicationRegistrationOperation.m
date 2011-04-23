@@ -95,7 +95,7 @@
     [self createdRemoteGlobalAppFileStructureSuccessfully:success];
 }
 
-- (void)checkWhetherRemoteClientDeviceFileStructureExists
+- (void)checkWhetherRemoteGlobalAppClientDeviceFileStructureExists
 {
     if( ![[self fileManager] fileExistsAtPath:[self clientDevicesThisClientDeviceDirectoryPath]] ) {
         [self discoveredStatusOfRemoteClientDeviceFileStructure:TICDSRemoteFileStructureExistsResponseTypeDoesNotExist];
@@ -122,9 +122,9 @@
     [self discoveredStatusOfRemoteClientDeviceFileStructure:TICDSRemoteFileStructureExistsResponseTypeError];
 }
 
-- (void)createRemoteClientDeviceFileStructure
+- (void)createRemoteGlobalAppClientDeviceFileStructure
 {
-    NSDictionary *fileStructure = [TICDSUtilities remoteClientDeviceFileStructure];
+    NSDictionary *fileStructure = [TICDSUtilities remoteGlobalAppClientDeviceFileStructure];
     
     NSError *anyError = nil;
     BOOL success = [self createDirectoryContentsFromDictionary:fileStructure inDirectory:[self clientDevicesDirectoryPath]];

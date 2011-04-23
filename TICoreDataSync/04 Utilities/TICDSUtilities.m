@@ -30,7 +30,7 @@
     return dictionary;
 }
 
-+ (NSDictionary *)remoteClientDeviceFileStructure
++ (NSDictionary *)remoteGlobalAppClientDeviceFileStructure
 {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     
