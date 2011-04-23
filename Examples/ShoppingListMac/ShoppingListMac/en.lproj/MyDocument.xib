@@ -638,7 +638,7 @@
 							<reference key="NSNextResponder" ref="568628114"/>
 							<int key="NSvFlags">-2147482334</int>
 							<object class="NSPSMatrix" key="NSDrawMatrix"/>
-							<string key="NSFrame">{{186, 16}, {263, 20}}</string>
+							<string key="NSFrame">{{186, 16}, {240, 20}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="81911589"/>
@@ -661,6 +661,31 @@
 								<reference key="NSControlView" ref="331519866"/>
 								<reference key="NSBackgroundColor" ref="34288824"/>
 								<reference key="NSTextColor" ref="590573322"/>
+							</object>
+						</object>
+						<object class="NSButton" id="238579922">
+							<reference key="NSNextResponder" ref="568628114"/>
+							<int key="NSvFlags">268</int>
+							<string key="NSFrame">{{428, 17}, {19, 19}}</string>
+							<reference key="NSSuperview" ref="568628114"/>
+							<reference key="NSWindow"/>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSButtonCell" key="NSCell" id="193504321">
+								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags2">134348800</int>
+								<string key="NSContents"/>
+								<reference key="NSSupport" ref="26"/>
+								<reference key="NSControlView" ref="238579922"/>
+								<int key="NSButtonFlags">-2042347265</int>
+								<int key="NSButtonFlags2">134</int>
+								<object class="NSCustomResource" key="NSNormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">NSActionTemplate</string>
+								</object>
+								<string key="NSAlternateContents"/>
+								<string key="NSKeyEquivalent"/>
+								<int key="NSPeriodicDelay">400</int>
+								<int key="NSPeriodicInterval">75</int>
 							</object>
 						</object>
 						<object class="NSButton" id="81911589">
@@ -1067,6 +1092,14 @@
 					</object>
 					<int key="connectionID">100131</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showSyncChangesWindow:</string>
+						<reference key="source" ref="512844837"/>
+						<reference key="destination" ref="238579922"/>
+					</object>
+					<int key="connectionID">100134</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -1111,6 +1144,7 @@
 							<reference ref="432477745"/>
 							<reference ref="30359018"/>
 							<reference ref="331519866"/>
+							<reference ref="238579922"/>
 						</object>
 						<reference key="parent" ref="275939982"/>
 					</object>
@@ -1412,6 +1446,20 @@
 						<reference key="object" ref="461958442"/>
 						<reference key="parent" ref="81911589"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">100132</int>
+						<reference key="object" ref="238579922"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="193504321"/>
+						</object>
+						<reference key="parent" ref="568628114"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">100133</int>
+						<reference key="object" ref="193504321"/>
+						<reference key="parent" ref="238579922"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1430,6 +1478,8 @@
 					<string>100125.IBPluginDependency</string>
 					<string>100128.IBPluginDependency</string>
 					<string>100129.IBPluginDependency</string>
+					<string>100132.IBPluginDependency</string>
+					<string>100133.IBPluginDependency</string>
 					<string>5.IBEditorWindowLastContentRect</string>
 					<string>5.IBPluginDependency</string>
 					<string>5.IBWindowTemplateEditedContentRect</string>
@@ -1460,6 +1510,8 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{133, 238}, {467, 345}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{133, 238}, {467, 345}}</string>
@@ -1481,7 +1533,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">100131</int>
+			<int key="maxID">100134</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1490,14 +1542,35 @@
 					<string key="className">MyDocument</string>
 					<string key="superclassName">NSPersistentDocument</string>
 					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">configureSynchronization:</string>
-						<string key="NS.object.0">id</string>
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>configureSynchronization:</string>
+							<string>showSyncChangesWindow:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+						</object>
 					</object>
 					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">configureSynchronization:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">configureSynchronization:</string>
-							<string key="candidateClassName">id</string>
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>configureSynchronization:</string>
+							<string>showSyncChangesWindow:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">configureSynchronization:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">showSyncChangesWindow:</string>
+								<string key="candidateClassName">id</string>
+							</object>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
@@ -1626,8 +1699,17 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">NSSwitch</string>
-			<string key="NS.object.0">{15, 15}</string>
+			<bool key="EncodedWithXMLCoder">YES</bool>
+			<object class="NSArray" key="dict.sortedKeys">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<string>NSActionTemplate</string>
+				<string>NSSwitch</string>
+			</object>
+			<object class="NSMutableArray" key="dict.values">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<string>{15, 15}</string>
+				<string>{15, 15}</string>
+			</object>
 		</object>
 	</data>
 </archive>

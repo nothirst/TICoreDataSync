@@ -8,6 +8,8 @@
 
 #import "MyDocument.h"
 
+#import "TIDocumentSyncChangesWindowController.h"
+
 @interface MyDocument () 
 
 - (void)updateInterfaceForSyncEnabled;
@@ -177,6 +179,13 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
 
 #pragma mark -
 #pragma mark Actions
+- (IBAction)showSyncChangesWindow:(id)sender
+{
+    if( [self documentSyncManager] ) {
+        [[self documentSyncChangesWindowController] showWindow:sender];
+    }
+}
+
 /*- (IBAction)initiateSynchronization:(id)sender
 {
     [[self documentSyncManager] initiateSynchronization];
@@ -229,9 +238,15 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextDidSave:) name:NSManagedObjectContextDidSaveNotification object:nil];
 }
 
-- (NSString *)windowNibName
+- (void)makeWindowControllers
 {
-    return @"MyDocument";
+    NSWindowController *windowController = [[NSWindowController alloc] initWithWindowNibName:@"MyDocument" owner:self];
+    
+    [self addWindowController:windowController];
+    
+    [windowController release];
+    
+    
 }
 
 - (void)updateInterfaceForSyncEnabled
@@ -274,7 +289,8 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     [_documentSyncIdentifier release], _documentSyncIdentifier = nil;
     [_documentSyncManager release], _documentSyncManager = nil;
     [_synchronizedManagedObjectContext release], _synchronizedManagedObjectContext = nil;
-    
+    [_documentSyncChangesWindowController release], _documentSyncChangesWindowController = nil;
+
     [super dealloc];
 }
 
@@ -287,5 +303,19 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
 @synthesize synchronizationStatusLabel = _synchronizationStatusLabel;
 @synthesize synchronizingProgressIndicator = _synchronizingProgressIndicator;
 @synthesize enableSynchronizationButton = _enableSynchronizationButton;
+@synthesize documentSyncChangesWindowController = _documentSyncChangesWindowController;
+
+- (TIDocumentSyncChangesWindowController *)documentSyncChangesWindowController
+{
+    if( _documentSyncChangesWindowController ) {
+        return _documentSyncChangesWindowController;
+    }
+    
+    _documentSyncChangesWindowController = [[TIDocumentSyncChangesWindowController alloc] initWithManagedObjectContext:[[self documentSyncManager] syncChangesMOC]];
+
+    [self addWindowController:_documentSyncChangesWindowController];
+    
+    return _documentSyncChangesWindowController;
+}
 
 @end
