@@ -45,8 +45,8 @@
 @property (nonatomic, readonly, retain) NSDictionary *userInfo;
 @property (nonatomic, retain) NSOperationQueue *registrationQueue;
 @property (nonatomic, retain) NSOperationQueue *otherTasksQueue;
-@property (nonatomic, readonly) NSString *relativePathToClientDevicesDirectory;
 @property (nonatomic, readonly) NSString *relativePathToDocumentsDirectory;
-@property (nonatomic, readonly) NSString *relativePathToThisClientDeviceDirectory;
+@property (nonatomic, readonly) NSString *relativePathToClientDevicesDirectory;
+@property (nonatomic, readonly) NSString *relativePathToClientDevicesThisClientDeviceDirectory;
 
 @end

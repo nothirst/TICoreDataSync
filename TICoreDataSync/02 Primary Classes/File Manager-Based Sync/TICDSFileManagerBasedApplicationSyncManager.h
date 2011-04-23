@@ -11,13 +11,13 @@
 
 @interface TICDSFileManagerBasedApplicationSyncManager : TICDSApplicationSyncManager {
 @private
-    NSURL *_localApplicationContainingDirectoryLocation;
+    NSURL *_applicationContainingDirectoryLocation;
 }
 
-@property (nonatomic, retain) NSURL *localApplicationContainingDirectoryLocation;
-@property (nonatomic, readonly) NSURL *localApplicationDirectoryLocation;
-@property (nonatomic, readonly) NSURL *localDocumentsDirectoryLocation;
-@property (nonatomic, readonly) NSURL *localClientDevicesDirectoryLocation;
-@property (nonatomic, readonly) NSURL *localClientDevicesThisClientDeviceDirectoryLocation;
+@property (nonatomic, retain) NSURL *applicationContainingDirectoryLocation;
+@property (nonatomic, readonly) NSString *applicationDirectoryPath;
+@property (nonatomic, readonly) NSString *documentsDirectoryPath;
+@property (nonatomic, readonly) NSString *clientDevicesDirectoryPath;
+@property (nonatomic, readonly) NSString *clientDevicesThisClientDeviceDirectoryPath;
 
 @end

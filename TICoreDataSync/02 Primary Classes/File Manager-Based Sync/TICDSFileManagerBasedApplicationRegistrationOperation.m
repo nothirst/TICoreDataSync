@@ -13,7 +13,7 @@
 
 #pragma mark -
 #pragma mark Helper Methods
-- (BOOL)createDirectoryContentsFromDictionary:(NSDictionary *)aDictionary inDirectory:(NSURL *)aDirectoryLocation
+- (BOOL)createDirectoryContentsFromDictionary:(NSDictionary *)aDictionary inDirectory:(NSString *)aDirectoryPath
 {
     NSError *anyError = nil;
     
@@ -26,10 +26,10 @@
         }
         
         if( [object isKindOfClass:[NSDictionary class]] ) {
-            NSURL *thisPath = [NSURL fileURLWithPath:[[aDirectoryLocation path] stringByAppendingPathComponent:eachName]];
+            NSString *thisPath = [aDirectoryPath stringByAppendingPathComponent:eachName];
             
             // create directory
-            BOOL success = [[self fileManager] createDirectoryAtPath:[thisPath path] withIntermediateDirectories:YES attributes:nil error:&anyError];
+            BOOL success = [[self fileManager] createDirectoryAtPath:thisPath withIntermediateDirectories:YES attributes:nil error:&anyError];
             if( !success ) {
                 [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
                 return NO;
@@ -50,14 +50,14 @@
 #pragma mark Overridden Methods
 - (void)checkWhetherRemoteGlobalAppFileStructureExists
 {
-    if( ![[self fileManager] fileExistsAtPath:[[self localApplicationDirectoryLocation] path]] ) {
+    if( ![[self fileManager] fileExistsAtPath:[self applicationDirectoryPath]] ) {
         // The directory does not exist at all
         [self discoveredStatusOfRemoteGlobalAppFileStructure:TICDSRemoteFileStructureExistsResponseTypeDoesNotExist];
         return;
     }
     
     NSError *anyError = nil;
-    NSArray *contents = [[self fileManager] contentsOfDirectoryAtPath:[[self localApplicationDirectoryLocation] path] error:&anyError];
+    NSArray *contents = [[self fileManager] contentsOfDirectoryAtPath:[self applicationDirectoryPath] error:&anyError];
     
     if( !contents ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
@@ -80,12 +80,12 @@
     NSDictionary *fileStructure = [TICDSUtilities remoteGlobalAppFileStructure];
     
     NSError *anyError = nil;
-    BOOL success = [self createDirectoryContentsFromDictionary:fileStructure inDirectory:[self localApplicationDirectoryLocation]];
+    BOOL success = [self createDirectoryContentsFromDictionary:fileStructure inDirectory:[self applicationDirectoryPath]];
     
     // Create Read Me.txt
     if( success ) { 
         NSString *pathToResource = [[NSBundle mainBundle] pathForResource:@"ReadMe" ofType:@"txt" inDirectory:nil];
-        NSString *pathToNewFile = [[[self localApplicationDirectoryLocation] path] stringByAppendingPathComponent:@"ReadMe.txt"];
+        NSString *pathToNewFile = [[self applicationDirectoryPath] stringByAppendingPathComponent:@"ReadMe.txt"];
         success = [[self fileManager] copyItemAtPath:pathToResource toPath:pathToNewFile error:&anyError];
     }
     
@@ -98,13 +98,13 @@
 
 - (void)checkWhetherRemoteClientDeviceFileStructureExists
 {
-    if( ![[self fileManager] fileExistsAtPath:[[self localClientDevicesThisClientDeviceDirectoryLocation] path]] ) {
+    if( ![[self fileManager] fileExistsAtPath:[self clientDevicesThisClientDeviceDirectoryPath]] ) {
         [self discoveredStatusOfRemoteClientDeviceFileStructure:TICDSRemoteFileStructureExistsResponseTypeDoesNotExist];
         return;
     }
     
     NSError *anyError = nil;
-    NSArray *contents = [[self fileManager] contentsOfDirectoryAtPath:[[self localClientDevicesThisClientDeviceDirectoryLocation] path] error:&anyError];
+    NSArray *contents = [[self fileManager] contentsOfDirectoryAtPath:[self clientDevicesThisClientDeviceDirectoryPath] error:&anyError];
     
     if( !contents ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
@@ -128,7 +128,7 @@
     NSDictionary *fileStructure = [TICDSUtilities remoteClientDeviceFileStructure];
     
     NSError *anyError = nil;
-    BOOL success = [self createDirectoryContentsFromDictionary:fileStructure inDirectory:[self localClientDevicesDirectoryLocation]];
+    BOOL success = [self createDirectoryContentsFromDictionary:fileStructure inDirectory:[self clientDevicesDirectoryPath]];
     
     // Create deviceInfo.plist
     if( success ) { 
@@ -137,7 +137,7 @@
         [deviceInfo setValue:[self clientDescription] forKey:kTICDSClientDeviceDescription];
         [deviceInfo setValue:[self userInfo] forKey:kTICDSClientDeviceUserInfo];
         
-        NSString *pathToNewFile = [[[self localClientDevicesThisClientDeviceDirectoryLocation] path] stringByAppendingPathComponent:@"deviceInfo.plist"];
+        NSString *pathToNewFile = [[self clientDevicesThisClientDeviceDirectoryPath] stringByAppendingPathComponent:@"deviceInfo.plist"];
         success = [deviceInfo writeToFile:pathToNewFile atomically:YES];
     }
     
@@ -152,19 +152,19 @@
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
-    [_localApplicationDirectoryLocation release], _localApplicationDirectoryLocation = nil;
-    [_localDocumentsDirectoryLocation release], _localDocumentsDirectoryLocation = nil;
-    [_localClientDevicesDirectoryLocation release], _localClientDevicesDirectoryLocation = nil;
-    [_localClientDevicesThisClientDeviceDirectoryLocation release], _localClientDevicesThisClientDeviceDirectoryLocation = nil;
+    [_applicationDirectoryPath release], _applicationDirectoryPath = nil;
+    [_documentsDirectoryPath release], _documentsDirectoryPath = nil;
+    [_clientDevicesDirectoryPath release], _clientDevicesDirectoryPath = nil;
+    [_clientDevicesThisClientDeviceDirectoryPath release], _clientDevicesThisClientDeviceDirectoryPath = nil;
     
     [super dealloc];
 }
 
 #pragma mark -
 #pragma mark Properties
-@synthesize localApplicationDirectoryLocation = _localApplicationDirectoryLocation;
-@synthesize localDocumentsDirectoryLocation = _localDocumentsDirectoryLocation;
-@synthesize localClientDevicesDirectoryLocation = _localClientDevicesDirectoryLocation;
-@synthesize localClientDevicesThisClientDeviceDirectoryLocation = _localClientDevicesThisClientDeviceDirectoryLocation;
+@synthesize applicationDirectoryPath = _applicationDirectoryPath;
+@synthesize documentsDirectoryPath = _documentsDirectoryPath;
+@synthesize clientDevicesDirectoryPath = _clientDevicesDirectoryPath;
+@synthesize clientDevicesThisClientDeviceDirectoryPath = _clientDevicesThisClientDeviceDirectoryPath;
 
 @end

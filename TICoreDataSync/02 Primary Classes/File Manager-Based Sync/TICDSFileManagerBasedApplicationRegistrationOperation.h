@@ -11,15 +11,15 @@
 
 @interface TICDSFileManagerBasedApplicationRegistrationOperation : TICDSApplicationRegistrationOperation {
 @private
-    NSURL *_localApplicationDirectoryLocation;
-    NSURL *_localDocumentsDirectoryLocation;
-    NSURL *_localClientDevicesDirectoryLocation;
-    NSURL *_localClientDevicesThisClientDeviceDirectoryLocation;
+    NSString *_applicationDirectoryPath;
+    NSString *_documentsDirectoryPath;
+    NSString *_clientDevicesDirectoryPath;
+    NSString *_clientDevicesThisClientDeviceDirectoryPath;
 }
 
-@property (nonatomic, retain) NSURL *localApplicationDirectoryLocation;
-@property (nonatomic, retain) NSURL *localDocumentsDirectoryLocation;
-@property (nonatomic, retain) NSURL *localClientDevicesDirectoryLocation;
-@property (nonatomic, retain) NSURL *localClientDevicesThisClientDeviceDirectoryLocation;
+@property (retain) NSString *applicationDirectoryPath;
+@property (retain) NSString *documentsDirectoryPath;
+@property (retain) NSString *clientDevicesDirectoryPath;
+@property (retain) NSString *clientDevicesThisClientDeviceDirectoryPath;
 
 @end

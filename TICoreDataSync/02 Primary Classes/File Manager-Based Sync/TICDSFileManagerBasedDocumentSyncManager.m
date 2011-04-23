@@ -12,10 +12,12 @@
 
 @implementation TICDSFileManagerBasedDocumentSyncManager
 
+#pragma mark -
+#pragma mark Registration
 - (void)registerWithDelegate:(id<TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo
 {
     if( [anAppSyncManager isKindOfClass:[TICDSFileManagerBasedApplicationSyncManager class]] ) {
-        [self setApplicationDirectoryLocation:[(TICDSFileManagerBasedApplicationSyncManager *)anAppSyncManager localApplicationDirectoryLocation]];
+        [self setApplicationDirectoryPath:[(TICDSFileManagerBasedApplicationSyncManager *)anAppSyncManager applicationDirectoryPath]];
     }
     
     [super registerWithDelegate:aDelegate appSyncManager:anAppSyncManager managedObjectContext:aContext documentIdentifier:aDocumentIdentifier description:aDocumentDescription userInfo:someUserInfo];
@@ -38,28 +40,28 @@
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
-    [_applicationDirectoryLocation release], _applicationDirectoryLocation = nil;
+    [_applicationDirectoryPath release], _applicationDirectoryPath = nil;
     
     [super dealloc];
 }
 
 #pragma mark -
 #pragma mark Properties
-@synthesize applicationDirectoryLocation = _applicationDirectoryLocation;
+@synthesize applicationDirectoryPath = _applicationDirectoryPath;
 
 - (NSString *)documentsDirectoryPath
 {
-    return [[[self applicationDirectoryLocation] path] stringByAppendingPathComponent:[self relativePathToDocumentsDirectory]];
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToDocumentsDirectory]];
 }
 
 - (NSString *)thisDocumentDirectoryPath
 {
-    return [[[self applicationDirectoryLocation] path] stringByAppendingPathComponent:[self relativePathToThisDocumentDirectory]];
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentDirectory]];
 }
 
 - (NSString *)thisDocumentSyncChangesThisClientDirectoryPath
 {
-    return [[[self applicationDirectoryLocation] path] stringByAppendingPathComponent:[self relativePathToThisDocumentSyncChangesThisClientDirectory]];
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentSyncChangesThisClientDirectory]];
 }
 
 @end

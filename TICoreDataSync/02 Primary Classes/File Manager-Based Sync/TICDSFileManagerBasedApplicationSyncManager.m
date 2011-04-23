@@ -17,10 +17,10 @@
 {
     TICDSFileManagerBasedApplicationRegistrationOperation *operation = [[TICDSFileManagerBasedApplicationRegistrationOperation alloc] initWithDelegate:self];
     
-    [operation setLocalApplicationDirectoryLocation:[self localApplicationDirectoryLocation]];
-    [operation setLocalClientDevicesDirectoryLocation:[self localClientDevicesDirectoryLocation]];
-    [operation setLocalDocumentsDirectoryLocation:[self localDocumentsDirectoryLocation]];
-    [operation setLocalClientDevicesThisClientDeviceDirectoryLocation:[self localClientDevicesThisClientDeviceDirectoryLocation]];
+    [operation setApplicationDirectoryPath:[self applicationDirectoryPath]];
+    [operation setDocumentsDirectoryPath:[self documentsDirectoryPath]];
+    [operation setClientDevicesDirectoryPath:[self clientDevicesDirectoryPath]];
+    [operation setClientDevicesThisClientDeviceDirectoryPath:[self clientDevicesThisClientDeviceDirectoryPath]];
     
     return [operation autorelease];
 }
@@ -29,33 +29,33 @@
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
-    [_localApplicationContainingDirectoryLocation release], _localApplicationContainingDirectoryLocation = nil;
+    [_applicationContainingDirectoryLocation release], _applicationContainingDirectoryLocation = nil;
 
     [super dealloc];
 }
 
 #pragma mark -
 #pragma mark Properties
-@synthesize localApplicationContainingDirectoryLocation = _localApplicationContainingDirectoryLocation;
+@synthesize applicationContainingDirectoryLocation = _applicationContainingDirectoryLocation;
 
-- (NSURL *)localApplicationDirectoryLocation
+- (NSString *)applicationDirectoryPath
 {
-    return [NSURL fileURLWithPath:[[[self localApplicationContainingDirectoryLocation] path] stringByAppendingPathComponent:[self appIdentifier]]];
+    return [[[self applicationContainingDirectoryLocation] path] stringByAppendingPathComponent:[self appIdentifier]];
 }
 
-- (NSURL *)localDocumentsDirectoryLocation
+- (NSString *)documentsDirectoryPath
 {
-    return [NSURL fileURLWithPath:[[[self localApplicationDirectoryLocation] path] stringByAppendingPathComponent:[self relativePathToDocumentsDirectory]]];
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToDocumentsDirectory]];
 }
 
-- (NSURL *)localClientDevicesDirectoryLocation
+- (NSString *)clientDevicesDirectoryPath
 {
-    return [NSURL fileURLWithPath:[[[self localApplicationDirectoryLocation] path] stringByAppendingPathComponent:[self relativePathToClientDevicesDirectory]]];
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToClientDevicesDirectory]];
 }
 
-- (NSURL *)localClientDevicesThisClientDeviceDirectoryLocation
+- (NSString *)clientDevicesThisClientDeviceDirectoryPath
 {
-    return [NSURL fileURLWithPath:[[[self localApplicationDirectoryLocation] path] stringByAppendingPathComponent:[self relativePathToThisClientDeviceDirectory]]];
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToClientDevicesThisClientDeviceDirectory]];
 }
 
 @end

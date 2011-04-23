@@ -71,7 +71,7 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
     
     NSURL *dropboxLocation = [NSURL fileURLWithPath:[[NSUserDefaults standardUserDefaults] valueForKey:kTISLUserDropboxLocation]];
     
-    [(TICDSFileManagerBasedApplicationSyncManager *)syncManager setLocalApplicationContainingDirectoryLocation:dropboxLocation];
+    [(TICDSFileManagerBasedApplicationSyncManager *)syncManager setApplicationContainingDirectoryLocation:dropboxLocation];
     
     // Get a unique client ID for this client from user defaults, generating one if it doesn't already exist
     NSString *clientUuid = [[NSUserDefaults standardUserDefaults] stringForKey:kTISLSynchronizationClientIdentifier];

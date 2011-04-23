@@ -166,17 +166,17 @@ id gTICDSDefaultApplicationSyncManager = nil;
 
 #pragma mark -
 #pragma mark Relative Paths
-- (NSString *)relativePathToClientDevicesDirectory
-{
-    return @"ClientDevices";
-}
-
 - (NSString *)relativePathToDocumentsDirectory
 {
-    return @"Documents";
+    return TICDSDocumentsDirectoryName;
 }
 
-- (NSString *)relativePathToThisClientDeviceDirectory
+- (NSString *)relativePathToClientDevicesDirectory
+{
+    return TICDSClientDevicesDirectoryName;
+}
+
+- (NSString *)relativePathToClientDevicesThisClientDeviceDirectory
 {
     return [[self relativePathToClientDevicesDirectory] stringByAppendingPathComponent:[self clientIdentifier]];
 }
