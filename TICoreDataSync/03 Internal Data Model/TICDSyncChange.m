@@ -6,10 +6,15 @@
 //  Copyright (c) 2011 Tim Isted. All rights reserved.
 //
 
-#import "TICDSyncChange.h"
-
+#import "TICoreDataSync.h"
 
 @implementation TICDSyncChange
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%@ %@", TICDSSyncChangeTypeNames[ [[self changeType] unsignedIntValue] ], [self objectEntityName]];
+}
+
 @dynamic objectSyncID;
 @dynamic changedValue;
 @dynamic relatedObjectSyncID;

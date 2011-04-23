@@ -24,6 +24,10 @@
 #import "TICDSFileManagerBasedDocumentRegistrationOperation.h"
 
 #pragma mark -
+#pragma mark Internal Data Model
+#import "TICDSyncChange.h"
+
+#pragma mark -
 #pragma mark Utilities
 #import "TICDSUtilities.h"
 #import "TICDSLog.h"

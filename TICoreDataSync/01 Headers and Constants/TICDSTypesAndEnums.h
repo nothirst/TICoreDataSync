@@ -80,8 +80,21 @@ typedef enum _TICDSOperationPhaseStatus {
     
 } TICDSOperationPhaseStatus;
 
+#pragma mark Sync Changes
+typedef enum _TICDSSyncChangeType {
+    TICDSSyncChangeTypeUnknown = 0,
+    TICDSSyncChangeTypeObjectInserted = 1,
+    TICDSSyncChangeTypeObjectDeleted = 2,
+    TICDSSyncChangeTypeAttributeChanged = 3,
+    TICDSSyncChangeTypeToOneRelationshipChanged = 4,
+    TICDSSyncChangeTypeToManyRelationshipAdded = 5,
+    TICDSSyncChangeTypeToManyRelationshipRemoved = 6,
+} TICDSSyncChangeType;
+
 #pragma mark -
 #pragma mark STRING CONSTANTS
+extern NSString * const TICDSSyncChangeTypeNames[];
+
 extern NSString * const TICDSErrorUserInfoKey;
 extern NSString * const TICDSErrorUnderlyingErrorKey;
 extern NSString * const TICDSErrorClassAndMethod;

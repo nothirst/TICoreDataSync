@@ -245,8 +245,6 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     [self addWindowController:windowController];
     
     [windowController release];
-    
-    
 }
 
 - (void)updateInterfaceForSyncEnabled

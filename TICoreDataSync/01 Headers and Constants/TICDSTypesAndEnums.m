@@ -8,6 +8,15 @@
 
 #import "TICDSTypesAndEnums.h"
 
+NSString * const TICDSSyncChangeTypeNames[] = {
+    @"Unknown",
+    @"Object Inserted",
+    @"Object Deleted",
+    @"Attribute Changed",
+    @"To One Relationship Changed",
+    @"To Many Relationship Added",
+    @"To Many Relationship Removed",
+};
 
 NSString * const TICDSErrorUserInfoKey = @"TICDSErrorUserInfoKey";
 NSString * const TICDSErrorUnderlyingErrorKey = @"TICDSErrorUnderlyingErrorKey";

@@ -23,7 +23,12 @@
 @class TICDSFileManagerBasedApplicationRegistrationOperation;
 @class TICDSFileManagerBasedDocumentRegistrationOperation;
 
-#pragma mark External Classes
+#pragma mark -
+#pragma mark INTERNAL DATA MODEL
+@class TICDSyncChange;
+
+#pragma mark -
+#pragma mark EXTERNAL CLASSES
 @class TICoreDataFactory;
 
 #pragma mark -
