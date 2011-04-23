@@ -38,7 +38,7 @@
     [self setApplicationSyncManager:anAppSyncManager];
     [self setDocumentIdentifier:aDocumentIdentifier];
     [self setDocumentDescription:aDocumentDescription];
-    [self setClientIdentifier:[anAppSyncManager clientDescription]];
+    [self setClientIdentifier:[anAppSyncManager clientIdentifier]];
     [self setUserInfo:someUserInfo];
     
     if( [anAppSyncManager state] == TICDSApplicationSyncManagerStateAbleToSync ) {
