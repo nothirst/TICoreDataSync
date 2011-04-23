@@ -9,6 +9,7 @@
 #import "MyDocument.h"
 
 #import "TIDocumentSyncChangesWindowController.h"
+#import "TIDocumentShopsWindowController.h"
 
 @interface MyDocument () 
 
@@ -186,6 +187,11 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     }
 }
 
+- (IBAction)showShopsWindow:(id)sender
+{
+    [[self documentShopsWindowController] showWindow:sender];
+}
+
 /*- (IBAction)initiateSynchronization:(id)sender
 {
     [[self documentSyncManager] initiateSynchronization];
@@ -231,6 +237,8 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
 - (void)windowControllerDidLoadNib:(NSWindowController *) aController
 {
     [super windowControllerDidLoadNib:aController];
+    
+    [aController setShouldCloseDocument:YES];
     
     [self updateInterfaceForSyncEnabled];
     [self registerSyncManagerIfSyncEnabled];
@@ -288,6 +296,7 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     [_documentSyncManager release], _documentSyncManager = nil;
     [_synchronizedManagedObjectContext release], _synchronizedManagedObjectContext = nil;
     [_documentSyncChangesWindowController release], _documentSyncChangesWindowController = nil;
+    [_documentShopsWindowController release], _documentShopsWindowController = nil;
 
     [super dealloc];
 }
@@ -302,6 +311,7 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
 @synthesize synchronizingProgressIndicator = _synchronizingProgressIndicator;
 @synthesize enableSynchronizationButton = _enableSynchronizationButton;
 @synthesize documentSyncChangesWindowController = _documentSyncChangesWindowController;
+@synthesize documentShopsWindowController = _documentShopsWindowController;
 
 - (TIDocumentSyncChangesWindowController *)documentSyncChangesWindowController
 {
@@ -314,6 +324,17 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     [self addWindowController:_documentSyncChangesWindowController];
     
     return _documentSyncChangesWindowController;
+}
+
+- (TIDocumentShopsWindowController *)documentShopsWindowController
+{
+    if( _documentShopsWindowController ) return _documentShopsWindowController;
+    
+    _documentShopsWindowController = [[TIDocumentShopsWindowController alloc] initWithManagedObjectContext:[self managedObjectContext]];
+    
+    [self addWindowController:_documentShopsWindowController];
+    
+    return _documentShopsWindowController;
 }
 
 @end
