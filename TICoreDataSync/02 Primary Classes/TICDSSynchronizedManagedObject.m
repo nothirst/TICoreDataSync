@@ -12,7 +12,7 @@
 
 - (TICDSSyncChange *)createSyncChangeForChangeType:(TICDSSyncChangeType)aType;
 - (void)createSyncChangesForAllRelationships;
-- (void)createSyncChangeForRelationship:(NSRelationshipDescription *)aRelationship;
+- (void)createSyncChangeIfApplicableForRelationship:(NSRelationshipDescription *)aRelationship;
 - (NSDictionary *)dictionaryOfAllAttributes;
 
 @end
@@ -38,35 +38,36 @@
     NSDictionary *objectRelationshipsByName = [[self entity] relationshipsByName];
     
     for( NSString *eachRelationshipName in objectRelationshipsByName ) {
-        NSRelationshipDescription *relationship = [objectRelationshipsByName valueForKey:eachRelationshipName];
-        NSRelationshipDescription *inverseRelationship = [relationship inverseRelationship];
-        
-        // Check if this is a many-to-one relationship (only sync the -to-one side)
-        if( ([relationship isToMany]) && (![inverseRelationship isToMany]) ) {
-            continue;
-        }
-        
-        // Check if this is a many to many relationship, and only sync the first relationship name alphabetically
-        if( ([relationship isToMany]) && ([inverseRelationship isToMany]) && ([[relationship name] caseInsensitiveCompare:[inverseRelationship name]] == NSOrderedDescending) ) {
-            continue;
-        }
-        
-        // Check if this is a one to one relationship, and only sync the first relationship name alphabetically
-        if( (![relationship isToMany]) && (![inverseRelationship isToMany]) && ([[relationship name] caseInsensitiveCompare:[inverseRelationship name]] == NSOrderedDescending) ) {
-            continue;
-        }
-        
-        // If we get here, this is:
-        // a) a one-to-many relationship
-        // b) the alphabetical lowest end of a many-to-many relationship
-        // c) the alphabetical lowest end of a one-to-one relationship
-        
-        [self createSyncChangeForRelationship:relationship];
+        [self createSyncChangeIfApplicableForRelationship:[objectRelationshipsByName valueForKey:eachRelationshipName]];
     }
 }
 
-- (void)createSyncChangeForRelationship:(NSRelationshipDescription *)aRelationship
+- (void)createSyncChangeIfApplicableForRelationship:(NSRelationshipDescription *)aRelationship
 {
+    NSRelationshipDescription *inverseRelationship = [aRelationship inverseRelationship];
+    
+    // Check if this is a many-to-one relationship (only sync the -to-one side)
+    if( ([aRelationship isToMany]) && (![inverseRelationship isToMany]) ) {
+        return;
+    }
+    
+    // Check if this is a many to many relationship, and only sync the first relationship name alphabetically
+    if( ([aRelationship isToMany]) && ([inverseRelationship isToMany]) && ([[aRelationship name] caseInsensitiveCompare:[inverseRelationship name]] == NSOrderedDescending) ) {
+        return;
+    }
+    
+    // Check if this is a one to one relationship, and only sync the first relationship name alphabetically
+    if( (![aRelationship isToMany]) && (![inverseRelationship isToMany]) && ([[aRelationship name] caseInsensitiveCompare:[inverseRelationship name]] == NSOrderedDescending) ) {
+        return;
+    }
+    
+    // If we get here, this is:
+    // a) a one-to-many relationship
+    // b) the alphabetical lowest end of a many-to-many relationship
+    // c) the alphabetical lowest end of a one-to-one relationship
+    // d) edge-case 1: a self-referential many-to-many relationship (twice)
+    // e) edge-case 2: a self-referential one-to-one relationship (twice)
+    
     TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeRelationshipChanged];
     
     [syncChange setRelatedObjectEntityName:[[aRelationship destinationEntity] name]];
@@ -131,7 +132,19 @@
 
 - (void)createSyncChangesForChangedProperties
 {
+    NSDictionary *changedValues = [self changedValues];
     
+    for( NSString *eachPropertyName in changedValues ) {
+        id eachValue = [changedValues valueForKey:eachPropertyName];
+        
+        if( [eachValue isKindOfClass:[NSManagedObject class]] || [eachValue isKindOfClass:[NSSet class]] ) { 
+            [self createSyncChangeIfApplicableForRelationship:[[[self entity] relationshipsByName] valueForKey:eachPropertyName]];
+        } else {
+            TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeAttributeChanged];
+            [syncChange setRelevantKey:eachPropertyName];
+            [syncChange setChangedAttributes:eachValue];
+        }
+    }
 }
 
 #pragma mark -
