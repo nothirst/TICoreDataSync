@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/TICDSApplicationSyncManager.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/TICDSApplicationSyncManager</TokenIdentifier>
+			<Abstract>TICDSDocumentSyncManager describes the generic behavior provided by an Application Sync Manager in the TICoreDataSync framework.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>
+			
+			<NodeRef refid="2"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSApplicationSyncManager/defaultApplicationSyncManager</TokenIdentifier>
+			<Abstract>Returns an application-wide sync manager.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>+ (id)defaultApplicationSyncManager</Declaration>
+			
+			<ReturnValue><Abstract>The default application-wide sync manager (if one doesn't exist, it will be created).</Abstract></ReturnValue>
+			<Anchor>//api/name/defaultApplicationSyncManager</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSApplicationSyncManager/setDefaultApplicationSyncManager:</TokenIdentifier>
+			<Abstract>Set the application-wide sync manager.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>+ (void)setDefaultApplicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The new sync manager to set as the application-wide default.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setDefaultApplicationSyncManager:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationSyncManager/registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:</TokenIdentifier>
+			<Abstract>Register an application ready for future synchronization.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (void)registerWithDelegate:(id&lt;TICDSApplicationSyncManagerDelegate&gt;)aDelegate globalAppIdentifier:(NSString *)anAppIdentifier uniqueClientIdentifier:(NSString *)aClientIdentifier description:(NSString *)aClientDescription userInfo:(NSDictionary *)someUserInfo</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aDelegate</Name>
+					<Abstract>The object you wish to be notified regarding application-related sync information; this object must conform to the TICDSApplicationSyncManagerDelegate protocol, which includes some required methods.</Abstract>
+				</Parameter><Parameter>
+					<Name>anAppIdentifier</Name>
+					<Abstract>The identification string used to identify the synchronization information across multiple clients. If you wish to be able to synchronize Mac and iOS, this app identifier should be the same on both platforms. This identifier will also be used as the root level of the remote file structure.</Abstract>
+				</Parameter><Parameter>
+					<Name>aClientIdentifier</Name>
+					<Abstract>An identification string for this client. Every client wishing to synchronize must have a string to identify itself (i.e., the application instance on a machine) uniquely. You would typically create a UUID string the first time your app is launched and store this in preferences.</Abstract>
+				</Parameter><Parameter>
+					<Name>aClientDescription</Name>
+					<Abstract>A human-readable string used to identify this client, e.g. the computer name.</Abstract>
+				</Parameter><Parameter>
+					<Name>userInfo</Name>
+					<Abstract>A dictionary of information that will be saved throughout all future synchronizations. Because this information is saved in a plist, everything in the dictionary must be archivable using NSKeyedArchiver.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationSyncManager/applicationRegistrationOperation</TokenIdentifier>
+			<Abstract>Returns an application registration operation.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (TICDSApplicationRegistrationOperation *)applicationRegistrationOperation</Declaration>
+			
+			<ReturnValue><Abstract>a correctly-configured subclass of TICDSApplicationRegistrationOperation.</Abstract></ReturnValue>
+			<Anchor>//api/name/applicationRegistrationOperation</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/state</TokenIdentifier>
+			<Abstract>Application Sync Manager State.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) TICDSApplicationSyncManagerState state</Declaration>
+			
+			
+			<Anchor>//api/name/state</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/delegate</TokenIdentifier>
+			<Abstract>The Application Sync Manager Delegate.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) id&lt;TICDSApplicationSyncManagerDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/appIdentifier</TokenIdentifier>
+			<Abstract>The App Identifier used for registration.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly, retain) NSString *appIdentifier</Declaration>
+			
+			
+			<Anchor>//api/name/appIdentifier</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/clientIdentifier</TokenIdentifier>
+			<Abstract>The Client Identifier used for registration.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly, retain) NSString *clientIdentifier</Declaration>
+			
+			
+			<Anchor>//api/name/clientIdentifier</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/clientDescription</TokenIdentifier>
+			<Abstract>The Client Description used for registration.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly, retain) NSString *clientDescription</Declaration>
+			
+			
+			<Anchor>//api/name/clientDescription</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/userInfo</TokenIdentifier>
+			<Abstract>The User Info used for registration.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly, retain) NSDictionary *userInfo</Declaration>
+			
+			
+			<Anchor>//api/name/userInfo</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/registrationQueue</TokenIdentifier>
+			<Abstract>The operation queue used for registration operations.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSOperationQueue *registrationQueue</Declaration>
+			
+			
+			<Anchor>//api/name/registrationQueue</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/otherTasksQueue</TokenIdentifier>
+			<Abstract>The operation queue used for non-registration tasks.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSOperationQueue *otherTasksQueue</Declaration>
+			
+			
+			<Anchor>//api/name/otherTasksQueue</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/relativePathToDocumentsDirectory</TokenIdentifier>
+			<Abstract>The path to the Documents directory, relative to the root of the remote file structure.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *relativePathToDocumentsDirectory</Declaration>
+			
+			
+			<Anchor>//api/name/relativePathToDocumentsDirectory</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/relativePathToClientDevicesDirectory</TokenIdentifier>
+			<Abstract>The path to the ClientDevices directory, relative to the root of the remote file structure.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *relativePathToClientDevicesDirectory</Declaration>
+			
+			
+			<Anchor>//api/name/relativePathToClientDevicesDirectory</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/relativePathToClientDevicesThisClientDeviceDirectory</TokenIdentifier>
+			<Abstract>The path to this client's directory inside the ClientDevices directory, relative to the root of the remote file structure.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *relativePathToClientDevicesThisClientDeviceDirectory</Declaration>
+			
+			
+			<Anchor>//api/name/relativePathToClientDevicesThisClientDeviceDirectory</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

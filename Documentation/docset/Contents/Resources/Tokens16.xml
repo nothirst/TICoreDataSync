@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Categories/NSObject(TIDelegateCommunications).html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cat/NSObject</TokenIdentifier>
+			<Abstract>TIDelegateCommunications is a category on NSObject to make it easy to communicate with a delegate.</Abstract>
+			<DeclaredIn>NSObject+TIDelegateCommunications.h</DeclaredIn>
+			
+			<NodeRef refid="16"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSObject/ti_invocationForDelegateSelector:withArgList:</TokenIdentifier>
+			<Abstract>Return an invocation confgured to target the delegate.</Abstract>
+			<DeclaredIn>NSObject+TIDelegateCommunications.h</DeclaredIn>			
+			
+			<Declaration>- (NSInvocation *)ti_invocationForDelegateSelector:(SEL)aSelector withArgList:(va_list)args</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSelector</Name>
+					<Abstract>The selector for which you wish to create an invocation object.</Abstract>
+				</Parameter><Parameter>
+					<Name>args</Name>
+					<Abstract>A properly-started va_list of arguments to be passed to the selector.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>A properly-configured NSInvocation object.</Abstract></ReturnValue>
+			<Anchor>//api/name/ti_invocationForDelegateSelector:withArgList:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSObject/ti_getResult:fromDelegateWithSelector:</TokenIdentifier>
+			<Abstract>Get some kind of result from a delegate with a given selector and arguments.</Abstract>
+			<DeclaredIn>NSObject+TIDelegateCommunications.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)ti_getResult:(void *)result fromDelegateWithSelector:(SEL)aSelector</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>result</Name>
+					<Abstract>A pointer to a buffer for the result. Note that this buffer won't be changed if the invocation is not invoked.</Abstract>
+				</Parameter><Parameter>
+					<Name>aSelector</Name>
+					<Abstract>The selector to invoke.</Abstract>
+				</Parameter><Parameter>
+					<Name>...</Name>
+					<Abstract>A variable number of arguments to be passed to the selector (excluding the first argument, assumed to be self).</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>YES if invocation was invoked successfully.</Abstract></ReturnValue>
+			<Anchor>//api/name/ti_getResult:fromDelegateWithSelector:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSObject/ti_getResult:fromDelegateWithSelector:withArgList:</TokenIdentifier>
+			<Abstract>Get some kind of result from a delegate with a given selector and va_list.</Abstract>
+			<DeclaredIn>NSObject+TIDelegateCommunications.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)ti_getResult:(void *)result fromDelegateWithSelector:(SEL)aSelector withArgList:(va_list)args</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>result</Name>
+					<Abstract>A pointer to a buffer for the result. Note that this buffer won't be changed if the invocation is not invoked.</Abstract>
+				</Parameter><Parameter>
+					<Name>aSelector</Name>
+					<Abstract>The selector to invoke.</Abstract>
+				</Parameter><Parameter>
+					<Name>args</Name>
+					<Abstract>A properly-started va_list of arguments to be passed to the selector.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>YES if invocation was invoked successfully.</Abstract></ReturnValue>
+			<Anchor>//api/name/ti_getResult:fromDelegateWithSelector:withArgList:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSObject/ti_objectFromDelegateWithSelector:</TokenIdentifier>
+			<Abstract>Get an object value from a given delegate selector with provided (object) arguments.</Abstract>
+			<DeclaredIn>NSObject+TIDelegateCommunications.h</DeclaredIn>			
+			
+			<Declaration>- (id)ti_objectFromDelegateWithSelector:(SEL)aSelector</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSelector</Name>
+					<Abstract>The selector to invoke.</Abstract>
+				</Parameter><Parameter>
+					<Name>...</Name>
+					<Abstract>The arguments to be passed to the selector (excluding the first argument, assumed to be self).</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>The object returned by the delegate.</Abstract></ReturnValue>
+			<Anchor>//api/name/ti_objectFromDelegateWithSelector:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSObject/ti_optimisticBoolFromDelegateWithSelector:</TokenIdentifier>
+			<Abstract>Get a Boolean value from a given delegate selector with provided (object) arguments.</Abstract>
+			<DeclaredIn>NSObject+TIDelegateCommunications.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)ti_optimisticBoolFromDelegateWithSelector:(SEL)aSelector</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSelector</Name>
+					<Abstract>The selector to invoke.</Abstract>
+				</Parameter><Parameter>
+					<Name>...</Name>
+					<Abstract>The arguments to be passed to the selector (excluding the first argument, assumed to be self).</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>The Boolean returned by the delegate.</Abstract></ReturnValue>
+			<Anchor>//api/name/ti_optimisticBoolFromDelegateWithSelector:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSObject/ti_boolFromDelegateWithSelector:</TokenIdentifier>
+			<Abstract>Get a Boolean value from a given delegate selector with provided (object) arguments.</Abstract>
+			<DeclaredIn>NSObject+TIDelegateCommunications.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)ti_boolFromDelegateWithSelector:(SEL)aSelector</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSelector</Name>
+					<Abstract>The selector to invoke.</Abstract>
+				</Parameter><Parameter>
+					<Name>...</Name>
+					<Abstract>The arguments to be passed to the selector (excluding the first argument, assumed to be self).</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>The Boolean returned by the delegate.</Abstract></ReturnValue>
+			<Anchor>//api/name/ti_boolFromDelegateWithSelector:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSObject/ti_alertDelegateWithSelector:</TokenIdentifier>
+			<Abstract>Alert a delegate with a given selector and provided (object) arguments.</Abstract>
+			<DeclaredIn>NSObject+TIDelegateCommunications.h</DeclaredIn>			
+			
+			<Declaration>- (void)ti_alertDelegateWithSelector:(SEL)aSelector</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSelector</Name>
+					<Abstract>The selector to invoke.</Abstract>
+				</Parameter><Parameter>
+					<Name>...</Name>
+					<Abstract>The arguments to be passed to the selector (excluding the first argument, assumed to be self).</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/ti_alertDelegateWithSelector:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/NSObject/ti_alertDelegateOnMainThreadWithSelector:waitUntilDone:</TokenIdentifier>
+			<Abstract>Alert a delegate on the main thread with a given selector and provided (object) arguments.</Abstract>
+			<DeclaredIn>NSObject+TIDelegateCommunications.h</DeclaredIn>			
+			
+			<Declaration>- (void)ti_alertDelegateOnMainThreadWithSelector:(SEL)aSelector waitUntilDone:(BOOL)shouldWait</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSelector</Name>
+					<Abstract>The selector to invoke.</Abstract>
+				</Parameter><Parameter>
+					<Name>...</Name>
+					<Abstract>The arguments to be passed to the selector (excluding the first argument, assumed to be self).</Abstract>
+				</Parameter><Parameter>
+					<Name>waitUntilDone</Name>
+					<Abstract>A Boolean indicating whether this method should wait until the delegate has been alerted.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/ti_alertDelegateOnMainThreadWithSelector:waitUntilDone:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

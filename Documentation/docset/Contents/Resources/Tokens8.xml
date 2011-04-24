@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/TICDSFileManagerBasedDocumentRegistrationOperation.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/TICDSFileManagerBasedDocumentRegistrationOperation</TokenIdentifier>
+			<Abstract>TICDSFileManagerBasedDocumentRegistrationOperation is a document registration operation designed for use with a TICDSFileManagerBasedDocumentSyncManager.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedDocumentRegistrationOperation.h</DeclaredIn>
+			
+			<NodeRef refid="8"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentRegistrationOperation/documentsDirectoryPath</TokenIdentifier>
+			<Abstract>The path to the Documents directory.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedDocumentRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSString *documentsDirectoryPath</Declaration>
+			
+			
+			<Anchor>//api/name/documentsDirectoryPath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentRegistrationOperation/thisDocumentDirectoryPath</TokenIdentifier>
+			<Abstract>The path to this document's directory inside the Documents directory.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedDocumentRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSString *thisDocumentDirectoryPath</Declaration>
+			
+			
+			<Anchor>//api/name/thisDocumentDirectoryPath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentRegistrationOperation/thisDocumentSyncChangesThisClientDirectoryPath</TokenIdentifier>
+			<Abstract>The path to the this client's directory inside this document's SyncChanges directory.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedDocumentRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSString *thisDocumentSyncChangesThisClientDirectoryPath</Declaration>
+			
+			
+			<Anchor>//api/name/thisDocumentSyncChangesThisClientDirectoryPath</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

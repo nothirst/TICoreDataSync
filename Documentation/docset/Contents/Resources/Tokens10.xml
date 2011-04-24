@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/TICDSLog.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/TICDSLog</TokenIdentifier>
+			<Abstract>TICDLog is a utility class to provide the primary logging behavior for the TICoreDataSync framework.</Abstract>
+			<DeclaredIn>TICDSLog.h</DeclaredIn>
+			
+			<NodeRef refid="10"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSLog/verbosity</TokenIdentifier>
+			<Abstract>Returns the current verbosity level for logging.</Abstract>
+			<DeclaredIn>TICDSLog.h</DeclaredIn>			
+			
+			<Declaration>+ (NSInteger)verbosity</Declaration>
+			
+			
+			<Anchor>//api/name/verbosity</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSLog/setVerbosity:</TokenIdentifier>
+			<Abstract>Sets the verbosity level for logging.</Abstract>
+			<DeclaredIn>TICDSLog.h</DeclaredIn>			
+			
+			<Declaration>+ (void)setVerbosity:(NSInteger)verbosity</Declaration>
+			
+			
+			<Anchor>//api/name/setVerbosity:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSLog/logWithVerbosity:information:</TokenIdentifier>
+			<Abstract>Log some information (assuming DEBUG is set).</Abstract>
+			<DeclaredIn>TICDSLog.h</DeclaredIn>			
+			
+			<Declaration>+ (void)logWithVerbosity:(NSInteger)someVerbosity information:(NSString *)formatString</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>someVerbosity</Name>
+					<Abstract>The verbosity level of this information (if the current verbosity is less than this, the information won't be logged).</Abstract>
+				</Parameter><Parameter>
+					<Name>formatString</Name>
+					<Abstract>The format string (using NSLog() format specifiers).</Abstract>
+				</Parameter><Parameter>
+					<Name>...</Name>
+					<Abstract>A comma-separated list of arguments to substitute into formatString.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/logWithVerbosity:information:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSLog/logWithVerbosity:formatString:args:</TokenIdentifier>
+			<Abstract>Log some information (assuming DEBUG is set).</Abstract>
+			<DeclaredIn>TICDSLog.h</DeclaredIn>			
+			
+			<Declaration>+ (void)logWithVerbosity:(NSInteger)someVerbosity formatString:(NSString *)formatString args:(va_list)args</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>someVerbosity</Name>
+					<Abstract>The verbosity level of this information (if the current verbosity is less than this, the information won't be logged).</Abstract>
+				</Parameter><Parameter>
+					<Name>formatString</Name>
+					<Abstract>The format string (using NSLog() format specifiers).</Abstract>
+				</Parameter><Parameter>
+					<Name>args</Name>
+					<Abstract>A correctly started va_list with the arguments to substitute into formatString.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/logWithVerbosity:formatString:args:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

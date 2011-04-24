@@ -25,6 +25,9 @@ xcuserdata
 profile
 *.moved-aside
 
+# Appledoc docset-installed file
+docset-installed.txt
+
 # Generated files
 VersionX-revision.h
 

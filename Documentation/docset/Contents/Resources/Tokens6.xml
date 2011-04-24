@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/TICDSFileManagerBasedApplicationRegistrationOperation.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/TICDSFileManagerBasedApplicationRegistrationOperation</TokenIdentifier>
+			<Abstract>TICDSFileManagerBasedApplicationRegistrationOperation is an application registration operation designed for use with a TICDSFileManagerBasedApplicationSyncManager.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedApplicationRegistrationOperation.h</DeclaredIn>
+			
+			<NodeRef refid="6"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedApplicationRegistrationOperation/applicationDirectoryPath</TokenIdentifier>
+			<Abstract>The application root path.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSString *applicationDirectoryPath</Declaration>
+			
+			
+			<Anchor>//api/name/applicationDirectoryPath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedApplicationRegistrationOperation/documentsDirectoryPath</TokenIdentifier>
+			<Abstract>The path to the Documents directory.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSString *documentsDirectoryPath</Declaration>
+			
+			
+			<Anchor>//api/name/documentsDirectoryPath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedApplicationRegistrationOperation/clientDevicesDirectoryPath</TokenIdentifier>
+			<Abstract>The path to the ClientDevices directory.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSString *clientDevicesDirectoryPath</Declaration>
+			
+			
+			<Anchor>//api/name/clientDevicesDirectoryPath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedApplicationRegistrationOperation/clientDevicesThisClientDeviceDirectoryPath</TokenIdentifier>
+			<Abstract>The path to the this client's directory inside the ClientDevices directory.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSString *clientDevicesThisClientDeviceDirectoryPath</Declaration>
+			
+			
+			<Anchor>//api/name/clientDevicesThisClientDeviceDirectoryPath</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

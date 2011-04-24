@@ -1,0 +1,983 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>TICDSApplicationRegistrationOperation Class Reference</title>
+		<meta http-equiv="Content-Type" content="application/xhtml+xml;charset=utf-8" />
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<meta name="viewport" content="width=550" />
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" />
+		<meta name="generator" content="appledoc 2.0.3 (build 668)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">TICDSApplicationRegistrationOperation Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/appIdentifier">&nbsp;&nbsp;&nbsp;&nbsp;appIdentifier</option>
+	
+	<option value="//api/name/clientDescription">&nbsp;&nbsp;&nbsp;&nbsp;clientDescription</option>
+	
+	<option value="//api/name/clientDeviceFileStructureStatus">&nbsp;&nbsp;&nbsp;&nbsp;clientDeviceFileStructureStatus</option>
+	
+	<option value="//api/name/completionInProgress">&nbsp;&nbsp;&nbsp;&nbsp;completionInProgress</option>
+	
+	<option value="//api/name/globalAppFileStructureStatus">&nbsp;&nbsp;&nbsp;&nbsp;globalAppFileStructureStatus</option>
+	
+	<option value="//api/name/userInfo">&nbsp;&nbsp;&nbsp;&nbsp;userInfo</option>
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/checkWhetherRemoteGlobalAppFileStructureExists">&nbsp;&nbsp;&nbsp;&nbsp;- checkWhetherRemoteGlobalAppFileStructureExists</option>
+	
+	<option value="//api/name/checkWhetherRemoteGlobalAppThisClientDeviceFileStructureExists">&nbsp;&nbsp;&nbsp;&nbsp;- checkWhetherRemoteGlobalAppThisClientDeviceFileStructureExists</option>
+	
+	<option value="//api/name/createRemoteGlobalAppFileStructure">&nbsp;&nbsp;&nbsp;&nbsp;- createRemoteGlobalAppFileStructure</option>
+	
+	<option value="//api/name/createRemoteGlobalAppThisClientDeviceFileStructure">&nbsp;&nbsp;&nbsp;&nbsp;- createRemoteGlobalAppThisClientDeviceFileStructure</option>
+	
+	<option value="//api/name/createdRemoteClientDeviceFileStructureSuccessfully:">&nbsp;&nbsp;&nbsp;&nbsp;- createdRemoteClientDeviceFileStructureSuccessfully:</option>
+	
+	<option value="//api/name/createdRemoteGlobalAppFileStructureSuccessfully:">&nbsp;&nbsp;&nbsp;&nbsp;- createdRemoteGlobalAppFileStructureSuccessfully:</option>
+	
+	<option value="//api/name/discoveredStatusOfRemoteClientDeviceFileStructure:">&nbsp;&nbsp;&nbsp;&nbsp;- discoveredStatusOfRemoteClientDeviceFileStructure:</option>
+	
+	<option value="//api/name/discoveredStatusOfRemoteGlobalAppFileStructure:">&nbsp;&nbsp;&nbsp;&nbsp;- discoveredStatusOfRemoteGlobalAppFileStructure:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Methods Overridden by Subclasses">Methods Overridden by Subclasses</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Callbacks">Callbacks</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Properties">Properties</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Completion">Completion</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/appIdentifier">appIdentifier</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/clientDescription">clientDescription</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/clientDeviceFileStructureStatus">clientDeviceFileStructureStatus</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/completionInProgress">completionInProgress</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/globalAppFileStructureStatus">globalAppFileStructureStatus</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/userInfo">userInfo</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/checkWhetherRemoteGlobalAppFileStructureExists">checkWhetherRemoteGlobalAppFileStructureExists</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/checkWhetherRemoteGlobalAppThisClientDeviceFileStructureExists">checkWhetherRemoteGlobalAppThisClientDeviceFileStructureExists</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/createRemoteGlobalAppFileStructure">createRemoteGlobalAppFileStructure</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/createRemoteGlobalAppThisClientDeviceFileStructure">createRemoteGlobalAppThisClientDeviceFileStructure</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/createdRemoteClientDeviceFileStructureSuccessfully:">createdRemoteClientDeviceFileStructureSuccessfully:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/createdRemoteGlobalAppFileStructureSuccessfully:">createdRemoteGlobalAppFileStructureSuccessfully:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/discoveredStatusOfRemoteClientDeviceFileStructure:">discoveredStatusOfRemoteClientDeviceFileStructure:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/discoveredStatusOfRemoteGlobalAppFileStructure:">discoveredStatusOfRemoteGlobalAppFileStructure:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="TICDSApplicationRegistrationOperation Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">TICDSApplicationRegistrationOperation Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value"><a href="../Classes/TICDSOperation.html">TICDSOperation</a> : NSOperation</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">TICDSApplicationRegistrationOperation.h</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The <a href="TICDSApplicationRegistrationOperation.html"><code>TICDSApplicationRegistrationOperation</code></a> class describes a generic operation used by the <code>TICoreDataSync</code> framework to register an application for future synchronization of documents.</p>
+
+<p>The operation carries out the following tasks:</p>
+
+<ol>
+<li>Check whether the application has been previously registered with the remote (i.e., whether the file structure exists).</li>
+<li>If not, register the app and create the file structure.</li>
+<li>Check whether this client has previously been registered for this application (i.e., whether client-specific file structures exist).</li>
+<li>If not, create the necessary file structure for this client.</li>
+</ol>
+
+
+<p>Operations are typically created automatically by the relevant sync manager.</p><div class="warning"><p>You must use one of the subclasses of <a href="TICDSApplicationRegistrationOperation.html"><code>TICDSApplicationRegistrationOperation</code></a>.</p></div>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						<a title="Methods Overridden by Subclasses" name="task_Methods Overridden by Subclasses"></a>
+						<h3 class="subsubtitle task-title">Methods Overridden by Subclasses</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/checkWhetherRemoteGlobalAppFileStructureExists">&ndash;&nbsp;checkWhetherRemoteGlobalAppFileStructureExists</a></code>
+		<span class="tooltip"><p>Check whether this application has previously been registered; i.e., whether the remote file structure for this application already exists.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/createRemoteGlobalAppFileStructure">&ndash;&nbsp;createRemoteGlobalAppFileStructure</a></code>
+		<span class="tooltip"><p>Create the file structure for this application; this method will be called automatically if the file structure dosn&rsquo;t already exist.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/checkWhetherRemoteGlobalAppThisClientDeviceFileStructureExists">&ndash;&nbsp;checkWhetherRemoteGlobalAppThisClientDeviceFileStructureExists</a></code>
+		<span class="tooltip"><p>Check whether this client has previously been registered for this application; i.e., whether the files for this client device already exist.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/createRemoteGlobalAppThisClientDeviceFileStructure">&ndash;&nbsp;createRemoteGlobalAppThisClientDeviceFileStructure</a></code>
+		<span class="tooltip"><p>Create the file structure for this client device for this application; this method will be called automatically if the file structure doesn&rsquo;t already exist.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Callbacks" name="task_Callbacks"></a>
+						<h3 class="subsubtitle task-title">Callbacks</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/discoveredStatusOfRemoteGlobalAppFileStructure:">&ndash;&nbsp;discoveredStatusOfRemoteGlobalAppFileStructure:</a></code>
+		<span class="tooltip"><p>Indicate the status of the remote global app file structure; i.e., whether the application has previously been registered.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/createdRemoteGlobalAppFileStructureSuccessfully:">&ndash;&nbsp;createdRemoteGlobalAppFileStructureSuccessfully:</a></code>
+		<span class="tooltip"><p>Indicate whether the creation of the global app file structure was successful.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/discoveredStatusOfRemoteClientDeviceFileStructure:">&ndash;&nbsp;discoveredStatusOfRemoteClientDeviceFileStructure:</a></code>
+		<span class="tooltip"><p>Indicate the status of the file structure for this client; i.e. whether this client device has previously been registered.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/createdRemoteClientDeviceFileStructureSuccessfully:">&ndash;&nbsp;createdRemoteClientDeviceFileStructureSuccessfully:</a></code>
+		<span class="tooltip"><p>Indicate whether the creation of the file structure for this client was successful.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Properties" name="task_Properties"></a>
+						<h3 class="subsubtitle task-title">Properties</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/appIdentifier">&nbsp;&nbsp;appIdentifier</a></code>
+		<span class="tooltip"><p>The application identifier.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/clientDescription">&nbsp;&nbsp;clientDescription</a></code>
+		<span class="tooltip"><p>The client description.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/userInfo">&nbsp;&nbsp;userInfo</a></code>
+		<span class="tooltip"><p>The user info.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+						
+						<a title="Completion" name="task_Completion"></a>
+						<h3 class="subsubtitle task-title">Completion</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/completionInProgress">&nbsp;&nbsp;completionInProgress</a></code>
+		<span class="tooltip"><p>Used to indicate that completion is currently in progress, and no further checks should be made.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/globalAppFileStructureStatus">&nbsp;&nbsp;globalAppFileStructureStatus</a></code>
+		<span class="tooltip"><p>The phase status of the global app file structure tests/creation.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/clientDeviceFileStructureStatus">&nbsp;&nbsp;clientDeviceFileStructureStatus</a></code>
+		<span class="tooltip"><p>The phase status of the client device file structure tests/creation.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/appIdentifier" title="appIdentifier"></a>
+	<h3 class="subsubtitle method-title">appIdentifier</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The application identifier.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSString *appIdentifier</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/clientDescription" title="clientDescription"></a>
+	<h3 class="subsubtitle method-title">clientDescription</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The client description.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSString *clientDescription</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/clientDeviceFileStructureStatus" title="clientDeviceFileStructureStatus"></a>
+	<h3 class="subsubtitle method-title">clientDeviceFileStructureStatus</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The phase status of the client device file structure tests/creation.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) TICDSOperationPhaseStatus clientDeviceFileStructureStatus</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/completionInProgress" title="completionInProgress"></a>
+	<h3 class="subsubtitle method-title">completionInProgress</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Used to indicate that completion is currently in progress, and no further checks should be made.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) BOOL completionInProgress</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/globalAppFileStructureStatus" title="globalAppFileStructureStatus"></a>
+	<h3 class="subsubtitle method-title">globalAppFileStructureStatus</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The phase status of the global app file structure tests/creation.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) TICDSOperationPhaseStatus globalAppFileStructureStatus</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/userInfo" title="userInfo"></a>
+	<h3 class="subsubtitle method-title">userInfo</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The user info.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSDictionary *userInfo</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/checkWhetherRemoteGlobalAppFileStructureExists" title="checkWhetherRemoteGlobalAppFileStructureExists"></a>
+	<h3 class="subsubtitle method-title">checkWhetherRemoteGlobalAppFileStructureExists</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Check whether this application has previously been registered; i.e., whether the remote file structure for this application already exists.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)checkWhetherRemoteGlobalAppFileStructureExists</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/discoveredStatusOfRemoteGlobalAppFileStructure:"><code>discoveredStatusOfRemoteGlobalAppFileStructure:</code></a> to indicate the status.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/checkWhetherRemoteGlobalAppThisClientDeviceFileStructureExists" title="checkWhetherRemoteGlobalAppThisClientDeviceFileStructureExists"></a>
+	<h3 class="subsubtitle method-title">checkWhetherRemoteGlobalAppThisClientDeviceFileStructureExists</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Check whether this client has previously been registered for this application; i.e., whether the files for this client device already exist.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)checkWhetherRemoteGlobalAppThisClientDeviceFileStructureExists</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/discoveredStatusOfRemoteClientDeviceFileStructure:"><code>discoveredStatusOfRemoteClientDeviceFileStructure:</code></a> to indicate the status.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/createRemoteGlobalAppFileStructure" title="createRemoteGlobalAppFileStructure"></a>
+	<h3 class="subsubtitle method-title">createRemoteGlobalAppFileStructure</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Create the file structure for this application; this method will be called automatically if the file structure dosn&rsquo;t already exist.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)createRemoteGlobalAppFileStructure</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/createdRemoteGlobalAppFileStructureSuccessfully:"><code>createdRemoteGlobalAppFileStructureSuccessfully:</code></a> to indicate whether the creation was successful.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/createRemoteGlobalAppThisClientDeviceFileStructure" title="createRemoteGlobalAppThisClientDeviceFileStructure"></a>
+	<h3 class="subsubtitle method-title">createRemoteGlobalAppThisClientDeviceFileStructure</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Create the file structure for this client device for this application; this method will be called automatically if the file structure doesn&rsquo;t already exist.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)createRemoteGlobalAppThisClientDeviceFileStructure</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/createdRemoteClientDeviceFileStructureSuccessfully:"><code>createdRemoteClientDeviceFileStructureSuccessfully:</code></a> to indicate whether the creation was successful.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/createdRemoteClientDeviceFileStructureSuccessfully:" title="createdRemoteClientDeviceFileStructureSuccessfully:"></a>
+	<h3 class="subsubtitle method-title">createdRemoteClientDeviceFileStructureSuccessfully:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the creation of the file structure for this client was successful.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)createdRemoteClientDeviceFileStructureSuccessfully:(BOOL)<em>someSuccess</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>someSuccess</em></dt>
+			<dd><p>A Boolean indicating whether the global app file structure was created or not.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If not, call <code>setError:</code> and return <code>NO</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/createdRemoteGlobalAppFileStructureSuccessfully:" title="createdRemoteGlobalAppFileStructureSuccessfully:"></a>
+	<h3 class="subsubtitle method-title">createdRemoteGlobalAppFileStructureSuccessfully:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the creation of the global app file structure was successful.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)createdRemoteGlobalAppFileStructureSuccessfully:(BOOL)<em>someSuccess</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>someSuccess</em></dt>
+			<dd><p>A Boolean indicating whether the global app file structure was created or not.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If not, call <code>setError:</code> and return <code>NO</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/discoveredStatusOfRemoteClientDeviceFileStructure:" title="discoveredStatusOfRemoteClientDeviceFileStructure:"></a>
+	<h3 class="subsubtitle method-title">discoveredStatusOfRemoteClientDeviceFileStructure:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate the status of the file structure for this client; i.e. whether this client device has previously been registered.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)discoveredStatusOfRemoteClientDeviceFileStructure:(TICDSRemoteFileStructureExistsResponseType)<em>status</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>status</em></dt>
+			<dd><p>The status of the structure: does exist, does not exist, or error (see <code>TICDSTypesAndEnums.h</code> for possible values).</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> and return <code>TICDSRemoteFileStructureExistsResponseTypeError</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/discoveredStatusOfRemoteGlobalAppFileStructure:" title="discoveredStatusOfRemoteGlobalAppFileStructure:"></a>
+	<h3 class="subsubtitle method-title">discoveredStatusOfRemoteGlobalAppFileStructure:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate the status of the remote global app file structure; i.e., whether the application has previously been registered.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)discoveredStatusOfRemoteGlobalAppFileStructure:(TICDSRemoteFileStructureExistsResponseType)<em>status</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>status</em></dt>
+			<dd><p>The status of the structure: does exist, does not exist, or error (see <code>TICDSTypesAndEnums.h</code> for possible values).</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> and return <code>TICDSRemoteFileStructureExistsResponseTypeError</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2011 Tim Isted. All rights reserved. (Last updated: 2011-04-24)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.0.3 (build 668)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+		</script>
+	</body>
+</html>

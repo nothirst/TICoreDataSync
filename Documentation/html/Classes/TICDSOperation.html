@@ -1,0 +1,866 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>TICDSOperation Class Reference</title>
+		<meta http-equiv="Content-Type" content="application/xhtml+xml;charset=utf-8" />
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<meta name="viewport" content="width=550" />
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" />
+		<meta name="generator" content="appledoc 2.0.3 (build 668)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">TICDSOperation Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/clientIdentifier">&nbsp;&nbsp;&nbsp;&nbsp;clientIdentifier</option>
+	
+	<option value="//api/name/delegate">&nbsp;&nbsp;&nbsp;&nbsp;delegate</option>
+	
+	<option value="//api/name/error">&nbsp;&nbsp;&nbsp;&nbsp;error</option>
+	
+	<option value="//api/name/fileManager">&nbsp;&nbsp;&nbsp;&nbsp;fileManager</option>
+	
+	<option value="//api/name/helperFileDirectoryLocation">&nbsp;&nbsp;&nbsp;&nbsp;helperFileDirectoryLocation</option>
+	
+	<option value="//api/name/isExecuting">&nbsp;&nbsp;&nbsp;&nbsp;isExecuting</option>
+	
+	<option value="//api/name/isFinished">&nbsp;&nbsp;&nbsp;&nbsp;isFinished</option>
+	
+	<option value="//api/name/needsMainThread">&nbsp;&nbsp;&nbsp;&nbsp;needsMainThread</option>
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/initWithDelegate:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithDelegate:</option>
+	
+	<option value="//api/name/operationDidCompleteSuccessfully">&nbsp;&nbsp;&nbsp;&nbsp;- operationDidCompleteSuccessfully</option>
+	
+	<option value="//api/name/operationDidFailToComplete">&nbsp;&nbsp;&nbsp;&nbsp;- operationDidFailToComplete</option>
+	
+	<option value="//api/name/operationDidStart">&nbsp;&nbsp;&nbsp;&nbsp;- operationDidStart</option>
+	
+	<option value="//api/name/operationWasCancelled">&nbsp;&nbsp;&nbsp;&nbsp;- operationWasCancelled</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Designated Initializer">Designated Initializer</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Operation Phase Updates">Operation Phase Updates</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Properties">Properties</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/clientIdentifier">clientIdentifier</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/delegate">delegate</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/error">error</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fileManager">fileManager</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/helperFileDirectoryLocation">helperFileDirectoryLocation</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/isExecuting">isExecuting</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/isFinished">isFinished</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/needsMainThread">needsMainThread</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithDelegate:">initWithDelegate:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/operationDidCompleteSuccessfully">operationDidCompleteSuccessfully</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/operationDidFailToComplete">operationDidFailToComplete</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/operationDidStart">operationDidStart</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/operationWasCancelled">operationWasCancelled</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="TICDSOperation Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">TICDSOperation Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value">NSOperation</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">TICDSOperation.h</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The <a href="TICDSOperation.html"><code>TICDSOperation</code></a> class provides the abstract behavior typical of any operation used by the <code>TICoreDataSync</code> framework.</p>
+
+<p>All <code>TICoreDataSync</code> operations are (in Apple terms) concurrent, which means that they return <code>YES</code> for <code>isConcurrent</code>. This means they may be used by classes using e.g. <code>NSURLConnection</code> or custom rest clients to fetch information in the background.</p>
+
+<p>Subclasses should make use of the operation phase methods listed below to update the values of <a href="#//api/name/isExecuting"><code>isExecuting</code></a> and <a href="#//api/name/isFinished"><code>isFinished</code></a> so that operation queues can keep track of them. The <a href="#//api/name/operationDidStart"><code>operationDidStart</code></a> method is called automatically when the operation begins to execute.</p>
+
+<p>Subclasses of <a href="TICDSOperation.html"><code>TICDSOperation</code></a> should override <a href="#//api/name/needsMainThread"><code>needsMainThread</code></a> to return <code>YES</code> if they require their tasks to be implemented on the main thread.</p>
+
+<p>The <code>start</code> method automatically sets up the operation and notifies its <a href="#//api/name/delegate"><code>delegate</code></a> that it started. Subclasses should override <code>main</code> to do their work.</p><div class="warning"><p>Subclasses must call one of the <a href="#//api/name/operationDidCompleteSuccessfully"><code>operationDidCompleteSuccessfully</code></a>, <a href="#//api/name/operationDidFailToComplete"><code>operationDidFailToComplete</code></a> or <a href="#//api/name/operationWasCancelled"><code>operationWasCancelled</code></a> to update the <a href="#//api/name/delegate">delegate</a> and set the necessary values such that the operation be removed from the operation queue.</p></div>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						<a title="Designated Initializer" name="task_Designated Initializer"></a>
+						<h3 class="subsubtitle task-title">Designated Initializer</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithDelegate:">&ndash;&nbsp;initWithDelegate:</a></code>
+		<span class="tooltip"><p>Initialize the operation with a provided <a href="#//api/name/delegate">delegate</a>.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Operation Phase Updates" name="task_Operation Phase Updates"></a>
+						<h3 class="subsubtitle task-title">Operation Phase Updates</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/operationDidStart">&ndash;&nbsp;operationDidStart</a></code>
+		<span class="tooltip"><p>Notify the <a href="#//api/name/delegate">delegate</a> when the operation starts, and set the necessary values for <a href="#//api/name/isExecuting"><code>isExecuting</code></a> and <a href="#//api/name/isFinished"><code>isFinished</code></a>.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/operationDidCompleteSuccessfully">&ndash;&nbsp;operationDidCompleteSuccessfully</a></code>
+		<span class="tooltip"><p>Notify the <a href="#//api/name/delegate">delegate</a> when the operation completes, and set the necessary values for <a href="#//api/name/isExecuting"><code>isExecuting</code></a> and <a href="#//api/name/isFinished"><code>isFinished</code></a>.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/operationDidFailToComplete">&ndash;&nbsp;operationDidFailToComplete</a></code>
+		<span class="tooltip"><p>Notify the <a href="#//api/name/delegate">delegate</a> if the operation has failed for some reason. Set the relevant <a href="#//api/name/error"><code>error</code></a> property before calling this method. This will set the required values for <a href="#//api/name/isExecuting"><code>isExecuting</code></a> and <a href="#//api/name/isFinished"><code>isFinished</code></a>.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/operationWasCancelled">&ndash;&nbsp;operationWasCancelled</a></code>
+		<span class="tooltip"><p>Call this method if the operation is cancelled midway through its work. This will set the required values for <a href="#//api/name/isExecuting"><code>isExecuting</code></a> and <a href="#//api/name/isFinished"><code>isFinished</code></a>.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Properties" name="task_Properties"></a>
+						<h3 class="subsubtitle task-title">Properties</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/delegate">&nbsp;&nbsp;delegate</a></code>
+		<span class="tooltip"><p>The operation <a href="#//api/name/delegate">delegate</a>.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/needsMainThread">&nbsp;&nbsp;needsMainThread</a></code>
+		<span class="tooltip"><p>By default returns <code>NO</code>, but override if your operation needs its code to execute on the main thread, such as for an <code>NSURLConnection</code>.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/isExecuting">&nbsp;&nbsp;isExecuting</a></code>
+		<span class="tooltip"><p>Indicates the operation is currently executing; this is set automatically through the operation phase methods.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/isFinished">&nbsp;&nbsp;isFinished</a></code>
+		<span class="tooltip"><p>Indicates the operation has completed; this is set automatically through the operation phase methods.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/error">&nbsp;&nbsp;error</a></code>
+		<span class="tooltip"><p>The most recent <a href="#//api/name/error">error</a>; set this before calling <a href="#//api/name/operationDidFailToComplete"><code>operationDidFailToComplete</code></a>.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fileManager">&nbsp;&nbsp;fileManager</a></code>
+		<span class="tooltip"><p>An <code>NSFileManager</code> object suitable for use by this operation.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/helperFileDirectoryLocation">&nbsp;&nbsp;helperFileDirectoryLocation</a></code>
+		<span class="tooltip"><p>The local location on disc of helper files needed by <code>TICoreDataSync</code> for this operation (not set automatically).</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/clientIdentifier">&nbsp;&nbsp;clientIdentifier</a></code>
+		<span class="tooltip"><p>The identifier of the client application (not set automatically, but may be used whenever necessary by subclasses).</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/clientIdentifier" title="clientIdentifier"></a>
+	<h3 class="subsubtitle method-title">clientIdentifier</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The identifier of the client application (not set automatically, but may be used whenever necessary by subclasses).</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, copy) NSString *clientIdentifier</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/delegate" title="delegate"></a>
+	<h3 class="subsubtitle method-title">delegate</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The operation <a href="#//api/name/delegate">delegate</a>.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) NSObject&lt;TICDSOperationDelegate&gt; *delegate</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/error" title="error"></a>
+	<h3 class="subsubtitle method-title">error</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The most recent <a href="#//api/name/error">error</a>; set this before calling <a href="#//api/name/operationDidFailToComplete"><code>operationDidFailToComplete</code></a>.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSError *error</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fileManager" title="fileManager"></a>
+	<h3 class="subsubtitle method-title">fileManager</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>An <code>NSFileManager</code> object suitable for use by this operation.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSFileManager *fileManager</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/helperFileDirectoryLocation" title="helperFileDirectoryLocation"></a>
+	<h3 class="subsubtitle method-title">helperFileDirectoryLocation</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The local location on disc of helper files needed by <code>TICoreDataSync</code> for this operation (not set automatically).</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSURL *helperFileDirectoryLocation</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/isExecuting" title="isExecuting"></a>
+	<h3 class="subsubtitle method-title">isExecuting</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicates the operation is currently executing; this is set automatically through the operation phase methods.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (readonly) BOOL isExecuting</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/isFinished" title="isFinished"></a>
+	<h3 class="subsubtitle method-title">isFinished</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicates the operation has completed; this is set automatically through the operation phase methods.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (readonly) BOOL isFinished</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/needsMainThread" title="needsMainThread"></a>
+	<h3 class="subsubtitle method-title">needsMainThread</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>By default returns <code>NO</code>, but override if your operation needs its code to execute on the main thread, such as for an <code>NSURLConnection</code>.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (readonly) BOOL needsMainThread</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/initWithDelegate:" title="initWithDelegate:"></a>
+	<h3 class="subsubtitle method-title">initWithDelegate:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Initialize the operation with a provided <a href="#//api/name/delegate">delegate</a>.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (id)initWithDelegate:(NSObject&lt;TICDSOperationDelegate&gt; *)<em>aDelegate</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aDelegate</em></dt>
+			<dd><p>The <a href="#//api/name/delegate">delegate</a> object for the operation, notified when the operation starts, ends, fails, or is cancelled using methods defined in the <a href="../Protocols/TICDSOperationDelegate.html"><code>TICDSOperationDelegate</code></a> protocol.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A properly-initialized operation.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/operationDidCompleteSuccessfully" title="operationDidCompleteSuccessfully"></a>
+	<h3 class="subsubtitle method-title">operationDidCompleteSuccessfully</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Notify the <a href="#//api/name/delegate">delegate</a> when the operation completes, and set the necessary values for <a href="#//api/name/isExecuting"><code>isExecuting</code></a> and <a href="#//api/name/isFinished"><code>isFinished</code></a>.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)operationDidCompleteSuccessfully</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/operationDidFailToComplete" title="operationDidFailToComplete"></a>
+	<h3 class="subsubtitle method-title">operationDidFailToComplete</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Notify the <a href="#//api/name/delegate">delegate</a> if the operation has failed for some reason. Set the relevant <a href="#//api/name/error"><code>error</code></a> property before calling this method. This will set the required values for <a href="#//api/name/isExecuting"><code>isExecuting</code></a> and <a href="#//api/name/isFinished"><code>isFinished</code></a>.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)operationDidFailToComplete</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/operationDidStart" title="operationDidStart"></a>
+	<h3 class="subsubtitle method-title">operationDidStart</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Notify the <a href="#//api/name/delegate">delegate</a> when the operation starts, and set the necessary values for <a href="#//api/name/isExecuting"><code>isExecuting</code></a> and <a href="#//api/name/isFinished"><code>isFinished</code></a>.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)operationDidStart</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p>This method is called automatically by <a href="TICDSOperation.html"><code>TICDSOperation</code></a> when the opertion starts to execute, so you should not call it in a <a href="TICDSOperation.html"><code>TICDSOperation</code></a> subclass.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/operationWasCancelled" title="operationWasCancelled"></a>
+	<h3 class="subsubtitle method-title">operationWasCancelled</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Call this method if the operation is cancelled midway through its work. This will set the required values for <a href="#//api/name/isExecuting"><code>isExecuting</code></a> and <a href="#//api/name/isFinished"><code>isFinished</code></a>.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)operationWasCancelled</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2011 Tim Isted. All rights reserved. (Last updated: 2011-04-24)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.0.3 (build 668)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+		</script>
+	</body>
+</html>
