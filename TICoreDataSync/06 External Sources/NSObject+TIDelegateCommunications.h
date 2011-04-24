@@ -18,30 +18,82 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+/** 
+ `TIDelegateCommunications` is a category on `NSObject` to make it easy to communicate with a delegate.
+ 
+ @warning The arguments passed to any of these methods must be objects.
+*/
 
 @interface NSObject (TIDelegateCommunications)
 
-/** Returns an invocation confgured to target the delegate */
+/** @name Invocations */
+
+/** Return an invocation confgured to target the delegate.
+ 
+ @param aSelector The selector for which you wish to create an invocation object.
+ @param args A properly-started `va_list` of arguments to be passed to the selector.
+ 
+ @return A properly-configured `NSInvocation` object.
+ */
 - (NSInvocation *)ti_invocationForDelegateSelector:(SEL)aSelector withArgList:(va_list)args;
 
-/** Method used primarily by others to get some kind of result from a delegate selector passing a variable number of (object) arguments. Returns YES if invocation was invoked successfully; result parameter won't be changed if invocation not invoked */
+/** Get some kind of result from a delegate with a given selector and arguments. 
+ 
+ @param result A pointer to a buffer for the result. Note that this buffer won't be changed if the invocation is not invoked.
+ @param aSelector The selector to invoke.
+ @param ... A variable number of arguments to be passed to the selector (excluding the first argument, assumed to be `self`).
+ 
+ @return YES if invocation was invoked successfully. */
 - (BOOL)ti_getResult:(void *)result fromDelegateWithSelector:(SEL)aSelector, ...;
 
-/** Method used primarily by others to get some kind of result from a delegate selector passing a va_list of arguments. Returns YES if invocation was invoked successfully; result parameter won't be changed if invocation not invoked */
+/** Get some kind of result from a delegate with a given selector and `va_list`.
+ 
+ @param result A pointer to a buffer for the result. Note that this buffer won't be changed if the invocation is not invoked.
+ @param aSelector The selector to invoke.
+ @param args A properly-started `va_list` of arguments to be passed to the selector.
+ 
+ @return YES if invocation was invoked successfully. */
 - (BOOL)ti_getResult:(void *)result fromDelegateWithSelector:(SEL)aSelector withArgList:(va_list)args;
 
-/** Returns an object value from a given delegate selector and provided (object) arguments */
+/** Get an object value from a given delegate selector with provided (object) arguments.
+ 
+ @param aSelector The selector to invoke.
+ @param ... The arguments to be passed to the selector (excluding the first argument, assumed to be `self`). 
+ 
+ @return The object returned by the delegate. */
 - (id)ti_objectFromDelegateWithSelector:(SEL)aSelector, ...;
 
-/** Returns a BOOL value from a given delegate selector. If the delegate does not respond to the selector, YES is returned. */
+/** Get a Boolean value from a given delegate selector with provided (object) arguments. 
+ 
+ If the delegate does not respond to the selector, `YES` is returned.
+ 
+ @param aSelector The selector to invoke.
+ @param ... The arguments to be passed to the selector (excluding the first argument, assumed to be `self`). 
+ 
+ @return The Boolean returned by the delegate. */
 - (BOOL)ti_optimisticBoolFromDelegateWithSelector:(SEL)aSelector, ...;
 
-/** Returns a BOOL value from a given delegate selector. If the delegate does not respond to the selector, NO is returned. */
+/** Get a Boolean value from a given delegate selector with provided (object) arguments. 
+ 
+ If the delegate does not respond to the selector, `NO` is returned. 
+ 
+ @param aSelector The selector to invoke.
+ @param ... The arguments to be passed to the selector (excluding the first argument, assumed to be `self`). 
+ 
+ @return The Boolean returned by the delegate. */
 - (BOOL)ti_boolFromDelegateWithSelector:(SEL)aSelector, ...;
 
-/** Alerts a delegate with a given selector and provided arguments */
+/** Alert a delegate with a given selector and provided (object) arguments.
+ 
+ @param aSelector The selector to invoke.
+ @param ... The arguments to be passed to the selector (excluding the first argument, assumed to be `self`). */
 - (void)ti_alertDelegateWithSelector:(SEL)aSelector, ...;
 
+/** Alert a delegate on the main thread with a given selector and provided (object) arguments.
+ 
+ @param aSelector The selector to invoke.
+ @param waitUntilDone A Boolean indicating whether this method should wait until the delegate has been alerted.
+ @param ... The arguments to be passed to the selector (excluding the first argument, assumed to be `self`). */
 - (void)ti_alertDelegateOnMainThreadWithSelector:(SEL)aSelector waitUntilDone:(BOOL)shouldWait, ...;
 
 @end

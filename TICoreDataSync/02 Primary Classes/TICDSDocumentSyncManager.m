@@ -18,6 +18,8 @@
 @property (nonatomic, retain) NSString *documentDescription;
 @property (nonatomic, retain) NSString *clientIdentifier;
 @property (nonatomic, retain) NSDictionary *userInfo;
+@property (retain) NSURL *helperFileDirectoryLocation;
+
 @end
 
 @implementation TICDSDocumentSyncManager

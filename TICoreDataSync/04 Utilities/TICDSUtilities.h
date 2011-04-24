@@ -6,23 +6,31 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
+/** `TICDSUtilities` is a utility class providing various class methods for miscellaneous tasks */
+
 @interface TICDSUtilities : NSObject {
 @private
     
 }
 
-/** Returns a globally unique string */
+/** @name Unique Strings */
+
+/** Returns a globally unique string, currently created using `[[NSProcessInfo processInfo] globallyUniqueString]`. */
 + (NSString *)uuidString;
 
-/** Returns a dictionary containing the basic file structure for synchronization */
-/** String Keys are names of sub-directories */
+/** @name File Structure */
+
+/** Returns a dictionary containing the basic file structure for Global Application synchronization.
+ 
+ The string keys are names of sub-directories. */
 + (NSDictionary *)remoteGlobalAppFileStructure;
 
-/** Returns a dictionary containing the basic client device file structure for synchronization */
-/** Keys etc as above, with exception of ClientDeviceUID etc keys */
+/** Returns a dictionary containing the basic client device file structure for Global Application synchronization.
+ 
+ The string keys etc are names of sub-directories, with exception of certain keys to be substitued with ClientDeviceUID, etc. */
 + (NSDictionary *)remoteGlobalAppClientDeviceFileStructure;
 
-/** Returns a dictionary containing the basic file structure for a synchronized document */
+/** Returns a dictionary containing the basic file structure for a synchronized document. */
 + (NSDictionary *)remoteDocumentFileStructure;
 
 @end

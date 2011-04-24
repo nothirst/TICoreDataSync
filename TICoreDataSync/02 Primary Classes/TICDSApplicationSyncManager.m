@@ -13,6 +13,7 @@
 - (BOOL)startRegistrationProcess:(NSError **)outError;
 - (void)bailFromRegistrationProcess;
 
+@property (nonatomic, assign) TICDSApplicationSyncManagerState state;
 @property (nonatomic, retain) NSString *appIdentifier;
 @property (nonatomic, retain) NSString *clientIdentifier;
 @property (nonatomic, retain) NSString *clientDescription;

@@ -8,6 +8,9 @@
 
 #import "TICDSApplicationRegistrationOperation.h"
 
+/**
+ `TICDSFileManagerBasedApplicationRegistrationOperation` is an application registration operation designed for use with a `TICDSFileManagerBasedApplicationSyncManager`.
+ */
 
 @interface TICDSFileManagerBasedApplicationRegistrationOperation : TICDSApplicationRegistrationOperation {
 @private
@@ -17,9 +20,18 @@
     NSString *_clientDevicesThisClientDeviceDirectoryPath;
 }
 
+/** @name Properties */
+
+/** The application root path. */
 @property (retain) NSString *applicationDirectoryPath;
+
+/** The path to the `Documents` directory. */
 @property (retain) NSString *documentsDirectoryPath;
+
+/** The path to the `ClientDevices` directory. */
 @property (retain) NSString *clientDevicesDirectoryPath;
+
+/** The path to the this client's directory inside the `ClientDevices` directory. */
 @property (retain) NSString *clientDevicesThisClientDeviceDirectoryPath;
 
 @end

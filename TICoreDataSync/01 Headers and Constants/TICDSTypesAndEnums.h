@@ -6,37 +6,43 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
-#pragma mark -
-#pragma mark TYPEDEFS
-#pragma mark Sync Managers
+/** Contains Typedefs and enums for the entire `TICoreDataSync` framework */
+
+/** @name Sync Managers */
+/** The state of an Application Sync Manager 
+ */
 typedef enum _TICDSApplicationSyncManagerState {
     TICDSApplicationSyncManagerStateUnknown = 0,
     
     TICDSApplicationSyncManagerStateAbleToSync = 1,
     
-    // Registration Phase
+    /** Registration Phase */
     TICDSApplicationSyncManagerStateNotYetRegistered = -100,
     TICDSApplicationSyncManagerStateRegistering = -110,
 } TICDSApplicationSyncManagerState;
 
+/** The state of a Document Sync Manager 
+ */
 typedef enum _TICDSDocumentSyncManagerState {
     TICDSDocumentSyncManagerStateUnknown = 0,
     
     TICDSDocumentSyncManagerStateAbleToSync = 1,
     
-    // Registration Phase
+    /** Registration Phase */
     TICDSDocumentSyncManagerStateNotYetRegistered = -100,
     TICDSDocumentSyncManagerStateRegistering = -110,
     
-    // Helper Files
+    /** Helper Files */
     TICDSDocumentSyncManagerStateUnableToSyncBecauseDelegateProvidedHelperFileDirectoryDoesNotExist = -162,
     TICDSDocumentSyncManagerStateFailedToCreateDefaultHelperFileDirectory = -167,
     
-    // Synchronization
+    /** Synchronization */
     TICDSDocumentSyncManagerStateSynchronizing = -400
 } TICDSDocumentSyncManagerState;
 
-#pragma mark Existence
+/** @name File Structure Existence */
+/** Whether file structures exist or not 
+ */
 typedef enum _TICDSRemoteFileStructureExistsResponseType {
     
     TICDSRemoteFileStructureExistsResponseTypeError = 0,
@@ -45,7 +51,9 @@ typedef enum _TICDSRemoteFileStructureExistsResponseType {
     
 } TICDSRemoteFileStructureExistsResponseType;
 
-#pragma mark Logging
+/** @name Logging */
+/** Verbosity for Logging debugging output
+ */
 typedef enum _TICDSLogVerbosity {
     TICDSLogVerbosityNoLogging = 0,
     TICDSLogVerbosityErrorsOnly = 1,
@@ -54,7 +62,9 @@ typedef enum _TICDSLogVerbosity {
     TICDSLogVerbosityEveryStep = 100
 } TICDSLogVerbosity;
 
-#pragma mark Errors
+/** @name Errors */
+/** Error codes
+ */
 typedef enum _TICDSErrorCode {
     
     TICDSErrorCodeNoError = 0,
@@ -71,7 +81,9 @@ typedef enum _TICDSErrorCode {
     TICDSErrorCodeCoreDataSaveError,
 } TICDSErrorCode;
 
-#pragma mark Operations
+/** @name Operation Phases */
+/** The status of any particular phase of an operation 
+ */
 typedef enum _TICDSOperationPhaseStatus {
     TICDSOperationPhaseStatusInProgress = 0,
     
@@ -80,7 +92,9 @@ typedef enum _TICDSOperationPhaseStatus {
     
 } TICDSOperationPhaseStatus;
 
-#pragma mark Sync Changes
+/** @name Sync Changes */
+/** The type of a sync change
+ */
 typedef enum _TICDSSyncChangeType {
     TICDSSyncChangeTypeUnknown = 0,
     TICDSSyncChangeTypeObjectInserted = 1,

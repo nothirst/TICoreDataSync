@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>--company-id</key>
+	<string>com.timisted</string>
+	<key>--ignore</key>
+	<array>
+		<string>ThirdParty</string>
+		<string>Libraries</string>
+		<string>Frameworks</string>
+		<string>Testing</string>
+		<string>SupportingFiles</string>
+		<string>.m</string>
+	</array>
+	<key>--logformat</key>
+	<integer>1</integer>
+	<key>--print-settings</key>
+	<true/>
+	<key>--project-company</key>
+	<string>Tim Isted</string>
+	<key>--project-name</key>
+	<string>TICoreDataSync</string>
+	<key>--repeat-first-par</key>
+	<false/>
+	<key>--verbose</key>
+	<integer>3</integer>
+	<key>--output</key>
+	<string>Documentation</string>
+	<key>--keep-intermediate-files</key>
+	<true/>
+</dict>
+</plist>
