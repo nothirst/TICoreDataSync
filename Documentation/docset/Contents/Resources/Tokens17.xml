@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/TICDSApplicationSyncManagerDelegate.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/TICDSApplicationSyncManagerDelegate</TokenIdentifier>
+			<Abstract>The TICDSApplicationSyncManagerDelegate protocol defines the methods implemented by delegates of a TICDSApplicationSyncManager object.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>
+			
+			<NodeRef refid="17"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManagerDidStartRegistration:</TokenIdentifier>
+			<Abstract>Informs the delegate that the sync manager has started the application registration process.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManagerDidStartRegistration:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The application sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerDidStartRegistration:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManager:encounteredRegistrationError:</TokenIdentifier>
+			<Abstract>Informs the delegate that the sync manager encountered an error during the application registration process.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager encounteredRegistrationError:(NSError *)anError</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The application sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>anError</Name>
+					<Abstract>The error that was encountered.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManager:encounteredRegistrationError:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManagerFailedToRegister:</TokenIdentifier>
+			<Abstract>Informs the delegate that the registration process failed to complete.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManagerFailedToRegister:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The application sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerFailedToRegister:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManagerDidRegisterSuccessfully:</TokenIdentifier>
+			<Abstract>Informs the delegate that the registration process completed successfully.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManagerDidRegisterSuccessfully:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The application sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerDidRegisterSuccessfully:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:</TokenIdentifier>
+			<Abstract>Informs the delegate that the sync manager has started to check for available documents that have previously been synchronized.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The application sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:</TokenIdentifier>
+			<Abstract>Informs the delegate that the sync manager failed to check for previously-synchronized documents.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager failedToCheckForPreviouslySynchronizedDocumentsWithError:(NSError *)anError</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The application sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>anError</Name>
+					<Abstract>The error related to the failure.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManagerDidNotFindAnyPreviouslySynchronizedDocuments:</TokenIdentifier>
+			<Abstract>Informs the delegate that the sync manager didn't find any previously-synchronized documents.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManagerDidNotFindAnyPreviouslySynchronizedDocuments:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The application sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerDidNotFindAnyPreviouslySynchronizedDocuments:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManager:didFindPreviouslySynchronizedDocuments:</TokenIdentifier>
+			<Abstract>Informs the delegate that the sync manager found one or more previously-synchronized documents.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager didFindPreviouslySynchronizedDocuments:(NSArray *)documentsArray</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The application sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>documentsArray</Name>
+					<Abstract>An array of NSDictionary objects containing information about each available document.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManager:didFindPreviouslySynchronizedDocuments:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

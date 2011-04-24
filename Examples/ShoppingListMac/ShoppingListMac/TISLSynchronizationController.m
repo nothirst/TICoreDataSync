@@ -126,9 +126,9 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
 #pragma mark List of Available Documents
 - (void)fetchListOfAvailableDocuments
 {
-    /*TICDApplicationSyncManager *syncManager = [TICDLocalDropboxApplicationSyncManager defaultSyncManager];
+    TICDSApplicationSyncManager *syncManager = [TICDSFileManagerBasedApplicationSyncManager defaultApplicationSyncManager];
     
-    [syncManager requestListOfAvailableDocuments];*/
+    [syncManager requestListOfPreviouslySynchronizedDocuments];
 }
 
 #pragma mark Available Docs Delegate

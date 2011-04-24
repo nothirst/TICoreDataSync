@@ -12,6 +12,7 @@
 
 - (BOOL)startRegistrationProcess:(NSError **)outError;
 - (void)bailFromRegistrationProcess;
+- (BOOL)getAvailablePreviouslySynchronizedDocuments:(NSError **)outError;
 
 @property (nonatomic, assign) TICDSApplicationSyncManagerState state;
 @property (nonatomic, retain) NSString *appIdentifier;
@@ -118,11 +119,88 @@
 }
 
 #pragma mark -
+#pragma mark LIST OF PREVIOUSLY SYNCHRONIZED DOCUMENTS
+- (void)requestListOfPreviouslySynchronizedDocuments
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to check for remote documents that have been previously synchronized");
+    [self ti_alertDelegateWithSelector:@selector(syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:)];
+    
+    NSError *anyError = nil;
+    BOOL success = [self getAvailablePreviouslySynchronizedDocuments:&anyError];
+    
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Request for list of previously-synchronized documents failed with error: %@", anyError);
+        [self ti_alertDelegateWithSelector:@selector(syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:), anyError];
+    }
+}
+
+- (BOOL)getAvailablePreviouslySynchronizedDocuments:(NSError **)outError
+{
+    TICDSListOfPreviouslySynchronizedDocumentsOperation *operation = [self listOfPreviouslySynchronizedDocumentsOperation];
+    
+    if( !operation ) {
+        if( outError ) {
+            *outError = [TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__];
+        }
+        
+        return NO;
+    }
+    
+    [[self otherTasksQueue] addOperation:operation];
+    
+    return YES;
+}
+
+- (void)gotNoPreviouslySynchronizedDocuments
+{
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Didn't get any available documents");
+    [self ti_alertDelegateWithSelector:@selector(syncManagerDidNotFindAnyPreviouslySynchronizedDocuments:)];
+}
+
+- (void)gotAvailablePreviouslySynchronizedDocuments:(NSArray *)anArray
+{
+    if( [anArray count] < 1 ) {
+        [self gotNoPreviouslySynchronizedDocuments];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Found previously-synchronized remote documents: %@", anArray);
+    [self ti_alertDelegateWithSelector:@selector(syncManager:didFindPreviouslySynchronizedDocuments:), anArray];
+}
+
+#pragma mark Operation Generation
+- (TICDSListOfPreviouslySynchronizedDocumentsOperation *)listOfPreviouslySynchronizedDocumentsOperation
+{
+    return [[[TICDSListOfPreviouslySynchronizedDocumentsOperation alloc] initWithDelegate:self] autorelease];
+}
+
+#pragma mark Operation Communications
+- (void)listOfDocumentsOperationCompleted:(TICDSListOfPreviouslySynchronizedDocumentsOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"List of Previously-Synchronized Documents Operation Completed");
+    [self gotAvailablePreviouslySynchronizedDocuments:[anOperation availableDocuments]];
+}
+
+- (void)listOfDocumentsOperationWasCancelled:(TICDSListOfPreviouslySynchronizedDocumentsOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"List of Previously-Synchronized Documents Operation was Cancelled");
+    [self gotNoPreviouslySynchronizedDocuments];
+}
+
+- (void)listOfDocumentsOperation:(TICDSListOfPreviouslySynchronizedDocumentsOperation *)anOperation failedToCompleteWithError:(NSError *)anError
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"List of Previously-Synchronized Documents Operation Failed to Complete with Error: %@", anError);
+    [self ti_alertDelegateWithSelector:@selector(syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:), anError];
+}
+
+#pragma mark -
 #pragma mark OPERATION COMMUNICATIONS
 - (void)operationCompletedSuccessfully:(TICDSOperation *)anOperation
 {
     if( [anOperation isKindOfClass:[TICDSApplicationRegistrationOperation class]] ) {
         [self applicationRegistrationOperationCompleted:(id)anOperation];
+    } else if( [anOperation isKindOfClass:[TICDSListOfPreviouslySynchronizedDocumentsOperation class]] ) {
+        [self listOfDocumentsOperationCompleted:(id)anOperation];
     }
 }
 
@@ -130,6 +208,8 @@
 {
     if( [anOperation isKindOfClass:[TICDSApplicationRegistrationOperation class]] ) {
         [self applicationRegistrationOperationWasCancelled:(id)anOperation];
+    } else if( [anOperation isKindOfClass:[TICDSListOfPreviouslySynchronizedDocumentsOperation class]] ) {
+        [self listOfDocumentsOperationWasCancelled:(id)anOperation];
     }
 }
 
@@ -137,6 +217,8 @@
 {
     if( [anOperation isKindOfClass:[TICDSApplicationRegistrationOperation class]] ) {
         [self applicationRegistrationOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
+    } else if( [anOperation isKindOfClass:[TICDSListOfPreviouslySynchronizedDocumentsOperation class]] ) {
+        [self listOfDocumentsOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     }
 }
 

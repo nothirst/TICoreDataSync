@@ -72,7 +72,11 @@
 	
 	<option value="//api/name/applicationRegistrationOperation">&nbsp;&nbsp;&nbsp;&nbsp;- applicationRegistrationOperation</option>
 	
+	<option value="//api/name/listOfPreviouslySynchronizedDocumentsOperation">&nbsp;&nbsp;&nbsp;&nbsp;- listOfPreviouslySynchronizedDocumentsOperation</option>
+	
 	<option value="//api/name/registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:">&nbsp;&nbsp;&nbsp;&nbsp;- registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:</option>
+	
+	<option value="//api/name/requestListOfPreviouslySynchronizedDocuments">&nbsp;&nbsp;&nbsp;&nbsp;- requestListOfPreviouslySynchronizedDocuments</option>
 	
 	
 	
@@ -93,6 +97,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Application-Wide Sync Manager">Application-Wide Sync Manager</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Registration">Registration</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Accessing Previously-Synchronized Documents">Accessing Previously-Synchronized Documents</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Methods Overridden by Subclasses">Methods Overridden by Subclasses</a></span></li>
 	
@@ -150,7 +156,11 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationRegistrationOperation">applicationRegistrationOperation</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/listOfPreviouslySynchronizedDocumentsOperation">listOfPreviouslySynchronizedDocumentsOperation</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:">registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/requestListOfPreviouslySynchronizedDocuments">requestListOfPreviouslySynchronizedDocuments</a></span></li>
 	
 </ul></li>
 
@@ -248,6 +258,21 @@
 						</ul>
 						
 						
+						<a title="Accessing Previously-Synchronized Documents" name="task_Accessing Previously-Synchronized Documents"></a>
+						<h3 class="subsubtitle task-title">Accessing Previously-Synchronized Documents</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/requestListOfPreviouslySynchronizedDocuments">&ndash;&nbsp;requestListOfPreviouslySynchronizedDocuments</a></code>
+		<span class="tooltip"><p>Request a list of documents that have previously been synchronized for this application, by any client.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
 						<a title="Methods Overridden by Subclasses" name="task_Methods Overridden by Subclasses"></a>
 						<h3 class="subsubtitle task-title">Methods Overridden by Subclasses</h3>
 
@@ -256,6 +281,13 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/applicationRegistrationOperation">&ndash;&nbsp;applicationRegistrationOperation</a></code>
 		<span class="tooltip"><p>Returns an application registration operation.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/listOfPreviouslySynchronizedDocumentsOperation">&ndash;&nbsp;listOfPreviouslySynchronizedDocumentsOperation</a></code>
+		<span class="tooltip"><p>Returns an operation to fetch a list of previously synchronized documents.</p></span>
 	</span>
 	
 	
@@ -905,6 +937,48 @@
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/listOfPreviouslySynchronizedDocumentsOperation" title="listOfPreviouslySynchronizedDocumentsOperation"></a>
+	<h3 class="subsubtitle method-title">listOfPreviouslySynchronizedDocumentsOperation</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns an operation to fetch a list of previously synchronized documents.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (TICDSListOfPreviouslySynchronizedDocumentsOperation *)listOfPreviouslySynchronizedDocumentsOperation</code></div>
+	
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>a correctly-configured subclass of <a href="../Classes/TICDSListOfPreviouslySynchronizedDocumentsOperation.html"><code>TICDSListOfPreviouslySynchronizedDocumentsOperation</code></a>.</p>
+	</div>
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Subclasses of <a href="TICDSApplicationSyncManager.html"><code>TICDSApplicationSyncManager</code></a> use this method to return a correctly-configured list of documents operation for their particular sync method.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:" title="registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:"></a>
 	<h3 class="subsubtitle method-title">registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:</h3>
 	
@@ -959,6 +1033,43 @@
 <p>This will automatically spawn a <a href="../Classes/TICDSApplicationRegistrationOperation.html"><code>TICDSApplicationRegistrationOperation</code></a>, and notify you of progress through the <a href="../Protocols/TICDSApplicationSyncManagerDelegate.html"><code>TICDSApplicationSyncManagerDelegate</code></a> methods.</p>
 
 <p>If this is the first time you have registered a client with this app identifier, registration will automatically create the file structure necessary at the remote end for this and other clients to synchronize. See <a href="../Classes/TICDSUtilities.html#//api/name/remoteGlobalAppFileStructure"><code>[TICDSUtilities remoteGlobalAppFileStructure]</code></a> for the structure that will be created.</p><div class="warning"><p>You must call this method before using the application sync manager for any other purpose.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/requestListOfPreviouslySynchronizedDocuments" title="requestListOfPreviouslySynchronizedDocuments"></a>
+	<h3 class="subsubtitle method-title">requestListOfPreviouslySynchronizedDocuments</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Request a list of documents that have previously been synchronized for this application, by any client.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)requestListOfPreviouslySynchronizedDocuments</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method will automatically spawn a <a href="../Classes/TICDSListOfPreviouslySynchronizedDocumentsOperation.html"><code>TICDSListOfPreviouslySynchronizedDocumentsOperation</code></a>, and notify you of progress through the <a href="../Protocols/TICDSApplicationSyncManagerDelegate.html"><code>TICDSApplicationSyncManagerDelegate</code></a> methods.</p>
 	</div>
 	
 	

@@ -25,11 +25,23 @@
 						<NodeRef refid="13"/>
 						<NodeRef refid="14"/>
 						<NodeRef refid="15"/>
+						<NodeRef refid="16"/>
 						
 					</Subnodes>
 				</Node>
 				
 				
+				
+				<Node type="folder">
+					<Name>Protocols</Name>
+					<Path>index.html</Path>
+					<Subnodes>
+						<NodeRef refid="17"/>
+						<NodeRef refid="18"/>
+						<NodeRef refid="19"/>
+						
+					</Subnodes>
+				</Node>
 				
 			</Subnodes>
         </Node>
@@ -72,31 +84,47 @@
 			<Path>Classes/TICDSFileManagerBasedDocumentSyncManager.html</Path>
 		</Node>
 		<Node id="10">
+			<Name>TICDSListOfPreviouslySynchronizedDocumentsOperation</Name>
+			<Path>Classes/TICDSListOfPreviouslySynchronizedDocumentsOperation.html</Path>
+		</Node>
+		<Node id="11">
 			<Name>TICDSLog</Name>
 			<Path>Classes/TICDSLog.html</Path>
 		</Node>
-		<Node id="11">
+		<Node id="12">
 			<Name>TICDSOperation</Name>
 			<Path>Classes/TICDSOperation.html</Path>
 		</Node>
-		<Node id="12">
+		<Node id="13">
 			<Name>TICDSSyncChange</Name>
 			<Path>Classes/TICDSSyncChange.html</Path>
 		</Node>
-		<Node id="13">
+		<Node id="14">
 			<Name>TICDSSynchronizedManagedObject</Name>
 			<Path>Classes/TICDSSynchronizedManagedObject.html</Path>
 		</Node>
-		<Node id="14">
+		<Node id="15">
 			<Name>TICDSSynchronizedManagedObjectContext</Name>
 			<Path>Classes/TICDSSynchronizedManagedObjectContext.html</Path>
 		</Node>
-		<Node id="15">
+		<Node id="16">
 			<Name>TICDSUtilities</Name>
 			<Path>Classes/TICDSUtilities.html</Path>
 		</Node>
 		
 		
+		<Node id="17">
+			<Name>TICDSApplicationSyncManagerDelegate</Name>
+			<Path>Protocols/TICDSApplicationSyncManagerDelegate.html</Path>
+		</Node>
+		<Node id="18">
+			<Name>TICDSDocumentSyncManagerDelegate</Name>
+			<Path>Protocols/TICDSDocumentSyncManagerDelegate.html</Path>
+		</Node>
+		<Node id="19">
+			<Name>TICDSOperationDelegate</Name>
+			<Path>Protocols/TICDSOperationDelegate.html</Path>
+		</Node>
 		
 	</Library>
 </DocSetNodes>

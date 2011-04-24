@@ -74,6 +74,13 @@
  */
 - (void)registerWithDelegate:(id <TICDSApplicationSyncManagerDelegate>)aDelegate globalAppIdentifier:(NSString *)anAppIdentifier uniqueClientIdentifier:(NSString *)aClientIdentifier description:(NSString *)aClientDescription userInfo:(NSDictionary *)someUserInfo;
 
+/** @name Accessing Previously-Synchronized Documents */
+
+/** Request a list of documents that have previously been synchronized for this application, by any client.
+ 
+ This method will automatically spawn a `TICDSListOfPreviouslySynchronizedDocumentsOperation`, and notify you of progress through the `TICDSApplicationSyncManagerDelegate` methods. */
+- (void)requestListOfPreviouslySynchronizedDocuments;
+
 /** @name Methods Overridden by Subclasses */
 
 /** Returns an application registration operation.
@@ -83,6 +90,13 @@
  @return a correctly-configured subclass of `TICDSApplicationRegistrationOperation`.
 */
 - (TICDSApplicationRegistrationOperation *)applicationRegistrationOperation;
+
+/** Returns an operation to fetch a list of previously synchronized documents.
+ 
+ Subclasses of `TICDSApplicationSyncManager` use this method to return a correctly-configured list of documents operation for their particular sync method.
+ 
+ @return a correctly-configured subclass of `TICDSListOfPreviouslySynchronizedDocumentsOperation`. */
+- (TICDSListOfPreviouslySynchronizedDocumentsOperation *)listOfPreviouslySynchronizedDocumentsOperation;
 
 /** @name Properties */
 

@@ -67,6 +67,17 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationSyncManager/requestListOfPreviouslySynchronizedDocuments</TokenIdentifier>
+			<Abstract>Request a list of documents that have previously been synchronized for this application, by any client.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (void)requestListOfPreviouslySynchronizedDocuments</Declaration>
+			
+			
+			<Anchor>//api/name/requestListOfPreviouslySynchronizedDocuments</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationSyncManager/applicationRegistrationOperation</TokenIdentifier>
 			<Abstract>Returns an application registration operation.</Abstract>
 			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
@@ -75,6 +86,17 @@
 			
 			<ReturnValue><Abstract>a correctly-configured subclass of TICDSApplicationRegistrationOperation.</Abstract></ReturnValue>
 			<Anchor>//api/name/applicationRegistrationOperation</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationSyncManager/listOfPreviouslySynchronizedDocumentsOperation</TokenIdentifier>
+			<Abstract>Returns an operation to fetch a list of previously synchronized documents.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (TICDSListOfPreviouslySynchronizedDocumentsOperation *)listOfPreviouslySynchronizedDocumentsOperation</Declaration>
+			
+			<ReturnValue><Abstract>a correctly-configured subclass of TICDSListOfPreviouslySynchronizedDocumentsOperation.</Abstract></ReturnValue>
+			<Anchor>//api/name/listOfPreviouslySynchronizedDocumentsOperation</Anchor>
 		</Token>
 		
 		<Token>

@@ -44,6 +44,7 @@
 		389F86C81360933F00004CA4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389F86C71360933F00004CA4 /* QuartzCore.framework */; };
 		389F86CA1360934800004CA4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389F86C91360934700004CA4 /* SystemConfiguration.framework */; };
 		389F86CD136093D800004CA4 /* TISLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 389F86CC136093D800004CA4 /* TISLAppDelegate.m */; };
+		38BE911A136477B400312C60 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BE9119136477B400312C60 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.m */; };
 		38C0B62F13632A8600B63589 /* TIDocumentSyncChangesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C0B62E13632A8600B63589 /* TIDocumentSyncChangesWindowController.m */; };
 		38C0B63C136333D100B63589 /* TICDSSynchronizedManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C0B63B136333D100B63589 /* TICDSSynchronizedManagedObject.m */; };
 		38C0B641136338BC00B63589 /* TIKQDirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C0B63E136338BC00B63589 /* TIKQDirectoryWatcher.m */; };
@@ -117,6 +118,8 @@
 		389F86C91360934700004CA4 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		389F86CB136093D800004CA4 /* TISLAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TISLAppDelegate.h; sourceTree = "<group>"; };
 		389F86CC136093D800004CA4 /* TISLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TISLAppDelegate.m; sourceTree = "<group>"; };
+		38BE9118136477B400312C60 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSListOfPreviouslySynchronizedDocumentsOperation.h; sourceTree = "<group>"; };
+		38BE9119136477B400312C60 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSListOfPreviouslySynchronizedDocumentsOperation.m; sourceTree = "<group>"; };
 		38C0B62D13632A8600B63589 /* TIDocumentSyncChangesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TIDocumentSyncChangesWindowController.h; sourceTree = "<group>"; };
 		38C0B62E13632A8600B63589 /* TIDocumentSyncChangesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TIDocumentSyncChangesWindowController.m; sourceTree = "<group>"; };
 		38C0B63A136333D100B63589 /* TICDSSynchronizedManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSynchronizedManagedObject.h; sourceTree = "<group>"; };
@@ -172,6 +175,8 @@
 				382390D113608A1D0068EB37 /* TICDSApplicationRegistrationOperation.m */,
 				389D76991361D730007F19DC /* TICDSDocumentRegistrationOperation.h */,
 				389D769A1361D730007F19DC /* TICDSDocumentRegistrationOperation.m */,
+				38BE9118136477B400312C60 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.h */,
+				38BE9119136477B400312C60 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.m */,
 			);
 			path = "Generic Operations";
 			sourceTree = "<group>";
@@ -465,6 +470,7 @@
 				38C0B642136338BC00B63589 /* TIManagedObjectExtensions.m in Sources */,
 				3863105B13634163003D8EE3 /* TIDocumentShopsWindowController.m in Sources */,
 				3863106813636BDD003D8EE3 /* TICDSConstants.m in Sources */,
+				38BE911A136477B400312C60 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
