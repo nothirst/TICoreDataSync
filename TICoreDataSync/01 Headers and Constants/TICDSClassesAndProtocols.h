@@ -45,7 +45,7 @@
 @optional
 
 #pragma mark Registration
-/** @name Registration Phase */
+/** @name Registration */
 
 /** Informs the delegate that the sync manager has started the application registration process.
  
