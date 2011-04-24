@@ -12,6 +12,10 @@
 		<string>Testing</string>
 		<string>SupportingFiles</string>
 		<string>.m</string>
+		<string>Examples</string>
+		<string>Documentation</string>
+		<string>05 File Structure</string>
+		<string>06 External Sources</string>
 	</array>
 	<key>--logformat</key>
 	<integer>1</integer>

@@ -30,15 +30,6 @@
 				</Node>
 				
 				
-				<Node type="folder">
-					<Name>Categories</Name>
-					<Path>index.html</Path>
-					<Subnodes>
-						<NodeRef refid="16"/>
-						
-					</Subnodes>
-				</Node>
-				
 				
 			</Subnodes>
         </Node>
@@ -105,10 +96,6 @@
 			<Path>Classes/TICDSUtilities.html</Path>
 		</Node>
 		
-		<Node id="16">
-			<Name>NSObject(TIDelegateCommunications)</Name>
-			<Path>Categories/NSObject(TIDelegateCommunications).html</Path>
-		</Node>
 		
 		
 	</Library>
