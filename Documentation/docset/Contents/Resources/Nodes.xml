@@ -26,6 +26,7 @@
 						<NodeRef refid="14"/>
 						<NodeRef refid="15"/>
 						<NodeRef refid="16"/>
+						<NodeRef refid="17"/>
 						
 					</Subnodes>
 				</Node>
@@ -36,9 +37,9 @@
 					<Name>Protocols</Name>
 					<Path>index.html</Path>
 					<Subnodes>
-						<NodeRef refid="17"/>
 						<NodeRef refid="18"/>
 						<NodeRef refid="19"/>
+						<NodeRef refid="20"/>
 						
 					</Subnodes>
 				</Node>
@@ -84,44 +85,48 @@
 			<Path>Classes/TICDSFileManagerBasedDocumentSyncManager.html</Path>
 		</Node>
 		<Node id="10">
+			<Name>TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation</Name>
+			<Path>Classes/TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation.html</Path>
+		</Node>
+		<Node id="11">
 			<Name>TICDSListOfPreviouslySynchronizedDocumentsOperation</Name>
 			<Path>Classes/TICDSListOfPreviouslySynchronizedDocumentsOperation.html</Path>
 		</Node>
-		<Node id="11">
+		<Node id="12">
 			<Name>TICDSLog</Name>
 			<Path>Classes/TICDSLog.html</Path>
 		</Node>
-		<Node id="12">
+		<Node id="13">
 			<Name>TICDSOperation</Name>
 			<Path>Classes/TICDSOperation.html</Path>
 		</Node>
-		<Node id="13">
+		<Node id="14">
 			<Name>TICDSSyncChange</Name>
 			<Path>Classes/TICDSSyncChange.html</Path>
 		</Node>
-		<Node id="14">
+		<Node id="15">
 			<Name>TICDSSynchronizedManagedObject</Name>
 			<Path>Classes/TICDSSynchronizedManagedObject.html</Path>
 		</Node>
-		<Node id="15">
+		<Node id="16">
 			<Name>TICDSSynchronizedManagedObjectContext</Name>
 			<Path>Classes/TICDSSynchronizedManagedObjectContext.html</Path>
 		</Node>
-		<Node id="16">
+		<Node id="17">
 			<Name>TICDSUtilities</Name>
 			<Path>Classes/TICDSUtilities.html</Path>
 		</Node>
 		
 		
-		<Node id="17">
+		<Node id="18">
 			<Name>TICDSApplicationSyncManagerDelegate</Name>
 			<Path>Protocols/TICDSApplicationSyncManagerDelegate.html</Path>
 		</Node>
-		<Node id="18">
+		<Node id="19">
 			<Name>TICDSDocumentSyncManagerDelegate</Name>
 			<Path>Protocols/TICDSDocumentSyncManagerDelegate.html</Path>
 		</Node>
-		<Node id="19">
+		<Node id="20">
 			<Name>TICDSOperationDelegate</Name>
 			<Path>Protocols/TICDSOperationDelegate.html</Path>
 		</Node>

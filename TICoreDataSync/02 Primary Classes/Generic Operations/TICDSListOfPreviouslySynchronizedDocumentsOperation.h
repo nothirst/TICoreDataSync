@@ -27,20 +27,26 @@
     
     BOOL _completionInProgress;
     TICDSOperationPhaseStatus _arrayOfDocumentIdentifiersStatus;
+    
+    TICDSOperationPhaseStatus _infoDictionariesStatus;
     NSUInteger _numberOfInfoDictionariesToFetch;
     NSUInteger _numberOfInfoDictionariesFetched;
     NSUInteger _numberOfInfoDictionariesThatFailedToFetch;
-    
-    TICDSOperationPhaseStatus _infoDictionariesStatus;
 }
 
 /** @name Methods Overridden by Subclasses */
 
 /** Build an array of `NSString` document identifiers for all available, previously-synchronized documents.
  
- Call `builtArrayOfDocumentIdentifiers:` when the array is built.
- */
+ Call `builtArrayOfDocumentIdentifiers:` when the array is built. */
 - (void)buildArrayOfDocumentIdentifiers;
+
+/** Fetch the `documentInfo` dictionaries for each of the documents with the specified IDs.
+ 
+ @param syncIDs The array of document identifier `NSString`s.
+ 
+ Call `fetchedInfoDictionary:forDocumentWithSyncID:` for each document as it is fetched. */
+- (void)fetchInfoDictionariesForDocumentsWithSyncIDs:(NSArray *)syncIDs;
 
 /** @name Callbacks */
 
@@ -50,6 +56,14 @@
  
  @param anArray The array of identifiers. Pass `nil` if an error occurred. */
 - (void)builtArrayOfDocumentIdentifiers:(NSArray *)anArray;
+
+/** Pass back the `documentInfo` dictionary for a given document sync identifier.
+ 
+ If an error occurred, call `setError:` and pass `nil` for `anInfoDictionary`.
+ 
+ @param anInfoDictionary The `documentInfo` dictionary, or `nil` if an error occurred.
+ @param aSyncID The unique synchronization identifier of the given document. */
+- (void)fetchedInfoDictionary:(NSDictionary *)anInfoDictionary forDocumentWithSyncID:(NSString *)aSyncID;
 
 /** @name Properties */
 
@@ -63,6 +77,15 @@
 
 /** The phase status regarding building the document sync IDs array. */
 @property (nonatomic, assign) TICDSOperationPhaseStatus arrayOfDocumentIdentifiersStatus;
+
+/** The total number of info dictionaries that need to be fetched. */
+@property (nonatomic, assign) NSUInteger numberOfInfoDictionariesToFetch;
+
+/** The number of info dictionaries that have already been fetched. */
+@property (nonatomic, assign) NSUInteger numberOfInfoDictionariesFetched;
+
+/** The number of info dictionaries that failed to fetch because of an error. */
+@property (nonatomic, assign) NSUInteger numberOfInfoDictionariesThatFailedToFetch;
 
 /** The phase status of the info dictionary requests. */
 @property (nonatomic, assign) TICDSOperationPhaseStatus infoDictionariesStatus;

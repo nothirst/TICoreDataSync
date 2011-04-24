@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/TICDSOperationDelegate.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/TICDSOperationDelegate</TokenIdentifier>
+			<Abstract>The TICDSOperationDelegate protocol defines the methods implemented by delegates of any generic TICDSOperation.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>
+			
+			<NodeRef refid="20"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSOperationDelegate/operationCompletedSuccessfully:</TokenIdentifier>
+			<Abstract>Informs the delegate that the operation has completely and successfully finished its tasks.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)operationCompletedSuccessfully:(TICDSOperation *)anOperation</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>anOperation</Name>
+					<Abstract>The operation object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/operationCompletedSuccessfully:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSOperationDelegate/operationWasCancelled:</TokenIdentifier>
+			<Abstract>Informs the delegate that the operation was cancelled before it could finish its tasks.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)operationWasCancelled:(TICDSOperation *)anOperation</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>anOperation</Name>
+					<Abstract>The operation object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/operationWasCancelled:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSOperationDelegate/operationFailedToComplete:</TokenIdentifier>
+			<Abstract>Informs the delegate that the operation failed to complete before it could finish its tasks.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)operationFailedToComplete:(TICDSOperation *)anOperation</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>anOperation</Name>
+					<Abstract>The operation object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/operationFailedToComplete:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

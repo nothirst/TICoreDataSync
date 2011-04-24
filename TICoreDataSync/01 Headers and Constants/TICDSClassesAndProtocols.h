@@ -24,6 +24,7 @@
 @class TICDSFileManagerBasedDocumentSyncManager;
 @class TICDSFileManagerBasedApplicationRegistrationOperation;
 @class TICDSFileManagerBasedDocumentRegistrationOperation;
+@class TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation;
 
 #pragma mark -
 #pragma mark INTERNAL DATA MODEL
@@ -89,6 +90,13 @@
 - (void)syncManagerDidNotFindAnyPreviouslySynchronizedDocuments:(TICDSApplicationSyncManager *)aSyncManager;
 
 /** Informs the delegate that the sync manager found one or more previously-synchronized documents.
+ 
+ One `NSDictionary` is supplied per document, containing the following keys:
+ 
+ 1. `kTICDSDocumentIdentifier`--the unique synchronization identifier of the document.
+ 2. `kTICDSDocumentDescription`--the description of the document, as provided when it was originally registered.
+ 3. `kTICDSOriginalDeviceIdentifier`--the unique identifier of the client that first registered the document.
+ 4. `kTICDSOriginalDeviceDescription`--the description of the client that first registered the document.
  
  @param aSyncManager The application sync manager object that sent the message. 
  @param documentsArray An array of `NSDictionary` objects containing information about each available document. */

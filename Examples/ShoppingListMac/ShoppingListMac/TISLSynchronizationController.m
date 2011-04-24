@@ -170,7 +170,7 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
     
     NSSavePanel *savePanel = [NSSavePanel savePanel];
     [savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"sqlite"]];
-    NSString *fileName = [[[self dropboxListOfAvailableDocumentsArray] objectAtIndex:selectedRow] valueForKey:kTICDSDocumentName];
+    NSString *fileName = [[[self dropboxListOfAvailableDocumentsArray] objectAtIndex:selectedRow] valueForKey:kTICDSDocumentDescription];
         
     //[savePanel setNameFieldStringValue:[[[self dropboxListOfAvailableDocumentsArray] objectAtIndex:selectedRow] valueForKey:kTICDDocumentName]];
     
@@ -429,7 +429,7 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
     }
     
     if( aTableColumn == [self dropboxListOfAvailableDocumentsDescriptionColumn] ) {
-        return [[[self dropboxListOfAvailableDocumentsArray] objectAtIndex:rowIndex] valueForKey:kTICDSDocumentName];
+        return [[[self dropboxListOfAvailableDocumentsArray] objectAtIndex:rowIndex] valueForKey:kTICDSDocumentDescription];
     } else if( aTableColumn == [self dropboxListOfAvailableDocumentsLastSyncColumn] ) {
         return [[self lastSyncDateFormatter] stringFromDate:[[[self dropboxListOfAvailableDocumentsArray] objectAtIndex:rowIndex] valueForKey:kTICDSLastSyncDate]];
     }

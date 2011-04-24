@@ -85,7 +85,7 @@
     if( success ) { 
         NSString *pathToResource = [[NSBundle mainBundle] pathForResource:@"documentInfo" ofType:@"plist" inDirectory:nil];
         NSMutableDictionary *documentInfo = [NSMutableDictionary dictionaryWithContentsOfFile:pathToResource];
-        [documentInfo setValue:[self documentDescription] forKey:kTICDSDocumentName];
+        [documentInfo setValue:[self documentDescription] forKey:kTICDSDocumentDescription];
         [documentInfo setValue:[self clientDescription] forKey:kTICDSOriginalDeviceDescription];
         [documentInfo setValue:[self clientIdentifier] forKey:kTICDSOriginalDeviceIdentifier];
         [documentInfo setValue:[self userInfo] forKey:kTICDSDocumentUserInfo];

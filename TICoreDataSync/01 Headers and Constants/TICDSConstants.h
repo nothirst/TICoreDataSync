@@ -17,7 +17,7 @@ extern NSString * const kTICDSClientDeviceDescription;
 extern NSString * const kTICDSClientDeviceUserInfo;
 extern NSString * const kTICDSLastSyncDate;
 extern NSString * const kTICDSDocumentIdentifier;
-extern NSString * const kTICDSDocumentName;
+extern NSString * const kTICDSDocumentDescription;
 extern NSString * const kTICDSDocumentUserInfo;
 extern NSString * const kTICDSOriginalDeviceDescription;
 extern NSString * const kTICDSOriginalDeviceIdentifier;
