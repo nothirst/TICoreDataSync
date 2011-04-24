@@ -41,6 +41,24 @@ Call fetchedInfoDictionary:forDocumentWithSyncID: for each document as it is fet
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSListOfPreviouslySynchronizedDocumentsOperation/fetchLastSynchronizationDateForDocumentWithSyncID:</TokenIdentifier>
+			<Abstract>Fetch the last synchronization date for a document with the given synchronization ID.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)fetchLastSynchronizationDateForDocumentWithSyncID:(NSString *)aSyncID</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncID</Name>
+					<Abstract>The synchronization identifier for the document.
+
+Call fetchedLastSynchronizationDate:forDocumentWithSyncID: when the date is fetched.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/fetchLastSynchronizationDateForDocumentWithSyncID:</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSListOfPreviouslySynchronizedDocumentsOperation/builtArrayOfDocumentIdentifiers:</TokenIdentifier>
 			<Abstract>Pass back the assembled NSArray of NSString document identifiers.</Abstract>
 			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
@@ -73,6 +91,25 @@ Call fetchedInfoDictionary:forDocumentWithSyncID: for each document as it is fet
 			</Parameters>
 			
 			<Anchor>//api/name/fetchedInfoDictionary:forDocumentWithSyncID:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSListOfPreviouslySynchronizedDocumentsOperation/fetchedLastSynchronizationDate:forDocumentWithSyncID:</TokenIdentifier>
+			<Abstract>Pass back the last synchronization date for a given document sync identifier.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)fetchedLastSynchronizationDate:(NSDate *)aDate forDocumentWithSyncID:(NSString *)aSyncID</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aDate</Name>
+					<Abstract>The last synchronization date, or nil if an error occurred.</Abstract>
+				</Parameter><Parameter>
+					<Name>aSyncID</Name>
+					<Abstract>The unique synchronization identifier of the given document.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/fetchedLastSynchronizationDate:forDocumentWithSyncID:</Anchor>
 		</Token>
 		
 		<Token>
@@ -150,6 +187,50 @@ Call fetchedInfoDictionary:forDocumentWithSyncID: for each document as it is fet
 			
 			
 			<Anchor>//api/name/infoDictionariesStatus</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSListOfPreviouslySynchronizedDocumentsOperation/numberOfLastSynchronizationDatesToFetch</TokenIdentifier>
+			<Abstract>The total number of last synchronization dates that need to be fetched.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) NSUInteger numberOfLastSynchronizationDatesToFetch</Declaration>
+			
+			
+			<Anchor>//api/name/numberOfLastSynchronizationDatesToFetch</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSListOfPreviouslySynchronizedDocumentsOperation/numberOfLastSynchronizationDatesFetched</TokenIdentifier>
+			<Abstract>The number of last synchronization dates that have already been fetched.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) NSUInteger numberOfLastSynchronizationDatesFetched</Declaration>
+			
+			
+			<Anchor>//api/name/numberOfLastSynchronizationDatesFetched</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSListOfPreviouslySynchronizedDocumentsOperation/numberOfLastSynchronizationDatesThatFailedToFetch</TokenIdentifier>
+			<Abstract>The number of last synchronization dates failed to fetch because of an error.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) NSUInteger numberOfLastSynchronizationDatesThatFailedToFetch</Declaration>
+			
+			
+			<Anchor>//api/name/numberOfLastSynchronizationDatesThatFailedToFetch</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSListOfPreviouslySynchronizedDocumentsOperation/lastSynchronizationDatesStatus</TokenIdentifier>
+			<Abstract>The phase status of the last synchronized dates requests.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus lastSynchronizationDatesStatus</Declaration>
+			
+			
+			<Anchor>//api/name/lastSynchronizationDatesStatus</Anchor>
 		</Token>
 		
 	</File>

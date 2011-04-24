@@ -14,7 +14,7 @@
  
  1. Get a list of document identifiers for available documents.
  2. Fetch the `documentInfo` dictionary for each document.
- 3. Get the most recent synchronization date for each document (the most recently modified file in `RecentSyncs`).
+ 3. Get the most recent synchronization date for each successfully-fetched document dictionary (the most recently modified file in `RecentSyncs`).
  
  Operations are typically created automatically by the relevant sync manager.
  
@@ -28,10 +28,15 @@
     BOOL _completionInProgress;
     TICDSOperationPhaseStatus _arrayOfDocumentIdentifiersStatus;
     
-    TICDSOperationPhaseStatus _infoDictionariesStatus;
     NSUInteger _numberOfInfoDictionariesToFetch;
     NSUInteger _numberOfInfoDictionariesFetched;
     NSUInteger _numberOfInfoDictionariesThatFailedToFetch;
+    TICDSOperationPhaseStatus _infoDictionariesStatus;
+    
+    NSUInteger _numberOfLastSynchronizationDatesToFetch;
+    NSUInteger _numberOfLastSynchronizationDatesFetched;
+    NSUInteger _numberOfLastSynchronizationDatesThatFailedToFetch;
+    TICDSOperationPhaseStatus _lastSynchronizationDatesStatus;
 }
 
 /** @name Methods Overridden by Subclasses */
@@ -47,6 +52,13 @@
  
  Call `fetchedInfoDictionary:forDocumentWithSyncID:` for each document as it is fetched. */
 - (void)fetchInfoDictionariesForDocumentsWithSyncIDs:(NSArray *)syncIDs;
+
+/** Fetch the last synchronization date for a document with the given synchronization ID.
+ 
+ @param aSyncID The synchronization identifier for the document.
+ 
+ Call `fetchedLastSynchronizationDate:forDocumentWithSyncID:` when the date is fetched. */
+- (void)fetchLastSynchronizationDateForDocumentWithSyncID:(NSString *)aSyncID;
 
 /** @name Callbacks */
 
@@ -64,6 +76,14 @@
  @param anInfoDictionary The `documentInfo` dictionary, or `nil` if an error occurred.
  @param aSyncID The unique synchronization identifier of the given document. */
 - (void)fetchedInfoDictionary:(NSDictionary *)anInfoDictionary forDocumentWithSyncID:(NSString *)aSyncID;
+
+/** Pass back the last synchronization date for a given document sync identifier.
+ 
+ If an error occurred, call `setError:` and pass `nil` for `aDate`.
+ 
+ @param aDate The last synchronization date, or `nil` if an error occurred.
+ @param aSyncID The unique synchronization identifier of the given document. */
+- (void)fetchedLastSynchronizationDate:(NSDate *)aDate forDocumentWithSyncID:(NSString *)aSyncID;
 
 /** @name Properties */
 
@@ -89,5 +109,17 @@
 
 /** The phase status of the info dictionary requests. */
 @property (nonatomic, assign) TICDSOperationPhaseStatus infoDictionariesStatus;
+
+/** The total number of last synchronization dates that need to be fetched. */
+@property (nonatomic, assign) NSUInteger numberOfLastSynchronizationDatesToFetch;
+
+/** The number of last synchronization dates that have already been fetched. */
+@property (nonatomic, assign) NSUInteger numberOfLastSynchronizationDatesFetched;
+
+/** The number of last synchronization dates failed to fetch because of an error. */
+@property (nonatomic, assign) NSUInteger numberOfLastSynchronizationDatesThatFailedToFetch;
+
+/** The phase status of the last synchronized dates requests. */
+@property (nonatomic, assign) TICDSOperationPhaseStatus lastSynchronizationDatesStatus;
 
 @end

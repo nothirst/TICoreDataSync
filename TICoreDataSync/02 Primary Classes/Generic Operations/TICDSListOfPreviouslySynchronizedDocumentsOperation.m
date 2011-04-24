@@ -16,6 +16,9 @@
 - (void)increaseNumberOfInfoDictionariesToFetch;
 - (void)increaseNumberOfInfoDictionariesFetched;
 - (void)increaseNumberOfInfoDictionariesThatFailedToFetch;
+- (void)increaseNumberOfLastSynchronizationDatesToFetch;
+- (void)increaseNumberOfLastSynchronizationDatesFetched;
+- (void)increaseNumberOfLastSynchronizationDatesThatFailedToFetch;
 
 @end
 
@@ -41,6 +44,7 @@
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error fetching list of document sync identifiers");
         [self setArrayOfDocumentIdentifiersStatus:TICDSOperationPhaseStatusFailure];
         [self setInfoDictionariesStatus:TICDSOperationPhaseStatusFailure];
+        [self setLastSynchronizationDatesStatus:TICDSOperationPhaseStatusFailure];
     } else {
         [self setArrayOfDocumentIdentifiersStatus:TICDSOperationPhaseStatusSuccess];
         [self beginFetchOfDocumentInfoDictionariesForSyncIDs:anArray];
@@ -66,13 +70,14 @@
         
     if( [syncIDs count] < 1 ) {
         [self setInfoDictionariesStatus:TICDSOperationPhaseStatusSuccess];
-        // [self set Dates Status]
+        [self setLastSynchronizationDatesStatus:TICDSOperationPhaseStatusSuccess];
         
         [self checkForCompletion];
         return;
     }
     
     [self setNumberOfInfoDictionariesToFetch:[syncIDs count]];
+    [self setNumberOfLastSynchronizationDatesToFetch:[syncIDs count]];
     [self fetchInfoDictionariesForDocumentsWithSyncIDs:syncIDs];
 }
 
@@ -80,6 +85,7 @@
 {
     if( !anInfoDictionary ) {
         [self increaseNumberOfInfoDictionariesThatFailedToFetch];
+        [self increaseNumberOfLastSynchronizationDatesThatFailedToFetch];
     } else {
         [self increaseNumberOfInfoDictionariesFetched];
         
@@ -87,13 +93,15 @@
         [dictionary setValue:aSyncID forKey:kTICDSDocumentIdentifier];
         [[self availableDocuments] addObject:dictionary];
         [dictionary release];
+        
+        [self fetchLastSynchronizationDateForDocumentWithSyncID:aSyncID];
     }
     
     if( [self numberOfInfoDictionariesToFetch] == [self numberOfInfoDictionariesFetched] ) {
         [self setInfoDictionariesStatus:TICDSOperationPhaseStatusSuccess];
     } else if( [self numberOfInfoDictionariesFetched] + [self numberOfInfoDictionariesThatFailedToFetch] == [self numberOfInfoDictionariesToFetch] ) {
         [self setInfoDictionariesStatus:TICDSOperationPhaseStatusFailure];
-        //[self setDatesStatus:TICDSOperationPhaseStatusFailure];
+        [self setLastSynchronizationDatesStatus:TICDSOperationPhaseStatusFailure];
     }
     
     [self checkForCompletion];
@@ -110,6 +118,41 @@
 }
 
 #pragma mark -
+#pragma mark Last Synchronization Date
+- (void)fetchedLastSynchronizationDate:(NSDate *)aDate forDocumentWithSyncID:(NSString *)aSyncID
+{
+    if( !aDate ) {
+        [self increaseNumberOfLastSynchronizationDatesThatFailedToFetch];
+    } else {
+        [self increaseNumberOfLastSynchronizationDatesFetched];
+        
+        for( NSMutableDictionary *eachDictionary in [self availableDocuments] ) {
+            if( ![[eachDictionary valueForKey:kTICDSDocumentIdentifier] isEqualToString:aSyncID] ) {
+                continue;
+            }
+            
+            [eachDictionary setValue:aDate forKey:kTICDSLastSyncDate];
+        }
+    }
+    
+    if( [self numberOfLastSynchronizationDatesToFetch] == [self numberOfLastSynchronizationDatesFetched] ) {
+        [self setLastSynchronizationDatesStatus:TICDSOperationPhaseStatusSuccess];
+    } else if( [self numberOfLastSynchronizationDatesToFetch] == [self numberOfLastSynchronizationDatesFetched] + [self numberOfLastSynchronizationDatesThatFailedToFetch] ) {
+        [self setLastSynchronizationDatesStatus:TICDSOperationPhaseStatusFailure];
+    }
+    
+    [self checkForCompletion];
+}
+
+#pragma mark Overridden Methods
+- (void)fetchLastSynchronizationDateForDocumentWithSyncID:(NSString *)aSyncID
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    
+    [self fetchedLastSynchronizationDate:nil forDocumentWithSyncID:aSyncID];
+}
+
+#pragma mark -
 #pragma mark Completion
 - (void)checkForCompletion
 {
@@ -117,18 +160,18 @@
         return;
     }
     
-    if( [self arrayOfDocumentIdentifiersStatus] == TICDSOperationPhaseStatusInProgress || [self infoDictionariesStatus] == TICDSOperationPhaseStatusInProgress ) {
+    if( [self arrayOfDocumentIdentifiersStatus] == TICDSOperationPhaseStatusInProgress || [self infoDictionariesStatus] == TICDSOperationPhaseStatusInProgress || [self lastSynchronizationDatesStatus] == TICDSOperationPhaseStatusInProgress ) {
         return;
     }
     
-    if( [self arrayOfDocumentIdentifiersStatus] == TICDSOperationPhaseStatusSuccess && [self infoDictionariesStatus] == TICDSOperationPhaseStatusSuccess ) {
+    if( [self arrayOfDocumentIdentifiersStatus] == TICDSOperationPhaseStatusSuccess && [self infoDictionariesStatus] == TICDSOperationPhaseStatusSuccess && [self lastSynchronizationDatesStatus] == TICDSOperationPhaseStatusSuccess ) {
         [self setCompletionInProgress:YES];
         
         [self operationDidCompleteSuccessfully];
         return;
     }
     
-    if( [self arrayOfDocumentIdentifiersStatus] == TICDSOperationPhaseStatusFailure || [self infoDictionariesStatus] == TICDSOperationPhaseStatusFailure ) {
+    if( [self arrayOfDocumentIdentifiersStatus] == TICDSOperationPhaseStatusFailure || [self infoDictionariesStatus] == TICDSOperationPhaseStatusFailure || [self lastSynchronizationDatesStatus] == TICDSOperationPhaseStatusFailure ) {
         [self setCompletionInProgress:YES];
         
         [self operationDidFailToComplete];
@@ -151,6 +194,21 @@
     [self setNumberOfInfoDictionariesThatFailedToFetch:[self numberOfInfoDictionariesThatFailedToFetch] + 1];
 }
 
+- (void)increaseNumberOfLastSynchronizationDatesToFetch
+{
+    [self setNumberOfLastSynchronizationDatesToFetch:[self numberOfLastSynchronizationDatesToFetch] + 1];
+}
+
+- (void)increaseNumberOfLastSynchronizationDatesFetched
+{
+    [self setNumberOfLastSynchronizationDatesFetched:[self numberOfLastSynchronizationDatesFetched] + 1];
+}
+
+- (void)increaseNumberOfLastSynchronizationDatesThatFailedToFetch
+{
+    [self setNumberOfLastSynchronizationDatesThatFailedToFetch:[self numberOfLastSynchronizationDatesThatFailedToFetch] + 1];
+}
+
 #pragma mark -
 #pragma mark Initialization and Deallocation
 - (void)dealloc
@@ -169,5 +227,9 @@
 @synthesize numberOfInfoDictionariesToFetch = _numberOfInfoDictionariesToFetch;
 @synthesize numberOfInfoDictionariesFetched = _numberOfInfoDictionariesFetched;
 @synthesize numberOfInfoDictionariesThatFailedToFetch = _numberOfInfoDictionariesThatFailedToFetch;
+@synthesize numberOfLastSynchronizationDatesToFetch = _numberOfLastSynchronizationDatesToFetch;
+@synthesize numberOfLastSynchronizationDatesFetched = _numberOfLastSynchronizationDatesFetched;
+@synthesize numberOfLastSynchronizationDatesThatFailedToFetch = _numberOfLastSynchronizationDatesThatFailedToFetch;
+@synthesize lastSynchronizationDatesStatus = _lastSynchronizationDatesStatus;
 
 @end
