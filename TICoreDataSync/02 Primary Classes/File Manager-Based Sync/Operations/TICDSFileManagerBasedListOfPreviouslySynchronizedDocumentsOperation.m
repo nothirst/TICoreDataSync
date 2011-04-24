@@ -50,11 +50,29 @@
     }
 }
 
+- (void)fetchLastSynchronizationDateForDocumentWithSyncID:(NSString *)aSyncID
+{
+    NSError *anyError = nil;
+    NSDictionary *dictionary = [[self fileManager] attributesOfItemAtPath:[self pathToDocumentRecentSyncsDirectoryForIdentifier:aSyncID] error:&anyError];
+    
+    if( !dictionary ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        
+    }
+    
+    [self fetchedLastSynchronizationDate:[dictionary valueForKey:NSFileModificationDate] forDocumentWithSyncID:aSyncID];
+}
+
 #pragma mark -
 #pragma mark Paths
 - (NSString *)pathToDocumentInfoForDocumentWithIdentifier:(NSString *)anIdentifier
 {
     return [[[self documentsDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:@"documentInfo.plist"];
+}
+
+- (NSString *)pathToDocumentRecentSyncsDirectoryForIdentifier:(NSString *)anIdentifier
+{
+    return [[[self documentsDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSRecentSyncsDirectoryName];
 }
 
 #pragma mark -

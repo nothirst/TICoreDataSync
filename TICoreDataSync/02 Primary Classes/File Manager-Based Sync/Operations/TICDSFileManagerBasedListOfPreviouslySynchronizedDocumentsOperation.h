@@ -21,11 +21,18 @@
 /** The path to the `Documents` directory. */
 @property (retain) NSString *documentsDirectoryPath;
 
-/** Returns the path to the `documentInfo.plist` file for a document with a specified identifier.
+/** Returns the path to the `documentInfo.plist` file for a document with the specified identifier.
  
  @param anIdentifier The identifier of the document.
  
  @return A path to the specified document. */
 - (NSString *)pathToDocumentInfoForDocumentWithIdentifier:(NSString *)anIdentifier;
+
+/** Returns the path to the `RecentSyncs` directory for a document with the specified identifier.
+ 
+ @param anIdentifier The identifier of the document.
+ 
+ @return A path to the `RecentSyncs` directory. */
+- (NSString *)pathToDocumentRecentSyncsDirectoryForIdentifier:(NSString *)anIdentifier;
 
 @end

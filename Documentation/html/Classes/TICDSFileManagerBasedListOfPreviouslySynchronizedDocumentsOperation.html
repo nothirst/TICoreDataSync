@@ -45,6 +45,8 @@
 	
 	<option value="//api/name/pathToDocumentInfoForDocumentWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- pathToDocumentInfoForDocumentWithIdentifier:</option>
 	
+	<option value="//api/name/pathToDocumentRecentSyncsDirectoryForIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- pathToDocumentRecentSyncsDirectoryForIdentifier:</option>
+	
 	
 	
 </select>
@@ -82,6 +84,8 @@
 <li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/pathToDocumentInfoForDocumentWithIdentifier:">pathToDocumentInfoForDocumentWithIdentifier:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/pathToDocumentRecentSyncsDirectoryForIdentifier:">pathToDocumentRecentSyncsDirectoryForIdentifier:</a></span></li>
 	
 </ul></li>
 
@@ -146,7 +150,14 @@
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/pathToDocumentInfoForDocumentWithIdentifier:">&ndash;&nbsp;pathToDocumentInfoForDocumentWithIdentifier:</a></code>
-		<span class="tooltip"><p>Returns the path to the <code>documentInfo.plist</code> file for a document with a specified identifier.</p></span>
+		<span class="tooltip"><p>Returns the path to the <code>documentInfo.plist</code> file for a document with the specified identifier.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/pathToDocumentRecentSyncsDirectoryForIdentifier:">&ndash;&nbsp;pathToDocumentRecentSyncsDirectoryForIdentifier:</a></code>
+		<span class="tooltip"><p>Returns the path to the <code>RecentSyncs</code> directory for a document with the specified identifier.</p></span>
 	</span>
 	
 	
@@ -212,7 +223,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Returns the path to the <code>documentInfo.plist</code> file for a document with a specified identifier.</p>
+		<p>Returns the path to the <code>documentInfo.plist</code> file for a document with the specified identifier.</p>
 	</div>		
 	
 	
@@ -234,6 +245,53 @@
 	<div class="method-subsection return">
 		<h4 class="method-subtitle parameter-title">Return Value</h4>
 		<p>A path to the specified document.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/pathToDocumentRecentSyncsDirectoryForIdentifier:" title="pathToDocumentRecentSyncsDirectoryForIdentifier:"></a>
+	<h3 class="subsubtitle method-title">pathToDocumentRecentSyncsDirectoryForIdentifier:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns the path to the <code>RecentSyncs</code> directory for a document with the specified identifier.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (NSString *)pathToDocumentRecentSyncsDirectoryForIdentifier:(NSString *)<em>anIdentifier</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The identifier of the document.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A path to the <code>RecentSyncs</code> directory.</p>
 	</div>
 	
 	
