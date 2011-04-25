@@ -27,6 +27,7 @@
 						<NodeRef refid="15"/>
 						<NodeRef refid="16"/>
 						<NodeRef refid="17"/>
+						<NodeRef refid="18"/>
 						
 					</Subnodes>
 				</Node>
@@ -37,10 +38,10 @@
 					<Name>Protocols</Name>
 					<Path>index.html</Path>
 					<Subnodes>
-						<NodeRef refid="18"/>
 						<NodeRef refid="19"/>
 						<NodeRef refid="20"/>
 						<NodeRef refid="21"/>
+						<NodeRef refid="22"/>
 						
 					</Subnodes>
 				</Node>
@@ -117,21 +118,25 @@
 			<Name>TICDSUtilities</Name>
 			<Path>Classes/TICDSUtilities.html</Path>
 		</Node>
-		
-		
 		<Node id="18">
+			<Name>TICDSWholeStoreUploadOperation</Name>
+			<Path>Classes/TICDSWholeStoreUploadOperation.html</Path>
+		</Node>
+		
+		
+		<Node id="19">
 			<Name>TICDSApplicationSyncManagerDelegate</Name>
 			<Path>Protocols/TICDSApplicationSyncManagerDelegate.html</Path>
 		</Node>
-		<Node id="19">
+		<Node id="20">
 			<Name>TICDSDocumentRegistrationOperationDelegate</Name>
 			<Path>Protocols/TICDSDocumentRegistrationOperationDelegate.html</Path>
 		</Node>
-		<Node id="20">
+		<Node id="21">
 			<Name>TICDSDocumentSyncManagerDelegate</Name>
 			<Path>Protocols/TICDSDocumentSyncManagerDelegate.html</Path>
 		</Node>
-		<Node id="21">
+		<Node id="22">
 			<Name>TICDSOperationDelegate</Name>
 			<Path>Protocols/TICDSOperationDelegate.html</Path>
 		</Node>
