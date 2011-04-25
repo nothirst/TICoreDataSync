@@ -38,7 +38,7 @@
 			<Abstract>Log some information (assuming DEBUG is set).</Abstract>
 			<DeclaredIn>TICDSLog.h</DeclaredIn>			
 			
-			<Declaration>+ (void)logWithVerbosity:(NSInteger)someVerbosity information:(NSString *)formatString</Declaration>
+			<Declaration>+ (void)logWithVerbosity:(NSInteger)someVerbosity information:(NSString *)formatString, ...</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>someVerbosity</Name>
