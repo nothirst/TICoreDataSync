@@ -1,58 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/TICDSUtilities.html">
+	<File path="Classes/TICDSSynchronizedManagedObjectContext.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/TICDSUtilities</TokenIdentifier>
-			<Abstract>TICDSUtilities is a utility class providing various class methods for miscellaneous tasks</Abstract>
-			<DeclaredIn>TICDSUtilities.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/TICDSSynchronizedManagedObjectContext</TokenIdentifier>
+			<Abstract>  
+Any changes you wish to synchronize for managed objects must take place within a synchronized managed object context.</Abstract>
+			<DeclaredIn>TICDSSynchronizedManagedObjectContext.h</DeclaredIn>
 			
 			<NodeRef refid="17"/>
 		</Token>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/TICDSUtilities/uuidString</TokenIdentifier>
-			<Abstract>Returns a globally unique string, currently created using [[NSProcessInfo processInfo] globallyUniqueString].</Abstract>
-			<DeclaredIn>TICDSUtilities.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizedManagedObjectContext/documentSyncManager</TokenIdentifier>
+			<Abstract>The document sync manager responsible for this managed object context's underlying persistent store/document.</Abstract>
+			<DeclaredIn>TICDSSynchronizedManagedObjectContext.h</DeclaredIn>			
 			
-			<Declaration>+ (NSString *)uuidString</Declaration>
-			
-			
-			<Anchor>//api/name/uuidString</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/TICDSUtilities/remoteGlobalAppFileStructure</TokenIdentifier>
-			<Abstract>Returns a dictionary containing the basic file structure for Global Application synchronization.</Abstract>
-			<DeclaredIn>TICDSUtilities.h</DeclaredIn>			
-			
-			<Declaration>+ (NSDictionary *)remoteGlobalAppFileStructure</Declaration>
+			<Declaration>@property (nonatomic, retain) TICDSDocumentSyncManager *documentSyncManager</Declaration>
 			
 			
-			<Anchor>//api/name/remoteGlobalAppFileStructure</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/TICDSUtilities/remoteGlobalAppClientDeviceFileStructure</TokenIdentifier>
-			<Abstract>Returns a dictionary containing the basic client device file structure for Global Application synchronization.</Abstract>
-			<DeclaredIn>TICDSUtilities.h</DeclaredIn>			
-			
-			<Declaration>+ (NSDictionary *)remoteGlobalAppClientDeviceFileStructure</Declaration>
-			
-			
-			<Anchor>//api/name/remoteGlobalAppClientDeviceFileStructure</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/TICDSUtilities/remoteDocumentFileStructure</TokenIdentifier>
-			<Abstract>Returns a dictionary containing the basic file structure for a synchronized document.</Abstract>
-			<DeclaredIn>TICDSUtilities.h</DeclaredIn>			
-			
-			<Declaration>+ (NSDictionary *)remoteDocumentFileStructure</Declaration>
-			
-			
-			<Anchor>//api/name/remoteDocumentFileStructure</Anchor>
+			<Anchor>//api/name/documentSyncManager</Anchor>
 		</Token>
 		
 	</File>

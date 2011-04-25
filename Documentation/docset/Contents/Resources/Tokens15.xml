@@ -1,16 +1,133 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/TICDSSynchronizedManagedObject.html">
+	<File path="Classes/TICDSSyncChange.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/TICDSSynchronizedManagedObject</TokenIdentifier>
-			<Abstract>  
-Any managed objects you wish to synchronize must be instances of TICDSSynchronizedManagedObject.</Abstract>
-			<DeclaredIn>TICDSSynchronizedManagedObject.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/TICDSSyncChange</TokenIdentifier>
+			<Abstract>TICDSSyncChange objects are used to describe changes made to synchronized objects within a synchronized managed object.</Abstract>
+			<DeclaredIn>TICDSSyncChange.h</DeclaredIn>
 			
 			<NodeRef refid="15"/>
 		</Token>
 		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSSyncChange/syncChangeOfType:inManagedObjectContext:</TokenIdentifier>
+			<Abstract>Create a sync change of the specified type in the given managed object context.</Abstract>
+			<DeclaredIn>TICDSSyncChange.h</DeclaredIn>			
+			
+			<Declaration>+ (id)syncChangeOfType:(TICDSSyncChangeType)aType inManagedObjectContext:(NSManagedObjectContext *)aMoc</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aType</Name>
+					<Abstract>The type of the change (see TICDSTypesAndEnums.h for possible values).</Abstract>
+				</Parameter><Parameter>
+					<Name>aMoc</Name>
+					<Abstract>The managed object context in which to create the sync change.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>A suitably-configured TICDSSyncChange object for the given change.</Abstract></ReturnValue>
+			<Anchor>//api/name/syncChangeOfType:inManagedObjectContext:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSyncChange/changeType</TokenIdentifier>
+			<Abstract>The type of the change.</Abstract>
+			<DeclaredIn>TICDSSyncChange.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSNumber *changeType</Declaration>
+			
+			
+			<Anchor>//api/name/changeType</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSyncChange/objectEntityName</TokenIdentifier>
+			<Abstract>The name of the entity for this sync change.</Abstract>
+			<DeclaredIn>TICDSSyncChange.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *objectEntityName</Declaration>
+			
+			
+			<Anchor>//api/name/objectEntityName</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSyncChange/objectSyncID</TokenIdentifier>
+			<Abstract>The sync ID (ticdsSyncID attribute) of the managed object to which this sync change refers.</Abstract>
+			<DeclaredIn>TICDSSyncChange.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *objectSyncID</Declaration>
+			
+			
+			<Anchor>//api/name/objectSyncID</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSyncChange/relevantKey</TokenIdentifier>
+			<Abstract>The relevant key that was changed if this is sync change represents an attribute change.</Abstract>
+			<DeclaredIn>TICDSSyncChange.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *relevantKey</Declaration>
+			
+			
+			<Anchor>//api/name/relevantKey</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSyncChange/changedAttributes</TokenIdentifier>
+			<Abstract>The changed values of the attributes (used for attribute change, and insertion).</Abstract>
+			<DeclaredIn>TICDSSyncChange.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) id changedAttributes</Declaration>
+			
+			
+			<Anchor>//api/name/changedAttributes</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSyncChange/changedRelationships</TokenIdentifier>
+			<Abstract>The changed relationships for a relationship sync change.</Abstract>
+			<DeclaredIn>TICDSSyncChange.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) id changedRelationships</Declaration>
+			
+			
+			<Anchor>//api/name/changedRelationships</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSyncChange/relatedObjectEntityName</TokenIdentifier>
+			<Abstract>The name of the related entity.</Abstract>
+			<DeclaredIn>TICDSSyncChange.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *relatedObjectEntityName</Declaration>
+			
+			
+			<Anchor>//api/name/relatedObjectEntityName</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSyncChange/localTimeStamp</TokenIdentifier>
+			<Abstract>The local timestamp of this change; note this is used only to sort sync changes when they are being applied. The last modification date of the entire sync change set determines the order in which change sets are applied.</Abstract>
+			<DeclaredIn>TICDSSyncChange.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSDate *localTimeStamp</Declaration>
+			
+			
+			<Anchor>//api/name/localTimeStamp</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSyncChange/relevantManagedObject</TokenIdentifier>
+			<Abstract>The managed object instance to which this sync change refers.</Abstract>
+			<DeclaredIn>TICDSSyncChange.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) NSManagedObject *relevantManagedObject</Declaration>
+			
+			
+			<Anchor>//api/name/relevantManagedObject</Anchor>
+		</Token>
 		
 	</File>
 </Tokens>

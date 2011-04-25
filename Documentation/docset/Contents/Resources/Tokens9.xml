@@ -55,5 +55,38 @@
 			<Anchor>//api/name/thisDocumentSyncChangesThisClientDirectoryPath</Anchor>
 		</Token>
 		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/thisDocumentWholeStoreThisClientDirectoryPath</TokenIdentifier>
+			<Abstract>The path to this client's directory inside this document's WholeStore directory.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *thisDocumentWholeStoreThisClientDirectoryPath</Declaration>
+			
+			
+			<Anchor>//api/name/thisDocumentWholeStoreThisClientDirectoryPath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/thisDocumentWholeStoreFilePath</TokenIdentifier>
+			<Abstract>The path to this client's WholeStore.sqlite file.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *thisDocumentWholeStoreFilePath</Declaration>
+			
+			
+			<Anchor>//api/name/thisDocumentWholeStoreFilePath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/thisDocumentAppliedSyncChangeSetsFilePath</TokenIdentifier>
+			<Abstract>The path to this client's AppliedSyncChangeSets.sqlite file.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *thisDocumentAppliedSyncChangeSetsFilePath</Declaration>
+			
+			
+			<Anchor>//api/name/thisDocumentAppliedSyncChangeSetsFilePath</Anchor>
+		</Token>
+		
 	</File>
 </Tokens>
