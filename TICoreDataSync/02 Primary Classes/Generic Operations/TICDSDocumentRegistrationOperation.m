@@ -202,6 +202,11 @@
 
 #pragma mark -
 #pragma mark Initialization and Deallocation
+- (id)initWithDelegate:(NSObject<TICDSDocumentRegistrationOperationDelegate> *)aDelegate
+{
+    return [super initWithDelegate:aDelegate];
+}
+
 - (void)dealloc
 {
     [_documentIdentifier release], _documentIdentifier = nil;

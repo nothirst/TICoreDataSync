@@ -40,6 +40,7 @@
 						<NodeRef refid="18"/>
 						<NodeRef refid="19"/>
 						<NodeRef refid="20"/>
+						<NodeRef refid="21"/>
 						
 					</Subnodes>
 				</Node>
@@ -123,10 +124,14 @@
 			<Path>Protocols/TICDSApplicationSyncManagerDelegate.html</Path>
 		</Node>
 		<Node id="19">
+			<Name>TICDSDocumentRegistrationOperationDelegate</Name>
+			<Path>Protocols/TICDSDocumentRegistrationOperationDelegate.html</Path>
+		</Node>
+		<Node id="20">
 			<Name>TICDSDocumentSyncManagerDelegate</Name>
 			<Path>Protocols/TICDSDocumentSyncManagerDelegate.html</Path>
 		</Node>
-		<Node id="20">
+		<Node id="21">
 			<Name>TICDSOperationDelegate</Name>
 			<Path>Protocols/TICDSOperationDelegate.html</Path>
 		</Node>

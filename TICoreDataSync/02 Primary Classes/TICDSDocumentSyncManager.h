@@ -23,7 +23,7 @@
  @see TICDSFileManagerBasedDocumentSyncManager
  */
 
-@interface TICDSDocumentSyncManager : NSObject {
+@interface TICDSDocumentSyncManager : NSObject <TICDSDocumentRegistrationOperationDelegate> {
 @private
     TICDSDocumentSyncManagerState _state;
     

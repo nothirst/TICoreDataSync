@@ -21,7 +21,7 @@
  @warning You must register the application sync manager before you can use it to register any documents.
 */
 
-@interface TICDSApplicationSyncManager : NSObject {
+@interface TICDSApplicationSyncManager : NSObject <TICDSOperationDelegate> {
 @private
     TICDSApplicationSyncManagerState _state;
     

@@ -12,6 +12,22 @@
 		
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentRegistrationOperation/initWithDelegate:</TokenIdentifier>
+			<Abstract>Initialize a document registration operation using a delegate that supports the TICDSDocumentRegistrationOperationDelegate protocol.</Abstract>
+			<DeclaredIn>TICDSDocumentRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (id)initWithDelegate:(NSObject&lt;TICDSDocumentRegistrationOperationDelegate&gt; *)aDelegate</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aDelegate</Name>
+					<Abstract>The delegate to use for this operation.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>An initialized document registration operation.</Abstract></ReturnValue>
+			<Anchor>//api/name/initWithDelegate:</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentRegistrationOperation/checkWhetherRemoteDocumentFileStructureExists</TokenIdentifier>
 			<Abstract>Check whether this document has previously been registered; i.e., whether the remote file structure for this document already exists.</Abstract>
 			<DeclaredIn>TICDSDocumentRegistrationOperation.h</DeclaredIn>			

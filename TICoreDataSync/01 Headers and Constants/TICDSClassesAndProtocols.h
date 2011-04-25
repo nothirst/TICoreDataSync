@@ -192,7 +192,7 @@
 #pragma mark -
 #pragma mark OPERATION DELEGATE PROTOCOLS
 #pragma Generic Operation Delegate
-/** The `TICDSOperationDelegate` protocol defines the methods implemented by delegates of any generic `TICDSOperation`. */
+/** The `TICDSOperationDelegate` protocol defines the methods implemented by delegates of any generic `TICDSOperation`. In the `TICoreDataSync` framework, these delegate methods are implemented by the application and document sync managers. */
 
 @protocol TICDSOperationDelegate <NSObject>
 
@@ -210,5 +210,21 @@
  
  @param anOperation The operation object that sent the message. */
 - (void)operationFailedToComplete:(TICDSOperation *)anOperation;
+
+@end
+
+#pragma mark Document Registration Delegate
+/** The `TICDSDocumentRegistrationOperationDelegate` protocol defines the methods implemented by delegates of `TICDSDocumentRegistrationOperation` or one of its subclasses. In the `TICoreDataSync` framework, these delegate methods are implemented by the document sync manager. */
+
+@protocol TICDSDocumentRegistrationOperationDelegate <TICDSOperationDelegate>
+
+/** Informs the delegate that the operation has been paused because the remote document file structure does not exist. The delegate should query its own delegate to ask whether to continue registration by creating the structure.
+ 
+ @param anOperation The operation object that sent the message. */
+- (void)registrationOperationPausedToFindOutWhetherToCreateRemoteDocumentStructure:(TICDSDocumentRegistrationOperation *)anOperation;
+
+/** Informs the delegate that the operation has resumed after being told whether or not to create the remote document file structure.
+ @param anOperation The operation object that sent the message. */
+- (void)registrationOperationResumedFollowingDocumentStructureCreationInstruction:(TICDSDocumentRegistrationOperation *)anOperation;
 
 @end

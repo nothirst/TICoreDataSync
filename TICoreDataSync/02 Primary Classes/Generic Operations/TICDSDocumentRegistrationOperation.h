@@ -7,6 +7,7 @@
 //
 
 #import "TICDSOperation.h"
+#import "TICDSClassesAndProtocols.h"
 
 /** The `TICDSDocumentRegistrationOperation` class describes a generic operation used by the `TICoreDataSync` framework to register a document for future synchronization.
  
@@ -39,6 +40,15 @@
     TICDSOperationPhaseStatus _documentFileStructureStatus;
     TICDSOperationPhaseStatus _documentClientDeviceFileStructureStatus;
 }
+
+/** @name Designated Initializer */
+
+/** Initialize a document registration operation using a delegate that supports the `TICDSDocumentRegistrationOperationDelegate` protocol.
+ 
+ @param aDelegate The delegate to use for this operation.
+ 
+ @return An initialized document registration operation. */
+- (id)initWithDelegate:(NSObject<TICDSDocumentRegistrationOperationDelegate> *)aDelegate;
 
 /** @name Methods Overridden by Subclasses */
 
