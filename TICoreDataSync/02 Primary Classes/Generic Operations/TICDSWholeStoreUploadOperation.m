@@ -128,7 +128,7 @@
 }
 
 #pragma mark -
-#pragma mark Applied Sync Change Sets Upload
+#pragma mark Applied Sync Change Sets File Upload
 - (void)beginUploadOfAppliedSyncChangeSetsFile
 {
     if( ![[self fileManager] fileExistsAtPath:[[self localAppliedSyncChangeSetsFileLocation] path]] ) {

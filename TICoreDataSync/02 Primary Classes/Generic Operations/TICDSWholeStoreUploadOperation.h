@@ -46,7 +46,7 @@
  */
 - (void)createThisClientWholeStoreDirectory;
 
-/** Upload the store at `localWholeStoreFileLocation` to the remote path 
+/** Upload the store at `localWholeStoreFileLocation` to the remote path `/Documents/documentIdentifier/WholeStore/clientIdentifier/WholeStore.sqlite`.
  
     This method must call `uploadedWholeStoreFileWithSuccess:` when finished. */
 - (void)uploadWholeStoreFile;

@@ -29,6 +29,34 @@
     TICDSOperationPhaseStatus _appliedSyncChangeSetsDownloadStatus;
 }
 
+/** @name Methods Overridden by Subclasses */
+
+/** Download the store at the remote document store path to the `localWholeStoreFileLocation`. 
+ 
+ This method must call `downloadedWholeStoreFileWithSuccess:` when finished. */
+- (void)downloadWholeStoreFile;
+
+/** Download the applied sync change sets file at the remote document store path to the `localAppliedSyncChangeSetsFileLocation`. 
+ 
+ This method must call `downloadedAppliedSyncChangeSetsFileWithSuccess:` when finished. */
+- (void)downloadAppliedSyncChangeSetsFile;
+
+/** @name Callbacks */
+
+/** Indicate whether the download of the whole store file was successful.
+ 
+ If not, call `setError:` first, then specify `NO` for `success`.
+ 
+ @param success A Boolean indicating whether the whole store file was downloaded or not. */
+- (void)downloadedWholeStoreFileWithSuccess:(BOOL)success;
+
+/** Indicate whether the download of the applied sync change sets file was successful.
+ 
+ If not, call `setError:` first, then specify `NO` for `success`.
+ 
+ @param success A Boolean indicating whether the applied sync change sets file was downloaded or not. */
+- (void)downloadedAppliedSyncChangeSetsFileWithSuccess:(BOOL)success;
+
 /** @name Properties */
 
 /** The location of the whole store file to upload. */
