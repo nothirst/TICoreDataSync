@@ -38,6 +38,8 @@
 	
 	<option value="//api/name/completionInProgress">&nbsp;&nbsp;&nbsp;&nbsp;completionInProgress</option>
 	
+	<option value="//api/name/localAppliedSyncChangeSetsFileLocation">&nbsp;&nbsp;&nbsp;&nbsp;localAppliedSyncChangeSetsFileLocation</option>
+	
 	<option value="//api/name/localWholeStoreFileLocation">&nbsp;&nbsp;&nbsp;&nbsp;localWholeStoreFileLocation</option>
 	
 	<option value="//api/name/wholeStoreDirectoryStatus">&nbsp;&nbsp;&nbsp;&nbsp;wholeStoreDirectoryStatus</option>
@@ -102,6 +104,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/appliedSyncChangeSetsFileUploadStatus">appliedSyncChangeSetsFileUploadStatus</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/completionInProgress">completionInProgress</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/localAppliedSyncChangeSetsFileLocation">localAppliedSyncChangeSetsFileLocation</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/localWholeStoreFileLocation">localWholeStoreFileLocation</a></span></li>
 	
@@ -222,7 +226,7 @@
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/uploadAppliedSyncChangeSetsFile">&ndash;&nbsp;uploadAppliedSyncChangeSetsFile</a></code>
-		<span class="tooltip"><p>Upload the applied sync change sets file at <code>localAppliedSyncChangeSetsFileLocation</code> to the remote path <code>/Documents/documentIdentifier/WholeStore/clientIdentifier/AppliedSyncChangeSets.sqlite</code>.</p></span>
+		<span class="tooltip"><p>Upload the applied sync change sets file at <a href="#//api/name/localAppliedSyncChangeSetsFileLocation"><code>localAppliedSyncChangeSetsFileLocation</code></a> to the remote path <code>/Documents/documentIdentifier/WholeStore/clientIdentifier/AppliedSyncChangeSets.sqlite</code>.</p></span>
 	</span>
 	
 	
@@ -274,6 +278,13 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/localWholeStoreFileLocation">&nbsp;&nbsp;localWholeStoreFileLocation</a></code>
 		<span class="tooltip"><p>The location of the whole store file to upload.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/localAppliedSyncChangeSetsFileLocation">&nbsp;&nbsp;localAppliedSyncChangeSetsFileLocation</a></code>
+		<span class="tooltip"><p>The location of the applied sync change sets file to upload.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -370,6 +381,38 @@
 	
 	
 	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) BOOL completionInProgress</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/localAppliedSyncChangeSetsFileLocation" title="localAppliedSyncChangeSetsFileLocation"></a>
+	<h3 class="subsubtitle method-title">localAppliedSyncChangeSetsFileLocation</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The location of the applied sync change sets file to upload.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (retain) NSURL *localAppliedSyncChangeSetsFileLocation</code></div>
 	
 	
 	
@@ -671,7 +714,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Upload the applied sync change sets file at <code>localAppliedSyncChangeSetsFileLocation</code> to the remote path <code>/Documents/documentIdentifier/WholeStore/clientIdentifier/AppliedSyncChangeSets.sqlite</code>.</p>
+		<p>Upload the applied sync change sets file at <a href="#//api/name/localAppliedSyncChangeSetsFileLocation"><code>localAppliedSyncChangeSetsFileLocation</code></a> to the remote path <code>/Documents/documentIdentifier/WholeStore/clientIdentifier/AppliedSyncChangeSets.sqlite</code>.</p>
 	</div>		
 	
 	
