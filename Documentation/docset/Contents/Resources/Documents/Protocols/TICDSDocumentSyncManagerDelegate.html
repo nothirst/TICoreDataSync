@@ -38,6 +38,8 @@
 	
 	<option value="instance_methods">Instance Methods</option>
 	
+	<option value="//api/name/syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</option>
+	
 	<option value="//api/name/syncManager:didBeginProcessingAfterMOCDidSave:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:didBeginProcessingAfterMOCDidSave:</option>
 	
 	<option value="//api/name/syncManager:didFinishProcessingAfterMOCDidSave:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:didFinishProcessingAfterMOCDidSave:</option>
@@ -51,8 +53,6 @@
 	<option value="//api/name/syncManager:failedToProcessAfterMOCDidSave:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:failedToProcessAfterMOCDidSave:</option>
 	
 	<option value="//api/name/syncManager:helperFileDirectoryLocationForDocumentWithIdentifier:description:userInfo:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:helperFileDirectoryLocationForDocumentWithIdentifier:description:userInfo:</option>
-	
-	<option value="//api/name/syncManager:urlForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:urlForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</option>
 	
 	<option value="//api/name/syncManagerDidBeginToUploadWholeStore:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidBeginToUploadWholeStore:</option>
 	
@@ -106,6 +106,8 @@
 
 <li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:">syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:didBeginProcessingAfterMOCDidSave:">syncManager:didBeginProcessingAfterMOCDidSave:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:didFinishProcessingAfterMOCDidSave:">syncManager:didFinishProcessingAfterMOCDidSave:</a></span></li>
@@ -119,8 +121,6 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:failedToProcessAfterMOCDidSave:">syncManager:failedToProcessAfterMOCDidSave:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:helperFileDirectoryLocationForDocumentWithIdentifier:description:userInfo:">syncManager:helperFileDirectoryLocationForDocumentWithIdentifier:description:userInfo:</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:urlForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:">syncManager:urlForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidBeginToUploadWholeStore:">syncManagerDidBeginToUploadWholeStore:</a></span></li>
 	
@@ -265,7 +265,7 @@
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/syncManager:urlForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:">&ndash;&nbsp;syncManager:urlForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</a></code>
+		<code><a href="#//api/name/syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:">&ndash;&nbsp;syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</a></code>
 		<span class="tooltip"><p>Invoked to ask the delegate for the URL of the document&rsquo;s SQLite store to upload.</p></span>
 	</span>
 	
@@ -343,6 +343,68 @@
 					<div class="section section-methods">
 						<a title="Instance Methods" name="instance_methods"></a>
 						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:" title="syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:"></a>
+	<h3 class="subsubtitle method-title">syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Invoked to ask the delegate for the URL of the document&rsquo;s SQLite store to upload.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (NSURL *)syncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> URLForWholeStoreToUploadForDocumentWithIdentifier:(NSString *)<em>anIdentifier</em> description:(NSString *)<em>aDescription</em> userInfo:(NSDictionary *)<em>userInfo</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The unique identifier for the document (as supplied at registration).</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aDescription</em></dt>
+			<dd><p>The description of the document (as supplied at registration).</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>userInfo</em></dt>
+			<dd><p>The user info dictionary (as supplied at registration).</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The location of the store file.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
 						
 						<div class="section-method">
 	<a name="//api/name/syncManager:didBeginProcessingAfterMOCDidSave:" title="syncManager:didBeginProcessingAfterMOCDidSave:"></a>
@@ -698,68 +760,6 @@
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>If you don&rsquo;t implement this method, the default location will be <code>~/Library/Application Support/&lt;application name&gt;/Documents/&lt;document identifier/</code>.</p><div class="warning"><p>The location you specify <strong>must</strong> already exist.</p></div>
 	</div>
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/syncManager:urlForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:" title="syncManager:urlForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:"></a>
-	<h3 class="subsubtitle method-title">syncManager:urlForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Invoked to ask the delegate for the URL of the document&rsquo;s SQLite store to upload.</p>
-	</div>		
-	
-	
-	<div class="method-subsection method-declaration"><code>- (NSURL *)syncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> urlForWholeStoreToUploadForDocumentWithIdentifier:(NSString *)<em>anIdentifier</em> description:(NSString *)<em>aDescription</em> userInfo:(NSDictionary *)<em>userInfo</em></code></div>
-	
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>aSyncManager</em></dt>
-			<dd><p>The document sync manager object that sent the message.</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>anIdentifier</em></dt>
-			<dd><p>The unique identifier for the document (as supplied at registration).</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>aDescription</em></dt>
-			<dd><p>The description of the document (as supplied at registration).</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>userInfo</em></dt>
-			<dd><p>The user info dictionary (as supplied at registration).</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	<div class="method-subsection return">
-		<h4 class="method-subtitle parameter-title">Return Value</h4>
-		<p>The location of the store file.</p>
-	</div>
-	
-	
 	
 	
 	

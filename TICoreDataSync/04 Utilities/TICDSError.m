@@ -12,7 +12,7 @@ NSString *gTICDSErrorStrings[] = {
     @"No error",
     @"Method not overridden in subclass",
     @"File Manager error",
-    @"Unexpected or incomplete directory structure",
+    @"Unexpected or incomplete file location or directory structure",
     @"Helper File directory does not already exist",
     @"Failed to save Sync Changes managed object context",
     @"Failed to create Operation Object",

@@ -70,7 +70,7 @@
     }
     
     // if we reach here, there's a problem with the structure...
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeUnexpectedOrIncompleteDirectoryStructure classAndMethod:__PRETTY_FUNCTION__]];
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeUnexpectedOrIncompleteFileLocationOrDirectoryStructure classAndMethod:__PRETTY_FUNCTION__]];
     [self discoveredStatusOfRemoteGlobalAppFileStructure:TICDSRemoteFileStructureExistsResponseTypeError];
 }
 

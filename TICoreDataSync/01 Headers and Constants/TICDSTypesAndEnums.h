@@ -71,7 +71,7 @@ typedef enum _TICDSErrorCode {
     
     TICDSErrorCodeMethodNotOverriddenBySubclass,
     TICDSErrorCodeFileManagerError,
-    TICDSErrorCodeUnexpectedOrIncompleteDirectoryStructure,
+    TICDSErrorCodeUnexpectedOrIncompleteFileLocationOrDirectoryStructure,
     TICDSErrorCodeHelperFileDirectoryDoesNotExist,
     TICDSErrorCodeFailedToSaveSyncChangesMOC,
     TICDSErrorCodeFailedToCreateOperationObject,

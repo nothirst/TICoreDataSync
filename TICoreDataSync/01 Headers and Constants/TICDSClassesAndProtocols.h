@@ -203,7 +203,7 @@
  
  @return The location of the store file. */
 @required
-- (NSURL *)syncManager:(TICDSDocumentSyncManager *)aSyncManager urlForWholeStoreToUploadForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo;
+- (NSURL *)syncManager:(TICDSDocumentSyncManager *)aSyncManager URLForWholeStoreToUploadForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo;
 @optional
 
 /** Informs the delegate that the document sync manager has begun to upload the whole store file, together with necessary helper files.

@@ -295,19 +295,31 @@
 - (void)bailFromUploadProcess
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from whole store upload process");
-    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToUploadStore:)];
+    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToUploadWholeStore:)];
 }
 
 - (void)startWholeStoreUploadProcess
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to upload whole store");
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting whole store upload process");
     [self ti_alertDelegateWithSelector:@selector(syncManagerDidBeginToUploadWholeStore:)];
+    
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Asking delegate for URL of whole store to upload");
+    NSURL *storeURL = [self ti_objectFromDelegateWithSelector:@selector(syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self userInfo]];
+    
+    if( !storeURL || ![[self fileManager] fileExistsAtPath:[storeURL path]] ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Store does not exist at provided path");
+        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredWholeStoreUploadError:), [TICDSError errorWithCode:TICDSErrorCodeUnexpectedOrIncompleteFileLocationOrDirectoryStructure classAndMethod:__PRETTY_FUNCTION__]];
+
+        [self bailFromUploadProcess];
+        return;
+    }
     
     TICDSWholeStoreUploadOperation *operation = [self wholeStoreUploadOperation];
     
     if( !operation ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create whole store operation object");
         [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredWholeStoreUploadError:), [TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
+        
         [self bailFromUploadProcess];
         return;
     }

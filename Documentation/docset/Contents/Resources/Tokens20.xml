@@ -161,11 +161,11 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:urlForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</TokenIdentifier>
 			<Abstract>Invoked to ask the delegate for the URL of the document's SQLite store to upload.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (NSURL *)syncManager:(TICDSDocumentSyncManager *)aSyncManager urlForWholeStoreToUploadForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo</Declaration>
+			<Declaration>- (NSURL *)syncManager:(TICDSDocumentSyncManager *)aSyncManager URLForWholeStoreToUploadForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -182,7 +182,7 @@
 				</Parameter>
 			</Parameters>
 			<ReturnValue><Abstract>The location of the store file.</Abstract></ReturnValue>
-			<Anchor>//api/name/syncManager:urlForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</Anchor>
+			<Anchor>//api/name/syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</Anchor>
 		</Token>
 		
 		<Token>

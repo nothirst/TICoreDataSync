@@ -70,7 +70,7 @@
     }
     
     // Currently won't get here until we make a better check that the entire directory structure exists
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeUnexpectedOrIncompleteDirectoryStructure classAndMethod:__PRETTY_FUNCTION__]];
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeUnexpectedOrIncompleteFileLocationOrDirectoryStructure classAndMethod:__PRETTY_FUNCTION__]];
     
     [self discoveredStatusOfRemoteDocumentFileStructure:TICDSRemoteFileStructureExistsResponseTypeError];
 }
@@ -118,7 +118,7 @@
     }
     
     // Currently won't get here until we make a better check that the entire directory structure exists
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeUnexpectedOrIncompleteDirectoryStructure classAndMethod:__PRETTY_FUNCTION__]];
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeUnexpectedOrIncompleteFileLocationOrDirectoryStructure classAndMethod:__PRETTY_FUNCTION__]];
     
     [self discoveredStatusOfRemoteDocumentSyncChangesThisClientFileStructure:TICDSRemoteFileStructureExistsResponseTypeError];
 }
