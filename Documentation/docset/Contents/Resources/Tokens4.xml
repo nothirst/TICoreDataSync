@@ -64,14 +64,14 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/initiateUploadOfEntireStore</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/initiateUploadOfWholeStore</TokenIdentifier>
 			<Abstract>Start the process manually to upload the entire store file for this document, along with the relevant AppliedSyncChanges.sqlite file.</Abstract>
 			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
 			
-			<Declaration>- (void)initiateUploadOfEntireStore</Declaration>
+			<Declaration>- (void)initiateUploadOfWholeStore</Declaration>
 			
 			
-			<Anchor>//api/name/initiateUploadOfEntireStore</Anchor>
+			<Anchor>//api/name/initiateUploadOfWholeStore</Anchor>
 		</Token>
 		
 		<Token>

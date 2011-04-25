@@ -285,7 +285,7 @@
 
 #pragma mark -
 #pragma mark WHOLE STORE UPLOAD
-- (void)initiateUploadOfEntireStore
+- (void)initiateUploadOfWholeStore
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Manual initiation of whole store upload");
     

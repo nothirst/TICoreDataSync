@@ -87,7 +87,7 @@
 /** Start the process manually to upload the entire store file for this document, along with the relevant `AppliedSyncChanges.sqlite` file.
  
  The location of the store file (and the applied sync changes file) will be requested from the delegate immediately after calling this method. */
-- (void)initiateUploadOfEntireStore;
+- (void)initiateUploadOfWholeStore;
 
 /** @name Methods Overridden by Subclasses */
 
