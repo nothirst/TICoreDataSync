@@ -40,6 +40,8 @@
 	
 	<option value="//api/name/localWholeStoreFileLocation">&nbsp;&nbsp;&nbsp;&nbsp;localWholeStoreFileLocation</option>
 	
+	<option value="//api/name/wholeStoreDirectoryStatus">&nbsp;&nbsp;&nbsp;&nbsp;wholeStoreDirectoryStatus</option>
+	
 	<option value="//api/name/wholeStoreFileUploadStatus">&nbsp;&nbsp;&nbsp;&nbsp;wholeStoreFileUploadStatus</option>
 	
 	
@@ -48,6 +50,14 @@
 	
 	
 	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/checkWhetherThisClientWholeStoreDirectoryExists">&nbsp;&nbsp;&nbsp;&nbsp;- checkWhetherThisClientWholeStoreDirectoryExists</option>
+	
+	<option value="//api/name/createThisClientWholeStoreDirectory">&nbsp;&nbsp;&nbsp;&nbsp;- createThisClientWholeStoreDirectory</option>
+	
+	<option value="//api/name/createdThisClientWholeStoreDirectorySuccessfully:">&nbsp;&nbsp;&nbsp;&nbsp;- createdThisClientWholeStoreDirectorySuccessfully:</option>
+	
+	<option value="//api/name/discoveredStatusOfWholeStoreDirectory:">&nbsp;&nbsp;&nbsp;&nbsp;- discoveredStatusOfWholeStoreDirectory:</option>
 	
 	<option value="//api/name/uploadAppliedSyncChangeSetsFile">&nbsp;&nbsp;&nbsp;&nbsp;- uploadAppliedSyncChangeSetsFile</option>
 	
@@ -95,6 +105,8 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/localWholeStoreFileLocation">localWholeStoreFileLocation</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/wholeStoreDirectoryStatus">wholeStoreDirectoryStatus</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/wholeStoreFileUploadStatus">wholeStoreFileUploadStatus</a></span></li>
 	
 </ul></li>
@@ -104,6 +116,14 @@
 
 
 <li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/checkWhetherThisClientWholeStoreDirectoryExists">checkWhetherThisClientWholeStoreDirectoryExists</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/createThisClientWholeStoreDirectory">createThisClientWholeStoreDirectory</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/createdThisClientWholeStoreDirectorySuccessfully:">createdThisClientWholeStoreDirectorySuccessfully:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/discoveredStatusOfWholeStoreDirectory:">discoveredStatusOfWholeStoreDirectory:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/uploadAppliedSyncChangeSetsFile">uploadAppliedSyncChangeSetsFile</a></span></li>
 	
@@ -155,6 +175,8 @@
 <p>The operation carries out the following tasks:</p>
 
 <ol>
+<li>Check whether a directory exists for this client inside the document&rsquo;s <code>WholeStore</code> directory.</li>
+<li>If not, create one.</li>
 <li>Upload the whole store file.</li>
 <li>Upload the applied sync change sets file that goes with this whole store.</li>
 </ol>
@@ -178,6 +200,20 @@
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
+		<code><a href="#//api/name/checkWhetherThisClientWholeStoreDirectoryExists">&ndash;&nbsp;checkWhetherThisClientWholeStoreDirectoryExists</a></code>
+		<span class="tooltip"><p>Check whether a directory exists for this client inside the document&rsquo;s <code>WholeStore</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/createThisClientWholeStoreDirectory">&ndash;&nbsp;createThisClientWholeStoreDirectory</a></code>
+		<span class="tooltip"><p>Create this client&rsquo;s directory inside this document&rsquo;s <code>WholeStore</code> directory; this method will be called automatically if the directory doesn&rsquo;t already exist.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
 		<code><a href="#//api/name/uploadWholeStoreFile">&ndash;&nbsp;uploadWholeStoreFile</a></code>
 		<span class="tooltip"><p>Upload the store at <a href="#//api/name/localWholeStoreFileLocation"><code>localWholeStoreFileLocation</code></a> to the remote path</p></span>
 	</span>
@@ -200,8 +236,22 @@
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
+		<code><a href="#//api/name/discoveredStatusOfWholeStoreDirectory:">&ndash;&nbsp;discoveredStatusOfWholeStoreDirectory:</a></code>
+		<span class="tooltip"><p>Indicate the status of this client&rsquo;s directory inside the <code>WholeStore</code> directory for this document.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
 		<code><a href="#//api/name/uploadedWholeStoreFileWithSuccess:">&ndash;&nbsp;uploadedWholeStoreFileWithSuccess:</a></code>
 		<span class="tooltip"><p>Indicate whether the upload of the whole store file was successful.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/createdThisClientWholeStoreDirectorySuccessfully:">&ndash;&nbsp;createdThisClientWholeStoreDirectorySuccessfully:</a></code>
+		<span class="tooltip"><p>Indicate whether the creation of this client&rsquo;s directory inside this document&rsquo;s <code>WholeStore</code> directory was successful.</p></span>
 	</span>
 	
 	
@@ -239,6 +289,13 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/completionInProgress">&nbsp;&nbsp;completionInProgress</a></code>
 		<span class="tooltip"><p>Used to indicate that completion is currently in progress, and that no further checks should be made.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/wholeStoreDirectoryStatus">&nbsp;&nbsp;wholeStoreDirectoryStatus</a></code>
+		<span class="tooltip"><p>The phase status regarding checking (and creating if necessary) this client&rsquo;s directory inside the <code>WholeStore</code> directory for this document.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -366,6 +423,38 @@
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/wholeStoreDirectoryStatus" title="wholeStoreDirectoryStatus"></a>
+	<h3 class="subsubtitle method-title">wholeStoreDirectoryStatus</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The phase status regarding checking (and creating if necessary) this client&rsquo;s directory inside the <code>WholeStore</code> directory for this document.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) TICDSOperationPhaseStatus wholeStoreDirectoryStatus</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/wholeStoreFileUploadStatus" title="wholeStoreFileUploadStatus"></a>
 	<h3 class="subsubtitle method-title">wholeStoreFileUploadStatus</h3>
 	
@@ -408,6 +497,174 @@
 						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
 						
 						<div class="section-method">
+	<a name="//api/name/checkWhetherThisClientWholeStoreDirectoryExists" title="checkWhetherThisClientWholeStoreDirectoryExists"></a>
+	<h3 class="subsubtitle method-title">checkWhetherThisClientWholeStoreDirectoryExists</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Check whether a directory exists for this client inside the document&rsquo;s <code>WholeStore</code> directory.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)checkWhetherThisClientWholeStoreDirectoryExists</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/discoveredStatusOfWholeStoreDirectory:"><code>discoveredStatusOfWholeStoreDirectory:</code></a> to indicate the status.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/createThisClientWholeStoreDirectory" title="createThisClientWholeStoreDirectory"></a>
+	<h3 class="subsubtitle method-title">createThisClientWholeStoreDirectory</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Create this client&rsquo;s directory inside this document&rsquo;s <code>WholeStore</code> directory; this method will be called automatically if the directory doesn&rsquo;t already exist.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)createThisClientWholeStoreDirectory</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/createdThisClientWholeStoreDirectorySuccessfully:"><code>createdThisClientWholeStoreDirectorySuccessfully:</code></a> to indicate whether the creation was successful.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/createdThisClientWholeStoreDirectorySuccessfully:" title="createdThisClientWholeStoreDirectorySuccessfully:"></a>
+	<h3 class="subsubtitle method-title">createdThisClientWholeStoreDirectorySuccessfully:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the creation of this client&rsquo;s directory inside this document&rsquo;s <code>WholeStore</code> directory was successful.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)createdThisClientWholeStoreDirectorySuccessfully:(BOOL)<em>someSuccess</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>someSuccess</em></dt>
+			<dd><p>A Boolean indicating whether the directory was created or not.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If not, call <code>setError:</code> and specify <code>NO</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/discoveredStatusOfWholeStoreDirectory:" title="discoveredStatusOfWholeStoreDirectory:"></a>
+	<h3 class="subsubtitle method-title">discoveredStatusOfWholeStoreDirectory:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate the status of this client&rsquo;s directory inside the <code>WholeStore</code> directory for this document.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)discoveredStatusOfWholeStoreDirectory:(TICDSRemoteFileStructureExistsResponseType)<em>status</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>status</em></dt>
+			<dd><p>The status of the directory: does exist, does not exist, or error (see <code>TICDSTypesAndEnums.h</code> for possible values).</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> and pass <code>TICDSRemoteFileStructureExistsResponseTypeError</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/uploadAppliedSyncChangeSetsFile" title="uploadAppliedSyncChangeSetsFile"></a>
 	<h3 class="subsubtitle method-title">uploadAppliedSyncChangeSetsFile</h3>
 	
@@ -427,7 +684,7 @@
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>Call <a href="#//api/name/uploadedWholeStoreFileWithSuccess:"><code>uploadedWholeStoreFileWithSuccess:</code></a> when finished.</p>
+		<p>This method must call <a href="#//api/name/uploadedWholeStoreFileWithSuccess:"><code>uploadedWholeStoreFileWithSuccess:</code></a> when finished.</p>
 	</div>
 	
 	
@@ -464,7 +721,7 @@
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<pre><code>Call `uploadedWholeStoreFileWithSuccess:` when finished. 
+		<pre><code>This method must call `uploadedWholeStoreFileWithSuccess:` when finished. 
 </code></pre>
 	</div>
 	

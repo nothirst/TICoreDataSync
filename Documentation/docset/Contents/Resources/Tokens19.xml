@@ -12,6 +12,28 @@
 		
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreUploadOperation/checkWhetherThisClientWholeStoreDirectoryExists</TokenIdentifier>
+			<Abstract>Check whether a directory exists for this client inside the document's WholeStore directory.</Abstract>
+			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)checkWhetherThisClientWholeStoreDirectoryExists</Declaration>
+			
+			
+			<Anchor>//api/name/checkWhetherThisClientWholeStoreDirectoryExists</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreUploadOperation/createThisClientWholeStoreDirectory</TokenIdentifier>
+			<Abstract>Create this client's directory inside this document's WholeStore directory; this method will be called automatically if the directory doesn't already exist.</Abstract>
+			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)createThisClientWholeStoreDirectory</Declaration>
+			
+			
+			<Anchor>//api/name/createThisClientWholeStoreDirectory</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreUploadOperation/uploadWholeStoreFile</TokenIdentifier>
 			<Abstract>Upload the store at localWholeStoreFileLocation to the remote path</Abstract>
 			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
@@ -34,6 +56,22 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreUploadOperation/discoveredStatusOfWholeStoreDirectory:</TokenIdentifier>
+			<Abstract>Indicate the status of this client's directory inside the WholeStore directory for this document.</Abstract>
+			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)discoveredStatusOfWholeStoreDirectory:(TICDSRemoteFileStructureExistsResponseType)status</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>status</Name>
+					<Abstract>The status of the directory: does exist, does not exist, or error (see TICDSTypesAndEnums.h for possible values).</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/discoveredStatusOfWholeStoreDirectory:</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreUploadOperation/uploadedWholeStoreFileWithSuccess:</TokenIdentifier>
 			<Abstract>Indicate whether the upload of the whole store file was successful.</Abstract>
 			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
@@ -47,6 +85,22 @@
 			</Parameters>
 			
 			<Anchor>//api/name/uploadedWholeStoreFileWithSuccess:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreUploadOperation/createdThisClientWholeStoreDirectorySuccessfully:</TokenIdentifier>
+			<Abstract>Indicate whether the creation of this client's directory inside this document's WholeStore directory was successful.</Abstract>
+			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)createdThisClientWholeStoreDirectorySuccessfully:(BOOL)someSuccess</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>someSuccess</Name>
+					<Abstract>A Boolean indicating whether the directory was created or not.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/createdThisClientWholeStoreDirectorySuccessfully:</Anchor>
 		</Token>
 		
 		<Token>
@@ -85,6 +139,17 @@
 			
 			
 			<Anchor>//api/name/completionInProgress</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSWholeStoreUploadOperation/wholeStoreDirectoryStatus</TokenIdentifier>
+			<Abstract>The phase status regarding checking (and creating if necessary) this client's directory inside the WholeStore directory for this document.</Abstract>
+			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus wholeStoreDirectoryStatus</Declaration>
+			
+			
+			<Anchor>//api/name/wholeStoreDirectoryStatus</Anchor>
 		</Token>
 		
 		<Token>
