@@ -92,10 +92,10 @@
 			<Abstract>Indicate whether the creation of this client's directory inside this document's WholeStore directory was successful.</Abstract>
 			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)createdThisClientWholeStoreDirectorySuccessfully:(BOOL)someSuccess</Declaration>
+			<Declaration>- (void)createdThisClientWholeStoreDirectorySuccessfully:(BOOL)success</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>someSuccess</Name>
+					<Name>success</Name>
 					<Abstract>A Boolean indicating whether the directory was created or not.</Abstract>
 				</Parameter>
 			</Parameters>

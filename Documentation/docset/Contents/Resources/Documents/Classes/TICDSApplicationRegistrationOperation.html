@@ -698,14 +698,14 @@
 	</div>		
 	
 	
-	<div class="method-subsection method-declaration"><code>- (void)createdRemoteClientDeviceFileStructureSuccessfully:(BOOL)<em>someSuccess</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)createdRemoteClientDeviceFileStructureSuccessfully:(BOOL)<em>success</em></code></div>
 	
 	
 	<div class="method-subsection arguments-section parameters">
 		<h4 class="method-subtitle parameter-title">Parameters</h4>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>someSuccess</em></dt>
+			<dt><em>success</em></dt>
 			<dd><p>A Boolean indicating whether the global app file structure was created or not.</p></dd>
 		</dl>
 		
@@ -717,7 +717,7 @@
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>If not, call <code>setError:</code> and return <code>NO</code>.</p>
+		<p>If not, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
 	</div>
 	
 	
@@ -745,14 +745,14 @@
 	</div>		
 	
 	
-	<div class="method-subsection method-declaration"><code>- (void)createdRemoteGlobalAppFileStructureSuccessfully:(BOOL)<em>someSuccess</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)createdRemoteGlobalAppFileStructureSuccessfully:(BOOL)<em>success</em></code></div>
 	
 	
 	<div class="method-subsection arguments-section parameters">
 		<h4 class="method-subtitle parameter-title">Parameters</h4>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>someSuccess</em></dt>
+			<dt><em>success</em></dt>
 			<dd><p>A Boolean indicating whether the global app file structure was created or not.</p></dd>
 		</dl>
 		
@@ -764,7 +764,7 @@
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>If not, call <code>setError:</code> and return <code>NO</code>.</p>
+		<p>If not, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
 	</div>
 	
 	
@@ -811,7 +811,7 @@
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>If an error occurred, call <code>setError:</code> and return <code>TICDSRemoteFileStructureExistsResponseTypeError</code>.</p>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>TICDSRemoteFileStructureExistsResponseTypeError</code> for <code>status</code>.</p>
 	</div>
 	
 	
@@ -858,7 +858,7 @@
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>If an error occurred, call <code>setError:</code> and return <code>TICDSRemoteFileStructureExistsResponseTypeError</code>.</p>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>TICDSRemoteFileStructureExistsResponseTypeError</code> for <code>status</code>.</p>
 	</div>
 	
 	

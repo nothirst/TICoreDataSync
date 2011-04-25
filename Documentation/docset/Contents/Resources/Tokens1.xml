@@ -76,10 +76,10 @@
 			<Abstract>Indicate whether the creation of the global app file structure was successful.</Abstract>
 			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)createdRemoteGlobalAppFileStructureSuccessfully:(BOOL)someSuccess</Declaration>
+			<Declaration>- (void)createdRemoteGlobalAppFileStructureSuccessfully:(BOOL)success</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>someSuccess</Name>
+					<Name>success</Name>
 					<Abstract>A Boolean indicating whether the global app file structure was created or not.</Abstract>
 				</Parameter>
 			</Parameters>
@@ -108,10 +108,10 @@
 			<Abstract>Indicate whether the creation of the file structure for this client was successful.</Abstract>
 			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)createdRemoteClientDeviceFileStructureSuccessfully:(BOOL)someSuccess</Declaration>
+			<Declaration>- (void)createdRemoteClientDeviceFileStructureSuccessfully:(BOOL)success</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>someSuccess</Name>
+					<Name>success</Name>
 					<Abstract>A Boolean indicating whether the global app file structure was created or not.</Abstract>
 				</Parameter>
 			</Parameters>
