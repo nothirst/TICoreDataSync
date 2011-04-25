@@ -63,31 +63,31 @@
 
 /** Indicate the status of the remote global app file structure; i.e., whether the application has previously been registered.
  
- If an error occurred, call `setError:` and return `TICDSRemoteFileStructureExistsResponseTypeError`.
+ If an error occurred, call `setError:` first, then specify `TICDSRemoteFileStructureExistsResponseTypeError` for `status`.
  
  @param status The status of the structure: does exist, does not exist, or error (see `TICDSTypesAndEnums.h` for possible values). */
 - (void)discoveredStatusOfRemoteGlobalAppFileStructure:(TICDSRemoteFileStructureExistsResponseType)status;
 
 /** Indicate whether the creation of the global app file structure was successful.
  
- If not, call `setError:` and return `NO`.
+ If not, call `setError:` first, then specify `NO` for `success`.
  
- @param someSuccess A Boolean indicating whether the global app file structure was created or not. */
-- (void)createdRemoteGlobalAppFileStructureSuccessfully:(BOOL)someSuccess;\
+ @param success A Boolean indicating whether the global app file structure was created or not. */
+- (void)createdRemoteGlobalAppFileStructureSuccessfully:(BOOL)success;
 
 /** Indicate the status of the file structure for this client; i.e. whether this client device has previously been registered.
  
- If an error occurred, call `setError:` and return `TICDSRemoteFileStructureExistsResponseTypeError`.
+ If an error occurred, call `setError:` first, then specify `TICDSRemoteFileStructureExistsResponseTypeError` for `status`.
  
  @param status The status of the structure: does exist, does not exist, or error (see `TICDSTypesAndEnums.h` for possible values). */
 - (void)discoveredStatusOfRemoteClientDeviceFileStructure:(TICDSRemoteFileStructureExistsResponseType)status;
 
 /** Indicate whether the creation of the file structure for this client was successful.
  
- If not, call `setError:` and return `NO`.
+ If not, call `setError:` first, then specify `NO` for `success`.
  
- @param someSuccess A Boolean indicating whether the global app file structure was created or not. */
-- (void)createdRemoteClientDeviceFileStructureSuccessfully:(BOOL)someSuccess;
+ @param success A Boolean indicating whether the global app file structure was created or not. */
+- (void)createdRemoteClientDeviceFileStructureSuccessfully:(BOOL)success;
 
 /** @name Properties */
 

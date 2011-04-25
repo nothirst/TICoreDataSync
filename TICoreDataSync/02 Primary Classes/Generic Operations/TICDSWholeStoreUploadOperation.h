@@ -60,28 +60,28 @@
 
 /** Indicate the status of this client's directory inside the `WholeStore` directory for this document.
  
- If an error occurred, call `setError:` and pass `TICDSRemoteFileStructureExistsResponseTypeError`.
+ If an error occurred, call `setError:` first, then specify `TICDSRemoteFileStructureExistsResponseTypeError` for `status`.
  
  @param status The status of the directory: does exist, does not exist, or error (see `TICDSTypesAndEnums.h` for possible values). */
 - (void)discoveredStatusOfWholeStoreDirectory:(TICDSRemoteFileStructureExistsResponseType)status;
 
 /** Indicate whether the upload of the whole store file was successful.
  
- If not, call `setError:` and specify `NO`.
+ If not, call `setError:` first, then specify `NO` for `success`.
  
  @param success A Boolean indicating whether the whole store file was uploaded or not. */
 - (void)uploadedWholeStoreFileWithSuccess:(BOOL)success;
 
 /** Indicate whether the creation of this client's directory inside this document's `WholeStore` directory was successful.
  
- If not, call `setError:` and specify `NO`.
+ If not, call `setError:` first, then specify `NO` for `success`.
  
- @param someSuccess A Boolean indicating whether the directory was created or not. */
-- (void)createdThisClientWholeStoreDirectorySuccessfully:(BOOL)someSuccess;
+ @param success A Boolean indicating whether the directory was created or not. */
+- (void)createdThisClientWholeStoreDirectorySuccessfully:(BOOL)success;
 
 /** Indicate whether the upload of the applied sync change sets file was successful.
  
- If not, call `setError:` and specify `NO`.
+ If not, call `setError:` first, then specify `NO` for `success`.
  
  @param success A Boolean indicating whether the applied sync change sets file was uploaded or not. */
 - (void)uploadedAppliedSyncChangeSetsFileWithSuccess:(BOOL)success;

@@ -82,28 +82,28 @@
 
 /** Indicate the status of the remote document file structure; i.e., whether the document has previously been registered.
  
- If an error occurred, call `setError:` and return `TICDSRemoteFileStructureExistsResponseTypeError`.
+ If an error occurred, call `setError:` first, then specify `TICDSRemoteFileStructureExistsResponseTypeError` for `status`.
  
  @param status The status of the structure: does exist, does not exist, or error (see `TICDSTypesAndEnums.h` for possible values). */
 - (void)discoveredStatusOfRemoteDocumentFileStructure:(TICDSRemoteFileStructureExistsResponseType)status;
 
 /** Indicate whether the creation of the document file structure was successful.
  
- If not, call `setError:` and return `NO`.
+ If not, call `setError:` first, then specify `NO` for `success`.
  
  @param success A Boolean indicating whether the document file structure was created or not */
 - (void)createdRemoteDocumentFileStructureWithSuccess:(BOOL)success;
 
 /** Indicate the status of the file structure for this client; i.e. whether this client device has previously been registered.
  
- If an error occurred, call `setError:` and return `TICDSRemoteFileStructureExistsResponseTypeError`.
+ If an error occurred, call `setError:` first, then specify `TICDSRemoteFileStructureExistsResponseTypeError` for `status`.
  
  @param status The status of the structure: does exist, does not exist, or error (see `TICDSTypesAndEnums.h` for possible values). */
 - (void)discoveredStatusOfRemoteDocumentSyncChangesThisClientFileStructure:(TICDSRemoteFileStructureExistsResponseType)status;
 
 /** Indicate whether the creation of the file structure for this client was successful.
  
- If not, call `setError:` and return `NO`.
+ If not, call `setError:` first, then specify `NO` for `success`.
  
  @param someSuccess A Boolean indicating whether the document file structure was created or not. */
 - (void)createdRemoteDocumentSyncChangesThisClientFileStructureWithSuccess:(BOOL)success;

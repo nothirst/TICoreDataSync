@@ -53,9 +53,9 @@
     [self checkForCompletion];
 }
 
-- (void)createdRemoteGlobalAppFileStructureSuccessfully:(BOOL)someSuccess
+- (void)createdRemoteGlobalAppFileStructureSuccessfully:(BOOL)success
 {
-    if( !someSuccess ) {
+    if( !success ) {
         TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Failed to create remote global app file structure");
         [self setGlobalAppFileStructureStatus:TICDSOperationPhaseStatusFailure];
         [self setClientDeviceFileStructureStatus:TICDSOperationPhaseStatusFailure];
@@ -108,9 +108,9 @@
     [self checkForCompletion];
 }
 
-- (void)createdRemoteClientDeviceFileStructureSuccessfully:(BOOL)someSuccess
+- (void)createdRemoteClientDeviceFileStructureSuccessfully:(BOOL)success
 {
-    if( !someSuccess ) {
+    if( !success ) {
         TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Failed to create remote client device file structure");
         [self setClientDeviceFileStructureStatus:TICDSOperationPhaseStatusFailure];
     } else {

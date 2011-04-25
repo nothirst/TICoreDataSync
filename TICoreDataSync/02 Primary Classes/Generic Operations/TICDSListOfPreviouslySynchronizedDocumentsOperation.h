@@ -64,14 +64,14 @@
 
 /** Pass back the assembled `NSArray` of `NSString` document identifiers.
  
- If an error occurred, call `setError:` and pass `nil`.
+ If an error occurred, call `setError:` first, then specify `nil` for `anArray`.
  
  @param anArray The array of identifiers. Pass `nil` if an error occurred. */
 - (void)builtArrayOfDocumentIdentifiers:(NSArray *)anArray;
 
 /** Pass back the `documentInfo` dictionary for a given document sync identifier.
  
- If an error occurred, call `setError:` and pass `nil` for `anInfoDictionary`.
+ If an error occurred, call `setError:` first, then specify `nil` for `anInfoDictionary`.
  
  @param anInfoDictionary The `documentInfo` dictionary, or `nil` if an error occurred.
  @param aSyncID The unique synchronization identifier of the given document. */
@@ -79,7 +79,7 @@
 
 /** Pass back the last synchronization date for a given document sync identifier.
  
- If an error occurred, call `setError:` and pass `nil` for `aDate`.
+ If an error occurred, call `setError:` first, then specify `nil` for `aDate`.
  
  @param aDate The last synchronization date, or `nil` if an error occurred.
  @param aSyncID The unique synchronization identifier of the given document. */
