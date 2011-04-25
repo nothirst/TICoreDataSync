@@ -91,6 +91,9 @@
 /** The location of the whole store file to upload. */
 @property (retain) NSURL *localWholeStoreFileLocation;
 
+/** The location of the applied sync change sets file to upload. */
+@property (retain) NSURL *localAppliedSyncChangeSetsFileLocation;
+
 /** @name Completion */
 
 /** Used to indicate that completion is currently in progress, and that no further checks should be made. */

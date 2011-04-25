@@ -326,6 +326,11 @@
     
     [operation setLocalWholeStoreFileLocation:storeURL];
     
+    NSString *appliedSyncChangeSetsFilePath = [[self helperFileDirectoryLocation] path];
+    appliedSyncChangeSetsFilePath = [appliedSyncChangeSetsFilePath stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
+    
+    [operation setLocalAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:appliedSyncChangeSetsFilePath]];
+    
     [[self otherTasksQueue] addOperation:operation];
 }
 

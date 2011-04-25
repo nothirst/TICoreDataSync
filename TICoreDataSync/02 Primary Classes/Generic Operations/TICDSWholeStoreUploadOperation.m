@@ -131,6 +131,13 @@
 #pragma mark Applied Sync Change Sets Upload
 - (void)beginUploadOfAppliedSyncChangeSetsFile
 {
+    if( ![[self fileManager] fileExistsAtPath:[[self localAppliedSyncChangeSetsFileLocation] path]] ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Local applied sync change sets file doesn't exist locally");
+        [self setAppliedSyncChangeSetsFileUploadStatus:TICDSOperationPhaseStatusSuccess];
+        [self checkForCompletion];
+        return;
+    }
+    
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Uploading applied sync change sets file");
     
     [self uploadAppliedSyncChangeSetsFile];
@@ -188,13 +195,15 @@
 - (void)dealloc
 {
     [_localWholeStoreFileLocation release], _localWholeStoreFileLocation = nil;
-    
+    [_localAppliedSyncChangeSetsFileLocation release], _localAppliedSyncChangeSetsFileLocation = nil;
+
     [super dealloc];
 }
 
 #pragma mark -
 #pragma mark Properties
 @synthesize localWholeStoreFileLocation = _localWholeStoreFileLocation;
+@synthesize localAppliedSyncChangeSetsFileLocation = _localAppliedSyncChangeSetsFileLocation;
 @synthesize completionInProgress = _completionInProgress;
 @synthesize wholeStoreDirectoryStatus = _wholeStoreDirectoryStatus;
 @synthesize wholeStoreFileUploadStatus = _wholeStoreFileUploadStatus;
