@@ -11,6 +11,30 @@
 
 @implementation TICDSFileManagerBasedWholeStoreUploadOperation
 
+- (void)checkWhetherThisClientWholeStoreDirectoryExists
+{
+    if( [[self fileManager] fileExistsAtPath:[self thisDocumentWholeStoreThisClientDirectoryPath]] ) {
+        [self discoveredStatusOfWholeStoreDirectory:TICDSRemoteFileStructureExistsResponseTypeDoesExist];
+    } else {
+        [self discoveredStatusOfWholeStoreDirectory:TICDSRemoteFileStructureExistsResponseTypeDoesNotExist];
+    }
+}
+
+- (void)createThisClientWholeStoreDirectory
+{
+    NSError *anyError = nil;
+    
+    BOOL success = [[self fileManager] createDirectoryAtPath:[self thisDocumentWholeStoreThisClientDirectoryPath] withIntermediateDirectories:NO attributes:nil error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self createdThisClientWholeStoreDirectorySuccessfully:NO];
+        return;
+    }
+    
+    [self createdThisClientWholeStoreDirectorySuccessfully:YES];
+}
+
 #pragma mark -
 #pragma mark Initialization and Deallocation
 - (void)dealloc

@@ -38,6 +38,7 @@
 {
     TICDSFileManagerBasedWholeStoreUploadOperation *operation = [[TICDSFileManagerBasedWholeStoreUploadOperation alloc] initWithDelegate:self];
     
+    [operation setThisDocumentWholeStoreThisClientDirectoryPath:[self thisDocumentWholeStoreThisClientDirectoryPath]];
     [operation setThisDocumentWholeStoreThisClientDirectoryWholeStoreFilePath:[self thisDocumentWholeStoreFilePath]];
     [operation setThisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath:[self thisDocumentAppliedSyncChangeSetsFilePath]];
     

@@ -76,9 +76,13 @@
     if( !someSuccess ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create this client's WholeStore directory");
         [self setWholeStoreDirectoryStatus:TICDSOperationPhaseStatusFailure];
+        [self setWholeStoreFileUploadStatus:TICDSOperationPhaseStatusFailure];
+        [self setAppliedSyncChangeSetsFileUploadStatus:TICDSOperationPhaseStatusFailure];
     } else {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Created this client's WholeStore directory");
         [self setWholeStoreDirectoryStatus:TICDSOperationPhaseStatusSuccess];
+        
+        [self beginUploadOfWholeStoreFile];
     }
     
     [self checkForCompletion];
