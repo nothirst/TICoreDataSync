@@ -76,6 +76,8 @@
 	
 	<option value="//api/name/registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:">&nbsp;&nbsp;&nbsp;&nbsp;- registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:</option>
 	
+	<option value="//api/name/requestDownloadOfDocumentWithIdentifier:toLocation:">&nbsp;&nbsp;&nbsp;&nbsp;- requestDownloadOfDocumentWithIdentifier:toLocation:</option>
+	
 	<option value="//api/name/requestListOfPreviouslySynchronizedDocuments">&nbsp;&nbsp;&nbsp;&nbsp;- requestListOfPreviouslySynchronizedDocuments</option>
 	
 	
@@ -98,7 +100,7 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Registration">Registration</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Accessing Previously-Synchronized Documents">Accessing Previously-Synchronized Documents</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Accessing Previously Synchronized Documents">Accessing Previously Synchronized Documents</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Methods Overridden by Subclasses">Methods Overridden by Subclasses</a></span></li>
 	
@@ -159,6 +161,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/listOfPreviouslySynchronizedDocumentsOperation">listOfPreviouslySynchronizedDocumentsOperation</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:">registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/requestDownloadOfDocumentWithIdentifier:toLocation:">requestDownloadOfDocumentWithIdentifier:toLocation:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/requestListOfPreviouslySynchronizedDocuments">requestListOfPreviouslySynchronizedDocuments</a></span></li>
 	
@@ -261,14 +265,21 @@
 						</ul>
 						
 						
-						<a title="Accessing Previously-Synchronized Documents" name="task_Accessing Previously-Synchronized Documents"></a>
-						<h3 class="subsubtitle task-title">Accessing Previously-Synchronized Documents</h3>
+						<a title="Accessing Previously Synchronized Documents" name="task_Accessing Previously Synchronized Documents"></a>
+						<h3 class="subsubtitle task-title">Accessing Previously Synchronized Documents</h3>
 
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/requestListOfPreviouslySynchronizedDocuments">&ndash;&nbsp;requestListOfPreviouslySynchronizedDocuments</a></code>
 		<span class="tooltip"><p>Request a list of documents that have previously been synchronized for this application, by any client.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/requestDownloadOfDocumentWithIdentifier:toLocation:">&ndash;&nbsp;requestDownloadOfDocumentWithIdentifier:toLocation:</a></code>
+		<span class="tooltip"><p>Download a document that has previously been synchronized for this application.</p></span>
 	</span>
 	
 	
@@ -1036,6 +1047,58 @@
 <p>This will automatically spawn a <a href="../Classes/TICDSApplicationRegistrationOperation.html"><code>TICDSApplicationRegistrationOperation</code></a>, and notify you of progress through the <a href="../Protocols/TICDSApplicationSyncManagerDelegate.html"><code>TICDSApplicationSyncManagerDelegate</code></a> methods.</p>
 
 <p>If this is the first time you have registered a client with this app identifier, registration will automatically create the file structure necessary at the remote end for this and other clients to synchronize. See <a href="../Classes/TICDSUtilities.html#//api/name/remoteGlobalAppFileStructure"><code>[TICDSUtilities remoteGlobalAppFileStructure]</code></a> for the structure that will be created.</p><div class="warning"><p>You must call this method before using the application sync manager for any other purpose.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/requestDownloadOfDocumentWithIdentifier:toLocation:" title="requestDownloadOfDocumentWithIdentifier:toLocation:"></a>
+	<h3 class="subsubtitle method-title">requestDownloadOfDocumentWithIdentifier:toLocation:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Download a document that has previously been synchronized for this application.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)requestDownloadOfDocumentWithIdentifier:(NSString *)<em>anIdentifier</em> toLocation:(NSURL *)<em>aLocation</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The unique synchronization identifier string for the requested document. If you&rsquo;re requesting the download of a document represented by a dictionary supplied from a request for the list of previously synchronized documents, use the value for its <code>kTICDSDocumentIdentifier</code> key.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aLocation</em></dt>
+			<dd><p>The location on disc to which the persistent store file should be downloaded.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method will automatically spawn a <code>TICDSDocumentDownloadOperation</code>, and notify you of progress through the <a href="../Protocols/TICDSApplicationSyncManagerDelegate.html"><code>TICDSApplicationSyncManagerDelegate</code></a> methods.</p>
 	</div>
 	
 	

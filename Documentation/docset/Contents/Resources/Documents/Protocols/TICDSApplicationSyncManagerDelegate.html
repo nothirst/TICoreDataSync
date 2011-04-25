@@ -40,9 +40,17 @@
 	
 	<option value="//api/name/syncManager:didFindPreviouslySynchronizedDocuments:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:didFindPreviouslySynchronizedDocuments:</option>
 	
+	<option value="//api/name/syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:</option>
+	
+	<option value="//api/name/syncManager:didStartToDownloadDocumentWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:didStartToDownloadDocumentWithIdentifier:</option>
+	
+	<option value="//api/name/syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:</option>
+	
 	<option value="//api/name/syncManager:encounteredRegistrationError:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:encounteredRegistrationError:</option>
 	
 	<option value="//api/name/syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:</option>
+	
+	<option value="//api/name/syncManager:failedToDownloadDocumentWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:failedToDownloadDocumentWithIdentifier:</option>
 	
 	<option value="//api/name/syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:</option>
 	
@@ -72,7 +80,9 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Registration">Registration</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Previously-Synchronized Documents">Previously-Synchronized Documents</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Listing Previously Synchronized Documents">Listing Previously Synchronized Documents</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Downloading a Previously Synchronized Document">Downloading a Previously Synchronized Document</a></span></li>
 	
 </ul></li>
 
@@ -88,9 +98,17 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:didFindPreviouslySynchronizedDocuments:">syncManager:didFindPreviouslySynchronizedDocuments:</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:">syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:didStartToDownloadDocumentWithIdentifier:">syncManager:didStartToDownloadDocumentWithIdentifier:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:">syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredRegistrationError:">syncManager:encounteredRegistrationError:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:">syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:failedToDownloadDocumentWithIdentifier:">syncManager:failedToDownloadDocumentWithIdentifier:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:">syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:</a></span></li>
 	
@@ -187,8 +205,8 @@
 						</ul>
 						
 						
-						<a title="Previously-Synchronized Documents" name="task_Previously-Synchronized Documents"></a>
-						<h3 class="subsubtitle task-title">Previously-Synchronized Documents</h3>
+						<a title="Listing Previously Synchronized Documents" name="task_Listing Previously Synchronized Documents"></a>
+						<h3 class="subsubtitle task-title">Listing Previously Synchronized Documents</h3>
 
 						<ul class="task-list">
 							<li>
@@ -201,21 +219,57 @@
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:">&ndash;&nbsp;syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:</a></code>
-		<span class="tooltip"><p>Informs the delegate that the sync manager failed to check for previously-synchronized documents.</p></span>
+		<span class="tooltip"><p>Informs the delegate that the sync manager failed to check for available documents that have previously been synchronized.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/syncManagerDidNotFindAnyPreviouslySynchronizedDocuments:">&ndash;&nbsp;syncManagerDidNotFindAnyPreviouslySynchronizedDocuments:</a></code>
-		<span class="tooltip"><p>Informs the delegate that the sync manager didn&rsquo;t find any previously-synchronized documents.</p></span>
+		<span class="tooltip"><p>Informs the delegate that the sync manager didn&rsquo;t find any available documents that have previously been synchronized.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/syncManager:didFindPreviouslySynchronizedDocuments:">&ndash;&nbsp;syncManager:didFindPreviouslySynchronizedDocuments:</a></code>
-		<span class="tooltip"><p>Informs the delegate that the sync manager found one or more previously-synchronized documents.</p></span>
+		<span class="tooltip"><p>Informs the delegate that the sync manager found one or more available documents that have previously been synchronized.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Downloading a Previously Synchronized Document" name="task_Downloading a Previously Synchronized Document"></a>
+						<h3 class="subsubtitle task-title">Downloading a Previously Synchronized Document</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManager:didStartToDownloadDocumentWithIdentifier:">&ndash;&nbsp;syncManager:didStartToDownloadDocumentWithIdentifier:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the sync manager has started to download a requested document that has previously been synchronized.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:">&ndash;&nbsp;syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the sync manager encountered an error during the document download process.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManager:failedToDownloadDocumentWithIdentifier:">&ndash;&nbsp;syncManager:failedToDownloadDocumentWithIdentifier:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the download of a requested document has failed to complete.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:">&ndash;&nbsp;syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the download of a requested document has completed successfully.</p></span>
 	</span>
 	
 	
@@ -243,7 +297,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Informs the delegate that the sync manager found one or more previously-synchronized documents.</p>
+		<p>Informs the delegate that the sync manager found one or more available documents that have previously been synchronized.</p>
 	</div>		
 	
 	
@@ -281,6 +335,157 @@
 </ol>
 
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:" title="syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:"></a>
+	<h3 class="subsubtitle method-title">syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the download of a requested document has completed successfully.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)syncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> didFinishDownloadingDocumentWithIdentifier:(NSString *)<em>anIdentifier</em> toLocation:(NSURL *)<em>aLocation</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The unique synchronization identifier of the document.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aLocation</em></dt>
+			<dd><p>The location of the downloaded store file.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/syncManager:didStartToDownloadDocumentWithIdentifier:" title="syncManager:didStartToDownloadDocumentWithIdentifier:"></a>
+	<h3 class="subsubtitle method-title">syncManager:didStartToDownloadDocumentWithIdentifier:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the sync manager has started to download a requested document that has previously been synchronized.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)syncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> didStartToDownloadDocumentWithIdentifier:(NSString *)<em>anIdentifier</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The unique synchronization identifier of the document.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:" title="syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:"></a>
+	<h3 class="subsubtitle method-title">syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the sync manager encountered an error during the document download process.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)syncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> encounteredDownloadError:(NSError *)<em>anError</em> forDownloadOfDocumentWithIdentifier:(NSString *)<em>anIdentifier</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anError</em></dt>
+			<dd><p>The error that was encountered.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The unique synchronization identifier of the document.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
 	
 	
 	
@@ -350,7 +555,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Informs the delegate that the sync manager failed to check for previously-synchronized documents.</p>
+		<p>Informs the delegate that the sync manager failed to check for available documents that have previously been synchronized.</p>
 	</div>		
 	
 	
@@ -375,6 +580,58 @@
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/syncManager:failedToDownloadDocumentWithIdentifier:" title="syncManager:failedToDownloadDocumentWithIdentifier:"></a>
+	<h3 class="subsubtitle method-title">syncManager:failedToDownloadDocumentWithIdentifier:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the download of a requested document has failed to complete.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)syncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> failedToDownloadDocumentWithIdentifier:(NSString *)<em>anIdentifier</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The unique synchronization identifier of the document.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The error will previously have been supplied through the <a href="#//api/name/syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:"><code>syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:</code></a> method.</p>
+	</div>
 	
 	
 	
@@ -444,7 +701,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Informs the delegate that the sync manager didn&rsquo;t find any previously-synchronized documents.</p>
+		<p>Informs the delegate that the sync manager didn&rsquo;t find any available documents that have previously been synchronized.</p>
 	</div>		
 	
 	
