@@ -194,6 +194,22 @@
 }
 
 #pragma mark -
+#pragma mark DOCUMENT DOWNLOAD
+- (void)requestDownloadOfDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to download a previously synchronized document %@ to %@", anIdentifier, aLocation);
+    /*[self ti_alertDelegateWithSelector:@selector(syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:)];
+    
+    NSError *anyError = nil;
+    BOOL success = [self getAvailablePreviouslySynchronizedDocuments:&anyError];
+    
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Request for list of previously-synchronized documents failed with error: %@", anyError);
+        [self ti_alertDelegateWithSelector:@selector(syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:), anyError];
+    }*/
+}
+
+#pragma mark -
 #pragma mark OPERATION COMMUNICATIONS
 - (void)operationCompletedSuccessfully:(TICDSOperation *)anOperation
 {

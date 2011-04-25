@@ -74,12 +74,20 @@
  */
 - (void)registerWithDelegate:(id <TICDSApplicationSyncManagerDelegate>)aDelegate globalAppIdentifier:(NSString *)anAppIdentifier uniqueClientIdentifier:(NSString *)aClientIdentifier description:(NSString *)aClientDescription userInfo:(NSDictionary *)someUserInfo;
 
-/** @name Accessing Previously-Synchronized Documents */
+/** @name Accessing Previously Synchronized Documents */
 
 /** Request a list of documents that have previously been synchronized for this application, by any client.
  
  This method will automatically spawn a `TICDSListOfPreviouslySynchronizedDocumentsOperation`, and notify you of progress through the `TICDSApplicationSyncManagerDelegate` methods. */
 - (void)requestListOfPreviouslySynchronizedDocuments;
+
+/** Download a document that has previously been synchronized for this application.
+ 
+ This method will automatically spawn a `TICDSDocumentDownloadOperation`, and notify you of progress through the `TICDSApplicationSyncManagerDelegate` methods.
+ 
+ @param anIdentifier The unique synchronization identifier string for the requested document. If you're requesting the download of a document represented by a dictionary supplied from a request for the list of previously synchronized documents, use the value for its `kTICDSDocumentIdentifier` key.
+ @param aLocation The location on disc to which the persistent store file should be downloaded. */
+- (void)requestDownloadOfDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation;
 
 /** @name Methods Overridden by Subclasses */
 
