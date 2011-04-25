@@ -35,7 +35,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreUploadOperation/uploadWholeStoreFile</TokenIdentifier>
-			<Abstract>Upload the store at localWholeStoreFileLocation to the remote path</Abstract>
+			<Abstract>Upload the store at localWholeStoreFileLocation to the remote path /Documents/documentIdentifier/WholeStore/clientIdentifier/WholeStore.sqlite.</Abstract>
 			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
 			
 			<Declaration>- (void)uploadWholeStoreFile</Declaration>

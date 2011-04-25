@@ -49,6 +49,17 @@
 	
 	
 	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/downloadAppliedSyncChangeSetsFile">&nbsp;&nbsp;&nbsp;&nbsp;- downloadAppliedSyncChangeSetsFile</option>
+	
+	<option value="//api/name/downloadWholeStoreFile">&nbsp;&nbsp;&nbsp;&nbsp;- downloadWholeStoreFile</option>
+	
+	<option value="//api/name/downloadedAppliedSyncChangeSetsFileWithSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- downloadedAppliedSyncChangeSetsFileWithSuccess:</option>
+	
+	<option value="//api/name/downloadedWholeStoreFileWithSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- downloadedWholeStoreFileWithSuccess:</option>
+	
+	
 	
 </select>
 				</li>
@@ -63,6 +74,10 @@
 
 
 <li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Methods Overridden by Subclasses">Methods Overridden by Subclasses</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Callbacks">Callbacks</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Properties">Properties</a></span></li>
 	
@@ -91,6 +106,18 @@
 
 
 
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/downloadAppliedSyncChangeSetsFile">downloadAppliedSyncChangeSetsFile</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/downloadWholeStoreFile">downloadWholeStoreFile</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/downloadedAppliedSyncChangeSetsFileWithSuccess:">downloadedAppliedSyncChangeSetsFileWithSuccess:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/downloadedWholeStoreFileWithSuccess:">downloadedWholeStoreFileWithSuccess:</a></span></li>
+	
+</ul></li>
 
 
 			</ul>
@@ -147,6 +174,50 @@
 					<div class="section section-tasks">
 						<a title="Tasks" name="tasks"></a>
 						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						<a title="Methods Overridden by Subclasses" name="task_Methods Overridden by Subclasses"></a>
+						<h3 class="subsubtitle task-title">Methods Overridden by Subclasses</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/downloadWholeStoreFile">&ndash;&nbsp;downloadWholeStoreFile</a></code>
+		<span class="tooltip"><p>Download the store at the remote document store path to the <a href="#//api/name/localWholeStoreFileLocation"><code>localWholeStoreFileLocation</code></a>.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/downloadAppliedSyncChangeSetsFile">&ndash;&nbsp;downloadAppliedSyncChangeSetsFile</a></code>
+		<span class="tooltip"><p>Download the applied sync change sets file at the remote document store path to the <a href="#//api/name/localAppliedSyncChangeSetsFileLocation"><code>localAppliedSyncChangeSetsFileLocation</code></a>.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Callbacks" name="task_Callbacks"></a>
+						<h3 class="subsubtitle task-title">Callbacks</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/downloadedWholeStoreFileWithSuccess:">&ndash;&nbsp;downloadedWholeStoreFileWithSuccess:</a></code>
+		<span class="tooltip"><p>Indicate whether the download of the whole store file was successful.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/downloadedAppliedSyncChangeSetsFileWithSuccess:">&ndash;&nbsp;downloadedAppliedSyncChangeSetsFileWithSuccess:</a></code>
+		<span class="tooltip"><p>Indicate whether the download of the applied sync change sets file was successful.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
 						
 						
 						<a title="Properties" name="task_Properties"></a>
@@ -374,6 +445,180 @@
 					
 					
 					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/downloadAppliedSyncChangeSetsFile" title="downloadAppliedSyncChangeSetsFile"></a>
+	<h3 class="subsubtitle method-title">downloadAppliedSyncChangeSetsFile</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Download the applied sync change sets file at the remote document store path to the <a href="#//api/name/localAppliedSyncChangeSetsFileLocation"><code>localAppliedSyncChangeSetsFileLocation</code></a>.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)downloadAppliedSyncChangeSetsFile</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/downloadedAppliedSyncChangeSetsFileWithSuccess:"><code>downloadedAppliedSyncChangeSetsFileWithSuccess:</code></a> when finished.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreDownloadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/downloadWholeStoreFile" title="downloadWholeStoreFile"></a>
+	<h3 class="subsubtitle method-title">downloadWholeStoreFile</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Download the store at the remote document store path to the <a href="#//api/name/localWholeStoreFileLocation"><code>localWholeStoreFileLocation</code></a>.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)downloadWholeStoreFile</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/downloadedWholeStoreFileWithSuccess:"><code>downloadedWholeStoreFileWithSuccess:</code></a> when finished.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreDownloadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/downloadedAppliedSyncChangeSetsFileWithSuccess:" title="downloadedAppliedSyncChangeSetsFileWithSuccess:"></a>
+	<h3 class="subsubtitle method-title">downloadedAppliedSyncChangeSetsFileWithSuccess:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the download of the applied sync change sets file was successful.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)downloadedAppliedSyncChangeSetsFileWithSuccess:(BOOL)<em>success</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p>A Boolean indicating whether the applied sync change sets file was downloaded or not.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If not, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreDownloadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/downloadedWholeStoreFileWithSuccess:" title="downloadedWholeStoreFileWithSuccess:"></a>
+	<h3 class="subsubtitle method-title">downloadedWholeStoreFileWithSuccess:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the download of the whole store file was successful.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)downloadedWholeStoreFileWithSuccess:(BOOL)<em>success</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p>A Boolean indicating whether the whole store file was downloaded or not.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If not, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreDownloadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
 					
 					
 				</div>

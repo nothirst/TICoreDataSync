@@ -12,6 +12,60 @@
 		
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreDownloadOperation/downloadWholeStoreFile</TokenIdentifier>
+			<Abstract>Download the store at the remote document store path to the localWholeStoreFileLocation.</Abstract>
+			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)downloadWholeStoreFile</Declaration>
+			
+			
+			<Anchor>//api/name/downloadWholeStoreFile</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreDownloadOperation/downloadAppliedSyncChangeSetsFile</TokenIdentifier>
+			<Abstract>Download the applied sync change sets file at the remote document store path to the localAppliedSyncChangeSetsFileLocation.</Abstract>
+			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)downloadAppliedSyncChangeSetsFile</Declaration>
+			
+			
+			<Anchor>//api/name/downloadAppliedSyncChangeSetsFile</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreDownloadOperation/downloadedWholeStoreFileWithSuccess:</TokenIdentifier>
+			<Abstract>Indicate whether the download of the whole store file was successful.</Abstract>
+			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)downloadedWholeStoreFileWithSuccess:(BOOL)success</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>success</Name>
+					<Abstract>A Boolean indicating whether the whole store file was downloaded or not.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/downloadedWholeStoreFileWithSuccess:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreDownloadOperation/downloadedAppliedSyncChangeSetsFileWithSuccess:</TokenIdentifier>
+			<Abstract>Indicate whether the download of the applied sync change sets file was successful.</Abstract>
+			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)downloadedAppliedSyncChangeSetsFileWithSuccess:(BOOL)success</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>success</Name>
+					<Abstract>A Boolean indicating whether the applied sync change sets file was downloaded or not.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/downloadedAppliedSyncChangeSetsFileWithSuccess:</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSWholeStoreDownloadOperation/localWholeStoreFileLocation</TokenIdentifier>
 			<Abstract>The location of the whole store file to upload.</Abstract>
 			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
