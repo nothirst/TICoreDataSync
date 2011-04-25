@@ -10,6 +10,8 @@
 
 @interface TICDSWholeStoreUploadOperation ()
 
+- (void)beginCheckForThisClientWholeStoreDirectory;
+- (void)beginCreationOfThisClientWholeStoreDirectory;
 - (void)beginUploadOfWholeStoreFile;
 - (void)beginUploadOfAppliedSyncChangeSetsFile;
 - (void)checkForCompletion;
@@ -20,7 +22,73 @@
 
 - (void)main
 {
-    [self beginUploadOfWholeStoreFile];
+    [self beginCheckForThisClientWholeStoreDirectory];
+}
+
+#pragma mark -
+#pragma mark Whole Store Directory Check
+- (void)beginCheckForThisClientWholeStoreDirectory
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Checking whether this client's WholeStore directory exists");
+    
+    [self checkWhetherThisClientWholeStoreDirectoryExists];
+}
+
+- (void)discoveredStatusOfWholeStoreDirectory:(TICDSRemoteFileStructureExistsResponseType)status
+{
+    if( status == TICDSRemoteFileStructureExistsResponseTypeError ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error checking whether this client's WholeStore directory exists");
+        [self setWholeStoreDirectoryStatus:TICDSOperationPhaseStatusFailure];
+        [self setWholeStoreFileUploadStatus:TICDSOperationPhaseStatusFailure];
+        [self setAppliedSyncChangeSetsFileUploadStatus:TICDSOperationPhaseStatusFailure];
+    } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesExist ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"WholeStore directory exists");
+        [self setWholeStoreFileUploadStatus:TICDSOperationPhaseStatusSuccess];
+        
+        [self beginUploadOfWholeStoreFile];
+    } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesNotExist ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"WholeStore directory does not exist");
+        
+        [self beginCreationOfThisClientWholeStoreDirectory];
+    }
+    
+    [self checkForCompletion];
+}
+
+#pragma mark Overridden Method
+- (void)checkWhetherThisClientWholeStoreDirectoryExists
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self discoveredStatusOfWholeStoreDirectory:TICDSRemoteFileStructureExistsResponseTypeError];
+}
+
+#pragma mark -
+#pragma mark Whole Store Directory Creation
+- (void)beginCreationOfThisClientWholeStoreDirectory
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Creating this client's WholeStore directory");
+    
+    [self createThisClientWholeStoreDirectory];
+}
+
+- (void)createdThisClientWholeStoreDirectorySuccessfully:(BOOL)someSuccess
+{
+    if( !someSuccess ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create this client's WholeStore directory");
+        [self setWholeStoreDirectoryStatus:TICDSOperationPhaseStatusFailure];
+    } else {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Created this client's WholeStore directory");
+        [self setWholeStoreDirectoryStatus:TICDSOperationPhaseStatusSuccess];
+    }
+    
+    [self checkForCompletion];
+}
+
+#pragma mark Overridden Method
+- (void)createThisClientWholeStoreDirectory
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self createdThisClientWholeStoreDirectorySuccessfully:NO];
 }
 
 #pragma mark -
@@ -92,18 +160,18 @@
         return;
     }
     
-    if( [self wholeStoreFileUploadStatus] == TICDSOperationPhaseStatusInProgress || [self appliedSyncChangeSetsFileUploadStatus] == TICDSOperationPhaseStatusInProgress ) {
+    if( [self wholeStoreDirectoryStatus] == TICDSOperationPhaseStatusInProgress || [self wholeStoreFileUploadStatus] == TICDSOperationPhaseStatusInProgress || [self appliedSyncChangeSetsFileUploadStatus] == TICDSOperationPhaseStatusInProgress ) {
         return;
     }
     
-    if( [self wholeStoreFileUploadStatus] == TICDSOperationPhaseStatusSuccess && [self appliedSyncChangeSetsFileUploadStatus] == TICDSOperationPhaseStatusSuccess ) {
+    if( [self wholeStoreDirectoryStatus] == TICDSOperationPhaseStatusSuccess && [self wholeStoreFileUploadStatus] == TICDSOperationPhaseStatusSuccess && [self appliedSyncChangeSetsFileUploadStatus] == TICDSOperationPhaseStatusSuccess ) {
         [self setCompletionInProgress:YES];
         
         [self operationDidCompleteSuccessfully];
         return;
     }
     
-    if( [self wholeStoreFileUploadStatus] == TICDSOperationPhaseStatusFailure || [self appliedSyncChangeSetsFileUploadStatus] == TICDSOperationPhaseStatusFailure ) {
+    if( [self wholeStoreDirectoryStatus] == TICDSOperationPhaseStatusFailure || [self wholeStoreFileUploadStatus] == TICDSOperationPhaseStatusFailure || [self appliedSyncChangeSetsFileUploadStatus] == TICDSOperationPhaseStatusFailure ) {
         [self setCompletionInProgress:YES];
         
         [self operationDidFailToComplete];
@@ -124,6 +192,7 @@
 #pragma mark Properties
 @synthesize localWholeStoreFileLocation = _localWholeStoreFileLocation;
 @synthesize completionInProgress = _completionInProgress;
+@synthesize wholeStoreDirectoryStatus = _wholeStoreDirectoryStatus;
 @synthesize wholeStoreFileUploadStatus = _wholeStoreFileUploadStatus;
 @synthesize appliedSyncChangeSetsFileUploadStatus = _appliedSyncChangeSetsFileUploadStatus;
 

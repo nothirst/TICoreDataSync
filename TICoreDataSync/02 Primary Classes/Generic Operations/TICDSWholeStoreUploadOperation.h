@@ -12,8 +12,10 @@
  
  The operation carries out the following tasks:
  
- 1. Upload the whole store file.
- 2. Upload the applied sync change sets file that goes with this whole store.
+ 1. Check whether a directory exists for this client inside the document's `WholeStore` directory.
+ 2. If not, create one.
+ 3. Upload the whole store file.
+ 4. Upload the applied sync change sets file that goes with this whole store.
  
  Operations are typically created automatically by the relevant sync manager.
  
@@ -25,23 +27,43 @@
     NSURL *_localAppliedSyncChangeSetsFileLocation;
     
     BOOL _completionInProgress;
+    TICDSOperationPhaseStatus _wholeStoreDirectoryStatus;
     TICDSOperationPhaseStatus _wholeStoreFileUploadStatus;
     TICDSOperationPhaseStatus _appliedSyncChangeSetsUploadStatus;
 }
 
 /** @name Methods Overridden by Subclasses */
 
+/** Check whether a directory exists for this client inside the document's `WholeStore` directory.
+ 
+ This method must call `discoveredStatusOfWholeStoreDirectory:` to indicate the status.
+ */
+- (void)checkWhetherThisClientWholeStoreDirectoryExists;
+
+/** Create this client's directory inside this document's `WholeStore` directory; this method will be called automatically if the directory doesn't already exist.
+ 
+ This method must call `createdThisClientWholeStoreDirectorySuccessfully:` to indicate whether the creation was successful.
+ */
+- (void)createThisClientWholeStoreDirectory;
+
 /** Upload the store at `localWholeStoreFileLocation` to the remote path 
  
-    Call `uploadedWholeStoreFileWithSuccess:` when finished. */
+    This method must call `uploadedWholeStoreFileWithSuccess:` when finished. */
 - (void)uploadWholeStoreFile;
 
 /** Upload the applied sync change sets file at `localAppliedSyncChangeSetsFileLocation` to the remote path `/Documents/documentIdentifier/WholeStore/clientIdentifier/AppliedSyncChangeSets.sqlite`. 
  
- Call `uploadedWholeStoreFileWithSuccess:` when finished. */
+ This method must call `uploadedWholeStoreFileWithSuccess:` when finished. */
 - (void)uploadAppliedSyncChangeSetsFile;
 
 /** @name Callbacks */
+
+/** Indicate the status of this client's directory inside the `WholeStore` directory for this document.
+ 
+ If an error occurred, call `setError:` and pass `TICDSRemoteFileStructureExistsResponseTypeError`.
+ 
+ @param status The status of the directory: does exist, does not exist, or error (see `TICDSTypesAndEnums.h` for possible values). */
+- (void)discoveredStatusOfWholeStoreDirectory:(TICDSRemoteFileStructureExistsResponseType)status;
 
 /** Indicate whether the upload of the whole store file was successful.
  
@@ -49,6 +71,13 @@
  
  @param success A Boolean indicating whether the whole store file was uploaded or not. */
 - (void)uploadedWholeStoreFileWithSuccess:(BOOL)success;
+
+/** Indicate whether the creation of this client's directory inside this document's `WholeStore` directory was successful.
+ 
+ If not, call `setError:` and specify `NO`.
+ 
+ @param someSuccess A Boolean indicating whether the directory was created or not. */
+- (void)createdThisClientWholeStoreDirectorySuccessfully:(BOOL)someSuccess;
 
 /** Indicate whether the upload of the applied sync change sets file was successful.
  
@@ -66,6 +95,9 @@
 
 /** Used to indicate that completion is currently in progress, and that no further checks should be made. */
 @property (nonatomic, assign) BOOL completionInProgress;
+
+/** The phase status regarding checking (and creating if necessary) this client's directory inside the `WholeStore` directory for this document. */
+@property (nonatomic, assign) TICDSOperationPhaseStatus wholeStoreDirectoryStatus;
 
 /** The phase status of the whole store file upload. */
 @property (nonatomic, assign) TICDSOperationPhaseStatus wholeStoreFileUploadStatus;
