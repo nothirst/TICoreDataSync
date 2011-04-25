@@ -101,7 +101,7 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
 
 - (void)syncManagerFailedToRegisterDocument:(TICDSDocumentSyncManager *)aSyncManager
 {
-    [self performSelector:@selector(decreaseActivity) withObject:nil afterDelay:1.0];
+    [self decreaseActivity];
 }
 
 - (void)syncManagerDidRegisterDocumentSuccessfully:(TICDSDocumentSyncManager *)aSyncManager
