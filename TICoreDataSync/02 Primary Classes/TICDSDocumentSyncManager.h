@@ -218,6 +218,18 @@
 /** The path to this client's directory inside the `SyncChanges` directory for this document, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentSyncChangesThisClientDirectory;
 
+/** The path to the `WholeStore` directory for this document, relative to the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreDirectory;
+
+/** The path to this client's directory inside the `WholeStore` directory for this document, relative to the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreThisClientDirectory;
+
+/** The path to this client's `WholeStore.sqlite` file inside it's directory inside the `WholeStore` directory for this document, relative to the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreThisClientDirectoryWholeStoreFile;
+
+/** The path to this client's `AppliedSyncChangeSets.sqlite` file inside it's directory inside the `WholeStore` directory for this document, relative to the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFile;
+
 @property (nonatomic, readonly) NSString * unsynchronizedSyncChangesStorePath;
 
 @end

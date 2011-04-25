@@ -537,6 +537,26 @@
     return [[self relativePathToThisDocumentSyncChangesDirectory] stringByAppendingPathComponent:[self clientIdentifier]];
 }
 
+- (NSString *)relativePathToThisDocumentWholeStoreDirectory
+{
+    return [[self relativePathToThisDocumentDirectory] stringByAppendingPathComponent:TICDSWholeStoreDirectoryName];
+}
+
+- (NSString *)relativePathToThisDocumentWholeStoreThisClientDirectory
+{
+    return [[self relativePathToThisDocumentWholeStoreDirectory] stringByAppendingPathComponent:[self clientIdentifier]];
+}
+
+- (NSString *)relativePathToThisDocumentWholeStoreThisClientDirectoryWholeStoreFile
+{
+    return [[self relativePathToThisDocumentWholeStoreThisClientDirectory] stringByAppendingPathComponent:TICDSWholeStoreFilename];
+}
+
+- (NSString *)relativePathToThisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFile
+{
+    return [[self relativePathToThisDocumentWholeStoreThisClientDirectory] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
+}
+
 - (NSString *)unsynchronizedSyncChangesStorePath
 {
     return [[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSUnsynchronizedSyncChangesStoreName];

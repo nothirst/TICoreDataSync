@@ -26,6 +26,7 @@
 @class TICDSFileManagerBasedApplicationRegistrationOperation;
 @class TICDSFileManagerBasedDocumentRegistrationOperation;
 @class TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation;
+@class TICDSFileManagerBasedWholeStoreUploadOperation;
 
 #pragma mark -
 #pragma mark INTERNAL DATA MODEL

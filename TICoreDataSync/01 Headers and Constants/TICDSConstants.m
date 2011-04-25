@@ -41,6 +41,8 @@ NSString * const TICDSRecentSyncsDirectoryName = @"RecentSyncs";
 NSString * const TICDSUnappliedChangesDirectoryName = @"UnappliedSyncChanges";
 NSString * const TICDSSyncChangesToPushDirectoryName = @"SyncChangesToPush";
 NSString * const TICDSUnsynchronizedSyncChangesStoreName = @"UnsynchronizedSyncChanges.sqlite";
+NSString * const TICDSWholeStoreFilename = @"WholeStore.sqlite";
+NSString * const TICDSAppliedSyncChangeSetsFilename = @"AppliedSyncChangeSets.sqlite";
 
 NSString * const TICDSSyncIDAttributeName = @"ticdsSyncID";
 NSString * const TICDSSyncChangeDataModelName = @"TICDSSyncChange";

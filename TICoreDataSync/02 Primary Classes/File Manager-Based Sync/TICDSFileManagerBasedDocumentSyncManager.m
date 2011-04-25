@@ -34,6 +34,16 @@
     return [operation autorelease];
 }
 
+- (TICDSWholeStoreUploadOperation *)wholeStoreUploadOperation
+{
+    TICDSFileManagerBasedWholeStoreUploadOperation *operation = [[TICDSFileManagerBasedWholeStoreUploadOperation alloc] initWithDelegate:self];
+    
+    [operation setThisDocumentWholeStoreThisClientDirectoryWholeStoreFilePath:[self thisDocumentWholeStoreFilePath]];
+    [operation setThisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath:[self thisDocumentAppliedSyncChangeSetsFilePath]];
+    
+    return [operation autorelease];
+}
+
 #pragma mark -
 #pragma mark Paths
 - (NSString *)documentsDirectoryPath
@@ -49,6 +59,21 @@
 - (NSString *)thisDocumentSyncChangesThisClientDirectoryPath
 {
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentSyncChangesThisClientDirectory]];
+}
+
+- (NSString *)thisDocumentWholeStoreThisClientDirectoryPath
+{
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentWholeStoreThisClientDirectory]];
+}
+
+- (NSString *)thisDocumentWholeStoreFilePath
+{
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentWholeStoreThisClientDirectoryWholeStoreFile]];
+}
+
+- (NSString *)thisDocumentAppliedSyncChangeSetsFilePath
+{
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFile]];
 }
 
 #pragma mark -

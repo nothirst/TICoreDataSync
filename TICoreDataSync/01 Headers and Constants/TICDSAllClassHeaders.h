@@ -26,6 +26,7 @@
 #import "TICDSFileManagerBasedApplicationRegistrationOperation.h"
 #import "TICDSFileManagerBasedDocumentRegistrationOperation.h"
 #import "TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation.h"
+#import "TICDSFileManagerBasedWholeStoreUploadOperation.h"
 
 #pragma mark -
 #pragma mark Internal Data Model

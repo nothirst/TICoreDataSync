@@ -36,4 +36,13 @@
 /** The path to this client's directory inside this document's `SyncChanges` directory. */
 @property (nonatomic, readonly) NSString *thisDocumentSyncChangesThisClientDirectoryPath;
 
+/** The path to this client's directory inside this document's `WholeStore` directory. */
+@property (nonatomic, readonly) NSString *thisDocumentWholeStoreThisClientDirectoryPath;
+
+/** The path to this client's `WholeStore.sqlite` file. */
+@property (nonatomic, readonly) NSString *thisDocumentWholeStoreFilePath;
+
+/** The path to this client's `AppliedSyncChangeSets.sqlite` file. */
+@property (nonatomic, readonly) NSString *thisDocumentAppliedSyncChangeSetsFilePath;
+
 @end
