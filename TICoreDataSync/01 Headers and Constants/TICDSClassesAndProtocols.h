@@ -19,6 +19,7 @@
 @class TICDSDocumentRegistrationOperation;
 @class TICDSListOfPreviouslySynchronizedDocumentsOperation;
 @class TICDSWholeStoreUploadOperation;
+@class TICDSWholeStoreDownloadOperation;
 
 #pragma mark File Manager-Based
 @class TICDSFileManagerBasedApplicationSyncManager;

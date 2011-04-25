@@ -19,6 +19,7 @@
 #import "TICDSDocumentRegistrationOperation.h"
 #import "TICDSListOfPreviouslySynchronizedDocumentsOperation.h"
 #import "TICDSWholeStoreUploadOperation.h"
+#import "TICDSWholeStoreDownloadOperation.h"
 
 #pragma mark File Manager-Based
 #import "TICDSFileManagerBasedApplicationSyncManager.h"

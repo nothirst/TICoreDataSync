@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		381627DF1365E4BB00F668B4 /* TICDSWholeStoreDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 381627DE1365E4BB00F668B4 /* TICDSWholeStoreDownloadOperation.m */; };
 		382390CE136087850068EB37 /* TICDSLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 382390CD136087850068EB37 /* TICDSLog.m */; };
 		382390D213608A1D0068EB37 /* TICDSApplicationRegistrationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 382390D113608A1D0068EB37 /* TICDSApplicationRegistrationOperation.m */; };
 		382390D513608AAF0068EB37 /* TICDSError.m in Sources */ = {isa = PBXBuildFile; fileRef = 382390D413608AAE0068EB37 /* TICDSError.m */; };
@@ -58,6 +59,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		381627DD1365E4BB00F668B4 /* TICDSWholeStoreDownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSWholeStoreDownloadOperation.h; sourceTree = "<group>"; };
+		381627DE1365E4BB00F668B4 /* TICDSWholeStoreDownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSWholeStoreDownloadOperation.m; sourceTree = "<group>"; };
 		382390C8136086030068EB37 /* TICDSTypesAndEnums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSTypesAndEnums.h; sourceTree = "<group>"; };
 		382390CC136087850068EB37 /* TICDSLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSLog.h; sourceTree = "<group>"; };
 		382390CD136087850068EB37 /* TICDSLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSLog.m; sourceTree = "<group>"; };
@@ -188,6 +191,8 @@
 				38BE9119136477B400312C60 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.m */,
 				38AD2BCE13658BB900BEF407 /* TICDSWholeStoreUploadOperation.h */,
 				38AD2BCF13658BB900BEF407 /* TICDSWholeStoreUploadOperation.m */,
+				381627DD1365E4BB00F668B4 /* TICDSWholeStoreDownloadOperation.h */,
+				381627DE1365E4BB00F668B4 /* TICDSWholeStoreDownloadOperation.m */,
 			);
 			path = "Generic Operations";
 			sourceTree = "<group>";
@@ -489,6 +494,7 @@
 				38BE911D1364879F00312C60 /* TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation.m in Sources */,
 				38AD2BD013658BB900BEF407 /* TICDSWholeStoreUploadOperation.m in Sources */,
 				38BAFEC41365CBE6000368FE /* TICDSFileManagerBasedWholeStoreUploadOperation.m in Sources */,
+				381627DF1365E4BB00F668B4 /* TICDSWholeStoreDownloadOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
