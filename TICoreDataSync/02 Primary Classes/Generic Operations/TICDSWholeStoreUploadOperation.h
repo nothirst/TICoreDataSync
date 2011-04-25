@@ -17,8 +17,7 @@
  
  Operations are typically created automatically by the relevant sync manager.
  
- @warning You must use one of the subclasses of `TICDSWholeStoreUploadOperation`.
- */
+ @warning You must use one of the subclasses of `TICDSWholeStoreUploadOperation`. */
 
 @interface TICDSWholeStoreUploadOperation : TICDSOperation {
 @private
@@ -32,12 +31,12 @@
 
 /** @name Methods Overridden by Subclasses */
 
-/** Upload the store at `localWholeStoreFileLocation` to the remote path `Documents/<document identifier>/WholeStore/<client identifier>/WholeStore.sqlite`. 
+/** Upload the store at `localWholeStoreFileLocation` to the remote path 
  
     Call `uploadedWholeStoreFileWithSuccess:` when finished. */
 - (void)uploadWholeStoreFile;
 
-/** Upload the applied sync change sets file at `localAppliedSyncChangeSetsFileLocation` to the remote path `Documents/<document identifier>/WholeStore/<client identifier>/AppliedSyncChangeSets.sqlite`. 
+/** Upload the applied sync change sets file at `localAppliedSyncChangeSetsFileLocation` to the remote path `/Documents/documentIdentifier/WholeStore/clientIdentifier/AppliedSyncChangeSets.sqlite`. 
  
  Call `uploadedWholeStoreFileWithSuccess:` when finished. */
 - (void)uploadAppliedSyncChangeSetsFile;

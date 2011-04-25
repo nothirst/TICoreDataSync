@@ -172,7 +172,7 @@
 
 /** Invoked to allow the delegate to return a custom location for a local directory to contain the helper files the `TICoreDataSync` framework uses to synchronize a document.
  
- If you don't implement this method, the default location will be `~/Library/Application Support/<application name>/Documents/<document identifier/`.
+ If you don't implement this method, the default location will be `~/Library/Application Support/ApplicationName/Documents/documentIdentifier/`.
  
  @param aSyncManager The document sync manager object that sent the message.
  @param anIdentifier The unique identifier for the document (as supplied at registration).

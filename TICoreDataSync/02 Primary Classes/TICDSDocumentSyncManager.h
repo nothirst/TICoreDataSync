@@ -180,7 +180,7 @@
  
  You typically set this property by implementing the `TICDSDocumentSyncManagerDelegate` method `syncManager:helperFileDirectoryLocationForDocumentWithIdentifier:description:userInfo:`.
  
- By default, the framework will use the location `~/Library/Application Support/<your application>/Documents/<documentIdentifier>`.
+ By default, the framework will use the location `~/Library/Application Support/ApplicationName/Documents/documentIdentifier`.
  */
 @property (readonly, retain) NSURL *helperFileDirectoryLocation;
 
