@@ -82,6 +82,13 @@
  */
 - (void)continueRegistrationByCreatingRemoteFileStructure:(BOOL)shouldCreateFileStructure;
 
+/** @name Whole Store Upload */
+
+/** Start the process manually to upload the entire store file for this document, along with the relevant `AppliedSyncChanges.sqlite` file.
+ 
+ The location of the store file (and the applied sync changes file) will be requested from the delegate immediately after calling this method. */
+- (void)initiateUploadOfEntireStore;
+
 /** @name Methods Overridden by Subclasses */
 
 /** Returns a document registration operation.
@@ -91,6 +98,13 @@
  @return A correctly-configured subclass of `TICDSDocumentRegistrationOperation`.
  */
 - (TICDSDocumentRegistrationOperation *)documentRegistrationOperation;
+
+/** Returns a whole store upload operation.
+ 
+ Subclasses of `TICDSDocumentSyncManager` use this method to return a correctly-configured whole store upload operation for their particular sync method.
+ 
+ @return A correctly-configured subclass of `TICDSWholeStoreUploadOperation`. */
+- (TICDSWholeStoreUploadOperation *)wholeStoreUploadOperation;
 
 /** @name Managed Object Context Saving */
 

@@ -78,15 +78,15 @@
 @property (readonly) BOOL isFinished;
 
 /** The most recent error; set this before calling `operationDidFailToComplete`. */
-@property (nonatomic, retain) NSError *error;
+@property (retain) NSError *error;
 
 /** An `NSFileManager` object suitable for use by this operation. */
-@property (nonatomic, retain) NSFileManager *fileManager;
+@property (nonatomic, readonly, retain) NSFileManager *fileManager;
 
 /** The local location on disc of helper files needed by `TICoreDataSync` for this operation (not set automatically). */
-@property (nonatomic, retain) NSURL *helperFileDirectoryLocation;
+@property (retain) NSURL *helperFileDirectoryLocation;
 
 /** The identifier of the client application (not set automatically, but may be used whenever necessary by subclasses). */
-@property (nonatomic, copy) NSString *clientIdentifier;
+@property (retain) NSString *clientIdentifier;
 
 @end

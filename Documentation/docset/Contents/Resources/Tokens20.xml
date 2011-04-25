@@ -20,7 +20,7 @@
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
 				</Parameter>
 			</Parameters>
 			
@@ -36,7 +36,7 @@
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
 				</Parameter><Parameter>
 					<Name>anError</Name>
 					<Abstract>The error that was encountered.</Abstract>
@@ -55,7 +55,7 @@
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
 				</Parameter><Parameter>
 					<Name>anIdentifier</Name>
 					<Abstract>The unique identifier for the document (as supplied at registration).</Abstract>
@@ -80,7 +80,7 @@
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
 				</Parameter>
 			</Parameters>
 			
@@ -96,7 +96,7 @@
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
 				</Parameter>
 			</Parameters>
 			
@@ -112,7 +112,7 @@
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
 				</Parameter>
 			</Parameters>
 			
@@ -128,7 +128,7 @@
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
 				</Parameter><Parameter>
 					<Name>anIdentifier</Name>
 					<Abstract>The unique identifier for the document (as supplied at registration).</Abstract>
@@ -145,6 +145,105 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerShouldUploadWholeStoreAfterRegistration:</TokenIdentifier>
+			<Abstract>Invoked to ask the delegate whether the document sync manager should automatically initiate a Whole Store Upload at registration.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)syncManagerShouldUploadWholeStoreAfterRegistration:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>A Boolean indicating whether to initiate the upload.</Abstract></ReturnValue>
+			<Anchor>//api/name/syncManagerShouldUploadWholeStoreAfterRegistration:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerURLForWholeStoreToUpload:</TokenIdentifier>
+			<Abstract>Invoked to ask the delegate for the URL of the document's SQLite store to upload.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (NSURL *)syncManagerURLForWholeStoreToUpload:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>The location of the store file.</Abstract></ReturnValue>
+			<Anchor>//api/name/syncManagerURLForWholeStoreToUpload:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidBeginToUploadWholeStore:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager has begun to upload the whole store file, together with necessary helper files.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManagerDidBeginToUploadWholeStore:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerDidBeginToUploadWholeStore:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:encounteredWholeStoreUploadError:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager encountered an error during the whole store upload.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredWholeStoreUploadError:(NSError *)anError</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>anError</Name>
+					<Abstract>The error.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManager:encounteredWholeStoreUploadError:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerFailedToUploadWholeStore:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager failed to upload the whole store file.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManagerFailedToUploadWholeStore:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerFailedToUploadWholeStore:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidUploadWholeStoreSuccessfully:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager finished uploading the whole store file successfully.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManagerDidUploadWholeStoreSuccessfully:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncMaanger</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerDidUploadWholeStoreSuccessfully:</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:didBeginProcessingAfterMOCDidSave:</TokenIdentifier>
 			<Abstract>Informs the delegate that the sync manager has begun to process the changes that have occurred since the previous save: of the managed object context.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
@@ -153,7 +252,7 @@
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
 				</Parameter><Parameter>
 					<Name>aMoc</Name>
 					<Abstract>The managed object context.</Abstract>
@@ -172,7 +271,7 @@
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
 				</Parameter><Parameter>
 					<Name>aMoc</Name>
 					<Abstract>The managed object context.</Abstract>
@@ -180,6 +279,25 @@
 			</Parameters>
 			
 			<Anchor>//api/name/syncManager:failedToProcessAfterMOCDidSave:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:didFinishProcessingAfterMOCDidSave:</TokenIdentifier>
+			<Abstract>Informs the delegate that the sync manager finished processing the changes that have occurred since the previous save: of the managed object context.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didFinishProcessingAfterMOCDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>aMoc</Name>
+					<Abstract>The managed object context.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManager:didFinishProcessingAfterMOCDidSave:</Anchor>
 		</Token>
 		
 	</File>

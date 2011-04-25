@@ -13,6 +13,8 @@
 - (BOOL)startDocumentRegistrationProcess:(NSError **)outError;
 - (void)bailFromRegistrationProcess;
 - (BOOL)checkForHelperFileDirectoryOrCreateIfNecessary:(NSError **)outError;
+- (void)startWholeStoreUploadProcess;
+- (void)bailFromUploadProcess;
 
 @property (nonatomic, retain) NSString *documentIdentifier;
 @property (nonatomic, retain) NSString *documentDescription;
@@ -153,15 +155,14 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification object:self];
     
-    /*
     // Upload whole store if necessary
-    if( [anOperation documentHasBeenSynchronizedByThisClient] ) {
-        [self uploadWholeStoreIfDelegateRequiresForPhase:TICDSShouldUploadEntireStorePhaseTypeRegistrationOfExistingDocument];
-    } else if( [anOperation documentHasBeenSynchronizedByAnyClient] ) {
-        [self uploadWholeStoreIfDelegateRequiresForPhase:TICDSShouldUploadEntireStorePhaseTypeInitialRegistrationOfThisDocumentByThisClientDevice];
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Asking delegate whether to upload whole store after registration");
+    if( [self ti_boolFromDelegateWithSelector:@selector(syncManagerShouldUploadWholeStoreAfterRegistration:)] ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate allowed whole store upload after registration");
+        [self startWholeStoreUploadProcess];
     } else {
-        [self uploadWholeStoreIfDelegateRequiresForPhase:TICDSShouldUploadEntireStorePhaseTypeInitialRegistrationOfThisDocumentByAnyClientDevice];
-    }*/
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate denied whole store upload after registration");
+    }
 }
 
 - (void)documentRegistrationOperationWasCancelled:(TICDSDocumentRegistrationOperation *)anOperation
@@ -283,6 +284,65 @@
 }
 
 #pragma mark -
+#pragma mark WHOLE STORE UPLOAD
+- (void)initiateUploadOfEntireStore
+{
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Manual initiation of whole store upload");
+    
+    [self startWholeStoreUploadProcess];
+}
+
+- (void)bailFromUploadProcess
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from whole store upload process");
+    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToUploadStore:)];
+}
+
+- (void)startWholeStoreUploadProcess
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to upload whole store");
+    
+    TICDSWholeStoreUploadOperation *operation = [self wholeStoreUploadOperation];
+    
+    if( !operation ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create whole store operation object");
+        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredWholeStoreUploadError:), [TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
+        [self bailFromUploadProcess];
+        return;
+    }
+    
+    [[self otherTasksQueue] addOperation:operation];
+}
+
+#pragma mark Operation Generation
+- (TICDSWholeStoreUploadOperation *)wholeStoreUploadOperation
+{
+    return [[[TICDSWholeStoreUploadOperation alloc] initWithDelegate:self] autorelease];
+}
+
+#pragma mark Operation Communications
+- (void)wholeStoreUploadOperationCompleted:(TICDSWholeStoreUploadOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Whole Store Upload Operation Completed");
+    
+    [self ti_alertDelegateWithSelector:@selector(syncManagerDidUploadWholeStoreSuccessfully:)];
+}
+
+- (void)wholeStoreUploadOperationWasCancelled:(TICDSWholeStoreUploadOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Whole Store Upload Operation was Cancelled");
+    
+    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToUploadWholeStore:)];
+}
+
+- (void)wholeStoreUploadOperation:(TICDSDocumentRegistrationOperation *)anOperation failedToCompleteWithError:(NSError *)anError
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Whole Store Upload Operation Failed to Complete with Error: %@", anError);
+    [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredWholeStoreUploadError:), anError];
+    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToUploadWholeStore:)];
+}
+
+#pragma mark -
 #pragma mark MANAGED OBJECT CONTEXT DID SAVE BEHAVIOR
 - (void)synchronizedMOCWillSave:(TICDSSynchronizedManagedObjectContext *)aMoc
 {
@@ -342,6 +402,8 @@
 {
     if( [anOperation isKindOfClass:[TICDSDocumentRegistrationOperation class]] ) {
         [self documentRegistrationOperationCompleted:(id)anOperation];
+    } else if( [anOperation isKindOfClass:[TICDSWholeStoreUploadOperation class]] ) {
+        [self wholeStoreUploadOperationCompleted:(id)anOperation];
     }
 }
 
@@ -349,6 +411,8 @@
 {
     if( [anOperation isKindOfClass:[TICDSDocumentRegistrationOperation class]] ) {
         [self documentRegistrationOperationWasCancelled:(id)anOperation];
+    } else if( [anOperation isKindOfClass:[TICDSWholeStoreUploadOperation class]] ) {
+        [self wholeStoreUploadOperationWasCancelled:(id)anOperation];
     }
 }
 
@@ -356,6 +420,8 @@
 {
     if( [anOperation isKindOfClass:[TICDSDocumentRegistrationOperation class]] ) {
         [self documentRegistrationOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
+    } else if( [anOperation isKindOfClass:[TICDSWholeStoreUploadOperation class]] ) {
+        [self wholeStoreUploadOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     }
 }
 

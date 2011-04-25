@@ -77,6 +77,8 @@
 	
 	<option value="//api/name/documentRegistrationOperation">&nbsp;&nbsp;&nbsp;&nbsp;- documentRegistrationOperation</option>
 	
+	<option value="//api/name/initiateUploadOfEntireStore">&nbsp;&nbsp;&nbsp;&nbsp;- initiateUploadOfEntireStore</option>
+	
 	<option value="//api/name/registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:">&nbsp;&nbsp;&nbsp;&nbsp;- registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:</option>
 	
 	<option value="//api/name/synchronizedMOCDidSave:">&nbsp;&nbsp;&nbsp;&nbsp;- synchronizedMOCDidSave:</option>
@@ -84,6 +86,8 @@
 	<option value="//api/name/synchronizedMOCFailedToSave:withError:">&nbsp;&nbsp;&nbsp;&nbsp;- synchronizedMOCFailedToSave:withError:</option>
 	
 	<option value="//api/name/synchronizedMOCWillSave:">&nbsp;&nbsp;&nbsp;&nbsp;- synchronizedMOCWillSave:</option>
+	
+	<option value="//api/name/wholeStoreUploadOperation">&nbsp;&nbsp;&nbsp;&nbsp;- wholeStoreUploadOperation</option>
 	
 	
 	
@@ -102,6 +106,8 @@
 <li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Registration">Registration</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Whole Store Upload">Whole Store Upload</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Methods Overridden by Subclasses">Methods Overridden by Subclasses</a></span></li>
 	
@@ -165,6 +171,8 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentRegistrationOperation">documentRegistrationOperation</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initiateUploadOfEntireStore">initiateUploadOfEntireStore</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:">registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/synchronizedMOCDidSave:">synchronizedMOCDidSave:</a></span></li>
@@ -172,6 +180,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/synchronizedMOCFailedToSave:withError:">synchronizedMOCFailedToSave:withError:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/synchronizedMOCWillSave:">synchronizedMOCWillSave:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/wholeStoreUploadOperation">wholeStoreUploadOperation</a></span></li>
 	
 </ul></li>
 
@@ -257,6 +267,21 @@
 						</ul>
 						
 						
+						<a title="Whole Store Upload" name="task_Whole Store Upload"></a>
+						<h3 class="subsubtitle task-title">Whole Store Upload</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initiateUploadOfEntireStore">&ndash;&nbsp;initiateUploadOfEntireStore</a></code>
+		<span class="tooltip"><p>Start the process manually to upload the entire store file for this document, along with the relevant <code>AppliedSyncChanges.sqlite</code> file.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
 						<a title="Methods Overridden by Subclasses" name="task_Methods Overridden by Subclasses"></a>
 						<h3 class="subsubtitle task-title">Methods Overridden by Subclasses</h3>
 
@@ -265,6 +290,13 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/documentRegistrationOperation">&ndash;&nbsp;documentRegistrationOperation</a></code>
 		<span class="tooltip"><p>Returns a document registration operation.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/wholeStoreUploadOperation">&ndash;&nbsp;wholeStoreUploadOperation</a></code>
+		<span class="tooltip"><p>Returns a whole store upload operation.</p></span>
 	</span>
 	
 	
@@ -1104,6 +1136,43 @@
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/initiateUploadOfEntireStore" title="initiateUploadOfEntireStore"></a>
+	<h3 class="subsubtitle method-title">initiateUploadOfEntireStore</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Start the process manually to upload the entire store file for this document, along with the relevant <code>AppliedSyncChanges.sqlite</code> file.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)initiateUploadOfEntireStore</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The location of the store file (and the applied sync changes file) will be requested from the <a href="#//api/name/delegate">delegate</a> immediately after calling this method.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:" title="registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:"></a>
 	<h3 class="subsubtitle method-title">registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:</h3>
 	
@@ -1313,6 +1382,48 @@
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>This method is called automatically by <a href="../Classes/TICDSSynchronizedManagedObjectContext.html"><code>TICDSSynchronizedManagedObjectContext</code></a> when it&rsquo;s about to initiate a <code>save:</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/wholeStoreUploadOperation" title="wholeStoreUploadOperation"></a>
+	<h3 class="subsubtitle method-title">wholeStoreUploadOperation</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns a whole store upload operation.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (TICDSWholeStoreUploadOperation *)wholeStoreUploadOperation</code></div>
+	
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A correctly-configured subclass of <a href="../Classes/TICDSWholeStoreUploadOperation.html"><code>TICDSWholeStoreUploadOperation</code></a>.</p>
+	</div>
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Subclasses of <a href="TICDSDocumentSyncManager.html"><code>TICDSDocumentSyncManager</code></a> use this method to return a correctly-configured whole store upload operation for their particular sync method.</p>
 	</div>
 	
 	

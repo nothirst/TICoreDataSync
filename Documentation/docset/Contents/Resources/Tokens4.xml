@@ -64,6 +64,17 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/initiateUploadOfEntireStore</TokenIdentifier>
+			<Abstract>Start the process manually to upload the entire store file for this document, along with the relevant AppliedSyncChanges.sqlite file.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (void)initiateUploadOfEntireStore</Declaration>
+			
+			
+			<Anchor>//api/name/initiateUploadOfEntireStore</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/documentRegistrationOperation</TokenIdentifier>
 			<Abstract>Returns a document registration operation.</Abstract>
 			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
@@ -72,6 +83,17 @@
 			
 			<ReturnValue><Abstract>A correctly-configured subclass of TICDSDocumentRegistrationOperation.</Abstract></ReturnValue>
 			<Anchor>//api/name/documentRegistrationOperation</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/wholeStoreUploadOperation</TokenIdentifier>
+			<Abstract>Returns a whole store upload operation.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (TICDSWholeStoreUploadOperation *)wholeStoreUploadOperation</Declaration>
+			
+			<ReturnValue><Abstract>A correctly-configured subclass of TICDSWholeStoreUploadOperation.</Abstract></ReturnValue>
+			<Anchor>//api/name/wholeStoreUploadOperation</Anchor>
 		</Token>
 		
 		<Token>

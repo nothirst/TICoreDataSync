@@ -79,7 +79,9 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     [[self documentSyncManager] registerWithDelegate:self appSyncManager:[TICDSApplicationSyncManager defaultApplicationSyncManager] managedObjectContext:(TICDSSynchronizedManagedObjectContext *)[self managedObjectContext] documentIdentifier:[self documentSyncIdentifier] description:[[[self fileURL] path] lastPathComponent] userInfo:nil];
 }
 
-#pragma mark Callbacks
+#pragma mark -
+#pragma mark CALLBACKS
+#pragma mark Registration
 - (void)syncManagerDidStartDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager
 {
     [self increaseActivity];
@@ -105,6 +107,12 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
 - (void)syncManagerDidRegisterDocumentSuccessfully:(TICDSDocumentSyncManager *)aSyncManager
 {
     [self decreaseActivity];
+}
+
+#pragma mark Whole Store Upload
+- (NSURL *)syncManagerURLForWholeStoreToUpload:(TICDSDocumentSyncManager *)aSyncManager
+{
+    return nil;
 }
 
 #pragma mark -

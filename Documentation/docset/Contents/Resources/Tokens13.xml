@@ -120,7 +120,7 @@
 			<Abstract>The most recent error; set this before calling operationDidFailToComplete.</Abstract>
 			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, retain) NSError *error</Declaration>
+			<Declaration>@property (retain) NSError *error</Declaration>
 			
 			
 			<Anchor>//api/name/error</Anchor>
@@ -131,7 +131,7 @@
 			<Abstract>An NSFileManager object suitable for use by this operation.</Abstract>
 			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, retain) NSFileManager *fileManager</Declaration>
+			<Declaration>@property (nonatomic, readonly, retain) NSFileManager *fileManager</Declaration>
 			
 			
 			<Anchor>//api/name/fileManager</Anchor>
@@ -142,7 +142,7 @@
 			<Abstract>The local location on disc of helper files needed by TICoreDataSync for this operation (not set automatically).</Abstract>
 			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, retain) NSURL *helperFileDirectoryLocation</Declaration>
+			<Declaration>@property (retain) NSURL *helperFileDirectoryLocation</Declaration>
 			
 			
 			<Anchor>//api/name/helperFileDirectoryLocation</Anchor>
@@ -153,7 +153,7 @@
 			<Abstract>The identifier of the client application (not set automatically, but may be used whenever necessary by subclasses).</Abstract>
 			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, copy) NSString *clientIdentifier</Declaration>
+			<Declaration>@property (retain) NSString *clientIdentifier</Declaration>
 			
 			
 			<Anchor>//api/name/clientIdentifier</Anchor>

@@ -44,6 +44,7 @@
 		389F86C81360933F00004CA4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389F86C71360933F00004CA4 /* QuartzCore.framework */; };
 		389F86CA1360934800004CA4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389F86C91360934700004CA4 /* SystemConfiguration.framework */; };
 		389F86CD136093D800004CA4 /* TISLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 389F86CC136093D800004CA4 /* TISLAppDelegate.m */; };
+		38AD2BD013658BB900BEF407 /* TICDSWholeStoreUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38AD2BCF13658BB900BEF407 /* TICDSWholeStoreUploadOperation.m */; };
 		38BE911A136477B400312C60 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BE9119136477B400312C60 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.m */; };
 		38BE911D1364879F00312C60 /* TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BE911C1364879F00312C60 /* TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation.m */; };
 		38C0B62F13632A8600B63589 /* TIDocumentSyncChangesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C0B62E13632A8600B63589 /* TIDocumentSyncChangesWindowController.m */; };
@@ -119,6 +120,8 @@
 		389F86C91360934700004CA4 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		389F86CB136093D800004CA4 /* TISLAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TISLAppDelegate.h; sourceTree = "<group>"; };
 		389F86CC136093D800004CA4 /* TISLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TISLAppDelegate.m; sourceTree = "<group>"; };
+		38AD2BCE13658BB900BEF407 /* TICDSWholeStoreUploadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSWholeStoreUploadOperation.h; sourceTree = "<group>"; };
+		38AD2BCF13658BB900BEF407 /* TICDSWholeStoreUploadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSWholeStoreUploadOperation.m; sourceTree = "<group>"; };
 		38BE9118136477B400312C60 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSListOfPreviouslySynchronizedDocumentsOperation.h; sourceTree = "<group>"; };
 		38BE9119136477B400312C60 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSListOfPreviouslySynchronizedDocumentsOperation.m; sourceTree = "<group>"; };
 		38BE911B1364879F00312C60 /* TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation.h; sourceTree = "<group>"; };
@@ -180,6 +183,8 @@
 				389D769A1361D730007F19DC /* TICDSDocumentRegistrationOperation.m */,
 				38BE9118136477B400312C60 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.h */,
 				38BE9119136477B400312C60 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.m */,
+				38AD2BCE13658BB900BEF407 /* TICDSWholeStoreUploadOperation.h */,
+				38AD2BCF13658BB900BEF407 /* TICDSWholeStoreUploadOperation.m */,
 			);
 			path = "Generic Operations";
 			sourceTree = "<group>";
@@ -477,6 +482,7 @@
 				3863106813636BDD003D8EE3 /* TICDSConstants.m in Sources */,
 				38BE911A136477B400312C60 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.m in Sources */,
 				38BE911D1364879F00312C60 /* TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation.m in Sources */,
+				38AD2BD013658BB900BEF407 /* TICDSWholeStoreUploadOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

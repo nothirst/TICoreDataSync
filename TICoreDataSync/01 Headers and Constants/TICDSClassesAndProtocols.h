@@ -18,6 +18,7 @@
 @class TICDSApplicationRegistrationOperation;
 @class TICDSDocumentRegistrationOperation;
 @class TICDSListOfPreviouslySynchronizedDocumentsOperation;
+@class TICDSWholeStoreUploadOperation;
 
 #pragma mark File Manager-Based
 @class TICDSFileManagerBasedApplicationSyncManager;
@@ -49,6 +50,10 @@
 
 /** Informs the delegate that the sync manager has started the application registration process.
  
+ If an error occurs during application registration, the `syncManager:encounteredRegistrationError:` method will be called.
+ 
+ At the end of the registration process, one of the `syncManagerFailedToRegister:` or `syncManagerDidRegisterSuccessfully:` methods will be called.
+ 
  @param aSyncManager The application sync manager object that sent the message. */
 - (void)syncManagerDidStartRegistration:(TICDSApplicationSyncManager *)aSyncManager;
 
@@ -74,6 +79,8 @@
 /** @name Previously-Synchronized Documents */
 
 /** Informs the delegate that the sync manager has started to check for available documents that have previously been synchronized.
+ 
+ At the end of the process, one of the `syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:`, `syncManagerDidNotFindAnyPreviouslySynchronizedDocuments:`, or `syncManager:didFindPreviouslySynchronizedDocuments` methods will be called.
  
  @param aSyncManager The application sync manager object that sent the message. */
 - (void)syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:(TICDSApplicationSyncManager *)aSyncManager;
@@ -116,18 +123,22 @@
 
 /** Informs the delegate that the sync manager has started the document registration process.
  
- @param aSyncManager The application sync manager object that sent the message. */
+ If an error occurs during document registration, the `syncManager:encounteredDocumentRegistrationError:` method will be called.
+ 
+ At the end of the registration process, one of the `syncManagerFailedToRegisterDocument:` or `syncManagerDidRegisterDocumentSuccessfully:` methods will be called.
+
+ @param aSyncManager The document sync manager object that sent the message. */
 - (void)syncManagerDidStartDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager;
 
 /** Informs the delegate that the sync manager encountered an error during the document registration process.
  
- @param aSyncManager The application sync manager object that sent the message. 
+ @param aSyncManager The document sync manager object that sent the message. 
  @param anError The error that was encountered. */
 - (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredDocumentRegistrationError:(NSError *)anError;
 
 /** Informs the delegate that the sync manager paused the document registration process because the remote file structure does not yet exist for the specified document.
  
- @param aSyncManager The application sync manager object that sent the message. 
+ @param aSyncManager The document sync manager object that sent the message. 
  @param anIdentifier The unique identifier for the document (as supplied at registration).
  @param aDescription The description of the document (as supplied at registration).
  @param userInfo The user info dictionary (as supplied at registration).
@@ -141,19 +152,19 @@
 
 /** Informs the delegate that the sync manager has resumed the document registration process.
  
- @param aSyncManager The application sync manager object that sent the message. */
+ @param aSyncManager The document sync manager object that sent the message. */
 - (void)syncManagerDidResumeRegistration:(TICDSDocumentSyncManager *)aSyncManager;
 
 /** Informs the delegate that the sync manager failed to complete the document registration process.
  
  The error will previously have been supplied through the `syncManager:encounteredDocumentRegistrationError:` method.
 
- @param aSyncManager The application sync manager object that sent the message. */
+ @param aSyncManager The document sync manager object that sent the message. */
 - (void)syncManagerFailedToRegisterDocument:(TICDSDocumentSyncManager *)aSyncManager;
 
 /** Informs the delegate that the registration process completed successfully.
  
- @param aSyncManager The application sync manager object that sent the message. */
+ @param aSyncManager The document sync manager object that sent the message. */
 - (void)syncManagerDidRegisterDocumentSuccessfully:(TICDSDocumentSyncManager *)aSyncManager;
 
 #pragma mark Helper Files
@@ -163,35 +174,90 @@
  
  If you don't implement this method, the default location will be `~/Library/Application Support/<application name>/Documents/<document identifier/`.
  
- @param aSyncManager The application sync manager object that sent the message.
+ @param aSyncManager The document sync manager object that sent the message.
  @param anIdentifier The unique identifier for the document (as supplied at registration).
  @param aDescription The description of the document (as supplied at registration).
  @param userInfo The user info dictionary (as supplied at registration).
  
  @return The `NSURL` for the location you wish to use.
+ 
  @warning The location you specify *must* already exist. */
 - (NSURL *)syncManager:(TICDSDocumentSyncManager *)aSyncManager helperFileDirectoryLocationForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo;
+
+#pragma mark Whole Store Upload
+/** @name Whole Store Upload */
+
+/** Invoked to ask the delegate whether the document sync manager should automatically initiate a Whole Store Upload at registration.
+ 
+ @param aSyncManager The document sync manager object that sent the message.
+ 
+ @return A Boolean indicating whether to initiate the upload. */
+- (BOOL)syncManagerShouldUploadWholeStoreAfterRegistration:(TICDSDocumentSyncManager *)aSyncManager;
+
+/** Invoked to ask the delegate for the URL of the document's SQLite store to upload.
+ 
+ @param aSyncManager The document sync manager object that sent the message.
+ 
+ @return The location of the store file. */
+@required
+- (NSURL *)syncManagerURLForWholeStoreToUpload:(TICDSDocumentSyncManager *)aSyncManager;
+@optional
+
+/** Informs the delegate that the document sync manager has begun to upload the whole store file, together with necessary helper files.
+ 
+ If an error occurs during the upload process, the `syncManager:encounteredWholeStoreUploadError:` method will be called.
+ 
+ At the end of the upload process, one of the `syncManagerFailedToUploadWholeStore:` or `syncManagerDidUploadWholeStoreSuccessfully:` methods will be called.
+
+ @param aSyncManager The document sync manager object that sent the message. */
+- (void)syncManagerDidBeginToUploadWholeStore:(TICDSDocumentSyncManager *)aSyncManager;
+
+/** Informs the delegate that the document sync manager encountered an error during the whole store upload.
+ 
+ @param aSyncManager The document sync manager object that sent the message.
+ @param anError The error. */
+- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredWholeStoreUploadError:(NSError *)anError;
+
+/** Informs the delegate that the document sync manager failed to upload the whole store file.
+ 
+ The error will previously have been supplied through the `syncManager:encounteredWholeStoreUploadError:` method.
+ 
+ @param aSyncManager The document sync manager object that sent the message. */
+- (void)syncManagerFailedToUploadWholeStore:(TICDSDocumentSyncManager *)aSyncManager;
+
+/** Informs the delegate that the document sync manager finished uploading the whole store file successfully.
+ 
+ @param aSyncMaanger The document sync manager object that sent the message. */
+- (void)syncManagerDidUploadWholeStoreSuccessfully:(TICDSDocumentSyncManager *)aSyncManager;
 
 #pragma mark Processing
 /** @name Processing after Managed Object Context save */
 
 /** Informs the delegate that the sync manager has begun to process the changes that have occurred since the previous `save:` of the managed object context.
  
- @param aSyncManager The application sync manager object that sent the message.
+ At the end of the process, one of the `syncManager:failedToProcessAfterMOCDidSave:` or `syncManager:didFinishProcessingAfterMOCDidSave` methods will be called.
+ 
+ @param aSyncManager The document sync manager object that sent the message.
  @param aMoc The managed object context. */
 - (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didBeginProcessingAfterMOCDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc;
 
 /** Informs the delegate that the sync manager failed to process the changes that have occurred since the previous `save:` of the managed object context.
  
- @param aSyncManager The application sync manager object that sent the message.
+ @param aSyncManager The document sync manager object that sent the message.
  @param aMoc The managed object context. */
 - (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager failedToProcessAfterMOCDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc;
+
+/** Informs the delegate that the sync manager finished processing the changes that have occurred since the previous `save:` of the managed object context.
+ 
+ @param aSyncManager The document sync manager object that sent the message.
+ @param aMoc The managed object context. */
+- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didFinishProcessingAfterMOCDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc;
 
 @end
 
 #pragma mark -
 #pragma mark OPERATION DELEGATE PROTOCOLS
-#pragma Generic Operation Delegate
+#pragma mark Generic Operation Delegate
 /** The `TICDSOperationDelegate` protocol defines the methods implemented by delegates of any generic `TICDSOperation`. In the `TICoreDataSync` framework, these delegate methods are implemented by the application and document sync managers. */
 
 @protocol TICDSOperationDelegate <NSObject>
