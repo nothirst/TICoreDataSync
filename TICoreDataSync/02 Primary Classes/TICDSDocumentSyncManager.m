@@ -157,7 +157,7 @@
     
     // Upload whole store if necessary
     TICDSLog(TICDSLogVerbosityEveryStep, @"Asking delegate whether to upload whole store after registration");
-    if( [self ti_boolFromDelegateWithSelector:@selector(syncManagerShouldUploadWholeStoreAfterRegistration:)] ) {
+    if( [self ti_boolFromDelegateWithSelector:@selector(syncManagerShouldUploadWholeStoreAfterDocumentRegistration:)] ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate allowed whole store upload after registration");
         [self startWholeStoreUploadProcess];
     } else {
@@ -301,6 +301,7 @@
 - (void)startWholeStoreUploadProcess
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to upload whole store");
+    [self ti_alertDelegateWithSelector:@selector(syncManagerDidBeginToUploadWholeStore:)];
     
     TICDSWholeStoreUploadOperation *operation = [self wholeStoreUploadOperation];
     

@@ -145,11 +145,11 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerShouldUploadWholeStoreAfterRegistration:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerShouldUploadWholeStoreAfterDocumentRegistration:</TokenIdentifier>
 			<Abstract>Invoked to ask the delegate whether the document sync manager should automatically initiate a Whole Store Upload at registration.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (BOOL)syncManagerShouldUploadWholeStoreAfterRegistration:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Declaration>- (BOOL)syncManagerShouldUploadWholeStoreAfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -157,23 +157,32 @@
 				</Parameter>
 			</Parameters>
 			<ReturnValue><Abstract>A Boolean indicating whether to initiate the upload.</Abstract></ReturnValue>
-			<Anchor>//api/name/syncManagerShouldUploadWholeStoreAfterRegistration:</Anchor>
+			<Anchor>//api/name/syncManagerShouldUploadWholeStoreAfterDocumentRegistration:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerURLForWholeStoreToUpload:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:urlForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</TokenIdentifier>
 			<Abstract>Invoked to ask the delegate for the URL of the document's SQLite store to upload.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (NSURL *)syncManagerURLForWholeStoreToUpload:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Declaration>- (NSURL *)syncManager:(TICDSDocumentSyncManager *)aSyncManager urlForWholeStoreToUploadForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
 					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>anIdentifier</Name>
+					<Abstract>The unique identifier for the document (as supplied at registration).</Abstract>
+				</Parameter><Parameter>
+					<Name>aDescription</Name>
+					<Abstract>The description of the document (as supplied at registration).</Abstract>
+				</Parameter><Parameter>
+					<Name>userInfo</Name>
+					<Abstract>The user info dictionary (as supplied at registration).</Abstract>
 				</Parameter>
 			</Parameters>
 			<ReturnValue><Abstract>The location of the store file.</Abstract></ReturnValue>
-			<Anchor>//api/name/syncManagerURLForWholeStoreToUpload:</Anchor>
+			<Anchor>//api/name/syncManager:urlForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</Anchor>
 		</Token>
 		
 		<Token>

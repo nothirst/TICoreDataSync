@@ -192,15 +192,18 @@
  @param aSyncManager The document sync manager object that sent the message.
  
  @return A Boolean indicating whether to initiate the upload. */
-- (BOOL)syncManagerShouldUploadWholeStoreAfterRegistration:(TICDSDocumentSyncManager *)aSyncManager;
+- (BOOL)syncManagerShouldUploadWholeStoreAfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager;
 
 /** Invoked to ask the delegate for the URL of the document's SQLite store to upload.
  
  @param aSyncManager The document sync manager object that sent the message.
+ @param anIdentifier The unique identifier for the document (as supplied at registration).
+ @param aDescription The description of the document (as supplied at registration).
+ @param userInfo The user info dictionary (as supplied at registration).
  
  @return The location of the store file. */
 @required
-- (NSURL *)syncManagerURLForWholeStoreToUpload:(TICDSDocumentSyncManager *)aSyncManager;
+- (NSURL *)syncManager:(TICDSDocumentSyncManager *)aSyncManager urlForWholeStoreToUploadForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo;
 @optional
 
 /** Informs the delegate that the document sync manager has begun to upload the whole store file, together with necessary helper files.

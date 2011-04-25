@@ -110,9 +110,30 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
 }
 
 #pragma mark Whole Store Upload
-- (NSURL *)syncManagerURLForWholeStoreToUpload:(TICDSDocumentSyncManager *)aSyncManager
+- (BOOL)syncManagerShouldUploadWholeStoreAfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager
+{
+    // A Mac desktop Dropbox-sync-based application should upload relatively frequently, as it's just a simple copy from one location to another.
+    return YES;
+}
+
+- (NSURL *)syncManager:(TICDSDocumentSyncManager *)aSyncManager urlForWholeStoreToUploadForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo
 {
     return nil;
+}
+
+- (void)syncManagerDidBeginToUploadWholeStore:(TICDSDocumentSyncManager *)aSyncManager
+{
+    [self increaseActivity];
+}
+
+- (void)syncManagerFailedToUploadWholeStore:(TICDSDocumentSyncManager *)aSyncManager
+{
+    [self performSelector:@selector(decreaseActivity) withObject:nil afterDelay:1.0];
+}
+
+- (void)syncManagerDidUploadWholeStoreSuccessfully:(TICDSDocumentSyncManager *)aSyncManager
+{
+    [self performSelector:@selector(decreaseActivity) withObject:nil afterDelay:1.0];
 }
 
 #pragma mark -
