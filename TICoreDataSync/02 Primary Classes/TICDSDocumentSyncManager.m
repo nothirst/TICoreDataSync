@@ -324,7 +324,7 @@
         return;
     }
     
-    
+    [operation setLocalWholeStoreFileLocation:storeURL];
     
     [[self otherTasksQueue] addOperation:operation];
 }

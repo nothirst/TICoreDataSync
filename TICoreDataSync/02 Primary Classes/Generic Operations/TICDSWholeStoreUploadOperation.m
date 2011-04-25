@@ -43,7 +43,7 @@
         [self setAppliedSyncChangeSetsFileUploadStatus:TICDSOperationPhaseStatusFailure];
     } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesExist ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"WholeStore directory exists");
-        [self setWholeStoreFileUploadStatus:TICDSOperationPhaseStatusSuccess];
+        [self setWholeStoreDirectoryStatus:TICDSOperationPhaseStatusSuccess];
         
         [self beginUploadOfWholeStoreFile];
     } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesNotExist ) {
