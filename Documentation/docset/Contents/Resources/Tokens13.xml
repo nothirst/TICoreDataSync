@@ -1,80 +1,236 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/TICDSLog.html">
+	<File path="Classes/TICDSListOfPreviouslySynchronizedDocumentsOperation.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/TICDSLog</TokenIdentifier>
-			<Abstract>TICDLog is a utility class to provide the primary logging behavior for the TICoreDataSync framework.</Abstract>
-			<DeclaredIn>TICDSLog.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/TICDSListOfPreviouslySynchronizedDocumentsOperation</TokenIdentifier>
+			<Abstract>The TICDSListOfPreviouslySynchronizedDocumentsOperation class describes a generic operation used by the TICoreDataSync framework to fetch a list of documents that have previously been synchronized for this application.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>
 			
 			<NodeRef refid="13"/>
 		</Token>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/TICDSLog/verbosity</TokenIdentifier>
-			<Abstract>Returns the current verbosity level for logging.</Abstract>
-			<DeclaredIn>TICDSLog.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSListOfPreviouslySynchronizedDocumentsOperation/buildArrayOfDocumentIdentifiers</TokenIdentifier>
+			<Abstract>Build an array of NSString document identifiers for all available, previously-synchronized documents.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
 			
-			<Declaration>+ (NSInteger)verbosity</Declaration>
+			<Declaration>- (void)buildArrayOfDocumentIdentifiers</Declaration>
 			
 			
-			<Anchor>//api/name/verbosity</Anchor>
+			<Anchor>//api/name/buildArrayOfDocumentIdentifiers</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/TICDSLog/setVerbosity:</TokenIdentifier>
-			<Abstract>Sets the verbosity level for logging.</Abstract>
-			<DeclaredIn>TICDSLog.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSListOfPreviouslySynchronizedDocumentsOperation/fetchInfoDictionariesForDocumentsWithSyncIDs:</TokenIdentifier>
+			<Abstract>Fetch the documentInfo dictionaries for each of the documents with the specified IDs.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
 			
-			<Declaration>+ (void)setVerbosity:(NSInteger)verbosity</Declaration>
-			
-			
-			<Anchor>//api/name/setVerbosity:</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/TICDSLog/logWithVerbosity:information:</TokenIdentifier>
-			<Abstract>Log some information (assuming DEBUG is set).</Abstract>
-			<DeclaredIn>TICDSLog.h</DeclaredIn>			
-			
-			<Declaration>+ (void)logWithVerbosity:(NSInteger)someVerbosity information:(NSString *)formatString, ...</Declaration>
+			<Declaration>- (void)fetchInfoDictionariesForDocumentsWithSyncIDs:(NSArray *)syncIDs</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>someVerbosity</Name>
-					<Abstract>The verbosity level of this information (if the current verbosity is less than this, the information won't be logged).</Abstract>
-				</Parameter><Parameter>
-					<Name>formatString</Name>
-					<Abstract>The format string (using NSLog() format specifiers).</Abstract>
-				</Parameter><Parameter>
-					<Name>...</Name>
-					<Abstract>A comma-separated list of arguments to substitute into formatString.</Abstract>
+					<Name>syncIDs</Name>
+					<Abstract>The array of document identifier NSStrings.
+
+Call fetchedInfoDictionary:forDocumentWithSyncID: for each document as it is fetched.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/logWithVerbosity:information:</Anchor>
+			<Anchor>//api/name/fetchInfoDictionariesForDocumentsWithSyncIDs:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/TICDSLog/logWithVerbosity:formatString:args:</TokenIdentifier>
-			<Abstract>Log some information (assuming DEBUG is set).</Abstract>
-			<DeclaredIn>TICDSLog.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSListOfPreviouslySynchronizedDocumentsOperation/fetchLastSynchronizationDateForDocumentWithSyncID:</TokenIdentifier>
+			<Abstract>Fetch the last synchronization date for a document with the given synchronization ID.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
 			
-			<Declaration>+ (void)logWithVerbosity:(NSInteger)someVerbosity formatString:(NSString *)formatString args:(va_list)args</Declaration>
+			<Declaration>- (void)fetchLastSynchronizationDateForDocumentWithSyncID:(NSString *)aSyncID</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>someVerbosity</Name>
-					<Abstract>The verbosity level of this information (if the current verbosity is less than this, the information won't be logged).</Abstract>
-				</Parameter><Parameter>
-					<Name>formatString</Name>
-					<Abstract>The format string (using NSLog() format specifiers).</Abstract>
-				</Parameter><Parameter>
-					<Name>args</Name>
-					<Abstract>A correctly started va_list with the arguments to substitute into formatString.</Abstract>
+					<Name>aSyncID</Name>
+					<Abstract>The synchronization identifier for the document.
+
+Call fetchedLastSynchronizationDate:forDocumentWithSyncID: when the date is fetched.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/logWithVerbosity:formatString:args:</Anchor>
+			<Anchor>//api/name/fetchLastSynchronizationDateForDocumentWithSyncID:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSListOfPreviouslySynchronizedDocumentsOperation/builtArrayOfDocumentIdentifiers:</TokenIdentifier>
+			<Abstract>Pass back the assembled NSArray of NSString document identifiers.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)builtArrayOfDocumentIdentifiers:(NSArray *)anArray</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>anArray</Name>
+					<Abstract>The array of identifiers. Pass nil if an error occurred.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/builtArrayOfDocumentIdentifiers:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSListOfPreviouslySynchronizedDocumentsOperation/fetchedInfoDictionary:forDocumentWithSyncID:</TokenIdentifier>
+			<Abstract>Pass back the documentInfo dictionary for a given document sync identifier.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)fetchedInfoDictionary:(NSDictionary *)anInfoDictionary forDocumentWithSyncID:(NSString *)aSyncID</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>anInfoDictionary</Name>
+					<Abstract>The documentInfo dictionary, or nil if an error occurred.</Abstract>
+				</Parameter><Parameter>
+					<Name>aSyncID</Name>
+					<Abstract>The unique synchronization identifier of the given document.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/fetchedInfoDictionary:forDocumentWithSyncID:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSListOfPreviouslySynchronizedDocumentsOperation/fetchedLastSynchronizationDate:forDocumentWithSyncID:</TokenIdentifier>
+			<Abstract>Pass back the last synchronization date for a given document sync identifier.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)fetchedLastSynchronizationDate:(NSDate *)aDate forDocumentWithSyncID:(NSString *)aSyncID</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aDate</Name>
+					<Abstract>The last synchronization date, or nil if an error occurred.</Abstract>
+				</Parameter><Parameter>
+					<Name>aSyncID</Name>
+					<Abstract>The unique synchronization identifier of the given document.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/fetchedLastSynchronizationDate:forDocumentWithSyncID:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSListOfPreviouslySynchronizedDocumentsOperation/availableDocuments</TokenIdentifier>
+			<Abstract>An array of documents, built as information comes in.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSMutableArray *availableDocuments</Declaration>
+			
+			
+			<Anchor>//api/name/availableDocuments</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSListOfPreviouslySynchronizedDocumentsOperation/completionInProgress</TokenIdentifier>
+			<Abstract>Used to indicate that completion is currently in progress, and that no further checks should be made.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) BOOL completionInProgress</Declaration>
+			
+			
+			<Anchor>//api/name/completionInProgress</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSListOfPreviouslySynchronizedDocumentsOperation/arrayOfDocumentIdentifiersStatus</TokenIdentifier>
+			<Abstract>The phase status regarding building the document sync IDs array.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus arrayOfDocumentIdentifiersStatus</Declaration>
+			
+			
+			<Anchor>//api/name/arrayOfDocumentIdentifiersStatus</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSListOfPreviouslySynchronizedDocumentsOperation/numberOfInfoDictionariesToFetch</TokenIdentifier>
+			<Abstract>The total number of info dictionaries that need to be fetched.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) NSUInteger numberOfInfoDictionariesToFetch</Declaration>
+			
+			
+			<Anchor>//api/name/numberOfInfoDictionariesToFetch</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSListOfPreviouslySynchronizedDocumentsOperation/numberOfInfoDictionariesFetched</TokenIdentifier>
+			<Abstract>The number of info dictionaries that have already been fetched.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) NSUInteger numberOfInfoDictionariesFetched</Declaration>
+			
+			
+			<Anchor>//api/name/numberOfInfoDictionariesFetched</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSListOfPreviouslySynchronizedDocumentsOperation/numberOfInfoDictionariesThatFailedToFetch</TokenIdentifier>
+			<Abstract>The number of info dictionaries that failed to fetch because of an error.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) NSUInteger numberOfInfoDictionariesThatFailedToFetch</Declaration>
+			
+			
+			<Anchor>//api/name/numberOfInfoDictionariesThatFailedToFetch</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSListOfPreviouslySynchronizedDocumentsOperation/infoDictionariesStatus</TokenIdentifier>
+			<Abstract>The phase status of the info dictionary requests.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus infoDictionariesStatus</Declaration>
+			
+			
+			<Anchor>//api/name/infoDictionariesStatus</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSListOfPreviouslySynchronizedDocumentsOperation/numberOfLastSynchronizationDatesToFetch</TokenIdentifier>
+			<Abstract>The total number of last synchronization dates that need to be fetched.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) NSUInteger numberOfLastSynchronizationDatesToFetch</Declaration>
+			
+			
+			<Anchor>//api/name/numberOfLastSynchronizationDatesToFetch</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSListOfPreviouslySynchronizedDocumentsOperation/numberOfLastSynchronizationDatesFetched</TokenIdentifier>
+			<Abstract>The number of last synchronization dates that have already been fetched.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) NSUInteger numberOfLastSynchronizationDatesFetched</Declaration>
+			
+			
+			<Anchor>//api/name/numberOfLastSynchronizationDatesFetched</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSListOfPreviouslySynchronizedDocumentsOperation/numberOfLastSynchronizationDatesThatFailedToFetch</TokenIdentifier>
+			<Abstract>The number of last synchronization dates failed to fetch because of an error.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) NSUInteger numberOfLastSynchronizationDatesThatFailedToFetch</Declaration>
+			
+			
+			<Anchor>//api/name/numberOfLastSynchronizationDatesThatFailedToFetch</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSListOfPreviouslySynchronizedDocumentsOperation/lastSynchronizationDatesStatus</TokenIdentifier>
+			<Abstract>The phase status of the last synchronized dates requests.</Abstract>
+			<DeclaredIn>TICDSListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus lastSynchronizationDatesStatus</Declaration>
+			
+			
+			<Anchor>//api/name/lastSynchronizationDatesStatus</Anchor>
 		</Token>
 		
 	</File>
