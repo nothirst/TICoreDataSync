@@ -27,7 +27,7 @@
 - (void)increaseNumberOfUnappliedSyncChangeSetsThatFailedToFetch;
 - (void)beginFetchOfUnappliedSyncChanges;
 
-- (void)addUnappliedSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientWithIdentifier:(NSString *)aClientIdentifier;
+- (void)addUnappliedSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientWithIdentifier:(NSString *)aClientIdentifier modificationDate:(NSDate *)aDate;
 
 - (void)beginUploadOfLocalSyncCommands;
 - (void)beginUploadOfLocalSyncChanges;
@@ -218,10 +218,10 @@
     }
 }
 
-- (void)fetchedSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier withSuccess:(BOOL)success
+- (void)fetchedSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier modificationDate:(NSDate *)aDate withSuccess:(BOOL)success
 {
     if( success ) {
-        [self addUnappliedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientWithIdentifier:aClientIdentifier];
+        [self addUnappliedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientWithIdentifier:aClientIdentifier modificationDate:aDate];
         [self increaseNumberOfUnappliedSyncChangeSetsFetched];
     } else {
         [self increaseNumberOfUnappliedSyncChangeSetsThatFailedToFetch];
@@ -230,12 +230,12 @@
     if( [self numberOfUnappliedSyncChangeSetsToFetch] == [self numberOfUnappliedSyncChangeSetsFetched] ) {
         [self setFetchUnappliedSyncChangeSetsStatus:TICDSOperationPhaseStatusSuccess];
         
-        //TODO: whatever's next
         NSError *anyError = nil;
         BOOL success = [[self unappliedSyncChangeSetsContext] save:&anyError];
         if( !success ) {
             TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save UnappliedSyncChanges.sqlite file: %@", anyError);
         }
+        //TODO: whatever's next
         assert(nil);
     } else if( [self numberOfUnappliedSyncChangeSetsToFetch] == [self numberOfUnappliedSyncChangeSetsFetched] + [self numberOfUnappliedSyncChangeSetsThatFailedToFetch] ) {
         [self setAllInProgressStatusesToFailure];
@@ -243,7 +243,7 @@
     [self checkForCompletion];
 }
 
-- (void)addUnappliedSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientWithIdentifier:(NSString *)aClientIdentifier
+- (void)addUnappliedSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientWithIdentifier:(NSString *)aClientIdentifier modificationDate:(NSDate *)aDate
 {
     // Check whether it already exists
     NSError *anyError = nil;
@@ -259,14 +259,14 @@
         return;
     }
     
-    set = [TICDSSyncChangeSet syncChangeSetWithIdentifier:aChangeSetIdentifier fromClient:aClientIdentifier creationDate:nil inManagedObjectContext:[self unappliedSyncChangeSetsContext]];
+    set = [TICDSSyncChangeSet syncChangeSetWithIdentifier:aChangeSetIdentifier fromClient:aClientIdentifier creationDate:aDate inManagedObjectContext:[self unappliedSyncChangeSetsContext]];
 }
 
 #pragma mark Overridden Method
 - (void)fetchSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier toLocation:(NSURL *)aLocation
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier withSuccess:NO];
+    [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:nil withSuccess:NO];
 }
 
 #pragma mark -

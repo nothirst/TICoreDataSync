@@ -115,14 +115,17 @@
  @param anIdentifier The client identifier for this array of `SyncChangeSet` identifiers. */
 - (void)builtArrayOfClientSyncChangeSetIdentifiers:(NSArray *)anArray forClientIdentifier:(NSString *)anIdentifier;
 
-/** Indiciate whether the download of the specified `SyncChangeSet` was successful.
+/** Indicate whether the download of the specified `SyncChangeSet` was successful.
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
+ If it was successful, you should supply the original modification date of the file.
+ 
  @param aChangeSetIdentifier The identifier for the change set to fetch.
  @param aClientIdentifier The identifier of the client who uploaded the change set.
+ @param aDate The modification date of the change set.
  @param success A Boolean indicating whether the sync change set file was downloaded or not. */
-- (void)fetchedSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier withSuccess:(BOOL)success;
+- (void)fetchedSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier modificationDate:(NSDate *)aDate withSuccess:(BOOL)success;
 
 /** Indicate whether the upload of the sync change set file was successful.
  
