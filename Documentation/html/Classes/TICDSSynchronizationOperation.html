@@ -97,7 +97,7 @@
 	
 	<option value="//api/name/fetchSyncChangeSetWithIdentifier:forClientIdentifier:toLocation:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchSyncChangeSetWithIdentifier:forClientIdentifier:toLocation:</option>
 	
-	<option value="//api/name/fetchedSyncChangeSetWithIdentifier:forClientIdentifier:withSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchedSyncChangeSetWithIdentifier:forClientIdentifier:withSuccess:</option>
+	<option value="//api/name/fetchedSyncChangeSetWithIdentifier:forClientIdentifier:modificationDate:withSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchedSyncChangeSetWithIdentifier:forClientIdentifier:modificationDate:withSuccess:</option>
 	
 	<option value="//api/name/uploadLocalSyncChangeSetFileAtLocation:">&nbsp;&nbsp;&nbsp;&nbsp;- uploadLocalSyncChangeSetFileAtLocation:</option>
 	
@@ -199,7 +199,7 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchSyncChangeSetWithIdentifier:forClientIdentifier:toLocation:">fetchSyncChangeSetWithIdentifier:forClientIdentifier:toLocation:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchedSyncChangeSetWithIdentifier:forClientIdentifier:withSuccess:">fetchedSyncChangeSetWithIdentifier:forClientIdentifier:withSuccess:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchedSyncChangeSetWithIdentifier:forClientIdentifier:modificationDate:withSuccess:">fetchedSyncChangeSetWithIdentifier:forClientIdentifier:modificationDate:withSuccess:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/uploadLocalSyncChangeSetFileAtLocation:">uploadLocalSyncChangeSetFileAtLocation:</a></span></li>
 	
@@ -356,8 +356,8 @@
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/fetchedSyncChangeSetWithIdentifier:forClientIdentifier:withSuccess:">&ndash;&nbsp;fetchedSyncChangeSetWithIdentifier:forClientIdentifier:withSuccess:</a></code>
-		<span class="tooltip"><p>Indiciate whether the download of the specified <code>SyncChangeSet</code> was successful.</p></span>
+		<code><a href="#//api/name/fetchedSyncChangeSetWithIdentifier:forClientIdentifier:modificationDate:withSuccess:">&ndash;&nbsp;fetchedSyncChangeSetWithIdentifier:forClientIdentifier:modificationDate:withSuccess:</a></code>
+		<span class="tooltip"><p>Indicate whether the download of the specified <code>SyncChangeSet</code> was successful.</p></span>
 	</span>
 	
 	
@@ -1525,17 +1525,17 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/fetchedSyncChangeSetWithIdentifier:forClientIdentifier:withSuccess:" title="fetchedSyncChangeSetWithIdentifier:forClientIdentifier:withSuccess:"></a>
-	<h3 class="subsubtitle method-title">fetchedSyncChangeSetWithIdentifier:forClientIdentifier:withSuccess:</h3>
+	<a name="//api/name/fetchedSyncChangeSetWithIdentifier:forClientIdentifier:modificationDate:withSuccess:" title="fetchedSyncChangeSetWithIdentifier:forClientIdentifier:modificationDate:withSuccess:"></a>
+	<h3 class="subsubtitle method-title">fetchedSyncChangeSetWithIdentifier:forClientIdentifier:modificationDate:withSuccess:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Indiciate whether the download of the specified <code>SyncChangeSet</code> was successful.</p>
+		<p>Indicate whether the download of the specified <code>SyncChangeSet</code> was successful.</p>
 	</div>		
 	
 	
-	<div class="method-subsection method-declaration"><code>- (void)fetchedSyncChangeSetWithIdentifier:(NSString *)<em>aChangeSetIdentifier</em> forClientIdentifier:(NSString *)<em>aClientIdentifier</em> withSuccess:(BOOL)<em>success</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)fetchedSyncChangeSetWithIdentifier:(NSString *)<em>aChangeSetIdentifier</em> forClientIdentifier:(NSString *)<em>aClientIdentifier</em> modificationDate:(NSDate *)<em>aDate</em> withSuccess:(BOOL)<em>success</em></code></div>
 	
 	
 	<div class="method-subsection arguments-section parameters">
@@ -1552,6 +1552,11 @@
 		</dl>
 		
 		<dl class="argument-def parameter-def">
+			<dt><em>aDate</em></dt>
+			<dd><p>The modification date of the change set.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
 			<dt><em>success</em></dt>
 			<dd><p>A Boolean indicating whether the sync change set file was downloaded or not.</p></dd>
 		</dl>
@@ -1565,6 +1570,8 @@
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>If not, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
+
+<p>If it was successful, you should supply the original modification date of the file.</p>
 	</div>
 	
 	

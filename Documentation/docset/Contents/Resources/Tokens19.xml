@@ -96,11 +96,11 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/fetchedSyncChangeSetWithIdentifier:forClientIdentifier:withSuccess:</TokenIdentifier>
-			<Abstract>Indiciate whether the download of the specified SyncChangeSet was successful.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/fetchedSyncChangeSetWithIdentifier:forClientIdentifier:modificationDate:withSuccess:</TokenIdentifier>
+			<Abstract>Indicate whether the download of the specified SyncChangeSet was successful.</Abstract>
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)fetchedSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier withSuccess:(BOOL)success</Declaration>
+			<Declaration>- (void)fetchedSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier modificationDate:(NSDate *)aDate withSuccess:(BOOL)success</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aChangeSetIdentifier</Name>
@@ -109,12 +109,15 @@
 					<Name>aClientIdentifier</Name>
 					<Abstract>The identifier of the client who uploaded the change set.</Abstract>
 				</Parameter><Parameter>
+					<Name>aDate</Name>
+					<Abstract>The modification date of the change set.</Abstract>
+				</Parameter><Parameter>
 					<Name>success</Name>
 					<Abstract>A Boolean indicating whether the sync change set file was downloaded or not.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/fetchedSyncChangeSetWithIdentifier:forClientIdentifier:withSuccess:</Anchor>
+			<Anchor>//api/name/fetchedSyncChangeSetWithIdentifier:forClientIdentifier:modificationDate:withSuccess:</Anchor>
 		</Token>
 		
 		<Token>
