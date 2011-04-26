@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'AlternativeShoppingListMac' target in the 'AlternativeShoppingListMac' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

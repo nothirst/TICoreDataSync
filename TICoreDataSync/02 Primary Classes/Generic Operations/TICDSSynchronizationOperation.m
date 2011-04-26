@@ -83,7 +83,11 @@
         return;
     }
     
-    assert(nil);
+    [self setFetchArrayOfSyncCommandSetIDsStatus:TICDSOperationPhaseStatusSuccess];
+    
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"***Not yet implemented*** so 'finished' fetch of local sync commands");
+    
+    [self beginFetchOfListOfSyncChangeSetIdentifiers];
 }
 
 #pragma mark -
