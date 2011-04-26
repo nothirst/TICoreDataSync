@@ -157,6 +157,7 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
 
 - (void)syncManagerDidFinishSynchronization:(TICDSDocumentSyncManager *)aSyncManager
 {
+    [[self documentSyncChangesWindowController] setManagedObjectContext:[[self documentSyncManager] syncChangesMOC]];
     [self performSelector:@selector(decreaseActivity) withObject:nil afterDelay:1.0];
 }
 
