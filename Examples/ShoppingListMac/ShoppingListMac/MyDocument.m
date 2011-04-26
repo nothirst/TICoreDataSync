@@ -82,14 +82,6 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     [[self documentSyncManager] configureWithDelegate:self appSyncManager:[TICDSApplicationSyncManager defaultApplicationSyncManager] documentIdentifier:anIdentifier];
 }
 
-/*- (void)registerSyncManagerForDownloadedStoreWithIdentifier:(NSString *)anIdentifier
-{
-    [self setDocumentSyncManager:[[[TICDSFileManagerBasedDocumentSyncManager alloc] init] autorelease]];
-    [self setDocumentSyncIdentifier:anIdentifier];
-    
-    [[self documentSyncManager] registerWithDelegate:self appSyncManager:[TICDSApplicationSyncManager defaultApplicationSyncManager] managedObjectContext:(TICDSSynchronizedManagedObjectContext *)[self managedObjectContext] documentIdentifier:[self documentSyncIdentifier] description:[[[self fileURL] path] lastPathComponent] userInfo:nil];
-}*/
-
 #pragma mark -
 #pragma mark CALLBACKS
 #pragma mark Registration
@@ -232,10 +224,10 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     [[self documentShopsWindowController] showWindow:sender];
 }
 
-/*- (IBAction)initiateSynchronization:(id)sender
+- (IBAction)initiateSynchronization:(id)sender
 {
     [[self documentSyncManager] initiateSynchronization];
-}*/
+}
 
 // Callback from save
 - (void)document:(NSDocument *)aDocument didSave:(BOOL)didSave contextInfo:(void *)contextInfo
@@ -300,9 +292,11 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     if( [self isSyncEnabled] ) {
         [[self synchronizationStatusLabel] setStringValue:NSLocalizedString(@"Enabled", @"Synchronization Enabled")];
         [[self enableSynchronizationButton] setHidden:YES];
+        [[self synchronizeButton] setEnabled:YES];
     } else {
         [[self synchronizationStatusLabel] setStringValue:NSLocalizedString(@"Not Enabled", @"Synchronization Not Enabled")];
         [[self enableSynchronizationButton] setHidden:NO];
+        [[self synchronizeButton] setEnabled:NO];
     }    
 }
 
@@ -350,6 +344,7 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
 @synthesize synchronizationStatusLabel = _synchronizationStatusLabel;
 @synthesize synchronizingProgressIndicator = _synchronizingProgressIndicator;
 @synthesize enableSynchronizationButton = _enableSynchronizationButton;
+@synthesize synchronizeButton = _synchronizeButton;
 @synthesize documentSyncChangesWindowController = _documentSyncChangesWindowController;
 @synthesize documentShopsWindowController = _documentShopsWindowController;
 

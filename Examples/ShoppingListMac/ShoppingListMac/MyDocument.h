@@ -20,12 +20,13 @@
     NSTextField *_synchronizationStatusLabel;
     NSProgressIndicator *_synchronizingProgressIndicator;
     NSButton *_enableSynchronizationButton;
+    NSButton *_synchronizeButton;
     NSUInteger _synchronizationActivity;
     TIDocumentSyncChangesWindowController *_documentSyncChangesWindowController;
     TIDocumentShopsWindowController *_documentShopsWindowController;
 }
 
-//- (IBAction)initiateSynchronization:(id)sender;
+- (IBAction)initiateSynchronization:(id)sender;
 - (IBAction)showSyncChangesWindow:(id)sender;
 - (IBAction)showShopsWindow:(id)sender;
 - (IBAction)configureSynchronization:(id)sender;
@@ -39,6 +40,7 @@
 @property (nonatomic, assign) IBOutlet NSTextField *synchronizationStatusLabel;
 @property (nonatomic, assign) IBOutlet NSProgressIndicator *synchronizingProgressIndicator;
 @property (nonatomic, assign) IBOutlet NSButton *enableSynchronizationButton;
+@property (nonatomic, assign) IBOutlet NSButton *synchronizeButton;
 @property (nonatomic, retain) TIDocumentSyncChangesWindowController *documentSyncChangesWindowController;
 @property (nonatomic, retain) TIDocumentShopsWindowController *documentShopsWindowController;
 

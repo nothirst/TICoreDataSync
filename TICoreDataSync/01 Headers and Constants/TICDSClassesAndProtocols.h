@@ -286,6 +286,37 @@
  @param aSyncMaanger The document sync manager object that sent the message. */
 - (void)syncManagerDidUploadWholeStoreSuccessfully:(TICDSDocumentSyncManager *)aSyncManager;
 
+#pragma mark Synchronization
+
+/** @name Synchronization */
+
+/** Informs the delegate that the document sync manager has begun to synchronize the document.
+ 
+ If an error occurs during the upload process, the `syncManager:encounteredSynchronizationError:` method will be called.
+ 
+ At the end of the synchronization process, one of the `syncManagerFailedToSynchronize:` or `syncManagerDidFinishSynchronization:` methods will be called.
+ 
+ @param aSyncManager The document sync manager object that sent the message. */
+- (void)syncManagerDidBeginToSynchronize:(TICDSDocumentSyncManager *)aSyncManager;
+
+/** Informs the delegate that the document sync manager encountered an error during the synchronization process.
+ 
+ @param aSyncManager The document sync manager object that sent the message.
+ @param anError The error. */
+- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredSynchronizationError:(NSError *)anError;
+
+/** Informs the delegate that the document sync manager failed to synchronize the document.
+ 
+ The error will previously have been supplied through the `syncManager:encounteredSynchronizationError:` method.
+ 
+ @param aSyncManager The document sync manager object that sent the message. */
+- (void)syncManagerFailedToSynchronize:(TICDSDocumentSyncManager *)aSyncManager;
+
+/** Informs the delegate that the document sync manager finished synchronizing the document.
+ 
+ @param aSyncMaanger The document sync manager object that sent the message. */
+- (void)syncManagerDidFinishSynchronization:(TICDSDocumentSyncManager *)aSyncManager;
+
 #pragma mark Processing
 /** @name Processing after Managed Object Context save */
 

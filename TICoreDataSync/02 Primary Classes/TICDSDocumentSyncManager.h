@@ -105,8 +105,17 @@
 
 /** Start the process manually to upload the entire store file for this document, along with the relevant `AppliedSyncChanges.sqlite` file.
  
+ This will automatically spawn a `TICDSWholeStoreUploadOperation`, and notify you of progress through the `TICDSDocumentSyncManagerDelegate` methods.
+ 
  The location of the store file (and the applied sync changes file) will be requested from the delegate immediately after calling this method. */
 - (void)initiateUploadOfWholeStore;
+
+/** @name Synchronization */
+
+/** Start synchronizing the document with the remote location. 
+ 
+ This will automatically spawn a `TICDSSynchronizationOperation`, and notify you of progress through the `TICDSDocumentSyncManagerDelegate` methods. */
+- (void)initiateSynchronization;
 
 /** @name Methods Overridden by Subclasses */
 

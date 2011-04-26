@@ -16,6 +16,8 @@
 - (BOOL)checkForHelperFileDirectoryOrCreateIfNecessary:(NSError **)outError;
 - (void)startWholeStoreUploadProcess;
 - (void)bailFromUploadProcess;
+- (void)startSynchronizationProcess;
+- (void)bailFromSynchronizationProcess;
 
 @property (nonatomic, retain) NSString *documentIdentifier;
 @property (nonatomic, retain) NSString *documentDescription;
@@ -398,6 +400,39 @@
 }
 
 #pragma mark -
+#pragma mark SYNCHRONIZATION
+- (void)initiateSynchronization
+{
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Manual initiation of synchronization");
+    
+    [self startSynchronizationProcess];
+}
+
+- (void)bailFromSynchronizationProcess
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from synchronization process");
+    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToSynchronize:)];
+}
+
+- (void)startSynchronizationProcess
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting synchronization process");
+    [self ti_alertDelegateWithSelector:@selector(syncManagerDidBeginToSynchronize:)];
+    
+    TICDSOperation *operation = nil;
+    
+    if( !operation ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create synchronization operation object");
+        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredSynchronizationError:), [TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
+        
+        [self bailFromSynchronizationProcess];
+        return;
+    }
+    
+    [[self synchronizationQueue] addOperation:operation];
+}
+
+#pragma mark -
 #pragma mark MANAGED OBJECT CONTEXT DID SAVE BEHAVIOR
 - (void)synchronizedMOCWillSave:(TICDSSynchronizedManagedObjectContext *)aMoc
 {
@@ -436,7 +471,7 @@
     }
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate allowed synchronization after saving");
-    [self initiateSynchronization];
+    [self startSynchronizationProcess];
 }
 
 - (void)synchronizedMOCFailedToSave:(TICDSSynchronizedManagedObjectContext *)aMoc withError:(NSError *)anError
