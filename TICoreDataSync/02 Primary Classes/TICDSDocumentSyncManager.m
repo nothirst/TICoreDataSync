@@ -429,6 +429,8 @@
         return;
     }
     
+    [operation setClientIdentifier:[self clientIdentifier]];
+    
     [[self synchronizationQueue] addOperation:operation];
 }
 

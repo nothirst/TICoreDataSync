@@ -30,6 +30,7 @@
 @class TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation;
 @class TICDSFileManagerBasedWholeStoreUploadOperation;
 @class TICDSFileManagerBasedWholeStoreDownloadOperation;
+@class TICDSFileManagerBasedSynchronizationOperation;
 
 #pragma mark -
 #pragma mark INTERNAL DATA MODEL

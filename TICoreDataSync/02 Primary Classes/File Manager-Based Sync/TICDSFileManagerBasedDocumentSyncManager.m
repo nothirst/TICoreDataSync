@@ -45,6 +45,15 @@
     return [operation autorelease];
 }
 
+- (TICDSSynchronizationOperation *)synchronizationOperation
+{
+    TICDSFileManagerBasedSynchronizationOperation *operation = [[TICDSFileManagerBasedSynchronizationOperation alloc] initWithDelegate:self];
+    
+    [operation setThisDocumentSyncChangesDirectoryPath:[self thisDocumentSyncChangesDirectoryPath]];
+    
+    return [operation autorelease];
+}
+
 #pragma mark -
 #pragma mark Paths
 - (NSString *)documentsDirectoryPath
@@ -55,6 +64,11 @@
 - (NSString *)thisDocumentDirectoryPath
 {
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentDirectory]];
+}
+
+- (NSString *)thisDocumentSyncChangesDirectoryPath
+{
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentSyncChangesDirectory]];
 }
 
 - (NSString *)thisDocumentSyncChangesThisClientDirectoryPath

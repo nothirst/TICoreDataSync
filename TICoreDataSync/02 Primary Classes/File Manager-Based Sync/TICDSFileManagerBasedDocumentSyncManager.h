@@ -33,6 +33,9 @@
 /** The path to this document's directory inside the `Documents` directory. */
 @property (nonatomic, readonly) NSString *thisDocumentDirectoryPath;
 
+/** The path this document's `SyncChanges` directory. */
+@property (nonatomic, readonly) NSString *thisDocumentSyncChangesDirectoryPath;
+
 /** The path to this client's directory inside this document's `SyncChanges` directory. */
 @property (nonatomic, readonly) NSString *thisDocumentSyncChangesThisClientDirectoryPath;
 

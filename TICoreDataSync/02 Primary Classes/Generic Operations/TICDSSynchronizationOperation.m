@@ -8,8 +8,129 @@
 
 #import "TICoreDataSync.h"
 
+@interface TICDSSynchronizationOperation ()
+
+- (void)checkForCompletion;
+- (void)beginFetchOfListOfClientDeviceIdentifiers;
+- (void)beginFetchOfListOfSyncCommandSetIdentifiersForClientIdentifiers:(NSArray *)clientIdentifiers;
+- (void)beginFetchOfListOfSyncChangeSetIdentifiersForClientIdentifiers:(NSArray *)clientIdentifiers;
+
+@end
 
 @implementation TICDSSynchronizationOperation
 
+- (void)main
+{
+    [self beginFetchOfListOfClientDeviceIdentifiers];
+}
+
+#pragma mark -
+#pragma mark LIST OF DEVICE IDENTIFIERS
+- (void)beginFetchOfListOfClientDeviceIdentifiers
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Starting to fetch list of client device identifiers");
+    
+    [self buildArrayOfClientDeviceIdentifiers];
+}
+
+- (void)builtArrayOfClientDeviceIdentifiers:(NSArray *)anArray
+{
+    if( !anArray ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error fetching list of client device identifiers");
+        [self setFetchArrayOfClientDeviceIDsStatus:TICDSOperationPhaseStatusFailure];
+        [self setFetchArrayOfSyncCommandSetIDsStatus:TICDSOperationPhaseStatusFailure];
+        // TODO: Add other phases that are effectively failed
+        
+        [self checkForCompletion];
+        return;
+    }
+    
+    [self setFetchArrayOfClientDeviceIDsStatus:TICDSOperationPhaseStatusSuccess];
+    
+    NSMutableArray *clientIdentifiers = [NSMutableArray arrayWithCapacity:[anArray count]];
+    
+    for( NSString *eachClientIdentifier in anArray ) {
+        if( [eachClientIdentifier isEqualToString:[self clientIdentifier]] ) {
+            continue;
+        }
+        
+        [clientIdentifiers addObject:eachClientIdentifier];
+    }
+    
+    [self beginFetchOfListOfSyncCommandSetIdentifiersForClientIdentifiers:clientIdentifiers];
+}
+
+#pragma Overridden Method
+- (void)buildArrayOfClientDeviceIdentifiers
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self builtArrayOfClientDeviceIdentifiers:nil];
+}
+
+#pragma mark -
+#pragma mark LIST OF SYNC COMMAND SETS
+- (void)beginFetchOfListOfSyncCommandSetIdentifiersForClientIdentifiers:(NSArray *)clientIdentifiers
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Starting to fetch list of SyncCommandSet identifiers for clients %@", clientIdentifiers);
+    
+    if( [clientIdentifiers count] < 1 ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"No other clients are synchronizing with this document, so skipping to fetch SyncChanges");
+        [self setFetchArrayOfSyncCommandSetIDsStatus:TICDSOperationPhaseStatusSuccess];
+        [self beginFetchOfListOfSyncChangeSetIdentifiersForClientIdentifiers:clientIdentifiers];
+        return;
+    }
+    
+    assert(nil);
+}
+
+#pragma mark -
+#pragma mark LIST OF SYNC CHANGE SETS
+- (void)beginFetchOfListOfSyncChangeSetIdentifiersForClientIdentifiers:(NSArray *)clientIdentifiers
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Starting to fetch list of SyncChangeSet identifiers");
+    
+    if( [clientIdentifiers count] < 1 ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"No other clients are synchronizing with this document, so skipping to uploading SyncCommands");
+        [self setFetchArrayOfSyncChangeSetIDsStatus:TICDSOperationPhaseStatusSuccess];
+        assert(nil);
+        return;
+    }
+    
+    assert(nil);
+}
+
+#pragma mark -
+#pragma mark Completion
+- (void)checkForCompletion
+{
+    if( [self completionInProgress] ) {
+        return;
+    }
+    
+    if( [self fetchArrayOfClientDeviceIDsStatus] == TICDSOperationPhaseStatusInProgress || [self fetchArrayOfSyncCommandSetIDsStatus] == TICDSOperationPhaseStatusInProgress || [self fetchArrayOfSyncChangeSetIDsStatus] == TICDSOperationPhaseStatusInProgress ) {
+        return;
+    }
+    
+    if( [self fetchArrayOfClientDeviceIDsStatus] == TICDSOperationPhaseStatusSuccess && [self fetchArrayOfSyncCommandSetIDsStatus] == TICDSOperationPhaseStatusSuccess && [self fetchArrayOfSyncChangeSetIDsStatus] == TICDSOperationPhaseStatusSuccess ) {
+        [self setCompletionInProgress:YES];
+        
+        [self operationDidCompleteSuccessfully];
+        return;
+    }
+    
+    if( [self fetchArrayOfClientDeviceIDsStatus] == TICDSOperationPhaseStatusFailure || [self fetchArrayOfSyncCommandSetIDsStatus] == TICDSOperationPhaseStatusFailure || [self fetchArrayOfSyncChangeSetIDsStatus] == TICDSOperationPhaseStatusFailure ) {
+        [self setCompletionInProgress:YES];
+        
+        [self operationDidFailToComplete];
+        return;
+    }
+}
+
+#pragma mark -
+#pragma mark Properties
+@synthesize completionInProgress = _completionInProgress;
+@synthesize fetchArrayOfClientDeviceIDsStatus = _fetchArrayOfClientDeviceIDsStatus;
+@synthesize fetchArrayOfSyncCommandSetIDsStatus = _fetchArrayOfSyncCommandSetIDsStatus;
+@synthesize fetchArrayOfSyncChangeSetIDsStatus = _fetchArrayOfSyncChangeSetIDsStatus;
 
 @end
