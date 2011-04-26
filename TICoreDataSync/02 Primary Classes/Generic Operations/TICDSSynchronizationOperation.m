@@ -14,6 +14,8 @@
 - (void)beginFetchOfListOfClientDeviceIdentifiers;
 - (void)beginFetchOfListOfSyncCommandSetIdentifiers;
 - (void)beginFetchOfListOfSyncChangeSetIdentifiers;
+- (void)beginUploadOfLocalSyncCommands;
+- (void)beginUploadOfLocalSyncChanges;
 
 @end
 
@@ -93,11 +95,43 @@
     if( [[self otherSynchronizedClientDeviceIdentifiers] count] < 1 ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"No other clients are synchronizing with this document, so skipping to uploading SyncCommands");
         [self setFetchArrayOfSyncChangeSetIDsStatus:TICDSOperationPhaseStatusSuccess];
-        assert(nil);
+        [self beginUploadOfLocalSyncCommands];
         return;
     }
     
     assert(nil);
+}
+
+#pragma mark -
+#pragma mark UPLOAD OF LOCAL SYNC COMMANDS
+- (void)beginUploadOfLocalSyncCommands
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Starting to upload local sync commands");
+    
+    [self setUploadLocalSyncCommandSetStatus:TICDSOperationPhaseStatusSuccess];
+    
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"***Not yet implemented*** so 'finished' local sync commands");
+    
+    [self beginUploadOfLocalSyncChanges];
+}
+
+#pragma mark -
+#pragma mark UPLOAD OF LOCAL SYNC CHANGES
+- (void)beginUploadOfLocalSyncChanges
+{
+    if( ![[self fileManager] fileExistsAtPath:[[self localSyncChangesToMergeLocation] path]] ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"No local sync changes file to push on this sync");
+        [self setUploadLocalSyncChangeSetStatus:TICDSOperationPhaseStatusSuccess];
+        [self checkForCompletion];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Starting to upload local sync changes");
+    
+    assert(nil);
+    /*
+    NSError *anyError = nil;
+    BOOL success = [[self fileManager] moveItemAtPath:<#(NSString *)#> toPath:<#(NSString *)#> error:&anyError];*/
 }
 
 #pragma mark -
@@ -108,18 +142,24 @@
         return;
     }
     
-    if( [self fetchArrayOfClientDeviceIDsStatus] == TICDSOperationPhaseStatusInProgress || [self fetchArrayOfSyncCommandSetIDsStatus] == TICDSOperationPhaseStatusInProgress || [self fetchArrayOfSyncChangeSetIDsStatus] == TICDSOperationPhaseStatusInProgress ) {
+    if( [self fetchArrayOfClientDeviceIDsStatus] == TICDSOperationPhaseStatusInProgress || [self fetchArrayOfSyncCommandSetIDsStatus] == TICDSOperationPhaseStatusInProgress || [self fetchArrayOfSyncChangeSetIDsStatus] == TICDSOperationPhaseStatusInProgress
+       
+       || [self uploadLocalSyncCommandSetStatus] == TICDSOperationPhaseStatusInProgress || [self uploadLocalSyncChangeSetStatus] == TICDSOperationPhaseStatusInProgress ) {
         return;
     }
     
-    if( [self fetchArrayOfClientDeviceIDsStatus] == TICDSOperationPhaseStatusSuccess && [self fetchArrayOfSyncCommandSetIDsStatus] == TICDSOperationPhaseStatusSuccess && [self fetchArrayOfSyncChangeSetIDsStatus] == TICDSOperationPhaseStatusSuccess ) {
+    if( [self fetchArrayOfClientDeviceIDsStatus] == TICDSOperationPhaseStatusSuccess && [self fetchArrayOfSyncCommandSetIDsStatus] == TICDSOperationPhaseStatusSuccess && [self fetchArrayOfSyncChangeSetIDsStatus] == TICDSOperationPhaseStatusSuccess
+       
+       && [self uploadLocalSyncCommandSetStatus] == TICDSOperationPhaseStatusSuccess && [self uploadLocalSyncChangeSetStatus] == TICDSOperationPhaseStatusSuccess ) {
         [self setCompletionInProgress:YES];
         
         [self operationDidCompleteSuccessfully];
         return;
     }
     
-    if( [self fetchArrayOfClientDeviceIDsStatus] == TICDSOperationPhaseStatusFailure || [self fetchArrayOfSyncCommandSetIDsStatus] == TICDSOperationPhaseStatusFailure || [self fetchArrayOfSyncChangeSetIDsStatus] == TICDSOperationPhaseStatusFailure ) {
+    if( [self fetchArrayOfClientDeviceIDsStatus] == TICDSOperationPhaseStatusFailure || [self fetchArrayOfSyncCommandSetIDsStatus] == TICDSOperationPhaseStatusFailure || [self fetchArrayOfSyncChangeSetIDsStatus] == TICDSOperationPhaseStatusFailure
+       
+       || [self uploadLocalSyncCommandSetStatus] == TICDSOperationPhaseStatusFailure || [self uploadLocalSyncChangeSetStatus] == TICDSOperationPhaseStatusFailure ) {
         [self setCompletionInProgress:YES];
         
         [self operationDidFailToComplete];
@@ -131,6 +171,7 @@
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
+    [_localSyncChangesToMergeLocation release], _localSyncChangesToMergeLocation = nil;
     [_otherSynchronizedClientDeviceIdentifiers release], _otherSynchronizedClientDeviceIdentifiers = nil;
 
     [super dealloc];
@@ -138,10 +179,14 @@
 
 #pragma mark -
 #pragma mark Properties
+@synthesize localSyncChangesToMergeLocation = _localSyncChangesToMergeLocation;
 @synthesize otherSynchronizedClientDeviceIdentifiers = _otherSynchronizedClientDeviceIdentifiers;
 @synthesize completionInProgress = _completionInProgress;
 @synthesize fetchArrayOfClientDeviceIDsStatus = _fetchArrayOfClientDeviceIDsStatus;
 @synthesize fetchArrayOfSyncCommandSetIDsStatus = _fetchArrayOfSyncCommandSetIDsStatus;
 @synthesize fetchArrayOfSyncChangeSetIDsStatus = _fetchArrayOfSyncChangeSetIDsStatus;
+
+@synthesize uploadLocalSyncCommandSetStatus = _uploadLocalSyncCommandSetStatus;
+@synthesize uploadLocalSyncChangeSetStatus = _uploadLocalSyncChangeSetStatus;
 
 @end

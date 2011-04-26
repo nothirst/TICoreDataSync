@@ -268,6 +268,11 @@
 /** The path to the `AppliedSyncChanges.sqlite` file, located in the `helperFileDirectoryLocation`. */
 @property (nonatomic, readonly) NSString *localAppliedSyncChangesFilePath;
 
-@property (nonatomic, readonly) NSString * unsynchronizedSyncChangesStorePath;
+/** The path to the `SyncChangesBeingSynchronized.sqlite` file, located in the `helperFileDirectoryLocation`. */
+@property (nonatomic, readonly) NSString *syncChangesBeingSynchronizedStorePath;
+
+/** The path to the `UnsynchronizedSyncChanges.sqlite` file, located in the `helperFileDirectoryLocation`. */
+@property (nonatomic, readonly) NSString *unsynchronizedSyncChangesStorePath;
+
 
 @end

@@ -18,6 +18,7 @@
 - (void)bailFromUploadProcess;
 - (void)startSynchronizationProcess;
 - (void)bailFromSynchronizationProcess;
+- (void)moveUnsynchronizedSyncChangesToMergeLocation;
 
 @property (nonatomic, retain) NSString *documentIdentifier;
 @property (nonatomic, retain) NSString *documentDescription;
@@ -83,17 +84,6 @@
     NSString *unappliedSyncChangesPath = [[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSUnappliedChangesDirectoryName];
     if( ![[self fileManager] fileExistsAtPath:unappliedSyncChangesPath] ) {
         BOOL success = [[self fileManager] createDirectoryAtPath:unappliedSyncChangesPath withIntermediateDirectories:YES attributes:nil error:&anyError];
-        if( !success ) {
-            if( outError ) {
-                *outError = [TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__];
-            }
-            return NO;
-        }
-    }
-    
-    NSString *syncChangesToPushPath = [[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSSyncChangesToPushDirectoryName];
-    if( ![[self fileManager] fileExistsAtPath:syncChangesToPushPath] ) {
-        BOOL success = [[self fileManager] createDirectoryAtPath:syncChangesToPushPath withIntermediateDirectories:YES attributes:nil error:&anyError];
         if( !success ) {
             if( outError ) {
                 *outError = [TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__];
@@ -169,6 +159,9 @@
     NSError *anyError;
     BOOL shouldContinue = YES;
     
+    [self setDelegate:aDelegate];
+    [self setDocumentIdentifier:aDocumentIdentifier];
+    
     if( [self state] != TICDSApplicationSyncManagerStateConfigured ) {
         shouldContinue = [self startDocumentConfigurationProcess:&anyError];
     }
@@ -186,9 +179,7 @@
     [aContext setDocumentSyncManager:self];
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Registration Information:\n   Delegate: %@,\n   App Sync Manager: %@,\n   Document ID: %@,\n   Description: %@,\n   User Info: %@", aDelegate, anAppSyncManager, aDocumentIdentifier, aDocumentDescription, someUserInfo);
-    [self setDelegate:aDelegate];
     [self setApplicationSyncManager:anAppSyncManager];
-    [self setDocumentIdentifier:aDocumentIdentifier];
     [self setDocumentDescription:aDocumentDescription];
     [self setClientIdentifier:[anAppSyncManager clientIdentifier]];
     [self setDocumentUserInfo:someUserInfo];
@@ -419,6 +410,8 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting synchronization process");
     [self ti_alertDelegateWithSelector:@selector(syncManagerDidBeginToSynchronize:)];
     
+    [self moveUnsynchronizedSyncChangesToMergeLocation];
+    
     TICDSSynchronizationOperation *operation = [self synchronizationOperation];
     
     if( !operation ) {
@@ -430,8 +423,62 @@
     }
     
     [operation setClientIdentifier:[self clientIdentifier]];
+    // Set location of sync changes to merge file
+    NSURL *syncChangesToMergeLocation = nil;
+    if( [[self fileManager] fileExistsAtPath:[self syncChangesBeingSynchronizedStorePath]] ) {
+        syncChangesToMergeLocation = [NSURL fileURLWithPath:[self syncChangesBeingSynchronizedStorePath]];
+    }
+    [operation setLocalSyncChangesToMergeLocation:syncChangesToMergeLocation];
     
     [[self synchronizationQueue] addOperation:operation];
+}
+
+- (void)moveUnsynchronizedSyncChangesToMergeLocation
+{
+    // check whether there's an existing set of sync changes to merg left over from a previous error
+    if( [[self fileManager] fileExistsAtPath:[self syncChangesBeingSynchronizedStorePath]] ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"A SyncChangesBeingSynchronized.sqlite file already exists from a previous failed sync, so using it for this synchronization process. The most recent local sync changes won't be synchronized.");
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Checking if there are local sync changes to merge and push");
+    NSError *anyError = nil;
+    NSArray *syncChanges = [TICDSSyncChange ti_allObjectsInManagedObjectContext:[self syncChangesMOC] error:&anyError];
+    
+    if( !syncChanges ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to fetch local sync changes");
+        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredSynchronizationError:), [TICDSError errorWithCode:TICDSErrorCodeCoreDataFetchError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self bailFromSynchronizationProcess];
+        return;
+    }
+    
+    if( [syncChanges count] < 1 ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"No local sync changes need to be pushed for this sync operation");
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Moving UnsynchronizedSyncChanges to SyncChangesBeingSynchronized");
+    
+    [self setCoreDataFactory:nil];
+    [self setSyncChangesMOC:nil];
+    
+    // move UnsynchronizedSyncChanges file to SyncChangesBeingSynchronized
+    BOOL success = [[self fileManager] moveItemAtPath:[self unsynchronizedSyncChangesStorePath] toPath:[self syncChangesBeingSynchronizedStorePath] error:&anyError];
+    
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to move UnsynchronizedSyncChanges.sqlite to SyncChangesBeingSynchronized.sqlite");
+        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredSynchronizationError:), [TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    // setup the syncChangesMOC
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Re-Creating SyncChangesMOC");
+    [self setSyncChangesMOC:[[self coreDataFactory] managedObjectContext]];
+    if( ![self syncChangesMOC] ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create sync changes MOC");
+        [self bailFromRegistrationProcess];
+        return;
+    }
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Finished creating SyncChangesMOC");
 }
 
 #pragma mark Operation Generation
@@ -671,6 +718,11 @@
 - (NSString *)localAppliedSyncChangesFilePath
 {
     return [[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
+}
+
+- (NSString *)syncChangesBeingSynchronizedStorePath
+{
+    return [[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSSyncChangesBeingSynchronizedStoreName];
 }
 
 - (NSString *)unsynchronizedSyncChangesStorePath

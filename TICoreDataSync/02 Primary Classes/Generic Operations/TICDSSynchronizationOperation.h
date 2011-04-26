@@ -41,10 +41,15 @@
 @private
     NSArray *_otherSynchronizedClientDeviceIdentifiers;
     
+    NSURL *_localSyncChangesToMergeLocation;
+    
     BOOL _completionInProgress;
     TICDSOperationPhaseStatus _fetchArrayOfClientDeviceIDsStatus;
     TICDSOperationPhaseStatus _fetchArrayOfSyncCommandSetIDsStatus;
     TICDSOperationPhaseStatus _fetchArrayOfSyncChangeSetIDsStatus;
+    
+    TICDSOperationPhaseStatus _uploadLocalSyncCommandSetStatus;
+    TICDSOperationPhaseStatus _uploadLocalSyncChangeSetStatus;
 }
 
 #pragma mark Overridden Methods
@@ -54,6 +59,8 @@
  
  Call `buildArrayOfClientDeviceIdentifiers` when the array is built. */
 - (void)buildArrayOfClientDeviceIdentifiers;
+
+//- (void)uploadLocalSyncChanges
 
 #pragma mark Callbacks
 /** @name Callbacks */
@@ -67,6 +74,9 @@
 
 #pragma mark Properties
 /** @name Properties */
+
+/** The location of the `SyncChangesBeingSynchronized.sqlite` file for this synchronization operation. */
+@property (retain) NSURL *localSyncChangesToMergeLocation;
 
 /** An array of client identifiers for clients that synchronize with this document, excluding this client. */
 @property (nonatomic, retain) NSArray *otherSynchronizedClientDeviceIdentifiers;
@@ -85,5 +95,11 @@
 
 /** The phase status regarding fetching an array of available SyncChange sets. */
 @property (nonatomic, assign) TICDSOperationPhaseStatus fetchArrayOfSyncChangeSetIDsStatus;
+
+/** The phase status regarding upload of the local set of sync commands. */
+@property (nonatomic, assign) TICDSOperationPhaseStatus uploadLocalSyncCommandSetStatus;
+
+/** THe phase status regarding upload of the local set of sync changes. */
+@property (nonatomic, assign) TICDSOperationPhaseStatus uploadLocalSyncChangeSetStatus;
 
 @end
