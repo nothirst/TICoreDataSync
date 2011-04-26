@@ -34,11 +34,27 @@
     [self builtArrayOfClientDeviceIdentifiers:clientDeviceIdentifiers];
 }
 
+- (void)uploadLocalSyncChangeSetFileAtLocation:(NSURL *)aLocation
+{
+    NSError *anyError = nil;
+    
+    NSString *uploadPath = [[self thisDocumentSyncChangesThisClientDirectoryPath] stringByAppendingPathComponent:[[aLocation path] lastPathComponent]];
+    
+    BOOL success = [[self fileManager] moveItemAtPath:[aLocation path] toPath:uploadPath error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    [self uploadedLocalSyncChangeSetFileSuccessfully:success];
+}
+
 #pragma mark -
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
     [_thisDocumentSyncChangesDirectoryPath release], _thisDocumentSyncChangesDirectoryPath = nil;
+    [_thisDocumentSyncChangesThisClientDirectoryPath release], _thisDocumentSyncChangesThisClientDirectoryPath = nil;
 
     [super dealloc];
 }
@@ -46,5 +62,6 @@
 #pragma mark -
 #pragma mark Properties
 @synthesize thisDocumentSyncChangesDirectoryPath = _thisDocumentSyncChangesDirectoryPath;
+@synthesize thisDocumentSyncChangesThisClientDirectoryPath = _thisDocumentSyncChangesThisClientDirectoryPath;
 
 @end

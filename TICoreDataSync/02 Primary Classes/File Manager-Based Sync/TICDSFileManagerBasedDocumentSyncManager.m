@@ -50,6 +50,7 @@
     TICDSFileManagerBasedSynchronizationOperation *operation = [[TICDSFileManagerBasedSynchronizationOperation alloc] initWithDelegate:self];
     
     [operation setThisDocumentSyncChangesDirectoryPath:[self thisDocumentSyncChangesDirectoryPath]];
+    [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
     
     return [operation autorelease];
 }

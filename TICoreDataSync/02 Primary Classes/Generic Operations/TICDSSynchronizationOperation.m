@@ -126,12 +126,48 @@
         return;
     }
     
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Starting to upload local sync changes");
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Renaming sync changes file ready for upload");
     
-    assert(nil);
-    /*
+    NSString *filePath = [[self localSyncChangesToMergeLocation] path];
+    filePath = [filePath stringByDeletingLastPathComponent];
+    filePath = [filePath stringByAppendingPathComponent:[TICDSUtilities uuidString]];
+    filePath = [filePath stringByAppendingPathExtension:TICDSSyncChangeSetFileExtension];
+    
     NSError *anyError = nil;
-    BOOL success = [[self fileManager] moveItemAtPath:<#(NSString *)#> toPath:<#(NSString *)#> error:&anyError];*/
+    BOOL success = [[self fileManager] moveItemAtPath:[[self localSyncChangesToMergeLocation] path] toPath:filePath error:&anyError];
+    
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to move local sync changes to merge file");
+        
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];        
+        [self setUploadLocalSyncChangeSetStatus:TICDSOperationPhaseStatusFailure];
+        [self checkForCompletion];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Starting to upload local sync changes");
+    [self uploadLocalSyncChangeSetFileAtLocation:[NSURL fileURLWithPath:filePath]];
+}
+
+- (void)uploadedLocalSyncChangeSetFileSuccessfully:(BOOL)success
+{
+    if( success ) {
+        TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Uploaded local sync changes file");
+        [self setUploadLocalSyncChangeSetStatus:TICDSOperationPhaseStatusSuccess];
+    } else {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to upload local sync changes files");
+        [self setUploadLocalSyncChangeSetStatus:TICDSOperationPhaseStatusFailure];
+    }
+    
+    [self checkForCompletion];
+}
+
+#pragma mark -
+#pragma mark Overridden Method
+- (void)uploadLocalSyncChangeSetFileAtLocation:(NSURL *)aLocation
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self uploadedLocalSyncChangeSetFileSuccessfully:NO];
 }
 
 #pragma mark -

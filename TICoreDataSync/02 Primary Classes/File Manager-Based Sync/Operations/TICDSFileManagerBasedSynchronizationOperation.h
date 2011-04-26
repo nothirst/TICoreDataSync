@@ -15,11 +15,15 @@
 @interface TICDSFileManagerBasedSynchronizationOperation : TICDSSynchronizationOperation {
 @private
     NSString *_thisDocumentSyncChangesDirectoryPath;
+    NSString *_thisDocumentSyncChangesThisClientDirectoryPath;
 }
 
 /** @name Paths */
 
 /** The path to this document's `SyncChanges` directory. */
 @property (retain) NSString *thisDocumentSyncChangesDirectoryPath;
+
+/** The path this client's directory inside this document's `SyncChanges` directory. */
+@property (retain) NSString *thisDocumentSyncChangesThisClientDirectoryPath;
 
 @end

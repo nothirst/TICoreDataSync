@@ -60,7 +60,11 @@
  Call `buildArrayOfClientDeviceIdentifiers` when the array is built. */
 - (void)buildArrayOfClientDeviceIdentifiers;
 
-//- (void)uploadLocalSyncChanges
+/** Upload the specified sync changes file to the client device's directory inside the document's `SyncChanges` directory.
+ 
+ This method must call `uploadedLocalSyncChangeSetFileSuccessfully:` to indicate whether the creation was successful.
+ */
+- (void)uploadLocalSyncChangeSetFileAtLocation:(NSURL *)aLocation;
 
 #pragma mark Callbacks
 /** @name Callbacks */
@@ -71,6 +75,13 @@
  
  @param anArray The array of identifiers. Pass `nil` if an error occurred. */
 - (void)builtArrayOfClientDeviceIdentifiers:(NSArray *)anArray;
+
+/** Indicate whether the upload of the sync change set file was successful.
+ 
+ If not, call `setError:` first, then specify `NO` for `success`.
+ 
+ @param success A Boolean indicating whether the sync change set file was uploaded or not. */
+- (void)uploadedLocalSyncChangeSetFileSuccessfully:(BOOL)success;
 
 #pragma mark Properties
 /** @name Properties */
