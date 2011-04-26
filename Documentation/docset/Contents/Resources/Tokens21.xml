@@ -231,22 +231,22 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManager:helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:atLocation:</TokenIdentifier>
-			<Abstract>Invoked to allow the delegate to return a custom location for a local directory to contain the helper files the TICoreDataSync framework uses to synchronize a downloaded document.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atLocation:</TokenIdentifier>
+			<Abstract>Invoked to request the delegate to return a configured (though not yet registered) document sync manager for a downloaded document.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (NSURL *)syncManager:(TICDSApplicationSyncManager *)aSyncManager helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:(NSString *)anIdentifier atLocation:(NSURL *)aLocation</Declaration>
+			<Declaration>- (TICDSDocumentSyncManager *)syncManager:(TICDSApplicationSyncManager *)aSyncManager preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:(NSString *)anIdentifier atLocation:(NSURL *)aLocation</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
 					<Abstract>The document sync manager object that sent the message.</Abstract>
 				</Parameter><Parameter>
 					<Name>anIdentifier</Name>
-					<Abstract>The unique identifier for the document (as supplied at registration).</Abstract>
+					<Abstract>The unique synchronization identifier for the document.</Abstract>
 				</Parameter>
 			</Parameters>
-			<ReturnValue><Abstract>The NSURL for the location you wish to use.</Abstract></ReturnValue>
-			<Anchor>//api/name/syncManager:helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:atLocation:</Anchor>
+			<ReturnValue><Abstract>The pre-configured, unregistered sync manager for the document.</Abstract></ReturnValue>
+			<Anchor>//api/name/syncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atLocation:</Anchor>
 		</Token>
 		
 		<Token>

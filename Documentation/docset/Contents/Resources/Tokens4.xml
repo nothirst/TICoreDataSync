@@ -64,6 +64,37 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/configureWithDelegate:appSyncManager:documentIdentifier:</TokenIdentifier>
+			<Abstract>Configure a sync manager for a document that's just been downloaded, but without carrying out full registration.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (void)configureWithDelegate:(id&lt;TICDSDocumentSyncManagerDelegate&gt;)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager documentIdentifier:(NSString *)aDocumentIdentifier</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aDelegate</Name>
+					<Abstract>The object you wish to be notified regarding document-related sync information; this object must conform to the TICDSDocumentSyncManagerDelegate protocol, which includes some required methods.</Abstract>
+				</Parameter><Parameter>
+					<Name>anAppSyncManager</Name>
+					<Abstract>The application sync manager responsible for overseeing this document.</Abstract>
+				</Parameter><Parameter>
+					<Name>aDocumentIdentifier</Name>
+					<Abstract>An identification string to identify this document uniquely. You would typically create a UUID string the first time this doc is registered and store this in e.g. the store metadata.</Abstract>
+				</Parameter><Parameter>
+					<Name>aContext</Name>
+					<Abstract>The primary managed object context in your application; this must be an instance of TICDSSynchronizedManagedObjectContext and not just a plain NSManagedObjectContext.</Abstract>
+				</Parameter><Parameter>
+					<Name>aDocumentDescription</Name>
+					<Abstract>A human-readable string used to identify this document, e.g. the full name of the document.</Abstract>
+				</Parameter><Parameter>
+					<Name>userInfo</Name>
+					<Abstract>A dictionary of information that will be saved throughout all future synchronizations. Because this information is saved in a plist, everything in the dictionary must be archivable using NSKeyedArchiver.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/configureWithDelegate:appSyncManager:documentIdentifier:</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/initiateUploadOfWholeStore</TokenIdentifier>
 			<Abstract>Start the process manually to upload the entire store file for this document, along with the relevant AppliedSyncChanges.sqlite file.</Abstract>
 			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			

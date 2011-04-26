@@ -83,6 +83,8 @@
 	
 	<option value="instance_methods">Instance Methods</option>
 	
+	<option value="//api/name/configureWithDelegate:appSyncManager:documentIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- configureWithDelegate:appSyncManager:documentIdentifier:</option>
+	
 	<option value="//api/name/continueRegistrationByCreatingRemoteFileStructure:">&nbsp;&nbsp;&nbsp;&nbsp;- continueRegistrationByCreatingRemoteFileStructure:</option>
 	
 	<option value="//api/name/documentRegistrationOperation">&nbsp;&nbsp;&nbsp;&nbsp;- documentRegistrationOperation</option>
@@ -187,6 +189,8 @@
 
 <li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/configureWithDelegate:appSyncManager:documentIdentifier:">configureWithDelegate:appSyncManager:documentIdentifier:</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/continueRegistrationByCreatingRemoteFileStructure:">continueRegistrationByCreatingRemoteFileStructure:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentRegistrationOperation">documentRegistrationOperation</a></span></li>
@@ -280,6 +284,13 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/continueRegistrationByCreatingRemoteFileStructure:">&ndash;&nbsp;continueRegistrationByCreatingRemoteFileStructure:</a></code>
 		<span class="tooltip"><p>Continue Registration.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/configureWithDelegate:appSyncManager:documentIdentifier:">&ndash;&nbsp;configureWithDelegate:appSyncManager:documentIdentifier:</a></code>
+		<span class="tooltip"><p>Configure a sync manager for a document that&rsquo;s just been downloaded, but without carrying out full registration.</p></span>
 	</span>
 	
 	
@@ -1258,6 +1269,82 @@
 					<div class="section section-methods">
 						<a title="Instance Methods" name="instance_methods"></a>
 						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/configureWithDelegate:appSyncManager:documentIdentifier:" title="configureWithDelegate:appSyncManager:documentIdentifier:"></a>
+	<h3 class="subsubtitle method-title">configureWithDelegate:appSyncManager:documentIdentifier:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Configure a sync manager for a document that&rsquo;s just been downloaded, but without carrying out full registration.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)configureWithDelegate:(id&lt;TICDSDocumentSyncManagerDelegate&gt;)<em>aDelegate</em> appSyncManager:(TICDSApplicationSyncManager *)<em>anAppSyncManager</em> documentIdentifier:(NSString *)<em>aDocumentIdentifier</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aDelegate</em></dt>
+			<dd><p>The object you wish to be notified regarding document-related sync information; this object must conform to the <a href="../Protocols/TICDSDocumentSyncManagerDelegate.html"><code>TICDSDocumentSyncManagerDelegate</code></a> protocol, which includes some required methods.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anAppSyncManager</em></dt>
+			<dd><p>The application sync manager responsible for overseeing this document.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aDocumentIdentifier</em></dt>
+			<dd><p>An identification string to identify this document uniquely. You would typically create a UUID string the first time this doc is registered and store this in e.g. the store metadata.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aContext</em></dt>
+			<dd><p>The primary managed object context in your application; this must be an instance of <a href="../Classes/TICDSSynchronizedManagedObjectContext.html"><code>TICDSSynchronizedManagedObjectContext</code></a> and not just a plain <code>NSManagedObjectContext</code>.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aDocumentDescription</em></dt>
+			<dd><p>A human-readable string used to identify this document, e.g. the full name of the document.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>userInfo</em></dt>
+			<dd><p>A dictionary of information that will be saved throughout all future synchronizations. Because this information is saved in a plist, everything in the dictionary must be archivable using <code>NSKeyedArchiver</code>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Use this method to provide basic configuration of the sync manager for a document that&rsquo;s been downloaded by calling the <a href="../Classes/TICDSApplicationSyncManager.html"><code>TICDSApplicationSyncManager</code></a> method <code>requestDownloadOfDocumentWithIdentifier:toLocation:</code>, normally in response to the <a href="../Classes/TICDSApplicationSyncManager.html"><code>TICDSApplicationSyncManager</code></a> <a href="#//api/name/delegate">delegate</a> method <code>syncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atLocation:</code>.</p>
+
+<p>This will setup the necessary helper file location and do any local configuration, but won&rsquo;t register the document with the remote.</p>
+
+<p>If an error occurs, the <a href="#//api/name/delegate">delegate</a> will be informed via the <code>syncManager:encounteredDocumentRegistrationError:</code> method.</p><div class="warning"><p>This method is called automatically by <a href="#//api/name/registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:"><code>registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:</code></a>, so you should only call it when needed during the document download process, not during general document registration.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
 						
 						<div class="section-method">
 	<a name="//api/name/continueRegistrationByCreatingRemoteFileStructure:" title="continueRegistrationByCreatingRemoteFileStructure:"></a>

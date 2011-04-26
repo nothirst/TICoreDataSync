@@ -52,7 +52,7 @@
 	
 	<option value="//api/name/syncManager:failedToDownloadDocumentWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:failedToDownloadDocumentWithIdentifier:</option>
 	
-	<option value="//api/name/syncManager:helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:atLocation:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:atLocation:</option>
+	<option value="//api/name/syncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atLocation:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atLocation:</option>
 	
 	<option value="//api/name/syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:</option>
 	
@@ -114,7 +114,7 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:failedToDownloadDocumentWithIdentifier:">syncManager:failedToDownloadDocumentWithIdentifier:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:atLocation:">syncManager:helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:atLocation:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atLocation:">syncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atLocation:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:">syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:</a></span></li>
 	
@@ -283,11 +283,11 @@
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/syncManager:helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:atLocation:">&ndash;&nbsp;syncManager:helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:atLocation:</a></code>
-		<span class="tooltip"><p>Invoked to allow the delegate to return a custom location for a local directory to contain the helper files the <code>TICoreDataSync</code> framework uses to synchronize a downloaded document.</p></span>
+		<code><a href="#//api/name/syncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atLocation:">&ndash;&nbsp;syncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atLocation:</a></code>
+		<span class="tooltip"><p>Invoked to request the delegate to return a configured (though not yet registered) document sync manager for a downloaded document.</p></span>
 	</span>
 	
-	
+	<span class="task-item-suffix">required method</span>
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:">&ndash;&nbsp;syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:</a></code>
@@ -670,17 +670,17 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/syncManager:helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:atLocation:" title="syncManager:helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:atLocation:"></a>
-	<h3 class="subsubtitle method-title">syncManager:helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:atLocation:</h3>
+	<a name="//api/name/syncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atLocation:" title="syncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atLocation:"></a>
+	<h3 class="subsubtitle method-title">syncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atLocation:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Invoked to allow the delegate to return a custom location for a local directory to contain the helper files the <code>TICoreDataSync</code> framework uses to synchronize a downloaded document.</p>
+		<p>Invoked to request the delegate to return a configured (though not yet registered) document sync manager for a downloaded document.</p>
 	</div>		
 	
 	
-	<div class="method-subsection method-declaration"><code>- (NSURL *)syncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:(NSString *)<em>anIdentifier</em> atLocation:(NSURL *)<em>aLocation</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (TICDSDocumentSyncManager *)syncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:(NSString *)<em>anIdentifier</em> atLocation:(NSURL *)<em>aLocation</em></code></div>
 	
 	
 	<div class="method-subsection arguments-section parameters">
@@ -693,7 +693,7 @@
 		
 		<dl class="argument-def parameter-def">
 			<dt><em>anIdentifier</em></dt>
-			<dd><p>The unique identifier for the document (as supplied at registration).</p></dd>
+			<dd><p>The unique synchronization identifier for the document.</p></dd>
 		</dl>
 		
 	</div>
@@ -702,14 +702,16 @@
 	
 	<div class="method-subsection return">
 		<h4 class="method-subtitle parameter-title">Return Value</h4>
-		<p>The <code>NSURL</code> for the location you wish to use.</p>
+		<p>The pre-configured, unregistered sync manager for the document.</p>
 	</div>
 	
 	
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>If you don&rsquo;t implement this method, the default location will be <code>~/Library/Application Support/ApplicationName/Documents/documentIdentifier/</code>.</p><div class="warning"><p>The location you specify <strong>must</strong> already exist.</p></div>
+		<p>This method will be called once the whole store has been replaced for the document. You should create a suitable document sync manager for the downloaded store, and configure it by calling <code>configureWithDelegate:appSyncManager:documentIdentifier:</code>;</p>
+
+<p>Do not register the document sync manager until after the <a href="#//api/name/syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:"><code>syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:</code></a> method is called.</p>
 	</div>
 	
 	
