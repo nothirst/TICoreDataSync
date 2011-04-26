@@ -220,7 +220,7 @@
 
 - (BOOL)startDocumentDownloadProcessForDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation error:(NSError **)outError
 {
-    TICDSOperation *operation = [self documentDownloadOperationForDocumentWithIdentifier:(NSString *)anIdentifier];
+    TICDSWholeStoreDownloadOperation *operation = [self wholeStoreDownloadOperationForDocumentWithIdentifier:(NSString *)anIdentifier];
     
     if( !operation ) {
         if( outError ) {
@@ -230,6 +230,8 @@
         return NO;
     }
     
+    [operation setLocalWholeStoreFileLocation:aLocation];
+    
     [operation setClientIdentifier:[self clientIdentifier]];
     
     [[self otherTasksQueue] addOperation:operation];
@@ -238,7 +240,7 @@
 }
 
 #pragma mark Overridden Methods
-- (TICDSWholeStoreDownloadOperation *)documentDownloadOperationForDocumentWithIdentifier:(NSString *)anIdentifier
+- (TICDSWholeStoreDownloadOperation *)wholeStoreDownloadOperationForDocumentWithIdentifier:(NSString *)anIdentifier
 {
     return [[[TICDSWholeStoreDownloadOperation alloc] initWithDelegate:self] autorelease];
 }
@@ -338,6 +340,16 @@ id gTICDSDefaultApplicationSyncManager = nil;
 - (NSString *)relativePathToClientDevicesThisClientDeviceDirectory
 {
     return [[self relativePathToClientDevicesDirectory] stringByAppendingPathComponent:[self clientIdentifier]];
+}
+
+- (NSString *)relativePathToDocumentDirectoryForDocumentWithIdentifier:(NSString *)anIdentifier
+{
+    return [[self relativePathToDocumentsDirectory] stringByAppendingPathComponent:anIdentifier];
+}
+
+- (NSString *)relativePathToWholeStoreDirectoryForDocumentWithIdentifier:(NSString *)anIdentifier
+{
+    return [[self relativePathToDocumentDirectoryForDocumentWithIdentifier:anIdentifier] stringByAppendingPathComponent:TICDSWholeStoreDirectoryName];
 }
 
 #pragma mark -

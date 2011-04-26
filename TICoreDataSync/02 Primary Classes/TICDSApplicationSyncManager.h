@@ -113,7 +113,7 @@
  @param anIdentifier The unique synchronization identifier of the document to download.
  
  @return A correctly-configured subclass of `TICDSWholeStoreDownloadOperation`. */
-- (TICDSWholeStoreDownloadOperation *)documentDownloadOperationForDocumentWithIdentifier:(NSString *)anIdentifier;
+- (TICDSWholeStoreDownloadOperation *)wholeStoreDownloadOperationForDocumentWithIdentifier:(NSString *)anIdentifier;
 
 /** @name Properties */
 
@@ -172,5 +172,11 @@
 
 /** The path to this client's directory inside the `ClientDevices` directory, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToClientDevicesThisClientDeviceDirectory;
+
+/** The path to a document's directory within the `Documents` directory, relative to the root of the remote file structure. */
+- (NSString *)relativePathToDocumentDirectoryForDocumentWithIdentifier:(NSString *)anIdentifier;
+
+/** The path to a document's `WholeStore` directory, relative to the root of the remote file structure. */
+- (NSString *)relativePathToWholeStoreDirectoryForDocumentWithIdentifier:(NSString *)anIdentifier;
 
 @end
