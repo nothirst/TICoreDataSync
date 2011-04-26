@@ -48,13 +48,19 @@
 	
 	<option value="//api/name/syncManager:encounteredDocumentRegistrationError:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:encounteredDocumentRegistrationError:</option>
 	
+	<option value="//api/name/syncManager:encounteredSynchronizationError:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:encounteredSynchronizationError:</option>
+	
 	<option value="//api/name/syncManager:encounteredWholeStoreUploadError:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:encounteredWholeStoreUploadError:</option>
 	
 	<option value="//api/name/syncManager:failedToProcessAfterMOCDidSave:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:failedToProcessAfterMOCDidSave:</option>
 	
 	<option value="//api/name/syncManager:helperFileDirectoryLocationForDocumentWithIdentifier:description:userInfo:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:helperFileDirectoryLocationForDocumentWithIdentifier:description:userInfo:</option>
 	
+	<option value="//api/name/syncManagerDidBeginToSynchronize:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidBeginToSynchronize:</option>
+	
 	<option value="//api/name/syncManagerDidBeginToUploadWholeStore:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidBeginToUploadWholeStore:</option>
+	
+	<option value="//api/name/syncManagerDidFinishSynchronization:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidFinishSynchronization:</option>
 	
 	<option value="//api/name/syncManagerDidRegisterDocumentSuccessfully:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidRegisterDocumentSuccessfully:</option>
 	
@@ -65,6 +71,8 @@
 	<option value="//api/name/syncManagerDidUploadWholeStoreSuccessfully:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidUploadWholeStoreSuccessfully:</option>
 	
 	<option value="//api/name/syncManagerFailedToRegisterDocument:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerFailedToRegisterDocument:</option>
+	
+	<option value="//api/name/syncManagerFailedToSynchronize:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerFailedToSynchronize:</option>
 	
 	<option value="//api/name/syncManagerFailedToUploadWholeStore:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerFailedToUploadWholeStore:</option>
 	
@@ -92,6 +100,8 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Whole Store Upload">Whole Store Upload</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Synchronization">Synchronization</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Processing after Managed Object Context save">Processing after Managed Object Context save</a></span></li>
 	
 </ul></li>
@@ -116,13 +126,19 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredDocumentRegistrationError:">syncManager:encounteredDocumentRegistrationError:</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredSynchronizationError:">syncManager:encounteredSynchronizationError:</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredWholeStoreUploadError:">syncManager:encounteredWholeStoreUploadError:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:failedToProcessAfterMOCDidSave:">syncManager:failedToProcessAfterMOCDidSave:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:helperFileDirectoryLocationForDocumentWithIdentifier:description:userInfo:">syncManager:helperFileDirectoryLocationForDocumentWithIdentifier:description:userInfo:</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidBeginToSynchronize:">syncManagerDidBeginToSynchronize:</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidBeginToUploadWholeStore:">syncManagerDidBeginToUploadWholeStore:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidFinishSynchronization:">syncManagerDidFinishSynchronization:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidRegisterDocumentSuccessfully:">syncManagerDidRegisterDocumentSuccessfully:</a></span></li>
 	
@@ -133,6 +149,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidUploadWholeStoreSuccessfully:">syncManagerDidUploadWholeStoreSuccessfully:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerFailedToRegisterDocument:">syncManagerFailedToRegisterDocument:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerFailedToSynchronize:">syncManagerFailedToSynchronize:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerFailedToUploadWholeStore:">syncManagerFailedToUploadWholeStore:</a></span></li>
 	
@@ -295,6 +313,42 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/syncManagerDidUploadWholeStoreSuccessfully:">&ndash;&nbsp;syncManagerDidUploadWholeStoreSuccessfully:</a></code>
 		<span class="tooltip"><p>Informs the delegate that the document sync manager finished uploading the whole store file successfully.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Synchronization" name="task_Synchronization"></a>
+						<h3 class="subsubtitle task-title">Synchronization</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManagerDidBeginToSynchronize:">&ndash;&nbsp;syncManagerDidBeginToSynchronize:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager has begun to synchronize the document.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManager:encounteredSynchronizationError:">&ndash;&nbsp;syncManager:encounteredSynchronizationError:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager encountered an error during the synchronization process.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManagerFailedToSynchronize:">&ndash;&nbsp;syncManagerFailedToSynchronize:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager failed to synchronize the document.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManagerDidFinishSynchronization:">&ndash;&nbsp;syncManagerDidFinishSynchronization:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager finished synchronizing the document.</p></span>
 	</span>
 	
 	
@@ -615,6 +669,53 @@
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/syncManager:encounteredSynchronizationError:" title="syncManager:encounteredSynchronizationError:"></a>
+	<h3 class="subsubtitle method-title">syncManager:encounteredSynchronizationError:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager encountered an error during the synchronization process.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)syncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> encounteredSynchronizationError:(NSError *)<em>anError</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anError</em></dt>
+			<dd><p>The error.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/syncManager:encounteredWholeStoreUploadError:" title="syncManager:encounteredWholeStoreUploadError:"></a>
 	<h3 class="subsubtitle method-title">syncManager:encounteredWholeStoreUploadError:</h3>
 	
@@ -776,6 +877,55 @@
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/syncManagerDidBeginToSynchronize:" title="syncManagerDidBeginToSynchronize:"></a>
+	<h3 class="subsubtitle method-title">syncManagerDidBeginToSynchronize:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager has begun to synchronize the document.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)syncManagerDidBeginToSynchronize:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurs during the upload process, the <a href="#//api/name/syncManager:encounteredSynchronizationError:"><code>syncManager:encounteredSynchronizationError:</code></a> method will be called.</p>
+
+<p>At the end of the synchronization process, one of the <a href="#//api/name/syncManagerFailedToSynchronize:"><code>syncManagerFailedToSynchronize:</code></a> or <a href="#//api/name/syncManagerDidFinishSynchronization:"><code>syncManagerDidFinishSynchronization:</code></a> methods will be called.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/syncManagerDidBeginToUploadWholeStore:" title="syncManagerDidBeginToUploadWholeStore:"></a>
 	<h3 class="subsubtitle method-title">syncManagerDidBeginToUploadWholeStore:</h3>
 	
@@ -809,6 +959,48 @@
 
 <p>At the end of the upload process, one of the <a href="#//api/name/syncManagerFailedToUploadWholeStore:"><code>syncManagerFailedToUploadWholeStore:</code></a> or <a href="#//api/name/syncManagerDidUploadWholeStoreSuccessfully:"><code>syncManagerDidUploadWholeStoreSuccessfully:</code></a> methods will be called.</p>
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/syncManagerDidFinishSynchronization:" title="syncManagerDidFinishSynchronization:"></a>
+	<h3 class="subsubtitle method-title">syncManagerDidFinishSynchronization:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager finished synchronizing the document.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)syncManagerDidFinishSynchronization:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncMaanger</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
 	
 	
 	
@@ -1030,6 +1222,53 @@
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>The error will previously have been supplied through the <a href="#//api/name/syncManager:encounteredDocumentRegistrationError:"><code>syncManager:encounteredDocumentRegistrationError:</code></a> method.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/syncManagerFailedToSynchronize:" title="syncManagerFailedToSynchronize:"></a>
+	<h3 class="subsubtitle method-title">syncManagerFailedToSynchronize:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager failed to synchronize the document.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)syncManagerFailedToSynchronize:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The error will previously have been supplied through the <a href="#//api/name/syncManager:encounteredSynchronizationError:"><code>syncManager:encounteredSynchronizationError:</code></a> method.</p>
 	</div>
 	
 	

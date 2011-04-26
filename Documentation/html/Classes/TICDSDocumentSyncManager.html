@@ -89,6 +89,8 @@
 	
 	<option value="//api/name/documentRegistrationOperation">&nbsp;&nbsp;&nbsp;&nbsp;- documentRegistrationOperation</option>
 	
+	<option value="//api/name/initiateSynchronization">&nbsp;&nbsp;&nbsp;&nbsp;- initiateSynchronization</option>
+	
 	<option value="//api/name/initiateUploadOfWholeStore">&nbsp;&nbsp;&nbsp;&nbsp;- initiateUploadOfWholeStore</option>
 	
 	<option value="//api/name/registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:">&nbsp;&nbsp;&nbsp;&nbsp;- registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:</option>
@@ -120,6 +122,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Registration">Registration</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Whole Store Upload">Whole Store Upload</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Synchronization">Synchronization</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Methods Overridden by Subclasses">Methods Overridden by Subclasses</a></span></li>
 	
@@ -194,6 +198,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/continueRegistrationByCreatingRemoteFileStructure:">continueRegistrationByCreatingRemoteFileStructure:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentRegistrationOperation">documentRegistrationOperation</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initiateSynchronization">initiateSynchronization</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initiateUploadOfWholeStore">initiateUploadOfWholeStore</a></span></li>
 	
@@ -306,6 +312,21 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/initiateUploadOfWholeStore">&ndash;&nbsp;initiateUploadOfWholeStore</a></code>
 		<span class="tooltip"><p>Start the process manually to upload the entire store file for this document, along with the relevant <code>AppliedSyncChanges.sqlite</code> file.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Synchronization" name="task_Synchronization"></a>
+						<h3 class="subsubtitle task-title">Synchronization</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initiateSynchronization">&ndash;&nbsp;initiateSynchronization</a></code>
+		<span class="tooltip"><p>Start synchronizing the document with the remote location.</p></span>
 	</span>
 	
 	
@@ -1438,6 +1459,43 @@
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/initiateSynchronization" title="initiateSynchronization"></a>
+	<h3 class="subsubtitle method-title">initiateSynchronization</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Start synchronizing the document with the remote location.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)initiateSynchronization</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This will automatically spawn a <code>TICDSSynchronizationOperation</code>, and notify you of progress through the <a href="../Protocols/TICDSDocumentSyncManagerDelegate.html"><code>TICDSDocumentSyncManagerDelegate</code></a> methods.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/initiateUploadOfWholeStore" title="initiateUploadOfWholeStore"></a>
 	<h3 class="subsubtitle method-title">initiateUploadOfWholeStore</h3>
 	
@@ -1457,7 +1515,9 @@
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>The location of the store file (and the applied sync changes file) will be requested from the <a href="#//api/name/delegate">delegate</a> immediately after calling this method.</p>
+		<p>This will automatically spawn a <a href="../Classes/TICDSWholeStoreUploadOperation.html"><code>TICDSWholeStoreUploadOperation</code></a>, and notify you of progress through the <a href="../Protocols/TICDSDocumentSyncManagerDelegate.html"><code>TICDSDocumentSyncManagerDelegate</code></a> methods.</p>
+
+<p>The location of the store file (and the applied sync changes file) will be requested from the <a href="#//api/name/delegate">delegate</a> immediately after calling this method.</p>
 	</div>
 	
 	

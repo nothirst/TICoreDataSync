@@ -106,6 +106,17 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/initiateSynchronization</TokenIdentifier>
+			<Abstract>Start synchronizing the document with the remote location.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (void)initiateSynchronization</Declaration>
+			
+			
+			<Anchor>//api/name/initiateSynchronization</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/documentRegistrationOperation</TokenIdentifier>
 			<Abstract>Returns a document registration operation.</Abstract>
 			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
