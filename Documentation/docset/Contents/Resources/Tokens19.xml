@@ -39,6 +39,17 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/fetchSyncChangeSetWithIdentifier:forClientIdentifier:toLocation:</TokenIdentifier>
+			<Abstract>Fetch a SyncChangeSet with a given identifier from a client's SyncChanges directory.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)fetchSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier toLocation:(NSURL *)aLocation</Declaration>
+			
+			
+			<Anchor>//api/name/fetchSyncChangeSetWithIdentifier:forClientIdentifier:toLocation:</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/uploadLocalSyncChangeSetFileAtLocation:</TokenIdentifier>
 			<Abstract>Upload the specified sync changes file to the client device's directory inside the document's SyncChanges directory.</Abstract>
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
@@ -85,6 +96,28 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/fetchedSyncChangeSetWithIdentifier:forClientIdentifier:withSuccess:</TokenIdentifier>
+			<Abstract>Indiciate whether the download of the specified SyncChangeSet was successful.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)fetchedSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier withSuccess:(BOOL)success</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aChangeSetIdentifier</Name>
+					<Abstract>The identifier for the change set to fetch.</Abstract>
+				</Parameter><Parameter>
+					<Name>aClientIdentifier</Name>
+					<Abstract>The identifier of the client who uploaded the change set.</Abstract>
+				</Parameter><Parameter>
+					<Name>success</Name>
+					<Abstract>A Boolean indicating whether the sync change set file was downloaded or not.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/fetchedSyncChangeSetWithIdentifier:forClientIdentifier:withSuccess:</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/uploadedLocalSyncChangeSetFileSuccessfully:</TokenIdentifier>
 			<Abstract>Indicate whether the upload of the sync change set file was successful.</Abstract>
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
@@ -123,6 +156,72 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/appliedSyncChangeSetsCoreDataFactory</TokenIdentifier>
+			<Abstract>A TICoreDataFactory to access the contents of the AppliedSyncChangeSets.sqlite file.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) TICoreDataFactory *appliedSyncChangeSetsCoreDataFactory</Declaration>
+			
+			
+			<Anchor>//api/name/appliedSyncChangeSetsCoreDataFactory</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/appliedSyncChangeSetsContext</TokenIdentifier>
+			<Abstract>The managed object context for the AppliedSyncChangeSets.sqlite file.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSManagedObjectContext *appliedSyncChangeSetsContext</Declaration>
+			
+			
+			<Anchor>//api/name/appliedSyncChangeSetsContext</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unappliedSyncChangesDirectoryLocation</TokenIdentifier>
+			<Abstract>The location of the UnappliedSyncChanges directory for this synchronization operation.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSURL *unappliedSyncChangesDirectoryLocation</Declaration>
+			
+			
+			<Anchor>//api/name/unappliedSyncChangesDirectoryLocation</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unappliedSyncChangeSetsFileLocation</TokenIdentifier>
+			<Abstract>The location of this document's UnappliedSyncChangeSets.sqlite file.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSURL *unappliedSyncChangeSetsFileLocation</Declaration>
+			
+			
+			<Anchor>//api/name/unappliedSyncChangeSetsFileLocation</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unappliedSyncChangeSetsCoreDataFactory</TokenIdentifier>
+			<Abstract>A TICoreDataFactory to access the contents of the UnappliedSyncChangeSets.sqlite file.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) TICoreDataFactory *unappliedSyncChangeSetsCoreDataFactory</Declaration>
+			
+			
+			<Anchor>//api/name/unappliedSyncChangeSetsCoreDataFactory</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unappliedSyncChangeSetsContext</TokenIdentifier>
+			<Abstract>The managed object context for the UnappliedSyncChangeSets.sqlite file.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSManagedObjectContext *unappliedSyncChangeSetsContext</Declaration>
+			
+			
+			<Anchor>//api/name/unappliedSyncChangeSetsContext</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/otherSynchronizedClientDeviceIdentifiers</TokenIdentifier>
 			<Abstract>An array of client identifiers for clients that synchronize with this document, excluding this client.</Abstract>
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
@@ -135,10 +234,10 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/otherSynchronizedClientDeviceSyncChangeSetIdentifiers</TokenIdentifier>
-			<Abstract>An array of sync change set identifiers from other clients that synchronize with this document.</Abstract>
+			<Abstract>A dictionary of arrays; keys are client identifiers, values are sync change set identifiers for each of those clients.</Abstract>
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
 			
-			<Declaration>@property (retain) NSMutableArray *otherSynchronizedClientDeviceSyncChangeSetIdentifiers</Declaration>
+			<Declaration>@property (retain) NSMutableDictionary *otherSynchronizedClientDeviceSyncChangeSetIdentifiers</Declaration>
 			
 			
 			<Anchor>//api/name/otherSynchronizedClientDeviceSyncChangeSetIdentifiers</Anchor>
@@ -219,6 +318,39 @@
 			
 			
 			<Anchor>//api/name/fetchArrayOfSyncChangeSetIDsStatus</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/numberOfUnappliedSyncChangeSetsToFetch</TokenIdentifier>
+			<Abstract>The number of unapplied sync change sets that need to be fetched.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) NSUInteger numberOfUnappliedSyncChangeSetsToFetch</Declaration>
+			
+			
+			<Anchor>//api/name/numberOfUnappliedSyncChangeSetsToFetch</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/numberOfUnappliedSyncChangeSetsFetched</TokenIdentifier>
+			<Abstract>The number of unapplied sync change sets that have already been fetched.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) NSUInteger numberOfUnappliedSyncChangeSetsFetched</Declaration>
+			
+			
+			<Anchor>//api/name/numberOfUnappliedSyncChangeSetsFetched</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/numberOfUnappliedSyncChangeSetsThatFailedToFetch</TokenIdentifier>
+			<Abstract>The number of unapplied sync change sets that failed to fetch because of an error.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) NSUInteger numberOfUnappliedSyncChangeSetsThatFailedToFetch</Declaration>
+			
+			
+			<Anchor>//api/name/numberOfUnappliedSyncChangeSetsThatFailedToFetch</Anchor>
 		</Token>
 		
 		<Token>

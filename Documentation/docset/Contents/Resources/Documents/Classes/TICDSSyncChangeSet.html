@@ -36,6 +36,8 @@
 	
 	<option value="class_methods">Class Methods</option>
 	
+	<option value="//api/name/hasSyncChangeSetWithIdentifer:alreadyBeenAppliedInManagedObjectContext:">&nbsp;&nbsp;&nbsp;&nbsp;+ hasSyncChangeSetWithIdentifer:alreadyBeenAppliedInManagedObjectContext:</option>
+	
 	<option value="//api/name/syncChangeSetWithIdentifier:fromClient:creationDate:inManagedObjectContext:">&nbsp;&nbsp;&nbsp;&nbsp;+ syncChangeSetWithIdentifier:fromClient:creationDate:inManagedObjectContext:</option>
 	
 	
@@ -58,6 +60,8 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Class Factory Method">Class Factory Method</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Helper Methods">Helper Methods</a></span></li>
+	
 </ul></li>
 
 
@@ -67,6 +71,8 @@
 
 
 <li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#class_methods">Class Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/hasSyncChangeSetWithIdentifer:alreadyBeenAppliedInManagedObjectContext:">hasSyncChangeSetWithIdentifer:alreadyBeenAppliedInManagedObjectContext:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncChangeSetWithIdentifier:fromClient:creationDate:inManagedObjectContext:">syncChangeSetWithIdentifier:fromClient:creationDate:inManagedObjectContext:</a></span></li>
 	
@@ -122,13 +128,28 @@
 						
 						
 						<a title="Class Factory Method" name="task_Class Factory Method"></a>
-						
-<h3 class="subsubtitle task-title">Class Factory Method</h3>
+						<h3 class="subsubtitle task-title">Class Factory Method</h3>
+
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/syncChangeSetWithIdentifier:fromClient:creationDate:inManagedObjectContext:">+&nbsp;syncChangeSetWithIdentifier:fromClient:creationDate:inManagedObjectContext:</a></code>
 		<span class="tooltip"><p>Create a sync change set in the given managed object context.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Helper Methods" name="task_Helper Methods"></a>
+						<h3 class="subsubtitle task-title">Helper Methods</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/hasSyncChangeSetWithIdentifer:alreadyBeenAppliedInManagedObjectContext:">+&nbsp;hasSyncChangeSetWithIdentifer:alreadyBeenAppliedInManagedObjectContext:</a></code>
+		<span class="tooltip"><p>Check whether a sync change set with a given identifier has already been applied in a managed object context.</p></span>
 	</span>
 	
 	
@@ -146,6 +167,58 @@
 					<div class="section section-methods">
 						<a title="Class Methods" name="class_methods"></a>
 						<h2 class="subtitle subtitle-methods">Class Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/hasSyncChangeSetWithIdentifer:alreadyBeenAppliedInManagedObjectContext:" title="hasSyncChangeSetWithIdentifer:alreadyBeenAppliedInManagedObjectContext:"></a>
+	<h3 class="subsubtitle method-title">hasSyncChangeSetWithIdentifer:alreadyBeenAppliedInManagedObjectContext:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Check whether a sync change set with a given identifier has already been applied in a managed object context.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>+ (BOOL)hasSyncChangeSetWithIdentifer:(NSString *)<em>anIdentifier</em> alreadyBeenAppliedInManagedObjectContext:(NSManagedObjectContext *)<em>aMoc</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The unique identifier for the sync change.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aMoc</em></dt>
+			<dd><p>The managed object context to check.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A Boolean indicating whether the sync change has already been applied.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSyncChangeSet.h</code><br />
+	</div>				
+	
+	
+</div>
 						
 						<div class="section-method">
 	<a name="//api/name/syncChangeSetWithIdentifier:fromClient:creationDate:inManagedObjectContext:" title="syncChangeSetWithIdentifier:fromClient:creationDate:inManagedObjectContext:"></a>

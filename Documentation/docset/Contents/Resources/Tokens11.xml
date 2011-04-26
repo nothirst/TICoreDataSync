@@ -44,5 +44,16 @@
 			<Anchor>//api/name/pathToSyncChangesDirectoryForClientWithIdentifier:</Anchor>
 		</Token>
 		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSFileManagerBasedSynchronizationOperation/pathToSyncChangeSetWithIdentifier:forClientWithIdentifier:</TokenIdentifier>
+			<Abstract>The path to a SyncChangeSet uploaded by a given client.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)pathToSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientWithIdentifier:(NSString *)aClientIdentifier</Declaration>
+			
+			
+			<Anchor>//api/name/pathToSyncChangeSetWithIdentifier:forClientWithIdentifier:</Anchor>
+		</Token>
+		
 	</File>
 </Tokens>
