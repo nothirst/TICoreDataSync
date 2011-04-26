@@ -72,15 +72,19 @@
 	
 	<option value="//api/name/applicationRegistrationOperation">&nbsp;&nbsp;&nbsp;&nbsp;- applicationRegistrationOperation</option>
 	
-	<option value="//api/name/documentDownloadOperationForDocumentWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- documentDownloadOperationForDocumentWithIdentifier:</option>
-	
 	<option value="//api/name/listOfPreviouslySynchronizedDocumentsOperation">&nbsp;&nbsp;&nbsp;&nbsp;- listOfPreviouslySynchronizedDocumentsOperation</option>
 	
 	<option value="//api/name/registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:">&nbsp;&nbsp;&nbsp;&nbsp;- registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:</option>
 	
+	<option value="//api/name/relativePathToDocumentDirectoryForDocumentWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- relativePathToDocumentDirectoryForDocumentWithIdentifier:</option>
+	
+	<option value="//api/name/relativePathToWholeStoreDirectoryForDocumentWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- relativePathToWholeStoreDirectoryForDocumentWithIdentifier:</option>
+	
 	<option value="//api/name/requestDownloadOfDocumentWithIdentifier:toLocation:">&nbsp;&nbsp;&nbsp;&nbsp;- requestDownloadOfDocumentWithIdentifier:toLocation:</option>
 	
 	<option value="//api/name/requestListOfPreviouslySynchronizedDocuments">&nbsp;&nbsp;&nbsp;&nbsp;- requestListOfPreviouslySynchronizedDocuments</option>
+	
+	<option value="//api/name/wholeStoreDownloadOperationForDocumentWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- wholeStoreDownloadOperationForDocumentWithIdentifier:</option>
 	
 	
 	
@@ -160,15 +164,19 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationRegistrationOperation">applicationRegistrationOperation</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentDownloadOperationForDocumentWithIdentifier:">documentDownloadOperationForDocumentWithIdentifier:</a></span></li>
-	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/listOfPreviouslySynchronizedDocumentsOperation">listOfPreviouslySynchronizedDocumentsOperation</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:">registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/relativePathToDocumentDirectoryForDocumentWithIdentifier:">relativePathToDocumentDirectoryForDocumentWithIdentifier:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/relativePathToWholeStoreDirectoryForDocumentWithIdentifier:">relativePathToWholeStoreDirectoryForDocumentWithIdentifier:</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/requestDownloadOfDocumentWithIdentifier:toLocation:">requestDownloadOfDocumentWithIdentifier:toLocation:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/requestListOfPreviouslySynchronizedDocuments">requestListOfPreviouslySynchronizedDocuments</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/wholeStoreDownloadOperationForDocumentWithIdentifier:">wholeStoreDownloadOperationForDocumentWithIdentifier:</a></span></li>
 	
 </ul></li>
 
@@ -311,7 +319,7 @@
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/documentDownloadOperationForDocumentWithIdentifier:">&ndash;&nbsp;documentDownloadOperationForDocumentWithIdentifier:</a></code>
+		<code><a href="#//api/name/wholeStoreDownloadOperationForDocumentWithIdentifier:">&ndash;&nbsp;wholeStoreDownloadOperationForDocumentWithIdentifier:</a></code>
 		<span class="tooltip"><p>Returns an operation to download a document with a given identifier.</p></span>
 	</span>
 	
@@ -416,6 +424,20 @@
 		<span class="tooltip"><p>The path to this client&rsquo;s directory inside the <code>ClientDevices</code> directory, relative to the root of the remote file structure.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/relativePathToDocumentDirectoryForDocumentWithIdentifier:">&ndash;&nbsp;relativePathToDocumentDirectoryForDocumentWithIdentifier:</a></code>
+		<span class="tooltip"><p>The path to a document&rsquo;s directory within the <code>Documents</code> directory, relative to the root of the remote file structure.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/relativePathToWholeStoreDirectoryForDocumentWithIdentifier:">&ndash;&nbsp;relativePathToWholeStoreDirectoryForDocumentWithIdentifier:</a></code>
+		<span class="tooltip"><p>The path to a document&rsquo;s <code>WholeStore</code> directory, relative to the root of the remote file structure.</p></span>
+	</span>
+	
 	
 </li>
 						</ul>
@@ -962,58 +984,6 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/documentDownloadOperationForDocumentWithIdentifier:" title="documentDownloadOperationForDocumentWithIdentifier:"></a>
-	<h3 class="subsubtitle method-title">documentDownloadOperationForDocumentWithIdentifier:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Returns an operation to download a document with a given identifier.</p>
-	</div>		
-	
-	
-	<div class="method-subsection method-declaration"><code>- (TICDSWholeStoreDownloadOperation *)documentDownloadOperationForDocumentWithIdentifier:(NSString *)<em>anIdentifier</em></code></div>
-	
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>anIdentifier</em></dt>
-			<dd><p>The unique synchronization identifier of the document to download.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	<div class="method-subsection return">
-		<h4 class="method-subtitle parameter-title">Return Value</h4>
-		<p>A correctly-configured subclass of <a href="../Classes/TICDSWholeStoreDownloadOperation.html"><code>TICDSWholeStoreDownloadOperation</code></a>.</p>
-	</div>
-	
-	
-	
-	<div class="method-subsection discussion-section">
-		<h4 class="method-subtitle">Discussion</h4>
-		<p>Subclasses of <a href="TICDSApplicationSyncManager.html"><code>TICDSApplicationSyncManager</code></a> use this method to return a correctly-configured whole store download operation for their particular sync method.</p>
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">TICDSApplicationSyncManager.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
 	<a name="//api/name/listOfPreviouslySynchronizedDocumentsOperation" title="listOfPreviouslySynchronizedDocumentsOperation"></a>
 	<h3 class="subsubtitle method-title">listOfPreviouslySynchronizedDocumentsOperation</h3>
 	
@@ -1127,6 +1097,70 @@
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/relativePathToDocumentDirectoryForDocumentWithIdentifier:" title="relativePathToDocumentDirectoryForDocumentWithIdentifier:"></a>
+	<h3 class="subsubtitle method-title">relativePathToDocumentDirectoryForDocumentWithIdentifier:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The path to a document&rsquo;s directory within the <code>Documents</code> directory, relative to the root of the remote file structure.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (NSString *)relativePathToDocumentDirectoryForDocumentWithIdentifier:(NSString *)<em>anIdentifier</em></code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/relativePathToWholeStoreDirectoryForDocumentWithIdentifier:" title="relativePathToWholeStoreDirectoryForDocumentWithIdentifier:"></a>
+	<h3 class="subsubtitle method-title">relativePathToWholeStoreDirectoryForDocumentWithIdentifier:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The path to a document&rsquo;s <code>WholeStore</code> directory, relative to the root of the remote file structure.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (NSString *)relativePathToWholeStoreDirectoryForDocumentWithIdentifier:(NSString *)<em>anIdentifier</em></code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/requestDownloadOfDocumentWithIdentifier:toLocation:" title="requestDownloadOfDocumentWithIdentifier:toLocation:"></a>
 	<h3 class="subsubtitle method-title">requestDownloadOfDocumentWithIdentifier:toLocation:</h3>
 	
@@ -1199,6 +1233,58 @@
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>This method will automatically spawn a <a href="../Classes/TICDSListOfPreviouslySynchronizedDocumentsOperation.html"><code>TICDSListOfPreviouslySynchronizedDocumentsOperation</code></a>, and notify you of progress through the <a href="../Protocols/TICDSApplicationSyncManagerDelegate.html"><code>TICDSApplicationSyncManagerDelegate</code></a> methods.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/wholeStoreDownloadOperationForDocumentWithIdentifier:" title="wholeStoreDownloadOperationForDocumentWithIdentifier:"></a>
+	<h3 class="subsubtitle method-title">wholeStoreDownloadOperationForDocumentWithIdentifier:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns an operation to download a document with a given identifier.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (TICDSWholeStoreDownloadOperation *)wholeStoreDownloadOperationForDocumentWithIdentifier:(NSString *)<em>anIdentifier</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The unique synchronization identifier of the document to download.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A correctly-configured subclass of <a href="../Classes/TICDSWholeStoreDownloadOperation.html"><code>TICDSWholeStoreDownloadOperation</code></a>.</p>
+	</div>
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Subclasses of <a href="TICDSApplicationSyncManager.html"><code>TICDSApplicationSyncManager</code></a> use this method to return a correctly-configured whole store download operation for their particular sync method.</p>
 	</div>
 	
 	

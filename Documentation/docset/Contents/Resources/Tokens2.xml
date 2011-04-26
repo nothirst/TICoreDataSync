@@ -119,11 +119,11 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationSyncManager/documentDownloadOperationForDocumentWithIdentifier:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationSyncManager/wholeStoreDownloadOperationForDocumentWithIdentifier:</TokenIdentifier>
 			<Abstract>Returns an operation to download a document with a given identifier.</Abstract>
 			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
 			
-			<Declaration>- (TICDSWholeStoreDownloadOperation *)documentDownloadOperationForDocumentWithIdentifier:(NSString *)anIdentifier</Declaration>
+			<Declaration>- (TICDSWholeStoreDownloadOperation *)wholeStoreDownloadOperationForDocumentWithIdentifier:(NSString *)anIdentifier</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>anIdentifier</Name>
@@ -131,7 +131,7 @@
 				</Parameter>
 			</Parameters>
 			<ReturnValue><Abstract>A correctly-configured subclass of TICDSWholeStoreDownloadOperation.</Abstract></ReturnValue>
-			<Anchor>//api/name/documentDownloadOperationForDocumentWithIdentifier:</Anchor>
+			<Anchor>//api/name/wholeStoreDownloadOperationForDocumentWithIdentifier:</Anchor>
 		</Token>
 		
 		<Token>
@@ -253,6 +253,28 @@
 			
 			
 			<Anchor>//api/name/relativePathToClientDevicesThisClientDeviceDirectory</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationSyncManager/relativePathToDocumentDirectoryForDocumentWithIdentifier:</TokenIdentifier>
+			<Abstract>The path to a document's directory within the Documents directory, relative to the root of the remote file structure.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)relativePathToDocumentDirectoryForDocumentWithIdentifier:(NSString *)anIdentifier</Declaration>
+			
+			
+			<Anchor>//api/name/relativePathToDocumentDirectoryForDocumentWithIdentifier:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationSyncManager/relativePathToWholeStoreDirectoryForDocumentWithIdentifier:</TokenIdentifier>
+			<Abstract>The path to a document's WholeStore directory, relative to the root of the remote file structure.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)relativePathToWholeStoreDirectoryForDocumentWithIdentifier:(NSString *)anIdentifier</Declaration>
+			
+			
+			<Anchor>//api/name/relativePathToWholeStoreDirectoryForDocumentWithIdentifier:</Anchor>
 		</Token>
 		
 	</File>
