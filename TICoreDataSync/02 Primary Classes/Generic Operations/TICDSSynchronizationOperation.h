@@ -44,6 +44,7 @@
     NSMutableArray *_otherSynchronizedClientDeviceSyncChangeSetIdentifiers;
     
     NSURL *_localSyncChangesToMergeLocation;
+    NSURL *_appliedSyncChangeSetsFileLocation;
     
     BOOL _completionInProgress;
     TICDSOperationPhaseStatus _fetchArrayOfClientDeviceIDsStatus;
@@ -114,6 +115,9 @@
 
 /** The location of the `SyncChangesBeingSynchronized.sqlite` file for this synchronization operation. */
 @property (retain) NSURL *localSyncChangesToMergeLocation;
+
+/** The location of this document's `AppliedSyncChangeSets.sqlite` file. */
+@property (retain) NSURL *appliedSyncChangeSetsFileLocation;
 
 /** An array of client identifiers for clients that synchronize with this document, excluding this client. */
 @property (nonatomic, retain) NSArray *otherSynchronizedClientDeviceIdentifiers;

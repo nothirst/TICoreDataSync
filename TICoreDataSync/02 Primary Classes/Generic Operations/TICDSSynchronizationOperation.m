@@ -312,6 +312,7 @@
 - (void)dealloc
 {
     [_localSyncChangesToMergeLocation release], _localSyncChangesToMergeLocation = nil;
+    [_appliedSyncChangeSetsFileLocation release], _appliedSyncChangeSetsFileLocation = nil;
     [_otherSynchronizedClientDeviceIdentifiers release], _otherSynchronizedClientDeviceIdentifiers = nil;
     [_otherSynchronizedClientDeviceSyncChangeSetIdentifiers release], _otherSynchronizedClientDeviceSyncChangeSetIdentifiers = nil;
 
@@ -321,6 +322,7 @@
 #pragma mark -
 #pragma mark Properties
 @synthesize localSyncChangesToMergeLocation = _localSyncChangesToMergeLocation;
+@synthesize appliedSyncChangeSetsFileLocation = _appliedSyncChangeSetsFileLocation;
 @synthesize otherSynchronizedClientDeviceIdentifiers = _otherSynchronizedClientDeviceIdentifiers;
 @synthesize otherSynchronizedClientDeviceSyncChangeSetIdentifiers = _otherSynchronizedClientDeviceSyncChangeSetIdentifiers;
 @synthesize completionInProgress = _completionInProgress;
