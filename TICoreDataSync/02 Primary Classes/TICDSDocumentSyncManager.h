@@ -174,7 +174,7 @@
 @property (nonatomic, readonly, retain) NSDictionary *documentUserInfo;
 
 /** An `NSFileManager` suitable for use in document registration tasks. */
-@property (nonatomic, retain) NSFileManager *fileManager;
+@property (nonatomic, readonly, retain) NSFileManager *fileManager;
 
 /** The location of a directory used by the `TICoreDataSync` framework to store local helper files for this document.
  

@@ -6,6 +6,8 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
+extern NSString * const TICDSFrameworkName;
+
 extern NSString * const TICDSSyncChangeTypeNames[];
 
 extern NSString * const TICDSErrorUserInfoKey;
@@ -24,6 +26,8 @@ extern NSString * const kTICDSOriginalDeviceIdentifier;
 
 extern NSString * const kTICDSUtilitiesFileStructureClientDeviceUID;
 extern NSString * const kTICDSUtilitiesFileStructureDocumentUID;
+
+extern NSString * const kTICDSDocumentDownloadFinalWholeStoreLocation;
 
 extern NSString * const TICDSClientDevicesDirectoryName;
 extern NSString * const TICDSDocumentsDirectoryName;

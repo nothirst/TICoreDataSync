@@ -33,6 +33,8 @@
     
     NSOperationQueue *_registrationQueue;
     NSOperationQueue *_otherTasksQueue;
+    
+    NSFileManager *_fileManager;
 }
 
 /** @name Application-Wide Sync Manager */
@@ -151,6 +153,9 @@
  Set the user info when registering with `registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:`.
  */
 @property (nonatomic, readonly, retain) NSDictionary *applicationUserInfo;
+
+/** A File Manager for use by the application sync manager. */
+@property (nonatomic, readonly, retain) NSFileManager *fileManager;
 
 /** @name Operation Queues */
 

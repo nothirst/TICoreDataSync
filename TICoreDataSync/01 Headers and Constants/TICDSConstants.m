@@ -8,6 +8,8 @@
 
 #import "TICDSConstants.h"
 
+NSString * const TICDSFrameworkName = @"TICoreDataSync";
+
 NSString * const TICDSSyncChangeTypeNames[] = {
     @"Unknown",
     @"Inserted",
@@ -32,6 +34,8 @@ NSString * const kTICDSOriginalDeviceIdentifier = @"kTICDSOriginalDeviceIdentifi
 
 NSString * const kTICDSUtilitiesFileStructureClientDeviceUID = @"kTICDSUtilitiesFileStructureClientDeviceUID";
 NSString * const kTICDSUtilitiesFileStructureDocumentUID = @"kTICDSUtilitiesFileStructureDocumentUID";
+
+NSString * const kTICDSDocumentDownloadFinalWholeStoreLocation = @"kTICDSDocumentDownloadFinalWholeStoreLocation";
 
 NSString * const TICDSClientDevicesDirectoryName = @"ClientDevices";
 NSString * const TICDSDocumentsDirectoryName = @"Documents";

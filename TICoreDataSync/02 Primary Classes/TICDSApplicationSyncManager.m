@@ -220,6 +220,23 @@
 
 - (BOOL)startDocumentDownloadProcessForDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation error:(NSError **)outError
 {
+    // Set download to go to a temporary location
+    NSString *temporaryPath = [NSTemporaryDirectory() stringByAppendingPathComponent:TICDSFrameworkName];
+    temporaryPath = [temporaryPath stringByAppendingPathComponent:anIdentifier];
+    
+    NSError *anyError = nil;
+    BOOL success = [[self fileManager] createDirectoryAtPath:temporaryPath withIntermediateDirectories:YES attributes:nil error:&anyError];
+    
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create temporary directory for document download: %@", anyError);
+        
+        if( outError ) {
+            *outError = [TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__];
+        }
+        
+        return NO;
+    }
+    
     TICDSWholeStoreDownloadOperation *operation = [self wholeStoreDownloadOperationForDocumentWithIdentifier:(NSString *)anIdentifier];
     
     if( !operation ) {
@@ -230,7 +247,13 @@
         return NO;
     }
     
-    [operation setLocalWholeStoreFileLocation:aLocation];
+    [operation setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:aLocation, kTICDSDocumentDownloadFinalWholeStoreLocation, nil]];
+    
+    NSString *wholeStoreFilePath = [temporaryPath stringByAppendingPathComponent:TICDSWholeStoreFilename];
+    NSString *appliedSyncChangesFilePath = [temporaryPath stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
+    
+    [operation setLocalWholeStoreFileLocation:[NSURL fileURLWithPath:wholeStoreFilePath]];
+    [operation setLocalAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:appliedSyncChangesFilePath]];
     
     [operation setClientIdentifier:[self clientIdentifier]];
     
@@ -379,8 +402,20 @@ id gTICDSDefaultApplicationSyncManager = nil;
     [_applicationUserInfo release], _applicationUserInfo = nil;
     [_registrationQueue release], _registrationQueue = nil;
     [_otherTasksQueue release], _otherTasksQueue = nil;
-    
+    [_fileManager release], _fileManager = nil;
+
     [super dealloc];
+}
+
+#pragma mark -
+#pragma mark Lazy Accessors
+- (NSFileManager *)fileManager
+{
+    if( _fileManager ) return _fileManager;
+    
+    _fileManager = [[NSFileManager alloc] init];
+    
+    return _fileManager;
 }
 
 #pragma mark -
@@ -393,5 +428,6 @@ id gTICDSDefaultApplicationSyncManager = nil;
 @synthesize applicationUserInfo = _applicationUserInfo;
 @synthesize registrationQueue = _registrationQueue;
 @synthesize otherTasksQueue = _otherTasksQueue;
+@synthesize fileManager = _fileManager;
 
 @end

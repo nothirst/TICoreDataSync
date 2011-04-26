@@ -69,7 +69,16 @@
 #pragma mark Whole Store File Download
 - (void)beginDownloadOfWholeStoreFile
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Downloading whole store file");
+    NSError *anyError = nil;
+    if( [[self fileManager] fileExistsAtPath:[[self localWholeStoreFileLocation] path]] && ![[self fileManager] removeItemAtURL:[self localWholeStoreFileLocation] error:&anyError] ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to delete existing whole store");
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        
+        [self downloadedWholeStoreFileWithSuccess:NO];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Downloading whole store file to %@", [self localWholeStoreFileLocation]);
     
     [self downloadWholeStoreFile];
 }

@@ -64,6 +64,18 @@
     [self determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:identifierToReturn];
 }
 
+- (void)downloadWholeStoreFile
+{
+    NSError *anyError = nil;
+    BOOL success = [[self fileManager] copyItemAtPath:[self pathToWholeStoreFileForClientWithIdentifier:[self requestedWholeStoreClientIdentifier]] toPath:[[self localWholeStoreFileLocation] path] error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    [self downloadedWholeStoreFileWithSuccess:success];
+}
+
 #pragma mark -
 #pragma mark Paths
 - (NSString *)pathToWholeStoreFileForClientWithIdentifier:(NSString *)anIdentifier
