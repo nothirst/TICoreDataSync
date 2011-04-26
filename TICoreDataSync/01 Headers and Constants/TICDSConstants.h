@@ -39,6 +39,8 @@ extern NSString * const TICDSSyncChangesToPushDirectoryName;
 extern NSString * const TICDSUnsynchronizedSyncChangesStoreName;
 extern NSString * const TICDSWholeStoreFilename;
 extern NSString * const TICDSAppliedSyncChangeSetsFilename;
+extern NSString * const TICDSSyncCommandSetFileExtension;
+extern NSString * const TICDSSyncChangeSetFileExtension;
 
 extern NSString * const TICDSSyncIDAttributeName;
 extern NSString * const TICDSSyncChangeDataModelName;
