@@ -203,6 +203,11 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
     [self decreaseSyncActivity];
 }
 
+- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager willReplaceWholeStoreFileForDocumentWithIdentifier:(NSString *)anIdentifier atLocation:(NSURL *)aLocation
+{
+    NSLog(@"Replacing the document at %@", aLocation);
+}
+
 - (id)syncManager:(TICDSApplicationSyncManager *)aSyncManager documentSyncManagerForNewlyDownloadedDocumentWithIdentifier:(NSString *)anIdentifier atLocation:(NSURL *)aLocation;
 {
     [self decreaseSyncActivity];

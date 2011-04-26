@@ -70,7 +70,7 @@
 - (void)beginDownloadOfWholeStoreFile
 {
     NSError *anyError = nil;
-    if( [[self fileManager] fileExistsAtPath:[[self localWholeStoreFileLocation] path]] && ![[self fileManager] removeItemAtURL:[self localWholeStoreFileLocation] error:&anyError] ) {
+    if( [[self fileManager] fileExistsAtPath:[[self localWholeStoreFileLocation] path]] && ![[self fileManager] removeItemAtPath:[[self localWholeStoreFileLocation] path] error:&anyError] ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to delete existing whole store");
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
         
@@ -110,7 +110,16 @@
 #pragma mark Applied Sync Change Sets File Download
 - (void)beginDownloadOfAppliedSyncChangeSetsFile
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Downloading applied sync change sets file");
+    NSError *anyError = nil;
+    if( [[self fileManager] fileExistsAtPath:[[self localAppliedSyncChangeSetsFileLocation] path]] && ![[self fileManager] removeItemAtPath:[[self localAppliedSyncChangeSetsFileLocation] path] error:&anyError] ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to delete existing applied sync changes");
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        
+        [self downloadedAppliedSyncChangeSetsFileWithSuccess:NO];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Downloading applied sync change sets file to %@", [self localAppliedSyncChangeSetsFileLocation]);
     
     [self downloadAppliedSyncChangeSetsFile];
 }

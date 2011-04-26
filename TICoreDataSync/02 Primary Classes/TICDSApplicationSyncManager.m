@@ -247,7 +247,7 @@
         return NO;
     }
     
-    [operation setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:aLocation, kTICDSDocumentDownloadFinalWholeStoreLocation, nil]];
+    [operation setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:aLocation, kTICDSDocumentDownloadFinalWholeStoreLocation, anIdentifier, kTICDSDocumentIdentifier, nil]];
     
     NSString *wholeStoreFilePath = [temporaryPath stringByAppendingPathComponent:TICDSWholeStoreFilename];
     NSString *appliedSyncChangesFilePath = [temporaryPath stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
@@ -271,21 +271,38 @@
 #pragma mark Operation Communications
 - (void)documentDownloadOperationCompleted:(TICDSWholeStoreDownloadOperation *)anOperation
 {
+    NSError *anyError = nil;
+    
+    NSURL *finalWholeStoreLocation = [[anOperation userInfo] valueForKey:kTICDSDocumentDownloadFinalWholeStoreLocation];
+    
+    if( [[self fileManager] fileExistsAtPath:[finalWholeStoreLocation path]] ) {
+        [self ti_alertDelegateWithSelector:@selector(syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], finalWholeStoreLocation];
+        
+        [[self fileManager] removeItemAtPath:[finalWholeStoreLocation path] error:&anyError];
+    }
+    
+    BOOL success = [[self fileManager] moveItemAtPath:[[anOperation localWholeStoreFileLocation] path] toPath:[finalWholeStoreLocation path] error:&anyError];
+    if( !success ) {
+        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:), [TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__], [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier]];
+        [self ti_alertDelegateWithSelector:@selector(syncManager:failedToDownloadDocumentWithIdentifier:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier]];
+        return;
+    }
+    
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Document Download Operation Completed");
-    [self ti_alertDelegateWithSelector:@selector(syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:), nil, nil];
+    [self ti_alertDelegateWithSelector:@selector(syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], nil];
 }
 
 - (void)documentDownloadOperationWasCancelled:(TICDSWholeStoreDownloadOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Download Operation was Cancelled");
-    [self ti_alertDelegateWithSelector:@selector(syncManager:failedToDownloadDocumentWithIdentifier:), nil];
+    [self ti_alertDelegateWithSelector:@selector(syncManager:failedToDownloadDocumentWithIdentifier:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier]];
 }
 
 - (void)documentDownloadOperation:(TICDSWholeStoreDownloadOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Download Operation Failed to Complete with Error: %@", anError);
-    [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:), anError, nil];
-    [self ti_alertDelegateWithSelector:@selector(syncManager:failedToDownloadDocumentWithIdentifier:), nil];
+    [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:), anError, [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier]];
+    [self ti_alertDelegateWithSelector:@selector(syncManager:failedToDownloadDocumentWithIdentifier:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier]];
 }
 
 #pragma mark -

@@ -76,6 +76,22 @@
     [self downloadedWholeStoreFileWithSuccess:success];
 }
 
+- (void)downloadAppliedSyncChangeSetsFile
+{
+    if( ![[self fileManager] fileExistsAtPath:[self pathToAppliedSyncChangesFileForClientWithIdentifier:[self requestedWholeStoreClientIdentifier]]] ) {
+        [self downloadedAppliedSyncChangeSetsFileWithSuccess:YES];
+    }
+    
+    NSError *anyError = nil;
+    BOOL success = [[self fileManager] copyItemAtPath:[self pathToAppliedSyncChangesFileForClientWithIdentifier:[self requestedWholeStoreClientIdentifier]] toPath:[[self localAppliedSyncChangeSetsFileLocation] path] error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    [self downloadedAppliedSyncChangeSetsFileWithSuccess:success];
+}
+
 #pragma mark -
 #pragma mark Paths
 - (NSString *)pathToWholeStoreFileForClientWithIdentifier:(NSString *)anIdentifier

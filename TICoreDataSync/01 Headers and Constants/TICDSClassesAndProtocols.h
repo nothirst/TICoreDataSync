@@ -136,6 +136,13 @@
  @param anIdentifier The unique synchronization identifier of the document. */
 - (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager failedToDownloadDocumentWithIdentifier:(NSString *)anIdentifier;
 
+/** Informs the delegate that a downloaded store file file is about to replace an existing store file on disc.
+ 
+ @param aSyncManager The application sync manager object that sent the message.
+ @param anIdentifier The unique synchronization identifier of the document.
+ @param aLocation The location on disc of the existing document that will be replaced. */
+- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager willReplaceWholeStoreFileForDocumentWithIdentifier:(NSString *)anIdentifier atLocation:(NSURL *)aLocation;
+
 /** Informs the delegate that the download of a requested document has completed successfully.
  
  @param aSyncManager The application sync manager object that sent the message. 
