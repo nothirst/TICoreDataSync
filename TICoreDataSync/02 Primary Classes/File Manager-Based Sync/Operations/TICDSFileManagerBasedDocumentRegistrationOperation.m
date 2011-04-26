@@ -88,7 +88,7 @@
         [documentInfo setValue:[self documentDescription] forKey:kTICDSDocumentDescription];
         [documentInfo setValue:[self clientDescription] forKey:kTICDSOriginalDeviceDescription];
         [documentInfo setValue:[self clientIdentifier] forKey:kTICDSOriginalDeviceIdentifier];
-        [documentInfo setValue:[self userInfo] forKey:kTICDSDocumentUserInfo];
+        [documentInfo setValue:[self documentUserInfo] forKey:kTICDSDocumentUserInfo];
         
         NSURL *fileLocation = [NSURL fileURLWithPath:[[self thisDocumentDirectoryPath] stringByAppendingPathComponent:@"documentInfo.plist"]];
         success = [documentInfo writeToURL:fileLocation atomically:YES];

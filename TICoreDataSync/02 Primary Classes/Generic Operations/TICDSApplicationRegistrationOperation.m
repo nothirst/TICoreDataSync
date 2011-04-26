@@ -168,7 +168,7 @@
 {
     [_appIdentifier release], _appIdentifier = nil;
     [_clientDescription release], _clientDescription = nil;
-    [_userInfo release], _userInfo = nil;
+    [_applicationUserInfo release], _applicationUserInfo = nil;
     
     [super dealloc];
 }
@@ -177,7 +177,7 @@
 #pragma mark Properties
 @synthesize appIdentifier = _appIdentifier;
 @synthesize clientDescription = _clientDescription;
-@synthesize userInfo = _userInfo;
+@synthesize applicationUserInfo = _applicationUserInfo;
 @synthesize completionInProgress = _completionInProgress;
 @synthesize globalAppFileStructureStatus = _globalAppFileStructureStatus;
 @synthesize clientDeviceFileStructureStatus = _clientDeviceFileStructureStatus;

@@ -19,7 +19,7 @@
 @property (nonatomic, retain) NSString *documentIdentifier;
 @property (nonatomic, retain) NSString *documentDescription;
 @property (nonatomic, retain) NSString *clientIdentifier;
-@property (nonatomic, retain) NSDictionary *userInfo;
+@property (nonatomic, retain) NSDictionary *documentUserInfo;
 @property (retain) NSURL *helperFileDirectoryLocation;
 
 @end
@@ -42,7 +42,7 @@
     [self setDocumentIdentifier:aDocumentIdentifier];
     [self setDocumentDescription:aDocumentDescription];
     [self setClientIdentifier:[anAppSyncManager clientIdentifier]];
-    [self setUserInfo:someUserInfo];
+    [self setDocumentUserInfo:someUserInfo];
     
     if( [anAppSyncManager state] == TICDSApplicationSyncManagerStateAbleToSync ) {
         [[self registrationQueue] setSuspended:NO];
@@ -93,7 +93,7 @@
     [operation setClientIdentifier:[self clientIdentifier]];
     [operation setClientDescription:[[self applicationSyncManager] clientDescription]];
     [operation setDocumentDescription:[self documentDescription]];
-    [operation setUserInfo:[self userInfo]];
+    [operation setDocumentUserInfo:[self documentUserInfo]];
     
     [[self registrationQueue] addOperation:operation];
     
@@ -104,7 +104,7 @@
 - (void)registrationOperationPausedToFindOutWhetherToCreateRemoteDocumentStructure:(TICDSDocumentRegistrationOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Registration operation paused to find out whether to create document structure");
-    [self ti_alertDelegateWithSelector:@selector(syncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self userInfo]];
+    [self ti_alertDelegateWithSelector:@selector(syncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
 }
 
 - (void)registrationOperationResumedFollowingDocumentStructureCreationInstruction:(TICDSDocumentRegistrationOperation *)anOperation
@@ -230,7 +230,7 @@
 - (BOOL)checkForHelperFileDirectoryOrCreateIfNecessary:(NSError **)outError
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Asking delegate for location of helper file directory");
-    NSURL *finalURL = [self ti_objectFromDelegateWithSelector:@selector(syncManager:helperFileDirectoryLocationForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self userInfo]];
+    NSURL *finalURL = [self ti_objectFromDelegateWithSelector:@selector(syncManager:helperFileDirectoryLocationForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Checking that delegate-provided helper file directory exists");
     
@@ -304,7 +304,7 @@
     [self ti_alertDelegateWithSelector:@selector(syncManagerDidBeginToUploadWholeStore:)];
     
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Asking delegate for URL of whole store to upload");
-    NSURL *storeURL = [self ti_objectFromDelegateWithSelector:@selector(syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self userInfo]];
+    NSURL *storeURL = [self ti_objectFromDelegateWithSelector:@selector(syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
     
     if( !storeURL || ![[self fileManager] fileExistsAtPath:[storeURL path]] ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Store does not exist at provided path");
@@ -483,7 +483,7 @@
     [_applicationSyncManager release], _applicationSyncManager = nil;
     [_documentIdentifier release], _documentIdentifier = nil;
     [_clientIdentifier release], _clientIdentifier = nil;
-    [_userInfo release], _userInfo = nil;
+    [_documentUserInfo release], _documentUserInfo = nil;
     [_fileManager release], _fileManager = nil;
     [_helperFileDirectoryLocation release], _helperFileDirectoryLocation = nil;
     [_primaryDocumentMOC release], _primaryDocumentMOC = nil;
@@ -575,7 +575,7 @@
 @synthesize documentIdentifier = _documentIdentifier;
 @synthesize documentDescription = _documentDescription;
 @synthesize clientIdentifier = _clientIdentifier;
-@synthesize userInfo = _userInfo;
+@synthesize documentUserInfo = _documentUserInfo;
 @synthesize fileManager = _fileManager;
 @synthesize helperFileDirectoryLocation = _helperFileDirectoryLocation;
 @synthesize primaryDocumentMOC = _primaryDocumentMOC;

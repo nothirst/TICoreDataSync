@@ -26,7 +26,7 @@
 @private
     NSString *_appIdentifier;
     NSString *_clientDescription;
-    NSDictionary *_userInfo;
+    NSDictionary *_applicationUserInfo;
     
     BOOL _completionInProgress;
     TICDSOperationPhaseStatus _globalAppFileStructureStatus;
@@ -98,7 +98,7 @@
 @property (nonatomic, retain) NSString *clientDescription;
 
 /** The user info. */
-@property (nonatomic, retain) NSDictionary *userInfo;
+@property (nonatomic, retain) NSDictionary *applicationUserInfo;
 
 /** @name Completion */
 

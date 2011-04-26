@@ -134,7 +134,7 @@
         NSString *pathToResource = [[NSBundle mainBundle] pathForResource:@"deviceInfo" ofType:@"plist" inDirectory:nil];
         NSMutableDictionary *deviceInfo = [NSMutableDictionary dictionaryWithContentsOfFile:pathToResource];
         [deviceInfo setValue:[self clientDescription] forKey:kTICDSClientDeviceDescription];
-        [deviceInfo setValue:[self userInfo] forKey:kTICDSClientDeviceUserInfo];
+        [deviceInfo setValue:[self applicationUserInfo] forKey:kTICDSClientDeviceUserInfo];
         
         NSString *pathToNewFile = [[self clientDevicesThisClientDeviceDirectoryPath] stringByAppendingPathComponent:@"deviceInfo.plist"];
         success = [deviceInfo writeToFile:pathToNewFile atomically:YES];

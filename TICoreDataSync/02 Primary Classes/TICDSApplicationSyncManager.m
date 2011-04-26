@@ -20,7 +20,7 @@
 @property (nonatomic, retain) NSString *appIdentifier;
 @property (nonatomic, retain) NSString *clientIdentifier;
 @property (nonatomic, retain) NSString *clientDescription;
-@property (nonatomic, retain) NSDictionary *userInfo;
+@property (nonatomic, retain) NSDictionary *applicationUserInfo;
 
 @end
 
@@ -39,7 +39,7 @@
     [self setAppIdentifier:anAppIdentifier];
     [self setClientIdentifier:aClientIdentifier];
     [self setClientDescription:aClientDescription];
-    [self setUserInfo:someUserInfo];
+    [self setApplicationUserInfo:someUserInfo];
     
     NSError *anyError = nil;
     BOOL shouldContinue = [self startRegistrationProcess:&anyError];
@@ -74,7 +74,7 @@
     [operation setAppIdentifier:[self appIdentifier]];
     [operation setClientDescription:[self clientDescription]];
     [operation setClientIdentifier:[self clientIdentifier]];
-    [operation setUserInfo:[self userInfo]];
+    [operation setApplicationUserInfo:[self applicationUserInfo]];
     
     [[self registrationQueue] addOperation:operation];
     
@@ -376,7 +376,7 @@ id gTICDSDefaultApplicationSyncManager = nil;
     [_appIdentifier release], _appIdentifier = nil;
     [_clientIdentifier release], _clientIdentifier = nil;
     [_clientDescription release], _clientDescription = nil;
-    [_userInfo release], _userInfo = nil;
+    [_applicationUserInfo release], _applicationUserInfo = nil;
     [_registrationQueue release], _registrationQueue = nil;
     [_otherTasksQueue release], _otherTasksQueue = nil;
     
@@ -390,7 +390,7 @@ id gTICDSDefaultApplicationSyncManager = nil;
 @synthesize appIdentifier = _appIdentifier;
 @synthesize clientIdentifier = _clientIdentifier;
 @synthesize clientDescription = _clientDescription;
-@synthesize userInfo = _userInfo;
+@synthesize applicationUserInfo = _applicationUserInfo;
 @synthesize registrationQueue = _registrationQueue;
 @synthesize otherTasksQueue = _otherTasksQueue;
 

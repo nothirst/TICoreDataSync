@@ -31,7 +31,7 @@
     NSString *_documentIdentifier;
     NSString *_documentDescription;
     NSString *_clientDescription;
-    NSDictionary *_userInfo;
+    NSDictionary *_documentUserInfo;
     
     BOOL _documentHasBeenSynchronizedByAnyClient;
     BOOL _documentHasBeenSynchronizedByThisClient;
@@ -126,7 +126,7 @@
 @property (retain) NSString *clientDescription;
 
 /** The user info. */
-@property (retain) NSDictionary *userInfo;
+@property (retain) NSDictionary *documentUserInfo;
 
 /** @name Completion */
 

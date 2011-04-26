@@ -66,7 +66,7 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
         _documentSyncIdentifier = [[TICDSUtilities uuidString] retain];
     }
     
-    [[self documentSyncManager] registerWithDelegate:self appSyncManager:[TICDSApplicationSyncManager defaultApplicationSyncManager] managedObjectContext:(TICDSSynchronizedManagedObjectContext *)[self managedObjectContext] documentIdentifier:[self documentSyncIdentifier] description:[[[self fileURL] path] lastPathComponent] userInfo:nil];
+    [[self documentSyncManager] registerWithDelegate:self appSyncManager:[TICDSApplicationSyncManager defaultApplicationSyncManager] managedObjectContext:(TICDSSynchronizedManagedObjectContext *)[self managedObjectContext] documentIdentifier:[self documentSyncIdentifier] description:[[[self fileURL] path] lastPathComponent] userInfo:[NSDictionary dictionaryWithObject:@"Hello" forKey:@"HelloKey"]];
     
     [self saveDocument:self];
 }

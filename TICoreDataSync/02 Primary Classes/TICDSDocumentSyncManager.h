@@ -32,7 +32,7 @@
     NSString *_documentIdentifier;
     NSString *_documentDescription;
 	NSString *_clientIdentifier;
-    NSDictionary *_userInfo;
+    NSDictionary *_documentUserInfo;
     
     NSFileManager *_fileManager;
     
@@ -171,7 +171,7 @@
  
  Set the user info when registering with `registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:`.
  */
-@property (nonatomic, readonly, retain) NSDictionary *userInfo;
+@property (nonatomic, readonly, retain) NSDictionary *documentUserInfo;
 
 /** An `NSFileManager` suitable for use in document registration tasks. */
 @property (nonatomic, retain) NSFileManager *fileManager;

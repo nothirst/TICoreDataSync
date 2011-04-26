@@ -86,7 +86,7 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
     CFRelease(name);
     
     // Register this sync manager ready for future sync'ing
-    [syncManager registerWithDelegate:self globalAppIdentifier:kTISLGlobalApplicationIdentifier uniqueClientIdentifier:clientUuid description:deviceDescription userInfo:nil];
+    [syncManager registerWithDelegate:self globalAppIdentifier:kTISLGlobalApplicationIdentifier uniqueClientIdentifier:clientUuid description:deviceDescription userInfo:[NSDictionary dictionaryWithObject:@"Hello" forKey:@"HelloKey"]];
 }
 
 - (void)disableSync

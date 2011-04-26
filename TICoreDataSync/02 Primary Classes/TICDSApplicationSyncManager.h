@@ -29,7 +29,7 @@
     NSString *_appIdentifier;
     NSString *_clientIdentifier;
     NSString *_clientDescription;
-    NSDictionary *_userInfo;
+    NSDictionary *_applicationUserInfo;
     
     NSOperationQueue *_registrationQueue;
     NSOperationQueue *_otherTasksQueue;
@@ -150,7 +150,7 @@
  
  Set the user info when registering with `registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:`.
  */
-@property (nonatomic, readonly, retain) NSDictionary *userInfo;
+@property (nonatomic, readonly, retain) NSDictionary *applicationUserInfo;
 
 /** @name Operation Queues */
 

@@ -212,7 +212,7 @@
     [_documentIdentifier release], _documentIdentifier = nil;
     [_documentDescription release], _documentDescription = nil;
     [_clientDescription release], _clientDescription = nil;
-    [_userInfo release], _userInfo = nil;
+    [_documentUserInfo release], _documentUserInfo = nil;
 
     [super dealloc];
 }
@@ -224,7 +224,7 @@
 @synthesize documentIdentifier = _documentIdentifier;
 @synthesize documentDescription = _documentDescription;
 @synthesize clientDescription = _clientDescription;
-@synthesize userInfo = _userInfo;
+@synthesize documentUserInfo = _documentUserInfo;
 @synthesize completionInProgress = _completionInProgress;
 @synthesize documentFileStructureStatus = _documentFileStructureStatus;
 @synthesize documentClientDeviceFileStructureStatus = _documentClientDeviceFileStructureStatus;
