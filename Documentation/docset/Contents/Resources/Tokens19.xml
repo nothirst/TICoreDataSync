@@ -112,6 +112,17 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/appliedSyncChangeSetsFileLocation</TokenIdentifier>
+			<Abstract>The location of this document's AppliedSyncChangeSets.sqlite file.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSURL *appliedSyncChangeSetsFileLocation</Declaration>
+			
+			
+			<Anchor>//api/name/appliedSyncChangeSetsFileLocation</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/otherSynchronizedClientDeviceIdentifiers</TokenIdentifier>
 			<Abstract>An array of client identifiers for clients that synchronize with this document, excluding this client.</Abstract>
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
