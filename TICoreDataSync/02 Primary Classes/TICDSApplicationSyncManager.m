@@ -13,6 +13,8 @@
 - (BOOL)startRegistrationProcess:(NSError **)outError;
 - (void)bailFromRegistrationProcess;
 - (BOOL)getAvailablePreviouslySynchronizedDocuments:(NSError **)outError;
+- (void)bailFromDocumentDownloadProcessForDocumentWithIdentifier:(NSString *)anIdentifier;
+- (BOOL)startDocumentDownloadProcessForDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation error:(NSError **)outError;
 
 @property (nonatomic, assign) TICDSApplicationSyncManagerState state;
 @property (nonatomic, retain) NSString *appIdentifier;
@@ -198,15 +200,67 @@
 - (void)requestDownloadOfDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to download a previously synchronized document %@ to %@", anIdentifier, aLocation);
-    /*[self ti_alertDelegateWithSelector:@selector(syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:)];
+    
+    [self ti_alertDelegateWithSelector:@selector(syncManager:didStartToDownloadDocumentWithIdentifier:), anIdentifier];
     
     NSError *anyError = nil;
-    BOOL success = [self getAvailablePreviouslySynchronizedDocuments:&anyError];
+    BOOL success = [self startDocumentDownloadProcessForDocumentWithIdentifier:anIdentifier toLocation:aLocation error:&anyError];
     
     if( !success ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Request for list of previously-synchronized documents failed with error: %@", anyError);
         [self ti_alertDelegateWithSelector:@selector(syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:), anyError];
-    }*/
+    }
+}
+
+- (void)bailFromDocumentDownloadProcessForDocumentWithIdentifier:(NSString *)anIdentifier
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from document download process");
+    [self ti_alertDelegateWithSelector:@selector(syncManager:failedToDownloadDocumentWithIdentifier:), anIdentifier];
+}
+
+- (BOOL)startDocumentDownloadProcessForDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation error:(NSError **)outError
+{
+    TICDSOperation *operation = [self documentDownloadOperationForDocumentWithIdentifier:(NSString *)anIdentifier];
+    
+    if( !operation ) {
+        if( outError ) {
+            *outError = [TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__];
+        }
+        
+        return NO;
+    }
+    
+    [operation setClientIdentifier:[self clientIdentifier]];
+    
+    [[self otherTasksQueue] addOperation:operation];
+    
+    return YES;
+}
+
+#pragma mark Overridden Methods
+- (TICDSWholeStoreDownloadOperation *)documentDownloadOperationForDocumentWithIdentifier:(NSString *)anIdentifier
+{
+    return [[[TICDSWholeStoreDownloadOperation alloc] initWithDelegate:self] autorelease];
+}
+
+#pragma mark Operation Communications
+- (void)documentDownloadOperationCompleted:(TICDSWholeStoreDownloadOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Document Download Operation Completed");
+    [self ti_alertDelegateWithSelector:@selector(syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:), nil, nil];
+}
+
+- (void)documentDownloadOperationWasCancelled:(TICDSWholeStoreDownloadOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Download Operation was Cancelled");
+    [self ti_alertDelegateWithSelector:@selector(syncManager:failedToDownloadDocumentWithIdentifier:), nil];
+}
+
+- (void)documentDownloadOperation:(TICDSWholeStoreDownloadOperation *)anOperation failedToCompleteWithError:(NSError *)anError
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Download Operation Failed to Complete with Error: %@", anError);
+    [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:), anError, nil];
+    [self ti_alertDelegateWithSelector:@selector(syncManager:failedToDownloadDocumentWithIdentifier:), nil];
 }
 
 #pragma mark -
@@ -217,6 +271,8 @@
         [self applicationRegistrationOperationCompleted:(id)anOperation];
     } else if( [anOperation isKindOfClass:[TICDSListOfPreviouslySynchronizedDocumentsOperation class]] ) {
         [self listOfDocumentsOperationCompleted:(id)anOperation];
+    } else if( [anOperation isKindOfClass:[TICDSWholeStoreDownloadOperation class]] ) {
+        [self documentDownloadOperationCompleted:(id)anOperation];
     }
 }
 
@@ -226,6 +282,8 @@
         [self applicationRegistrationOperationWasCancelled:(id)anOperation];
     } else if( [anOperation isKindOfClass:[TICDSListOfPreviouslySynchronizedDocumentsOperation class]] ) {
         [self listOfDocumentsOperationWasCancelled:(id)anOperation];
+    } else if( [anOperation isKindOfClass:[TICDSWholeStoreDownloadOperation class]] ) {
+        [self documentDownloadOperationWasCancelled:(id)anOperation];
     }
 }
 
@@ -235,6 +293,8 @@
         [self applicationRegistrationOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     } else if( [anOperation isKindOfClass:[TICDSListOfPreviouslySynchronizedDocumentsOperation class]] ) {
         [self listOfDocumentsOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
+    } else if( [anOperation isKindOfClass:[TICDSWholeStoreDownloadOperation class]] ) {
+        [self documentDownloadOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     }
 }
 

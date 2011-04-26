@@ -12,7 +12,8 @@
  
  The operation carries out the following tasks:
  
- 1. Download the whole store file.
+ 1. If `requestedWholeStoreClientIdentifier` is not set, determine which client uploaded a store most recently, and set `requestedWholeStoreClientIdentifier`.
+ 1. Download the whole store file from the `requestedWholeStoreClientIdentifier`'s directory.
  2. Download the applied sync change sets file that goes with this whole store.
  
  Operations are typically created automatically by the relevant sync manager.
@@ -21,15 +22,23 @@
 
 @interface TICDSWholeStoreDownloadOperation : TICDSOperation {
 @private
+    NSString *_requestedWholeStoreClientIdentifier;
+    
     NSURL *_localWholeStoreFileLocation;
     NSURL *_localAppliedSyncChangeSetsFileLocation;
     
     BOOL _completionInProgress;
+    TICDSOperationPhaseStatus _determineMostRecentlyUploadedStoreStatus;
     TICDSOperationPhaseStatus _wholeStoreFileDownloadStatus;
     TICDSOperationPhaseStatus _appliedSyncChangeSetsDownloadStatus;
 }
 
 /** @name Methods Overridden by Subclasses */
+
+/** Determine which client uploaded a WholeStore most recently.
+ 
+ This method must call `determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:` when finished. */
+- (void)checkForMostRecentClientWholeStore;
 
 /** Download the store at the remote document store path to the `localWholeStoreFileLocation`. 
  
@@ -42,6 +51,13 @@
 - (void)downloadAppliedSyncChangeSetsFile;
 
 /** @name Callbacks */
+
+/** Indicate which client uploaded the most recent WholeStore.
+ 
+ If an error occurs, call `setError:` first, then specify `nil` for `anIdentifier`
+ 
+ @param anIdentifier The identifier of the client. */
+- (void)determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:(NSString *)anIdentifier;
 
 /** Indicate whether the download of the whole store file was successful.
  
@@ -59,6 +75,9 @@
 
 /** @name Properties */
 
+/** The client identifier for the WholeStore to download. If this is not specified before the operation executes, the operation will determine which client uploaded a store most recently. */
+@property (retain) NSString *requestedWholeStoreClientIdentifier;
+
 /** The location of the whole store file to upload. */
 @property (retain) NSURL *localWholeStoreFileLocation;
 
@@ -69,6 +88,9 @@
 
 /** Used to indicate that completion is currently in progress, and that no further checks should be made. */
 @property (nonatomic, assign) BOOL completionInProgress;
+
+/** The phase status of the check for which client uploaded a store most recently. */
+@property (nonatomic, assign) TICDSOperationPhaseStatus determineMostRecentlyUploadedStoreStatus;
 
 /** The phase status of the whole store file upload. */
 @property (nonatomic, assign) TICDSOperationPhaseStatus wholeStoreFileDownloadStatus;

@@ -184,21 +184,21 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
     
     TICDSApplicationSyncManager *syncManager = [TICDSFileManagerBasedApplicationSyncManager defaultApplicationSyncManager];
     
-    [syncManager requestDownloadOfDocumentStoreWithIdentifier:itemIdentifier toFileLocation:fileLocation];
+    [syncManager requestDownloadOfDocumentWithIdentifier:itemIdentifier toLocation:fileLocation];
 }
 
 #pragma mark Download Doc Delegate
-- (void)syncManagerDidStartDocumentDownloadProcess:(TICDSApplicationSyncManager *)aSyncManager
+- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager didStartToDownloadDocumentWithIdentifier:(NSString *)anIdentifier
 {
     [self increaseSyncActivity];
 }
 
-- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager encounteredDocumentDownloadError:(NSError *)anError
+- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager encounteredDownloadError:(NSError *)anError forDownloadOfDocumentWithIdentifier:(NSString *)anIdentifier
 {
     NSLog(@"Error downloading: %@", anError);
 }
 
-- (void)syncManagerFailedToDownloadDocument:(TICDSApplicationSyncManager *)aSyncManager
+- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager failedToDownloadDocumentWithIdentifier:(NSString *)anIdentifier
 {
     [self decreaseSyncActivity];
 }
@@ -222,7 +222,7 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
     return [document documentSyncManager];
 }
 
-- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager finishedDownloadingDocumentToLocation:(NSURL *)aLocation
+- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishDownloadingDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation
 {
     NSError *anyError = nil;
     MyDocument *document = [[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:aLocation display:YES error:&anyError];

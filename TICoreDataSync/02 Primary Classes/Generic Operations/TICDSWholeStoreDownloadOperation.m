@@ -11,6 +11,7 @@
 @interface TICDSWholeStoreDownloadOperation ()
 
 - (void)checkForCompletion;
+- (void)beginCheckForMostRecentClientWholeStore;
 - (void)beginDownloadOfWholeStoreFile;
 - (void)beginDownloadOfAppliedSyncChangeSetsFile;
 
@@ -21,7 +22,47 @@
 
 - (void)main
 {
+    if( [self requestedWholeStoreClientIdentifier] ) {
+        [self setDetermineMostRecentlyUploadedStoreStatus:TICDSOperationPhaseStatusSuccess];
+        [self beginDownloadOfWholeStoreFile];
+    } else {
+        [self beginCheckForMostRecentClientWholeStore];
+    }
+}
+
+#pragma mark -
+#pragma mark Most Recent Client Upload
+- (void)beginCheckForMostRecentClientWholeStore
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Checking which client uploaded a store most recently");
+    
+    [self checkForMostRecentClientWholeStore];
+}
+
+- (void)determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:(NSString *)anIdentifier
+{
+    if( !anIdentifier ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to determine which client uploaded store most recently");
+        [self setDetermineMostRecentlyUploadedStoreStatus:TICDSOperationPhaseStatusFailure];
+        [self setWholeStoreFileDownloadStatus:TICDSOperationPhaseStatusFailure];
+        [self setAppliedSyncChangeSetsFileDownloadStatus:TICDSOperationPhaseStatusFailure];
+        
+        [self checkForCompletion];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Client %@ uploaded store most recently", anIdentifier);
+    [self setRequestedWholeStoreClientIdentifier:anIdentifier];
+    [self setDetermineMostRecentlyUploadedStoreStatus:TICDSOperationPhaseStatusSuccess];
+    
     [self beginDownloadOfWholeStoreFile];
+}
+
+#pragma mark Overriden Method
+- (void)checkForMostRecentClientWholeStore
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:nil];
 }
 
 #pragma mark -
@@ -93,18 +134,18 @@
         return;
     }
     
-    if( [self wholeStoreFileDownloadStatus] == TICDSOperationPhaseStatusInProgress || [self appliedSyncChangeSetsFileDownloadStatus] == TICDSOperationPhaseStatusInProgress ) {
+    if( [self determineMostRecentlyUploadedStoreStatus] == TICDSOperationPhaseStatusInProgress || [self wholeStoreFileDownloadStatus] == TICDSOperationPhaseStatusInProgress || [self appliedSyncChangeSetsFileDownloadStatus] == TICDSOperationPhaseStatusInProgress ) {
         return;
     }
     
-    if( [self wholeStoreFileDownloadStatus] == TICDSOperationPhaseStatusSuccess && [self appliedSyncChangeSetsFileDownloadStatus] == TICDSOperationPhaseStatusSuccess ) {
+    if( [self determineMostRecentlyUploadedStoreStatus] == TICDSOperationPhaseStatusSuccess && [self wholeStoreFileDownloadStatus] == TICDSOperationPhaseStatusSuccess && [self appliedSyncChangeSetsFileDownloadStatus] == TICDSOperationPhaseStatusSuccess ) {
         [self setCompletionInProgress:YES];
         
         [self operationDidCompleteSuccessfully];
         return;
     }
     
-    if( [self wholeStoreFileDownloadStatus] == TICDSOperationPhaseStatusFailure || [self appliedSyncChangeSetsFileDownloadStatus] == TICDSOperationPhaseStatusFailure ) {
+    if( [self determineMostRecentlyUploadedStoreStatus] == TICDSOperationPhaseStatusFailure || [self wholeStoreFileDownloadStatus] == TICDSOperationPhaseStatusFailure || [self appliedSyncChangeSetsFileDownloadStatus] == TICDSOperationPhaseStatusFailure ) {
         [self setCompletionInProgress:YES];
         
         [self operationDidFailToComplete];
@@ -116,6 +157,7 @@
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
+    [_requestedWholeStoreClientIdentifier release], _requestedWholeStoreClientIdentifier = nil;
     [_localWholeStoreFileLocation release], _localWholeStoreFileLocation = nil;
     [_localAppliedSyncChangeSetsFileLocation release], _localAppliedSyncChangeSetsFileLocation = nil;
     
@@ -124,9 +166,11 @@
 
 #pragma mark -
 #pragma mark Properties
+@synthesize requestedWholeStoreClientIdentifier = _requestedWholeStoreClientIdentifier;
 @synthesize localWholeStoreFileLocation = _localWholeStoreFileLocation;
 @synthesize localAppliedSyncChangeSetsFileLocation = _localAppliedSyncChangeSetsFileLocation;
 @synthesize completionInProgress = _completionInProgress;
+@synthesize determineMostRecentlyUploadedStoreStatus = _determineMostRecentlyUploadedStoreStatus;
 @synthesize wholeStoreFileDownloadStatus = _wholeStoreFileDownloadStatus;
 @synthesize appliedSyncChangeSetsFileDownloadStatus = _appliedSyncChangeSetsFileDownloadStatus;
 

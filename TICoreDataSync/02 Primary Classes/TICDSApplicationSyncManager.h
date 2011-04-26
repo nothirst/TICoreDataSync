@@ -95,7 +95,7 @@
  
  Subclasses of `TICDSApplicationSyncManager` use this method to return a correctly-configured application registration operation for their particular sync method.
  
- @return a correctly-configured subclass of `TICDSApplicationRegistrationOperation`.
+ @return A correctly-configured subclass of `TICDSApplicationRegistrationOperation`.
 */
 - (TICDSApplicationRegistrationOperation *)applicationRegistrationOperation;
 
@@ -103,8 +103,17 @@
  
  Subclasses of `TICDSApplicationSyncManager` use this method to return a correctly-configured list of documents operation for their particular sync method.
  
- @return a correctly-configured subclass of `TICDSListOfPreviouslySynchronizedDocumentsOperation`. */
+ @return A correctly-configured subclass of `TICDSListOfPreviouslySynchronizedDocumentsOperation`. */
 - (TICDSListOfPreviouslySynchronizedDocumentsOperation *)listOfPreviouslySynchronizedDocumentsOperation;
+
+/** Returns an operation to download a document with a given identifier.
+ 
+ Subclasses of `TICDSApplicationSyncManager` use this method to return a correctly-configured whole store download operation for their particular sync method.
+ 
+ @param anIdentifier The unique synchronization identifier of the document to download.
+ 
+ @return A correctly-configured subclass of `TICDSWholeStoreDownloadOperation`. */
+- (TICDSWholeStoreDownloadOperation *)documentDownloadOperationForDocumentWithIdentifier:(NSString *)anIdentifier;
 
 /** @name Properties */
 
