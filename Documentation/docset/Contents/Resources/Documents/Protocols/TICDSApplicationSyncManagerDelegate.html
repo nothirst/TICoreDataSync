@@ -52,6 +52,8 @@
 	
 	<option value="//api/name/syncManager:failedToDownloadDocumentWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:failedToDownloadDocumentWithIdentifier:</option>
 	
+	<option value="//api/name/syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:</option>
+	
 	<option value="//api/name/syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:</option>
 	
 	<option value="//api/name/syncManagerDidNotFindAnyPreviouslySynchronizedDocuments:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidNotFindAnyPreviouslySynchronizedDocuments:</option>
@@ -109,6 +111,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:">syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:failedToDownloadDocumentWithIdentifier:">syncManager:failedToDownloadDocumentWithIdentifier:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:">syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:">syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:</a></span></li>
 	
@@ -263,6 +267,13 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/syncManager:failedToDownloadDocumentWithIdentifier:">&ndash;&nbsp;syncManager:failedToDownloadDocumentWithIdentifier:</a></code>
 		<span class="tooltip"><p>Informs the delegate that the download of a requested document has failed to complete.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:">&ndash;&nbsp;syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:</a></code>
+		<span class="tooltip"><p>Informs the delegate that a downloaded store file file is about to replace an existing store file on disc.</p></span>
 	</span>
 	
 	
@@ -632,6 +643,58 @@
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>The error will previously have been supplied through the <a href="#//api/name/syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:"><code>syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:</code></a> method.</p>
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:" title="syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:"></a>
+	<h3 class="subsubtitle method-title">syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that a downloaded store file file is about to replace an existing store file on disc.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)syncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> willReplaceWholeStoreFileForDocumentWithIdentifier:(NSString *)<em>anIdentifier</em> atLocation:(NSURL *)<em>aLocation</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The unique synchronization identifier of the document.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aLocation</em></dt>
+			<dd><p>The location on disc of the existing document that will be replaced.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
 	
 	
 	
