@@ -83,6 +83,17 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSOperation/userInfo</TokenIdentifier>
+			<Abstract>A user info dictionary for sync managers to keep task-specific information.</Abstract>
+			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSDictionary *userInfo</Declaration>
+			
+			
+			<Anchor>//api/name/userInfo</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSOperation/needsMainThread</TokenIdentifier>
 			<Abstract>By default returns NO, but override if your operation needs its code to execute on the main thread, such as for an NSURLConnection.</Abstract>
 			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
