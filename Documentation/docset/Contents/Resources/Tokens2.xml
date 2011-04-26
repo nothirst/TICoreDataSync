@@ -201,6 +201,17 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/fileManager</TokenIdentifier>
+			<Abstract>A File Manager for use by the application sync manager.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly, retain) NSFileManager *fileManager</Declaration>
+			
+			
+			<Anchor>//api/name/fileManager</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/registrationQueue</TokenIdentifier>
 			<Abstract>The operation queue used for registration operations.</Abstract>
 			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			

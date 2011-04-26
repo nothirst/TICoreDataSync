@@ -229,7 +229,7 @@
 			<Abstract>An NSFileManager suitable for use in document registration tasks.</Abstract>
 			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, retain) NSFileManager *fileManager</Declaration>
+			<Declaration>@property (nonatomic, readonly, retain) NSFileManager *fileManager</Declaration>
 			
 			
 			<Anchor>//api/name/fileManager</Anchor>
