@@ -155,7 +155,6 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
     documentsArray = [documentsArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     
     [self setDropboxListOfAvailableDocumentsArray:documentsArray];
-    //[[self dropboxListOfAvailableDocumentsArrayController] setContent:nil];
     [[self dropboxListOfAvailableDocumentsTableView] reloadData];
 }
 
@@ -172,8 +171,6 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
     [savePanel setAllowedFileTypes:[NSArray arrayWithObject:@"sqlite"]];
     NSString *fileName = [[[self dropboxListOfAvailableDocumentsArray] objectAtIndex:selectedRow] valueForKey:kTICDSDocumentDescription];
         
-    //[savePanel setNameFieldStringValue:[[[self dropboxListOfAvailableDocumentsArray] objectAtIndex:selectedRow] valueForKey:kTICDDocumentName]];
-    
     if( [savePanel runModalForDirectory:nil file:fileName] == NSFileHandlingPanelCancelButton ) {
         return;
     }
@@ -208,7 +205,7 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
     NSLog(@"Replacing the document at %@", aLocation);
 }
 
-- (TICDSDocumentSyncManager *)syncManager:(TICDSApplicationSyncManager *)aSyncManager unregisteredDocumentSyncManagerForDocumentWithIdentifier:(NSString *)anIdentifier atLocation:(NSURL *)aLocation
+- (TICDSDocumentSyncManager *)syncManager:(TICDSApplicationSyncManager *)aSyncManager preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:(NSString *)anIdentifier atLocation:(NSURL *)aLocation
 {
     NSLog(@"Downloaded %@ to %@", anIdentifier, aLocation);
     
@@ -220,6 +217,8 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
     }
     
     [[NSDocumentController sharedDocumentController] addDocument:document];
+    
+    [document configureSyncManagerForDownloadedStoreWithIdentifier:anIdentifier];
     
     return [document documentSyncManager];
 }
@@ -234,6 +233,9 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
         NSLog(@"Error opening document: %@", anyError);
         return;
     }
+    
+    [document makeWindowControllers];
+    [document showWindows];
 }
 
 #pragma mark -

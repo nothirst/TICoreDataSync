@@ -143,18 +143,19 @@
  @param aLocation The location on disc of the existing document that will be replaced. */
 - (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager willReplaceWholeStoreFileForDocumentWithIdentifier:(NSString *)anIdentifier atLocation:(NSURL *)aLocation;
 
-/** Invoked to allow the delegate to return a custom location for a local directory to contain the helper files the `TICoreDataSync` framework uses to synchronize a downloaded document.
+/** Invoked to request the delegate to return a configured (though not yet registered) document sync manager for a downloaded document.
  
- If you don't implement this method, the default location will be `~/Library/Application Support/ApplicationName/Documents/documentIdentifier/`.
+ This method will be called once the whole store has been replaced for the document. You should create a suitable document sync manager for the downloaded store, and configure it by calling `configureWithDelegate:appSyncManager:documentIdentifier:`;
+ 
+ Do not register the document sync manager until after the `syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:` method is called.
  
  @param aSyncManager The document sync manager object that sent the message.
- @param anIdentifier The unique identifier for the document (as supplied at registration).
+ @param anIdentifier The unique synchronization identifier for the document.
  
- @return The `NSURL` for the location you wish to use.
- 
- @warning The location you specify *must* already exist. */
-- (NSURL *)syncManager:(TICDSApplicationSyncManager *)aSyncManager helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:(NSString *)anIdentifier atLocation:(NSURL *)aLocation;
-
+ @return The pre-configured, unregistered sync manager for the document. */
+@required
+- (TICDSDocumentSyncManager *)syncManager:(TICDSApplicationSyncManager *)aSyncManager preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:(NSString *)anIdentifier atLocation:(NSURL *)aLocation;
+@optional
 /** Informs the delegate that the download of a requested document has completed successfully.
  
  @param aSyncManager The application sync manager object that sent the message. 

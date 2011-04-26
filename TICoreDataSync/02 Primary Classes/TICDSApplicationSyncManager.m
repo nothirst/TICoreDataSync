@@ -304,9 +304,13 @@
     }
     
     // Get document sync manager from delegate
-    /*NSURL *location = [self ti_objectFromDelegateWithSelector:@selector(syncManager:helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:atLocation:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], finalWholeStoreLocation];
+    TICDSDocumentSyncManager *documentSyncManager = [self ti_objectFromDelegateWithSelector:@selector(syncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atLocation:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], finalWholeStoreLocation];
     
-    NSString *finalAppliedSyncChangeSetsPath = [aDocumentSyncManager localAppliedSyncChangesFilePath];
+    if( !documentSyncManager ) {
+        // TODO: ALERT DELEGATE AND BAIL
+    }
+    
+    NSString *finalAppliedSyncChangeSetsPath = [documentSyncManager localAppliedSyncChangesFilePath];
     
     // Remove existing applied sync changes, if necessary
     if( [[self fileManager] fileExistsAtPath:finalAppliedSyncChangeSetsPath] && ![[self fileManager] removeItemAtPath:finalAppliedSyncChangeSetsPath error:&anyError] ) {
@@ -319,7 +323,7 @@
         [self bailFromDocumentDownloadPostProcessingForOperation:anOperation withError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
         return;
     }
-    */
+    
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Document Download Operation Completed");
     [self ti_alertDelegateWithSelector:@selector(syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], finalWholeStoreLocation];
 }

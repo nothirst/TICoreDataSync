@@ -71,13 +71,24 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     [self saveDocument:self];
 }
 
-- (void)registerSyncManagerForDownloadedStoreWithIdentifier:(NSString *)anIdentifier
+- (void)configureSyncManagerForDownloadedStoreWithIdentifier:(NSString *)anIdentifier
+{
+    if( ![self documentSyncManager] ) {
+        _documentSyncManager = [[TICDSFileManagerBasedDocumentSyncManager alloc] init];
+    }
+    
+    [self setDocumentSyncIdentifier:anIdentifier];
+    
+    [[self documentSyncManager] configureWithDelegate:self appSyncManager:[TICDSApplicationSyncManager defaultApplicationSyncManager] documentIdentifier:anIdentifier];
+}
+
+/*- (void)registerSyncManagerForDownloadedStoreWithIdentifier:(NSString *)anIdentifier
 {
     [self setDocumentSyncManager:[[[TICDSFileManagerBasedDocumentSyncManager alloc] init] autorelease]];
     [self setDocumentSyncIdentifier:anIdentifier];
     
     [[self documentSyncManager] registerWithDelegate:self appSyncManager:[TICDSApplicationSyncManager defaultApplicationSyncManager] managedObjectContext:(TICDSSynchronizedManagedObjectContext *)[self managedObjectContext] documentIdentifier:[self documentSyncIdentifier] description:[[[self fileURL] path] lastPathComponent] userInfo:nil];
-}
+}*/
 
 #pragma mark -
 #pragma mark CALLBACKS

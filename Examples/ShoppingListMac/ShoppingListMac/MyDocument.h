@@ -29,7 +29,8 @@
 - (IBAction)showSyncChangesWindow:(id)sender;
 - (IBAction)showShopsWindow:(id)sender;
 - (IBAction)configureSynchronization:(id)sender;
-- (void)registerSyncManagerForDownloadedStoreWithIdentifier:(NSString *)anIdentifier;
+
+- (void)configureSyncManagerForDownloadedStoreWithIdentifier:(NSString *)anIdentifier;
 
 @property (nonatomic, assign, getter=isSyncEnabled) BOOL syncEnabled;
 @property (nonatomic, retain) NSString *documentSyncIdentifier;

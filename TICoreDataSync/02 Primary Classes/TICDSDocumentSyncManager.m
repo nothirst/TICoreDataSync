@@ -10,6 +10,7 @@
 
 @interface TICDSDocumentSyncManager ()
 
+- (BOOL)startDocumentConfigurationProcess:(NSError **)outError;
 - (BOOL)startDocumentRegistrationProcess:(NSError **)outError;
 - (void)bailFromRegistrationProcess;
 - (BOOL)checkForHelperFileDirectoryOrCreateIfNecessary:(NSError **)outError;
@@ -27,9 +28,155 @@
 @implementation TICDSDocumentSyncManager
 
 #pragma mark -
+#pragma mark CONFIGURATION
+- (void)configureWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager documentIdentifier:(NSString *)aDocumentIdentifier
+{
+    [self setDelegate:aDelegate];
+    [self setDocumentIdentifier:aDocumentIdentifier];
+    
+    NSError *anyError = nil;
+    BOOL success = [self startDocumentConfigurationProcess:&anyError];
+    
+    if( !success ) {
+        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredRegistrationError:), anyError];
+    }
+}
+
+- (BOOL)startDocumentConfigurationProcess:(NSError **)outError
+{
+    // get the location of the helper file directory from the delegate, or create default location if necessary
+    NSError *anyError;
+    BOOL shouldContinue = [self checkForHelperFileDirectoryOrCreateIfNecessary:&anyError];
+    
+    if( !shouldContinue ) {
+        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredDocumentRegistrationError:), anyError];
+        return NO;
+    }
+    
+    [self setState:TICDSApplicationSyncManagerStateConfigured];
+    
+    return YES;
+}
+
+#pragma mark Helper File Directory
+- (NSString *)applicationSupportDirectory
+{    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : NSTemporaryDirectory();
+    return [basePath stringByAppendingPathComponent:[[NSProcessInfo processInfo] processName]];
+}
+
+- (NSURL *)defaultHelperFileLocation
+{
+    NSString *location = [[self applicationSupportDirectory] stringByAppendingPathComponent:TICDSDocumentsDirectoryName];
+    location = [location stringByAppendingPathComponent:[self documentIdentifier]];
+    
+    return [NSURL fileURLWithPath:location];
+}
+
+- (BOOL)createHelperFileDirectoryFileStructure:(NSError **)outError
+{
+    NSError *anyError = nil;
+    
+    NSString *unappliedSyncChangesPath = [[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSUnappliedChangesDirectoryName];
+    if( ![[self fileManager] fileExistsAtPath:unappliedSyncChangesPath] ) {
+        BOOL success = [[self fileManager] createDirectoryAtPath:unappliedSyncChangesPath withIntermediateDirectories:YES attributes:nil error:&anyError];
+        if( !success ) {
+            if( outError ) {
+                *outError = [TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__];
+            }
+            return NO;
+        }
+    }
+    
+    NSString *syncChangesToPushPath = [[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSSyncChangesToPushDirectoryName];
+    if( ![[self fileManager] fileExistsAtPath:syncChangesToPushPath] ) {
+        BOOL success = [[self fileManager] createDirectoryAtPath:syncChangesToPushPath withIntermediateDirectories:YES attributes:nil error:&anyError];
+        if( !success ) {
+            if( outError ) {
+                *outError = [TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__];
+            }
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
+- (BOOL)checkForHelperFileDirectoryOrCreateIfNecessary:(NSError **)outError
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Asking delegate for location of helper file directory");
+    NSURL *finalURL = [self ti_objectFromDelegateWithSelector:@selector(syncManager:helperFileDirectoryLocationForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Checking that delegate-provided helper file directory exists");
+    
+    if( finalURL && ![[self fileManager] fileExistsAtPath:[finalURL path]] ) {
+        [self setState:TICDSDocumentSyncManagerStateUnableToSyncBecauseDelegateProvidedHelperFileDirectoryDoesNotExist];
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Delegate-provided helper file directory does not exist");
+        
+        if( outError ) {
+            *outError = [TICDSError errorWithCode:TICDSErrorCodeHelperFileDirectoryDoesNotExist classAndMethod:__PRETTY_FUNCTION__];
+        }
+        return NO;
+    }
+    
+    if( finalURL ) {
+        TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Delegate-provided helper file directory");
+        
+        [self setHelperFileDirectoryLocation:finalURL];
+        return [self createHelperFileDirectoryFileStructure:outError];
+    }
+    
+    // delegate did not provide a location for the helper files
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate did not provide a location for helper files, so checking default location");
+    
+    [self setHelperFileDirectoryLocation:[self defaultHelperFileLocation]];
+    if( [[self fileManager] fileExistsAtPath:[[self defaultHelperFileLocation] path]] ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Default helper file location exists, so using it");
+        return [self createHelperFileDirectoryFileStructure:outError];
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Default helper file location does not exist, so creating it");
+    NSError *anyError = nil;
+    BOOL success = [[self fileManager] createDirectoryAtPath:[[self helperFileDirectoryLocation] path] withIntermediateDirectories:YES attributes:nil error:&anyError];
+    if( !success ) {
+        [self setState:TICDSDocumentSyncManagerStateFailedToCreateDefaultHelperFileDirectory];
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create default helper file directory: %@", anyError);
+        
+        if( outError ) {
+            *outError = [TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__];
+        }
+        return NO;
+    }
+    
+    success = [self createHelperFileDirectoryFileStructure:outError];
+    if( !success ) {
+        return NO;
+    }
+    
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Created default helper file directory");
+    
+    return YES;
+}
+
+#pragma mark -
 #pragma mark REGISTRATION
 - (void)registerWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo
 {
+    // configure the document, if necessary
+    NSError *anyError;
+    BOOL shouldContinue = YES;
+    
+    if( [self state] != TICDSApplicationSyncManagerStateConfigured ) {
+        shouldContinue = [self startDocumentConfigurationProcess:&anyError];
+    }
+    
+    if( !shouldContinue ) {
+        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredDocumentRegistrationError:), anyError];
+        [self bailFromRegistrationProcess];
+        return;
+    }
+    
     [self setState:TICDSDocumentSyncManagerStateRegistering];
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to register document sync manager");
     
@@ -48,16 +195,6 @@
         [[self registrationQueue] setSuspended:NO];
     } else { 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appSyncManagerDidRegister:) name:TICDSApplicationSyncManagerDidRegisterSuccessfullyNotification object:anAppSyncManager];
-    }
-    
-    // get the location of the helper file directory from the delegate, or create default location if necessary
-    NSError *anyError;
-    BOOL shouldContinue = [self checkForHelperFileDirectoryOrCreateIfNecessary:&anyError];
-    
-    if( !shouldContinue ) {
-        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredDocumentRegistrationError:), anyError];
-        [self bailFromRegistrationProcess];
-        return;
     }
     
     shouldContinue = [self startDocumentRegistrationProcess:&anyError];
@@ -179,108 +316,6 @@
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Registration Operation Failed to Complete with Error: %@", anError);
     [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredDocumentRegistrationError:), anError];
     [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToRegisterDocument:)];
-}
-
-#pragma mark -
-#pragma mark HELPER FILE DIRECTORY
-- (NSString *)applicationSupportDirectory
-{    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : NSTemporaryDirectory();
-    return [basePath stringByAppendingPathComponent:[[NSProcessInfo processInfo] processName]];
-}
-
-- (NSURL *)defaultHelperFileLocation
-{
-    NSString *location = [[self applicationSupportDirectory] stringByAppendingPathComponent:TICDSDocumentsDirectoryName];
-    location = [location stringByAppendingPathComponent:[self documentIdentifier]];
-    
-    return [NSURL fileURLWithPath:location];
-}
-
-- (BOOL)createHelperFileDirectoryFileStructure:(NSError **)outError
-{
-    NSError *anyError = nil;
-    
-    NSString *unappliedSyncChangesPath = [[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSUnappliedChangesDirectoryName];
-    if( ![[self fileManager] fileExistsAtPath:unappliedSyncChangesPath] ) {
-        BOOL success = [[self fileManager] createDirectoryAtPath:unappliedSyncChangesPath withIntermediateDirectories:YES attributes:nil error:&anyError];
-        if( !success ) {
-            if( outError ) {
-                *outError = [TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__];
-            }
-            return NO;
-        }
-    }
-    
-    NSString *syncChangesToPushPath = [[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSSyncChangesToPushDirectoryName];
-    if( ![[self fileManager] fileExistsAtPath:syncChangesToPushPath] ) {
-        BOOL success = [[self fileManager] createDirectoryAtPath:syncChangesToPushPath withIntermediateDirectories:YES attributes:nil error:&anyError];
-        if( !success ) {
-            if( outError ) {
-                *outError = [TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__];
-            }
-            return NO;
-        }
-    }
-    
-    return YES;
-}
-
-- (BOOL)checkForHelperFileDirectoryOrCreateIfNecessary:(NSError **)outError
-{
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Asking delegate for location of helper file directory");
-    NSURL *finalURL = [self ti_objectFromDelegateWithSelector:@selector(syncManager:helperFileDirectoryLocationForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
-    
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Checking that delegate-provided helper file directory exists");
-    
-    if( finalURL && ![[self fileManager] fileExistsAtPath:[finalURL path]] ) {
-        [self setState:TICDSDocumentSyncManagerStateUnableToSyncBecauseDelegateProvidedHelperFileDirectoryDoesNotExist];
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Delegate-provided helper file directory does not exist");
-        
-        if( outError ) {
-            *outError = [TICDSError errorWithCode:TICDSErrorCodeHelperFileDirectoryDoesNotExist classAndMethod:__PRETTY_FUNCTION__];
-        }
-        return NO;
-    }
-    
-    if( finalURL ) {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Delegate-provided helper file directory");
-        
-        [self setHelperFileDirectoryLocation:finalURL];
-        return [self createHelperFileDirectoryFileStructure:outError];
-    }
-    
-    // delegate did not provide a location for the helper files
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate did not provide a location for helper files, so checking default location");
-    
-    [self setHelperFileDirectoryLocation:[self defaultHelperFileLocation]];
-    if( [[self fileManager] fileExistsAtPath:[[self defaultHelperFileLocation] path]] ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Default helper file location exists, so using it");
-        return [self createHelperFileDirectoryFileStructure:outError];
-    }
-    
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Default helper file location does not exist, so creating it");
-    NSError *anyError = nil;
-    BOOL success = [[self fileManager] createDirectoryAtPath:[[self helperFileDirectoryLocation] path] withIntermediateDirectories:YES attributes:nil error:&anyError];
-    if( !success ) {
-        [self setState:TICDSDocumentSyncManagerStateFailedToCreateDefaultHelperFileDirectory];
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create default helper file directory: %@", anyError);
-        
-        if( outError ) {
-            *outError = [TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__];
-        }
-        return NO;
-    }
-    
-    success = [self createHelperFileDirectoryFileStructure:outError];
-    if( !success ) {
-        return NO;
-    }
-    
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Created default helper file directory");
-    
-    return YES;
 }
 
 #pragma mark -

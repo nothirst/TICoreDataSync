@@ -82,6 +82,25 @@
  */
 - (void)continueRegistrationByCreatingRemoteFileStructure:(BOOL)shouldCreateFileStructure;
 
+/** Configure a sync manager for a document that's just been downloaded, but without carrying out full registration.
+ 
+ Use this method to provide basic configuration of the sync manager for a document that's been downloaded by calling the `TICDSApplicationSyncManager` method `requestDownloadOfDocumentWithIdentifier:toLocation:`, normally in response to the `TICDSApplicationSyncManager` delegate method `syncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atLocation:`.
+ 
+ This will setup the necessary helper file location and do any local configuration, but won't register the document with the remote.
+ 
+ If an error occurs, the delegate will be informed via the `syncManager:encounteredDocumentRegistrationError:` method.
+ 
+ @warning This method is called automatically by `registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:`, so you should only call it when needed during the document download process, not during general document registration.
+ 
+ @param aDelegate The object you wish to be notified regarding document-related sync information; this object must conform to the `TICDSDocumentSyncManagerDelegate` protocol, which includes some required methods.
+ @param anAppSyncManager The application sync manager responsible for overseeing this document.
+ @param aContext The primary managed object context in your application; this must be an instance of `TICDSSynchronizedManagedObjectContext` and not just a plain `NSManagedObjectContext`.
+ @param aDocumentIdentifier An identification string to identify this document uniquely. You would typically create a UUID string the first time this doc is registered and store this in e.g. the store metadata.
+ @param aDocumentDescription A human-readable string used to identify this document, e.g. the full name of the document.
+ @param userInfo A dictionary of information that will be saved throughout all future synchronizations. Because this information is saved in a plist, everything in the dictionary must be archivable using `NSKeyedArchiver`.
+ */
+- (void)configureWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager documentIdentifier:(NSString *)aDocumentIdentifier;
+
 /** @name Whole Store Upload */
 
 /** Start the process manually to upload the entire store file for this document, along with the relevant `AppliedSyncChanges.sqlite` file.
