@@ -26,12 +26,32 @@
 	
 	
 	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/completionInProgress">&nbsp;&nbsp;&nbsp;&nbsp;completionInProgress</option>
+	
+	<option value="//api/name/fetchArrayOfClientDeviceIDsStatus">&nbsp;&nbsp;&nbsp;&nbsp;fetchArrayOfClientDeviceIDsStatus</option>
+	
+	<option value="//api/name/fetchArrayOfSyncChangeSetIDsStatus">&nbsp;&nbsp;&nbsp;&nbsp;fetchArrayOfSyncChangeSetIDsStatus</option>
+	
+	<option value="//api/name/fetchArrayOfSyncCommandSetIDsStatus">&nbsp;&nbsp;&nbsp;&nbsp;fetchArrayOfSyncCommandSetIDsStatus</option>
 	
 	
 	
 	
 	
 	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/buildArrayOfClientDeviceIdentifiers">&nbsp;&nbsp;&nbsp;&nbsp;- buildArrayOfClientDeviceIdentifiers</option>
+	
+	<option value="//api/name/builtArrayOfClientDeviceIdentifiers:">&nbsp;&nbsp;&nbsp;&nbsp;- builtArrayOfClientDeviceIdentifiers:</option>
 	
 	
 	
@@ -47,13 +67,43 @@
 
 
 
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Methods Overridden by Subclasses">Methods Overridden by Subclasses</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Callbacks">Callbacks</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Completion">Completion</a></span></li>
+	
+</ul></li>
 
 
 
 
 
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/completionInProgress">completionInProgress</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchArrayOfClientDeviceIDsStatus">fetchArrayOfClientDeviceIDsStatus</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchArrayOfSyncChangeSetIDsStatus">fetchArrayOfSyncChangeSetIDsStatus</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchArrayOfSyncCommandSetIDsStatus">fetchArrayOfSyncCommandSetIDsStatus</a></span></li>
+	
+</ul></li>
 
 
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/buildArrayOfClientDeviceIdentifiers">buildArrayOfClientDeviceIdentifiers</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/builtArrayOfClientDeviceIdentifiers:">builtArrayOfClientDeviceIdentifiers:</a></span></li>
+	
+</ul></li>
 
 
 			</ul>
@@ -97,24 +147,36 @@
 <p>In full, the operation carries out the following tasks:</p>
 
 <ol>
-<li>Fetch an array of UUID strings for each available set of <code>SyncCommand</code>s.</li>
-<li>Determine which sets of <code>SyncCommand</code>s haven&rsquo;t yet been applied locally.</li>
-<li>If any sets of <code>SyncCommand</code>s haven&rsquo;t yet been applied, fetch them to the <code>UnappliedSyncCommands</code> helper file directory.</li>
-<li>Go through each set of <code>SyncCommands</code> and apply them, determining whether synchronization can continue, or whether e.g. the entire store needs to be downloaded.</li>
-<li>If synchronization can continue, fetch an array of UUID strings for each available set of <code>SyncChanges</code>.</li>
-<li>Determine which sets of <code>SyncChanges</code> haven&rsquo;t yet been applied locally.</li>
-<li>If any sets of <code>SyncChanges</code> haven&rsquo;t yet been applied, fetch them to the <code>UnappliedSyncChanges</code> helper file directory.</li>
-<li>Go through each set of <code>SyncChanges</code> and:
+<li>Fetch an array containing UUID strings for each client device that has synchronized this document.</li>
+<li>For each client device that isn&rsquo;t the current device:
+
+<ol>
+<li> Fetch an array containing UUID strings for each available <code>SyncCommandSet</code>.</li>
+</ol>
+</li>
+<li>Determine which <code>SyncCommandSet</code>s haven&rsquo;t yet been applied locally.</li>
+<li>If any <code>SyncCommandSet</code>s haven&rsquo;t yet been applied, fetch them to the <code>UnappliedSyncCommandSets</code> helper file directory.</li>
+<li>Go through each <code>SyncCommandSet</code> and:
+
+<ol>
+<li> Carry out the command, determining whether synchronization can continue, or whether e.g. the entire store needs to be downloaded.</li>
+<li> Add the UUID of the set to the list of <code>AppliedSyncChangeCommands.sqlite</code>.</li>
+</ol>
+</li>
+<li>If synchronization can continue, fetch an array of UUID strings for each available <code>SyncChangeSet</code>.</li>
+<li>Determine which <code>SyncChangeSet</code>s haven&rsquo;t yet been applied locally.</li>
+<li>If any <code>SyncChangeSet</code>s haven&rsquo;t yet been applied, fetch them to the <code>UnappliedSyncChangeSets</code> helper file directory.</li>
+<li>Go through each <code>SyncChangeSet</code> and:
 
 <ol>
 <li> Check for conflicts against local changes made since the last synchronization.</li>
 <li> Fix any conflicts, and build an array of conflict warnings for issues that cannot be resolved.</li>
 <li> Apply each <code>SyncChange</code> in the set to the local <code>WholeStore</code>.</li>
-<li> Add the UUID of the set to the list of <code>AppliedSyncChanges.sqlite</code>.</li>
+<li> Add the UUID of the set to the list of <code>AppliedSyncChangeSets.sqlite</code>.</li>
 </ol>
 </li>
-<li>Push any sets of local <code>SyncCommands</code> to the remote.</li>
-<li>Push any sets of local <code>SyncChanges</code> to the remote.</li>
+<li>If there are local <code>SyncCommand</code>s, rename <code>UnsynchronizedSyncCommands.sqlite</code> to <code>UUID.synccmd</code> and push the file to the remote.</li>
+<li>If there are local <code>SyncChange</code>s, rename <code>UnsynchronizedSyncChanges.sqlite</code> to <code>UUID.syncchd</code> and push the file to the remote.</li>
 </ol>
 
 
@@ -125,13 +187,309 @@
 					
 					
 					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						<a title="Methods Overridden by Subclasses" name="task_Methods Overridden by Subclasses"></a>
+						<h3 class="subsubtitle task-title">Methods Overridden by Subclasses</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/buildArrayOfClientDeviceIdentifiers">&ndash;&nbsp;buildArrayOfClientDeviceIdentifiers</a></code>
+		<span class="tooltip"><p>Build an array of <code>NSString</code> identifiers for all clients that have synchronized with this document.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Callbacks" name="task_Callbacks"></a>
+						<h3 class="subsubtitle task-title">Callbacks</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/builtArrayOfClientDeviceIdentifiers:">&ndash;&nbsp;builtArrayOfClientDeviceIdentifiers:</a></code>
+		<span class="tooltip"><p>Pass back the assembled <code>NSArray</code> of <code>NSString</code> <code>ClientDevice</code> identifiers.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Completion" name="task_Completion"></a>
+						<h3 class="subsubtitle task-title">Completion</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/completionInProgress">&nbsp;&nbsp;completionInProgress</a></code>
+		<span class="tooltip"><p>Used to indicate that completion is currently in progress, and that no further checks should be made.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchArrayOfClientDeviceIDsStatus">&nbsp;&nbsp;fetchArrayOfClientDeviceIDsStatus</a></code>
+		<span class="tooltip"><p>The phase status regarding fetching an array of client devices that have synchronized this document.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchArrayOfSyncCommandSetIDsStatus">&nbsp;&nbsp;fetchArrayOfSyncCommandSetIDsStatus</a></code>
+		<span class="tooltip"><p>The phase status regarding fetching an array of available SyncCommand sets.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchArrayOfSyncChangeSetIDsStatus">&nbsp;&nbsp;fetchArrayOfSyncChangeSetIDsStatus</a></code>
+		<span class="tooltip"><p>The phase status regarding fetching an array of available SyncChange sets.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+					</div>
 					
 					
 					
 					
 					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/completionInProgress" title="completionInProgress"></a>
+	<h3 class="subsubtitle method-title">completionInProgress</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Used to indicate that completion is currently in progress, and that no further checks should be made.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) BOOL completionInProgress</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchArrayOfClientDeviceIDsStatus" title="fetchArrayOfClientDeviceIDsStatus"></a>
+	<h3 class="subsubtitle method-title">fetchArrayOfClientDeviceIDsStatus</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The phase status regarding fetching an array of client devices that have synchronized this document.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) TICDSOperationPhaseStatus fetchArrayOfClientDeviceIDsStatus</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchArrayOfSyncChangeSetIDsStatus" title="fetchArrayOfSyncChangeSetIDsStatus"></a>
+	<h3 class="subsubtitle method-title">fetchArrayOfSyncChangeSetIDsStatus</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The phase status regarding fetching an array of available SyncChange sets.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) TICDSOperationPhaseStatus fetchArrayOfSyncChangeSetIDsStatus</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchArrayOfSyncCommandSetIDsStatus" title="fetchArrayOfSyncCommandSetIDsStatus"></a>
+	<h3 class="subsubtitle method-title">fetchArrayOfSyncCommandSetIDsStatus</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The phase status regarding fetching an array of available SyncCommand sets.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) TICDSOperationPhaseStatus fetchArrayOfSyncCommandSetIDsStatus</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
 					
 					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/buildArrayOfClientDeviceIdentifiers" title="buildArrayOfClientDeviceIdentifiers"></a>
+	<h3 class="subsubtitle method-title">buildArrayOfClientDeviceIdentifiers</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Build an array of <code>NSString</code> identifiers for all clients that have synchronized with this document.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)buildArrayOfClientDeviceIdentifiers</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Call <a href="#//api/name/buildArrayOfClientDeviceIdentifiers"><code>buildArrayOfClientDeviceIdentifiers</code></a> when the array is built.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/builtArrayOfClientDeviceIdentifiers:" title="builtArrayOfClientDeviceIdentifiers:"></a>
+	<h3 class="subsubtitle method-title">builtArrayOfClientDeviceIdentifiers:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Pass back the assembled <code>NSArray</code> of <code>NSString</code> <code>ClientDevice</code> identifiers.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)builtArrayOfClientDeviceIdentifiers:(NSArray *)<em>anArray</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anArray</em></dt>
+			<dd><p>The array of identifiers. Pass <code>nil</code> if an error occurred.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>nil</code> for <code>anArray</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
 					
 					
 				</div>
