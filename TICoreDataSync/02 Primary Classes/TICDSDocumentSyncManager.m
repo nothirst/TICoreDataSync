@@ -430,6 +430,11 @@
     }
     [operation setLocalSyncChangesToMergeLocation:syncChangesToMergeLocation];
     
+    // Set location of AppliedSyncChangeSets file
+    [operation setAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename]]];
+    [operation setUnappliedSyncChangesDirectoryLocation:[NSURL fileURLWithPath:[[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSUnappliedChangesDirectoryName]]];
+    [operation setUnappliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSUnappliedChangeSetsFilename]]];
+    
     [[self synchronizationQueue] addOperation:operation];
 }
 

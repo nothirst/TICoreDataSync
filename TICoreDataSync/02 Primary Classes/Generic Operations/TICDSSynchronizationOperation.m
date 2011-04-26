@@ -8,7 +8,7 @@
 
 #import "TICoreDataSync.h"
 
-@interface TICDSSynchronizationOperation ()
+@interface TICDSSynchronizationOperation () <TICoreDataFactoryDelegate>
 
 - (void)setAllInProgressStatusesToFailure;
 - (void)checkForCompletion;
@@ -19,8 +19,15 @@
 - (void)increaseNumberOfSyncChangeSetIdentifierArraysFetched;
 - (void)increaseNumberOfSyncChangeSetIdentifierArraysThatFailedToFetch;
 - (void)beginFetchOfListOfSyncChangeSetIdentifiers;
-- (void)addUnappliedSyncChangeSetIdentifiersFromAvailableSyncChangeSetIdentifiers:(NSArray *)changeSetIdentifiers;
+- (NSArray *)unappliedSyncChangeSetIdentifiersFromAvailableSyncChangeSetIdentifiers:(NSArray *)changeSetIdentifiers;
 - (BOOL)syncChangeSetHasBeenAppliedWithIdentifier:(NSString *)anIdentifier;
+
+- (void)increaseNumberOfUnappliedSyncChangeSetsToFetch;
+- (void)increaseNumberOfUnappliedSyncChangeSetsFetched;
+- (void)increaseNumberOfUnappliedSyncChangeSetsThatFailedToFetch;
+- (void)beginFetchOfUnappliedSyncChanges;
+
+- (void)addUnappliedSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientWithIdentifier:(NSString *)aClientIdentifier;
 
 - (void)beginUploadOfLocalSyncCommands;
 - (void)beginUploadOfLocalSyncChanges;
@@ -111,7 +118,8 @@
     }
     
     [self setNumberOfSyncChangeSetIDArraysToFetch:[[self otherSynchronizedClientDeviceIdentifiers] count]];
-    [self setOtherSynchronizedClientDeviceSyncChangeSetIdentifiers:[NSMutableArray arrayWithCapacity:50]];
+    
+    [self setOtherSynchronizedClientDeviceSyncChangeSetIdentifiers:[NSMutableDictionary dictionaryWithCapacity:[[self otherSynchronizedClientDeviceIdentifiers] count]]];
     
     for( NSString *eachClientIdentifier in [self otherSynchronizedClientDeviceIdentifiers] ) {
         [self buildArrayOfSyncChangeSetIdentifiersForClientIdentifier:eachClientIdentifier];
@@ -120,19 +128,23 @@
     [self checkForCompletion];
 }
 
-- (void)builtArrayOfClientSyncChangeSetIdentifiers:(NSArray *)anArray forClientIdentifier:(NSString *)anIdentifier
+- (void)builtArrayOfClientSyncChangeSetIdentifiers:(NSArray *)anArray forClientIdentifier:(NSString *)aClientIdentifier
 {
     if( !anArray ) {
         [self increaseNumberOfSyncChangeSetIdentifierArraysThatFailedToFetch];
     } else {
         [self increaseNumberOfSyncChangeSetIdentifierArraysFetched];
-        [self addUnappliedSyncChangeSetIdentifiersFromAvailableSyncChangeSetIdentifiers:anArray];
+        anArray = [self unappliedSyncChangeSetIdentifiersFromAvailableSyncChangeSetIdentifiers:anArray];
+    }
+    
+    if( [anArray count] > 0 ) {
+        [[self otherSynchronizedClientDeviceSyncChangeSetIdentifiers] setValue:anArray forKey:aClientIdentifier];
     }
     
     if( [self numberOfSyncChangeSetIDArraysToFetch] == [self numberOfSyncChangeSetIDArraysFetched] ) {
         [self setFetchArrayOfSyncChangeSetIDsStatus:TICDSOperationPhaseStatusSuccess];
         
-        assert(nil);
+        [self beginFetchOfUnappliedSyncChanges];
     } else if( [self numberOfSyncChangeSetIDArraysToFetch] == [self numberOfSyncChangeSetIDArraysFetched] + [self numberOfSyncChangeSetIDArraysThatFailedToFetch] ) {
         [self setAllInProgressStatusesToFailure];
         
@@ -140,20 +152,24 @@
     }
 }
 
-- (void)addUnappliedSyncChangeSetIdentifiersFromAvailableSyncChangeSetIdentifiers:(NSArray *)changeSetIdentifiers
+- (NSArray *)unappliedSyncChangeSetIdentifiersFromAvailableSyncChangeSetIdentifiers:(NSArray *)changeSetIdentifiers
 {
+    NSMutableArray *addedIdentifiers = [NSMutableArray array];
+    
     for( NSString *eachIdentifier in changeSetIdentifiers ) {
         if( [self syncChangeSetHasBeenAppliedWithIdentifier:eachIdentifier] ) {
             continue;
         }
         
-        [[self otherSynchronizedClientDeviceSyncChangeSetIdentifiers] addObject:eachIdentifier];
+        [addedIdentifiers addObject:eachIdentifier];
     }
+    
+    return addedIdentifiers;
 }
 
 - (BOOL)syncChangeSetHasBeenAppliedWithIdentifier:(NSString *)anIdentifier
 {
-    return NO;
+    return [TICDSSyncChangeSet hasSyncChangeSetWithIdentifer:anIdentifier alreadyBeenAppliedInManagedObjectContext:[self appliedSyncChangeSetsContext]];
 }
 
 #pragma mark Overridden Method
@@ -161,6 +177,96 @@
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
     [self builtArrayOfClientSyncChangeSetIdentifiers:nil forClientIdentifier:anIdentifier];
+}
+
+#pragma mark -
+#pragma mark FETCH OF UNAPPLIED SYNC CHANGE SETS
+- (void)beginFetchOfUnappliedSyncChanges
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Fetching unapplied sync change sets");
+    
+    if( [[self otherSynchronizedClientDeviceSyncChangeSetIdentifiers] count] < 1 ) {
+        [self setFetchUnappliedSyncChangeSetsStatus:TICDSOperationPhaseStatusSuccess];
+        
+        // TODO: whatever's next
+        assert(nil);
+    }
+    
+    NSString *unappliedSyncChangesPath = [[self unappliedSyncChangesDirectoryLocation] path];
+    
+    for( NSString *eachClientIdentifier in [self otherSynchronizedClientDeviceSyncChangeSetIdentifiers] ) {
+        NSArray *syncChangeSets = [[self otherSynchronizedClientDeviceSyncChangeSetIdentifiers] valueForKey:eachClientIdentifier];
+        
+        [self setNumberOfUnappliedSyncChangeSetsToFetch:[self numberOfUnappliedSyncChangeSetsToFetch] + [syncChangeSets count]];
+    }
+    
+    NSString *fileLocation = nil;
+    NSError *anyError = nil;
+    for( NSString *eachClientIdentifier in [self otherSynchronizedClientDeviceSyncChangeSetIdentifiers] ) {
+        NSArray *syncChangeSets = [[self otherSynchronizedClientDeviceSyncChangeSetIdentifiers] valueForKey:eachClientIdentifier];
+        
+        for( NSString *eachSyncChangeSetIdentifier in syncChangeSets ) {
+            fileLocation = [unappliedSyncChangesPath stringByAppendingPathComponent:eachSyncChangeSetIdentifier];
+            fileLocation = [fileLocation stringByAppendingPathExtension:TICDSSyncChangeSetFileExtension];
+            
+            if( [[self fileManager] fileExistsAtPath:fileLocation] && ![[self fileManager] removeItemAtPath:fileLocation error:&anyError] ) {
+                TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to remove existing downloaded but unapplied sync change set %@", eachSyncChangeSetIdentifier);
+            }
+            
+            [self fetchSyncChangeSetWithIdentifier:eachSyncChangeSetIdentifier forClientIdentifier:eachClientIdentifier toLocation:[NSURL fileURLWithPath:fileLocation]];
+        }
+    }
+}
+
+- (void)fetchedSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier withSuccess:(BOOL)success
+{
+    if( success ) {
+        [self addUnappliedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientWithIdentifier:aClientIdentifier];
+        [self increaseNumberOfUnappliedSyncChangeSetsFetched];
+    } else {
+        [self increaseNumberOfUnappliedSyncChangeSetsThatFailedToFetch];
+    }
+    
+    if( [self numberOfUnappliedSyncChangeSetsToFetch] == [self numberOfUnappliedSyncChangeSetsFetched] ) {
+        [self setFetchUnappliedSyncChangeSetsStatus:TICDSOperationPhaseStatusSuccess];
+        
+        //TODO: whatever's next
+        NSError *anyError = nil;
+        BOOL success = [[self unappliedSyncChangeSetsContext] save:&anyError];
+        if( !success ) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save UnappliedSyncChanges.sqlite file: %@", anyError);
+        }
+        assert(nil);
+    } else if( [self numberOfUnappliedSyncChangeSetsToFetch] == [self numberOfUnappliedSyncChangeSetsFetched] + [self numberOfUnappliedSyncChangeSetsThatFailedToFetch] ) {
+        [self setAllInProgressStatusesToFailure];
+    }
+    [self checkForCompletion];
+}
+
+- (void)addUnappliedSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientWithIdentifier:(NSString *)aClientIdentifier
+{
+    // Check whether it already exists
+    NSError *anyError = nil;
+    
+    TICDSSyncChangeSet *set = [TICDSSyncChangeSet ti_firstObjectMatchingPredicate:[NSPredicate predicateWithFormat:@"syncChangeSetIdentifier == %@", aChangeSetIdentifier] inManagedObjectContext:[self unappliedSyncChangeSetsContext] error:&anyError];
+    
+    if( set ) {
+        return;
+    }
+    
+    if( anyError ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to add unapplied sync change set to UnappliedSyncChangeSets.sqlite: %@", anyError);
+        return;
+    }
+    
+    set = [TICDSSyncChangeSet syncChangeSetWithIdentifier:aChangeSetIdentifier fromClient:aClientIdentifier creationDate:nil inManagedObjectContext:[self unappliedSyncChangeSetsContext]];
+}
+
+#pragma mark Overridden Method
+- (void)fetchSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier toLocation:(NSURL *)aLocation
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier withSuccess:NO];
 }
 
 #pragma mark -
@@ -276,6 +382,21 @@
     [self setNumberOfSyncChangeSetIDArraysThatFailedToFetch:[self numberOfSyncChangeSetIDArraysThatFailedToFetch] + 1];
 }
 
+- (void)increaseNumberOfUnappliedSyncChangeSetsToFetch
+{
+    [self setNumberOfUnappliedSyncChangeSetsToFetch:[self numberOfUnappliedSyncChangeSetsToFetch] + 1];
+}
+
+- (void)increaseNumberOfUnappliedSyncChangeSetsFetched
+{
+    [self setNumberOfUnappliedSyncChangeSetsFetched:[self numberOfUnappliedSyncChangeSetsFetched] + 1];
+}
+
+- (void)increaseNumberOfUnappliedSyncChangeSetsThatFailedToFetch
+{
+    [self setNumberOfUnappliedSyncChangeSetsThatFailedToFetch:[self numberOfUnappliedSyncChangeSetsThatFailedToFetch] + 1];
+}
+
 - (void)checkForCompletion
 {
     if( [self completionInProgress] ) {
@@ -308,11 +429,25 @@
 }
 
 #pragma mark -
+#pragma mark TICoreDataFactory Delegate
+- (void)coreDataFactory:(TICoreDataFactory *)aFactory encounteredError:(NSError *)anError
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Applied Sync Change Sets Factory Error: %@", anError);
+}
+
+#pragma mark -
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
     [_localSyncChangesToMergeLocation release], _localSyncChangesToMergeLocation = nil;
     [_appliedSyncChangeSetsFileLocation release], _appliedSyncChangeSetsFileLocation = nil;
+    [_appliedSyncChangeSetsCoreDataFactory release], _appliedSyncChangeSetsCoreDataFactory = nil;
+    [_appliedSyncChangeSetsContext release], _appliedSyncChangeSetsContext = nil;
+    [_unappliedSyncChangesDirectoryLocation release], _unappliedSyncChangesDirectoryLocation = nil;
+    [_unappliedSyncChangeSetsFileLocation release], _unappliedSyncChangeSetsFileLocation = nil;
+    [_unappliedSyncChangeSetsCoreDataFactory release], _unappliedSyncChangeSetsCoreDataFactory = nil;
+    [_unappliedSyncChangeSetsContext release], _unappliedSyncChangeSetsContext = nil;
+
     [_otherSynchronizedClientDeviceIdentifiers release], _otherSynchronizedClientDeviceIdentifiers = nil;
     [_otherSynchronizedClientDeviceSyncChangeSetIdentifiers release], _otherSynchronizedClientDeviceSyncChangeSetIdentifiers = nil;
 
@@ -320,9 +455,68 @@
 }
 
 #pragma mark -
+#pragma mark Lazy Accessors
+- (NSManagedObjectContext *)appliedSyncChangeSetsContext
+{
+    if( _appliedSyncChangeSetsContext ) {
+        return _appliedSyncChangeSetsContext;
+    }
+    
+    _appliedSyncChangeSetsContext = [[[self appliedSyncChangeSetsCoreDataFactory] managedObjectContext] retain];
+    
+    return _appliedSyncChangeSetsContext;
+}
+
+- (TICoreDataFactory *)appliedSyncChangeSetsCoreDataFactory
+{
+    if( _appliedSyncChangeSetsCoreDataFactory ) {
+        return _appliedSyncChangeSetsCoreDataFactory;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Creating Core Data Factory (TICoreDataFactory)");
+    _appliedSyncChangeSetsCoreDataFactory = [[TICoreDataFactory alloc] initWithMomdName:TICDSSyncChangeSetDataModelName];
+    [_appliedSyncChangeSetsCoreDataFactory setPersistentStoreDataPath:[[self appliedSyncChangeSetsFileLocation] path]];
+    [_appliedSyncChangeSetsCoreDataFactory setDelegate:self];
+    
+    return _appliedSyncChangeSetsCoreDataFactory;
+}
+
+- (NSManagedObjectContext *)unappliedSyncChangeSetsContext
+{
+    if( _unappliedSyncChangeSetsContext ) {
+        return _unappliedSyncChangeSetsContext;
+    }
+    
+    _unappliedSyncChangeSetsContext = [[[self unappliedSyncChangeSetsCoreDataFactory] managedObjectContext] retain];
+    
+    return _unappliedSyncChangeSetsContext;
+}
+
+- (TICoreDataFactory *)unappliedSyncChangeSetsCoreDataFactory
+{
+    if( _unappliedSyncChangeSetsCoreDataFactory ) {
+        return _unappliedSyncChangeSetsCoreDataFactory;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Creating Core Data Factory (TICoreDataFactory)");
+    _unappliedSyncChangeSetsCoreDataFactory = [[TICoreDataFactory alloc] initWithMomdName:TICDSSyncChangeSetDataModelName];
+    [_unappliedSyncChangeSetsCoreDataFactory setPersistentStoreDataPath:[[self unappliedSyncChangeSetsFileLocation] path]];
+    [_unappliedSyncChangeSetsCoreDataFactory setDelegate:self];
+    
+    return _unappliedSyncChangeSetsCoreDataFactory;
+}
+
+#pragma mark -
 #pragma mark Properties
 @synthesize localSyncChangesToMergeLocation = _localSyncChangesToMergeLocation;
 @synthesize appliedSyncChangeSetsFileLocation = _appliedSyncChangeSetsFileLocation;
+@synthesize appliedSyncChangeSetsCoreDataFactory = _appliedSyncChangeSetsCoreDataFactory;
+@synthesize appliedSyncChangeSetsContext = _appliedSyncChangeSetsContext;
+@synthesize unappliedSyncChangesDirectoryLocation = _unappliedSyncChangesDirectoryLocation;
+@synthesize unappliedSyncChangeSetsFileLocation = _unappliedSyncChangeSetsFileLocation;
+@synthesize unappliedSyncChangeSetsCoreDataFactory = _unappliedSyncChangeSetsCoreDataFactory;
+@synthesize unappliedSyncChangeSetsContext = _unappliedSyncChangeSetsContext;
+
 @synthesize otherSynchronizedClientDeviceIdentifiers = _otherSynchronizedClientDeviceIdentifiers;
 @synthesize otherSynchronizedClientDeviceSyncChangeSetIdentifiers = _otherSynchronizedClientDeviceSyncChangeSetIdentifiers;
 @synthesize completionInProgress = _completionInProgress;
@@ -334,6 +528,9 @@
 @synthesize numberOfSyncChangeSetIDArraysThatFailedToFetch = _numberOfSyncChangeSetIDArraysThatFailedToFetch;
 @synthesize fetchArrayOfSyncChangeSetIDsStatus = _fetchArrayOfSyncChangeSetIDsStatus;
 
+@synthesize numberOfUnappliedSyncChangeSetsToFetch = _numberOfUnappliedSyncChangeSetsToFetch;
+@synthesize numberOfUnappliedSyncChangeSetsFetched = _numberOfUnappliedSyncChangeSetsFetched;
+@synthesize numberOfUnappliedSyncChangeSetsThatFailedToFetch = _numberOfUnappliedSyncChangeSetsThatFailedToFetch;
 @synthesize fetchUnappliedSyncChangeSetsStatus = _fetchUnappliedSyncChangeSetsStatus;
 
 @synthesize uploadLocalSyncCommandSetStatus = _uploadLocalSyncCommandSetStatus;

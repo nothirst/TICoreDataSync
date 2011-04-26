@@ -47,11 +47,13 @@ NSString * const TICDSUnsynchronizedSyncChangesStoreName = @"UnsynchronizedSyncC
 NSString * const TICDSSyncChangesBeingSynchronizedStoreName = @"SyncChangesBeingSynchronized.sqlite";
 NSString * const TICDSWholeStoreFilename = @"WholeStore.sqlite";
 NSString * const TICDSAppliedSyncChangeSetsFilename = @"AppliedSyncChangeSets.sqlite";
+NSString * const TICDSUnappliedChangeSetsFilename = @"UnappliedSyncChangeSets.sqlite";
 NSString * const TICDSSyncCommandSetFileExtension = @"synccmd";
 NSString * const TICDSSyncChangeSetFileExtension = @"syncchg";
 
 NSString * const TICDSSyncIDAttributeName = @"ticdsSyncID";
 NSString * const TICDSSyncChangeDataModelName = @"TICDSSyncChange";
+NSString * const TICDSSyncChangeSetDataModelName = @"TICDSSyncChangeSet";
 
 NSString * const TICDSApplicationSyncManagerDidRegisterSuccessfullyNotification = @"TICDSApplicationSyncManagerDidRegisterSuccessfullyNotification";
 NSString * const TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification = @"TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification";

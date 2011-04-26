@@ -29,4 +29,7 @@
 /** The path to a given client's `SyncChanges` directory. */
 - (NSString *)pathToSyncChangesDirectoryForClientWithIdentifier:(NSString *)anIdentifier;
 
+/** The path to a `SyncChangeSet` uploaded by a given client. */
+- (NSString *)pathToSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientWithIdentifier:(NSString *)aClientIdentifier;
+
 @end

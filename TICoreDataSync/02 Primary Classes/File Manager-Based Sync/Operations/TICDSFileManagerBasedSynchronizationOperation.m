@@ -64,10 +64,23 @@
             continue;
         }
         
-        [identifiers addObject:eachIdentifier];
+        [identifiers addObject:[eachIdentifier stringByDeletingPathExtension]];
     }
     
     [self builtArrayOfClientSyncChangeSetIdentifiers:identifiers forClientIdentifier:anIdentifier];
+}
+
+- (void)fetchSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier toLocation:(NSURL *)aLocation
+{
+    NSError *anyError = nil;
+    
+    BOOL success = [[self fileManager] copyItemAtPath:[self pathToSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientWithIdentifier:aClientIdentifier] toPath:[aLocation path] error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier withSuccess:success];
 }
 
 #pragma mark -
@@ -85,6 +98,11 @@
 - (NSString *)pathToSyncChangesDirectoryForClientWithIdentifier:(NSString *)anIdentifier
 {
     return [[self thisDocumentSyncChangesDirectoryPath] stringByAppendingPathComponent:anIdentifier];
+}
+
+- (NSString *)pathToSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientWithIdentifier:(NSString *)aClientIdentifier
+{
+    return [[[self pathToSyncChangesDirectoryForClientWithIdentifier:aClientIdentifier] stringByAppendingPathComponent:aChangeSetIdentifier] stringByAppendingPathExtension:TICDSSyncChangeSetFileExtension];
 }
 
 #pragma mark -

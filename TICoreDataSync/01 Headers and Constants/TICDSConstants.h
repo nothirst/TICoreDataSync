@@ -39,11 +39,13 @@ extern NSString * const TICDSUnsynchronizedSyncChangesStoreName;
 extern NSString * const TICDSSyncChangesBeingSynchronizedStoreName;
 extern NSString * const TICDSWholeStoreFilename;
 extern NSString * const TICDSAppliedSyncChangeSetsFilename;
+extern NSString * const TICDSUnappliedChangeSetsFilename;
 extern NSString * const TICDSSyncCommandSetFileExtension;
 extern NSString * const TICDSSyncChangeSetFileExtension;
 
 extern NSString * const TICDSSyncIDAttributeName;
 extern NSString * const TICDSSyncChangeDataModelName;
+extern NSString * const TICDSSyncChangeSetDataModelName;
 
 extern NSString * const TICDSApplicationSyncManagerDidRegisterSuccessfullyNotification;
 extern NSString * const TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification;

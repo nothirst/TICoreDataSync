@@ -7,10 +7,23 @@
 //
 
 #import "TICoreDataSync.h"
-
+#import "TIManagedObjectExtensions.h"
 
 @implementation TICDSSyncChangeSet
 
+#pragma mark -
+#pragma mark Helper Methods
++ (BOOL)hasSyncChangeSetWithIdentifer:(NSString *)anIdentifier alreadyBeenAppliedInManagedObjectContext:(NSManagedObjectContext *)aMoc
+{
+    NSError *anyError = nil;
+    NSManagedObject *obj = [self ti_firstObjectInManagedObjectContext:aMoc error:&anyError matchingPredicateWithFormat:@"syncChangeSetIdentifier == %@", anIdentifier];
+    
+    if( anyError ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error fetching to find whether a change set has already been applied: %@", anyError);
+    }
+    
+    return (obj != nil);
+}
 
 #pragma mark -
 #pragma mark Initialization and Deallocation

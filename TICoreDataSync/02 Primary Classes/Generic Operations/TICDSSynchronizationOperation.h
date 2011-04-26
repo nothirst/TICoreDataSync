@@ -41,10 +41,17 @@
 @interface TICDSSynchronizationOperation : TICDSOperation {
 @private
     NSArray *_otherSynchronizedClientDeviceIdentifiers;
-    NSMutableArray *_otherSynchronizedClientDeviceSyncChangeSetIdentifiers;
+    NSMutableDictionary *_otherSynchronizedClientDeviceSyncChangeSetIdentifiers;
     
     NSURL *_localSyncChangesToMergeLocation;
     NSURL *_appliedSyncChangeSetsFileLocation;
+    TICoreDataFactory *_appliedSyncChangeSetsCoreDataFactory;
+    NSManagedObjectContext *_appliedSyncChangeSetsContext;
+    
+    NSURL *_unappliedSyncChangesDirectoryLocation;
+    NSURL *_unappliedSyncChangeSetsFileLocation;
+    TICoreDataFactory *_unappliedSyncChangeSetsCoreDataFactory;
+    NSManagedObjectContext *_unappliedSyncChangeSetsContext;
     
     BOOL _completionInProgress;
     TICDSOperationPhaseStatus _fetchArrayOfClientDeviceIDsStatus;
@@ -79,6 +86,11 @@
  @param anIdentifier The unique identifier of the client. */
 - (void)buildArrayOfSyncChangeSetIdentifiersForClientIdentifier:(NSString *)anIdentifier;
 
+/** Fetch a `SyncChangeSet` with a given identifier from a client's `SyncChanges` directory.
+ 
+ This method must call `fetchedSyncChangeSetsWithIdentifier:forClientIdentifier:withSuccess:` when finished. */
+- (void)fetchSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier toLocation:(NSURL *)aLocation;
+
 /** Upload the specified sync changes file to the client device's directory inside the document's `SyncChanges` directory.
  
  This method must call `uploadedLocalSyncChangeSetFileSuccessfully:` to indicate whether the creation was successful.
@@ -103,6 +115,15 @@
  @param anIdentifier The client identifier for this array of `SyncChangeSet` identifiers. */
 - (void)builtArrayOfClientSyncChangeSetIdentifiers:(NSArray *)anArray forClientIdentifier:(NSString *)anIdentifier;
 
+/** Indiciate whether the download of the specified `SyncChangeSet` was successful.
+ 
+ If not, call `setError:` first, then specify `NO` for `success`.
+ 
+ @param aChangeSetIdentifier The identifier for the change set to fetch.
+ @param aClientIdentifier The identifier of the client who uploaded the change set.
+ @param success A Boolean indicating whether the sync change set file was downloaded or not. */
+- (void)fetchedSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier withSuccess:(BOOL)success;
+
 /** Indicate whether the upload of the sync change set file was successful.
  
  If not, call `setError:` first, then specify `NO` for `success`.
@@ -119,11 +140,29 @@
 /** The location of this document's `AppliedSyncChangeSets.sqlite` file. */
 @property (retain) NSURL *appliedSyncChangeSetsFileLocation;
 
+/** A `TICoreDataFactory` to access the contents of the `AppliedSyncChangeSets.sqlite` file. */
+@property (nonatomic, retain) TICoreDataFactory *appliedSyncChangeSetsCoreDataFactory;
+
+/** The managed object context for the `AppliedSyncChangeSets.sqlite` file. */
+@property (nonatomic, retain) NSManagedObjectContext *appliedSyncChangeSetsContext;
+
+/** The location of the `UnappliedSyncChanges` directory for this synchronization operation. */
+@property (retain) NSURL *unappliedSyncChangesDirectoryLocation;
+
+/** The location of this document's `UnappliedSyncChangeSets.sqlite` file. */
+@property (retain) NSURL *unappliedSyncChangeSetsFileLocation;
+
+/** A `TICoreDataFactory` to access the contents of the `UnappliedSyncChangeSets.sqlite` file. */
+@property (nonatomic, retain) TICoreDataFactory *unappliedSyncChangeSetsCoreDataFactory;
+
+/** The managed object context for the `UnappliedSyncChangeSets.sqlite` file. */
+@property (nonatomic, retain) NSManagedObjectContext *unappliedSyncChangeSetsContext;
+
 /** An array of client identifiers for clients that synchronize with this document, excluding this client. */
 @property (nonatomic, retain) NSArray *otherSynchronizedClientDeviceIdentifiers;
 
-/** An array of sync change set identifiers from other clients that synchronize with this document. */
-@property (retain) NSMutableArray *otherSynchronizedClientDeviceSyncChangeSetIdentifiers;
+/** A dictionary of arrays; keys are client identifiers, values are sync change set identifiers for each of those clients. */
+@property (retain) NSMutableDictionary *otherSynchronizedClientDeviceSyncChangeSetIdentifiers;
 
 #pragma mark Completion
 /** @name Completion */
@@ -148,6 +187,15 @@
 
 /** The phase status regarding fetching an array of available `SyncChangeSet` identifiers. */
 @property (nonatomic, assign) TICDSOperationPhaseStatus fetchArrayOfSyncChangeSetIDsStatus;
+
+/** The number of unapplied sync change sets that need to be fetched. */
+@property (nonatomic, assign) NSUInteger numberOfUnappliedSyncChangeSetsToFetch;
+
+/** The number of unapplied sync change sets that have already been fetched. */
+@property (nonatomic, assign) NSUInteger numberOfUnappliedSyncChangeSetsFetched;
+
+/** The number of unapplied sync change sets that failed to fetch because of an error. */
+@property (nonatomic, assign) NSUInteger numberOfUnappliedSyncChangeSetsThatFailedToFetch;
 
 /** The phase status regarding fetching all unapplied `SyncChangeSet`s. */
 @property (nonatomic, assign) TICDSOperationPhaseStatus fetchUnappliedSyncChangeSetsStatus;

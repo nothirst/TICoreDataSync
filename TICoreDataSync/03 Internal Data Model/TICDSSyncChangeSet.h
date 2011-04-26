@@ -27,6 +27,16 @@
  */
 + (id)syncChangeSetWithIdentifier:(NSString *)anIdentifier fromClient:(NSString *)aClientIdentifier creationDate:(NSDate *)aDate inManagedObjectContext:(NSManagedObjectContext *)aMoc;
 
+/** @name Helper Methods */
+
+/** Check whether a sync change set with a given identifier has already been applied in a managed object context.
+ 
+ @param anIdentifier The unique identifier for the sync change.
+ @param aMoc The managed object context to check.
+ 
+ @return A Boolean indicating whether the sync change has already been applied. */
++ (BOOL)hasSyncChangeSetWithIdentifer:(NSString *)anIdentifier alreadyBeenAppliedInManagedObjectContext:(NSManagedObjectContext *)aMoc;
+
 @property (nonatomic, retain) NSDate * creationDate;
 @property (nonatomic, retain) NSString * fileName;
 @property (nonatomic, retain) NSString * syncChangeSetIdentifier;

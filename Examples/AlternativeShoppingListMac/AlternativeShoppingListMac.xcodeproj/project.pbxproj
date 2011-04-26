@@ -59,6 +59,8 @@
 		38CBE6B61367344100523599 /* TIManagedObjectExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CBE6951367344100523599 /* TIManagedObjectExtensions.m */; };
 		38CBE6B81367345A00523599 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38CBE6B71367345A00523599 /* QuartzCore.framework */; };
 		38CBE6BA1367346E00523599 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38CBE6B91367346E00523599 /* SystemConfiguration.framework */; };
+		38CBE6E71367629300523599 /* TICDSSyncChangeSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CBE6E41367629300523599 /* TICDSSyncChangeSet.m */; };
+		38CBE6E81367629300523599 /* TICDSSyncChangeSet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 38CBE6E51367629300523599 /* TICDSSyncChangeSet.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -158,6 +160,9 @@
 		38CBE6961367344100523599 /* TICoreDataSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICoreDataSync.h; sourceTree = "<group>"; };
 		38CBE6B71367345A00523599 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		38CBE6B91367346E00523599 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		38CBE6E31367629300523599 /* TICDSSyncChangeSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSyncChangeSet.h; sourceTree = "<group>"; };
+		38CBE6E41367629300523599 /* TICDSSyncChangeSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSyncChangeSet.m; sourceTree = "<group>"; };
+		38CBE6E61367629300523599 /* TICDSSyncChangeSet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TICDSSyncChangeSet.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -351,6 +356,9 @@
 		38CBE67E1367344100523599 /* 03 Internal Data Model */ = {
 			isa = PBXGroup;
 			children = (
+				38CBE6E31367629300523599 /* TICDSSyncChangeSet.h */,
+				38CBE6E41367629300523599 /* TICDSSyncChangeSet.m */,
+				38CBE6E51367629300523599 /* TICDSSyncChangeSet.xcdatamodeld */,
 				38CBE67F1367344100523599 /* TICDSSyncChange.h */,
 				38CBE6801367344100523599 /* TICDSSyncChange.m */,
 				38CBE6811367344100523599 /* TICDSSyncChange.xcdatamodel */,
@@ -505,6 +513,8 @@
 				38CBE6B41367344100523599 /* TICoreDataFactory.m in Sources */,
 				38CBE6B51367344100523599 /* TIKQDirectoryWatcher.m in Sources */,
 				38CBE6B61367344100523599 /* TIManagedObjectExtensions.m in Sources */,
+				38CBE6E71367629300523599 /* TICDSSyncChangeSet.m in Sources */,
+				38CBE6E81367629300523599 /* TICDSSyncChangeSet.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -627,6 +637,7 @@
 				38CBE627136733AB00523599 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
@@ -640,6 +651,16 @@
 			currentVersion = 38CBE631136733FF00523599 /* ShoppingList.xcdatamodel */;
 			name = ShoppingList.xcdatamodeld;
 			path = ../../ShoppingListMac/ShoppingListMac/ShoppingList.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		38CBE6E51367629300523599 /* TICDSSyncChangeSet.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				38CBE6E61367629300523599 /* TICDSSyncChangeSet.xcdatamodel */,
+			);
+			currentVersion = 38CBE6E61367629300523599 /* TICDSSyncChangeSet.xcdatamodel */;
+			path = TICDSSyncChangeSet.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
