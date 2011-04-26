@@ -22,5 +22,16 @@
 			<Anchor>//api/name/thisDocumentSyncChangesDirectoryPath</Anchor>
 		</Token>
 		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedSynchronizationOperation/thisDocumentSyncChangesThisClientDirectoryPath</TokenIdentifier>
+			<Abstract>The path this client's directory inside this document's SyncChanges directory.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSString *thisDocumentSyncChangesThisClientDirectoryPath</Declaration>
+			
+			
+			<Anchor>//api/name/thisDocumentSyncChangesThisClientDirectoryPath</Anchor>
+		</Token>
+		
 	</File>
 </Tokens>

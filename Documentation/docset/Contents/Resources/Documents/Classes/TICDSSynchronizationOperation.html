@@ -61,6 +61,10 @@
 	
 	<option value="//api/name/builtArrayOfClientDeviceIdentifiers:">&nbsp;&nbsp;&nbsp;&nbsp;- builtArrayOfClientDeviceIdentifiers:</option>
 	
+	<option value="//api/name/uploadLocalSyncChangeSetFileAtLocation:">&nbsp;&nbsp;&nbsp;&nbsp;- uploadLocalSyncChangeSetFileAtLocation:</option>
+	
+	<option value="//api/name/uploadedLocalSyncChangeSetFileSuccessfully:">&nbsp;&nbsp;&nbsp;&nbsp;- uploadedLocalSyncChangeSetFileSuccessfully:</option>
+	
 	
 	
 </select>
@@ -120,6 +124,10 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/buildArrayOfClientDeviceIdentifiers">buildArrayOfClientDeviceIdentifiers</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/builtArrayOfClientDeviceIdentifiers:">builtArrayOfClientDeviceIdentifiers:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/uploadLocalSyncChangeSetFileAtLocation:">uploadLocalSyncChangeSetFileAtLocation:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/uploadedLocalSyncChangeSetFileSuccessfully:">uploadedLocalSyncChangeSetFileSuccessfully:</a></span></li>
 	
 </ul></li>
 
@@ -226,6 +234,13 @@
 	</span>
 	
 	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/uploadLocalSyncChangeSetFileAtLocation:">&ndash;&nbsp;uploadLocalSyncChangeSetFileAtLocation:</a></code>
+		<span class="tooltip"><p>Upload the specified sync changes file to the client device&rsquo;s directory inside the document&rsquo;s <code>SyncChanges</code> directory.</p></span>
+	</span>
+	
+	
 </li>
 						</ul>
 						
@@ -238,6 +253,13 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/builtArrayOfClientDeviceIdentifiers:">&ndash;&nbsp;builtArrayOfClientDeviceIdentifiers:</a></code>
 		<span class="tooltip"><p>Pass back the assembled <code>NSArray</code> of <code>NSString</code> <code>ClientDevice</code> identifiers.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/uploadedLocalSyncChangeSetFileSuccessfully:">&ndash;&nbsp;uploadedLocalSyncChangeSetFileSuccessfully:</a></code>
+		<span class="tooltip"><p>Indicate whether the upload of the sync change set file was successful.</p></span>
 	</span>
 	
 	
@@ -660,6 +682,90 @@
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>If an error occurred, call <code>setError:</code> first, then specify <code>nil</code> for <code>anArray</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/uploadLocalSyncChangeSetFileAtLocation:" title="uploadLocalSyncChangeSetFileAtLocation:"></a>
+	<h3 class="subsubtitle method-title">uploadLocalSyncChangeSetFileAtLocation:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Upload the specified sync changes file to the client device&rsquo;s directory inside the document&rsquo;s <code>SyncChanges</code> directory.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)uploadLocalSyncChangeSetFileAtLocation:(NSURL *)<em>aLocation</em></code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/uploadedLocalSyncChangeSetFileSuccessfully:"><code>uploadedLocalSyncChangeSetFileSuccessfully:</code></a> to indicate whether the creation was successful.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/uploadedLocalSyncChangeSetFileSuccessfully:" title="uploadedLocalSyncChangeSetFileSuccessfully:"></a>
+	<h3 class="subsubtitle method-title">uploadedLocalSyncChangeSetFileSuccessfully:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the upload of the sync change set file was successful.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)uploadedLocalSyncChangeSetFileSuccessfully:(BOOL)<em>success</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p>A Boolean indicating whether the sync change set file was uploaded or not.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If not, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
 	</div>
 	
 	

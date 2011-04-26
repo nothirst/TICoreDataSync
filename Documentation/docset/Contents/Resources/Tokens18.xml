@@ -23,6 +23,17 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/uploadLocalSyncChangeSetFileAtLocation:</TokenIdentifier>
+			<Abstract>Upload the specified sync changes file to the client device's directory inside the document's SyncChanges directory.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)uploadLocalSyncChangeSetFileAtLocation:(NSURL *)aLocation</Declaration>
+			
+			
+			<Anchor>//api/name/uploadLocalSyncChangeSetFileAtLocation:</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/builtArrayOfClientDeviceIdentifiers:</TokenIdentifier>
 			<Abstract>Pass back the assembled NSArray of NSString ClientDevice identifiers.</Abstract>
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
@@ -36,6 +47,22 @@
 			</Parameters>
 			
 			<Anchor>//api/name/builtArrayOfClientDeviceIdentifiers:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/uploadedLocalSyncChangeSetFileSuccessfully:</TokenIdentifier>
+			<Abstract>Indicate whether the upload of the sync change set file was successful.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)uploadedLocalSyncChangeSetFileSuccessfully:(BOOL)success</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>success</Name>
+					<Abstract>A Boolean indicating whether the sync change set file was uploaded or not.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/uploadedLocalSyncChangeSetFileSuccessfully:</Anchor>
 		</Token>
 		
 		<Token>
