@@ -36,6 +36,8 @@
 	
 	<option value="//api/name/appIdentifier">&nbsp;&nbsp;&nbsp;&nbsp;appIdentifier</option>
 	
+	<option value="//api/name/applicationUserInfo">&nbsp;&nbsp;&nbsp;&nbsp;applicationUserInfo</option>
+	
 	<option value="//api/name/clientDescription">&nbsp;&nbsp;&nbsp;&nbsp;clientDescription</option>
 	
 	<option value="//api/name/clientIdentifier">&nbsp;&nbsp;&nbsp;&nbsp;clientIdentifier</option>
@@ -53,8 +55,6 @@
 	<option value="//api/name/relativePathToDocumentsDirectory">&nbsp;&nbsp;&nbsp;&nbsp;relativePathToDocumentsDirectory</option>
 	
 	<option value="//api/name/state">&nbsp;&nbsp;&nbsp;&nbsp;state</option>
-	
-	<option value="//api/name/userInfo">&nbsp;&nbsp;&nbsp;&nbsp;userInfo</option>
 	
 	
 	
@@ -126,6 +126,8 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/appIdentifier">appIdentifier</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationUserInfo">applicationUserInfo</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/clientDescription">clientDescription</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/clientIdentifier">clientIdentifier</a></span></li>
@@ -143,8 +145,6 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/relativePathToDocumentsDirectory">relativePathToDocumentsDirectory</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/state">state</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/userInfo">userInfo</a></span></li>
 	
 </ul></li>
 
@@ -369,7 +369,7 @@
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/userInfo">&nbsp;&nbsp;userInfo</a></code>
+		<code><a href="#//api/name/applicationUserInfo">&nbsp;&nbsp;applicationUserInfo</a></code>
 		<span class="tooltip"><p>The User Info used for registration.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
@@ -473,6 +473,43 @@
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>Set the identifier when registering with <a href="#//api/name/registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:"><code>registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:</code></a>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationUserInfo" title="applicationUserInfo"></a>
+	<h3 class="subsubtitle method-title">applicationUserInfo</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The User Info used for registration.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly, retain) NSDictionary *applicationUserInfo</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Set the user info when registering with <a href="#//api/name/registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:"><code>registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:</code></a>.</p>
 	</div>
 	
 	
@@ -783,43 +820,6 @@
 		<p>The <a href="#//api/name/state">state</a> of the application sync manager indicates whether it is ready to synchronize.</p>
 
 <p>Possible values are defined in <code>TICDSTypesAndEnums.h</code>.</p>
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">TICDSApplicationSyncManager.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/userInfo" title="userInfo"></a>
-	<h3 class="subsubtitle method-title">userInfo</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>The User Info used for registration.</p>
-	</div>		
-	
-	
-	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly, retain) NSDictionary *userInfo</code></div>
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection discussion-section">
-		<h4 class="method-subtitle">Discussion</h4>
-		<p>Set the user info when registering with <a href="#//api/name/registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:"><code>registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:</code></a>.</p>
 	</div>
 	
 	

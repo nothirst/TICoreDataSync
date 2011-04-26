@@ -142,14 +142,14 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationRegistrationOperation/userInfo</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationRegistrationOperation/applicationUserInfo</TokenIdentifier>
 			<Abstract>The user info.</Abstract>
 			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, retain) NSDictionary *userInfo</Declaration>
+			<Declaration>@property (nonatomic, retain) NSDictionary *applicationUserInfo</Declaration>
 			
 			
-			<Anchor>//api/name/userInfo</Anchor>
+			<Anchor>//api/name/applicationUserInfo</Anchor>
 		</Token>
 		
 		<Token>

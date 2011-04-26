@@ -191,14 +191,14 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentRegistrationOperation/userInfo</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentRegistrationOperation/documentUserInfo</TokenIdentifier>
 			<Abstract>The user info.</Abstract>
 			<DeclaredIn>TICDSDocumentRegistrationOperation.h</DeclaredIn>			
 			
-			<Declaration>@property (retain) NSDictionary *userInfo</Declaration>
+			<Declaration>@property (retain) NSDictionary *documentUserInfo</Declaration>
 			
 			
-			<Anchor>//api/name/userInfo</Anchor>
+			<Anchor>//api/name/documentUserInfo</Anchor>
 		</Token>
 		
 		<Token>

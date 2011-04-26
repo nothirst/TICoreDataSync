@@ -44,6 +44,8 @@
 	
 	<option value="//api/name/documentIdentifier">&nbsp;&nbsp;&nbsp;&nbsp;documentIdentifier</option>
 	
+	<option value="//api/name/documentUserInfo">&nbsp;&nbsp;&nbsp;&nbsp;documentUserInfo</option>
+	
 	<option value="//api/name/fileManager">&nbsp;&nbsp;&nbsp;&nbsp;fileManager</option>
 	
 	<option value="//api/name/helperFileDirectoryLocation">&nbsp;&nbsp;&nbsp;&nbsp;helperFileDirectoryLocation</option>
@@ -71,8 +73,6 @@
 	<option value="//api/name/state">&nbsp;&nbsp;&nbsp;&nbsp;state</option>
 	
 	<option value="//api/name/synchronizationQueue">&nbsp;&nbsp;&nbsp;&nbsp;synchronizationQueue</option>
-	
-	<option value="//api/name/userInfo">&nbsp;&nbsp;&nbsp;&nbsp;userInfo</option>
 	
 	
 	
@@ -145,6 +145,8 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentIdentifier">documentIdentifier</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentUserInfo">documentUserInfo</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fileManager">fileManager</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/helperFileDirectoryLocation">helperFileDirectoryLocation</a></span></li>
@@ -172,8 +174,6 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/state">state</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/synchronizationQueue">synchronizationQueue</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/userInfo">userInfo</a></span></li>
 	
 </ul></li>
 
@@ -397,7 +397,7 @@
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/userInfo">&nbsp;&nbsp;userInfo</a></code>
+		<code><a href="#//api/name/documentUserInfo">&nbsp;&nbsp;documentUserInfo</a></code>
 		<span class="tooltip"><p>The User Info used for registration.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
@@ -681,6 +681,43 @@
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>Set the identifier when registering with <a href="#//api/name/registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:"><code>registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:</code></a>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentUserInfo" title="documentUserInfo"></a>
+	<h3 class="subsubtitle method-title">documentUserInfo</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The User Info used for registration.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly, retain) NSDictionary *documentUserInfo</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Set the user info when registering with <a href="#//api/name/registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:"><code>registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:</code></a>.</p>
 	</div>
 	
 	
@@ -1153,43 +1190,6 @@
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>The queue supports only 1 operation at a time, and is suspended until the document has registered successfully.</p>
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">TICDSDocumentSyncManager.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/userInfo" title="userInfo"></a>
-	<h3 class="subsubtitle method-title">userInfo</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>The User Info used for registration.</p>
-	</div>		
-	
-	
-	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly, retain) NSDictionary *userInfo</code></div>
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection discussion-section">
-		<h4 class="method-subtitle">Discussion</h4>
-		<p>Set the user info when registering with <a href="#//api/name/registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:"><code>registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:</code></a>.</p>
 	</div>
 	
 	

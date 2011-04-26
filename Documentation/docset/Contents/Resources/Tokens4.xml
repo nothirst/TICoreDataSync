@@ -214,14 +214,14 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/userInfo</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/documentUserInfo</TokenIdentifier>
 			<Abstract>The User Info used for registration.</Abstract>
 			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, readonly, retain) NSDictionary *userInfo</Declaration>
+			<Declaration>@property (nonatomic, readonly, retain) NSDictionary *documentUserInfo</Declaration>
 			
 			
-			<Anchor>//api/name/userInfo</Anchor>
+			<Anchor>//api/name/documentUserInfo</Anchor>
 		</Token>
 		
 		<Token>

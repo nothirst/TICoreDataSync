@@ -190,14 +190,14 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/userInfo</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/applicationUserInfo</TokenIdentifier>
 			<Abstract>The User Info used for registration.</Abstract>
 			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, readonly, retain) NSDictionary *userInfo</Declaration>
+			<Declaration>@property (nonatomic, readonly, retain) NSDictionary *applicationUserInfo</Declaration>
 			
 			
-			<Anchor>//api/name/userInfo</Anchor>
+			<Anchor>//api/name/applicationUserInfo</Anchor>
 		</Token>
 		
 		<Token>
