@@ -562,6 +562,11 @@
     return [[self relativePathToThisDocumentWholeStoreThisClientDirectory] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
 }
 
+- (NSString *)localAppliedSyncChangesFilePath
+{
+    return [[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
+}
+
 - (NSString *)unsynchronizedSyncChangesStorePath
 {
     return [[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSUnsynchronizedSyncChangesStoreName];

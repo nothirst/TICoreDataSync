@@ -230,6 +230,9 @@
 /** The path to this client's `AppliedSyncChangeSets.sqlite` file inside it's directory inside the `WholeStore` directory for this document, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFile;
 
+/** The path to the `AppliedSyncChanges.sqlite` file, located in the `helperFileDirectoryLocation`. */
+@property (nonatomic, readonly) NSString *localAppliedSyncChangesFilePath;
+
 @property (nonatomic, readonly) NSString * unsynchronizedSyncChangesStorePath;
 
 @end

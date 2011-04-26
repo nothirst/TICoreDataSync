@@ -268,28 +268,60 @@
     return [[[TICDSWholeStoreDownloadOperation alloc] initWithDelegate:self] autorelease];
 }
 
+#pragma mark -
+#pragma mark Post-Operation Work
+- (void)bailFromDocumentDownloadPostProcessingForOperation:(TICDSWholeStoreDownloadOperation *)anOperation withError:(NSError *)anError
+{
+    [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:), anError, [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier]];
+    [self ti_alertDelegateWithSelector:@selector(syncManager:failedToDownloadDocumentWithIdentifier:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier]];
+}
+
 #pragma mark Operation Communications
 - (void)documentDownloadOperationCompleted:(TICDSWholeStoreDownloadOperation *)anOperation
 {
     NSError *anyError = nil;
+    BOOL success = YES;
     
     NSURL *finalWholeStoreLocation = [[anOperation userInfo] valueForKey:kTICDSDocumentDownloadFinalWholeStoreLocation];
     
+    // Remove existing WholeStore, if necessary
     if( [[self fileManager] fileExistsAtPath:[finalWholeStoreLocation path]] ) {
         [self ti_alertDelegateWithSelector:@selector(syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], finalWholeStoreLocation];
         
-        [[self fileManager] removeItemAtPath:[finalWholeStoreLocation path] error:&anyError];
+        success = [[self fileManager] removeItemAtPath:[finalWholeStoreLocation path] error:&anyError];
+        
+        if( !success ) {
+            [self bailFromDocumentDownloadPostProcessingForOperation:anOperation withError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+            return;
+        }
     }
     
-    BOOL success = [[self fileManager] moveItemAtPath:[[anOperation localWholeStoreFileLocation] path] toPath:[finalWholeStoreLocation path] error:&anyError];
+    // Move downloaded WholeStore
+    success = [[self fileManager] moveItemAtPath:[[anOperation localWholeStoreFileLocation] path] toPath:[finalWholeStoreLocation path] error:&anyError];
     if( !success ) {
-        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:), [TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__], [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier]];
-        [self ti_alertDelegateWithSelector:@selector(syncManager:failedToDownloadDocumentWithIdentifier:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier]];
+        [self bailFromDocumentDownloadPostProcessingForOperation:anOperation withError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
         return;
     }
     
+    // Get document sync manager from delegate
+    /*NSURL *location = [self ti_objectFromDelegateWithSelector:@selector(syncManager:helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:atLocation:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], finalWholeStoreLocation];
+    
+    NSString *finalAppliedSyncChangeSetsPath = [aDocumentSyncManager localAppliedSyncChangesFilePath];
+    
+    // Remove existing applied sync changes, if necessary
+    if( [[self fileManager] fileExistsAtPath:finalAppliedSyncChangeSetsPath] && ![[self fileManager] removeItemAtPath:finalAppliedSyncChangeSetsPath error:&anyError] ) {
+        [self bailFromDocumentDownloadPostProcessingForOperation:anOperation withError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        return;
+    }
+    
+    // Move new applied sync changes, if necessary
+    if( [[self fileManager] fileExistsAtPath:[[anOperation localAppliedSyncChangeSetsFileLocation] path]] && ![[self fileManager] moveItemAtPath:[[anOperation localAppliedSyncChangeSetsFileLocation] path] toPath:finalAppliedSyncChangeSetsPath error:&anyError] ) {
+        [self bailFromDocumentDownloadPostProcessingForOperation:anOperation withError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        return;
+    }
+    */
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Document Download Operation Completed");
-    [self ti_alertDelegateWithSelector:@selector(syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], nil];
+    [self ti_alertDelegateWithSelector:@selector(syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], finalWholeStoreLocation];
 }
 
 - (void)documentDownloadOperationWasCancelled:(TICDSWholeStoreDownloadOperation *)anOperation

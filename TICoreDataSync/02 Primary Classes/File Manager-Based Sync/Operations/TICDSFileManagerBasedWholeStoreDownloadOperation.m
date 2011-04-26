@@ -80,6 +80,7 @@
 {
     if( ![[self fileManager] fileExistsAtPath:[self pathToAppliedSyncChangesFileForClientWithIdentifier:[self requestedWholeStoreClientIdentifier]]] ) {
         [self downloadedAppliedSyncChangeSetsFileWithSuccess:YES];
+        return;
     }
     
     NSError *anyError = nil;
