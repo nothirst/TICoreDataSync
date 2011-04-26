@@ -35,6 +35,7 @@
 #pragma mark -
 #pragma mark INTERNAL DATA MODEL
 @class TICDSSyncChange;
+@class TICDSSyncChangeSet;
 
 #pragma mark -
 #pragma mark EXTERNAL CLASSES

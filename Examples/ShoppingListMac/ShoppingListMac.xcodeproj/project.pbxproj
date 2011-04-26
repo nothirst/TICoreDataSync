@@ -55,6 +55,8 @@
 		38C0B63C136333D100B63589 /* TICDSSynchronizedManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C0B63B136333D100B63589 /* TICDSSynchronizedManagedObject.m */; };
 		38C0B641136338BC00B63589 /* TIKQDirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C0B63E136338BC00B63589 /* TIKQDirectoryWatcher.m */; };
 		38C0B642136338BC00B63589 /* TIManagedObjectExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C0B640136338BC00B63589 /* TIManagedObjectExtensions.m */; };
+		38CBE6BD136745DB00523599 /* TICDSSyncChangeSet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 38CBE6BB136745DB00523599 /* TICDSSyncChangeSet.xcdatamodeld */; };
+		38CBE6D2136746B600523599 /* TICDSSyncChangeSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CBE6D1136746B600523599 /* TICDSSyncChangeSet.m */; };
 		38F52CCC1366CEF8002B886B /* TICDSFileManagerBasedWholeStoreDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F52CCB1366CEF8002B886B /* TICDSFileManagerBasedWholeStoreDownloadOperation.m */; };
 		38FF6075135708F100D12E6D /* ShoppingList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 38FF6074135708F100D12E6D /* ShoppingList.xcdatamodeld */; };
 		38FFACBD1360439F004758EE /* TICDSApplicationSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 38FFACBC1360439F004758EE /* TICDSApplicationSyncManager.m */; };
@@ -147,6 +149,9 @@
 		38C0B63E136338BC00B63589 /* TIKQDirectoryWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TIKQDirectoryWatcher.m; sourceTree = "<group>"; };
 		38C0B63F136338BC00B63589 /* TIManagedObjectExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TIManagedObjectExtensions.h; sourceTree = "<group>"; };
 		38C0B640136338BC00B63589 /* TIManagedObjectExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TIManagedObjectExtensions.m; sourceTree = "<group>"; };
+		38CBE6BC136745DB00523599 /* TICDSSyncChangeSet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TICDSSyncChangeSet.xcdatamodel; sourceTree = "<group>"; };
+		38CBE6D0136746B600523599 /* TICDSSyncChangeSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSyncChangeSet.h; sourceTree = "<group>"; };
+		38CBE6D1136746B600523599 /* TICDSSyncChangeSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSyncChangeSet.m; sourceTree = "<group>"; };
 		38F52CCA1366CEF8002B886B /* TICDSFileManagerBasedWholeStoreDownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSFileManagerBasedWholeStoreDownloadOperation.h; sourceTree = "<group>"; };
 		38F52CCB1366CEF8002B886B /* TICDSFileManagerBasedWholeStoreDownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSFileManagerBasedWholeStoreDownloadOperation.m; sourceTree = "<group>"; };
 		38FF6070135708E900D12E6D /* ShoppingList.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = ShoppingList.xcdatamodel; sourceTree = "<group>"; };
@@ -328,6 +333,9 @@
 				389D76B313632544007F19DC /* TICDSSyncChange.xcdatamodel */,
 				389D76B513632643007F19DC /* TICDSSyncChange.h */,
 				389D76B613632643007F19DC /* TICDSSyncChange.m */,
+				38CBE6BB136745DB00523599 /* TICDSSyncChangeSet.xcdatamodeld */,
+				38CBE6D0136746B600523599 /* TICDSSyncChangeSet.h */,
+				38CBE6D1136746B600523599 /* TICDSSyncChangeSet.m */,
 			);
 			path = "03 Internal Data Model";
 			sourceTree = "<group>";
@@ -513,6 +521,8 @@
 				38F52CCC1366CEF8002B886B /* TICDSFileManagerBasedWholeStoreDownloadOperation.m in Sources */,
 				3838C79F1367077B00D64CC6 /* TICDSSynchronizationOperation.m in Sources */,
 				383F454F1367186B004FA253 /* TICDSFileManagerBasedSynchronizationOperation.m in Sources */,
+				38CBE6BD136745DB00523599 /* TICDSSyncChangeSet.xcdatamodeld in Sources */,
+				38CBE6D2136746B600523599 /* TICDSSyncChangeSet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -640,6 +650,16 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
+		38CBE6BB136745DB00523599 /* TICDSSyncChangeSet.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				38CBE6BC136745DB00523599 /* TICDSSyncChangeSet.xcdatamodel */,
+			);
+			currentVersion = 38CBE6BC136745DB00523599 /* TICDSSyncChangeSet.xcdatamodel */;
+			path = TICDSSyncChangeSet.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
 		38FF6074135708F100D12E6D /* ShoppingList.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (

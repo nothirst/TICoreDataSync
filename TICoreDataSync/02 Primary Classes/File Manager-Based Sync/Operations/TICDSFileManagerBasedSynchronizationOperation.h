@@ -26,4 +26,7 @@
 /** The path this client's directory inside this document's `SyncChanges` directory. */
 @property (retain) NSString *thisDocumentSyncChangesThisClientDirectoryPath;
 
+/** The path to a given client's `SyncChanges` directory. */
+- (NSString *)pathToSyncChangesDirectoryForClientWithIdentifier:(NSString *)anIdentifier;
+
 @end

@@ -35,6 +35,7 @@
 #pragma mark -
 #pragma mark Internal Data Model
 #import "TICDSSyncChange.h"
+#import "TICDSSyncChangeSet.h"
 
 #pragma mark -
 #pragma mark Utilities

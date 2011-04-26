@@ -24,15 +24,16 @@
      2. Add the UUID of the set to the list of `AppliedSyncChangeCommands.sqlite`.
  5. If synchronization can continue, then for each client device that isn't the current device:
      1. Fetch an array containing UUID strings for each available `SyncChangeSet`.
- 6. Determine which `SyncChangeSet`s haven't yet been applied locally.
- 7. If any `SyncChangeSet`s haven't yet been applied, fetch them to the `UnappliedSyncChangeSets` helper file directory.
- 8. Go through each `SyncChangeSet` and:
+     2. Determine which `SyncChangeSet`s haven't yet been applied locally.
+     3. If any `SyncChangeSet`s haven't yet been applied, fetch them to the `UnappliedSyncChangeSets` helper file directory.
+ 6. Go through each `SyncChangeSet` and:
      1. Check for conflicts against local changes made since the last synchronization.
      2. Fix any conflicts, and build an array of conflict warnings for issues that cannot be resolved.
      3. Apply each `SyncChange` in the set to the local `WholeStore`.
      4. Add the UUID of the set to the list of `AppliedSyncChangeSets.sqlite`.
- 9. If there are local `SyncCommand`s, rename `UnsynchronizedSyncCommands.sqlite` to `UUID.synccmd` and push the file to the remote.
- 10. If there are local `SyncChange`s, rename `UnsynchronizedSyncChanges.sqlite` to `UUID.syncchd` and push the file to the remote.
+ 7. If there are local `SyncCommand`s, rename `UnsynchronizedSyncCommands.sqlite` to `UUID.synccmd` and push the file to the remote.
+ 8. If there are local `SyncChange`s, rename `UnsynchronizedSyncChanges.sqlite` to `UUID.syncchd` and push the file to the remote.
+ 9. Save this client's file in the `RecentSyncs` directory for this document.
  
  Operations are typically created automatically by the relevant sync manager.
  
@@ -40,13 +41,23 @@
 @interface TICDSSynchronizationOperation : TICDSOperation {
 @private
     NSArray *_otherSynchronizedClientDeviceIdentifiers;
+    NSMutableArray *_otherSynchronizedClientDeviceSyncChangeSetIdentifiers;
     
     NSURL *_localSyncChangesToMergeLocation;
     
     BOOL _completionInProgress;
     TICDSOperationPhaseStatus _fetchArrayOfClientDeviceIDsStatus;
     TICDSOperationPhaseStatus _fetchArrayOfSyncCommandSetIDsStatus;
+    
+    NSUInteger _numberOfSyncChangeSetIDArraysToFetch;
+    NSUInteger _numberOfSyncChangeSetIDArraysFetched;
+    NSUInteger _numberOfSyncChangeSetIDArraysThatFailedToFetch;
     TICDSOperationPhaseStatus _fetchArrayOfSyncChangeSetIDsStatus;
+    
+    NSUInteger _numberOfUnappliedSyncChangeSetsToFetch;
+    NSUInteger _numberOfUnappliedSyncChangeSetsFetched;
+    NSUInteger _numberOfUnappliedSyncChangeSetsThatFailedToFetch;
+    TICDSOperationPhaseStatus _fetchUnappliedSyncChangeSetsStatus;
     
     TICDSOperationPhaseStatus _uploadLocalSyncCommandSetStatus;
     TICDSOperationPhaseStatus _uploadLocalSyncChangeSetStatus;
@@ -57,8 +68,15 @@
 
 /** Build an array of `NSString` identifiers for all clients that have synchronized with this document. 
  
- Call `buildArrayOfClientDeviceIdentifiers` when the array is built. */
+ Call `builtArrayOfClientDeviceIdentifiers:` when the array is built. */
 - (void)buildArrayOfClientDeviceIdentifiers;
+
+/** Build an array of `NSString` identifiers for each `SyncChangeSet` for the given client device.
+ 
+ Call `builtArrayOfClientSyncChangeSetIdentifiers:forClientIdentifier:` when the array is built.
+ 
+ @param anIdentifier The unique identifier of the client. */
+- (void)buildArrayOfSyncChangeSetIdentifiersForClientIdentifier:(NSString *)anIdentifier;
 
 /** Upload the specified sync changes file to the client device's directory inside the document's `SyncChanges` directory.
  
@@ -76,6 +94,14 @@
  @param anArray The array of identifiers. Pass `nil` if an error occurred. */
 - (void)builtArrayOfClientDeviceIdentifiers:(NSArray *)anArray;
 
+/** Pass back the assembled `NSArray` of `NSString` `SyncChangeSet` identifiers.
+ 
+ If an error occured, call `setError:` first, then specify `nil` for `anArray`.
+ 
+ @param anArray The array of identifiers. Pass `nil` if an error occurred.
+ @param anIdentifier The client identifier for this array of `SyncChangeSet` identifiers. */
+- (void)builtArrayOfClientSyncChangeSetIdentifiers:(NSArray *)anArray forClientIdentifier:(NSString *)anIdentifier;
+
 /** Indicate whether the upload of the sync change set file was successful.
  
  If not, call `setError:` first, then specify `NO` for `success`.
@@ -92,6 +118,9 @@
 /** An array of client identifiers for clients that synchronize with this document, excluding this client. */
 @property (nonatomic, retain) NSArray *otherSynchronizedClientDeviceIdentifiers;
 
+/** An array of sync change set identifiers from other clients that synchronize with this document. */
+@property (retain) NSMutableArray *otherSynchronizedClientDeviceSyncChangeSetIdentifiers;
+
 #pragma mark Completion
 /** @name Completion */
 
@@ -104,8 +133,20 @@
 /** The phase status regarding fetching an array of available SyncCommand sets. */
 @property (nonatomic, assign) TICDSOperationPhaseStatus fetchArrayOfSyncCommandSetIDsStatus;
 
-/** The phase status regarding fetching an array of available SyncChange sets. */
+/** The total number of arrays of `SyncChangeSet` identifiers that need to be fetched. */
+@property (nonatomic, assign) NSUInteger numberOfSyncChangeSetIDArraysToFetch;
+
+/** The number of arrays of `SyncChangeSet` identifiers that have already been fetched. */
+@property (nonatomic, assign) NSUInteger numberOfSyncChangeSetIDArraysFetched;
+
+/** The number of arrays of `SyncChangeSet` identifiers that failed to fetch because of an error. */
+@property (nonatomic, assign) NSUInteger numberOfSyncChangeSetIDArraysThatFailedToFetch;
+
+/** The phase status regarding fetching an array of available `SyncChangeSet` identifiers. */
 @property (nonatomic, assign) TICDSOperationPhaseStatus fetchArrayOfSyncChangeSetIDsStatus;
+
+/** The phase status regarding fetching all unapplied `SyncChangeSet`s. */
+@property (nonatomic, assign) TICDSOperationPhaseStatus fetchUnappliedSyncChangeSetsStatus;
 
 /** The phase status regarding upload of the local set of sync commands. */
 @property (nonatomic, assign) TICDSOperationPhaseStatus uploadLocalSyncCommandSetStatus;

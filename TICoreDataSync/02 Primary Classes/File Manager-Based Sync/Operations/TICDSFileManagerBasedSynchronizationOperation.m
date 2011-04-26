@@ -49,6 +49,27 @@
     [self uploadedLocalSyncChangeSetFileSuccessfully:success];
 }
 
+- (void)buildArrayOfSyncChangeSetIdentifiersForClientIdentifier:(NSString *)anIdentifier
+{
+    NSError *anyError = nil;
+    NSArray *contents = [[self fileManager] contentsOfDirectoryAtPath:[self pathToSyncChangesDirectoryForClientWithIdentifier:anIdentifier] error:&anyError];
+    
+    if( !contents ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    NSMutableArray *identifiers = [NSMutableArray arrayWithCapacity:[contents count]];
+    for( NSString *eachIdentifier in contents ) {
+        if( [[eachIdentifier substringToIndex:1] isEqualToString:@"."] ) {
+            continue;
+        }
+        
+        [identifiers addObject:eachIdentifier];
+    }
+    
+    [self builtArrayOfClientSyncChangeSetIdentifiers:identifiers forClientIdentifier:anIdentifier];
+}
+
 #pragma mark -
 #pragma mark Initialization and Deallocation
 - (void)dealloc
@@ -57,6 +78,13 @@
     [_thisDocumentSyncChangesThisClientDirectoryPath release], _thisDocumentSyncChangesThisClientDirectoryPath = nil;
 
     [super dealloc];
+}
+
+#pragma mark -
+#pragma mark Paths
+- (NSString *)pathToSyncChangesDirectoryForClientWithIdentifier:(NSString *)anIdentifier
+{
+    return [[self thisDocumentSyncChangesDirectoryPath] stringByAppendingPathComponent:anIdentifier];
 }
 
 #pragma mark -
