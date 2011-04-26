@@ -125,6 +125,7 @@
 
 - (void)dealloc
 {
+    [_userInfo release], _userInfo = nil;
     [_error release], _error = nil;
     [_clientIdentifier release], _clientIdentifier = nil;
 
@@ -134,6 +135,7 @@
 #pragma mark -
 #pragma mark Properties
 @synthesize delegate = _delegate;
+@synthesize userInfo = _userInfo;
 @synthesize isExecuting = _isExecuting;
 @synthesize isFinished = _isFinished;
 @synthesize error = _error;

@@ -26,6 +26,7 @@
 @interface TICDSOperation : NSOperation {
 @private
     NSObject <TICDSOperationDelegate> *_delegate;
+    NSDictionary *_userInfo;
     
     BOOL _isExecuting;
     BOOL _isFinished;
@@ -67,6 +68,9 @@
 
 /** The operation delegate. */
 @property (nonatomic, assign) NSObject <TICDSOperationDelegate> *delegate;
+
+/** A user info dictionary for sync managers to keep task-specific information. */
+@property (retain) NSDictionary *userInfo;
 
 /** By default returns `NO`, but override if your operation needs its code to execute on the main thread, such as for an `NSURLConnection`. */
 @property (readonly) BOOL needsMainThread;
