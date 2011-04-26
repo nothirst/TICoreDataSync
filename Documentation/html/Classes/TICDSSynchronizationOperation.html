@@ -42,6 +42,8 @@
 	
 	<option value="//api/name/fetchArrayOfSyncCommandSetIDsStatus">&nbsp;&nbsp;&nbsp;&nbsp;fetchArrayOfSyncCommandSetIDsStatus</option>
 	
+	<option value="//api/name/otherSynchronizedClientDeviceIdentifiers">&nbsp;&nbsp;&nbsp;&nbsp;otherSynchronizedClientDeviceIdentifiers</option>
+	
 	
 	
 	
@@ -73,6 +75,8 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Callbacks">Callbacks</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Properties">Properties</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Completion">Completion</a></span></li>
 	
 </ul></li>
@@ -90,6 +94,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchArrayOfSyncChangeSetIDsStatus">fetchArrayOfSyncChangeSetIDsStatus</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchArrayOfSyncCommandSetIDsStatus">fetchArrayOfSyncCommandSetIDsStatus</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/otherSynchronizedClientDeviceIdentifiers">otherSynchronizedClientDeviceIdentifiers</a></span></li>
 	
 </ul></li>
 
@@ -163,7 +169,12 @@
 <li> Add the UUID of the set to the list of <code>AppliedSyncChangeCommands.sqlite</code>.</li>
 </ol>
 </li>
-<li>If synchronization can continue, fetch an array of UUID strings for each available <code>SyncChangeSet</code>.</li>
+<li>If synchronization can continue, then for each client device that isn&rsquo;t the current device:
+
+<ol>
+<li> Fetch an array containing UUID strings for each available <code>SyncChangeSet</code>.</li>
+</ol>
+</li>
 <li>Determine which <code>SyncChangeSet</code>s haven&rsquo;t yet been applied locally.</li>
 <li>If any <code>SyncChangeSet</code>s haven&rsquo;t yet been applied, fetch them to the <code>UnappliedSyncChangeSets</code> helper file directory.</li>
 <li>Go through each <code>SyncChangeSet</code> and:
@@ -217,6 +228,21 @@
 		<span class="tooltip"><p>Pass back the assembled <code>NSArray</code> of <code>NSString</code> <code>ClientDevice</code> identifiers.</p></span>
 	</span>
 	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Properties" name="task_Properties"></a>
+						<h3 class="subsubtitle task-title">Properties</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/otherSynchronizedClientDeviceIdentifiers">&nbsp;&nbsp;otherSynchronizedClientDeviceIdentifiers</a></code>
+		<span class="tooltip"><p>An array of client identifiers for clients that synchronize with this document, excluding this client.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
 	
 </li>
 						</ul>
@@ -375,6 +401,38 @@
 	
 	
 	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) TICDSOperationPhaseStatus fetchArrayOfSyncCommandSetIDsStatus</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/otherSynchronizedClientDeviceIdentifiers" title="otherSynchronizedClientDeviceIdentifiers"></a>
+	<h3 class="subsubtitle method-title">otherSynchronizedClientDeviceIdentifiers</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>An array of client identifiers for clients that synchronize with this document, excluding this client.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSArray *otherSynchronizedClientDeviceIdentifiers</code></div>
 	
 	
 	
