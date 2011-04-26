@@ -1,274 +1,188 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/TICDSApplicationSyncManagerDelegate.html">
+	<File path="Classes/TICDSWholeStoreUploadOperation.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/TICDSApplicationSyncManagerDelegate</TokenIdentifier>
-			<Abstract>The TICDSApplicationSyncManagerDelegate protocol defines the methods implemented by delegates of a TICDSApplicationSyncManager object.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/TICDSWholeStoreUploadOperation</TokenIdentifier>
+			<Abstract>The TICDSWholeStoreUploadOperation class describes a generic operation used by the TICoreDataSync framework to upload the whole store for a document.</Abstract>
+			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>
 			
 			<NodeRef refid="24"/>
 		</Token>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManagerDidStartRegistration:</TokenIdentifier>
-			<Abstract>Informs the delegate that the sync manager has started the application registration process.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreUploadOperation/checkWhetherThisClientWholeStoreDirectoryExists</TokenIdentifier>
+			<Abstract>Check whether a directory exists for this client inside the document's WholeStore directory.</Abstract>
+			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManagerDidStartRegistration:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>- (void)checkWhetherThisClientWholeStoreDirectoryExists</Declaration>
 			
-			<Anchor>//api/name/syncManagerDidStartRegistration:</Anchor>
+			
+			<Anchor>//api/name/checkWhetherThisClientWholeStoreDirectoryExists</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManager:encounteredRegistrationError:</TokenIdentifier>
-			<Abstract>Informs the delegate that the sync manager encountered an error during the application registration process.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreUploadOperation/createThisClientWholeStoreDirectory</TokenIdentifier>
+			<Abstract>Create this client's directory inside this document's WholeStore directory; this method will be called automatically if the directory doesn't already exist.</Abstract>
+			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager encounteredRegistrationError:(NSError *)anError</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter><Parameter>
-					<Name>anError</Name>
-					<Abstract>The error that was encountered.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>- (void)createThisClientWholeStoreDirectory</Declaration>
 			
-			<Anchor>//api/name/syncManager:encounteredRegistrationError:</Anchor>
+			
+			<Anchor>//api/name/createThisClientWholeStoreDirectory</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManagerFailedToRegister:</TokenIdentifier>
-			<Abstract>Informs the delegate that the registration process failed to complete.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreUploadOperation/uploadWholeStoreFile</TokenIdentifier>
+			<Abstract>Upload the store at localWholeStoreFileLocation to the remote path /Documents/documentIdentifier/WholeStore/clientIdentifier/WholeStore.sqlite.</Abstract>
+			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManagerFailedToRegister:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>- (void)uploadWholeStoreFile</Declaration>
 			
-			<Anchor>//api/name/syncManagerFailedToRegister:</Anchor>
+			
+			<Anchor>//api/name/uploadWholeStoreFile</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManagerDidRegisterSuccessfully:</TokenIdentifier>
-			<Abstract>Informs the delegate that the registration process completed successfully.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreUploadOperation/uploadAppliedSyncChangeSetsFile</TokenIdentifier>
+			<Abstract>Upload the applied sync change sets file at localAppliedSyncChangeSetsFileLocation to the remote path /Documents/documentIdentifier/WholeStore/clientIdentifier/AppliedSyncChangeSets.sqlite.</Abstract>
+			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManagerDidRegisterSuccessfully:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>- (void)uploadAppliedSyncChangeSetsFile</Declaration>
 			
-			<Anchor>//api/name/syncManagerDidRegisterSuccessfully:</Anchor>
+			
+			<Anchor>//api/name/uploadAppliedSyncChangeSetsFile</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:</TokenIdentifier>
-			<Abstract>Informs the delegate that the sync manager has started to check for available documents that have previously been synchronized.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreUploadOperation/discoveredStatusOfWholeStoreDirectory:</TokenIdentifier>
+			<Abstract>Indicate the status of this client's directory inside the WholeStore directory for this document.</Abstract>
+			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
+			<Declaration>- (void)discoveredStatusOfWholeStoreDirectory:(TICDSRemoteFileStructureExistsResponseType)status</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
+					<Name>status</Name>
+					<Abstract>The status of the directory: does exist, does not exist, or error (see TICDSTypesAndEnums.h for possible values).</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:</Anchor>
+			<Anchor>//api/name/discoveredStatusOfWholeStoreDirectory:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:</TokenIdentifier>
-			<Abstract>Informs the delegate that the sync manager failed to check for available documents that have previously been synchronized.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreUploadOperation/uploadedWholeStoreFileWithSuccess:</TokenIdentifier>
+			<Abstract>Indicate whether the upload of the whole store file was successful.</Abstract>
+			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager failedToCheckForPreviouslySynchronizedDocumentsWithError:(NSError *)anError</Declaration>
+			<Declaration>- (void)uploadedWholeStoreFileWithSuccess:(BOOL)success</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter><Parameter>
-					<Name>anError</Name>
-					<Abstract>The error related to the failure.</Abstract>
+					<Name>success</Name>
+					<Abstract>A Boolean indicating whether the whole store file was uploaded or not.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:</Anchor>
+			<Anchor>//api/name/uploadedWholeStoreFileWithSuccess:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManagerDidNotFindAnyPreviouslySynchronizedDocuments:</TokenIdentifier>
-			<Abstract>Informs the delegate that the sync manager didn't find any available documents that have previously been synchronized.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreUploadOperation/createdThisClientWholeStoreDirectorySuccessfully:</TokenIdentifier>
+			<Abstract>Indicate whether the creation of this client's directory inside this document's WholeStore directory was successful.</Abstract>
+			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManagerDidNotFindAnyPreviouslySynchronizedDocuments:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
+			<Declaration>- (void)createdThisClientWholeStoreDirectorySuccessfully:(BOOL)success</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
+					<Name>success</Name>
+					<Abstract>A Boolean indicating whether the directory was created or not.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManagerDidNotFindAnyPreviouslySynchronizedDocuments:</Anchor>
+			<Anchor>//api/name/createdThisClientWholeStoreDirectorySuccessfully:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManager:didFindPreviouslySynchronizedDocuments:</TokenIdentifier>
-			<Abstract>Informs the delegate that the sync manager found one or more available documents that have previously been synchronized.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreUploadOperation/uploadedAppliedSyncChangeSetsFileWithSuccess:</TokenIdentifier>
+			<Abstract>Indicate whether the upload of the applied sync change sets file was successful.</Abstract>
+			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager didFindPreviouslySynchronizedDocuments:(NSArray *)documentsArray</Declaration>
+			<Declaration>- (void)uploadedAppliedSyncChangeSetsFileWithSuccess:(BOOL)success</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter><Parameter>
-					<Name>documentsArray</Name>
-					<Abstract>An array of NSDictionary objects containing information about each available document.</Abstract>
+					<Name>success</Name>
+					<Abstract>A Boolean indicating whether the applied sync change sets file was uploaded or not.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManager:didFindPreviouslySynchronizedDocuments:</Anchor>
+			<Anchor>//api/name/uploadedAppliedSyncChangeSetsFileWithSuccess:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManager:didStartToDownloadDocumentWithIdentifier:</TokenIdentifier>
-			<Abstract>Informs the delegate that the sync manager has started to download a requested document that has previously been synchronized.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSWholeStoreUploadOperation/localWholeStoreFileLocation</TokenIdentifier>
+			<Abstract>The location of the whole store file to upload.</Abstract>
+			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager didStartToDownloadDocumentWithIdentifier:(NSString *)anIdentifier</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter><Parameter>
-					<Name>anIdentifier</Name>
-					<Abstract>The unique synchronization identifier of the document.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (retain) NSURL *localWholeStoreFileLocation</Declaration>
 			
-			<Anchor>//api/name/syncManager:didStartToDownloadDocumentWithIdentifier:</Anchor>
+			
+			<Anchor>//api/name/localWholeStoreFileLocation</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:</TokenIdentifier>
-			<Abstract>Informs the delegate that the sync manager encountered an error during the document download process.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSWholeStoreUploadOperation/localAppliedSyncChangeSetsFileLocation</TokenIdentifier>
+			<Abstract>The location of the applied sync change sets file to upload.</Abstract>
+			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager encounteredDownloadError:(NSError *)anError forDownloadOfDocumentWithIdentifier:(NSString *)anIdentifier</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter><Parameter>
-					<Name>anError</Name>
-					<Abstract>The error that was encountered.</Abstract>
-				</Parameter><Parameter>
-					<Name>anIdentifier</Name>
-					<Abstract>The unique synchronization identifier of the document.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (retain) NSURL *localAppliedSyncChangeSetsFileLocation</Declaration>
 			
-			<Anchor>//api/name/syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:</Anchor>
+			
+			<Anchor>//api/name/localAppliedSyncChangeSetsFileLocation</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManager:failedToDownloadDocumentWithIdentifier:</TokenIdentifier>
-			<Abstract>Informs the delegate that the download of a requested document has failed to complete.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSWholeStoreUploadOperation/completionInProgress</TokenIdentifier>
+			<Abstract>Used to indicate that completion is currently in progress, and that no further checks should be made.</Abstract>
+			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager failedToDownloadDocumentWithIdentifier:(NSString *)anIdentifier</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter><Parameter>
-					<Name>anIdentifier</Name>
-					<Abstract>The unique synchronization identifier of the document.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (nonatomic, assign) BOOL completionInProgress</Declaration>
 			
-			<Anchor>//api/name/syncManager:failedToDownloadDocumentWithIdentifier:</Anchor>
+			
+			<Anchor>//api/name/completionInProgress</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:</TokenIdentifier>
-			<Abstract>Informs the delegate that a downloaded store file file is about to replace an existing store file on disc.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSWholeStoreUploadOperation/wholeStoreDirectoryStatus</TokenIdentifier>
+			<Abstract>The phase status regarding checking (and creating if necessary) this client's directory inside the WholeStore directory for this document.</Abstract>
+			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager willReplaceWholeStoreFileForDocumentWithIdentifier:(NSString *)anIdentifier atLocation:(NSURL *)aLocation</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter><Parameter>
-					<Name>anIdentifier</Name>
-					<Abstract>The unique synchronization identifier of the document.</Abstract>
-				</Parameter><Parameter>
-					<Name>aLocation</Name>
-					<Abstract>The location on disc of the existing document that will be replaced.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus wholeStoreDirectoryStatus</Declaration>
 			
-			<Anchor>//api/name/syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:</Anchor>
+			
+			<Anchor>//api/name/wholeStoreDirectoryStatus</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atLocation:</TokenIdentifier>
-			<Abstract>Invoked to request the delegate to return a configured (though not yet registered) document sync manager for a downloaded document.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSWholeStoreUploadOperation/wholeStoreFileUploadStatus</TokenIdentifier>
+			<Abstract>The phase status of the whole store file upload.</Abstract>
+			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
 			
-			<Declaration>- (TICDSDocumentSyncManager *)syncManager:(TICDSApplicationSyncManager *)aSyncManager preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:(NSString *)anIdentifier atLocation:(NSURL *)aLocation</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The document sync manager object that sent the message.</Abstract>
-				</Parameter><Parameter>
-					<Name>anIdentifier</Name>
-					<Abstract>The unique synchronization identifier for the document.</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract>The pre-configured, unregistered sync manager for the document.</Abstract></ReturnValue>
-			<Anchor>//api/name/syncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atLocation:</Anchor>
+			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus wholeStoreFileUploadStatus</Declaration>
+			
+			
+			<Anchor>//api/name/wholeStoreFileUploadStatus</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:</TokenIdentifier>
-			<Abstract>Informs the delegate that the download of a requested document has completed successfully.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSWholeStoreUploadOperation/appliedSyncChangeSetsFileUploadStatus</TokenIdentifier>
+			<Abstract>The phase status of the applied sync change sets file upload.</Abstract>
+			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishDownloadingDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter><Parameter>
-					<Name>anIdentifier</Name>
-					<Abstract>The unique synchronization identifier of the document.</Abstract>
-				</Parameter><Parameter>
-					<Name>aLocation</Name>
-					<Abstract>The location of the downloaded store file.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus appliedSyncChangeSetsFileUploadStatus</Declaration>
 			
-			<Anchor>//api/name/syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:</Anchor>
+			
+			<Anchor>//api/name/appliedSyncChangeSetsFileUploadStatus</Anchor>
 		</Token>
 		
 	</File>

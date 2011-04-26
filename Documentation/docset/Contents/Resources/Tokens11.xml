@@ -33,5 +33,16 @@
 			<Anchor>//api/name/thisDocumentSyncChangesThisClientDirectoryPath</Anchor>
 		</Token>
 		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSFileManagerBasedSynchronizationOperation/pathToSyncChangesDirectoryForClientWithIdentifier:</TokenIdentifier>
+			<Abstract>The path to a given client's SyncChanges directory.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)pathToSyncChangesDirectoryForClientWithIdentifier:(NSString *)anIdentifier</Declaration>
+			
+			
+			<Anchor>//api/name/pathToSyncChangesDirectoryForClientWithIdentifier:</Anchor>
+		</Token>
+		
 	</File>
 </Tokens>
