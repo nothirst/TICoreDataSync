@@ -12,6 +12,17 @@
 		
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreDownloadOperation/checkForMostRecentClientWholeStore</TokenIdentifier>
+			<Abstract>Determine which client uploaded a WholeStore most recently.</Abstract>
+			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)checkForMostRecentClientWholeStore</Declaration>
+			
+			
+			<Anchor>//api/name/checkForMostRecentClientWholeStore</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreDownloadOperation/downloadWholeStoreFile</TokenIdentifier>
 			<Abstract>Download the store at the remote document store path to the localWholeStoreFileLocation.</Abstract>
 			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
@@ -31,6 +42,22 @@
 			
 			
 			<Anchor>//api/name/downloadAppliedSyncChangeSetsFile</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreDownloadOperation/determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:</TokenIdentifier>
+			<Abstract>Indicate which client uploaded the most recent WholeStore.</Abstract>
+			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:(NSString *)anIdentifier</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>anIdentifier</Name>
+					<Abstract>The identifier of the client.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:</Anchor>
 		</Token>
 		
 		<Token>
@@ -66,6 +93,17 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSWholeStoreDownloadOperation/requestedWholeStoreClientIdentifier</TokenIdentifier>
+			<Abstract>The client identifier for the WholeStore to download. If this is not specified before the operation executes, the operation will determine which client uploaded a store most recently.</Abstract>
+			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSString *requestedWholeStoreClientIdentifier</Declaration>
+			
+			
+			<Anchor>//api/name/requestedWholeStoreClientIdentifier</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSWholeStoreDownloadOperation/localWholeStoreFileLocation</TokenIdentifier>
 			<Abstract>The location of the whole store file to upload.</Abstract>
 			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
@@ -96,6 +134,17 @@
 			
 			
 			<Anchor>//api/name/completionInProgress</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSWholeStoreDownloadOperation/determineMostRecentlyUploadedStoreStatus</TokenIdentifier>
+			<Abstract>The phase status of the check for which client uploaded a store most recently.</Abstract>
+			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus determineMostRecentlyUploadedStoreStatus</Declaration>
+			
+			
+			<Anchor>//api/name/determineMostRecentlyUploadedStoreStatus</Anchor>
 		</Token>
 		
 		<Token>

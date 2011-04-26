@@ -72,6 +72,8 @@
 	
 	<option value="//api/name/applicationRegistrationOperation">&nbsp;&nbsp;&nbsp;&nbsp;- applicationRegistrationOperation</option>
 	
+	<option value="//api/name/documentDownloadOperationForDocumentWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- documentDownloadOperationForDocumentWithIdentifier:</option>
+	
 	<option value="//api/name/listOfPreviouslySynchronizedDocumentsOperation">&nbsp;&nbsp;&nbsp;&nbsp;- listOfPreviouslySynchronizedDocumentsOperation</option>
 	
 	<option value="//api/name/registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:">&nbsp;&nbsp;&nbsp;&nbsp;- registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:</option>
@@ -157,6 +159,8 @@
 <li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationRegistrationOperation">applicationRegistrationOperation</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentDownloadOperationForDocumentWithIdentifier:">documentDownloadOperationForDocumentWithIdentifier:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/listOfPreviouslySynchronizedDocumentsOperation">listOfPreviouslySynchronizedDocumentsOperation</a></span></li>
 	
@@ -302,6 +306,13 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/listOfPreviouslySynchronizedDocumentsOperation">&ndash;&nbsp;listOfPreviouslySynchronizedDocumentsOperation</a></code>
 		<span class="tooltip"><p>Returns an operation to fetch a list of previously synchronized documents.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentDownloadOperationForDocumentWithIdentifier:">&ndash;&nbsp;documentDownloadOperationForDocumentWithIdentifier:</a></code>
+		<span class="tooltip"><p>Returns an operation to download a document with a given identifier.</p></span>
 	</span>
 	
 	
@@ -926,7 +937,7 @@
 	
 	<div class="method-subsection return">
 		<h4 class="method-subtitle parameter-title">Return Value</h4>
-		<p>a correctly-configured subclass of <a href="../Classes/TICDSApplicationRegistrationOperation.html"><code>TICDSApplicationRegistrationOperation</code></a>.</p>
+		<p>A correctly-configured subclass of <a href="../Classes/TICDSApplicationRegistrationOperation.html"><code>TICDSApplicationRegistrationOperation</code></a>.</p>
 	</div>
 	
 	
@@ -934,6 +945,58 @@
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>Subclasses of <a href="TICDSApplicationSyncManager.html"><code>TICDSApplicationSyncManager</code></a> use this method to return a correctly-configured application registration operation for their particular sync method.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentDownloadOperationForDocumentWithIdentifier:" title="documentDownloadOperationForDocumentWithIdentifier:"></a>
+	<h3 class="subsubtitle method-title">documentDownloadOperationForDocumentWithIdentifier:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns an operation to download a document with a given identifier.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (TICDSWholeStoreDownloadOperation *)documentDownloadOperationForDocumentWithIdentifier:(NSString *)<em>anIdentifier</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The unique synchronization identifier of the document to download.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A correctly-configured subclass of <a href="../Classes/TICDSWholeStoreDownloadOperation.html"><code>TICDSWholeStoreDownloadOperation</code></a>.</p>
+	</div>
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Subclasses of <a href="TICDSApplicationSyncManager.html"><code>TICDSApplicationSyncManager</code></a> use this method to return a correctly-configured whole store download operation for their particular sync method.</p>
 	</div>
 	
 	
@@ -968,7 +1031,7 @@
 	
 	<div class="method-subsection return">
 		<h4 class="method-subtitle parameter-title">Return Value</h4>
-		<p>a correctly-configured subclass of <a href="../Classes/TICDSListOfPreviouslySynchronizedDocumentsOperation.html"><code>TICDSListOfPreviouslySynchronizedDocumentsOperation</code></a>.</p>
+		<p>A correctly-configured subclass of <a href="../Classes/TICDSListOfPreviouslySynchronizedDocumentsOperation.html"><code>TICDSListOfPreviouslySynchronizedDocumentsOperation</code></a>.</p>
 	</div>
 	
 	
@@ -1165,7 +1228,7 @@
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2011 Tim Isted. All rights reserved. (Last updated: 2011-04-25)</span><br />
+						<p><span class="copyright">&copy; 2011 Tim Isted. All rights reserved. (Last updated: 2011-04-26)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.0.3 (build 668)</a>.</span></p>
 						
