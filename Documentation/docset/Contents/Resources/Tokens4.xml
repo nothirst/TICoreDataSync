@@ -431,5 +431,27 @@
 			<Anchor>//api/name/localAppliedSyncChangesFilePath</Anchor>
 		</Token>
 		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/syncChangesBeingSynchronizedStorePath</TokenIdentifier>
+			<Abstract>The path to the SyncChangesBeingSynchronized.sqlite file, located in the helperFileDirectoryLocation.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *syncChangesBeingSynchronizedStorePath</Declaration>
+			
+			
+			<Anchor>//api/name/syncChangesBeingSynchronizedStorePath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/unsynchronizedSyncChangesStorePath</TokenIdentifier>
+			<Abstract>The path to the UnsynchronizedSyncChanges.sqlite file, located in the helperFileDirectoryLocation.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *unsynchronizedSyncChangesStorePath</Declaration>
+			
+			
+			<Anchor>//api/name/unsynchronizedSyncChangesStorePath</Anchor>
+		</Token>
+		
 	</File>
 </Tokens>

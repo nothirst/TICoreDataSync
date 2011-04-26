@@ -39,6 +39,17 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/localSyncChangesToMergeLocation</TokenIdentifier>
+			<Abstract>The location of the SyncChangesBeingSynchronized.sqlite file for this synchronization operation.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSURL *localSyncChangesToMergeLocation</Declaration>
+			
+			
+			<Anchor>//api/name/localSyncChangesToMergeLocation</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/otherSynchronizedClientDeviceIdentifiers</TokenIdentifier>
 			<Abstract>An array of client identifiers for clients that synchronize with this document, excluding this client.</Abstract>
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
@@ -91,6 +102,28 @@
 			
 			
 			<Anchor>//api/name/fetchArrayOfSyncChangeSetIDsStatus</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/uploadLocalSyncCommandSetStatus</TokenIdentifier>
+			<Abstract>The phase status regarding upload of the local set of sync commands.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus uploadLocalSyncCommandSetStatus</Declaration>
+			
+			
+			<Anchor>//api/name/uploadLocalSyncCommandSetStatus</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/uploadLocalSyncChangeSetStatus</TokenIdentifier>
+			<Abstract>THe phase status regarding upload of the local set of sync changes.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus uploadLocalSyncChangeSetStatus</Declaration>
+			
+			
+			<Anchor>//api/name/uploadLocalSyncChangeSetStatus</Anchor>
 		</Token>
 		
 	</File>

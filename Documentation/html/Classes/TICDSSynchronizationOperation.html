@@ -42,7 +42,13 @@
 	
 	<option value="//api/name/fetchArrayOfSyncCommandSetIDsStatus">&nbsp;&nbsp;&nbsp;&nbsp;fetchArrayOfSyncCommandSetIDsStatus</option>
 	
+	<option value="//api/name/localSyncChangesToMergeLocation">&nbsp;&nbsp;&nbsp;&nbsp;localSyncChangesToMergeLocation</option>
+	
 	<option value="//api/name/otherSynchronizedClientDeviceIdentifiers">&nbsp;&nbsp;&nbsp;&nbsp;otherSynchronizedClientDeviceIdentifiers</option>
+	
+	<option value="//api/name/uploadLocalSyncChangeSetStatus">&nbsp;&nbsp;&nbsp;&nbsp;uploadLocalSyncChangeSetStatus</option>
+	
+	<option value="//api/name/uploadLocalSyncCommandSetStatus">&nbsp;&nbsp;&nbsp;&nbsp;uploadLocalSyncCommandSetStatus</option>
 	
 	
 	
@@ -95,7 +101,13 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchArrayOfSyncCommandSetIDsStatus">fetchArrayOfSyncCommandSetIDsStatus</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/localSyncChangesToMergeLocation">localSyncChangesToMergeLocation</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/otherSynchronizedClientDeviceIdentifiers">otherSynchronizedClientDeviceIdentifiers</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/uploadLocalSyncChangeSetStatus">uploadLocalSyncChangeSetStatus</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/uploadLocalSyncCommandSetStatus">uploadLocalSyncCommandSetStatus</a></span></li>
 	
 </ul></li>
 
@@ -239,6 +251,13 @@
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
+		<code><a href="#//api/name/localSyncChangesToMergeLocation">&nbsp;&nbsp;localSyncChangesToMergeLocation</a></code>
+		<span class="tooltip"><p>The location of the <code>SyncChangesBeingSynchronized.sqlite</code> file for this synchronization operation.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
 		<code><a href="#//api/name/otherSynchronizedClientDeviceIdentifiers">&nbsp;&nbsp;otherSynchronizedClientDeviceIdentifiers</a></code>
 		<span class="tooltip"><p>An array of client identifiers for clients that synchronize with this document, excluding this client.</p></span>
 	</span>
@@ -277,6 +296,20 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/fetchArrayOfSyncChangeSetIDsStatus">&nbsp;&nbsp;fetchArrayOfSyncChangeSetIDsStatus</a></code>
 		<span class="tooltip"><p>The phase status regarding fetching an array of available SyncChange sets.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/uploadLocalSyncCommandSetStatus">&nbsp;&nbsp;uploadLocalSyncCommandSetStatus</a></code>
+		<span class="tooltip"><p>The phase status regarding upload of the local set of sync commands.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/uploadLocalSyncChangeSetStatus">&nbsp;&nbsp;uploadLocalSyncChangeSetStatus</a></code>
+		<span class="tooltip"><p>THe phase status regarding upload of the local set of sync changes.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -422,6 +455,38 @@
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/localSyncChangesToMergeLocation" title="localSyncChangesToMergeLocation"></a>
+	<h3 class="subsubtitle method-title">localSyncChangesToMergeLocation</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The location of the <code>SyncChangesBeingSynchronized.sqlite</code> file for this synchronization operation.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (retain) NSURL *localSyncChangesToMergeLocation</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/otherSynchronizedClientDeviceIdentifiers" title="otherSynchronizedClientDeviceIdentifiers"></a>
 	<h3 class="subsubtitle method-title">otherSynchronizedClientDeviceIdentifiers</h3>
 	
@@ -433,6 +498,70 @@
 	
 	
 	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSArray *otherSynchronizedClientDeviceIdentifiers</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/uploadLocalSyncChangeSetStatus" title="uploadLocalSyncChangeSetStatus"></a>
+	<h3 class="subsubtitle method-title">uploadLocalSyncChangeSetStatus</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>THe phase status regarding upload of the local set of sync changes.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) TICDSOperationPhaseStatus uploadLocalSyncChangeSetStatus</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/uploadLocalSyncCommandSetStatus" title="uploadLocalSyncCommandSetStatus"></a>
+	<h3 class="subsubtitle method-title">uploadLocalSyncCommandSetStatus</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The phase status regarding upload of the local set of sync commands.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) TICDSOperationPhaseStatus uploadLocalSyncCommandSetStatus</code></div>
 	
 	
 	

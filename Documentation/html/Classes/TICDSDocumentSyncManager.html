@@ -74,7 +74,11 @@
 	
 	<option value="//api/name/state">&nbsp;&nbsp;&nbsp;&nbsp;state</option>
 	
+	<option value="//api/name/syncChangesBeingSynchronizedStorePath">&nbsp;&nbsp;&nbsp;&nbsp;syncChangesBeingSynchronizedStorePath</option>
+	
 	<option value="//api/name/synchronizationQueue">&nbsp;&nbsp;&nbsp;&nbsp;synchronizationQueue</option>
+	
+	<option value="//api/name/unsynchronizedSyncChangesStorePath">&nbsp;&nbsp;&nbsp;&nbsp;unsynchronizedSyncChangesStorePath</option>
 	
 	
 	
@@ -185,7 +189,11 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/state">state</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncChangesBeingSynchronizedStorePath">syncChangesBeingSynchronizedStorePath</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/synchronizationQueue">synchronizationQueue</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/unsynchronizedSyncChangesStorePath">unsynchronizedSyncChangesStorePath</a></span></li>
 	
 </ul></li>
 
@@ -560,6 +568,20 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/localAppliedSyncChangesFilePath">&nbsp;&nbsp;localAppliedSyncChangesFilePath</a></code>
 		<span class="tooltip"><p>The path to the <code>AppliedSyncChanges.sqlite</code> file, located in the <a href="#//api/name/helperFileDirectoryLocation"><code>helperFileDirectoryLocation</code></a>.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncChangesBeingSynchronizedStorePath">&nbsp;&nbsp;syncChangesBeingSynchronizedStorePath</a></code>
+		<span class="tooltip"><p>The path to the <code>SyncChangesBeingSynchronized.sqlite</code> file, located in the <a href="#//api/name/helperFileDirectoryLocation"><code>helperFileDirectoryLocation</code></a>.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/unsynchronizedSyncChangesStorePath">&nbsp;&nbsp;unsynchronizedSyncChangesStorePath</a></code>
+		<span class="tooltip"><p>The path to the <code>UnsynchronizedSyncChanges.sqlite</code> file, located in the <a href="#//api/name/helperFileDirectoryLocation"><code>helperFileDirectoryLocation</code></a>.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -1256,6 +1278,38 @@
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/syncChangesBeingSynchronizedStorePath" title="syncChangesBeingSynchronizedStorePath"></a>
+	<h3 class="subsubtitle method-title">syncChangesBeingSynchronizedStorePath</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The path to the <code>SyncChangesBeingSynchronized.sqlite</code> file, located in the <a href="#//api/name/helperFileDirectoryLocation"><code>helperFileDirectoryLocation</code></a>.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) NSString *syncChangesBeingSynchronizedStorePath</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/synchronizationQueue" title="synchronizationQueue"></a>
 	<h3 class="subsubtitle method-title">synchronizationQueue</h3>
 	
@@ -1277,6 +1331,38 @@
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>The queue supports only 1 operation at a time, and is suspended until the document has registered successfully.</p>
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/unsynchronizedSyncChangesStorePath" title="unsynchronizedSyncChangesStorePath"></a>
+	<h3 class="subsubtitle method-title">unsynchronizedSyncChangesStorePath</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The path to the <code>UnsynchronizedSyncChanges.sqlite</code> file, located in the <a href="#//api/name/helperFileDirectoryLocation"><code>helperFileDirectoryLocation</code></a>.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) NSString *unsynchronizedSyncChangesStorePath</code></div>
+	
+	
+	
+	
+	
 	
 	
 	
