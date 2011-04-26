@@ -134,6 +134,13 @@
  @return A correctly-configured subclass of `TICDSWholeStoreUploadOperation`. */
 - (TICDSWholeStoreUploadOperation *)wholeStoreUploadOperation;
 
+/** Returns a synchronization operation.
+ 
+ Subclasses of `TICDSDocumentSyncManager` use this method to return a correctly-configured synchronization operation for their particularly sync method.
+ 
+ @return A correctly-configured subclass of `TICDSSynchronizationOperation`. */
+- (TICDSSynchronizationOperation *)synchronizationOperation;
+
 /** @name Managed Object Context Saving */
 
 /** Indicate that the synchronized managed object context is about to save.

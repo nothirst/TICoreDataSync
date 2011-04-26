@@ -419,7 +419,7 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting synchronization process");
     [self ti_alertDelegateWithSelector:@selector(syncManagerDidBeginToSynchronize:)];
     
-    TICDSOperation *operation = nil;
+    TICDSSynchronizationOperation *operation = [self synchronizationOperation];
     
     if( !operation ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create synchronization operation object");
@@ -430,6 +430,34 @@
     }
     
     [[self synchronizationQueue] addOperation:operation];
+}
+
+#pragma mark Operation Generation
+- (TICDSSynchronizationOperation *)synchronizationOperation
+{
+    return [[[TICDSSynchronizationOperation alloc] initWithDelegate:self] autorelease]; 
+}
+
+#pragma mark Operation Communications
+- (void)synchronizationOperationCompleted:(TICDSSynchronizationOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Synchronization Operation Completed");
+    
+    [self ti_alertDelegateWithSelector:@selector(syncManagerDidFinishSynchronization:)];
+}
+
+- (void)synchronizationOperationWasCancelled:(TICDSSynchronizationOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Synchronization Operation was Cancelled");
+    
+    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToSynchronize:)];
+}
+
+- (void)synchronizationOperation:(TICDSSynchronizationOperation *)anOperation failedToCompleteWithError:(NSError *)anError
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Synchronization Operation Failed to Complete with Error: %@", anError);
+    [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredSynchronizationError:), anError];
+    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToSynchronize:)];
 }
 
 #pragma mark -
@@ -494,6 +522,8 @@
         [self documentRegistrationOperationCompleted:(id)anOperation];
     } else if( [anOperation isKindOfClass:[TICDSWholeStoreUploadOperation class]] ) {
         [self wholeStoreUploadOperationCompleted:(id)anOperation];
+    } else if( [anOperation isKindOfClass:[TICDSSynchronizationOperation class]] ) {
+        [self synchronizationOperationCompleted:(id)anOperation];
     }
 }
 
@@ -503,6 +533,8 @@
         [self documentRegistrationOperationWasCancelled:(id)anOperation];
     } else if( [anOperation isKindOfClass:[TICDSWholeStoreUploadOperation class]] ) {
         [self wholeStoreUploadOperationWasCancelled:(id)anOperation];
+    } else if( [anOperation isKindOfClass:[TICDSSynchronizationOperation class]] ) {
+        [self synchronizationOperationWasCancelled:(id)anOperation];
     }
 }
 
@@ -512,6 +544,8 @@
         [self documentRegistrationOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     } else if( [anOperation isKindOfClass:[TICDSWholeStoreUploadOperation class]] ) {
         [self wholeStoreUploadOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
+    } else if( [anOperation isKindOfClass:[TICDSSynchronizationOperation class]] ) {
+        [self synchronizationOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     }
 }
 

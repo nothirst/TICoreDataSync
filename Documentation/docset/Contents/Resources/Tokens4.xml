@@ -139,6 +139,17 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/synchronizationOperation</TokenIdentifier>
+			<Abstract>Returns a synchronization operation.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (TICDSSynchronizationOperation *)synchronizationOperation</Declaration>
+			
+			<ReturnValue><Abstract>A correctly-configured subclass of TICDSSynchronizationOperation.</Abstract></ReturnValue>
+			<Anchor>//api/name/synchronizationOperation</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/synchronizedMOCWillSave:</TokenIdentifier>
 			<Abstract>Indicate that the synchronized managed object context is about to save.</Abstract>
 			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			

@@ -1,27 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/TICDSSynchronizedManagedObjectContext.html">
+	<File path="Classes/TICDSSynchronizedManagedObject.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/TICDSSynchronizedManagedObjectContext</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/cl/TICDSSynchronizedManagedObject</TokenIdentifier>
 			<Abstract>  
-Any changes you wish to synchronize for managed objects must take place within a synchronized managed object context.</Abstract>
-			<DeclaredIn>TICDSSynchronizedManagedObjectContext.h</DeclaredIn>
+Any managed objects you wish to synchronize must be instances of TICDSSynchronizedManagedObject.</Abstract>
+			<DeclaredIn>TICDSSynchronizedManagedObject.h</DeclaredIn>
 			
 			<NodeRef refid="18"/>
 		</Token>
 		
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizedManagedObjectContext/documentSyncManager</TokenIdentifier>
-			<Abstract>The document sync manager responsible for this managed object context's underlying persistent store/document.</Abstract>
-			<DeclaredIn>TICDSSynchronizedManagedObjectContext.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, retain) TICDSDocumentSyncManager *documentSyncManager</Declaration>
-			
-			
-			<Anchor>//api/name/documentSyncManager</Anchor>
-		</Token>
 		
 	</File>
 </Tokens>

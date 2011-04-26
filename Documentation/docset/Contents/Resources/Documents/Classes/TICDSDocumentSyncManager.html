@@ -95,6 +95,8 @@
 	
 	<option value="//api/name/registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:">&nbsp;&nbsp;&nbsp;&nbsp;- registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:</option>
 	
+	<option value="//api/name/synchronizationOperation">&nbsp;&nbsp;&nbsp;&nbsp;- synchronizationOperation</option>
+	
 	<option value="//api/name/synchronizedMOCDidSave:">&nbsp;&nbsp;&nbsp;&nbsp;- synchronizedMOCDidSave:</option>
 	
 	<option value="//api/name/synchronizedMOCFailedToSave:withError:">&nbsp;&nbsp;&nbsp;&nbsp;- synchronizedMOCFailedToSave:withError:</option>
@@ -204,6 +206,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initiateUploadOfWholeStore">initiateUploadOfWholeStore</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:">registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/synchronizationOperation">synchronizationOperation</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/synchronizedMOCDidSave:">synchronizedMOCDidSave:</a></span></li>
 	
@@ -349,6 +353,13 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/wholeStoreUploadOperation">&ndash;&nbsp;wholeStoreUploadOperation</a></code>
 		<span class="tooltip"><p>Returns a whole store upload operation.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/synchronizationOperation">&ndash;&nbsp;synchronizationOperation</a></code>
+		<span class="tooltip"><p>Returns a synchronization operation.</p></span>
 	</span>
 	
 	
@@ -1478,7 +1489,7 @@
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>This will automatically spawn a <code>TICDSSynchronizationOperation</code>, and notify you of progress through the <a href="../Protocols/TICDSDocumentSyncManagerDelegate.html"><code>TICDSDocumentSyncManagerDelegate</code></a> methods.</p>
+		<p>This will automatically spawn a <a href="../Classes/TICDSSynchronizationOperation.html"><code>TICDSSynchronizationOperation</code></a>, and notify you of progress through the <a href="../Protocols/TICDSDocumentSyncManagerDelegate.html"><code>TICDSDocumentSyncManagerDelegate</code></a> methods.</p>
 	</div>
 	
 	
@@ -1598,6 +1609,48 @@
 <p>If you provide an application sync manager that isn&rsquo;t yet ready to sync, the document registration task will be suspended until the application has finished registering.</p>
 
 <p>If this is the first time you have registered this document, or the remote file structure has been removed for some reason, your <a href="#//api/name/delegate">delegate</a> will be notified with the <code>syncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:</code> method. You must continue registration manually by calling the <a href="#//api/name/continueRegistrationByCreatingRemoteFileStructure:"><code>continueRegistrationByCreatingRemoteFileStructure:</code></a> method.</p><div class="warning"><p>You must call this method before using the document sync manager for any other purpose.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/synchronizationOperation" title="synchronizationOperation"></a>
+	<h3 class="subsubtitle method-title">synchronizationOperation</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns a synchronization operation.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (TICDSSynchronizationOperation *)synchronizationOperation</code></div>
+	
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A correctly-configured subclass of <a href="../Classes/TICDSSynchronizationOperation.html"><code>TICDSSynchronizationOperation</code></a>.</p>
+	</div>
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Subclasses of <a href="TICDSDocumentSyncManager.html"><code>TICDSDocumentSyncManager</code></a> use this method to return a correctly-configured synchronization operation for their particularly sync method.</p>
 	</div>
 	
 	

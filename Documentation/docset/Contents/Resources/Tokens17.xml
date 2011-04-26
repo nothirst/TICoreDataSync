@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/TICDSSynchronizedManagedObject.html">
+	<File path="Classes/TICDSSynchronizationOperation.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/TICDSSynchronizedManagedObject</TokenIdentifier>
-			<Abstract>  
-Any managed objects you wish to synchronize must be instances of TICDSSynchronizedManagedObject.</Abstract>
-			<DeclaredIn>TICDSSynchronizedManagedObject.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/TICDSSynchronizationOperation</TokenIdentifier>
+			<Abstract>The TICDSSynchronizationOperation class describes a generic operation used by the TICoreDataSync framework to synchronize changes made to a document.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>
 			
 			<NodeRef refid="17"/>
 		</Token>
