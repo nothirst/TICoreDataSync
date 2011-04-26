@@ -52,6 +52,8 @@
 	
 	<option value="//api/name/syncManager:failedToDownloadDocumentWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:failedToDownloadDocumentWithIdentifier:</option>
 	
+	<option value="//api/name/syncManager:helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:atLocation:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:atLocation:</option>
+	
 	<option value="//api/name/syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:</option>
 	
 	<option value="//api/name/syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:</option>
@@ -111,6 +113,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:">syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:failedToDownloadDocumentWithIdentifier:">syncManager:failedToDownloadDocumentWithIdentifier:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:atLocation:">syncManager:helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:atLocation:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:">syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:</a></span></li>
 	
@@ -274,6 +278,13 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:">&ndash;&nbsp;syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:</a></code>
 		<span class="tooltip"><p>Informs the delegate that a downloaded store file file is about to replace an existing store file on disc.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManager:helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:atLocation:">&ndash;&nbsp;syncManager:helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:atLocation:</a></code>
+		<span class="tooltip"><p>Invoked to allow the delegate to return a custom location for a local directory to contain the helper files the <code>TICoreDataSync</code> framework uses to synchronize a downloaded document.</p></span>
 	</span>
 	
 	
@@ -642,6 +653,63 @@
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>The error will previously have been supplied through the <a href="#//api/name/syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:"><code>syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:</code></a> method.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/syncManager:helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:atLocation:" title="syncManager:helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:atLocation:"></a>
+	<h3 class="subsubtitle method-title">syncManager:helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:atLocation:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Invoked to allow the delegate to return a custom location for a local directory to contain the helper files the <code>TICoreDataSync</code> framework uses to synchronize a downloaded document.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (NSURL *)syncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> helperFileDirectoryLocationForDownloadedDocumentWithIdentifier:(NSString *)<em>anIdentifier</em> atLocation:(NSURL *)<em>aLocation</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The unique identifier for the document (as supplied at registration).</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The <code>NSURL</code> for the location you wish to use.</p>
+	</div>
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If you don&rsquo;t implement this method, the default location will be <code>~/Library/Application Support/ApplicationName/Documents/documentIdentifier/</code>.</p><div class="warning"><p>The location you specify <strong>must</strong> already exist.</p></div>
 	</div>
 	
 	
