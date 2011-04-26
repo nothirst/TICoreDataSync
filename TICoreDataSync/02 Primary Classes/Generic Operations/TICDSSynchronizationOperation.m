@@ -12,8 +12,8 @@
 
 - (void)checkForCompletion;
 - (void)beginFetchOfListOfClientDeviceIdentifiers;
-- (void)beginFetchOfListOfSyncCommandSetIdentifiersForClientIdentifiers:(NSArray *)clientIdentifiers;
-- (void)beginFetchOfListOfSyncChangeSetIdentifiersForClientIdentifiers:(NSArray *)clientIdentifiers;
+- (void)beginFetchOfListOfSyncCommandSetIdentifiers;
+- (void)beginFetchOfListOfSyncChangeSetIdentifiers;
 
 @end
 
@@ -57,7 +57,8 @@
         [clientIdentifiers addObject:eachClientIdentifier];
     }
     
-    [self beginFetchOfListOfSyncCommandSetIdentifiersForClientIdentifiers:clientIdentifiers];
+    [self setOtherSynchronizedClientDeviceIdentifiers:clientIdentifiers];
+    [self beginFetchOfListOfSyncCommandSetIdentifiers];
 }
 
 #pragma Overridden Method
@@ -69,14 +70,14 @@
 
 #pragma mark -
 #pragma mark LIST OF SYNC COMMAND SETS
-- (void)beginFetchOfListOfSyncCommandSetIdentifiersForClientIdentifiers:(NSArray *)clientIdentifiers
+- (void)beginFetchOfListOfSyncCommandSetIdentifiers
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Starting to fetch list of SyncCommandSet identifiers for clients %@", clientIdentifiers);
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Starting to fetch list of SyncCommandSet identifiers for clients %@", [self otherSynchronizedClientDeviceIdentifiers]);
     
-    if( [clientIdentifiers count] < 1 ) {
+    if( [[self otherSynchronizedClientDeviceIdentifiers] count] < 1 ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"No other clients are synchronizing with this document, so skipping to fetch SyncChanges");
         [self setFetchArrayOfSyncCommandSetIDsStatus:TICDSOperationPhaseStatusSuccess];
-        [self beginFetchOfListOfSyncChangeSetIdentifiersForClientIdentifiers:clientIdentifiers];
+        [self beginFetchOfListOfSyncChangeSetIdentifiers];
         return;
     }
     
@@ -85,11 +86,11 @@
 
 #pragma mark -
 #pragma mark LIST OF SYNC CHANGE SETS
-- (void)beginFetchOfListOfSyncChangeSetIdentifiersForClientIdentifiers:(NSArray *)clientIdentifiers
+- (void)beginFetchOfListOfSyncChangeSetIdentifiers
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Starting to fetch list of SyncChangeSet identifiers");
     
-    if( [clientIdentifiers count] < 1 ) {
+    if( [[self otherSynchronizedClientDeviceIdentifiers] count] < 1 ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"No other clients are synchronizing with this document, so skipping to uploading SyncCommands");
         [self setFetchArrayOfSyncChangeSetIDsStatus:TICDSOperationPhaseStatusSuccess];
         assert(nil);
@@ -127,7 +128,17 @@
 }
 
 #pragma mark -
+#pragma mark Initialization and Deallocation
+- (void)dealloc
+{
+    [_otherSynchronizedClientDeviceIdentifiers release], _otherSynchronizedClientDeviceIdentifiers = nil;
+
+    [super dealloc];
+}
+
+#pragma mark -
 #pragma mark Properties
+@synthesize otherSynchronizedClientDeviceIdentifiers = _otherSynchronizedClientDeviceIdentifiers;
 @synthesize completionInProgress = _completionInProgress;
 @synthesize fetchArrayOfClientDeviceIDsStatus = _fetchArrayOfClientDeviceIDsStatus;
 @synthesize fetchArrayOfSyncCommandSetIDsStatus = _fetchArrayOfSyncCommandSetIDsStatus;

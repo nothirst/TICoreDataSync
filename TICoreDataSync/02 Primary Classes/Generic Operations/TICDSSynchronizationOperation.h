@@ -22,7 +22,8 @@
  4. Go through each `SyncCommandSet` and:
      1. Carry out the command, determining whether synchronization can continue, or whether e.g. the entire store needs to be downloaded.
      2. Add the UUID of the set to the list of `AppliedSyncChangeCommands.sqlite`.
- 5. If synchronization can continue, fetch an array of UUID strings for each available `SyncChangeSet`.
+ 5. If synchronization can continue, then for each client device that isn't the current device:
+     1. Fetch an array containing UUID strings for each available `SyncChangeSet`.
  6. Determine which `SyncChangeSet`s haven't yet been applied locally.
  7. If any `SyncChangeSet`s haven't yet been applied, fetch them to the `UnappliedSyncChangeSets` helper file directory.
  8. Go through each `SyncChangeSet` and:
@@ -38,6 +39,8 @@
  @warning You must use one of the subclasses of `TICDSSynchronizationOperation`. */
 @interface TICDSSynchronizationOperation : TICDSOperation {
 @private
+    NSArray *_otherSynchronizedClientDeviceIdentifiers;
+    
     BOOL _completionInProgress;
     TICDSOperationPhaseStatus _fetchArrayOfClientDeviceIDsStatus;
     TICDSOperationPhaseStatus _fetchArrayOfSyncCommandSetIDsStatus;
@@ -61,6 +64,12 @@
  
  @param anArray The array of identifiers. Pass `nil` if an error occurred. */
 - (void)builtArrayOfClientDeviceIdentifiers:(NSArray *)anArray;
+
+#pragma mark Properties
+/** @name Properties */
+
+/** An array of client identifiers for clients that synchronize with this document, excluding this client. */
+@property (nonatomic, retain) NSArray *otherSynchronizedClientDeviceIdentifiers;
 
 #pragma mark Completion
 /** @name Completion */
