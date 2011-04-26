@@ -139,6 +139,27 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     [self performSelector:@selector(decreaseActivity) withObject:nil afterDelay:1.0];
 }
 
+#pragma mark Synchronization
+- (void)syncManagerDidBeginToSynchronize:(TICDSDocumentSyncManager *)aSyncManager
+{
+    [self increaseActivity];
+}
+
+- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredSynchronizationError:(NSError *)anError
+{
+    NSLog(@"Sync Error: %@", anError);
+}
+
+- (void)syncManagerFailedToSynchronize:(TICDSDocumentSyncManager *)aSyncManager
+{
+    [self performSelector:@selector(decreaseActivity) withObject:nil afterDelay:1.0];
+}
+
+- (void)syncManagerDidFinishSynchronization:(TICDSDocumentSyncManager *)aSyncManager
+{
+    [self performSelector:@selector(decreaseActivity) withObject:nil afterDelay:1.0];
+}
+
 #pragma mark -
 #pragma mark Metadata
 - (NSDictionary *)customMetadataDictionary
