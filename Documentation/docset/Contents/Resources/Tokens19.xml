@@ -137,6 +137,33 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/contextForSyncChangesInUnappliedSyncChangeSet:</TokenIdentifier>
+			<Abstract>Releases any existing unappliedSyncChangesContext and unappliedSyncChangesCoreDataFactory and sets new ones, linked to the set of sync changes specified in the given sync change set.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (NSManagedObjectContext *)contextForSyncChangesInUnappliedSyncChangeSet:(TICDSSyncChangeSet *)aChangeSet</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aChangeSet</Name>
+					<Abstract>The TICDSSyncChangeSet object specifying the set of changes to use.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>A managed object context to access the sync changes.</Abstract></ReturnValue>
+			<Anchor>//api/name/contextForSyncChangesInUnappliedSyncChangeSet:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/configureBackgroundApplicationContextForPersistentStoreCoordinator:</TokenIdentifier>
+			<Abstract>Configure a background context (for applying sync changes) using the same persistent store coordinator as the main application context.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)configureBackgroundApplicationContextForPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)aPersistentStoreCoordinator</Declaration>
+			
+			
+			<Anchor>//api/name/configureBackgroundApplicationContextForPersistentStoreCoordinator:</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/localSyncChangesToMergeLocation</TokenIdentifier>
 			<Abstract>The location of the SyncChangesBeingSynchronized.sqlite file for this synchronization operation.</Abstract>
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
@@ -222,6 +249,61 @@
 			
 			
 			<Anchor>//api/name/unappliedSyncChangeSetsContext</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unappliedSyncChangesCoreDataFactory</TokenIdentifier>
+			<Abstract>A TICoreDataFactory to access the contents of a single, unapplied SyncChangeSet file.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) TICoreDataFactory *unappliedSyncChangesCoreDataFactory</Declaration>
+			
+			
+			<Anchor>//api/name/unappliedSyncChangesCoreDataFactory</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unappliedSyncChangesContext</TokenIdentifier>
+			<Abstract>The managed object context for the changes in a single, unapplied SyncChangeSet file.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSManagedObjectContext *unappliedSyncChangesContext</Declaration>
+			
+			
+			<Anchor>//api/name/unappliedSyncChangesContext</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unsynchronizedSyncChangesCoreDataFactory</TokenIdentifier>
+			<Abstract>A TICoreDataFactory to access the contents of the local, unsynchronized set of SyncChanges.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) TICoreDataFactory *unsynchronizedSyncChangesCoreDataFactory</Declaration>
+			
+			
+			<Anchor>//api/name/unsynchronizedSyncChangesCoreDataFactory</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unsynchronizedSyncChangesContext</TokenIdentifier>
+			<Abstract>The managed object context for the local, unsynchronized set of SyncChanges.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSManagedObjectContext *unsynchronizedSyncChangesContext</Declaration>
+			
+			
+			<Anchor>//api/name/unsynchronizedSyncChangesContext</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unsynchronizedSyncChangesFileLocation</TokenIdentifier>
+			<Abstract>The location of this document's local UnsynchronizedSyncChanges.sqlite file.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSURL *unsynchronizedSyncChangesFileLocation</Declaration>
+			
+			
+			<Anchor>//api/name/unsynchronizedSyncChangesFileLocation</Anchor>
 		</Token>
 		
 		<Token>
@@ -365,6 +447,17 @@
 			
 			
 			<Anchor>//api/name/fetchUnappliedSyncChangeSetsStatus</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/applyUnappliedSyncChangeSetsStatus</TokenIdentifier>
+			<Abstract>The phase status regarding application of unapplied SyncChangeSets.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus applyUnappliedSyncChangeSetsStatus</Declaration>
+			
+			
+			<Anchor>//api/name/applyUnappliedSyncChangeSetsStatus</Anchor>
 		</Token>
 		
 		<Token>

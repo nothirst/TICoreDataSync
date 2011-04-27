@@ -269,6 +269,25 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:</TokenIdentifier>
+			<Abstract>Informs the delegate that changes were made to managed objects in the application's context on a background thread during the synchronization process.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:(NSNotification *)aNotification</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>aNotification</Name>
+					<Abstract>The NSManagedObjectContextDidSave notification object containing changes made to objects.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:encounteredSynchronizationError:</TokenIdentifier>
 			<Abstract>Informs the delegate that the document sync manager encountered an error during the synchronization process.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
