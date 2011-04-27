@@ -430,10 +430,14 @@
     }
     [operation setLocalSyncChangesToMergeLocation:syncChangesToMergeLocation];
     
-    // Set location of AppliedSyncChangeSets file
+    // Set locations of files
     [operation setAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename]]];
     [operation setUnappliedSyncChangesDirectoryLocation:[NSURL fileURLWithPath:[[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSUnappliedChangesDirectoryName]]];
     [operation setUnappliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSUnappliedChangeSetsFilename]]];
+    [operation setUnsynchronizedSyncChangesFileLocation:[NSURL fileURLWithPath:[[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSUnsynchronizedSyncChangesStoreName]]];
+    
+    // Set background context
+    [operation configureBackgroundApplicationContextForPersistentStoreCoordinator:[[self primaryDocumentMOC] persistentStoreCoordinator]];
     
     [[self synchronizationQueue] addOperation:operation];
 }
@@ -566,6 +570,11 @@
 - (void)appSyncManagerDidRegister:(NSNotification *)aNotification
 {
     [[self registrationQueue] setSuspended:NO];
+}
+
+- (void)backgroundManagedObjectContextDidSave:(NSNotification *)aNotification
+{
+    [self ti_alertDelegateOnMainThreadWithSelector:@selector(syncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:) waitUntilDone:YES, aNotification];
 }
 
 #pragma mark -

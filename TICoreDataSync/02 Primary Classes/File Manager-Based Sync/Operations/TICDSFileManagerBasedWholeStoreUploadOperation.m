@@ -87,6 +87,58 @@
     [self uploadedWholeStoreFileWithSuccess:YES];
 }
 
+- (void)uploadAppliedSyncChangeSetsFile
+{
+    NSError *anyError = nil;
+    BOOL success = YES;
+    
+    NSString *backupFilePath = [[self thisDocumentWholeStoreThisClientDirectoryPath] stringByAppendingPathComponent:@"AppliedSyncChangeSetsBackup.sqlite"];
+    
+    // Delete the backup, if it exists
+    if( [[self fileManager] fileExistsAtPath:backupFilePath] ) {
+        success = [[self fileManager] removeItemAtPath:backupFilePath error:&anyError];
+    }
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self uploadedAppliedSyncChangeSetsFileWithSuccess:NO];
+        return;
+    }
+    
+    // Move the existing file, if it exists, to the backup location
+    if( [[self fileManager] fileExistsAtPath:[self thisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath]] ) {
+        success = [[self fileManager] moveItemAtPath:[self thisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath] toPath:backupFilePath error:&anyError];
+    }
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self uploadedAppliedSyncChangeSetsFileWithSuccess:NO];
+        return;
+    }
+    
+    // Copy the whole store to the correct location
+    success = [[self fileManager] copyItemAtPath:[[self localAppliedSyncChangeSetsFileLocation] path] toPath:[self thisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath] error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self uploadedAppliedSyncChangeSetsFileWithSuccess:NO];
+        return;
+    }
+    
+    // Delete the backup, if it exists
+    if( [[self fileManager] fileExistsAtPath:backupFilePath] ) {
+        success = [[self fileManager] removeItemAtPath:backupFilePath error:&anyError];
+    }
+    
+    if( !success ) {
+        // not being able to delete the backup file isn't catastrophic...
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to delete the applied sync changes backup file, but carrying on as it's not catastrophic");
+    }
+    
+    // If we get this far, everything went to plan
+    [self uploadedAppliedSyncChangeSetsFileWithSuccess:YES];
+}
+
 #pragma mark -
 #pragma mark Initialization and Deallocation
 - (void)dealloc

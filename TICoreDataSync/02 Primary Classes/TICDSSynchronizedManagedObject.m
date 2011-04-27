@@ -110,6 +110,7 @@
     TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeRelationshipChanged];
     
     [syncChange setRelatedObjectEntityName:[[aRelationship destinationEntity] name]];
+    [syncChange setRelevantKey:[aRelationship name]];
     
     if( [aRelationship isToMany] ) {
         NSSet *relatedObjects = [self valueForKey:[aRelationship name]];

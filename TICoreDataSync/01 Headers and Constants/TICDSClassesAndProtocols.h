@@ -302,6 +302,12 @@
  @param aSyncManager The document sync manager object that sent the message. */
 - (void)syncManagerDidBeginToSynchronize:(TICDSDocumentSyncManager *)aSyncManager;
 
+/** Informs the delegate that changes were made to managed objects in the application's context on a background thread during the synchronization process.
+ 
+ @param aSyncManager The document sync manager object that sent the message.
+ @param aNotification The `NSManagedObjectContextDidSave` notification object containing changes made to objects. */
+- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:(NSNotification *)aNotification;
+
 /** Informs the delegate that the document sync manager encountered an error during the synchronization process.
  
  @param aSyncManager The document sync manager object that sent the message.

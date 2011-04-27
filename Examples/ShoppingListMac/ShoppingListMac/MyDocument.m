@@ -145,6 +145,11 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     [self increaseActivity];
 }
 
+- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:(NSNotification *)aNotification
+{
+    [[self managedObjectContext] mergeChangesFromContextDidSaveNotification:aNotification];
+}
+
 - (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredSynchronizationError:(NSError *)anError
 {
     NSLog(@"Sync Error: %@", anError);

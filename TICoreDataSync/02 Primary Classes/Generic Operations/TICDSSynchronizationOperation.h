@@ -53,6 +53,15 @@
     TICoreDataFactory *_unappliedSyncChangeSetsCoreDataFactory;
     NSManagedObjectContext *_unappliedSyncChangeSetsContext;
     
+    TICoreDataFactory *_unappliedSyncChangesCoreDataFactory;
+    NSManagedObjectContext *_unappliedSyncChangesContext;
+    
+    NSURL *_unsynchronizedSyncChangesFileLocation;
+    TICoreDataFactory *_unsynchronizedSyncChangesCoreDataFactory;
+    NSManagedObjectContext *_unsynchronizedSyncChangesContext;
+    
+    NSManagedObjectContext *_backgroundApplicationContext;
+    
     BOOL _completionInProgress;
     TICDSOperationPhaseStatus _fetchArrayOfClientDeviceIDsStatus;
     TICDSOperationPhaseStatus _fetchArrayOfSyncCommandSetIDsStatus;
@@ -66,6 +75,8 @@
     NSUInteger _numberOfUnappliedSyncChangeSetsFetched;
     NSUInteger _numberOfUnappliedSyncChangeSetsThatFailedToFetch;
     TICDSOperationPhaseStatus _fetchUnappliedSyncChangeSetsStatus;
+    
+    TICDSOperationPhaseStatus _applyUnappliedSyncChangeSetsStatus;
     
     TICDSOperationPhaseStatus _uploadLocalSyncCommandSetStatus;
     TICDSOperationPhaseStatus _uploadLocalSyncChangeSetStatus;
@@ -134,6 +145,20 @@
  @param success A Boolean indicating whether the sync change set file was uploaded or not. */
 - (void)uploadedLocalSyncChangeSetFileSuccessfully:(BOOL)success;
 
+#pragma mark Helper Methods
+/** Releases any existing `unappliedSyncChangesContext` and `unappliedSyncChangesCoreDataFactory` and sets new ones, linked to the set of sync changes specified in the given sync change set.
+ 
+ @param aChangeSet The `TICDSSyncChangeSet` object specifying the set of changes to use.
+ 
+ @return A managed object context to access the sync changes. */
+- (NSManagedObjectContext *)contextForSyncChangesInUnappliedSyncChangeSet:(TICDSSyncChangeSet *)aChangeSet;
+
+#pragma mark Configuration
+/** Configure a background context (for applying sync changes) using the same persistent store coordinator as the main application context.
+ 
+ @pragam aPersistentStoreCoordinator The persistent store coordinator to use for the background context. */
+- (void)configureBackgroundApplicationContextForPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)aPersistentStoreCoordinator;
+
 #pragma mark Properties
 /** @name Properties */
 
@@ -161,11 +186,28 @@
 /** The managed object context for the `UnappliedSyncChangeSets.sqlite` file. */
 @property (nonatomic, retain) NSManagedObjectContext *unappliedSyncChangeSetsContext;
 
+/** A `TICoreDataFactory` to access the contents of a single, unapplied `SyncChangeSet` file. */
+@property (nonatomic, retain) TICoreDataFactory *unappliedSyncChangesCoreDataFactory;
+
+/** The managed object context for the changes in a single, unapplied `SyncChangeSet` file. */
+@property (nonatomic, retain) NSManagedObjectContext *unappliedSyncChangesContext;
+
+/** A `TICoreDataFactory` to access the contents of the local, unsynchronized set of `SyncChange`s. */
+@property (nonatomic, retain) TICoreDataFactory *unsynchronizedSyncChangesCoreDataFactory;
+
+/** The managed object context for the local, unsynchronized set of `SyncChange`s. */
+@property (nonatomic, retain) NSManagedObjectContext *unsynchronizedSyncChangesContext;
+
+/** The location of this document's local `UnsynchronizedSyncChanges.sqlite` file. */
+@property (retain) NSURL *unsynchronizedSyncChangesFileLocation;
+
 /** An array of client identifiers for clients that synchronize with this document, excluding this client. */
 @property (nonatomic, retain) NSArray *otherSynchronizedClientDeviceIdentifiers;
 
 /** A dictionary of arrays; keys are client identifiers, values are sync change set identifiers for each of those clients. */
 @property (retain) NSMutableDictionary *otherSynchronizedClientDeviceSyncChangeSetIdentifiers;
+
+@property (nonatomic, retain) NSManagedObjectContext *backgroundApplicationContext;
 
 #pragma mark Completion
 /** @name Completion */
@@ -202,6 +244,9 @@
 
 /** The phase status regarding fetching all unapplied `SyncChangeSet`s. */
 @property (nonatomic, assign) TICDSOperationPhaseStatus fetchUnappliedSyncChangeSetsStatus;
+
+/** The phase status regarding application of unapplied `SyncChangeSet`s. */
+@property (nonatomic, assign) TICDSOperationPhaseStatus applyUnappliedSyncChangeSetsStatus;
 
 /** The phase status regarding upload of the local set of sync commands. */
 @property (nonatomic, assign) TICDSOperationPhaseStatus uploadLocalSyncCommandSetStatus;
