@@ -550,7 +550,7 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Sync Manager saved Sync Changes context successfully");
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Asking delegate if we should sync after saving");
-    BOOL shouldSync = [self ti_boolFromDelegateWithSelector:@selector(syncManagerShouldInitiateSynchronizationAfterSave:)];
+    BOOL shouldSync = [self ti_boolFromDelegateWithSelector:@selector(syncManager:shouldInitiateSynchronizationAfterSaveOfContext:), aMoc];
     if( !shouldSync ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate denied synchronization after saving");
         return;
@@ -681,6 +681,7 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"Creating Core Data Factory (TICoreDataFactory)");
     _coreDataFactory = [[TICoreDataFactory alloc] initWithMomdName:TICDSSyncChangeDataModelName];
     [_coreDataFactory setDelegate:self];
+    [_coreDataFactory setPersistentStoreType:TICDSSyncChangesCoreDataPersistentStoreType];
     [_coreDataFactory setPersistentStoreDataPath:[self unsynchronizedSyncChangesStorePath]];
     
     return _coreDataFactory;

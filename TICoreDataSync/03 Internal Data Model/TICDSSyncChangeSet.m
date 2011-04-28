@@ -15,14 +15,19 @@
 #pragma mark Helper Methods
 + (BOOL)hasSyncChangeSetWithIdentifer:(NSString *)anIdentifier alreadyBeenAppliedInManagedObjectContext:(NSManagedObjectContext *)aMoc
 {
+    return [self changeSetWithIdentifier:anIdentifier inManagedObjectContext:aMoc] != nil;
+}
+
++ (TICDSSyncChangeSet *)changeSetWithIdentifier:(NSString *)anIdentifier inManagedObjectContext:(NSManagedObjectContext *)aMoc
+{
     NSError *anyError = nil;
-    NSManagedObject *obj = [self ti_firstObjectInManagedObjectContext:aMoc error:&anyError matchingPredicateWithFormat:@"syncChangeSetIdentifier == %@", anIdentifier];
+    TICDSSyncChangeSet *matchingChangeSet = [self ti_firstObjectInManagedObjectContext:aMoc error:&anyError matchingPredicateWithFormat:@"syncChangeSetIdentifier == %@", anIdentifier];
     
     if( anyError ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error fetching to find whether a change set has already been applied: %@", anyError);
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error fetching a change set: %@", anyError);
     }
     
-    return (obj != nil);
+    return matchingChangeSet;
 }
 
 #pragma mark -

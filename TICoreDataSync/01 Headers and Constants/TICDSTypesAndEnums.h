@@ -101,7 +101,7 @@ typedef enum _TICDSOperationPhaseStatus {
 typedef enum _TICDSSyncChangeType {
     TICDSSyncChangeTypeUnknown = 0,
     TICDSSyncChangeTypeObjectInserted = 1,
-    TICDSSyncChangeTypeObjectDeleted = 2,
-    TICDSSyncChangeTypeAttributeChanged = 3,
-    TICDSSyncChangeTypeRelationshipChanged = 4,
+    TICDSSyncChangeTypeAttributeChanged = 2,
+    TICDSSyncChangeTypeRelationshipChanged = 3,
+    TICDSSyncChangeTypeObjectDeleted = 4,
 } TICDSSyncChangeType;

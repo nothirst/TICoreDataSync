@@ -62,6 +62,8 @@
     
     NSManagedObjectContext *_backgroundApplicationContext;
     
+    NSArray *_syncChangeSortDescriptors;
+    
     BOOL _completionInProgress;
     TICDSOperationPhaseStatus _fetchArrayOfClientDeviceIDsStatus;
     TICDSOperationPhaseStatus _fetchArrayOfSyncCommandSetIDsStatus;
@@ -208,6 +210,8 @@
 @property (retain) NSMutableDictionary *otherSynchronizedClientDeviceSyncChangeSetIdentifiers;
 
 @property (nonatomic, retain) NSManagedObjectContext *backgroundApplicationContext;
+
+@property (nonatomic, retain) NSArray *syncChangeSortDescriptors;
 
 #pragma mark Completion
 /** @name Completion */

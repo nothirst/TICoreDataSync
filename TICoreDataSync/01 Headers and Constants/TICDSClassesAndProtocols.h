@@ -349,6 +349,14 @@
  @param aMoc The managed object context. */
 - (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didFinishProcessingAfterMOCDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc;
 
+/** Invoked to ask the delegate whether the document sync manager should automatically initiate Synchronization after finishing processing changes in a synchronized managed object context.
+ 
+ @param aSyncManager The document sync manager object that sent the message.
+ @param aMoc The managed object context that saved.
+ 
+ @return A Boolean indicating whether to initiate the upload. */
+- (BOOL)syncManager:(TICDSDocumentSyncManager *)aSyncManager shouldInitiateSynchronizationAfterSaveOfContext:(TICDSSynchronizedManagedObjectContext *)aMoc;
+
 @end
 
 #pragma mark -

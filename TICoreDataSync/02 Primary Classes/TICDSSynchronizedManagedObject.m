@@ -165,12 +165,12 @@
         [self createSyncChangeForInsertion];
     }
     
-    if( [self isDeleted] ) {
-        [self createSyncChangeForDeletion];
-    }
-    
     if( [self isUpdated] ) {
         [self createSyncChangesForChangedProperties];
+    }
+    
+    if( [self isDeleted] ) {
+        [self createSyncChangeForDeletion];
     }
 }
 

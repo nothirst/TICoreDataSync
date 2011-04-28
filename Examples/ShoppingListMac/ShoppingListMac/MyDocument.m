@@ -36,6 +36,8 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     _synchronizedManagedObjectContext = [[TICDSSynchronizedManagedObjectContext alloc] init];
     [_synchronizedManagedObjectContext setPersistentStoreCoordinator:[[super managedObjectContext] persistentStoreCoordinator]];
     
+    [[super managedObjectContext] setUndoManager:nil];
+    
     return _synchronizedManagedObjectContext;
 }
 
@@ -131,15 +133,20 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
 
 - (void)syncManagerFailedToUploadWholeStore:(TICDSDocumentSyncManager *)aSyncManager
 {
-    [self performSelector:@selector(decreaseActivity) withObject:nil afterDelay:1.0];
+    [self decreaseActivity];
 }
 
 - (void)syncManagerDidUploadWholeStoreSuccessfully:(TICDSDocumentSyncManager *)aSyncManager
 {
-    [self performSelector:@selector(decreaseActivity) withObject:nil afterDelay:1.0];
+    [self decreaseActivity];
 }
 
 #pragma mark Synchronization
+- (BOOL)syncManager:(TICDSDocumentSyncManager *)aSyncManager shouldInitiateSynchronizationAfterSaveOfContext:(TICDSSynchronizedManagedObjectContext *)aMoc
+{
+    return YES;
+}
+
 - (void)syncManagerDidBeginToSynchronize:(TICDSDocumentSyncManager *)aSyncManager
 {
     [self increaseActivity];
@@ -147,7 +154,35 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
 
 - (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:(NSNotification *)aNotification
 {
+    BOOL wasDirty = [self isDocumentEdited];
+    
+    [[[self managedObjectContext] undoManager] disableUndoRegistration];
     [[self managedObjectContext] mergeChangesFromContextDidSaveNotification:aNotification];
+    
+    NSError *anyError = nil;
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    NSDictionary *attributes = [fileManager attributesOfItemAtPath:[[self fileURL] path] error:&anyError];
+    if( !attributes ) {
+        NSLog(@"Failed to get attributes for document's persistent store");
+        return;
+    }
+    
+    NSDate *modificationDate = [attributes valueForKey:NSFileModificationDate];
+    
+    if( !modificationDate ) {
+        NSLog(@"Failed to get modification date for document's persistent store");
+    }
+    
+    [self setFileModificationDate:modificationDate];
+    
+    [[self managedObjectContext] processPendingChanges];
+    
+    [[[self managedObjectContext] undoManager] enableUndoRegistration];
+    
+    if( !wasDirty ) {
+        [self updateChangeCount:NSChangeCleared];
+        [[[self managedObjectContext] undoManager] removeAllActions];
+    }
 }
 
 - (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredSynchronizationError:(NSError *)anError
@@ -157,13 +192,13 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
 
 - (void)syncManagerFailedToSynchronize:(TICDSDocumentSyncManager *)aSyncManager
 {
-    [self performSelector:@selector(decreaseActivity) withObject:nil afterDelay:1.0];
+    [self decreaseActivity];
 }
 
 - (void)syncManagerDidFinishSynchronization:(TICDSDocumentSyncManager *)aSyncManager
 {
     [[self documentSyncChangesWindowController] setManagedObjectContext:[[self documentSyncManager] syncChangesMOC]];
-    [self performSelector:@selector(decreaseActivity) withObject:nil afterDelay:1.0];
+    [self decreaseActivity];
 }
 
 #pragma mark -

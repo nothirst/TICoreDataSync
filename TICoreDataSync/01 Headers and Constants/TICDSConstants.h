@@ -8,6 +8,8 @@
 
 extern NSString * const TICDSFrameworkName;
 
+#define TICDSSyncChangesCoreDataPersistentStoreType NSBinaryStoreType
+
 extern NSString * const TICDSSyncChangeTypeNames[];
 
 extern NSString * const TICDSErrorUserInfoKey;

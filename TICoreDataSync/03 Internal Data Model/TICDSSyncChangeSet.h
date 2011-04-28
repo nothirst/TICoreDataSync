@@ -37,6 +37,14 @@
  @return A Boolean indicating whether the sync change has already been applied. */
 + (BOOL)hasSyncChangeSetWithIdentifer:(NSString *)anIdentifier alreadyBeenAppliedInManagedObjectContext:(NSManagedObjectContext *)aMoc;
 
+/** Return a `TICDSSyncChangeSet` object, if one exists, for a given identifier.
+ 
+ @param anIdentifier The unique identifier for the sync change.
+ @param aMoc The managed object context to check.
+ 
+ @return The sync change set object, if it already exists, otherwise `nil`. */
++ (TICDSSyncChangeSet *)changeSetWithIdentifier:(NSString *)anIdentifier inManagedObjectContext:(NSManagedObjectContext *)aMoc;
+
 @property (nonatomic, retain) NSDate * creationDate;
 @property (nonatomic, retain) NSString * fileName;
 @property (nonatomic, retain) NSString * syncChangeSetIdentifier;
