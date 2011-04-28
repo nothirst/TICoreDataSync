@@ -323,7 +323,7 @@
 							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/initiateUploadOfWholeStore">&ndash;&nbsp;initiateUploadOfWholeStore</a></code>
-		<span class="tooltip"><p>Start the process manually to upload the entire store file for this document, along with the relevant <code>AppliedSyncChanges.sqlite</code> file.</p></span>
+		<span class="tooltip"><p>Start the process manually to upload the entire store file for this document, along with the relevant <code>AppliedSyncChanges.ticdsync</code> file.</p></span>
 	</span>
 	
 	
@@ -553,35 +553,35 @@
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/relativePathToThisDocumentWholeStoreThisClientDirectoryWholeStoreFile">&nbsp;&nbsp;relativePathToThisDocumentWholeStoreThisClientDirectoryWholeStoreFile</a></code>
-		<span class="tooltip"><p>The path to this client&rsquo;s <code>WholeStore.sqlite</code> file inside it&rsquo;s directory inside the <code>WholeStore</code> directory for this document, relative to the root of the remote file structure.</p></span>
+		<span class="tooltip"><p>The path to this client&rsquo;s <code>WholeStore.ticdsync</code> file inside it&rsquo;s directory inside the <code>WholeStore</code> directory for this document, relative to the root of the remote file structure.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/relativePathToThisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFile">&nbsp;&nbsp;relativePathToThisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFile</a></code>
-		<span class="tooltip"><p>The path to this client&rsquo;s <code>AppliedSyncChangeSets.sqlite</code> file inside it&rsquo;s directory inside the <code>WholeStore</code> directory for this document, relative to the root of the remote file structure.</p></span>
+		<span class="tooltip"><p>The path to this client&rsquo;s <code>AppliedSyncChangeSets.ticdsync</code> file inside it&rsquo;s directory inside the <code>WholeStore</code> directory for this document, relative to the root of the remote file structure.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/localAppliedSyncChangesFilePath">&nbsp;&nbsp;localAppliedSyncChangesFilePath</a></code>
-		<span class="tooltip"><p>The path to the <code>AppliedSyncChanges.sqlite</code> file, located in the <a href="#//api/name/helperFileDirectoryLocation"><code>helperFileDirectoryLocation</code></a>.</p></span>
+		<span class="tooltip"><p>The path to the <code>AppliedSyncChanges.ticdsync</code> file, located in the <a href="#//api/name/helperFileDirectoryLocation"><code>helperFileDirectoryLocation</code></a>.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/syncChangesBeingSynchronizedStorePath">&nbsp;&nbsp;syncChangesBeingSynchronizedStorePath</a></code>
-		<span class="tooltip"><p>The path to the <code>SyncChangesBeingSynchronized.sqlite</code> file, located in the <a href="#//api/name/helperFileDirectoryLocation"><code>helperFileDirectoryLocation</code></a>.</p></span>
+		<span class="tooltip"><p>The path to the <code>SyncChangesBeingSynchronized.syncchg</code> file, located in the <a href="#//api/name/helperFileDirectoryLocation"><code>helperFileDirectoryLocation</code></a>.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/unsynchronizedSyncChangesStorePath">&nbsp;&nbsp;unsynchronizedSyncChangesStorePath</a></code>
-		<span class="tooltip"><p>The path to the <code>UnsynchronizedSyncChanges.sqlite</code> file, located in the <a href="#//api/name/helperFileDirectoryLocation"><code>helperFileDirectoryLocation</code></a>.</p></span>
+		<span class="tooltip"><p>The path to the <code>UnsynchronizedSyncChanges.syncchg</code> file, located in the <a href="#//api/name/helperFileDirectoryLocation"><code>helperFileDirectoryLocation</code></a>.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -888,7 +888,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>The path to the <code>AppliedSyncChanges.sqlite</code> file, located in the <a href="#//api/name/helperFileDirectoryLocation"><code>helperFileDirectoryLocation</code></a>.</p>
+		<p>The path to the <code>AppliedSyncChanges.ticdsync</code> file, located in the <a href="#//api/name/helperFileDirectoryLocation"><code>helperFileDirectoryLocation</code></a>.</p>
 	</div>		
 	
 	
@@ -1181,7 +1181,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>The path to this client&rsquo;s <code>AppliedSyncChangeSets.sqlite</code> file inside it&rsquo;s directory inside the <code>WholeStore</code> directory for this document, relative to the root of the remote file structure.</p>
+		<p>The path to this client&rsquo;s <code>AppliedSyncChangeSets.ticdsync</code> file inside it&rsquo;s directory inside the <code>WholeStore</code> directory for this document, relative to the root of the remote file structure.</p>
 	</div>		
 	
 	
@@ -1213,7 +1213,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>The path to this client&rsquo;s <code>WholeStore.sqlite</code> file inside it&rsquo;s directory inside the <code>WholeStore</code> directory for this document, relative to the root of the remote file structure.</p>
+		<p>The path to this client&rsquo;s <code>WholeStore.ticdsync</code> file inside it&rsquo;s directory inside the <code>WholeStore</code> directory for this document, relative to the root of the remote file structure.</p>
 	</div>		
 	
 	
@@ -1284,7 +1284,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>The path to the <code>SyncChangesBeingSynchronized.sqlite</code> file, located in the <a href="#//api/name/helperFileDirectoryLocation"><code>helperFileDirectoryLocation</code></a>.</p>
+		<p>The path to the <code>SyncChangesBeingSynchronized.syncchg</code> file, located in the <a href="#//api/name/helperFileDirectoryLocation"><code>helperFileDirectoryLocation</code></a>.</p>
 	</div>		
 	
 	
@@ -1353,7 +1353,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>The path to the <code>UnsynchronizedSyncChanges.sqlite</code> file, located in the <a href="#//api/name/helperFileDirectoryLocation"><code>helperFileDirectoryLocation</code></a>.</p>
+		<p>The path to the <code>UnsynchronizedSyncChanges.syncchg</code> file, located in the <a href="#//api/name/helperFileDirectoryLocation"><code>helperFileDirectoryLocation</code></a>.</p>
 	</div>		
 	
 	
@@ -1599,7 +1599,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Start the process manually to upload the entire store file for this document, along with the relevant <code>AppliedSyncChanges.sqlite</code> file.</p>
+		<p>Start the process manually to upload the entire store file for this document, along with the relevant <code>AppliedSyncChanges.ticdsync</code> file.</p>
 	</div>		
 	
 	

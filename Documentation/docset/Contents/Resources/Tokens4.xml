@@ -96,7 +96,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/initiateUploadOfWholeStore</TokenIdentifier>
-			<Abstract>Start the process manually to upload the entire store file for this document, along with the relevant AppliedSyncChanges.sqlite file.</Abstract>
+			<Abstract>Start the process manually to upload the entire store file for this document, along with the relevant AppliedSyncChanges.ticdsync file.</Abstract>
 			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
 			
 			<Declaration>- (void)initiateUploadOfWholeStore</Declaration>
@@ -400,7 +400,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/relativePathToThisDocumentWholeStoreThisClientDirectoryWholeStoreFile</TokenIdentifier>
-			<Abstract>The path to this client's WholeStore.sqlite file inside it's directory inside the WholeStore directory for this document, relative to the root of the remote file structure.</Abstract>
+			<Abstract>The path to this client's WholeStore.ticdsync file inside it's directory inside the WholeStore directory for this document, relative to the root of the remote file structure.</Abstract>
 			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
 			
 			<Declaration>@property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreThisClientDirectoryWholeStoreFile</Declaration>
@@ -411,7 +411,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/relativePathToThisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFile</TokenIdentifier>
-			<Abstract>The path to this client's AppliedSyncChangeSets.sqlite file inside it's directory inside the WholeStore directory for this document, relative to the root of the remote file structure.</Abstract>
+			<Abstract>The path to this client's AppliedSyncChangeSets.ticdsync file inside it's directory inside the WholeStore directory for this document, relative to the root of the remote file structure.</Abstract>
 			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
 			
 			<Declaration>@property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFile</Declaration>
@@ -422,7 +422,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/localAppliedSyncChangesFilePath</TokenIdentifier>
-			<Abstract>The path to the AppliedSyncChanges.sqlite file, located in the helperFileDirectoryLocation.</Abstract>
+			<Abstract>The path to the AppliedSyncChanges.ticdsync file, located in the helperFileDirectoryLocation.</Abstract>
 			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
 			
 			<Declaration>@property (nonatomic, readonly) NSString *localAppliedSyncChangesFilePath</Declaration>
@@ -433,7 +433,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/syncChangesBeingSynchronizedStorePath</TokenIdentifier>
-			<Abstract>The path to the SyncChangesBeingSynchronized.sqlite file, located in the helperFileDirectoryLocation.</Abstract>
+			<Abstract>The path to the SyncChangesBeingSynchronized.syncchg file, located in the helperFileDirectoryLocation.</Abstract>
 			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
 			
 			<Declaration>@property (nonatomic, readonly) NSString *syncChangesBeingSynchronizedStorePath</Declaration>
@@ -444,7 +444,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/unsynchronizedSyncChangesStorePath</TokenIdentifier>
-			<Abstract>The path to the UnsynchronizedSyncChanges.sqlite file, located in the helperFileDirectoryLocation.</Abstract>
+			<Abstract>The path to the UnsynchronizedSyncChanges.syncchg file, located in the helperFileDirectoryLocation.</Abstract>
 			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
 			
 			<Declaration>@property (nonatomic, readonly) NSString *unsynchronizedSyncChangesStorePath</Declaration>

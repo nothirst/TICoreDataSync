@@ -13,7 +13,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSFileManagerBasedWholeStoreDownloadOperation/pathToWholeStoreFileForClientWithIdentifier:</TokenIdentifier>
-			<Abstract>The path to a given client's WholeStore.sqlite file within this document's WholeStore directory.</Abstract>
+			<Abstract>The path to a given client's WholeStore.ticdsync file within this document's WholeStore directory.</Abstract>
 			<DeclaredIn>TICDSFileManagerBasedWholeStoreDownloadOperation.h</DeclaredIn>			
 			
 			<Declaration>- (NSString *)pathToWholeStoreFileForClientWithIdentifier:(NSString *)anIdentifier</Declaration>
@@ -24,7 +24,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSFileManagerBasedWholeStoreDownloadOperation/pathToAppliedSyncChangesFileForClientWithIdentifier:</TokenIdentifier>
-			<Abstract>The path to a given client's AppliedSyncChanges.sqlite file within this document's WholeStore directory .</Abstract>
+			<Abstract>The path to a given client's AppliedSyncChanges.ticdsync file within this document's WholeStore directory .</Abstract>
 			<DeclaredIn>TICDSFileManagerBasedWholeStoreDownloadOperation.h</DeclaredIn>			
 			
 			<Declaration>- (NSString *)pathToAppliedSyncChangesFileForClientWithIdentifier:(NSString *)anIdentifier</Declaration>

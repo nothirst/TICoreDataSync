@@ -35,7 +35,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreUploadOperation/uploadWholeStoreFile</TokenIdentifier>
-			<Abstract>Upload the store at localWholeStoreFileLocation to the remote path /Documents/documentIdentifier/WholeStore/clientIdentifier/WholeStore.sqlite.</Abstract>
+			<Abstract>Upload the store at localWholeStoreFileLocation to the remote path /Documents/documentIdentifier/WholeStore/clientIdentifier/WholeStore.ticdsync.</Abstract>
 			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
 			
 			<Declaration>- (void)uploadWholeStoreFile</Declaration>
@@ -46,7 +46,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreUploadOperation/uploadAppliedSyncChangeSetsFile</TokenIdentifier>
-			<Abstract>Upload the applied sync change sets file at localAppliedSyncChangeSetsFileLocation to the remote path /Documents/documentIdentifier/WholeStore/clientIdentifier/AppliedSyncChangeSets.sqlite.</Abstract>
+			<Abstract>Upload the applied sync change sets file at localAppliedSyncChangeSetsFileLocation to the remote path /Documents/documentIdentifier/WholeStore/clientIdentifier/AppliedSyncChangeSets.ticdsync.</Abstract>
 			<DeclaredIn>TICDSWholeStoreUploadOperation.h</DeclaredIn>			
 			
 			<Declaration>- (void)uploadAppliedSyncChangeSetsFile</Declaration>

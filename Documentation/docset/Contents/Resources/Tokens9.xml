@@ -79,7 +79,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/thisDocumentWholeStoreFilePath</TokenIdentifier>
-			<Abstract>The path to this client's WholeStore.sqlite file.</Abstract>
+			<Abstract>The path to this client's WholeStore.ticdsync file.</Abstract>
 			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
 			
 			<Declaration>@property (nonatomic, readonly) NSString *thisDocumentWholeStoreFilePath</Declaration>
@@ -90,7 +90,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/thisDocumentAppliedSyncChangeSetsFilePath</TokenIdentifier>
-			<Abstract>The path to this client's AppliedSyncChangeSets.sqlite file.</Abstract>
+			<Abstract>The path to this client's AppliedSyncChangeSets.ticdsync file.</Abstract>
 			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
 			
 			<Declaration>@property (nonatomic, readonly) NSString *thisDocumentAppliedSyncChangeSetsFilePath</Declaration>

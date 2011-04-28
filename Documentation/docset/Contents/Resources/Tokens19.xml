@@ -165,7 +165,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/localSyncChangesToMergeLocation</TokenIdentifier>
-			<Abstract>The location of the SyncChangesBeingSynchronized.sqlite file for this synchronization operation.</Abstract>
+			<Abstract>The location of the SyncChangesBeingSynchronized.syncchg file for this synchronization operation.</Abstract>
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
 			
 			<Declaration>@property (retain) NSURL *localSyncChangesToMergeLocation</Declaration>
@@ -176,7 +176,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/appliedSyncChangeSetsFileLocation</TokenIdentifier>
-			<Abstract>The location of this document's AppliedSyncChangeSets.sqlite file.</Abstract>
+			<Abstract>The location of this document's AppliedSyncChangeSets.ticdsync file.</Abstract>
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
 			
 			<Declaration>@property (retain) NSURL *appliedSyncChangeSetsFileLocation</Declaration>
@@ -187,7 +187,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/appliedSyncChangeSetsCoreDataFactory</TokenIdentifier>
-			<Abstract>A TICoreDataFactory to access the contents of the AppliedSyncChangeSets.sqlite file.</Abstract>
+			<Abstract>A TICoreDataFactory to access the contents of the AppliedSyncChangeSets.ticdsync file.</Abstract>
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
 			
 			<Declaration>@property (nonatomic, retain) TICoreDataFactory *appliedSyncChangeSetsCoreDataFactory</Declaration>
@@ -198,7 +198,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/appliedSyncChangeSetsContext</TokenIdentifier>
-			<Abstract>The managed object context for the AppliedSyncChangeSets.sqlite file.</Abstract>
+			<Abstract>The managed object context for the AppliedSyncChangeSets.ticdsync file.</Abstract>
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
 			
 			<Declaration>@property (nonatomic, retain) NSManagedObjectContext *appliedSyncChangeSetsContext</Declaration>
@@ -220,7 +220,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unappliedSyncChangeSetsFileLocation</TokenIdentifier>
-			<Abstract>The location of this document's UnappliedSyncChangeSets.sqlite file.</Abstract>
+			<Abstract>The location of this document's UnappliedSyncChangeSets.ticdsync file.</Abstract>
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
 			
 			<Declaration>@property (retain) NSURL *unappliedSyncChangeSetsFileLocation</Declaration>
@@ -231,7 +231,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unappliedSyncChangeSetsCoreDataFactory</TokenIdentifier>
-			<Abstract>A TICoreDataFactory to access the contents of the UnappliedSyncChangeSets.sqlite file.</Abstract>
+			<Abstract>A TICoreDataFactory to access the contents of the UnappliedSyncChangeSets.ticdsync file.</Abstract>
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
 			
 			<Declaration>@property (nonatomic, retain) TICoreDataFactory *unappliedSyncChangeSetsCoreDataFactory</Declaration>
@@ -242,7 +242,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unappliedSyncChangeSetsContext</TokenIdentifier>
-			<Abstract>The managed object context for the UnappliedSyncChangeSets.sqlite file.</Abstract>
+			<Abstract>The managed object context for the UnappliedSyncChangeSets.ticdsync file.</Abstract>
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
 			
 			<Declaration>@property (nonatomic, retain) NSManagedObjectContext *unappliedSyncChangeSetsContext</Declaration>
@@ -297,7 +297,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unsynchronizedSyncChangesFileLocation</TokenIdentifier>
-			<Abstract>The location of this document's local UnsynchronizedSyncChanges.sqlite file.</Abstract>
+			<Abstract>The location of this document's local UnsynchronizedSyncChanges.syncchg file.</Abstract>
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
 			
 			<Declaration>@property (retain) NSURL *unsynchronizedSyncChangesFileLocation</Declaration>

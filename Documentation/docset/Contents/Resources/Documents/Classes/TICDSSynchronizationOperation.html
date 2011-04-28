@@ -294,7 +294,7 @@
 
 <ol>
 <li> Carry out the command, determining whether synchronization can continue, or whether e.g. the entire store needs to be downloaded.</li>
-<li> Add the UUID of the set to the list of <code>AppliedSyncChangeCommands.sqlite</code>.</li>
+<li> Add the UUID of the set to the list of <code>AppliedSyncChangeCommands.ticdsync</code>.</li>
 </ol>
 </li>
 <li>If synchronization can continue, then for each client device that isn&rsquo;t the current device:
@@ -311,11 +311,11 @@
 <li> Check for conflicts against local changes made since the last synchronization.</li>
 <li> Fix any conflicts, and build an array of conflict warnings for issues that cannot be resolved.</li>
 <li> Apply each <code>SyncChange</code> in the set to the local <code>WholeStore</code>.</li>
-<li> Add the UUID of the set to the list of <code>AppliedSyncChangeSets.sqlite</code>.</li>
+<li> Add the UUID of the set to the list of <code>AppliedSyncChangeSets.ticdsync</code>.</li>
 </ol>
 </li>
-<li>If there are local <code>SyncCommand</code>s, rename <code>UnsynchronizedSyncCommands.sqlite</code> to <code>UUID.synccmd</code> and push the file to the remote.</li>
-<li>If there are local <code>SyncChange</code>s, rename <code>UnsynchronizedSyncChanges.sqlite</code> to <code>UUID.syncchd</code> and push the file to the remote.</li>
+<li>If there are local <code>SyncCommand</code>s, rename <code>UnsynchronizedSyncCommands.ticdsync</code> to <code>UUID.synccmd</code> and push the file to the remote.</li>
+<li>If there are local <code>SyncChange</code>s, rename <code>UnsynchronizedSyncChanges.syncchg</code> to <code>UUID.syncchd</code> and push the file to the remote.</li>
 <li>Save this client&rsquo;s file in the <code>RecentSyncs</code> directory for this document.</li>
 </ol>
 
@@ -425,28 +425,28 @@
 							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/localSyncChangesToMergeLocation">&nbsp;&nbsp;localSyncChangesToMergeLocation</a></code>
-		<span class="tooltip"><p>The location of the <code>SyncChangesBeingSynchronized.sqlite</code> file for this synchronization operation.</p></span>
+		<span class="tooltip"><p>The location of the <code>SyncChangesBeingSynchronized.syncchg</code> file for this synchronization operation.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/appliedSyncChangeSetsFileLocation">&nbsp;&nbsp;appliedSyncChangeSetsFileLocation</a></code>
-		<span class="tooltip"><p>The location of this document&rsquo;s <code>AppliedSyncChangeSets.sqlite</code> file.</p></span>
+		<span class="tooltip"><p>The location of this document&rsquo;s <code>AppliedSyncChangeSets.ticdsync</code> file.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/appliedSyncChangeSetsCoreDataFactory">&nbsp;&nbsp;appliedSyncChangeSetsCoreDataFactory</a></code>
-		<span class="tooltip"><p>A <code>TICoreDataFactory</code> to access the contents of the <code>AppliedSyncChangeSets.sqlite</code> file.</p></span>
+		<span class="tooltip"><p>A <code>TICoreDataFactory</code> to access the contents of the <code>AppliedSyncChangeSets.ticdsync</code> file.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/appliedSyncChangeSetsContext">&nbsp;&nbsp;appliedSyncChangeSetsContext</a></code>
-		<span class="tooltip"><p>The managed object context for the <code>AppliedSyncChangeSets.sqlite</code> file.</p></span>
+		<span class="tooltip"><p>The managed object context for the <code>AppliedSyncChangeSets.ticdsync</code> file.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -460,21 +460,21 @@
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/unappliedSyncChangeSetsFileLocation">&nbsp;&nbsp;unappliedSyncChangeSetsFileLocation</a></code>
-		<span class="tooltip"><p>The location of this document&rsquo;s <code>UnappliedSyncChangeSets.sqlite</code> file.</p></span>
+		<span class="tooltip"><p>The location of this document&rsquo;s <code>UnappliedSyncChangeSets.ticdsync</code> file.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/unappliedSyncChangeSetsCoreDataFactory">&nbsp;&nbsp;unappliedSyncChangeSetsCoreDataFactory</a></code>
-		<span class="tooltip"><p>A <code>TICoreDataFactory</code> to access the contents of the <code>UnappliedSyncChangeSets.sqlite</code> file.</p></span>
+		<span class="tooltip"><p>A <code>TICoreDataFactory</code> to access the contents of the <code>UnappliedSyncChangeSets.ticdsync</code> file.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/unappliedSyncChangeSetsContext">&nbsp;&nbsp;unappliedSyncChangeSetsContext</a></code>
-		<span class="tooltip"><p>The managed object context for the <code>UnappliedSyncChangeSets.sqlite</code> file.</p></span>
+		<span class="tooltip"><p>The managed object context for the <code>UnappliedSyncChangeSets.ticdsync</code> file.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -509,7 +509,7 @@
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/unsynchronizedSyncChangesFileLocation">&nbsp;&nbsp;unsynchronizedSyncChangesFileLocation</a></code>
-		<span class="tooltip"><p>The location of this document&rsquo;s local <code>UnsynchronizedSyncChanges.sqlite</code> file.</p></span>
+		<span class="tooltip"><p>The location of this document&rsquo;s local <code>UnsynchronizedSyncChanges.syncchg</code> file.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -653,7 +653,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>The managed object context for the <code>AppliedSyncChangeSets.sqlite</code> file.</p>
+		<p>The managed object context for the <code>AppliedSyncChangeSets.ticdsync</code> file.</p>
 	</div>		
 	
 	
@@ -685,7 +685,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>A <code>TICoreDataFactory</code> to access the contents of the <code>AppliedSyncChangeSets.sqlite</code> file.</p>
+		<p>A <code>TICoreDataFactory</code> to access the contents of the <code>AppliedSyncChangeSets.ticdsync</code> file.</p>
 	</div>		
 	
 	
@@ -717,7 +717,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>The location of this document&rsquo;s <code>AppliedSyncChangeSets.sqlite</code> file.</p>
+		<p>The location of this document&rsquo;s <code>AppliedSyncChangeSets.ticdsync</code> file.</p>
 	</div>		
 	
 	
@@ -941,7 +941,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>The location of the <code>SyncChangesBeingSynchronized.sqlite</code> file for this synchronization operation.</p>
+		<p>The location of the <code>SyncChangesBeingSynchronized.syncchg</code> file for this synchronization operation.</p>
 	</div>		
 	
 	
@@ -1229,7 +1229,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>The managed object context for the <code>UnappliedSyncChangeSets.sqlite</code> file.</p>
+		<p>The managed object context for the <code>UnappliedSyncChangeSets.ticdsync</code> file.</p>
 	</div>		
 	
 	
@@ -1261,7 +1261,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>A <code>TICoreDataFactory</code> to access the contents of the <code>UnappliedSyncChangeSets.sqlite</code> file.</p>
+		<p>A <code>TICoreDataFactory</code> to access the contents of the <code>UnappliedSyncChangeSets.ticdsync</code> file.</p>
 	</div>		
 	
 	
@@ -1293,7 +1293,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>The location of this document&rsquo;s <code>UnappliedSyncChangeSets.sqlite</code> file.</p>
+		<p>The location of this document&rsquo;s <code>UnappliedSyncChangeSets.ticdsync</code> file.</p>
 	</div>		
 	
 	
@@ -1485,7 +1485,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>The location of this document&rsquo;s local <code>UnsynchronizedSyncChanges.sqlite</code> file.</p>
+		<p>The location of this document&rsquo;s local <code>UnsynchronizedSyncChanges.syncchg</code> file.</p>
 	</div>		
 	
 	
