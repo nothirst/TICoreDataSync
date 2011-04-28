@@ -248,7 +248,7 @@
         NSError *anyError = nil;
         BOOL success = [[self unappliedSyncChangeSetsContext] save:&anyError];
         if( !success ) {
-            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save UnappliedSyncChanges.sqlite file: %@", anyError);
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save UnappliedSyncChanges.ticdsync file: %@", anyError);
         }
         [self beginApplyingUnappliedSyncChangeSets];
     } else if( [self numberOfUnappliedSyncChangeSetsToFetch] == [self numberOfUnappliedSyncChangeSetsFetched] + [self numberOfUnappliedSyncChangeSetsThatFailedToFetch] ) {
@@ -269,7 +269,7 @@
     }
     
     if( anyError ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to add unapplied sync change set to UnappliedSyncChangeSets.sqlite: %@", anyError);
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to add unapplied sync change set to UnappliedSyncChangeSets.ticdsync: %@", anyError);
         return;
     }
     
@@ -397,7 +397,7 @@
         return;
     }
     
-    // Save Applied Sync Change Sets context (AppliedSyncChangeSets.sqlite file)
+    // Save Applied Sync Change Sets context (AppliedSyncChangeSets.ticdsync file)
     success = [[self appliedSyncChangeSetsContext] save:&anyError];
     if( !success ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save applied sync change sets context, after saving background context: %@", anyError);
@@ -406,7 +406,7 @@
         return;
     }
     
-    // Save Unapplied Sync Change Sets context (UnappliedSYncChangeSets.sqlite file)
+    // Save Unapplied Sync Change Sets context (UnappliedSYncChangeSets.ticdsync file)
     success = [[self unappliedSyncChangeSetsContext] save:&anyError];
     if( !success ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save unapplied sync change sets context, after saving applied sync change sets context: %@", anyError);
@@ -825,7 +825,7 @@
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Creating Core Data Factory (TICoreDataFactory)");
     _appliedSyncChangeSetsCoreDataFactory = [[TICoreDataFactory alloc] initWithMomdName:TICDSSyncChangeSetDataModelName];
-    [_appliedSyncChangeSetsCoreDataFactory setPersistentStoreType:TICDSSyncChangesCoreDataPersistentStoreType];
+    [_appliedSyncChangeSetsCoreDataFactory setPersistentStoreType:TICDSSyncChangeSetsCoreDataPersistentStoreType];
     [_appliedSyncChangeSetsCoreDataFactory setPersistentStoreDataPath:[[self appliedSyncChangeSetsFileLocation] path]];
     [_appliedSyncChangeSetsCoreDataFactory setDelegate:self];
     
@@ -852,7 +852,7 @@
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Creating Core Data Factory (TICoreDataFactory)");
     _unappliedSyncChangeSetsCoreDataFactory = [[TICoreDataFactory alloc] initWithMomdName:TICDSSyncChangeSetDataModelName];
-    [_unappliedSyncChangeSetsCoreDataFactory setPersistentStoreType:TICDSSyncChangesCoreDataPersistentStoreType];
+    [_unappliedSyncChangeSetsCoreDataFactory setPersistentStoreType:TICDSSyncChangeSetsCoreDataPersistentStoreType];
     [_unappliedSyncChangeSetsCoreDataFactory setPersistentStoreDataPath:[[self unappliedSyncChangeSetsFileLocation] path]];
     [_unappliedSyncChangeSetsCoreDataFactory setDelegate:self];
     

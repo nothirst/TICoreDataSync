@@ -21,7 +21,7 @@
  3. If any `SyncCommandSet`s haven't yet been applied, fetch them to the `UnappliedSyncCommandSets` helper file directory.
  4. Go through each `SyncCommandSet` and:
      1. Carry out the command, determining whether synchronization can continue, or whether e.g. the entire store needs to be downloaded.
-     2. Add the UUID of the set to the list of `AppliedSyncChangeCommands.sqlite`.
+     2. Add the UUID of the set to the list of `AppliedSyncChangeCommands.ticdsync`.
  5. If synchronization can continue, then for each client device that isn't the current device:
      1. Fetch an array containing UUID strings for each available `SyncChangeSet`.
      2. Determine which `SyncChangeSet`s haven't yet been applied locally.
@@ -30,9 +30,9 @@
      1. Check for conflicts against local changes made since the last synchronization.
      2. Fix any conflicts, and build an array of conflict warnings for issues that cannot be resolved.
      3. Apply each `SyncChange` in the set to the local `WholeStore`.
-     4. Add the UUID of the set to the list of `AppliedSyncChangeSets.sqlite`.
- 7. If there are local `SyncCommand`s, rename `UnsynchronizedSyncCommands.sqlite` to `UUID.synccmd` and push the file to the remote.
- 8. If there are local `SyncChange`s, rename `UnsynchronizedSyncChanges.sqlite` to `UUID.syncchd` and push the file to the remote.
+     4. Add the UUID of the set to the list of `AppliedSyncChangeSets.ticdsync`.
+ 7. If there are local `SyncCommand`s, rename `UnsynchronizedSyncCommands.ticdsync` to `UUID.synccmd` and push the file to the remote.
+ 8. If there are local `SyncChange`s, rename `UnsynchronizedSyncChanges.syncchg` to `UUID.syncchd` and push the file to the remote.
  9. Save this client's file in the `RecentSyncs` directory for this document.
  
  Operations are typically created automatically by the relevant sync manager.
@@ -164,28 +164,28 @@
 #pragma mark Properties
 /** @name Properties */
 
-/** The location of the `SyncChangesBeingSynchronized.sqlite` file for this synchronization operation. */
+/** The location of the `SyncChangesBeingSynchronized.syncchg` file for this synchronization operation. */
 @property (retain) NSURL *localSyncChangesToMergeLocation;
 
-/** The location of this document's `AppliedSyncChangeSets.sqlite` file. */
+/** The location of this document's `AppliedSyncChangeSets.ticdsync` file. */
 @property (retain) NSURL *appliedSyncChangeSetsFileLocation;
 
-/** A `TICoreDataFactory` to access the contents of the `AppliedSyncChangeSets.sqlite` file. */
+/** A `TICoreDataFactory` to access the contents of the `AppliedSyncChangeSets.ticdsync` file. */
 @property (nonatomic, retain) TICoreDataFactory *appliedSyncChangeSetsCoreDataFactory;
 
-/** The managed object context for the `AppliedSyncChangeSets.sqlite` file. */
+/** The managed object context for the `AppliedSyncChangeSets.ticdsync` file. */
 @property (nonatomic, retain) NSManagedObjectContext *appliedSyncChangeSetsContext;
 
 /** The location of the `UnappliedSyncChanges` directory for this synchronization operation. */
 @property (retain) NSURL *unappliedSyncChangesDirectoryLocation;
 
-/** The location of this document's `UnappliedSyncChangeSets.sqlite` file. */
+/** The location of this document's `UnappliedSyncChangeSets.ticdsync` file. */
 @property (retain) NSURL *unappliedSyncChangeSetsFileLocation;
 
-/** A `TICoreDataFactory` to access the contents of the `UnappliedSyncChangeSets.sqlite` file. */
+/** A `TICoreDataFactory` to access the contents of the `UnappliedSyncChangeSets.ticdsync` file. */
 @property (nonatomic, retain) TICoreDataFactory *unappliedSyncChangeSetsCoreDataFactory;
 
-/** The managed object context for the `UnappliedSyncChangeSets.sqlite` file. */
+/** The managed object context for the `UnappliedSyncChangeSets.ticdsync` file. */
 @property (nonatomic, retain) NSManagedObjectContext *unappliedSyncChangeSetsContext;
 
 /** A `TICoreDataFactory` to access the contents of a single, unapplied `SyncChangeSet` file. */
@@ -200,7 +200,7 @@
 /** The managed object context for the local, unsynchronized set of `SyncChange`s. */
 @property (nonatomic, retain) NSManagedObjectContext *unsynchronizedSyncChangesContext;
 
-/** The location of this document's local `UnsynchronizedSyncChanges.sqlite` file. */
+/** The location of this document's local `UnsynchronizedSyncChanges.syncchg` file. */
 @property (retain) NSURL *unsynchronizedSyncChangesFileLocation;
 
 /** An array of client identifiers for clients that synchronize with this document, excluding this client. */

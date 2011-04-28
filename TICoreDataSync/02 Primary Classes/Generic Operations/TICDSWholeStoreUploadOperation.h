@@ -46,12 +46,12 @@
  */
 - (void)createThisClientWholeStoreDirectory;
 
-/** Upload the store at `localWholeStoreFileLocation` to the remote path `/Documents/documentIdentifier/WholeStore/clientIdentifier/WholeStore.sqlite`.
+/** Upload the store at `localWholeStoreFileLocation` to the remote path `/Documents/documentIdentifier/WholeStore/clientIdentifier/WholeStore.ticdsync`.
  
     This method must call `uploadedWholeStoreFileWithSuccess:` when finished. */
 - (void)uploadWholeStoreFile;
 
-/** Upload the applied sync change sets file at `localAppliedSyncChangeSetsFileLocation` to the remote path `/Documents/documentIdentifier/WholeStore/clientIdentifier/AppliedSyncChangeSets.sqlite`. 
+/** Upload the applied sync change sets file at `localAppliedSyncChangeSetsFileLocation` to the remote path `/Documents/documentIdentifier/WholeStore/clientIdentifier/AppliedSyncChangeSets.ticdsync`. 
  
  This method must call `uploadedWholeStoreFileWithSuccess:` when finished. */
 - (void)uploadAppliedSyncChangeSetsFile;

@@ -40,7 +40,7 @@
     NSError *anyError = nil;
     BOOL success = YES;
     
-    NSString *backupFilePath = [[self thisDocumentWholeStoreThisClientDirectoryPath] stringByAppendingPathComponent:@"WholeStoreBackup.sqlite"];
+    NSString *backupFilePath = [[self thisDocumentWholeStoreThisClientDirectoryPath] stringByAppendingPathComponent:@"WholeStoreBackup.ticdsync"];
     
     // Delete the backup, if it exists
     if( [[self fileManager] fileExistsAtPath:backupFilePath] ) {
@@ -92,7 +92,7 @@
     NSError *anyError = nil;
     BOOL success = YES;
     
-    NSString *backupFilePath = [[self thisDocumentWholeStoreThisClientDirectoryPath] stringByAppendingPathComponent:@"AppliedSyncChangeSetsBackup.sqlite"];
+    NSString *backupFilePath = [[self thisDocumentWholeStoreThisClientDirectoryPath] stringByAppendingPathComponent:@"AppliedSyncChangeSetsBackup.ticdsync"];
     
     // Delete the backup, if it exists
     if( [[self fileManager] fileExistsAtPath:backupFilePath] ) {

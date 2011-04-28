@@ -9,6 +9,7 @@
 extern NSString * const TICDSFrameworkName;
 
 #define TICDSSyncChangesCoreDataPersistentStoreType NSBinaryStoreType
+#define TICDSSyncChangeSetsCoreDataPersistentStoreType NSSQLiteStoreType
 
 extern NSString * const TICDSSyncChangeTypeNames[];
 

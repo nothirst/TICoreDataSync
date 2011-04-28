@@ -103,7 +103,7 @@
 
 /** @name Whole Store Upload */
 
-/** Start the process manually to upload the entire store file for this document, along with the relevant `AppliedSyncChanges.sqlite` file.
+/** Start the process manually to upload the entire store file for this document, along with the relevant `AppliedSyncChanges.ticdsync` file.
  
  This will automatically spawn a `TICDSWholeStoreUploadOperation`, and notify you of progress through the `TICDSDocumentSyncManagerDelegate` methods.
  
@@ -259,19 +259,19 @@
 /** The path to this client's directory inside the `WholeStore` directory for this document, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreThisClientDirectory;
 
-/** The path to this client's `WholeStore.sqlite` file inside it's directory inside the `WholeStore` directory for this document, relative to the root of the remote file structure. */
+/** The path to this client's `WholeStore.ticdsync` file inside it's directory inside the `WholeStore` directory for this document, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreThisClientDirectoryWholeStoreFile;
 
-/** The path to this client's `AppliedSyncChangeSets.sqlite` file inside it's directory inside the `WholeStore` directory for this document, relative to the root of the remote file structure. */
+/** The path to this client's `AppliedSyncChangeSets.ticdsync` file inside it's directory inside the `WholeStore` directory for this document, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFile;
 
-/** The path to the `AppliedSyncChanges.sqlite` file, located in the `helperFileDirectoryLocation`. */
+/** The path to the `AppliedSyncChanges.ticdsync` file, located in the `helperFileDirectoryLocation`. */
 @property (nonatomic, readonly) NSString *localAppliedSyncChangesFilePath;
 
-/** The path to the `SyncChangesBeingSynchronized.sqlite` file, located in the `helperFileDirectoryLocation`. */
+/** The path to the `SyncChangesBeingSynchronized.syncchg` file, located in the `helperFileDirectoryLocation`. */
 @property (nonatomic, readonly) NSString *syncChangesBeingSynchronizedStorePath;
 
-/** The path to the `UnsynchronizedSyncChanges.sqlite` file, located in the `helperFileDirectoryLocation`. */
+/** The path to the `UnsynchronizedSyncChanges.syncchg` file, located in the `helperFileDirectoryLocation`. */
 @property (nonatomic, readonly) NSString *unsynchronizedSyncChangesStorePath;
 
 

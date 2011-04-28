@@ -42,10 +42,10 @@
 /** The path to this client's directory inside this document's `WholeStore` directory. */
 @property (nonatomic, readonly) NSString *thisDocumentWholeStoreThisClientDirectoryPath;
 
-/** The path to this client's `WholeStore.sqlite` file. */
+/** The path to this client's `WholeStore.ticdsync` file. */
 @property (nonatomic, readonly) NSString *thisDocumentWholeStoreFilePath;
 
-/** The path to this client's `AppliedSyncChangeSets.sqlite` file. */
+/** The path to this client's `AppliedSyncChangeSets.ticdsync` file. */
 @property (nonatomic, readonly) NSString *thisDocumentAppliedSyncChangeSetsFilePath;
 
 @end

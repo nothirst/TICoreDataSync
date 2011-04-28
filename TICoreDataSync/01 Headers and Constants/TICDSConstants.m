@@ -43,11 +43,11 @@ NSString * const TICDSWholeStoreDirectoryName = @"WholeStore";
 NSString * const TICDSSyncChangesDirectoryName = @"SyncChanges";
 NSString * const TICDSRecentSyncsDirectoryName = @"RecentSyncs";
 NSString * const TICDSUnappliedChangesDirectoryName = @"UnappliedSyncChanges";
-NSString * const TICDSUnsynchronizedSyncChangesStoreName = @"UnsynchronizedSyncChanges.sqlite";
-NSString * const TICDSSyncChangesBeingSynchronizedStoreName = @"SyncChangesBeingSynchronized.sqlite";
-NSString * const TICDSWholeStoreFilename = @"WholeStore.sqlite";
-NSString * const TICDSAppliedSyncChangeSetsFilename = @"AppliedSyncChangeSets.sqlite";
-NSString * const TICDSUnappliedChangeSetsFilename = @"UnappliedSyncChangeSets.sqlite";
+NSString * const TICDSUnsynchronizedSyncChangesStoreName = @"UnsynchronizedSyncChanges.syncchg";
+NSString * const TICDSSyncChangesBeingSynchronizedStoreName = @"SyncChangesBeingSynchronized.syncchg";
+NSString * const TICDSWholeStoreFilename = @"WholeStore.ticdsync";
+NSString * const TICDSAppliedSyncChangeSetsFilename = @"AppliedSyncChangeSets.ticdsync";
+NSString * const TICDSUnappliedChangeSetsFilename = @"UnappliedSyncChangeSets.ticdsync";
 NSString * const TICDSSyncCommandSetFileExtension = @"synccmd";
 NSString * const TICDSSyncChangeSetFileExtension = @"syncchg";
 

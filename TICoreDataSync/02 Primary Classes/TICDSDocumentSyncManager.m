@@ -446,7 +446,7 @@
 {
     // check whether there's an existing set of sync changes to merg left over from a previous error
     if( [[self fileManager] fileExistsAtPath:[self syncChangesBeingSynchronizedStorePath]] ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"A SyncChangesBeingSynchronized.sqlite file already exists from a previous failed sync, so using it for this synchronization process. The most recent local sync changes won't be synchronized.");
+        TICDSLog(TICDSLogVerbosityEveryStep, @"A SyncChangesBeingSynchronized.syncchg file already exists from a previous failed sync, so using it for this synchronization process. The most recent local sync changes won't be synchronized.");
         return;
     }
     
@@ -475,7 +475,7 @@
     BOOL success = [[self fileManager] moveItemAtPath:[self unsynchronizedSyncChangesStorePath] toPath:[self syncChangesBeingSynchronizedStorePath] error:&anyError];
     
     if( !success ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to move UnsynchronizedSyncChanges.sqlite to SyncChangesBeingSynchronized.sqlite");
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to move UnsynchronizedSyncChanges.syncchg to SyncChangesBeingSynchronized.syncchg");
         [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredSynchronizationError:), [TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
     }
     

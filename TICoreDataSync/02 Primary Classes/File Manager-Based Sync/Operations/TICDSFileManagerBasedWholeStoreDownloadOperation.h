@@ -18,10 +18,10 @@
 
 /** @name Paths */
 
-/** The path to a given client's `WholeStore.sqlite` file within this document's `WholeStore` directory. */
+/** The path to a given client's `WholeStore.ticdsync` file within this document's `WholeStore` directory. */
 - (NSString *)pathToWholeStoreFileForClientWithIdentifier:(NSString *)anIdentifier;
 
-/** The path to a given client's `AppliedSyncChanges.sqlite` file within this document's `WholeStore` directory .*/
+/** The path to a given client's `AppliedSyncChanges.ticdsync` file within this document's `WholeStore` directory .*/
 - (NSString *)pathToAppliedSyncChangesFileForClientWithIdentifier:(NSString *)anIdentifier;
 
 /** The path to this document's `WholeStore` directory. */
