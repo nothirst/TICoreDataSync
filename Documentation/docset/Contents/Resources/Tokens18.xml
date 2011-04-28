@@ -55,5 +55,24 @@
 			<Anchor>//api/name/hasSyncChangeSetWithIdentifer:alreadyBeenAppliedInManagedObjectContext:</Anchor>
 		</Token>
 		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSSyncChangeSet/changeSetWithIdentifier:inManagedObjectContext:</TokenIdentifier>
+			<Abstract>Return a TICDSSyncChangeSet object, if one exists, for a given identifier.</Abstract>
+			<DeclaredIn>TICDSSyncChangeSet.h</DeclaredIn>			
+			
+			<Declaration>+ (TICDSSyncChangeSet *)changeSetWithIdentifier:(NSString *)anIdentifier inManagedObjectContext:(NSManagedObjectContext *)aMoc</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>anIdentifier</Name>
+					<Abstract>The unique identifier for the sync change.</Abstract>
+				</Parameter><Parameter>
+					<Name>aMoc</Name>
+					<Abstract>The managed object context to check.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>The sync change set object, if it already exists, otherwise nil.</Abstract></ReturnValue>
+			<Anchor>//api/name/changeSetWithIdentifier:inManagedObjectContext:</Anchor>
+		</Token>
+		
 	</File>
 </Tokens>
