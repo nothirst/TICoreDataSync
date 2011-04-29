@@ -33,15 +33,6 @@
 }
 
 #pragma mark -
-#pragma mark Initialization and Deallocation
-- (void)dealloc
-{
-    [_documentSyncManager release], _documentSyncManager = nil;
-    
-    [super dealloc];
-}
-
-#pragma mark -
 #pragma mark Properties
 @synthesize documentSyncManager = _documentSyncManager;
 
