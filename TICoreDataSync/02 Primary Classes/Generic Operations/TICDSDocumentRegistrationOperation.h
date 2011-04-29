@@ -33,9 +33,6 @@
     NSString *_clientDescription;
     NSDictionary *_documentUserInfo;
     
-    BOOL _documentHasBeenSynchronizedByAnyClient;
-    BOOL _documentHasBeenSynchronizedByThisClient;
-    
     BOOL _completionInProgress;
     TICDSOperationPhaseStatus _documentFileStructureStatus;
     TICDSOperationPhaseStatus _documentClientDeviceFileStructureStatus;

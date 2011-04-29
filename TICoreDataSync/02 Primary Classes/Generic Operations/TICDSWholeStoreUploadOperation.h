@@ -29,7 +29,7 @@
     BOOL _completionInProgress;
     TICDSOperationPhaseStatus _wholeStoreDirectoryStatus;
     TICDSOperationPhaseStatus _wholeStoreFileUploadStatus;
-    TICDSOperationPhaseStatus _appliedSyncChangeSetsUploadStatus;
+    TICDSOperationPhaseStatus _appliedSyncChangeSetsFileUploadStatus;
 }
 
 /** @name Methods Overridden by Subclasses */

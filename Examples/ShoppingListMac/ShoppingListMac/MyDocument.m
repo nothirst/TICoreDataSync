@@ -174,6 +174,7 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     NSError *anyError = nil;
     NSFileManager *fileManager = [[NSFileManager alloc] init];
     NSDictionary *attributes = [fileManager attributesOfItemAtPath:[[self fileURL] path] error:&anyError];
+    [fileManager release];
     if( !attributes ) {
         NSLog(@"Failed to get attributes for document's persistent store");
         return;

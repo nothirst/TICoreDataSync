@@ -29,7 +29,7 @@
     [conflict setRelevantKey:aKey];
     [conflict setObjectSyncID:anObjectSyncID];
     
-    return conflict;
+    return [conflict autorelease];
 }
 
 - (void)dealloc

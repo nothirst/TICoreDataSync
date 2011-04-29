@@ -30,7 +30,7 @@
     BOOL _completionInProgress;
     TICDSOperationPhaseStatus _determineMostRecentlyUploadedStoreStatus;
     TICDSOperationPhaseStatus _wholeStoreFileDownloadStatus;
-    TICDSOperationPhaseStatus _appliedSyncChangeSetsDownloadStatus;
+    TICDSOperationPhaseStatus _appliedSyncChangeSetsFileDownloadStatus;
 }
 
 /** @name Methods Overridden by Subclasses */
