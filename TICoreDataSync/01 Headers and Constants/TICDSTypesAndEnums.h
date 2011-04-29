@@ -121,3 +121,12 @@ typedef enum _TICDSSyncWarningType {
     TICDSSyncWarningTypeObjectWithRelationshipsChangedRemotelyNowDeletedByLocalSyncChange = 7,
     
 } TICDSSyncWarningType;
+
+/** @name Sync Conflicts */
+/** The resolution for a sync conflict. */
+typedef enum _TICDSSyncConflictResolutionType {
+    TICDSSyncConflictResolutionTypeUnknown = 0,
+    
+    TICDSSyncConflictResolutionTypeRemoteWins = 1,
+    TICDSSyncConflictResolutionTypeLocalWins = 2,
+} TICDSSyncConflictResolutionType;

@@ -41,6 +41,7 @@
 - (NSArray *)remoteSyncChangesForObjectWithIdentifier:(NSString *)anIdentifier afterCheckingForConflictsInRemoteSyncChanges:(NSArray *)remoteSyncChanges;
 - (void)addWarningsForRemoteDeletionWithLocalChanges:(NSArray *)localChanges;
 - (void)addWarningsForRemoteChangesWithLocalDeletion:(NSArray *)remoteChanges;
+- (TICDSSyncConflictResolutionType)resolutionTypeForConflictBetweenLocalSyncChange:(TICDSSyncChange *)aSyncChange andRemoteSyncChange:(TICDSSyncChange *)aSyncChange;
 - (void)applyObjectInsertedSyncChange:(TICDSSyncChange *)aSyncChange;
 - (void)applyAttributeChangeSyncChange:(TICDSSyncChange *)aSyncChange;
 - (void)applyObjectDeletedSyncChange:(TICDSSyncChange *)aSyncChange;
@@ -571,9 +572,11 @@
         }
     }
     
-    // Check if remote has changed an object that has been deleted locally
-    NSArray *changeChanges = [remoteSyncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"changeType == %u || changeType == %u", TICDSSyncChangeTypeAttributeChanged, TICDSSyncChangeTypeRelationshipChanged]];
-    if( [changeChanges count] > 0 ) {
+    // Check if remote has changed attributes on an object that has been deleted locally
+    NSArray *changeChanges = [remoteSyncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"changeType == %u", TICDSSyncChangeTypeAttributeChanged]];
+    deletionChanges = [localSyncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"changeType == %u", TICDSSyncChangeTypeObjectDeleted]];
+    
+    if( [changeChanges count] > 0 && [deletionChanges count] > 0 ) {
         // remote has changed an object, so add warnings for each of the changes
         [self addWarningsForRemoteChangesWithLocalDeletion:changeChanges];
         
@@ -581,9 +584,34 @@
         [remoteSyncChangesToReturn removeObjectsInArray:changeChanges];
     }
     
-    /*// Check if remote has changed an object's attribute and local has changed the same object attribute
+    // Check if remote has changed an object's attribute and local has changed the same object attribute
     NSArray *remoteAttributeChanges = [remoteSyncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"changeType == %u", TICDSSyncChangeTypeAttributeChanged]];
-    */
+    NSArray *localAttributeChanges = [localSyncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"changeType == %u", TICDSSyncChangeTypeAttributeChanged]];
+    for( TICDSSyncChange *eachRemoteChange in remoteAttributeChanges ) {
+        // check the attribute name against each local attribute name
+        for( TICDSSyncChange *eachLocalChange in localAttributeChanges ) {
+            if( ![[eachLocalChange relevantKey] isEqualToString:[eachRemoteChange relevantKey]] ) {
+                continue;
+            }
+            
+            if( [[eachLocalChange changedAttributes] isEqual:[eachRemoteChange changedAttributes]] ) {
+                // both changes changed the value to the same thing so remove the local, unpushed sync change
+                [[self localSyncChangesToMergeContext] deleteObject:eachLocalChange];
+                continue;
+            }
+            
+            // if we get here, we have a conflict between eachRemoteChange and eachLocalChange
+            TICDSSyncConflictResolutionType resolutionType = [self resolutionTypeForConflictBetweenLocalSyncChange:eachLocalChange andRemoteSyncChange:eachRemoteChange];
+            
+            if( resolutionType == TICDSSyncConflictResolutionTypeRemoteWins ) {
+                // just delete the local sync change so the remote change wins
+                [[self localSyncChangesToMergeContext] deleteObject:eachLocalChange];
+            } else if( resolutionType == TICDSSyncConflictResolutionTypeLocalWins ) {
+                // remove the remote sync change so it's not applied
+                [remoteSyncChangesToReturn removeObject:eachRemoteChange];
+            }
+        }
+    }
     
     return remoteSyncChangesToReturn;
 }
@@ -594,10 +622,6 @@
         switch( [[eachLocalChange changeType] unsignedIntegerValue] ) {
             case TICDSSyncChangeTypeAttributeChanged:
                 [[self synchronizationWarnings] addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectWithAttributesChangedLocallyAlreadyDeletedByRemoteSyncChange entityName:[eachLocalChange objectEntityName] relatedObjectEntityName:nil attributes:[eachLocalChange changedAttributes]]];
-                break;
-                
-            case TICDSSyncChangeTypeRelationshipChanged:
-                [[self synchronizationWarnings] addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectWithRelationshipsChangedLocallyAlreadyDeletedByRemoteSyncChange entityName:[eachLocalChange objectEntityName] relatedObjectEntityName:[eachLocalChange relatedObjectEntityName] attributes:nil]];
                 break;
         }
     }
@@ -616,6 +640,11 @@
                 break;
         }
     }
+}
+
+- (TICDSSyncConflictResolutionType)resolutionTypeForConflictBetweenLocalSyncChange:(TICDSSyncChange *)aSyncChange andRemoteSyncChange:(TICDSSyncChange *)aSyncChange
+{
+    return TICDSSyncConflictResolutionTypeRemoteWins;
 }
 
 #pragma mark Fetching Affected Objects
