@@ -26,6 +26,8 @@ NSString * const TICDSSyncWarningTypeNames[] = {
     @"Object not found locally for deletion sync change",
     @"Object with attributes changed locally has already been deleted remotely",
     @"Object with relationships changed locally has already been deleted remotely",
+    @"Object with attributes changed remotely has been deleted locally",
+    @"Object with relationships changed remotely has been deleted locally",
 };
 
 NSString * const TICDSErrorUserInfoKey = @"TICDSErrorUserInfoKey";

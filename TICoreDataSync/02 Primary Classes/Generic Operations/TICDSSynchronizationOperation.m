@@ -40,6 +40,7 @@
 - (NSArray *)syncChangesAfterCheckingForConflicts:(NSArray *)syncChanges;
 - (NSArray *)remoteSyncChangesForObjectWithIdentifier:(NSString *)anIdentifier afterCheckingForConflictsInRemoteSyncChanges:(NSArray *)remoteSyncChanges;
 - (void)addWarningsForRemoteDeletionWithLocalChanges:(NSArray *)localChanges;
+- (void)addWarningsForRemoteChangesWithLocalDeletion:(NSArray *)remoteChanges;
 - (void)applyObjectInsertedSyncChange:(TICDSSyncChange *)aSyncChange;
 - (void)applyAttributeChangeSyncChange:(TICDSSyncChange *)aSyncChange;
 - (void)applyObjectDeletedSyncChange:(TICDSSyncChange *)aSyncChange;
@@ -556,22 +557,35 @@
         return remoteSyncChanges;
     }
     
+    NSMutableArray *remoteSyncChangesToReturn = [NSMutableArray arrayWithArray:remoteSyncChanges];
+    
     // Check if remote has deleted an object that has been changed locally
     NSArray *deletionChanges = [remoteSyncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"changeType == %u", TICDSSyncChangeTypeObjectDeleted]];
     if( [deletionChanges count] > 0 ) {
         // remote has deleted an object, so add warnings for all local changes
         [self addWarningsForRemoteDeletionWithLocalChanges:localSyncChanges];
         
-        // Remote all local sync changes for this object
+        // Delete all local sync changes for this object
         for( TICDSSyncChange *eachLocalChange in localSyncChanges ) {
             [[self localSyncChangesToMergeContext] deleteObject:eachLocalChange];
         }
     }
     
-    /*// Check if remote has changed an object that has been deleted locally
-    NSArray *changeChanges = [remoteSyncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"changeType == %@ || changeType == %@", TICDSSyncChangeTypeAttributeChanged, TICDSSyncChangeTypeRelationshipChanged]];*/
+    // Check if remote has changed an object that has been deleted locally
+    NSArray *changeChanges = [remoteSyncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"changeType == %u || changeType == %u", TICDSSyncChangeTypeAttributeChanged, TICDSSyncChangeTypeRelationshipChanged]];
+    if( [changeChanges count] > 0 ) {
+        // remote has changed an object, so add warnings for each of the changes
+        [self addWarningsForRemoteChangesWithLocalDeletion:changeChanges];
+        
+        // Remove change sync changs from remoteSyncChanges
+        [remoteSyncChangesToReturn removeObjectsInArray:changeChanges];
+    }
     
-    return remoteSyncChanges;
+    /*// Check if remote has changed an object's attribute and local has changed the same object attribute
+    NSArray *remoteAttributeChanges = [remoteSyncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"changeType == %u", TICDSSyncChangeTypeAttributeChanged]];
+    */
+    
+    return remoteSyncChangesToReturn;
 }
 
 - (void)addWarningsForRemoteDeletionWithLocalChanges:(NSArray *)localChanges
@@ -584,6 +598,21 @@
                 
             case TICDSSyncChangeTypeRelationshipChanged:
                 [[self synchronizationWarnings] addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectWithRelationshipsChangedLocallyAlreadyDeletedByRemoteSyncChange entityName:[eachLocalChange objectEntityName] relatedObjectEntityName:[eachLocalChange relatedObjectEntityName] attributes:nil]];
+                break;
+        }
+    }
+}
+
+- (void)addWarningsForRemoteChangesWithLocalDeletion:(NSArray *)remoteChanges
+{
+    for( TICDSSyncChange *eachRemoteChange in remoteChanges ) {
+        switch( [[eachRemoteChange changeType] unsignedIntegerValue] ) {
+            case TICDSSyncChangeTypeAttributeChanged:
+                [[self synchronizationWarnings] addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectWithAttributesChangedRemotelyNowDeletedByLocalSyncChange entityName:[eachRemoteChange objectEntityName] relatedObjectEntityName:nil attributes:[eachRemoteChange changedAttributes]]];
+                break;
+                
+            case TICDSSyncChangeTypeRelationshipChanged:
+                [[self synchronizationWarnings] addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectWithRelationshipsChangedRemotelyNowDeletedByLocalSyncChange entityName:[eachRemoteChange objectEntityName] relatedObjectEntityName:[eachRemoteChange relatedObjectEntityName] attributes:nil]];
                 break;
         }
     }
