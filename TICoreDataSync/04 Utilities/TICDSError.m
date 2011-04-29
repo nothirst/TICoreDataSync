@@ -48,18 +48,18 @@ NSString *gTICDSErrorStrings[] = {
     NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObject:gTICDSErrorStrings[aCode] forKey:NSLocalizedDescriptionKey];
     
     if( someInfo ) {
-        [userInfo setValue:someInfo forKey:TICDSErrorUserInfoKey];
+        [userInfo setValue:someInfo forKey:kTICDSErrorUserInfo];
     }
     
     if( anUnderlyingError ) {
-        [userInfo setValue:anUnderlyingError forKey:TICDSErrorUnderlyingErrorKey];
+        [userInfo setValue:anUnderlyingError forKey:kTICDSErrorUnderlyingError];
     }
     
     if( aClassAndMethod != NULL ) {
-        [userInfo setValue:[NSString stringWithUTF8String:aClassAndMethod] forKey:TICDSErrorClassAndMethod];
+        [userInfo setValue:[NSString stringWithUTF8String:aClassAndMethod] forKey:kTICDSErrorClassAndMethod];
     }
     
-    return [NSError errorWithDomain:TICDSErrorDomain code:aCode userInfo:userInfo];    
+    return [NSError errorWithDomain:kTICDSErrorDomain code:aCode userInfo:userInfo];    
 }
 
 @end

@@ -35,10 +35,10 @@ NSString * const TICDSSyncWarningTypeNames[] = {
     @"Object with relationships changed remotely has been deleted locally",
 };
 
-NSString * const TICDSErrorUserInfoKey = @"TICDSErrorUserInfoKey";
-NSString * const TICDSErrorUnderlyingErrorKey = @"TICDSErrorUnderlyingErrorKey";
-NSString * const TICDSErrorClassAndMethod = @"TICDSErrorClassAndMethod";
-NSString * const TICDSErrorDomain = @"com.timisted.ticoredatasync";
+NSString * const kTICDSErrorUserInfo = @"kTICDSErrorUserInfo";
+NSString * const kTICDSErrorUnderlyingError = @"kTICDSErrorUnderlyingError";
+NSString * const kTICDSErrorClassAndMethod = @"kTICDSErrorClassAndMethod";
+NSString * const kTICDSErrorDomain = @"com.timisted.ticoredatasync";
 
 NSString * const kTICDSClientDeviceDescription = @"kTICDSClientDeviceDescription";
 NSString * const kTICDSClientDeviceUserInfo = @"kTICDSClientDeviceUserInfo";

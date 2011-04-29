@@ -15,10 +15,10 @@ extern NSString * const TICDSSyncChangeTypeNames[];
 extern NSString * const TICDSSyncWarningTypeNames[];
 extern NSString * const TICDSSyncConflictTypeNames[];
 
-extern NSString * const TICDSErrorUserInfoKey;
-extern NSString * const TICDSErrorUnderlyingErrorKey;
-extern NSString * const TICDSErrorClassAndMethod;
-extern NSString * const TICDSErrorDomain;
+extern NSString * const kTICDSErrorUserInfo;
+extern NSString * const kTICDSErrorUnderlyingError;
+extern NSString * const kTICDSErrorClassAndMethod;
+extern NSString * const kTICDSErrorDomain;
 
 extern NSString * const kTICDSClientDeviceDescription;
 extern NSString * const kTICDSClientDeviceUserInfo;
