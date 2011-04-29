@@ -12,6 +12,7 @@ extern NSString * const TICDSFrameworkName;
 #define TICDSSyncChangeSetsCoreDataPersistentStoreType NSSQLiteStoreType
 
 extern NSString * const TICDSSyncChangeTypeNames[];
+extern NSString * const TICDSSyncWarningTypeNames[];
 
 extern NSString * const TICDSErrorUserInfoKey;
 extern NSString * const TICDSErrorUnderlyingErrorKey;
@@ -50,6 +51,12 @@ extern NSString * const TICDSRecentSyncFileExtension;
 extern NSString * const TICDSSyncIDAttributeName;
 extern NSString * const TICDSSyncChangeDataModelName;
 extern NSString * const TICDSSyncChangeSetDataModelName;
+
+extern NSString * const kTICDSSyncWarningType;
+extern NSString * const kTICDSSyncWarningDescription;
+extern NSString * const kTICDSSyncWarningEntityName;
+extern NSString * const kTICDSSyncWarningAttributes;
+extern NSString * const kTICDSSyncWarningRelatedObjectEntityName;
 
 extern NSString * const TICDSApplicationSyncManagerDidRegisterSuccessfullyNotification;
 extern NSString * const TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification;

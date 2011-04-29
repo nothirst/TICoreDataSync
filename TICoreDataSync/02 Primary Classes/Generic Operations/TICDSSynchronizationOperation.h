@@ -43,12 +43,12 @@
     NSArray *_otherSynchronizedClientDeviceIdentifiers;
     NSMutableDictionary *_otherSynchronizedClientDeviceSyncChangeSetIdentifiers;
     NSArray *_syncChangeSortDescriptors;
+    NSMutableArray *_synchronizationWarnings;
     
     NSURL *_localSyncChangesToMergeLocation;
     NSURL *_appliedSyncChangeSetsFileLocation;
     NSURL *_unappliedSyncChangesDirectoryLocation;
     NSURL *_unappliedSyncChangeSetsFileLocation;
-    NSURL *_unsynchronizedSyncChangesFileLocation;
     NSURL *_localRecentSyncFileLocation;
     
     TICoreDataFactory *_appliedSyncChangeSetsCoreDataFactory;
@@ -60,8 +60,8 @@
     TICoreDataFactory *_unappliedSyncChangesCoreDataFactory;
     NSManagedObjectContext *_unappliedSyncChangesContext;
     
-    TICoreDataFactory *_unsynchronizedSyncChangesCoreDataFactory;
-    NSManagedObjectContext *_unsynchronizedSyncChangesContext;
+    TICoreDataFactory *_localSyncChangesToMergeCoreDataFactory;
+    NSManagedObjectContext *_localSyncChangesToMergeContext;
     
     NSManagedObjectContext *_backgroundApplicationContext;
     
@@ -194,6 +194,9 @@
 /** The sort descriptors used to sort sync change objects in a `SyncChangeSet` before being applied. */
 @property (nonatomic, retain) NSArray *syncChangeSortDescriptors;
 
+/** The warnings generated during this synchronization. */
+@property (retain) NSMutableArray *synchronizationWarnings;
+
 /** @name File Locations */
 
 /** The location of the `SyncChangesBeingSynchronized.syncchg` file for this synchronization operation. */
@@ -207,9 +210,6 @@
 
 /** The location of this document's `UnappliedSyncChangeSets.ticdsync` file. */
 @property (retain) NSURL *unappliedSyncChangeSetsFileLocation;
-
-/** The location of this document's local `UnsynchronizedSyncChanges.syncchg` file. */
-@property (retain) NSURL *unsynchronizedSyncChangesFileLocation;
 
 /** The location of the local RecentSync file to upload at the end of the synchronization process. */
 @property (retain) NSURL *localRecentSyncFileLocation;
@@ -235,10 +235,10 @@
 @property (nonatomic, retain) NSManagedObjectContext *unappliedSyncChangesContext;
 
 /** A `TICoreDataFactory` to access the contents of the local, unsynchronized set of `SyncChange`s. */
-@property (nonatomic, retain) TICoreDataFactory *unsynchronizedSyncChangesCoreDataFactory;
+@property (nonatomic, retain) TICoreDataFactory *localSyncChangesToMergeCoreDataFactory;
 
 /** The managed object context for the local, unsynchronized set of `SyncChange`s. */
-@property (nonatomic, retain) NSManagedObjectContext *unsynchronizedSyncChangesContext;
+@property (nonatomic, retain) NSManagedObjectContext *localSyncChangesToMergeContext;
 
 /** The managed object context (tied to the application's persistent store coordinator) in which `SyncChanges` are applied. */
 @property (nonatomic, retain) NSManagedObjectContext *backgroundApplicationContext;

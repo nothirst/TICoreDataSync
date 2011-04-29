@@ -154,8 +154,6 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
 
 - (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:(NSNotification *)aNotification
 {
-    BOOL wasDirty = [self isDocumentEdited];
-    
     [[[self managedObjectContext] undoManager] disableUndoRegistration];
     [[self managedObjectContext] mergeChangesFromContextDidSaveNotification:aNotification];
     
@@ -178,11 +176,9 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     [[self managedObjectContext] processPendingChanges];
     
     [[[self managedObjectContext] undoManager] enableUndoRegistration];
-    
-    if( !wasDirty ) {
-        [self updateChangeCount:NSChangeCleared];
-        [[[self managedObjectContext] undoManager] removeAllActions];
-    }
+    [[[self managedObjectContext] undoManager] removeAllActions];
+
+    [self updateChangeCount:NSChangeCleared];
 }
 
 - (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredSynchronizationError:(NSError *)anError
@@ -285,6 +281,13 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
 {
     [[self documentShopsWindowController] showWindow:sender];
 }
+
+/*- (IBAction)saveDocument:(id)sender
+{
+    [[self managedObjectContext] processPendingChanges];
+    
+    [super saveDocument:sender];
+}*/
 
 - (IBAction)initiateSynchronization:(id)sender
 {

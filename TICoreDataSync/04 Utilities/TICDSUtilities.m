@@ -53,4 +53,26 @@
     return dictionary;
 }
 
++ (NSDictionary *)syncWarningOfType:(TICDSSyncWarningType)aType entityName:(NSString *)entityName relatedObjectEntityName:(NSString *)relatedObjectEntityName attributes:(NSDictionary *)attributes
+{
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    
+    [dictionary setValue:[NSNumber numberWithInt:aType] forKey:kTICDSSyncWarningType];
+    [dictionary setValue:TICDSSyncWarningTypeNames[aType] forKey:kTICDSSyncWarningDescription];
+    
+    if( entityName ) {
+        [dictionary setValue:entityName forKey:kTICDSSyncWarningEntityName];
+    }
+    
+    if( relatedObjectEntityName ) {
+        [dictionary setValue:relatedObjectEntityName forKey:kTICDSSyncWarningRelatedObjectEntityName];
+    }
+    
+    if( attributes ) {
+        [dictionary setValue:attributes forKey:kTICDSSyncWarningAttributes];
+    }
+    
+    return dictionary;
+}
+
 @end

@@ -20,6 +20,7 @@ NSString *gTICDSErrorStrings[] = {
     @"No previously uploaded store exists",
     @"Core Data Fetch error",
     @"Core Data Save error",
+    @"Failed to create Core Data object",
 };
 
 

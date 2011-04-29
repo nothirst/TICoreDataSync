@@ -82,6 +82,7 @@ typedef enum _TICDSErrorCode {
     TICDSErrorCodeNoPreviouslyUploadedStoreExists,
     TICDSErrorCodeCoreDataFetchError,
     TICDSErrorCodeCoreDataSaveError,
+    TICDSErrorCodeObjectCreationError,
 } TICDSErrorCode;
 
 /** @name Operation Phases */
@@ -105,3 +106,16 @@ typedef enum _TICDSSyncChangeType {
     TICDSSyncChangeTypeRelationshipChanged = 3,
     TICDSSyncChangeTypeObjectDeleted = 4,
 } TICDSSyncChangeType;
+
+/** @name Sync Warnings */
+/** The type of a sync warning */
+typedef enum _TICDSSyncWarningType {
+    TICDSSyncWarningTypeUnknown = 0,
+    
+    TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteAttributeSyncChange = 1,
+    TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteRelationshipSyncChange = 2,
+    TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteDeletionSyncChange = 3,
+    TICDSSyncWarningTypeObjectWithAttributesChangedLocallyAlreadyDeletedByRemoteSyncChange = 4,
+    TICDSSyncWarningTypeObjectWithRelationshipsChangedLocallyAlreadyDeletedByRemoteSyncChange = 5,
+    
+} TICDSSyncWarningType;

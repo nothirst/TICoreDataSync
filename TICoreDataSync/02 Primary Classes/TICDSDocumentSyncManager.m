@@ -434,7 +434,6 @@
     [operation setAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename]]];
     [operation setUnappliedSyncChangesDirectoryLocation:[NSURL fileURLWithPath:[[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSUnappliedChangesDirectoryName]]];
     [operation setUnappliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSUnappliedChangeSetsFilename]]];
-    [operation setUnsynchronizedSyncChangesFileLocation:[NSURL fileURLWithPath:[[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSUnsynchronizedSyncChangesStoreName]]];
     [operation setLocalRecentSyncFileLocation:[NSURL fileURLWithPath:[[[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:[self clientIdentifier]] stringByAppendingPathExtension:TICDSRecentSyncFileExtension]]];
     
     // Set background context
@@ -501,6 +500,11 @@
 - (void)synchronizationOperationCompleted:(TICDSSynchronizationOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Synchronization Operation Completed");
+    
+    if( [[anOperation synchronizationWarnings] count] > 0 ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Synchronization encountered warnings: \n%@", [anOperation synchronizationWarnings]);
+        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredSynchronizationWarnings:), [anOperation synchronizationWarnings]];
+    }
     
     [self ti_alertDelegateWithSelector:@selector(syncManagerDidFinishSynchronization:)];
 }

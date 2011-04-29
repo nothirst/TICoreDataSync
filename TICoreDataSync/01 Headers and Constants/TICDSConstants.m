@@ -18,6 +18,16 @@ NSString * const TICDSSyncChangeTypeNames[] = {
     @"Relationship Changed",
 };
 
+NSString * const TICDSSyncWarningTypeNames[] = {
+    @"Unknown",
+    
+    @"Object not found locally for attribute sync change",
+    @"Object not found locally for relationship sync change",
+    @"Object not found locally for deletion sync change",
+    @"Object with attributes changed locally has already been deleted remotely",
+    @"Object with relationships changed locally has already been deleted remotely",
+};
+
 NSString * const TICDSErrorUserInfoKey = @"TICDSErrorUserInfoKey";
 NSString * const TICDSErrorUnderlyingErrorKey = @"TICDSErrorUnderlyingErrorKey";
 NSString * const TICDSErrorClassAndMethod = @"TICDSErrorClassAndMethod";
@@ -55,6 +65,12 @@ NSString * const TICDSRecentSyncFileExtension = @"recentsync";
 NSString * const TICDSSyncIDAttributeName = @"ticdsSyncID";
 NSString * const TICDSSyncChangeDataModelName = @"TICDSSyncChange";
 NSString * const TICDSSyncChangeSetDataModelName = @"TICDSSyncChangeSet";
+
+NSString * const kTICDSSyncWarningType = @"kTICDSSyncWarningType";
+NSString * const kTICDSSyncWarningDescription = @"kTICDSSyncWarningDescription";
+NSString * const kTICDSSyncWarningEntityName = @"kTICDSSyncWarningEntityName";
+NSString * const kTICDSSyncWarningAttributes = @"kTICDSSyncWarningAttributes";
+NSString * const kTICDSSyncWarningRelatedObjectEntityName = @"kTICDSSyncWarningRelatedObjectEntityName";
 
 NSString * const TICDSApplicationSyncManagerDidRegisterSuccessfullyNotification = @"TICDSApplicationSyncManagerDidRegisterSuccessfullyNotification";
 NSString * const TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification = @"TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification";

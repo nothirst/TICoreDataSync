@@ -314,6 +314,14 @@
  @param anError The error. */
 - (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredSynchronizationError:(NSError *)anError;
 
+/** Informs the delegate that warnings were generated during the synchronization process.
+ 
+ Warnings indicate that e.g., an object was changed locally but deleted remotely.
+ 
+ @param aSyncManager The document sync manager object that sent the message.
+ @param warnings An array of `NSDictionary` objects containing information about each warning. */
+- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredSynchronizationWarnings:(NSArray *)warnings;
+
 /** Informs the delegate that the document sync manager failed to synchronize the document.
  
  The error will previously have been supplied through the `syncManager:encounteredSynchronizationError:` method.

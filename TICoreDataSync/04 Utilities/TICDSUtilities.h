@@ -33,4 +33,14 @@
 /** Returns a dictionary containing the basic file structure for a synchronized document. */
 + (NSDictionary *)remoteDocumentFileStructure;
 
+/** Returns a dictionary configured for a given synchronization warning. 
+ 
+ @param aType The type of the sync warning.
+ @param entityName The entity name for the affected object.
+ @param attributes Any defining attributes for the object affected by the sync change.
+ @param relatedObjectEntityName The entity name for any related object.
+ 
+ @return A dictionary configured with the given information. */
++ (NSDictionary *)syncWarningOfType:(TICDSSyncWarningType)aType entityName:(NSString *)entityName relatedObjectEntityName:(NSString *)relatedObjectEntityName attributes:(NSDictionary *)attributes;
+
 @end
