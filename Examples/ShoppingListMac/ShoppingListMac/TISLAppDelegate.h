@@ -8,7 +8,7 @@
 
 @class TISLSynchronizationController;
 
-@interface TISLAppDelegate : NSObject <NSApplicationDelegate> {
+@interface TISLAppDelegate : NSObject {
 @private
     TISLSynchronizationController *_syncController;
 }
