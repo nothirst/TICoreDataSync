@@ -212,6 +212,39 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/otherSynchronizedClientDeviceIdentifiers</TokenIdentifier>
+			<Abstract>An array of client identifiers for clients that synchronize with this document, excluding this client.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSArray *otherSynchronizedClientDeviceIdentifiers</Declaration>
+			
+			
+			<Anchor>//api/name/otherSynchronizedClientDeviceIdentifiers</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/otherSynchronizedClientDeviceSyncChangeSetIdentifiers</TokenIdentifier>
+			<Abstract>A dictionary of arrays; keys are client identifiers, values are sync change set identifiers for each of those clients.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSMutableDictionary *otherSynchronizedClientDeviceSyncChangeSetIdentifiers</Declaration>
+			
+			
+			<Anchor>//api/name/otherSynchronizedClientDeviceSyncChangeSetIdentifiers</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/syncChangeSortDescriptors</TokenIdentifier>
+			<Abstract>The sort descriptors used to sort sync change objects in a SyncChangeSet before being applied.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSArray *syncChangeSortDescriptors</Declaration>
+			
+			
+			<Anchor>//api/name/syncChangeSortDescriptors</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/localSyncChangesToMergeLocation</TokenIdentifier>
 			<Abstract>The location of the SyncChangesBeingSynchronized.syncchg file for this synchronization operation.</Abstract>
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
@@ -234,28 +267,6 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/appliedSyncChangeSetsCoreDataFactory</TokenIdentifier>
-			<Abstract>A TICoreDataFactory to access the contents of the AppliedSyncChangeSets.ticdsync file.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, retain) TICoreDataFactory *appliedSyncChangeSetsCoreDataFactory</Declaration>
-			
-			
-			<Anchor>//api/name/appliedSyncChangeSetsCoreDataFactory</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/appliedSyncChangeSetsContext</TokenIdentifier>
-			<Abstract>The managed object context for the AppliedSyncChangeSets.ticdsync file.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, retain) NSManagedObjectContext *appliedSyncChangeSetsContext</Declaration>
-			
-			
-			<Anchor>//api/name/appliedSyncChangeSetsContext</Anchor>
-		</Token>
-		
-		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unappliedSyncChangesDirectoryLocation</TokenIdentifier>
 			<Abstract>The location of the UnappliedSyncChanges directory for this synchronization operation.</Abstract>
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
@@ -275,6 +286,50 @@
 			
 			
 			<Anchor>//api/name/unappliedSyncChangeSetsFileLocation</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unsynchronizedSyncChangesFileLocation</TokenIdentifier>
+			<Abstract>The location of this document's local UnsynchronizedSyncChanges.syncchg file.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSURL *unsynchronizedSyncChangesFileLocation</Declaration>
+			
+			
+			<Anchor>//api/name/unsynchronizedSyncChangesFileLocation</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/localRecentSyncFileLocation</TokenIdentifier>
+			<Abstract>The location of the local RecentSync file to upload at the end of the synchronization process.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSURL *localRecentSyncFileLocation</Declaration>
+			
+			
+			<Anchor>//api/name/localRecentSyncFileLocation</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/appliedSyncChangeSetsCoreDataFactory</TokenIdentifier>
+			<Abstract>A TICoreDataFactory to access the contents of the AppliedSyncChangeSets.ticdsync file.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) TICoreDataFactory *appliedSyncChangeSetsCoreDataFactory</Declaration>
+			
+			
+			<Anchor>//api/name/appliedSyncChangeSetsCoreDataFactory</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/appliedSyncChangeSetsContext</TokenIdentifier>
+			<Abstract>The managed object context for the AppliedSyncChangeSets.ticdsync file.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSManagedObjectContext *appliedSyncChangeSetsContext</Declaration>
+			
+			
+			<Anchor>//api/name/appliedSyncChangeSetsContext</Anchor>
 		</Token>
 		
 		<Token>
@@ -344,47 +399,14 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unsynchronizedSyncChangesFileLocation</TokenIdentifier>
-			<Abstract>The location of this document's local UnsynchronizedSyncChanges.syncchg file.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/backgroundApplicationContext</TokenIdentifier>
+			<Abstract>The managed object context (tied to the application's persistent store coordinator) in which SyncChanges are applied.</Abstract>
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
 			
-			<Declaration>@property (retain) NSURL *unsynchronizedSyncChangesFileLocation</Declaration>
+			<Declaration>@property (nonatomic, retain) NSManagedObjectContext *backgroundApplicationContext</Declaration>
 			
 			
-			<Anchor>//api/name/unsynchronizedSyncChangesFileLocation</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/otherSynchronizedClientDeviceIdentifiers</TokenIdentifier>
-			<Abstract>An array of client identifiers for clients that synchronize with this document, excluding this client.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, retain) NSArray *otherSynchronizedClientDeviceIdentifiers</Declaration>
-			
-			
-			<Anchor>//api/name/otherSynchronizedClientDeviceIdentifiers</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/otherSynchronizedClientDeviceSyncChangeSetIdentifiers</TokenIdentifier>
-			<Abstract>A dictionary of arrays; keys are client identifiers, values are sync change set identifiers for each of those clients.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (retain) NSMutableDictionary *otherSynchronizedClientDeviceSyncChangeSetIdentifiers</Declaration>
-			
-			
-			<Anchor>//api/name/otherSynchronizedClientDeviceSyncChangeSetIdentifiers</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/localRecentSyncFileLocation</TokenIdentifier>
-			<Abstract>The location of the local RecentSync file to upload at the end of the synchronization process.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (retain) NSURL *localRecentSyncFileLocation</Declaration>
-			
-			
-			<Anchor>//api/name/localRecentSyncFileLocation</Anchor>
+			<Anchor>//api/name/backgroundApplicationContext</Anchor>
 		</Token>
 		
 		<Token>

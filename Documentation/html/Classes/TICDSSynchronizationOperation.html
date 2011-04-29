@@ -42,6 +42,8 @@
 	
 	<option value="//api/name/applyUnappliedSyncChangeSetsStatus">&nbsp;&nbsp;&nbsp;&nbsp;applyUnappliedSyncChangeSetsStatus</option>
 	
+	<option value="//api/name/backgroundApplicationContext">&nbsp;&nbsp;&nbsp;&nbsp;backgroundApplicationContext</option>
+	
 	<option value="//api/name/completionInProgress">&nbsp;&nbsp;&nbsp;&nbsp;completionInProgress</option>
 	
 	<option value="//api/name/fetchArrayOfClientDeviceIDsStatus">&nbsp;&nbsp;&nbsp;&nbsp;fetchArrayOfClientDeviceIDsStatus</option>
@@ -71,6 +73,8 @@
 	<option value="//api/name/otherSynchronizedClientDeviceIdentifiers">&nbsp;&nbsp;&nbsp;&nbsp;otherSynchronizedClientDeviceIdentifiers</option>
 	
 	<option value="//api/name/otherSynchronizedClientDeviceSyncChangeSetIdentifiers">&nbsp;&nbsp;&nbsp;&nbsp;otherSynchronizedClientDeviceSyncChangeSetIdentifiers</option>
+	
+	<option value="//api/name/syncChangeSortDescriptors">&nbsp;&nbsp;&nbsp;&nbsp;syncChangeSortDescriptors</option>
 	
 	<option value="//api/name/unappliedSyncChangeSetsContext">&nbsp;&nbsp;&nbsp;&nbsp;unappliedSyncChangeSetsContext</option>
 	
@@ -149,6 +153,10 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Properties">Properties</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_File Locatinos">File Locatinos</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Managed Object Contexts and Factories">Managed Object Contexts and Factories</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Completion">Completion</a></span></li>
 	
 </ul></li>
@@ -166,6 +174,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/appliedSyncChangeSetsFileLocation">appliedSyncChangeSetsFileLocation</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applyUnappliedSyncChangeSetsStatus">applyUnappliedSyncChangeSetsStatus</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/backgroundApplicationContext">backgroundApplicationContext</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/completionInProgress">completionInProgress</a></span></li>
 	
@@ -196,6 +206,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/otherSynchronizedClientDeviceIdentifiers">otherSynchronizedClientDeviceIdentifiers</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/otherSynchronizedClientDeviceSyncChangeSetIdentifiers">otherSynchronizedClientDeviceSyncChangeSetIdentifiers</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncChangeSortDescriptors">syncChangeSortDescriptors</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/unappliedSyncChangeSetsContext">unappliedSyncChangeSetsContext</a></span></li>
 	
@@ -454,6 +466,35 @@
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
+		<code><a href="#//api/name/otherSynchronizedClientDeviceIdentifiers">&nbsp;&nbsp;otherSynchronizedClientDeviceIdentifiers</a></code>
+		<span class="tooltip"><p>An array of client identifiers for clients that synchronize with this document, excluding this client.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/otherSynchronizedClientDeviceSyncChangeSetIdentifiers">&nbsp;&nbsp;otherSynchronizedClientDeviceSyncChangeSetIdentifiers</a></code>
+		<span class="tooltip"><p>A dictionary of arrays; keys are client identifiers, values are sync change set identifiers for each of those clients.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncChangeSortDescriptors">&nbsp;&nbsp;syncChangeSortDescriptors</a></code>
+		<span class="tooltip"><p>The sort descriptors used to sort sync change objects in a <code>SyncChangeSet</code> before being applied.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+						
+						<a title="File Locatinos" name="task_File Locatinos"></a>
+						<h3 class="subsubtitle task-title">File Locatinos</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
 		<code><a href="#//api/name/localSyncChangesToMergeLocation">&nbsp;&nbsp;localSyncChangesToMergeLocation</a></code>
 		<span class="tooltip"><p>The location of the <code>SyncChangesBeingSynchronized.syncchg</code> file for this synchronization operation.</p></span>
 	</span>
@@ -468,20 +509,6 @@
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/appliedSyncChangeSetsCoreDataFactory">&nbsp;&nbsp;appliedSyncChangeSetsCoreDataFactory</a></code>
-		<span class="tooltip"><p>A <code>TICoreDataFactory</code> to access the contents of the <code>AppliedSyncChangeSets.ticdsync</code> file.</p></span>
-	</span>
-	<span class="task-item-suffix">property</span>
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/appliedSyncChangeSetsContext">&nbsp;&nbsp;appliedSyncChangeSetsContext</a></code>
-		<span class="tooltip"><p>The managed object context for the <code>AppliedSyncChangeSets.ticdsync</code> file.</p></span>
-	</span>
-	<span class="task-item-suffix">property</span>
-	
-</li><li>
-	<span class="tooltip">
 		<code><a href="#//api/name/unappliedSyncChangesDirectoryLocation">&nbsp;&nbsp;unappliedSyncChangesDirectoryLocation</a></code>
 		<span class="tooltip"><p>The location of the <code>UnappliedSyncChanges</code> directory for this synchronization operation.</p></span>
 	</span>
@@ -491,6 +518,42 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/unappliedSyncChangeSetsFileLocation">&nbsp;&nbsp;unappliedSyncChangeSetsFileLocation</a></code>
 		<span class="tooltip"><p>The location of this document&rsquo;s <code>UnappliedSyncChangeSets.ticdsync</code> file.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/unsynchronizedSyncChangesFileLocation">&nbsp;&nbsp;unsynchronizedSyncChangesFileLocation</a></code>
+		<span class="tooltip"><p>The location of this document&rsquo;s local <code>UnsynchronizedSyncChanges.syncchg</code> file.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/localRecentSyncFileLocation">&nbsp;&nbsp;localRecentSyncFileLocation</a></code>
+		<span class="tooltip"><p>The location of the local RecentSync file to upload at the end of the synchronization process.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+						
+						<a title="Managed Object Contexts and Factories" name="task_Managed Object Contexts and Factories"></a>
+						<h3 class="subsubtitle task-title">Managed Object Contexts and Factories</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/appliedSyncChangeSetsCoreDataFactory">&nbsp;&nbsp;appliedSyncChangeSetsCoreDataFactory</a></code>
+		<span class="tooltip"><p>A <code>TICoreDataFactory</code> to access the contents of the <code>AppliedSyncChangeSets.ticdsync</code> file.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/appliedSyncChangeSetsContext">&nbsp;&nbsp;appliedSyncChangeSetsContext</a></code>
+		<span class="tooltip"><p>The managed object context for the <code>AppliedSyncChangeSets.ticdsync</code> file.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -538,29 +601,8 @@
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/unsynchronizedSyncChangesFileLocation">&nbsp;&nbsp;unsynchronizedSyncChangesFileLocation</a></code>
-		<span class="tooltip"><p>The location of this document&rsquo;s local <code>UnsynchronizedSyncChanges.syncchg</code> file.</p></span>
-	</span>
-	<span class="task-item-suffix">property</span>
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/otherSynchronizedClientDeviceIdentifiers">&nbsp;&nbsp;otherSynchronizedClientDeviceIdentifiers</a></code>
-		<span class="tooltip"><p>An array of client identifiers for clients that synchronize with this document, excluding this client.</p></span>
-	</span>
-	<span class="task-item-suffix">property</span>
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/otherSynchronizedClientDeviceSyncChangeSetIdentifiers">&nbsp;&nbsp;otherSynchronizedClientDeviceSyncChangeSetIdentifiers</a></code>
-		<span class="tooltip"><p>A dictionary of arrays; keys are client identifiers, values are sync change set identifiers for each of those clients.</p></span>
-	</span>
-	<span class="task-item-suffix">property</span>
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/localRecentSyncFileLocation">&nbsp;&nbsp;localRecentSyncFileLocation</a></code>
-		<span class="tooltip"><p>The location of the local RecentSync file to upload at the end of the synchronization process.</p></span>
+		<code><a href="#//api/name/backgroundApplicationContext">&nbsp;&nbsp;backgroundApplicationContext</a></code>
+		<span class="tooltip"><p>The managed object context (tied to the application&rsquo;s persistent store coordinator) in which <code>SyncChanges</code> are applied.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -798,6 +840,38 @@
 	
 	
 	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) TICDSOperationPhaseStatus applyUnappliedSyncChangeSetsStatus</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/backgroundApplicationContext" title="backgroundApplicationContext"></a>
+	<h3 class="subsubtitle method-title">backgroundApplicationContext</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The managed object context (tied to the application&rsquo;s persistent store coordinator) in which <code>SyncChanges</code> are applied.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSManagedObjectContext *backgroundApplicationContext</code></div>
 	
 	
 	
@@ -1278,6 +1352,38 @@
 	
 	
 	<div class="method-subsection method-declaration"><code>@property (retain) NSMutableDictionary *otherSynchronizedClientDeviceSyncChangeSetIdentifiers</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/syncChangeSortDescriptors" title="syncChangeSortDescriptors"></a>
+	<h3 class="subsubtitle method-title">syncChangeSortDescriptors</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The sort descriptors used to sort sync change objects in a <code>SyncChangeSet</code> before being applied.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSArray *syncChangeSortDescriptors</code></div>
 	
 	
 	
