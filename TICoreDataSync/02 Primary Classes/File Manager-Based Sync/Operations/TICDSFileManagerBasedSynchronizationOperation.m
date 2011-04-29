@@ -93,7 +93,7 @@
 
 - (void)uploadRecentSyncFileAtLocation:(NSURL *)aLocation
 {
-    NSString *remoteFile = [self thisDocumentRecentSyncThisClientFilePath];
+    NSString *remoteFile = [self thisDocumentRecentSyncsThisClientFilePath];
     
     NSError *anyError = nil;
     BOOL success = YES;
@@ -123,7 +123,7 @@
 {
     [_thisDocumentSyncChangesDirectoryPath release], _thisDocumentSyncChangesDirectoryPath = nil;
     [_thisDocumentSyncChangesThisClientDirectoryPath release], _thisDocumentSyncChangesThisClientDirectoryPath = nil;
-    [_thisDocumentRecentSyncThisClientFilePath release], _thisDocumentRecentSyncThisClientFilePath = nil;
+    [_thisDocumentRecentSyncsThisClientFilePath release], _thisDocumentRecentSyncsThisClientFilePath = nil;
 
     [super dealloc];
 }
@@ -144,6 +144,6 @@
 #pragma mark Properties
 @synthesize thisDocumentSyncChangesDirectoryPath = _thisDocumentSyncChangesDirectoryPath;
 @synthesize thisDocumentSyncChangesThisClientDirectoryPath = _thisDocumentSyncChangesThisClientDirectoryPath;
-@synthesize thisDocumentRecentSyncThisClientFilePath = _thisDocumentRecentSyncThisClientFilePath;
+@synthesize thisDocumentRecentSyncsThisClientFilePath = _thisDocumentRecentSyncsThisClientFilePath;
 
 @end

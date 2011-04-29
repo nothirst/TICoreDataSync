@@ -128,7 +128,8 @@
     [_userInfo release], _userInfo = nil;
     [_error release], _error = nil;
     [_clientIdentifier release], _clientIdentifier = nil;
-
+    [_fileManager release], _fileManager = nil;
+    
     [super dealloc];
 }
 

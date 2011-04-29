@@ -51,8 +51,7 @@
     
     [operation setThisDocumentSyncChangesDirectoryPath:[self thisDocumentSyncChangesDirectoryPath]];
     [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
-    // TODO: rename this to RecentSyncs!
-    [operation setThisDocumentRecentSyncThisClientFilePath:[self thisDocumentRecentSyncsThisClientFilePath]];
+    [operation setThisDocumentRecentSyncsThisClientFilePath:[self thisDocumentRecentSyncsThisClientFilePath]];
     
     return [operation autorelease];
 }
