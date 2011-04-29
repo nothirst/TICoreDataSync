@@ -17,7 +17,7 @@ Any changes you wish to synchronize for managed objects must take place within a
 			<Abstract>The document sync manager responsible for this managed object context's underlying persistent store/document.</Abstract>
 			<DeclaredIn>TICDSSynchronizedManagedObjectContext.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, retain) TICDSDocumentSyncManager *documentSyncManager</Declaration>
+			<Declaration>@property (nonatomic, assign) TICDSDocumentSyncManager *documentSyncManager</Declaration>
 			
 			
 			<Anchor>//api/name/documentSyncManager</Anchor>
