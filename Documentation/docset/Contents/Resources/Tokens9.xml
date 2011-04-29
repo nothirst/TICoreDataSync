@@ -99,5 +99,16 @@
 			<Anchor>//api/name/thisDocumentAppliedSyncChangeSetsFilePath</Anchor>
 		</Token>
 		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/thisDocumentRecentSyncThisClientFilePath</TokenIdentifier>
+			<Abstract>The path to this client's RecentSync file inside this document's RecentSyncs directory.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *thisDocumentRecentSyncThisClientFilePath</Declaration>
+			
+			
+			<Anchor>//api/name/thisDocumentRecentSyncThisClientFilePath</Anchor>
+		</Token>
+		
 	</File>
 </Tokens>

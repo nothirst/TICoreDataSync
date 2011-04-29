@@ -421,6 +421,28 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/relativePathToThisDocumentRecentSyncsDirectory</TokenIdentifier>
+			<Abstract>The path to this document's RecentSyncs directory, relative to the root of the remote file structure.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *relativePathToThisDocumentRecentSyncsDirectory</Declaration>
+			
+			
+			<Anchor>//api/name/relativePathToThisDocumentRecentSyncsDirectory</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/relativePathToThisDocumentRecentSyncsDirectoryThisClientFile</TokenIdentifier>
+			<Abstract>The path this client's RecentSync file inside this document's RecentSyncs directory, relative to the root of the remote file structure.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *relativePathToThisDocumentRecentSyncsDirectoryThisClientFile</Declaration>
+			
+			
+			<Anchor>//api/name/relativePathToThisDocumentRecentSyncsDirectoryThisClientFile</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/localAppliedSyncChangesFilePath</TokenIdentifier>
 			<Abstract>The path to the AppliedSyncChanges.ticdsync file, located in the helperFileDirectoryLocation.</Abstract>
 			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
