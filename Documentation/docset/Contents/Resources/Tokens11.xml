@@ -34,14 +34,14 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedSynchronizationOperation/thisDocumentRecentSyncThisClientFilePath</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedSynchronizationOperation/thisDocumentRecentSyncsThisClientFilePath</TokenIdentifier>
 			<Abstract>The path this client's RecentSync file inside this document's RecentSyncs directory.</Abstract>
 			<DeclaredIn>TICDSFileManagerBasedSynchronizationOperation.h</DeclaredIn>			
 			
-			<Declaration>@property (retain) NSString *thisDocumentRecentSyncThisClientFilePath</Declaration>
+			<Declaration>@property (retain) NSString *thisDocumentRecentSyncsThisClientFilePath</Declaration>
 			
 			
-			<Anchor>//api/name/thisDocumentRecentSyncThisClientFilePath</Anchor>
+			<Anchor>//api/name/thisDocumentRecentSyncsThisClientFilePath</Anchor>
 		</Token>
 		
 		<Token>
