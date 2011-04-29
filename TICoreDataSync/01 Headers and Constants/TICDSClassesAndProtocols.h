@@ -302,6 +302,21 @@
  @param aSyncManager The document sync manager object that sent the message. */
 - (void)syncManagerDidBeginToSynchronize:(TICDSDocumentSyncManager *)aSyncManager;
 
+/** Informs the delegate that the sychronization process was paused because a conflict was detected.
+ 
+ @param aSyncManager The document sync manager object that sent the message. 
+ @param aConflict The conflict.
+ 
+ @warning You *must* call the `continueSynchronizationByResolvingConflictWithResolutionType:` method to indicate whether registration should continue or not. */
+@required
+- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseSynchronizationAwaitingResolutionOfSyncConflict:(id)aConflict;
+@optional
+
+/** Informs the delegate that the synchronization process continue after a conflict was resolved.
+ 
+ @param aSyncManager The document sync manager object that sent the message. */
+- (void)syncManagerDidResumeSynchronization:(TICDSDocumentSyncManager *)aSyncManager;
+
 /** Informs the delegate that changes were made to managed objects in the application's context on a background thread during the synchronization process.
  
  @param aSyncManager The document sync manager object that sent the message.
@@ -391,7 +406,7 @@
 
 @end
 
-#pragma mark Document Registration Delegate
+#pragma mark Document Registration Operation Delegate
 /** The `TICDSDocumentRegistrationOperationDelegate` protocol defines the methods implemented by delegates of `TICDSDocumentRegistrationOperation` or one of its subclasses. In the `TICoreDataSync` framework, these delegate methods are implemented by the document sync manager. */
 
 @protocol TICDSDocumentRegistrationOperationDelegate <TICDSOperationDelegate>
@@ -402,7 +417,26 @@
 - (void)registrationOperationPausedToFindOutWhetherToCreateRemoteDocumentStructure:(TICDSDocumentRegistrationOperation *)anOperation;
 
 /** Informs the delegate that the operation has resumed after being told whether or not to create the remote document file structure.
+ 
  @param anOperation The operation object that sent the message. */
 - (void)registrationOperationResumedFollowingDocumentStructureCreationInstruction:(TICDSDocumentRegistrationOperation *)anOperation;
+
+@end
+
+#pragma mark Synchronization Operation Delegate
+/** The `TICDSSynchronizationOperationDelegate` protocol defines the methods implemented by delegates of `TICDSSynchronizationOperation` or one of its subclasses. In the `TICoreDataSync` framework, these delegate methods are implemented by the document sync manager. */
+
+@protocol TICDSSynchronizationOperationDelegate <TICDSOperationDelegate>
+
+/** Informs the delegate that the operation has been paused because of a conflict. The delegate should query its own delegate to ask how to resolve the conflict.
+ 
+ @param anOperation The operation object that sent the message.
+ @param aConflict The conflict. */
+- (void)synchronizationOperation:(TICDSSynchronizationOperation *)anOperation pausedToDetermineResolutionOfConflict:(id)aConflict;
+
+/** Informs the delegate that the operation has resumed after being told how to resolve the conflict. 
+ 
+ @param anOperation The operation object that sent the message. */
+- (void)synchronizationOperationResumedFollowingResolutionOfConflict:(TICDSSynchronizationOperation *)anOperation;
 
 @end

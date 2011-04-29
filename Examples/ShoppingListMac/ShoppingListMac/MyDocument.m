@@ -152,6 +152,20 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     [self increaseActivity];
 }
 
+- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseSynchronizationAwaitingResolutionOfSyncConflict:(id)aConflict
+{
+    [self decreaseActivity];
+    
+    NSLog(@"Conflict = %@", aConflict);
+    
+    [aSyncManager continueSynchronizationByResolvingConflictWithResolutionType:TICDSSyncConflictResolutionTypeLocalWins];
+}
+
+- (void)syncManagerDidResumeSynchronization:(TICDSDocumentSyncManager *)aSyncManager
+{
+    [self increaseActivity];
+}
+
 - (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:(NSNotification *)aNotification
 {
     [[[self managedObjectContext] undoManager] disableUndoRegistration];

@@ -117,6 +117,11 @@
  This will automatically spawn a `TICDSSynchronizationOperation`, and notify you of progress through the `TICDSDocumentSyncManagerDelegate` methods. */
 - (void)initiateSynchronization;
 
+/** If a conflict is encountered during synchronization, your delegate will be notified with the `solveConflict:` method. You must decide whether the remote or local `SyncChange` wins, and inform the document sync manager using this method to continue synchronization.
+ 
+ @param aType The type of conflict resolution; see `TICDSTypesAndEnums.h` for possible values. */
+- (void)continueSynchronizationByResolvingConflictWithResolutionType:(TICDSSyncConflictResolutionType)aType;
+
 /** @name Methods Overridden by Subclasses */
 
 /** Returns a document registration operation.

@@ -490,6 +490,26 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"Finished creating SyncChangesMOC");
 }
 
+#pragma mark Conflict Resolution
+- (void)synchronizationOperation:(TICDSSynchronizationOperation *)anOperation pausedToDetermineResolutionOfConflict:(id)aConflict
+{
+    [self ti_alertDelegateWithSelector:@selector(syncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:), aConflict];
+}
+
+- (void)synchronizationOperationResumedFollowingResolutionOfConflict:(TICDSSynchronizationOperation *)anOperation
+{
+    [self ti_alertDelegateWithSelector:@selector(syncManagerDidResumeSynchronization:)];
+}
+
+- (void)continueSynchronizationByResolvingConflictWithResolutionType:(TICDSSyncConflictResolutionType)aType
+{
+    TICDSSynchronizationOperation *operation = [[[self synchronizationQueue] operations] lastObject];
+    
+    [operation setMostRecentConflictResolutionType:aType];
+    
+    [operation setPaused:NO];
+}
+
 #pragma mark Operation Generation
 - (TICDSSynchronizationOperation *)synchronizationOperation
 {

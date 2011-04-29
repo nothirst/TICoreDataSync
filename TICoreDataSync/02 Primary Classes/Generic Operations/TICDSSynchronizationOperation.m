@@ -41,7 +41,7 @@
 - (NSArray *)remoteSyncChangesForObjectWithIdentifier:(NSString *)anIdentifier afterCheckingForConflictsInRemoteSyncChanges:(NSArray *)remoteSyncChanges;
 - (void)addWarningsForRemoteDeletionWithLocalChanges:(NSArray *)localChanges;
 - (void)addWarningsForRemoteChangesWithLocalDeletion:(NSArray *)remoteChanges;
-- (TICDSSyncConflictResolutionType)resolutionTypeForConflictBetweenLocalSyncChange:(TICDSSyncChange *)aSyncChange andRemoteSyncChange:(TICDSSyncChange *)aSyncChange;
+- (TICDSSyncConflictResolutionType)resolutionTypeForConflictBetweenLocalSyncChange:(TICDSSyncChange *)aLocalSyncChange andRemoteSyncChange:(TICDSSyncChange *)aRemoteSyncChange;
 - (void)applyObjectInsertedSyncChange:(TICDSSyncChange *)aSyncChange;
 - (void)applyAttributeChangeSyncChange:(TICDSSyncChange *)aSyncChange;
 - (void)applyObjectDeletedSyncChange:(TICDSSyncChange *)aSyncChange;
@@ -642,9 +642,19 @@
     }
 }
 
-- (TICDSSyncConflictResolutionType)resolutionTypeForConflictBetweenLocalSyncChange:(TICDSSyncChange *)aSyncChange andRemoteSyncChange:(TICDSSyncChange *)aSyncChange
+- (TICDSSyncConflictResolutionType)resolutionTypeForConflictBetweenLocalSyncChange:(TICDSSyncChange *)aLocalSyncChange andRemoteSyncChange:(TICDSSyncChange *)aRemoteSyncChange
 {
-    return TICDSSyncConflictResolutionTypeRemoteWins;
+    [self setPaused:YES];
+    
+    [self ti_alertDelegateOnMainThreadWithSelector:@selector(synchronizationOperation:pausedToDetermineResolutionOfConflict:) waitUntilDone:YES, @"Conflict"];
+    
+    while( [self isPaused] ) {
+        sleep(0.1);
+    }
+    
+    [self ti_alertDelegateOnMainThreadWithSelector:@selector(synchronizationOperationResumedFollowingResolutionOfConflict:) waitUntilDone:YES];
+    
+    return [self mostRecentConflictResolutionType];
 }
 
 #pragma mark Fetching Affected Objects
@@ -978,6 +988,11 @@
 
 #pragma mark -
 #pragma mark Initialization and Deallocation
+- (id)initWithDelegate:(NSObject<TICDSSynchronizationOperationDelegate> *)aDelegate
+{
+    return [super initWithDelegate:aDelegate];
+}
+
 - (void)dealloc
 {
     [_otherSynchronizedClientDeviceIdentifiers release], _otherSynchronizedClientDeviceIdentifiers = nil;
@@ -1107,6 +1122,8 @@
 
 #pragma mark -
 #pragma mark Properties
+@synthesize paused = _paused;
+@synthesize mostRecentConflictResolutionType = _mostRecentConflictResolutionType;
 @synthesize otherSynchronizedClientDeviceIdentifiers = _otherSynchronizedClientDeviceIdentifiers;
 @synthesize otherSynchronizedClientDeviceSyncChangeSetIdentifiers = _otherSynchronizedClientDeviceSyncChangeSetIdentifiers;
 @synthesize syncChangeSortDescriptors = _syncChangeSortDescriptors;

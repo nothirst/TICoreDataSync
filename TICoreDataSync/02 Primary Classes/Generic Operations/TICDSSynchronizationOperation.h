@@ -40,6 +40,9 @@
  @warning You must use one of the subclasses of `TICDSSynchronizationOperation`. */
 @interface TICDSSynchronizationOperation : TICDSOperation {
 @private
+    BOOL _paused;
+    TICDSSyncConflictResolutionType _mostRecentConflictResolutionType;
+    
     NSArray *_otherSynchronizedClientDeviceIdentifiers;
     NSMutableDictionary *_otherSynchronizedClientDeviceSyncChangeSetIdentifiers;
     NSArray *_syncChangeSortDescriptors;
@@ -86,6 +89,16 @@
     
     TICDSOperationPhaseStatus _uploadRecentSyncFileStatus;
 }
+
+#pragma mark Designated Initializer
+/** @name Designated Initializer */
+
+/** Initialize a synchronization operation using a delegate that supports the `TICDSSynchronizationOperationDelegate` protocol.
+ 
+ @param aDelegate The delegate to use for this operation.
+ 
+ @return An initialized synchronization operation. */
+- (id)initWithDelegate:(NSObject<TICDSSynchronizationOperationDelegate> *)aDelegate;
 
 #pragma mark Overridden Methods
 /** @name Methods Overridden by Subclasses */
@@ -184,6 +197,12 @@
 
 #pragma mark Properties
 /** @name Properties */
+
+/** A boolean indicating whether the operation is currently paused awaiting an instruction to continue, e.g. for conflict resolution. */
+@property (assign, getter = isPaused) BOOL paused;
+
+/** The resolution type for the most recent conflict, set before resuming the operation after a conflict is detected. */
+@property (assign) TICDSSyncConflictResolutionType mostRecentConflictResolutionType;
 
 /** An array of client identifiers for clients that synchronize with this document, excluding this client. */
 @property (nonatomic, retain) NSArray *otherSynchronizedClientDeviceIdentifiers;
