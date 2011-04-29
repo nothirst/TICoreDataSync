@@ -828,25 +828,27 @@
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
+    [_otherSynchronizedClientDeviceIdentifiers release], _otherSynchronizedClientDeviceIdentifiers = nil;
+    [_otherSynchronizedClientDeviceSyncChangeSetIdentifiers release], _otherSynchronizedClientDeviceSyncChangeSetIdentifiers = nil;
+    [_syncChangeSortDescriptors release], _syncChangeSortDescriptors = nil;
+    
     [_localSyncChangesToMergeLocation release], _localSyncChangesToMergeLocation = nil;
     [_appliedSyncChangeSetsFileLocation release], _appliedSyncChangeSetsFileLocation = nil;
-    [_appliedSyncChangeSetsCoreDataFactory release], _appliedSyncChangeSetsCoreDataFactory = nil;
-    [_appliedSyncChangeSetsContext release], _appliedSyncChangeSetsContext = nil;
     [_unappliedSyncChangesDirectoryLocation release], _unappliedSyncChangesDirectoryLocation = nil;
     [_unappliedSyncChangeSetsFileLocation release], _unappliedSyncChangeSetsFileLocation = nil;
+    [_unsynchronizedSyncChangesFileLocation release], _unsynchronizedSyncChangesFileLocation = nil;
+    [_localRecentSyncFileLocation release], _localRecentSyncFileLocation = nil;
+    
+    [_appliedSyncChangeSetsCoreDataFactory release], _appliedSyncChangeSetsCoreDataFactory = nil;
+    [_appliedSyncChangeSetsContext release], _appliedSyncChangeSetsContext = nil;
     [_unappliedSyncChangeSetsCoreDataFactory release], _unappliedSyncChangeSetsCoreDataFactory = nil;
     [_unappliedSyncChangeSetsContext release], _unappliedSyncChangeSetsContext = nil;
     [_unappliedSyncChangesCoreDataFactory release], _unappliedSyncChangesCoreDataFactory = nil;
     [_unappliedSyncChangesContext release], _unappliedSyncChangesContext = nil;
     [_unsynchronizedSyncChangesCoreDataFactory release], _unsynchronizedSyncChangesCoreDataFactory = nil;
     [_unsynchronizedSyncChangesContext release], _unsynchronizedSyncChangesContext = nil;
-    [_unsynchronizedSyncChangesFileLocation release], _unsynchronizedSyncChangesFileLocation = nil;
     [_backgroundApplicationContext release], _backgroundApplicationContext = nil;
-    [_syncChangeSortDescriptors release], _syncChangeSortDescriptors = nil;
-
-    [_otherSynchronizedClientDeviceIdentifiers release], _otherSynchronizedClientDeviceIdentifiers = nil;
-    [_otherSynchronizedClientDeviceSyncChangeSetIdentifiers release], _otherSynchronizedClientDeviceSyncChangeSetIdentifiers = nil;
-
+    
     [super dealloc];
 }
 
@@ -949,44 +951,41 @@
 
 #pragma mark -
 #pragma mark Properties
+@synthesize otherSynchronizedClientDeviceIdentifiers = _otherSynchronizedClientDeviceIdentifiers;
+@synthesize otherSynchronizedClientDeviceSyncChangeSetIdentifiers = _otherSynchronizedClientDeviceSyncChangeSetIdentifiers;
+@synthesize syncChangeSortDescriptors = _syncChangeSortDescriptors;
+
 @synthesize localSyncChangesToMergeLocation = _localSyncChangesToMergeLocation;
 @synthesize appliedSyncChangeSetsFileLocation = _appliedSyncChangeSetsFileLocation;
-@synthesize appliedSyncChangeSetsCoreDataFactory = _appliedSyncChangeSetsCoreDataFactory;
-@synthesize appliedSyncChangeSetsContext = _appliedSyncChangeSetsContext;
 @synthesize unappliedSyncChangesDirectoryLocation = _unappliedSyncChangesDirectoryLocation;
 @synthesize unappliedSyncChangeSetsFileLocation = _unappliedSyncChangeSetsFileLocation;
+@synthesize unsynchronizedSyncChangesFileLocation = _unsynchronizedSyncChangesFileLocation;
+@synthesize localRecentSyncFileLocation = _localRecentSyncFileLocation;
+
+@synthesize appliedSyncChangeSetsCoreDataFactory = _appliedSyncChangeSetsCoreDataFactory;
+@synthesize appliedSyncChangeSetsContext = _appliedSyncChangeSetsContext;
 @synthesize unappliedSyncChangeSetsCoreDataFactory = _unappliedSyncChangeSetsCoreDataFactory;
 @synthesize unappliedSyncChangeSetsContext = _unappliedSyncChangeSetsContext;
 @synthesize unappliedSyncChangesCoreDataFactory = _unappliedSyncChangesCoreDataFactory;
 @synthesize unappliedSyncChangesContext = _unappliedSyncChangesContext;
 @synthesize unsynchronizedSyncChangesCoreDataFactory = _unsynchronizedSyncChangesCoreDataFactory;
 @synthesize unsynchronizedSyncChangesContext = _unsynchronizedSyncChangesContext;
-@synthesize unsynchronizedSyncChangesFileLocation = _unsynchronizedSyncChangesFileLocation;
 @synthesize backgroundApplicationContext = _backgroundApplicationContext;
-@synthesize syncChangeSortDescriptors = _syncChangeSortDescriptors;
-@synthesize localRecentSyncFileLocation = _localRecentSyncFileLocation;
 
-@synthesize otherSynchronizedClientDeviceIdentifiers = _otherSynchronizedClientDeviceIdentifiers;
-@synthesize otherSynchronizedClientDeviceSyncChangeSetIdentifiers = _otherSynchronizedClientDeviceSyncChangeSetIdentifiers;
 @synthesize completionInProgress = _completionInProgress;
 @synthesize fetchArrayOfClientDeviceIDsStatus = _fetchArrayOfClientDeviceIDsStatus;
 @synthesize fetchArrayOfSyncCommandSetIDsStatus = _fetchArrayOfSyncCommandSetIDsStatus;
-
 @synthesize numberOfSyncChangeSetIDArraysToFetch = _numberOfSyncChangeSetIDArraysToFetch;
 @synthesize numberOfSyncChangeSetIDArraysFetched = _numberOfSyncChangeSetIDArraysFetched;
 @synthesize numberOfSyncChangeSetIDArraysThatFailedToFetch = _numberOfSyncChangeSetIDArraysThatFailedToFetch;
 @synthesize fetchArrayOfSyncChangeSetIDsStatus = _fetchArrayOfSyncChangeSetIDsStatus;
-
 @synthesize numberOfUnappliedSyncChangeSetsToFetch = _numberOfUnappliedSyncChangeSetsToFetch;
 @synthesize numberOfUnappliedSyncChangeSetsFetched = _numberOfUnappliedSyncChangeSetsFetched;
 @synthesize numberOfUnappliedSyncChangeSetsThatFailedToFetch = _numberOfUnappliedSyncChangeSetsThatFailedToFetch;
 @synthesize fetchUnappliedSyncChangeSetsStatus = _fetchUnappliedSyncChangeSetsStatus;
-
 @synthesize applyUnappliedSyncChangeSetsStatus = _applyUnappliedSyncChangeSetsStatus;
-
 @synthesize uploadLocalSyncCommandSetStatus = _uploadLocalSyncCommandSetStatus;
 @synthesize uploadLocalSyncChangeSetStatus = _uploadLocalSyncChangeSetStatus;
-
 @synthesize uploadRecentSyncFileStatus = _uploadRecentSyncFileStatus;
 
 @end

@@ -42,29 +42,28 @@
 @private
     NSArray *_otherSynchronizedClientDeviceIdentifiers;
     NSMutableDictionary *_otherSynchronizedClientDeviceSyncChangeSetIdentifiers;
+    NSArray *_syncChangeSortDescriptors;
     
     NSURL *_localSyncChangesToMergeLocation;
     NSURL *_appliedSyncChangeSetsFileLocation;
+    NSURL *_unappliedSyncChangesDirectoryLocation;
+    NSURL *_unappliedSyncChangeSetsFileLocation;
+    NSURL *_unsynchronizedSyncChangesFileLocation;
+    NSURL *_localRecentSyncFileLocation;
+    
     TICoreDataFactory *_appliedSyncChangeSetsCoreDataFactory;
     NSManagedObjectContext *_appliedSyncChangeSetsContext;
     
-    NSURL *_unappliedSyncChangesDirectoryLocation;
-    NSURL *_unappliedSyncChangeSetsFileLocation;
     TICoreDataFactory *_unappliedSyncChangeSetsCoreDataFactory;
     NSManagedObjectContext *_unappliedSyncChangeSetsContext;
     
     TICoreDataFactory *_unappliedSyncChangesCoreDataFactory;
     NSManagedObjectContext *_unappliedSyncChangesContext;
     
-    NSURL *_unsynchronizedSyncChangesFileLocation;
     TICoreDataFactory *_unsynchronizedSyncChangesCoreDataFactory;
     NSManagedObjectContext *_unsynchronizedSyncChangesContext;
     
     NSManagedObjectContext *_backgroundApplicationContext;
-    
-    NSArray *_syncChangeSortDescriptors;
-    
-    NSURL *_localRecentSyncFileLocation;
     
     BOOL _completionInProgress;
     TICDSOperationPhaseStatus _fetchArrayOfClientDeviceIDsStatus;
@@ -186,23 +185,42 @@
 #pragma mark Properties
 /** @name Properties */
 
+/** An array of client identifiers for clients that synchronize with this document, excluding this client. */
+@property (nonatomic, retain) NSArray *otherSynchronizedClientDeviceIdentifiers;
+
+/** A dictionary of arrays; keys are client identifiers, values are sync change set identifiers for each of those clients. */
+@property (retain) NSMutableDictionary *otherSynchronizedClientDeviceSyncChangeSetIdentifiers;
+
+/** The sort descriptors used to sort sync change objects in a `SyncChangeSet` before being applied. */
+@property (nonatomic, retain) NSArray *syncChangeSortDescriptors;
+
+/** @name File Locatinos */
+
 /** The location of the `SyncChangesBeingSynchronized.syncchg` file for this synchronization operation. */
 @property (retain) NSURL *localSyncChangesToMergeLocation;
 
 /** The location of this document's `AppliedSyncChangeSets.ticdsync` file. */
 @property (retain) NSURL *appliedSyncChangeSetsFileLocation;
 
-/** A `TICoreDataFactory` to access the contents of the `AppliedSyncChangeSets.ticdsync` file. */
-@property (nonatomic, retain) TICoreDataFactory *appliedSyncChangeSetsCoreDataFactory;
-
-/** The managed object context for the `AppliedSyncChangeSets.ticdsync` file. */
-@property (nonatomic, retain) NSManagedObjectContext *appliedSyncChangeSetsContext;
-
 /** The location of the `UnappliedSyncChanges` directory for this synchronization operation. */
 @property (retain) NSURL *unappliedSyncChangesDirectoryLocation;
 
 /** The location of this document's `UnappliedSyncChangeSets.ticdsync` file. */
 @property (retain) NSURL *unappliedSyncChangeSetsFileLocation;
+
+/** The location of this document's local `UnsynchronizedSyncChanges.syncchg` file. */
+@property (retain) NSURL *unsynchronizedSyncChangesFileLocation;
+
+/** The location of the local RecentSync file to upload at the end of the synchronization process. */
+@property (retain) NSURL *localRecentSyncFileLocation;
+
+/** @name Managed Object Contexts and Factories */
+
+/** A `TICoreDataFactory` to access the contents of the `AppliedSyncChangeSets.ticdsync` file. */
+@property (nonatomic, retain) TICoreDataFactory *appliedSyncChangeSetsCoreDataFactory;
+
+/** The managed object context for the `AppliedSyncChangeSets.ticdsync` file. */
+@property (nonatomic, retain) NSManagedObjectContext *appliedSyncChangeSetsContext;
 
 /** A `TICoreDataFactory` to access the contents of the `UnappliedSyncChangeSets.ticdsync` file. */
 @property (nonatomic, retain) TICoreDataFactory *unappliedSyncChangeSetsCoreDataFactory;
@@ -222,21 +240,9 @@
 /** The managed object context for the local, unsynchronized set of `SyncChange`s. */
 @property (nonatomic, retain) NSManagedObjectContext *unsynchronizedSyncChangesContext;
 
-/** The location of this document's local `UnsynchronizedSyncChanges.syncchg` file. */
-@property (retain) NSURL *unsynchronizedSyncChangesFileLocation;
-
-/** An array of client identifiers for clients that synchronize with this document, excluding this client. */
-@property (nonatomic, retain) NSArray *otherSynchronizedClientDeviceIdentifiers;
-
-/** A dictionary of arrays; keys are client identifiers, values are sync change set identifiers for each of those clients. */
-@property (retain) NSMutableDictionary *otherSynchronizedClientDeviceSyncChangeSetIdentifiers;
-
+/** The managed object context (tied to the application's persistent store coordinator) in which `SyncChanges` are applied. */
 @property (nonatomic, retain) NSManagedObjectContext *backgroundApplicationContext;
 
-@property (nonatomic, retain) NSArray *syncChangeSortDescriptors;
-
-/** The location of the local RecentSync file to upload at the end of the synchronization process. */
-@property (retain) NSURL *localRecentSyncFileLocation;
 
 #pragma mark Completion
 /** @name Completion */
