@@ -212,6 +212,27 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     [self decreaseActivity];
 }
 
+#pragma mark Vacuuming
+- (void)syncManagerDidBeginToVacuumUnneededRemoteFiles:(TICDSDocumentSyncManager *)aSyncManager
+{
+    [self increaseActivity];
+}
+
+- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredVacuumError:(NSError *)anError
+{
+    NSLog(@"Vacuum Error: %@", anError);
+}
+
+- (void)syncManagerFailedToVacuumUnneededFiles:(TICDSDocumentSyncManager *)aSyncManager
+{
+    [self decreaseActivity];
+}
+
+- (void)syncManagerDidFinishVacuumingUnneededFiles:(TICDSDocumentSyncManager *)aSyncManager
+{
+    [self decreaseActivity];
+}
+
 #pragma mark -
 #pragma mark Metadata
 - (NSDictionary *)customMetadataDictionary
@@ -309,6 +330,11 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     [[self documentSyncManager] initiateSynchronization];
 }
 
+- (IBAction)initiateVacuum:(id)sender
+{
+    [[self documentSyncManager] initiateVacuumOfUnneededRemoteFiles];
+}
+
 // Callback from save
 - (void)document:(NSDocument *)aDocument didSave:(BOOL)didSave contextInfo:(void *)contextInfo
 {
@@ -373,10 +399,12 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
         [[self synchronizationStatusLabel] setStringValue:NSLocalizedString(@"Enabled", @"Synchronization Enabled")];
         [[self enableSynchronizationButton] setHidden:YES];
         [[self synchronizeButton] setEnabled:YES];
+        [[self vacuumButton] setHidden:NO];
     } else {
         [[self synchronizationStatusLabel] setStringValue:NSLocalizedString(@"Not Enabled", @"Synchronization Not Enabled")];
         [[self enableSynchronizationButton] setHidden:NO];
         [[self synchronizeButton] setEnabled:NO];
+        [[self vacuumButton] setHidden:YES];
     }    
 }
 
@@ -425,6 +453,7 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
 @synthesize synchronizingProgressIndicator = _synchronizingProgressIndicator;
 @synthesize enableSynchronizationButton = _enableSynchronizationButton;
 @synthesize synchronizeButton = _synchronizeButton;
+@synthesize vacuumButton = _vacuumButton;
 @synthesize documentSyncChangesWindowController = _documentSyncChangesWindowController;
 @synthesize documentShopsWindowController = _documentShopsWindowController;
 

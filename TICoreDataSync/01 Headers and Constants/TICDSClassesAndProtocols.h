@@ -22,6 +22,7 @@
 @class TICDSWholeStoreUploadOperation;
 @class TICDSWholeStoreDownloadOperation;
 @class TICDSSynchronizationOperation;
+@class TICDSVacuumOperation;
 
 #pragma mark File Manager-Based
 @class TICDSFileManagerBasedApplicationSyncManager;
@@ -349,6 +350,36 @@
  
  @param aSyncMaanger The document sync manager object that sent the message. */
 - (void)syncManagerDidFinishSynchronization:(TICDSDocumentSyncManager *)aSyncManager;
+
+#pragma mark Vacuuming
+/** @name Vacuuming Unneeded Files */
+
+/** Informs the delegate that the sync manager has begun to remove unneeded files from the remote.
+ 
+ If an error occurs during the vacuum process, the `syncManager:encounteredVacuumError:` method will be called.
+ 
+ At the end of the vacuum process, one of the `syncManagerFailedToVacuumUnneededFiles:` or `syncManagerDidFinishVacuumingUnneededFiles:` methods will be called.
+ 
+ @param aSyncManager The document sync manager object that sent the message. */
+- (void)syncManagerDidBeginToVacuumUnneededRemoteFiles:(TICDSDocumentSyncManager *)aSyncManager;
+
+/** Informs the delegate that the sync manager encountered an error wile vacuuming unneeded files from the remote.
+ 
+ @param aSyncManager The document sync manager object that sent the message. 
+ @param anError The error that was encountered. */
+- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredVacuumError:(NSError *)anError;
+
+/** Informs the delegate that the document sync manager failed to vacuum unneeded files on the remote.
+ 
+ The error will previously have been supplied through the `syncManager:encounteredVacuumError:` method.
+ 
+ @param aSyncManager The document sync manager object that sent the message. */
+- (void)syncManagerFailedToVacuumUnneededFiles:(TICDSDocumentSyncManager *)aSyncManager;
+
+/** Informs the delegate that the document sync manager finished vacuuming unneeded files from the remote.
+ 
+ @param aSyncMaanger The document sync manager object that sent the message. */
+- (void)syncManagerDidFinishVacuumingUnneededFiles:(TICDSDocumentSyncManager *)aSyncManager;
 
 #pragma mark Processing
 /** @name Processing after Managed Object Context save */

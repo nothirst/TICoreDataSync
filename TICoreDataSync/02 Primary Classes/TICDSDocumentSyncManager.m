@@ -14,11 +14,15 @@
 - (BOOL)startDocumentRegistrationProcess:(NSError **)outError;
 - (void)bailFromRegistrationProcess;
 - (BOOL)checkForHelperFileDirectoryOrCreateIfNecessary:(NSError **)outError;
+
 - (void)startWholeStoreUploadProcess;
 - (void)bailFromUploadProcess;
+
 - (void)startSynchronizationProcess;
 - (void)bailFromSynchronizationProcess;
 - (void)moveUnsynchronizedSyncChangesToMergeLocation;
+
+- (void)startVacuumProcess;
 
 @property (nonatomic, retain) NSString *documentIdentifier;
 @property (nonatomic, retain) NSString *documentDescription;
@@ -544,6 +548,67 @@
 }
 
 #pragma mark -
+#pragma mark VACUUMING
+- (void)initiateVacuumOfUnneededRemoteFiles
+{
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Manual initiation of vacuum process");
+    
+    [self startVacuumProcess];
+}
+
+- (void)bailFromVacuumProcess
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from vacuum process");
+    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToVacuumUnneededFiles:)];
+}
+
+- (void)startVacuumProcess
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting vacuum process to remove unneeded files from the remote");
+    [self ti_alertDelegateWithSelector:@selector(syncManagerDidBeginToVacuumUnneededRemoteFiles:)];
+    
+    TICDSVacuumOperation *operation = [self vacuumOperation];
+    
+    if( !operation ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create vacuum operation object");
+        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredVacuumError:), [TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
+        
+        [self bailFromVacuumProcess];
+        return;
+    }
+    
+    [[self otherTasksQueue] addOperation:operation];
+}
+
+#pragma mark Operation Generation
+- (TICDSVacuumOperation *)vacuumOperation
+{
+    return [[[TICDSVacuumOperation alloc] initWithDelegate:self] autorelease];
+}
+
+#pragma mark Operation Communications
+- (void)vacuumOperationCompleted:(TICDSVacuumOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Vacuum Operation Completed");
+    
+    [self ti_alertDelegateWithSelector:@selector(syncManagerDidFinishVacuumingUnneededFiles:)];
+}
+
+- (void)vacuumOperationWasCancelled:(TICDSVacuumOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Vacuum Operation was Cancelled");
+    
+    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToVacuumUnneededFiles:)];
+}
+
+- (void)vacuumOperation:(TICDSVacuumOperation *)anOperation failedToCompleteWithError:(NSError *)anError
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Vacuum Operation Failed to Complete with Error: %@", anError);
+    [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredVacuumError:), anError];
+    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToVacuumUnneededFiles:)];
+}
+
+#pragma mark -
 #pragma mark MANAGED OBJECT CONTEXT DID SAVE BEHAVIOR
 - (void)synchronizedMOCWillSave:(TICDSSynchronizedManagedObjectContext *)aMoc
 {
@@ -612,6 +677,8 @@
         [self wholeStoreUploadOperationCompleted:(id)anOperation];
     } else if( [anOperation isKindOfClass:[TICDSSynchronizationOperation class]] ) {
         [self synchronizationOperationCompleted:(id)anOperation];
+    } else if( [anOperation isKindOfClass:[TICDSVacuumOperation class]] ) {
+        [self vacuumOperationCompleted:(id)anOperation];
     }
 }
 
@@ -623,6 +690,8 @@
         [self wholeStoreUploadOperationWasCancelled:(id)anOperation];
     } else if( [anOperation isKindOfClass:[TICDSSynchronizationOperation class]] ) {
         [self synchronizationOperationWasCancelled:(id)anOperation];
+    } else if( [anOperation isKindOfClass:[TICDSVacuumOperation class]] ) {
+        [self vacuumOperationWasCancelled:(id)anOperation];
     }
 }
 
@@ -634,6 +703,8 @@
         [self wholeStoreUploadOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     } else if( [anOperation isKindOfClass:[TICDSSynchronizationOperation class]] ) {
         [self synchronizationOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
+    } else if( [anOperation isKindOfClass:[TICDSVacuumOperation class]] ) {
+        [self vacuumOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     }
 }
 

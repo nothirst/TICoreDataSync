@@ -108,7 +108,7 @@
 							<string key="NSFrame">{{212, 18}, {214, 20}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="81911589"/>
+							<reference key="NSNextKeyView" ref="195177057"/>
 							<int key="NSpiFlags">16394</int>
 							<double key="NSMaxValue">100</double>
 						</object>
@@ -136,6 +136,7 @@
 							<string key="NSFrame">{{428, 19}, {19, 19}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="416990718">
 								<int key="NSCellFlags">67239424</int>
@@ -337,7 +338,7 @@
 											<string key="NSFrame">{{11, 139}, {140, 13}}</string>
 											<reference key="NSSuperview" ref="840286419"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView"/>
+											<reference key="NSNextKeyView" ref="305388839"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="156148332">
 												<int key="NSCellFlags">67239424</int>
@@ -415,7 +416,7 @@
 															<string key="NSFrameSize">{383, 87}</string>
 															<reference key="NSSuperview" ref="163972898"/>
 															<reference key="NSWindow"/>
-															<reference key="NSNextKeyView" ref="333057920"/>
+															<reference key="NSNextKeyView" ref="399144292"/>
 															<bool key="NSEnabled">YES</bool>
 															<object class="NSTableHeaderView" key="NSHeaderView" id="217914173">
 																<reference key="NSNextResponder" ref="333057920"/>
@@ -631,7 +632,7 @@
 											<string key="NSFrame">{{14, 164}, {400, 120}}</string>
 											<reference key="NSSuperview" ref="840286419"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="163972898"/>
+											<reference key="NSNextKeyView" ref="333057920"/>
 											<int key="NSsFlags">50</int>
 											<reference key="NSVScroller" ref="399144292"/>
 											<reference key="NSHScroller" ref="523273766"/>
@@ -800,6 +801,32 @@
 								<object class="NSCustomResource" key="NSNormalImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">NSRefreshTemplate</string>
+								</object>
+								<string key="NSAlternateContents"/>
+								<string key="NSKeyEquivalent"/>
+								<int key="NSPeriodicDelay">400</int>
+								<int key="NSPeriodicInterval">75</int>
+							</object>
+						</object>
+						<object class="NSButton" id="195177057">
+							<reference key="NSNextResponder" ref="568628114"/>
+							<int key="NSvFlags">268</int>
+							<string key="NSFrame">{{221, 22}, {14, 14}}</string>
+							<reference key="NSSuperview" ref="568628114"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="81911589"/>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSButtonCell" key="NSCell" id="69354667">
+								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags2">134217728</int>
+								<string key="NSContents"/>
+								<reference key="NSSupport" ref="1066038301"/>
+								<reference key="NSControlView" ref="195177057"/>
+								<int key="NSButtonFlags">-2042347265</int>
+								<int key="NSButtonFlags2">134</int>
+								<object class="NSCustomResource" key="NSNormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">NSListViewTemplate</string>
 								</object>
 								<string key="NSAlternateContents"/>
 								<string key="NSKeyEquivalent"/>
@@ -1349,6 +1376,22 @@
 					</object>
 					<int key="connectionID">100209</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">initiateVacuum:</string>
+						<reference key="source" ref="512844837"/>
+						<reference key="destination" ref="195177057"/>
+					</object>
+					<int key="connectionID">100213</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">vacuumButton</string>
+						<reference key="source" ref="512844837"/>
+						<reference key="destination" ref="195177057"/>
+					</object>
+					<int key="connectionID">100214</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -1395,6 +1438,7 @@
 							<reference ref="1072940936"/>
 							<reference ref="432477745"/>
 							<reference ref="331519866"/>
+							<reference ref="195177057"/>
 						</object>
 						<reference key="parent" ref="275939982"/>
 					</object>
@@ -1778,6 +1822,20 @@
 						<reference key="object" ref="914863300"/>
 						<reference key="parent" ref="1072940936"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">100210</int>
+						<reference key="object" ref="195177057"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="69354667"/>
+						</object>
+						<reference key="parent" ref="568628114"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">100211</int>
+						<reference key="object" ref="69354667"/>
+						<reference key="parent" ref="195177057"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1807,6 +1865,9 @@
 					<string>100204.IBPluginDependency</string>
 					<string>100206.IBPluginDependency</string>
 					<string>100207.IBPluginDependency</string>
+					<string>100210.IBAttributePlaceholdersKey</string>
+					<string>100210.IBPluginDependency</string>
+					<string>100211.IBPluginDependency</string>
 					<string>5.IBEditorWindowLastContentRect</string>
 					<string>5.IBPluginDependency</string>
 					<string>5.IBWindowTemplateEditedContentRect</string>
@@ -1858,6 +1919,16 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSMutableDictionary">
+						<string key="NS.key.0">ToolTip</string>
+						<object class="IBToolTipAttribute" key="NS.object.0">
+							<string key="name">ToolTip</string>
+							<reference key="object" ref="195177057"/>
+							<string key="toolTip">Clean up unneeded files</string>
+						</object>
+					</object>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{692, 610}, {467, 401}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{692, 610}, {467, 401}}</string>
@@ -1879,7 +1950,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">100209</int>
+			<int key="maxID">100214</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1893,11 +1964,13 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>configureSynchronization:</string>
 							<string>initiateSynchronization:</string>
+							<string>initiateVacuum:</string>
 							<string>showShopsWindow:</string>
 							<string>showSyncChangesWindow:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -1910,6 +1983,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>configureSynchronization:</string>
 							<string>initiateSynchronization:</string>
+							<string>initiateVacuum:</string>
 							<string>showShopsWindow:</string>
 							<string>showSyncChangesWindow:</string>
 						</object>
@@ -1921,6 +1995,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">initiateSynchronization:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">initiateVacuum:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -1941,6 +2019,7 @@
 							<string>synchronizationStatusLabel</string>
 							<string>synchronizeButton</string>
 							<string>synchronizingProgressIndicator</string>
+							<string>vacuumButton</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1948,6 +2027,7 @@
 							<string>NSTextField</string>
 							<string>NSButton</string>
 							<string>NSProgressIndicator</string>
+							<string>NSButton</string>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -1958,6 +2038,7 @@
 							<string>synchronizationStatusLabel</string>
 							<string>synchronizeButton</string>
 							<string>synchronizingProgressIndicator</string>
+							<string>vacuumButton</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1976,6 +2057,10 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">synchronizingProgressIndicator</string>
 								<string key="candidateClassName">NSProgressIndicator</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">vacuumButton</string>
+								<string key="candidateClassName">NSButton</string>
 							</object>
 						</object>
 					</object>
@@ -2070,12 +2155,14 @@
 			<object class="NSArray" key="dict.sortedKeys">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>NSActionTemplate</string>
+				<string>NSListViewTemplate</string>
 				<string>NSRefreshTemplate</string>
 				<string>NSSwitch</string>
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>{15, 15}</string>
+				<string>{11, 10}</string>
 				<string>{10, 12}</string>
 				<string>{15, 15}</string>
 			</object>

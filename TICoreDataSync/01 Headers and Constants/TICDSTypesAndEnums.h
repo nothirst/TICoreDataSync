@@ -8,6 +8,7 @@
 
 /** Contains Typedefs and enums for the entire `TICoreDataSync` framework */
 
+#pragma mark Sync Managers
 /** @name Sync Managers */
 /** The state of an Application Sync Manager 
  */
@@ -43,6 +44,7 @@ typedef enum _TICDSDocumentSyncManagerState {
     TICDSDocumentSyncManagerStateSynchronizing = -400
 } TICDSDocumentSyncManagerState;
 
+#pragma mark File Structure Existence
 /** @name File Structure Existence */
 /** Whether file structures exist or not 
  */
@@ -54,6 +56,7 @@ typedef enum _TICDSRemoteFileStructureExistsResponseType {
     
 } TICDSRemoteFileStructureExistsResponseType;
 
+#pragma mark Logging
 /** @name Logging */
 /** Verbosity for Logging debugging output
  */
@@ -65,6 +68,7 @@ typedef enum _TICDSLogVerbosity {
     TICDSLogVerbosityEveryStep = 100
 } TICDSLogVerbosity;
 
+#pragma mark Errors
 /** @name Errors */
 /** Error codes
  */
@@ -85,6 +89,7 @@ typedef enum _TICDSErrorCode {
     TICDSErrorCodeObjectCreationError,
 } TICDSErrorCode;
 
+#pragma mark Operation Phases
 /** @name Operation Phases */
 /** The status of any particular phase of an operation 
  */
@@ -96,6 +101,7 @@ typedef enum _TICDSOperationPhaseStatus {
     
 } TICDSOperationPhaseStatus;
 
+#pragma mark Sync Changes
 /** @name Sync Changes */
 /** The type of a sync change
  */
@@ -107,6 +113,7 @@ typedef enum _TICDSSyncChangeType {
     TICDSSyncChangeTypeObjectDeleted = 4,
 } TICDSSyncChangeType;
 
+#pragma mark Sync Warnings
 /** @name Sync Warnings */
 /** The type of a sync warning */
 typedef enum _TICDSSyncWarningType {
@@ -122,6 +129,7 @@ typedef enum _TICDSSyncWarningType {
     
 } TICDSSyncWarningType;
 
+#pragma mark Sync Conflicts
 /** @name Sync Conflicts */
 
 /** The type of a sync conflict. */

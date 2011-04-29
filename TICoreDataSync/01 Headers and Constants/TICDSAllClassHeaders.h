@@ -22,6 +22,7 @@
 #import "TICDSWholeStoreUploadOperation.h"
 #import "TICDSWholeStoreDownloadOperation.h"
 #import "TICDSSynchronizationOperation.h"
+#import "TICDSVacuumOperation.h"
 
 #pragma mark File Manager-Based
 #import "TICDSFileManagerBasedApplicationSyncManager.h"

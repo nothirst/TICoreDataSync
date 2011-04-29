@@ -122,6 +122,13 @@
  @param aType The type of conflict resolution; see `TICDSTypesAndEnums.h` for possible values. */
 - (void)continueSynchronizationByResolvingConflictWithResolutionType:(TICDSSyncConflictResolutionType)aType;
 
+/** @name Vacuuming */
+
+/** Initiate a vacuum operation to clean up files hanging around on the remote that are no longer needed by any registered clients.
+ 
+ This will automatically spawn a `TICDSVacuumOperation`, and notify you of progress through the `TICDSDocumentSyncManagerDelegate` methods. */
+- (void)initiateVacuumOfUnneededRemoteFiles;
+
 /** @name Methods Overridden by Subclasses */
 
 /** Returns a document registration operation.
@@ -141,10 +148,17 @@
 
 /** Returns a synchronization operation.
  
- Subclasses of `TICDSDocumentSyncManager` use this method to return a correctly-configured synchronization operation for their particularly sync method.
+ Subclasses of `TICDSDocumentSyncManager` use this method to return a correctly-configured synchronization operation for their particular sync method.
  
  @return A correctly-configured subclass of `TICDSSynchronizationOperation`. */
 - (TICDSSynchronizationOperation *)synchronizationOperation;
+
+/** Returns a vacuum operation.
+ 
+ Subclasses of `TICDSDocumentSyncManager` use this method to return a correctly-configured vacuum operation for their particular sync method.
+ 
+ @return A correctly-configured subclass of `TICDSVacuumOperation`. */
+- (TICDSVacuumOperation *)vacuumOperation;
 
 /** @name Managed Object Context Saving */
 
