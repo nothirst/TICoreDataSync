@@ -33,6 +33,7 @@
 @class TICDSFileManagerBasedWholeStoreUploadOperation;
 @class TICDSFileManagerBasedWholeStoreDownloadOperation;
 @class TICDSFileManagerBasedSynchronizationOperation;
+@class TICDSFileManagerBasedVacuumOperation;
 
 #pragma mark -
 #pragma mark INTERNAL DATA MODEL
@@ -288,7 +289,7 @@
 
 /** Informs the delegate that the document sync manager finished uploading the whole store file successfully.
  
- @param aSyncMaanger The document sync manager object that sent the message. */
+ @param aSyncManager The document sync manager object that sent the message. */
 - (void)syncManagerDidUploadWholeStoreSuccessfully:(TICDSDocumentSyncManager *)aSyncManager;
 
 #pragma mark Synchronization
@@ -348,7 +349,7 @@
 
 /** Informs the delegate that the document sync manager finished synchronizing the document.
  
- @param aSyncMaanger The document sync manager object that sent the message. */
+ @param aSyncManager The document sync manager object that sent the message. */
 - (void)syncManagerDidFinishSynchronization:(TICDSDocumentSyncManager *)aSyncManager;
 
 #pragma mark Vacuuming
@@ -378,7 +379,7 @@
 
 /** Informs the delegate that the document sync manager finished vacuuming unneeded files from the remote.
  
- @param aSyncMaanger The document sync manager object that sent the message. */
+ @param aSyncManager The document sync manager object that sent the message. */
 - (void)syncManagerDidFinishVacuumingUnneededFiles:(TICDSDocumentSyncManager *)aSyncManager;
 
 #pragma mark Processing

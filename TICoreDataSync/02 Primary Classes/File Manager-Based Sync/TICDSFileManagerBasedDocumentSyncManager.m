@@ -51,7 +51,18 @@
     
     [operation setThisDocumentSyncChangesDirectoryPath:[self thisDocumentSyncChangesDirectoryPath]];
     [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
-    [operation setThisDocumentRecentSyncThisClientFilePath:[self thisDocumentRecentSyncThisClientFilePath]];
+    // TODO: rename this to RecentSyncs!
+    [operation setThisDocumentRecentSyncThisClientFilePath:[self thisDocumentRecentSyncsThisClientFilePath]];
+    
+    return [operation autorelease];
+}
+
+- (TICDSVacuumOperation *)vacuumOperation
+{
+    TICDSFileManagerBasedVacuumOperation *operation = [[TICDSFileManagerBasedVacuumOperation alloc] initWithDelegate:self];
+    
+    [operation setThisDocumentRecentSyncsDirectoryPath:[self thisDocumentRecentSyncsDirectoryPath]];
+    [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
     
     return [operation autorelease];
 }
@@ -93,7 +104,12 @@
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFile]];
 }
 
-- (NSString *)thisDocumentRecentSyncThisClientFilePath
+- (NSString *)thisDocumentRecentSyncsDirectoryPath
+{
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentRecentSyncsDirectory]];
+}
+
+- (NSString *)thisDocumentRecentSyncsThisClientFilePath
 {
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentRecentSyncsDirectoryThisClientFile]];
 }

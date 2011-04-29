@@ -1,173 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/TICDSOperation.html">
+	<File path="Classes/TICDSLog.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/TICDSOperation</TokenIdentifier>
-			<Abstract>The TICDSOperation class provides the abstract behavior typical of any operation used by the TICoreDataSync framework.</Abstract>
-			<DeclaredIn>TICDSOperation.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/TICDSLog</TokenIdentifier>
+			<Abstract>TICDLog is a utility class to provide the primary logging behavior for the TICoreDataSync framework.</Abstract>
+			<DeclaredIn>TICDSLog.h</DeclaredIn>
 			
 			<NodeRef refid="16"/>
 		</Token>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSOperation/initWithDelegate:</TokenIdentifier>
-			<Abstract>Initialize the operation with a provided delegate.</Abstract>
-			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSLog/verbosity</TokenIdentifier>
+			<Abstract>Returns the current verbosity level for logging.</Abstract>
+			<DeclaredIn>TICDSLog.h</DeclaredIn>			
 			
-			<Declaration>- (id)initWithDelegate:(NSObject&lt;TICDSOperationDelegate&gt; *)aDelegate</Declaration>
+			<Declaration>+ (NSInteger)verbosity</Declaration>
+			
+			
+			<Anchor>//api/name/verbosity</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSLog/setVerbosity:</TokenIdentifier>
+			<Abstract>Sets the verbosity level for logging.</Abstract>
+			<DeclaredIn>TICDSLog.h</DeclaredIn>			
+			
+			<Declaration>+ (void)setVerbosity:(NSInteger)verbosity</Declaration>
+			
+			
+			<Anchor>//api/name/setVerbosity:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSLog/logWithVerbosity:information:</TokenIdentifier>
+			<Abstract>Log some information (assuming DEBUG is set).</Abstract>
+			<DeclaredIn>TICDSLog.h</DeclaredIn>			
+			
+			<Declaration>+ (void)logWithVerbosity:(NSInteger)someVerbosity information:(NSString *)formatString, ...</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>aDelegate</Name>
-					<Abstract>The delegate object for the operation, notified when the operation starts, ends, fails, or is cancelled using methods defined in the TICDSOperationDelegate protocol.</Abstract>
+					<Name>someVerbosity</Name>
+					<Abstract>The verbosity level of this information (if the current verbosity is less than this, the information won't be logged).</Abstract>
+				</Parameter><Parameter>
+					<Name>formatString</Name>
+					<Abstract>The format string (using NSLog() format specifiers).</Abstract>
+				</Parameter><Parameter>
+					<Name>...</Name>
+					<Abstract>A comma-separated list of arguments to substitute into formatString.</Abstract>
 				</Parameter>
 			</Parameters>
-			<ReturnValue><Abstract>A properly-initialized operation.</Abstract></ReturnValue>
-			<Anchor>//api/name/initWithDelegate:</Anchor>
+			
+			<Anchor>//api/name/logWithVerbosity:information:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSOperation/operationDidStart</TokenIdentifier>
-			<Abstract>Notify the delegate when the operation starts, and set the necessary values for isExecuting and isFinished.</Abstract>
-			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSLog/logWithVerbosity:formatString:args:</TokenIdentifier>
+			<Abstract>Log some information (assuming DEBUG is set).</Abstract>
+			<DeclaredIn>TICDSLog.h</DeclaredIn>			
 			
-			<Declaration>- (void)operationDidStart</Declaration>
+			<Declaration>+ (void)logWithVerbosity:(NSInteger)someVerbosity formatString:(NSString *)formatString args:(va_list)args</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>someVerbosity</Name>
+					<Abstract>The verbosity level of this information (if the current verbosity is less than this, the information won't be logged).</Abstract>
+				</Parameter><Parameter>
+					<Name>formatString</Name>
+					<Abstract>The format string (using NSLog() format specifiers).</Abstract>
+				</Parameter><Parameter>
+					<Name>args</Name>
+					<Abstract>A correctly started va_list with the arguments to substitute into formatString.</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/operationDidStart</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSOperation/operationDidCompleteSuccessfully</TokenIdentifier>
-			<Abstract>Notify the delegate when the operation completes, and set the necessary values for isExecuting and isFinished.</Abstract>
-			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
-			
-			<Declaration>- (void)operationDidCompleteSuccessfully</Declaration>
-			
-			
-			<Anchor>//api/name/operationDidCompleteSuccessfully</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSOperation/operationDidFailToComplete</TokenIdentifier>
-			<Abstract>Notify the delegate if the operation has failed for some reason. Set the relevant error property before calling this method. This will set the required values for isExecuting and isFinished.</Abstract>
-			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
-			
-			<Declaration>- (void)operationDidFailToComplete</Declaration>
-			
-			
-			<Anchor>//api/name/operationDidFailToComplete</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSOperation/operationWasCancelled</TokenIdentifier>
-			<Abstract>Call this method if the operation is cancelled midway through its work. This will set the required values for isExecuting and isFinished.</Abstract>
-			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
-			
-			<Declaration>- (void)operationWasCancelled</Declaration>
-			
-			
-			<Anchor>//api/name/operationWasCancelled</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSOperation/delegate</TokenIdentifier>
-			<Abstract>The operation delegate.</Abstract>
-			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, assign) NSObject&lt;TICDSOperationDelegate&gt; *delegate</Declaration>
-			
-			
-			<Anchor>//api/name/delegate</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSOperation/userInfo</TokenIdentifier>
-			<Abstract>A user info dictionary for sync managers to keep task-specific information.</Abstract>
-			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (retain) NSDictionary *userInfo</Declaration>
-			
-			
-			<Anchor>//api/name/userInfo</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSOperation/needsMainThread</TokenIdentifier>
-			<Abstract>By default returns NO, but override if your operation needs its code to execute on the main thread, such as for an NSURLConnection.</Abstract>
-			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (readonly) BOOL needsMainThread</Declaration>
-			
-			
-			<Anchor>//api/name/needsMainThread</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSOperation/isExecuting</TokenIdentifier>
-			<Abstract>Indicates the operation is currently executing; this is set automatically through the operation phase methods.</Abstract>
-			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (readonly) BOOL isExecuting</Declaration>
-			
-			
-			<Anchor>//api/name/isExecuting</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSOperation/isFinished</TokenIdentifier>
-			<Abstract>Indicates the operation has completed; this is set automatically through the operation phase methods.</Abstract>
-			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (readonly) BOOL isFinished</Declaration>
-			
-			
-			<Anchor>//api/name/isFinished</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSOperation/error</TokenIdentifier>
-			<Abstract>The most recent error; set this before calling operationDidFailToComplete.</Abstract>
-			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (retain) NSError *error</Declaration>
-			
-			
-			<Anchor>//api/name/error</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSOperation/fileManager</TokenIdentifier>
-			<Abstract>An NSFileManager object suitable for use by this operation.</Abstract>
-			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, readonly, retain) NSFileManager *fileManager</Declaration>
-			
-			
-			<Anchor>//api/name/fileManager</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSOperation/helperFileDirectoryLocation</TokenIdentifier>
-			<Abstract>The local location on disc of helper files needed by TICoreDataSync for this operation (not set automatically).</Abstract>
-			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (retain) NSURL *helperFileDirectoryLocation</Declaration>
-			
-			
-			<Anchor>//api/name/helperFileDirectoryLocation</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSOperation/clientIdentifier</TokenIdentifier>
-			<Abstract>The identifier of the client application (not set automatically, but may be used whenever necessary by subclasses).</Abstract>
-			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (retain) NSString *clientIdentifier</Declaration>
-			
-			
-			<Anchor>//api/name/clientIdentifier</Anchor>
+			<Anchor>//api/name/logWithVerbosity:formatString:args:</Anchor>
 		</Token>
 		
 	</File>

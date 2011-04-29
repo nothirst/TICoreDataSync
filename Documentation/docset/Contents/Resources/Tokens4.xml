@@ -133,6 +133,17 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/initiateVacuumOfUnneededRemoteFiles</TokenIdentifier>
+			<Abstract>Initiate a vacuum operation to clean up files hanging around on the remote that are no longer needed by any registered clients.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (void)initiateVacuumOfUnneededRemoteFiles</Declaration>
+			
+			
+			<Anchor>//api/name/initiateVacuumOfUnneededRemoteFiles</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/documentRegistrationOperation</TokenIdentifier>
 			<Abstract>Returns a document registration operation.</Abstract>
 			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
@@ -163,6 +174,17 @@
 			
 			<ReturnValue><Abstract>A correctly-configured subclass of TICDSSynchronizationOperation.</Abstract></ReturnValue>
 			<Anchor>//api/name/synchronizationOperation</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/vacuumOperation</TokenIdentifier>
+			<Abstract>Returns a vacuum operation.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (TICDSVacuumOperation *)vacuumOperation</Declaration>
+			
+			<ReturnValue><Abstract>A correctly-configured subclass of TICDSVacuumOperation.</Abstract></ReturnValue>
+			<Anchor>//api/name/vacuumOperation</Anchor>
 		</Token>
 		
 		<Token>

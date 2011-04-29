@@ -103,6 +103,8 @@
 	
 	<option value="//api/name/initiateUploadOfWholeStore">&nbsp;&nbsp;&nbsp;&nbsp;- initiateUploadOfWholeStore</option>
 	
+	<option value="//api/name/initiateVacuumOfUnneededRemoteFiles">&nbsp;&nbsp;&nbsp;&nbsp;- initiateVacuumOfUnneededRemoteFiles</option>
+	
 	<option value="//api/name/registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:">&nbsp;&nbsp;&nbsp;&nbsp;- registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:</option>
 	
 	<option value="//api/name/synchronizationOperation">&nbsp;&nbsp;&nbsp;&nbsp;- synchronizationOperation</option>
@@ -112,6 +114,8 @@
 	<option value="//api/name/synchronizedMOCFailedToSave:withError:">&nbsp;&nbsp;&nbsp;&nbsp;- synchronizedMOCFailedToSave:withError:</option>
 	
 	<option value="//api/name/synchronizedMOCWillSave:">&nbsp;&nbsp;&nbsp;&nbsp;- synchronizedMOCWillSave:</option>
+	
+	<option value="//api/name/vacuumOperation">&nbsp;&nbsp;&nbsp;&nbsp;- vacuumOperation</option>
 	
 	<option value="//api/name/wholeStoreUploadOperation">&nbsp;&nbsp;&nbsp;&nbsp;- wholeStoreUploadOperation</option>
 	
@@ -136,6 +140,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Whole Store Upload">Whole Store Upload</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Synchronization">Synchronization</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Vacuuming">Vacuuming</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Methods Overridden by Subclasses">Methods Overridden by Subclasses</a></span></li>
 	
@@ -225,6 +231,8 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initiateUploadOfWholeStore">initiateUploadOfWholeStore</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initiateVacuumOfUnneededRemoteFiles">initiateVacuumOfUnneededRemoteFiles</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:">registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/synchronizationOperation">synchronizationOperation</a></span></li>
@@ -234,6 +242,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/synchronizedMOCFailedToSave:withError:">synchronizedMOCFailedToSave:withError:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/synchronizedMOCWillSave:">synchronizedMOCWillSave:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/vacuumOperation">vacuumOperation</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/wholeStoreUploadOperation">wholeStoreUploadOperation</a></span></li>
 	
@@ -365,6 +375,21 @@
 						</ul>
 						
 						
+						<a title="Vacuuming" name="task_Vacuuming"></a>
+						<h3 class="subsubtitle task-title">Vacuuming</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initiateVacuumOfUnneededRemoteFiles">&ndash;&nbsp;initiateVacuumOfUnneededRemoteFiles</a></code>
+		<span class="tooltip"><p>Initiate a vacuum operation to clean up files hanging around on the remote that are no longer needed by any registered clients.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
 						<a title="Methods Overridden by Subclasses" name="task_Methods Overridden by Subclasses"></a>
 						<h3 class="subsubtitle task-title">Methods Overridden by Subclasses</h3>
 
@@ -387,6 +412,13 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/synchronizationOperation">&ndash;&nbsp;synchronizationOperation</a></code>
 		<span class="tooltip"><p>Returns a synchronization operation.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/vacuumOperation">&ndash;&nbsp;vacuumOperation</a></code>
+		<span class="tooltip"><p>Returns a vacuum operation.</p></span>
 	</span>
 	
 	
@@ -1771,6 +1803,43 @@
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/initiateVacuumOfUnneededRemoteFiles" title="initiateVacuumOfUnneededRemoteFiles"></a>
+	<h3 class="subsubtitle method-title">initiateVacuumOfUnneededRemoteFiles</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Initiate a vacuum operation to clean up files hanging around on the remote that are no longer needed by any registered clients.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)initiateVacuumOfUnneededRemoteFiles</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This will automatically spawn a <a href="../Classes/TICDSVacuumOperation.html"><code>TICDSVacuumOperation</code></a>, and notify you of progress through the <a href="../Protocols/TICDSDocumentSyncManagerDelegate.html"><code>TICDSDocumentSyncManagerDelegate</code></a> methods.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:" title="registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:"></a>
 	<h3 class="subsubtitle method-title">registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:</h3>
 	
@@ -1875,7 +1944,7 @@
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>Subclasses of <a href="TICDSDocumentSyncManager.html"><code>TICDSDocumentSyncManager</code></a> use this method to return a correctly-configured synchronization operation for their particularly sync method.</p>
+		<p>Subclasses of <a href="TICDSDocumentSyncManager.html"><code>TICDSDocumentSyncManager</code></a> use this method to return a correctly-configured synchronization operation for their particular sync method.</p>
 	</div>
 	
 	
@@ -2022,6 +2091,48 @@
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>This method is called automatically by <a href="../Classes/TICDSSynchronizedManagedObjectContext.html"><code>TICDSSynchronizedManagedObjectContext</code></a> when it&rsquo;s about to initiate a <code>save:</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/vacuumOperation" title="vacuumOperation"></a>
+	<h3 class="subsubtitle method-title">vacuumOperation</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns a vacuum operation.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (TICDSVacuumOperation *)vacuumOperation</code></div>
+	
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A correctly-configured subclass of <a href="../Classes/TICDSVacuumOperation.html"><code>TICDSVacuumOperation</code></a>.</p>
+	</div>
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Subclasses of <a href="TICDSDocumentSyncManager.html"><code>TICDSDocumentSyncManager</code></a> use this method to return a correctly-configured vacuum operation for their particular sync method.</p>
 	</div>
 	
 	

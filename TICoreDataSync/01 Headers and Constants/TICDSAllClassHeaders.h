@@ -33,6 +33,7 @@
 #import "TICDSFileManagerBasedWholeStoreUploadOperation.h"
 #import "TICDSFileManagerBasedWholeStoreDownloadOperation.h"
 #import "TICDSFileManagerBasedSynchronizationOperation.h"
+#import "TICDSFileManagerBasedVacuumOperation.h"
 
 #pragma mark -
 #pragma mark Internal Data Model

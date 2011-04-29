@@ -1,91 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/TICDSSyncConflict.html">
+	<File path="Classes/TICDSSyncChangeSet.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/TICDSSyncConflict</TokenIdentifier>
-			<Abstract>A TICDSSyncConflict object describes a conflict found between changes made locally, and changes made by another client who has already posted their SyncChanges.</Abstract>
-			<DeclaredIn>TICDSSyncConflict.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/TICDSSyncChangeSet</TokenIdentifier>
+			<Abstract>TICDSSyncChangeSet objects are used to keep track of collections of TICDSSyncChange objects.</Abstract>
+			<DeclaredIn>TICDSSyncChangeSet.h</DeclaredIn>
 			
 			<NodeRef refid="19"/>
 		</Token>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSyncConflict/conflictType</TokenIdentifier>
-			<Abstract>The type of conflict.</Abstract>
-			<DeclaredIn>TICDSSyncConflict.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSSyncChangeSet/syncChangeSetWithIdentifier:fromClient:creationDate:inManagedObjectContext:</TokenIdentifier>
+			<Abstract>Create a sync change set in the given managed object context.</Abstract>
+			<DeclaredIn>TICDSSyncChangeSet.h</DeclaredIn>			
 			
-			<Declaration>@property (assign) TICDSSyncConflictType conflictType</Declaration>
-			
-			
-			<Anchor>//api/name/conflictType</Anchor>
+			<Declaration>+ (id)syncChangeSetWithIdentifier:(NSString *)anIdentifier fromClient:(NSString *)aClientIdentifier creationDate:(NSDate *)aDate inManagedObjectContext:(NSManagedObjectContext *)aMoc</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>anIdentifier</Name>
+					<Abstract>The unique identifier for the sync change.</Abstract>
+				</Parameter><Parameter>
+					<Name>aClientIdentifier</Name>
+					<Abstract>The unique identifier of the client device that generated this set of sync changes.</Abstract>
+				</Parameter><Parameter>
+					<Name>aDate</Name>
+					<Abstract>The original creation date of the sync change set.</Abstract>
+				</Parameter><Parameter>
+					<Name>aMoc</Name>
+					<Abstract>The managed object context in which to create the sync change.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>A suitably-configured TICDSSyncChange object for the given change.</Abstract></ReturnValue>
+			<Anchor>//api/name/syncChangeSetWithIdentifier:fromClient:creationDate:inManagedObjectContext:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSyncConflict/conflictDescription</TokenIdentifier>
-			<Abstract>A description of this type of conflict.</Abstract>
-			<DeclaredIn>TICDSSyncConflict.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSSyncChangeSet/hasSyncChangeSetWithIdentifer:alreadyBeenAppliedInManagedObjectContext:</TokenIdentifier>
+			<Abstract>Check whether a sync change set with a given identifier has already been applied in a managed object context.</Abstract>
+			<DeclaredIn>TICDSSyncChangeSet.h</DeclaredIn>			
 			
-			<Declaration>@property (readonly) NSString *conflictDescription</Declaration>
-			
-			
-			<Anchor>//api/name/conflictDescription</Anchor>
+			<Declaration>+ (BOOL)hasSyncChangeSetWithIdentifer:(NSString *)anIdentifier alreadyBeenAppliedInManagedObjectContext:(NSManagedObjectContext *)aMoc</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>anIdentifier</Name>
+					<Abstract>The unique identifier for the sync change.</Abstract>
+				</Parameter><Parameter>
+					<Name>aMoc</Name>
+					<Abstract>The managed object context to check.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>A Boolean indicating whether the sync change has already been applied.</Abstract></ReturnValue>
+			<Anchor>//api/name/hasSyncChangeSetWithIdentifer:alreadyBeenAppliedInManagedObjectContext:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSyncConflict/entityName</TokenIdentifier>
-			<Abstract>The name of the entity for which conflicting changes were made to an object.</Abstract>
-			<DeclaredIn>TICDSSyncConflict.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSSyncChangeSet/changeSetWithIdentifier:inManagedObjectContext:</TokenIdentifier>
+			<Abstract>Return a TICDSSyncChangeSet object, if one exists, for a given identifier.</Abstract>
+			<DeclaredIn>TICDSSyncChangeSet.h</DeclaredIn>			
 			
-			<Declaration>@property (retain) NSString *entityName</Declaration>
-			
-			
-			<Anchor>//api/name/entityName</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSyncConflict/relevantKey</TokenIdentifier>
-			<Abstract>The name of the key for which a conflict exists.</Abstract>
-			<DeclaredIn>TICDSSyncConflict.h</DeclaredIn>			
-			
-			<Declaration>@property (retain) NSString *relevantKey</Declaration>
-			
-			
-			<Anchor>//api/name/relevantKey</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSyncConflict/objectSyncID</TokenIdentifier>
-			<Abstract>The sync id (ticdsSyncID attribute) of the object for which the conflict was found.</Abstract>
-			<DeclaredIn>TICDSSyncConflict.h</DeclaredIn>			
-			
-			<Declaration>@property (retain) NSString *objectSyncID</Declaration>
-			
-			
-			<Anchor>//api/name/objectSyncID</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSyncConflict/localInformation</TokenIdentifier>
-			<Abstract>Information about the conflicting information on the local change.</Abstract>
-			<DeclaredIn>TICDSSyncConflict.h</DeclaredIn>			
-			
-			<Declaration>@property (retain) NSDictionary *localInformation</Declaration>
-			
-			
-			<Anchor>//api/name/localInformation</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSyncConflict/remoteInformation</TokenIdentifier>
-			<Abstract>Information about the conflicting information on the remote change.</Abstract>
-			<DeclaredIn>TICDSSyncConflict.h</DeclaredIn>			
-			
-			<Declaration>@property (retain) NSDictionary *remoteInformation</Declaration>
-			
-			
-			<Anchor>//api/name/remoteInformation</Anchor>
+			<Declaration>+ (TICDSSyncChangeSet *)changeSetWithIdentifier:(NSString *)anIdentifier inManagedObjectContext:(NSManagedObjectContext *)aMoc</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>anIdentifier</Name>
+					<Abstract>The unique identifier for the sync change.</Abstract>
+				</Parameter><Parameter>
+					<Name>aMoc</Name>
+					<Abstract>The managed object context to check.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>The sync change set object, if it already exists, otherwise nil.</Abstract></ReturnValue>
+			<Anchor>//api/name/changeSetWithIdentifier:inManagedObjectContext:</Anchor>
 		</Token>
 		
 	</File>

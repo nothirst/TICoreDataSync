@@ -56,6 +56,8 @@
 	
 	<option value="//api/name/syncManager:encounteredSynchronizationWarnings:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:encounteredSynchronizationWarnings:</option>
 	
+	<option value="//api/name/syncManager:encounteredVacuumError:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:encounteredVacuumError:</option>
+	
 	<option value="//api/name/syncManager:encounteredWholeStoreUploadError:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:encounteredWholeStoreUploadError:</option>
 	
 	<option value="//api/name/syncManager:failedToProcessAfterMOCDidSave:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:failedToProcessAfterMOCDidSave:</option>
@@ -68,7 +70,11 @@
 	
 	<option value="//api/name/syncManagerDidBeginToUploadWholeStore:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidBeginToUploadWholeStore:</option>
 	
+	<option value="//api/name/syncManagerDidBeginToVacuumUnneededRemoteFiles:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidBeginToVacuumUnneededRemoteFiles:</option>
+	
 	<option value="//api/name/syncManagerDidFinishSynchronization:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidFinishSynchronization:</option>
+	
+	<option value="//api/name/syncManagerDidFinishVacuumingUnneededFiles:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidFinishVacuumingUnneededFiles:</option>
 	
 	<option value="//api/name/syncManagerDidRegisterDocumentSuccessfully:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidRegisterDocumentSuccessfully:</option>
 	
@@ -85,6 +91,8 @@
 	<option value="//api/name/syncManagerFailedToSynchronize:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerFailedToSynchronize:</option>
 	
 	<option value="//api/name/syncManagerFailedToUploadWholeStore:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerFailedToUploadWholeStore:</option>
+	
+	<option value="//api/name/syncManagerFailedToVacuumUnneededFiles:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerFailedToVacuumUnneededFiles:</option>
 	
 	<option value="//api/name/syncManagerShouldUploadWholeStoreAfterDocumentRegistration:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerShouldUploadWholeStoreAfterDocumentRegistration:</option>
 	
@@ -111,6 +119,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Whole Store Upload">Whole Store Upload</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Synchronization">Synchronization</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Vacuuming Unneeded Files">Vacuuming Unneeded Files</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Processing after Managed Object Context save">Processing after Managed Object Context save</a></span></li>
 	
@@ -144,6 +154,8 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredSynchronizationWarnings:">syncManager:encounteredSynchronizationWarnings:</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredVacuumError:">syncManager:encounteredVacuumError:</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredWholeStoreUploadError:">syncManager:encounteredWholeStoreUploadError:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:failedToProcessAfterMOCDidSave:">syncManager:failedToProcessAfterMOCDidSave:</a></span></li>
@@ -156,7 +168,11 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidBeginToUploadWholeStore:">syncManagerDidBeginToUploadWholeStore:</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidBeginToVacuumUnneededRemoteFiles:">syncManagerDidBeginToVacuumUnneededRemoteFiles:</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidFinishSynchronization:">syncManagerDidFinishSynchronization:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidFinishVacuumingUnneededFiles:">syncManagerDidFinishVacuumingUnneededFiles:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidRegisterDocumentSuccessfully:">syncManagerDidRegisterDocumentSuccessfully:</a></span></li>
 	
@@ -173,6 +189,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerFailedToSynchronize:">syncManagerFailedToSynchronize:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerFailedToUploadWholeStore:">syncManagerFailedToUploadWholeStore:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerFailedToVacuumUnneededFiles:">syncManagerFailedToVacuumUnneededFiles:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerShouldUploadWholeStoreAfterDocumentRegistration:">syncManagerShouldUploadWholeStoreAfterDocumentRegistration:</a></span></li>
 	
@@ -397,6 +415,42 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/syncManagerDidFinishSynchronization:">&ndash;&nbsp;syncManagerDidFinishSynchronization:</a></code>
 		<span class="tooltip"><p>Informs the delegate that the document sync manager finished synchronizing the document.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Vacuuming Unneeded Files" name="task_Vacuuming Unneeded Files"></a>
+						<h3 class="subsubtitle task-title">Vacuuming Unneeded Files</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManagerDidBeginToVacuumUnneededRemoteFiles:">&ndash;&nbsp;syncManagerDidBeginToVacuumUnneededRemoteFiles:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the sync manager has begun to remove unneeded files from the remote.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManager:encounteredVacuumError:">&ndash;&nbsp;syncManager:encounteredVacuumError:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the sync manager encountered an error wile vacuuming unneeded files from the remote.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManagerFailedToVacuumUnneededFiles:">&ndash;&nbsp;syncManagerFailedToVacuumUnneededFiles:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager failed to vacuum unneeded files on the remote.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManagerDidFinishVacuumingUnneededFiles:">&ndash;&nbsp;syncManagerDidFinishVacuumingUnneededFiles:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager finished vacuuming unneeded files from the remote.</p></span>
 	</span>
 	
 	
@@ -922,6 +976,53 @@
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/syncManager:encounteredVacuumError:" title="syncManager:encounteredVacuumError:"></a>
+	<h3 class="subsubtitle method-title">syncManager:encounteredVacuumError:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the sync manager encountered an error wile vacuuming unneeded files from the remote.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)syncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> encounteredVacuumError:(NSError *)<em>anError</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anError</em></dt>
+			<dd><p>The error that was encountered.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/syncManager:encounteredWholeStoreUploadError:" title="syncManager:encounteredWholeStoreUploadError:"></a>
 	<h3 class="subsubtitle method-title">syncManager:encounteredWholeStoreUploadError:</h3>
 	
@@ -1233,6 +1334,55 @@
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/syncManagerDidBeginToVacuumUnneededRemoteFiles:" title="syncManagerDidBeginToVacuumUnneededRemoteFiles:"></a>
+	<h3 class="subsubtitle method-title">syncManagerDidBeginToVacuumUnneededRemoteFiles:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the sync manager has begun to remove unneeded files from the remote.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)syncManagerDidBeginToVacuumUnneededRemoteFiles:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurs during the vacuum process, the <a href="#//api/name/syncManager:encounteredVacuumError:"><code>syncManager:encounteredVacuumError:</code></a> method will be called.</p>
+
+<p>At the end of the vacuum process, one of the <a href="#//api/name/syncManagerFailedToVacuumUnneededFiles:"><code>syncManagerFailedToVacuumUnneededFiles:</code></a> or <a href="#//api/name/syncManagerDidFinishVacuumingUnneededFiles:"><code>syncManagerDidFinishVacuumingUnneededFiles:</code></a> methods will be called.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/syncManagerDidFinishSynchronization:" title="syncManagerDidFinishSynchronization:"></a>
 	<h3 class="subsubtitle method-title">syncManagerDidFinishSynchronization:</h3>
 	
@@ -1250,7 +1400,49 @@
 		<h4 class="method-subtitle parameter-title">Parameters</h4>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>aSyncMaanger</em></dt>
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/syncManagerDidFinishVacuumingUnneededFiles:" title="syncManagerDidFinishVacuumingUnneededFiles:"></a>
+	<h3 class="subsubtitle method-title">syncManagerDidFinishVacuumingUnneededFiles:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager finished vacuuming unneeded files from the remote.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)syncManagerDidFinishVacuumingUnneededFiles:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
 			<dd><p>The document sync manager object that sent the message.</p></dd>
 		</dl>
 		
@@ -1467,7 +1659,7 @@
 		<h4 class="method-subtitle parameter-title">Parameters</h4>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>aSyncMaanger</em></dt>
+			<dt><em>aSyncManager</em></dt>
 			<dd><p>The document sync manager object that sent the message.</p></dd>
 		</dl>
 		
@@ -1616,6 +1808,53 @@
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>The error will previously have been supplied through the <a href="#//api/name/syncManager:encounteredWholeStoreUploadError:"><code>syncManager:encounteredWholeStoreUploadError:</code></a> method.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/syncManagerFailedToVacuumUnneededFiles:" title="syncManagerFailedToVacuumUnneededFiles:"></a>
+	<h3 class="subsubtitle method-title">syncManagerFailedToVacuumUnneededFiles:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager failed to vacuum unneeded files on the remote.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)syncManagerFailedToVacuumUnneededFiles:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The error will previously have been supplied through the <a href="#//api/name/syncManager:encounteredVacuumError:"><code>syncManager:encounteredVacuumError:</code></a> method.</p>
 	</div>
 	
 	

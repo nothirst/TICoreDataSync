@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/TICDSSynchronizationOperationDelegate.html">
+	<File path="Protocols/TICDSDocumentSyncManagerDelegate.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/TICDSSynchronizationOperationDelegate</TokenIdentifier>
-			<Abstract>The TICDSSynchronizationOperationDelegate protocol defines the methods implemented by delegates of TICDSSynchronizationOperation or one of its subclasses. In the TICoreDataSync framework, these delegate methods are implemented by the document sync manager.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intf/TICDSDocumentSyncManagerDelegate</TokenIdentifier>
+			<Abstract>The TICDSDocumentSyncManagerDelegate protocol defines the methods implemented by delegates of a TICDSDocumentSyncManager object.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>
 			
 			<NodeRef refid="30"/>
@@ -12,38 +12,527 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSSynchronizationOperationDelegate/synchronizationOperation:pausedToDetermineResolutionOfConflict:</TokenIdentifier>
-			<Abstract>Informs the delegate that the operation has been paused because of a conflict. The delegate should query its own delegate to ask how to resolve the conflict.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidStartDocumentRegistration:</TokenIdentifier>
+			<Abstract>Informs the delegate that the sync manager has started the document registration process.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)synchronizationOperation:(TICDSSynchronizationOperation *)anOperation pausedToDetermineResolutionOfConflict:(id)aConflict</Declaration>
+			<Declaration>- (void)syncManagerDidStartDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>anOperation</Name>
-					<Abstract>The operation object that sent the message.</Abstract>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerDidStartDocumentRegistration:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:encounteredDocumentRegistrationError:</TokenIdentifier>
+			<Abstract>Informs the delegate that the sync manager encountered an error during the document registration process.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredDocumentRegistrationError:(NSError *)anError</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>anError</Name>
+					<Abstract>The error that was encountered.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManager:encounteredDocumentRegistrationError:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:</TokenIdentifier>
+			<Abstract>Informs the delegate that the sync manager paused the document registration process because the remote file structure does not yet exist for the specified document.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>anIdentifier</Name>
+					<Abstract>The unique identifier for the document (as supplied at registration).</Abstract>
+				</Parameter><Parameter>
+					<Name>aDescription</Name>
+					<Abstract>The description of the document (as supplied at registration).</Abstract>
+				</Parameter><Parameter>
+					<Name>userInfo</Name>
+					<Abstract>The user info dictionary (as supplied at registration).</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidResumeRegistration:</TokenIdentifier>
+			<Abstract>Informs the delegate that the sync manager has resumed the document registration process.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManagerDidResumeRegistration:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerDidResumeRegistration:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerFailedToRegisterDocument:</TokenIdentifier>
+			<Abstract>Informs the delegate that the sync manager failed to complete the document registration process.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManagerFailedToRegisterDocument:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerFailedToRegisterDocument:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidRegisterDocumentSuccessfully:</TokenIdentifier>
+			<Abstract>Informs the delegate that the registration process completed successfully.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManagerDidRegisterDocumentSuccessfully:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerDidRegisterDocumentSuccessfully:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:helperFileDirectoryLocationForDocumentWithIdentifier:description:userInfo:</TokenIdentifier>
+			<Abstract>Invoked to allow the delegate to return a custom location for a local directory to contain the helper files the TICoreDataSync framework uses to synchronize a document.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (NSURL *)syncManager:(TICDSDocumentSyncManager *)aSyncManager helperFileDirectoryLocationForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>anIdentifier</Name>
+					<Abstract>The unique identifier for the document (as supplied at registration).</Abstract>
+				</Parameter><Parameter>
+					<Name>aDescription</Name>
+					<Abstract>The description of the document (as supplied at registration).</Abstract>
+				</Parameter><Parameter>
+					<Name>userInfo</Name>
+					<Abstract>The user info dictionary (as supplied at registration).</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>The NSURL for the location you wish to use.</Abstract></ReturnValue>
+			<Anchor>//api/name/syncManager:helperFileDirectoryLocationForDocumentWithIdentifier:description:userInfo:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerShouldUploadWholeStoreAfterDocumentRegistration:</TokenIdentifier>
+			<Abstract>Invoked to ask the delegate whether the document sync manager should automatically initiate a Whole Store Upload at registration.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)syncManagerShouldUploadWholeStoreAfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>A Boolean indicating whether to initiate the upload.</Abstract></ReturnValue>
+			<Anchor>//api/name/syncManagerShouldUploadWholeStoreAfterDocumentRegistration:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</TokenIdentifier>
+			<Abstract>Invoked to ask the delegate for the URL of the document's SQLite store to upload.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (NSURL *)syncManager:(TICDSDocumentSyncManager *)aSyncManager URLForWholeStoreToUploadForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>anIdentifier</Name>
+					<Abstract>The unique identifier for the document (as supplied at registration).</Abstract>
+				</Parameter><Parameter>
+					<Name>aDescription</Name>
+					<Abstract>The description of the document (as supplied at registration).</Abstract>
+				</Parameter><Parameter>
+					<Name>userInfo</Name>
+					<Abstract>The user info dictionary (as supplied at registration).</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>The location of the store file.</Abstract></ReturnValue>
+			<Anchor>//api/name/syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidBeginToUploadWholeStore:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager has begun to upload the whole store file, together with necessary helper files.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManagerDidBeginToUploadWholeStore:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerDidBeginToUploadWholeStore:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:encounteredWholeStoreUploadError:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager encountered an error during the whole store upload.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredWholeStoreUploadError:(NSError *)anError</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>anError</Name>
+					<Abstract>The error.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManager:encounteredWholeStoreUploadError:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerFailedToUploadWholeStore:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager failed to upload the whole store file.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManagerFailedToUploadWholeStore:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerFailedToUploadWholeStore:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidUploadWholeStoreSuccessfully:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager finished uploading the whole store file successfully.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManagerDidUploadWholeStoreSuccessfully:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerDidUploadWholeStoreSuccessfully:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidBeginToSynchronize:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager has begun to synchronize the document.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManagerDidBeginToSynchronize:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerDidBeginToSynchronize:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:</TokenIdentifier>
+			<Abstract>Informs the delegate that the sychronization process was paused because a conflict was detected.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseSynchronizationAwaitingResolutionOfSyncConflict:(id)aConflict</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
 				</Parameter><Parameter>
 					<Name>aConflict</Name>
 					<Abstract>The conflict.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/synchronizationOperation:pausedToDetermineResolutionOfConflict:</Anchor>
+			<Anchor>//api/name/syncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSSynchronizationOperationDelegate/synchronizationOperationResumedFollowingResolutionOfConflict:</TokenIdentifier>
-			<Abstract>Informs the delegate that the operation has resumed after being told how to resolve the conflict.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidResumeSynchronization:</TokenIdentifier>
+			<Abstract>Informs the delegate that the synchronization process continue after a conflict was resolved.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)synchronizationOperationResumedFollowingResolutionOfConflict:(TICDSSynchronizationOperation *)anOperation</Declaration>
+			<Declaration>- (void)syncManagerDidResumeSynchronization:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>anOperation</Name>
-					<Abstract>The operation object that sent the message.</Abstract>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/synchronizationOperationResumedFollowingResolutionOfConflict:</Anchor>
+			<Anchor>//api/name/syncManagerDidResumeSynchronization:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:</TokenIdentifier>
+			<Abstract>Informs the delegate that changes were made to managed objects in the application's context on a background thread during the synchronization process.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:(NSNotification *)aNotification</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>aNotification</Name>
+					<Abstract>The NSManagedObjectContextDidSave notification object containing changes made to objects.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:encounteredSynchronizationError:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager encountered an error during the synchronization process.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredSynchronizationError:(NSError *)anError</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>anError</Name>
+					<Abstract>The error.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManager:encounteredSynchronizationError:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:encounteredSynchronizationWarnings:</TokenIdentifier>
+			<Abstract>Informs the delegate that warnings were generated during the synchronization process.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredSynchronizationWarnings:(NSArray *)warnings</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>warnings</Name>
+					<Abstract>An array of NSDictionary objects containing information about each warning.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManager:encounteredSynchronizationWarnings:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerFailedToSynchronize:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager failed to synchronize the document.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManagerFailedToSynchronize:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerFailedToSynchronize:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidFinishSynchronization:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager finished synchronizing the document.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManagerDidFinishSynchronization:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerDidFinishSynchronization:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidBeginToVacuumUnneededRemoteFiles:</TokenIdentifier>
+			<Abstract>Informs the delegate that the sync manager has begun to remove unneeded files from the remote.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManagerDidBeginToVacuumUnneededRemoteFiles:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerDidBeginToVacuumUnneededRemoteFiles:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:encounteredVacuumError:</TokenIdentifier>
+			<Abstract>Informs the delegate that the sync manager encountered an error wile vacuuming unneeded files from the remote.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredVacuumError:(NSError *)anError</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>anError</Name>
+					<Abstract>The error that was encountered.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManager:encounteredVacuumError:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerFailedToVacuumUnneededFiles:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager failed to vacuum unneeded files on the remote.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManagerFailedToVacuumUnneededFiles:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerFailedToVacuumUnneededFiles:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidFinishVacuumingUnneededFiles:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager finished vacuuming unneeded files from the remote.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManagerDidFinishVacuumingUnneededFiles:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerDidFinishVacuumingUnneededFiles:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:didBeginProcessingAfterMOCDidSave:</TokenIdentifier>
+			<Abstract>Informs the delegate that the sync manager has begun to process the changes that have occurred since the previous save: of the managed object context.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didBeginProcessingAfterMOCDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>aMoc</Name>
+					<Abstract>The managed object context.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManager:didBeginProcessingAfterMOCDidSave:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:failedToProcessAfterMOCDidSave:</TokenIdentifier>
+			<Abstract>Informs the delegate that the sync manager failed to process the changes that have occurred since the previous save: of the managed object context.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager failedToProcessAfterMOCDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>aMoc</Name>
+					<Abstract>The managed object context.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManager:failedToProcessAfterMOCDidSave:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:didFinishProcessingAfterMOCDidSave:</TokenIdentifier>
+			<Abstract>Informs the delegate that the sync manager finished processing the changes that have occurred since the previous save: of the managed object context.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didFinishProcessingAfterMOCDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>aMoc</Name>
+					<Abstract>The managed object context.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManager:didFinishProcessingAfterMOCDidSave:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:shouldInitiateSynchronizationAfterSaveOfContext:</TokenIdentifier>
+			<Abstract>Invoked to ask the delegate whether the document sync manager should automatically initiate Synchronization after finishing processing changes in a synchronized managed object context.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)syncManager:(TICDSDocumentSyncManager *)aSyncManager shouldInitiateSynchronizationAfterSaveOfContext:(TICDSSynchronizedManagedObjectContext *)aMoc</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>aMoc</Name>
+					<Abstract>The managed object context that saved.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>A Boolean indicating whether to initiate the upload.</Abstract></ReturnValue>
+			<Anchor>//api/name/syncManager:shouldInitiateSynchronizationAfterSaveOfContext:</Anchor>
 		</Token>
 		
 	</File>
