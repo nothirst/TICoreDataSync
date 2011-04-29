@@ -19,6 +19,7 @@ extern NSString * const kTICDSErrorUserInfo;
 extern NSString * const kTICDSErrorUnderlyingError;
 extern NSString * const kTICDSErrorClassAndMethod;
 extern NSString * const kTICDSErrorDomain;
+extern NSString * const kTICDSStackTrace;
 
 extern NSString * const kTICDSClientDeviceDescription;
 extern NSString * const kTICDSClientDeviceUserInfo;

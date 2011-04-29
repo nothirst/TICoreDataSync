@@ -23,8 +23,14 @@ NSString *gTICDSErrorStrings[] = {
     @"Failed to create Core Data object",
 };
 
+#include <execinfo.h>
 
 @implementation TICDSError
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%@\nUser Info:%@", [super description], [self userInfo]];
+}
 
 #pragma mark -
 #pragma mark Error Generation
@@ -59,7 +65,39 @@ NSString *gTICDSErrorStrings[] = {
         [userInfo setValue:[NSString stringWithUTF8String:aClassAndMethod] forKey:kTICDSErrorClassAndMethod];
     }
     
-    return [NSError errorWithDomain:kTICDSErrorDomain code:aCode userInfo:userInfo];    
+    if( [self includeStackTraceInErrors] ) {
+        void *buffer[100]; 
+        int numberOfStackSymbols = backtrace(buffer, 100);
+        
+        char **strings = backtrace_symbols(buffer, numberOfStackSymbols);
+        
+        NSMutableArray *stackTraceArray = [NSMutableArray arrayWithCapacity:numberOfStackSymbols];
+        
+        for( int currentString = 0; currentString < numberOfStackSymbols; currentString++ ) {
+            [stackTraceArray addObject:[NSString stringWithCString:strings[currentString] encoding:NSASCIIStringEncoding]];
+        }
+        
+        [userInfo setValue:stackTraceArray forKey:kTICDSStackTrace];
+        
+        free(strings);
+    }
+    
+    return [self errorWithDomain:kTICDSErrorDomain code:aCode userInfo:userInfo];    
 }
+
+#pragma mark -
+#pragma mark Stack Trace
+static BOOL gTICDSIncludeStackTraceInErrors = NO;
+
++ (void)setIncludeStackTraceInErrors:(BOOL)aValue
+{
+    gTICDSIncludeStackTraceInErrors = aValue;
+}
+
++ (BOOL)includeStackTraceInErrors
+{
+    return gTICDSIncludeStackTraceInErrors;
+}
+
 
 @end

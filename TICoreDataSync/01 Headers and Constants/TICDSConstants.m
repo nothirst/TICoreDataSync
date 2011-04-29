@@ -39,6 +39,7 @@ NSString * const kTICDSErrorUserInfo = @"kTICDSErrorUserInfo";
 NSString * const kTICDSErrorUnderlyingError = @"kTICDSErrorUnderlyingError";
 NSString * const kTICDSErrorClassAndMethod = @"kTICDSErrorClassAndMethod";
 NSString * const kTICDSErrorDomain = @"com.timisted.ticoredatasync";
+NSString * const kTICDSStackTrace = @"kTICDSStackTrace";
 
 NSString * const kTICDSClientDeviceDescription = @"kTICDSClientDeviceDescription";
 NSString * const kTICDSClientDeviceUserInfo = @"kTICDSClientDeviceUserInfo";
