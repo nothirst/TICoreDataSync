@@ -76,8 +76,12 @@
             break;
         }
         
-        if( [(NSDate *)[attributes valueForKey:NSFileModificationDate] compare:[self leastRecentClientSyncDate]] ) {
+        if( [(NSDate *)[attributes valueForKey:NSFileModificationDate] compare:[self leastRecentClientSyncDate]] == NSOrderedAscending ) {
             success = [[self fileManager] removeItemAtPath:filePath error:&anyError];
+        }
+        
+        if( !success ) {
+            break;
         }
     }
     
