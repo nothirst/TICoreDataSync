@@ -95,6 +95,8 @@
 	
 	<option value="//api/name/continueRegistrationByCreatingRemoteFileStructure:">&nbsp;&nbsp;&nbsp;&nbsp;- continueRegistrationByCreatingRemoteFileStructure:</option>
 	
+	<option value="//api/name/continueSynchronizationByResolvingConflictWithResolutionType:">&nbsp;&nbsp;&nbsp;&nbsp;- continueSynchronizationByResolvingConflictWithResolutionType:</option>
+	
 	<option value="//api/name/documentRegistrationOperation">&nbsp;&nbsp;&nbsp;&nbsp;- documentRegistrationOperation</option>
 	
 	<option value="//api/name/initiateSynchronization">&nbsp;&nbsp;&nbsp;&nbsp;- initiateSynchronization</option>
@@ -214,6 +216,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/configureWithDelegate:appSyncManager:documentIdentifier:">configureWithDelegate:appSyncManager:documentIdentifier:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/continueRegistrationByCreatingRemoteFileStructure:">continueRegistrationByCreatingRemoteFileStructure:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/continueSynchronizationByResolvingConflictWithResolutionType:">continueSynchronizationByResolvingConflictWithResolutionType:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentRegistrationOperation">documentRegistrationOperation</a></span></li>
 	
@@ -347,6 +351,13 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/initiateSynchronization">&ndash;&nbsp;initiateSynchronization</a></code>
 		<span class="tooltip"><p>Start synchronizing the document with the remote location.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/continueSynchronizationByResolvingConflictWithResolutionType:">&ndash;&nbsp;continueSynchronizationByResolvingConflictWithResolutionType:</a></code>
+		<span class="tooltip"><p>If a conflict is encountered during synchronization, your <a href="#//api/name/delegate">delegate</a> will be notified with the <code>solveConflict:</code> method. You must decide whether the remote or local <code>SyncChange</code> wins, and inform the document sync manager using this method to continue synchronization.</p></span>
 	</span>
 	
 	
@@ -1584,6 +1595,48 @@
 
 <p>If you specify <code>NO</code>, registration will fail with an error.</p>
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/continueSynchronizationByResolvingConflictWithResolutionType:" title="continueSynchronizationByResolvingConflictWithResolutionType:"></a>
+	<h3 class="subsubtitle method-title">continueSynchronizationByResolvingConflictWithResolutionType:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>If a conflict is encountered during synchronization, your <a href="#//api/name/delegate">delegate</a> will be notified with the <code>solveConflict:</code> method. You must decide whether the remote or local <code>SyncChange</code> wins, and inform the document sync manager using this method to continue synchronization.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)continueSynchronizationByResolvingConflictWithResolutionType:(TICDSSyncConflictResolutionType)<em>aType</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aType</em></dt>
+			<dd><p>The type of conflict resolution; see <code>TICDSTypesAndEnums.h</code> for possible values.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
 	
 	
 	

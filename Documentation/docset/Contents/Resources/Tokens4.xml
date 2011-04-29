@@ -117,6 +117,22 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/continueSynchronizationByResolvingConflictWithResolutionType:</TokenIdentifier>
+			<Abstract>If a conflict is encountered during synchronization, your delegate will be notified with the solveConflict: method. You must decide whether the remote or local SyncChange wins, and inform the document sync manager using this method to continue synchronization.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (void)continueSynchronizationByResolvingConflictWithResolutionType:(TICDSSyncConflictResolutionType)aType</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aType</Name>
+					<Abstract>The type of conflict resolution; see TICDSTypesAndEnums.h for possible values.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/continueSynchronizationByResolvingConflictWithResolutionType:</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/documentRegistrationOperation</TokenIdentifier>
 			<Abstract>Returns a document registration operation.</Abstract>
 			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			

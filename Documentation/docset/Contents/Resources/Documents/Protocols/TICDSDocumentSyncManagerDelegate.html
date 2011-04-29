@@ -48,6 +48,8 @@
 	
 	<option value="//api/name/syncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:</option>
 	
+	<option value="//api/name/syncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:</option>
+	
 	<option value="//api/name/syncManager:encounteredDocumentRegistrationError:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:encounteredDocumentRegistrationError:</option>
 	
 	<option value="//api/name/syncManager:encounteredSynchronizationError:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:encounteredSynchronizationError:</option>
@@ -71,6 +73,8 @@
 	<option value="//api/name/syncManagerDidRegisterDocumentSuccessfully:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidRegisterDocumentSuccessfully:</option>
 	
 	<option value="//api/name/syncManagerDidResumeRegistration:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidResumeRegistration:</option>
+	
+	<option value="//api/name/syncManagerDidResumeSynchronization:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidResumeSynchronization:</option>
 	
 	<option value="//api/name/syncManagerDidStartDocumentRegistration:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidStartDocumentRegistration:</option>
 	
@@ -132,6 +136,8 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:">syncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:">syncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredDocumentRegistrationError:">syncManager:encounteredDocumentRegistrationError:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredSynchronizationError:">syncManager:encounteredSynchronizationError:</a></span></li>
@@ -155,6 +161,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidRegisterDocumentSuccessfully:">syncManagerDidRegisterDocumentSuccessfully:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidResumeRegistration:">syncManagerDidResumeRegistration:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidResumeSynchronization:">syncManagerDidResumeSynchronization:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidStartDocumentRegistration:">syncManagerDidStartDocumentRegistration:</a></span></li>
 	
@@ -340,6 +348,20 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/syncManagerDidBeginToSynchronize:">&ndash;&nbsp;syncManagerDidBeginToSynchronize:</a></code>
 		<span class="tooltip"><p>Informs the delegate that the document sync manager has begun to synchronize the document.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:">&ndash;&nbsp;syncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the sychronization process was paused because a conflict was detected.</p></span>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManagerDidResumeSynchronization:">&ndash;&nbsp;syncManagerDidResumeSynchronization:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the synchronization process continue after a conflict was resolved.</p></span>
 	</span>
 	
 	
@@ -685,6 +707,58 @@
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<div class="warning"><p>You <strong>must</strong> call the <code>continueRegistrationByCreatingRemoteFileStructure:</code> method to indicate whether registration should continue or not.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/syncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:" title="syncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:"></a>
+	<h3 class="subsubtitle method-title">syncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the sychronization process was paused because a conflict was detected.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)syncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> didPauseSynchronizationAwaitingResolutionOfSyncConflict:(id)<em>aConflict</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aConflict</em></dt>
+			<dd><p>The conflict.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p>You <strong>must</strong> call the <code>continueSynchronizationByResolvingConflictWithResolutionType:</code> method to indicate whether registration should continue or not.</p></div>
 	</div>
 	
 	
@@ -1254,6 +1328,48 @@
 	
 	
 	<div class="method-subsection method-declaration"><code>- (void)syncManagerDidResumeRegistration:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/syncManagerDidResumeSynchronization:" title="syncManagerDidResumeSynchronization:"></a>
+	<h3 class="subsubtitle method-title">syncManagerDidResumeSynchronization:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the synchronization process continue after a conflict was resolved.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)syncManagerDidResumeSynchronization:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
 	
 	
 	<div class="method-subsection arguments-section parameters">

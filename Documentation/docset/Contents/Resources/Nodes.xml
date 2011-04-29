@@ -34,6 +34,7 @@
 						<NodeRef refid="22"/>
 						<NodeRef refid="23"/>
 						<NodeRef refid="24"/>
+						<NodeRef refid="25"/>
 						
 					</Subnodes>
 				</Node>
@@ -44,10 +45,11 @@
 					<Name>Protocols</Name>
 					<Path>index.html</Path>
 					<Subnodes>
-						<NodeRef refid="25"/>
 						<NodeRef refid="26"/>
 						<NodeRef refid="27"/>
 						<NodeRef refid="28"/>
+						<NodeRef refid="29"/>
+						<NodeRef refid="30"/>
 						
 					</Subnodes>
 				</Node>
@@ -129,46 +131,54 @@
 			<Path>Classes/TICDSSyncChangeSet.html</Path>
 		</Node>
 		<Node id="19">
+			<Name>TICDSSyncConflict</Name>
+			<Path>Classes/TICDSSyncConflict.html</Path>
+		</Node>
+		<Node id="20">
 			<Name>TICDSSynchronizationOperation</Name>
 			<Path>Classes/TICDSSynchronizationOperation.html</Path>
 		</Node>
-		<Node id="20">
+		<Node id="21">
 			<Name>TICDSSynchronizedManagedObject</Name>
 			<Path>Classes/TICDSSynchronizedManagedObject.html</Path>
 		</Node>
-		<Node id="21">
+		<Node id="22">
 			<Name>TICDSSynchronizedManagedObjectContext</Name>
 			<Path>Classes/TICDSSynchronizedManagedObjectContext.html</Path>
 		</Node>
-		<Node id="22">
+		<Node id="23">
 			<Name>TICDSUtilities</Name>
 			<Path>Classes/TICDSUtilities.html</Path>
 		</Node>
-		<Node id="23">
+		<Node id="24">
 			<Name>TICDSWholeStoreDownloadOperation</Name>
 			<Path>Classes/TICDSWholeStoreDownloadOperation.html</Path>
 		</Node>
-		<Node id="24">
+		<Node id="25">
 			<Name>TICDSWholeStoreUploadOperation</Name>
 			<Path>Classes/TICDSWholeStoreUploadOperation.html</Path>
 		</Node>
 		
 		
-		<Node id="25">
+		<Node id="26">
 			<Name>TICDSApplicationSyncManagerDelegate</Name>
 			<Path>Protocols/TICDSApplicationSyncManagerDelegate.html</Path>
 		</Node>
-		<Node id="26">
+		<Node id="27">
 			<Name>TICDSDocumentRegistrationOperationDelegate</Name>
 			<Path>Protocols/TICDSDocumentRegistrationOperationDelegate.html</Path>
 		</Node>
-		<Node id="27">
+		<Node id="28">
 			<Name>TICDSDocumentSyncManagerDelegate</Name>
 			<Path>Protocols/TICDSDocumentSyncManagerDelegate.html</Path>
 		</Node>
-		<Node id="28">
+		<Node id="29">
 			<Name>TICDSOperationDelegate</Name>
 			<Path>Protocols/TICDSOperationDelegate.html</Path>
+		</Node>
+		<Node id="30">
+			<Name>TICDSSynchronizationOperationDelegate</Name>
+			<Path>Protocols/TICDSSynchronizationOperationDelegate.html</Path>
 		</Node>
 		
 	</Library>
