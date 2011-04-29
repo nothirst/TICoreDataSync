@@ -51,6 +51,7 @@
     
     [operation setThisDocumentSyncChangesDirectoryPath:[self thisDocumentSyncChangesDirectoryPath]];
     [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
+    [operation setThisDocumentRecentSyncThisClientFilePath:[self thisDocumentRecentSyncThisClientFilePath]];
     
     return [operation autorelease];
 }
@@ -90,6 +91,11 @@
 - (NSString *)thisDocumentAppliedSyncChangeSetsFilePath
 {
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFile]];
+}
+
+- (NSString *)thisDocumentRecentSyncThisClientFilePath
+{
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentRecentSyncsDirectoryThisClientFile]];
 }
 
 #pragma mark -

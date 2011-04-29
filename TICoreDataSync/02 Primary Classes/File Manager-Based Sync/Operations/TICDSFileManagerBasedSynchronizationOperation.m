@@ -91,12 +91,39 @@
     [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:[attributes valueForKey:NSFileModificationDate] withSuccess:success];
 }
 
+- (void)uploadRecentSyncFileAtLocation:(NSURL *)aLocation
+{
+    NSString *remoteFile = [self thisDocumentRecentSyncThisClientFilePath];
+    
+    NSError *anyError = nil;
+    BOOL success = YES;
+    
+    if( [[self fileManager] fileExistsAtPath:remoteFile] ) {
+        success = [[self fileManager] removeItemAtPath:remoteFile error:&anyError]; 
+    }
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self uploadedRecentSyncFileSuccessfully:success];
+        return;
+    }
+    
+    success = [[self fileManager] copyItemAtPath:[aLocation path] toPath:remoteFile error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    [self uploadedRecentSyncFileSuccessfully:success];
+}
+
 #pragma mark -
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
     [_thisDocumentSyncChangesDirectoryPath release], _thisDocumentSyncChangesDirectoryPath = nil;
     [_thisDocumentSyncChangesThisClientDirectoryPath release], _thisDocumentSyncChangesThisClientDirectoryPath = nil;
+    [_thisDocumentRecentSyncThisClientFilePath release], _thisDocumentRecentSyncThisClientFilePath = nil;
 
     [super dealloc];
 }
@@ -117,5 +144,6 @@
 #pragma mark Properties
 @synthesize thisDocumentSyncChangesDirectoryPath = _thisDocumentSyncChangesDirectoryPath;
 @synthesize thisDocumentSyncChangesThisClientDirectoryPath = _thisDocumentSyncChangesThisClientDirectoryPath;
+@synthesize thisDocumentRecentSyncThisClientFilePath = _thisDocumentRecentSyncThisClientFilePath;
 
 @end

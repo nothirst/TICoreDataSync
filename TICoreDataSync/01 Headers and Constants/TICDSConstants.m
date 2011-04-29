@@ -50,6 +50,7 @@ NSString * const TICDSAppliedSyncChangeSetsFilename = @"AppliedSyncChangeSets.ti
 NSString * const TICDSUnappliedChangeSetsFilename = @"UnappliedSyncChangeSets.ticdsync";
 NSString * const TICDSSyncCommandSetFileExtension = @"synccmd";
 NSString * const TICDSSyncChangeSetFileExtension = @"syncchg";
+NSString * const TICDSRecentSyncFileExtension = @"recentsync";
 
 NSString * const TICDSSyncIDAttributeName = @"ticdsSyncID";
 NSString * const TICDSSyncChangeDataModelName = @"TICDSSyncChange";

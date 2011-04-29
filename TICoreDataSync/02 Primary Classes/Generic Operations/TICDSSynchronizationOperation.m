@@ -45,6 +45,7 @@
 
 - (void)beginUploadOfLocalSyncCommands;
 - (void)beginUploadOfLocalSyncChanges;
+- (void)beginUploadOfRecentSyncFile;
 
 @end
 
@@ -613,7 +614,7 @@
     if( ![[self fileManager] fileExistsAtPath:[[self localSyncChangesToMergeLocation] path]] ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"No local sync changes file to push on this sync");
         [self setUploadLocalSyncChangeSetStatus:TICDSOperationPhaseStatusSuccess];
-        [self checkForCompletion];
+        [self beginUploadOfRecentSyncFile];
         return;
     }
     
@@ -646,6 +647,8 @@
     if( success ) {
         TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Uploaded local sync changes file");
         [self setUploadLocalSyncChangeSetStatus:TICDSOperationPhaseStatusSuccess];
+        
+        [self beginUploadOfRecentSyncFile];
     } else {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to upload local sync changes files");
         [self setAllInProgressStatusesToFailure];
@@ -659,6 +662,43 @@
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
     [self uploadedLocalSyncChangeSetFileSuccessfully:NO];
+}
+
+#pragma mark -
+#pragma mark RECENT SYNC FILE
+- (void)beginUploadOfRecentSyncFile
+{
+    NSString *recentSyncFilePath = [[self localRecentSyncFileLocation] path];
+    
+    NSDictionary *recentSyncDictionary = [NSDictionary dictionaryWithObject:[NSDate date] forKey:kTICDSLastSyncDate];
+    
+    BOOL success = [recentSyncDictionary writeToFile:recentSyncFilePath atomically:YES];
+    
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to write RecentSync file to helper file location, but not absolutely fatal so continuing");
+        [self setUploadRecentSyncFileStatus:TICDSOperationPhaseStatusSuccess];
+        [self checkForCompletion];
+        return;
+    }
+    
+    [self uploadRecentSyncFileAtLocation:[NSURL fileURLWithPath:recentSyncFilePath]];
+}
+
+- (void)uploadedRecentSyncFileSuccessfully:(BOOL)success
+{
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to upload RecentSync file, but not absolutely fatal so continuing: %@", [self error]);
+    }
+    
+    [self setUploadRecentSyncFileStatus:TICDSOperationPhaseStatusSuccess];
+    [self checkForCompletion];
+}
+
+#pragma mark Overridden Method
+- (void)uploadRecentSyncFileAtLocation:(NSURL *)aLocation
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self uploadedRecentSyncFileSuccessfully:NO];
 }
 
 #pragma mark -
@@ -691,6 +731,10 @@
     
     if( [self uploadLocalSyncChangeSetStatus] == TICDSOperationPhaseStatusInProgress ) {
         [self setUploadLocalSyncChangeSetStatus:TICDSOperationPhaseStatusFailure];
+    }
+    
+    if( [self uploadRecentSyncFileStatus] == TICDSOperationPhaseStatusInProgress ) {
+        [self setUploadRecentSyncFileStatus:TICDSOperationPhaseStatusFailure];
     }
 }
 
@@ -732,13 +776,15 @@
     
     if( [self fetchArrayOfClientDeviceIDsStatus] == TICDSOperationPhaseStatusInProgress || [self fetchArrayOfSyncCommandSetIDsStatus] == TICDSOperationPhaseStatusInProgress || [self fetchArrayOfSyncChangeSetIDsStatus] == TICDSOperationPhaseStatusInProgress || [self fetchUnappliedSyncChangeSetsStatus] == TICDSOperationPhaseStatusInProgress || [self applyUnappliedSyncChangeSetsStatus] == TICDSOperationPhaseStatusInProgress
        
-       || [self uploadLocalSyncCommandSetStatus] == TICDSOperationPhaseStatusInProgress || [self uploadLocalSyncChangeSetStatus] == TICDSOperationPhaseStatusInProgress ) {
+       || [self uploadLocalSyncCommandSetStatus] == TICDSOperationPhaseStatusInProgress || [self uploadLocalSyncChangeSetStatus] == TICDSOperationPhaseStatusInProgress
+       || [self uploadRecentSyncFileStatus] == TICDSOperationPhaseStatusInProgress ) {
         return;
     }
     
     if( [self fetchArrayOfClientDeviceIDsStatus] == TICDSOperationPhaseStatusSuccess && [self fetchArrayOfSyncCommandSetIDsStatus] == TICDSOperationPhaseStatusSuccess && [self fetchArrayOfSyncChangeSetIDsStatus] == TICDSOperationPhaseStatusSuccess && [self fetchUnappliedSyncChangeSetsStatus] == TICDSOperationPhaseStatusSuccess && [self applyUnappliedSyncChangeSetsStatus] == TICDSOperationPhaseStatusSuccess
        
-       && [self uploadLocalSyncCommandSetStatus] == TICDSOperationPhaseStatusSuccess && [self uploadLocalSyncChangeSetStatus] == TICDSOperationPhaseStatusSuccess ) {
+       && [self uploadLocalSyncCommandSetStatus] == TICDSOperationPhaseStatusSuccess && [self uploadLocalSyncChangeSetStatus] == TICDSOperationPhaseStatusSuccess
+       && [self uploadRecentSyncFileStatus] == TICDSOperationPhaseStatusSuccess ) {
         [self setCompletionInProgress:YES];
         
         [self operationDidCompleteSuccessfully];
@@ -747,7 +793,8 @@
     
     if( [self fetchArrayOfClientDeviceIDsStatus] == TICDSOperationPhaseStatusFailure || [self fetchArrayOfSyncCommandSetIDsStatus] == TICDSOperationPhaseStatusFailure || [self fetchArrayOfSyncChangeSetIDsStatus] == TICDSOperationPhaseStatusFailure || [self fetchUnappliedSyncChangeSetsStatus] == TICDSOperationPhaseStatusFailure || [self applyUnappliedSyncChangeSetsStatus] == TICDSOperationPhaseStatusFailure
        
-       || [self uploadLocalSyncCommandSetStatus] == TICDSOperationPhaseStatusFailure || [self uploadLocalSyncChangeSetStatus] == TICDSOperationPhaseStatusFailure ) {
+       || [self uploadLocalSyncCommandSetStatus] == TICDSOperationPhaseStatusFailure || [self uploadLocalSyncChangeSetStatus] == TICDSOperationPhaseStatusFailure
+       || [self uploadRecentSyncFileStatus] == TICDSOperationPhaseStatusFailure ) {
         [self setCompletionInProgress:YES];
         
         [self operationDidFailToComplete];
@@ -917,6 +964,7 @@
 @synthesize unsynchronizedSyncChangesFileLocation = _unsynchronizedSyncChangesFileLocation;
 @synthesize backgroundApplicationContext = _backgroundApplicationContext;
 @synthesize syncChangeSortDescriptors = _syncChangeSortDescriptors;
+@synthesize localRecentSyncFileLocation = _localRecentSyncFileLocation;
 
 @synthesize otherSynchronizedClientDeviceIdentifiers = _otherSynchronizedClientDeviceIdentifiers;
 @synthesize otherSynchronizedClientDeviceSyncChangeSetIdentifiers = _otherSynchronizedClientDeviceSyncChangeSetIdentifiers;
@@ -938,5 +986,7 @@
 
 @synthesize uploadLocalSyncCommandSetStatus = _uploadLocalSyncCommandSetStatus;
 @synthesize uploadLocalSyncChangeSetStatus = _uploadLocalSyncChangeSetStatus;
+
+@synthesize uploadRecentSyncFileStatus = _uploadRecentSyncFileStatus;
 
 @end

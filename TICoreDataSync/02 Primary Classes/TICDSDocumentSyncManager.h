@@ -265,6 +265,13 @@
 /** The path to this client's `AppliedSyncChangeSets.ticdsync` file inside it's directory inside the `WholeStore` directory for this document, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFile;
 
+/** The path to this document's `RecentSyncs` directory, relative to the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToThisDocumentRecentSyncsDirectory;
+
+/** The path this client's RecentSync file inside this document's `RecentSyncs` directory, relative to the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToThisDocumentRecentSyncsDirectoryThisClientFile;
+
+
 /** The path to the `AppliedSyncChanges.ticdsync` file, located in the `helperFileDirectoryLocation`. */
 @property (nonatomic, readonly) NSString *localAppliedSyncChangesFilePath;
 

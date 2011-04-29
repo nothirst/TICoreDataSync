@@ -64,6 +64,8 @@
     
     NSArray *_syncChangeSortDescriptors;
     
+    NSURL *_localRecentSyncFileLocation;
+    
     BOOL _completionInProgress;
     TICDSOperationPhaseStatus _fetchArrayOfClientDeviceIDsStatus;
     TICDSOperationPhaseStatus _fetchArrayOfSyncCommandSetIDsStatus;
@@ -82,6 +84,8 @@
     
     TICDSOperationPhaseStatus _uploadLocalSyncCommandSetStatus;
     TICDSOperationPhaseStatus _uploadLocalSyncChangeSetStatus;
+    
+    TICDSOperationPhaseStatus _uploadRecentSyncFileStatus;
 }
 
 #pragma mark Overridden Methods
@@ -101,14 +105,25 @@
 
 /** Fetch a `SyncChangeSet` with a given identifier from a client's `SyncChanges` directory.
  
- This method must call `fetchedSyncChangeSetsWithIdentifier:forClientIdentifier:withSuccess:` when finished. */
+ This method must call `fetchedSyncChangeSetsWithIdentifier:forClientIdentifier:withSuccess:` when finished. 
+ 
+ @param aChangeSetIdentifier The identifier of the sync change set to fetch.
+ @param aClientIdentifier The identifier of the client who created the sync change set.
+ @param aLocation The location of the file to upload. */
 - (void)fetchSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier toLocation:(NSURL *)aLocation;
 
 /** Upload the specified sync changes file to the client device's directory inside the document's `SyncChanges` directory.
  
  This method must call `uploadedLocalSyncChangeSetFileSuccessfully:` to indicate whether the creation was successful.
- */
+ @param aLocation The location of the file to upload. */
 - (void)uploadLocalSyncChangeSetFileAtLocation:(NSURL *)aLocation;
+
+/** Upload the specified RecentSync file to the document's `RecentSync` directory.
+ 
+ This method must call `uploadedRecentSyncFileSuccessfully:` to indicate whether the creation was successful.
+ 
+ @param aLocation The location of the file to upload. */
+- (void)uploadRecentSyncFileAtLocation:(NSURL *)aLocation;
 
 #pragma mark Callbacks
 /** @name Callbacks */
@@ -146,6 +161,13 @@
  
  @param success A Boolean indicating whether the sync change set file was uploaded or not. */
 - (void)uploadedLocalSyncChangeSetFileSuccessfully:(BOOL)success;
+
+/** Indicate whether the upload of the RecentSync file was successful.
+ 
+ If not, call `setError:` first, then specify `NO` for `success`.
+ 
+ @param success A Boolean indicating whether the RecentSync file was uploaded or not. */
+- (void)uploadedRecentSyncFileSuccessfully:(BOOL)success;
 
 #pragma mark Helper Methods
 /** Releases any existing `unappliedSyncChangesContext` and `unappliedSyncChangesCoreDataFactory` and sets new ones, linked to the set of sync changes specified in the given sync change set.
@@ -213,6 +235,9 @@
 
 @property (nonatomic, retain) NSArray *syncChangeSortDescriptors;
 
+/** The location of the local RecentSync file to upload at the end of the synchronization process. */
+@property (retain) NSURL *localRecentSyncFileLocation;
+
 #pragma mark Completion
 /** @name Completion */
 
@@ -255,7 +280,10 @@
 /** The phase status regarding upload of the local set of sync commands. */
 @property (nonatomic, assign) TICDSOperationPhaseStatus uploadLocalSyncCommandSetStatus;
 
-/** THe phase status regarding upload of the local set of sync changes. */
+/** The phase status regarding upload of the local set of sync changes. */
 @property (nonatomic, assign) TICDSOperationPhaseStatus uploadLocalSyncChangeSetStatus;
+
+/** The phase status regarding upload of this client's file in the document's `RecentSync` directory. */
+@property (nonatomic, assign) TICDSOperationPhaseStatus uploadRecentSyncFileStatus;
 
 @end

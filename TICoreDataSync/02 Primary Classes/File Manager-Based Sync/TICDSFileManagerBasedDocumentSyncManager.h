@@ -48,4 +48,7 @@
 /** The path to this client's `AppliedSyncChangeSets.ticdsync` file. */
 @property (nonatomic, readonly) NSString *thisDocumentAppliedSyncChangeSetsFilePath;
 
+/** The path to this client's RecentSync file inside this document's `RecentSyncs` directory. */
+@property (nonatomic, readonly) NSString *thisDocumentRecentSyncThisClientFilePath;
+
 @end
