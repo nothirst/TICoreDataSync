@@ -47,6 +47,7 @@
 		389F86C81360933F00004CA4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389F86C71360933F00004CA4 /* QuartzCore.framework */; };
 		389F86CA1360934800004CA4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389F86C91360934700004CA4 /* SystemConfiguration.framework */; };
 		389F86CD136093D800004CA4 /* TISLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 389F86CC136093D800004CA4 /* TISLAppDelegate.m */; };
+		38A7348E136AFED300311ED5 /* TICDSSyncConflict.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A7348D136AFED300311ED5 /* TICDSSyncConflict.m */; };
 		38AD2BD013658BB900BEF407 /* TICDSWholeStoreUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38AD2BCF13658BB900BEF407 /* TICDSWholeStoreUploadOperation.m */; };
 		38BAFEC41365CBE6000368FE /* TICDSFileManagerBasedWholeStoreUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BAFEC31365CBE6000368FE /* TICDSFileManagerBasedWholeStoreUploadOperation.m */; };
 		38BE911A136477B400312C60 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BE9119136477B400312C60 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.m */; };
@@ -133,6 +134,8 @@
 		389F86C91360934700004CA4 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		389F86CB136093D800004CA4 /* TISLAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TISLAppDelegate.h; sourceTree = "<group>"; };
 		389F86CC136093D800004CA4 /* TISLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TISLAppDelegate.m; sourceTree = "<group>"; };
+		38A7348C136AFED300311ED5 /* TICDSSyncConflict.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSyncConflict.h; sourceTree = "<group>"; };
+		38A7348D136AFED300311ED5 /* TICDSSyncConflict.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSyncConflict.m; sourceTree = "<group>"; };
 		38AD2BCE13658BB900BEF407 /* TICDSWholeStoreUploadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSWholeStoreUploadOperation.h; sourceTree = "<group>"; };
 		38AD2BCF13658BB900BEF407 /* TICDSWholeStoreUploadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSWholeStoreUploadOperation.m; sourceTree = "<group>"; };
 		38BAFEC21365CBE6000368FE /* TICDSFileManagerBasedWholeStoreUploadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSFileManagerBasedWholeStoreUploadOperation.h; sourceTree = "<group>"; };
@@ -391,6 +394,8 @@
 				389D76971361D519007F19DC /* TICDSSynchronizedManagedObjectContext.m */,
 				38C0B63A136333D100B63589 /* TICDSSynchronizedManagedObject.h */,
 				38C0B63B136333D100B63589 /* TICDSSynchronizedManagedObject.m */,
+				38A7348C136AFED300311ED5 /* TICDSSyncConflict.h */,
+				38A7348D136AFED300311ED5 /* TICDSSyncConflict.m */,
 				389D767B1361A53D007F19DC /* File Manager-Based Sync */,
 				382390CF136089F40068EB37 /* Generic Operations */,
 			);
@@ -523,6 +528,7 @@
 				383F454F1367186B004FA253 /* TICDSFileManagerBasedSynchronizationOperation.m in Sources */,
 				38CBE6BD136745DB00523599 /* TICDSSyncChangeSet.xcdatamodeld in Sources */,
 				38CBE6D2136746B600523599 /* TICDSSyncChangeSet.m in Sources */,
+				38A7348E136AFED300311ED5 /* TICDSSyncConflict.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

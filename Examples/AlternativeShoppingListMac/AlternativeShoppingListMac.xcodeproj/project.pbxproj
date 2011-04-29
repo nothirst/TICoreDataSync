@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		38A73491136B02BC00311ED5 /* TICDSSyncConflict.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A73490136B02BC00311ED5 /* TICDSSyncConflict.m */; };
 		38CBE606136733AB00523599 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38CBE605136733AB00523599 /* Cocoa.framework */; };
 		38CBE610136733AB00523599 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 38CBE60E136733AB00523599 /* InfoPlist.strings */; };
 		38CBE613136733AB00523599 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CBE612136733AB00523599 /* main.m */; };
@@ -64,6 +65,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		38A7348F136B02BC00311ED5 /* TICDSSyncConflict.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSyncConflict.h; sourceTree = "<group>"; };
+		38A73490136B02BC00311ED5 /* TICDSSyncConflict.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSyncConflict.m; sourceTree = "<group>"; };
 		38CBE601136733AB00523599 /* AlternativeShoppingListMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlternativeShoppingListMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38CBE605136733AB00523599 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		38CBE608136733AB00523599 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -297,6 +300,8 @@
 				38CBE67B1367344100523599 /* TICDSSynchronizedManagedObject.m */,
 				38CBE67C1367344100523599 /* TICDSSynchronizedManagedObjectContext.h */,
 				38CBE67D1367344100523599 /* TICDSSynchronizedManagedObjectContext.m */,
+				38A7348F136B02BC00311ED5 /* TICDSSyncConflict.h */,
+				38A73490136B02BC00311ED5 /* TICDSSyncConflict.m */,
 			);
 			path = "02 Primary Classes";
 			sourceTree = "<group>";
@@ -515,6 +520,7 @@
 				38CBE6B61367344100523599 /* TIManagedObjectExtensions.m in Sources */,
 				38CBE6E71367629300523599 /* TICDSSyncChangeSet.m in Sources */,
 				38CBE6E81367629300523599 /* TICDSSyncChangeSet.xcdatamodeld in Sources */,
+				38A73491136B02BC00311ED5 /* TICDSSyncConflict.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

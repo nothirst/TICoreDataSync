@@ -18,6 +18,11 @@ NSString * const TICDSSyncChangeTypeNames[] = {
     @"Relationship Changed",
 };
 
+NSString * const TICDSSyncConflictTypeNames[] = {
+    @"Unknown",
+    @"Both local and remote have changes to the same attribute",
+};
+
 NSString * const TICDSSyncWarningTypeNames[] = {
     @"Unknown",
     
@@ -67,6 +72,8 @@ NSString * const TICDSRecentSyncFileExtension = @"recentsync";
 NSString * const TICDSSyncIDAttributeName = @"ticdsSyncID";
 NSString * const TICDSSyncChangeDataModelName = @"TICDSSyncChange";
 NSString * const TICDSSyncChangeSetDataModelName = @"TICDSSyncChangeSet";
+
+NSString * const kTICDSChangedAttributeValue = @"kTICDSChangedAttributeValue";
 
 NSString * const kTICDSSyncWarningType = @"kTICDSSyncWarningType";
 NSString * const kTICDSSyncWarningDescription = @"kTICDSSyncWarningDescription";

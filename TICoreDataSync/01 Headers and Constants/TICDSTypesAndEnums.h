@@ -123,6 +123,13 @@ typedef enum _TICDSSyncWarningType {
 } TICDSSyncWarningType;
 
 /** @name Sync Conflicts */
+
+/** The type of a sync conflict. */
+typedef enum _TICDSSyncConflictType {
+    TICDSSyncConflictTypeUnknown = 0,
+    TICDSSyncConflictRemoteAttributeChangedAndLocalAttributeChanged = 1,
+} TICDSSyncConflictType;
+
 /** The resolution for a sync conflict. */
 typedef enum _TICDSSyncConflictResolutionType {
     TICDSSyncConflictResolutionTypeUnknown = 0,

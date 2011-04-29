@@ -12,6 +12,7 @@
 #import "TICDSDocumentSyncManager.h"
 #import "TICDSSynchronizedManagedObjectContext.h"
 #import "TICDSSynchronizedManagedObject.h"
+#import "TICDSSyncConflict.h"
 
 #pragma mark Operations
 #import "TICDSOperation.h"

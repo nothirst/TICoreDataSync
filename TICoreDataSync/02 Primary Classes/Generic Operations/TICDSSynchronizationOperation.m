@@ -41,7 +41,7 @@
 - (NSArray *)remoteSyncChangesForObjectWithIdentifier:(NSString *)anIdentifier afterCheckingForConflictsInRemoteSyncChanges:(NSArray *)remoteSyncChanges;
 - (void)addWarningsForRemoteDeletionWithLocalChanges:(NSArray *)localChanges;
 - (void)addWarningsForRemoteChangesWithLocalDeletion:(NSArray *)remoteChanges;
-- (TICDSSyncConflictResolutionType)resolutionTypeForConflictBetweenLocalSyncChange:(TICDSSyncChange *)aLocalSyncChange andRemoteSyncChange:(TICDSSyncChange *)aRemoteSyncChange;
+- (TICDSSyncConflictResolutionType)resolutionTypeForConflict:(TICDSSyncConflict *)aConflict;
 - (void)applyObjectInsertedSyncChange:(TICDSSyncChange *)aSyncChange;
 - (void)applyAttributeChangeSyncChange:(TICDSSyncChange *)aSyncChange;
 - (void)applyObjectDeletedSyncChange:(TICDSSyncChange *)aSyncChange;
@@ -601,7 +601,10 @@
             }
             
             // if we get here, we have a conflict between eachRemoteChange and eachLocalChange
-            TICDSSyncConflictResolutionType resolutionType = [self resolutionTypeForConflictBetweenLocalSyncChange:eachLocalChange andRemoteSyncChange:eachRemoteChange];
+            TICDSSyncConflict *conflict = [TICDSSyncConflict syncConflictOfType:TICDSSyncConflictRemoteAttributeChangedAndLocalAttributeChanged forEntityName:[eachLocalChange objectEntityName] key:[eachLocalChange relevantKey] objectSyncID:[eachLocalChange objectSyncID]];
+            [conflict setLocalInformation:[NSDictionary dictionaryWithObject:[eachLocalChange changedAttributes] forKey:kTICDSChangedAttributeValue]];
+            [conflict setRemoteInformation:[NSDictionary dictionaryWithObject:[eachRemoteChange changedAttributes] forKey:kTICDSChangedAttributeValue]];
+            TICDSSyncConflictResolutionType resolutionType = [self resolutionTypeForConflict:conflict];
             
             if( resolutionType == TICDSSyncConflictResolutionTypeRemoteWins ) {
                 // just delete the local sync change so the remote change wins
@@ -642,11 +645,11 @@
     }
 }
 
-- (TICDSSyncConflictResolutionType)resolutionTypeForConflictBetweenLocalSyncChange:(TICDSSyncChange *)aLocalSyncChange andRemoteSyncChange:(TICDSSyncChange *)aRemoteSyncChange
+- (TICDSSyncConflictResolutionType)resolutionTypeForConflict:(TICDSSyncConflict *)aConflict
 {
     [self setPaused:YES];
-    
-    [self ti_alertDelegateOnMainThreadWithSelector:@selector(synchronizationOperation:pausedToDetermineResolutionOfConflict:) waitUntilDone:YES, @"Conflict"];
+        
+    [self ti_alertDelegateOnMainThreadWithSelector:@selector(synchronizationOperation:pausedToDetermineResolutionOfConflict:) waitUntilDone:YES, aConflict];
     
     while( [self isPaused] ) {
         sleep(0.1);
