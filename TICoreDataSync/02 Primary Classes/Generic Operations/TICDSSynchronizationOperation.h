@@ -179,7 +179,7 @@
 #pragma mark Configuration
 /** Configure a background context (for applying sync changes) using the same persistent store coordinator as the main application context.
  
- @pragam aPersistentStoreCoordinator The persistent store coordinator to use for the background context. */
+ @param aPersistentStoreCoordinator The persistent store coordinator to use for the background context. */
 - (void)configureBackgroundApplicationContextForPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)aPersistentStoreCoordinator;
 
 #pragma mark Properties
@@ -194,7 +194,7 @@
 /** The sort descriptors used to sort sync change objects in a `SyncChangeSet` before being applied. */
 @property (nonatomic, retain) NSArray *syncChangeSortDescriptors;
 
-/** @name File Locatinos */
+/** @name File Locations */
 
 /** The location of the `SyncChangesBeingSynchronized.syncchg` file for this synchronization operation. */
 @property (retain) NSURL *localSyncChangesToMergeLocation;

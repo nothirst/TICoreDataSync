@@ -206,7 +206,12 @@
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
 			
 			<Declaration>- (void)configureBackgroundApplicationContextForPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)aPersistentStoreCoordinator</Declaration>
-			
+			<Parameters>
+				<Parameter>
+					<Name>aPersistentStoreCoordinator</Name>
+					<Abstract>The persistent store coordinator to use for the background context.</Abstract>
+				</Parameter>
+			</Parameters>
 			
 			<Anchor>//api/name/configureBackgroundApplicationContextForPersistentStoreCoordinator:</Anchor>
 		</Token>
