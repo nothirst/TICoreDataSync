@@ -55,5 +55,30 @@
 			<Anchor>//api/name/remoteDocumentFileStructure</Anchor>
 		</Token>
 		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSUtilities/syncWarningOfType:entityName:relatedObjectEntityName:attributes:</TokenIdentifier>
+			<Abstract>Returns a dictionary configured for a given synchronization warning.</Abstract>
+			<DeclaredIn>TICDSUtilities.h</DeclaredIn>			
+			
+			<Declaration>+ (NSDictionary *)syncWarningOfType:(TICDSSyncWarningType)aType entityName:(NSString *)entityName relatedObjectEntityName:(NSString *)relatedObjectEntityName attributes:(NSDictionary *)attributes</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aType</Name>
+					<Abstract>The type of the sync warning.</Abstract>
+				</Parameter><Parameter>
+					<Name>entityName</Name>
+					<Abstract>The entity name for the affected object.</Abstract>
+				</Parameter><Parameter>
+					<Name>relatedObjectEntityName</Name>
+					<Abstract>The entity name for any related object.</Abstract>
+				</Parameter><Parameter>
+					<Name>attributes</Name>
+					<Abstract>Any defining attributes for the object affected by the sync change.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>A dictionary configured with the given information.</Abstract></ReturnValue>
+			<Anchor>//api/name/syncWarningOfType:entityName:relatedObjectEntityName:attributes:</Anchor>
+		</Token>
+		
 	</File>
 </Tokens>

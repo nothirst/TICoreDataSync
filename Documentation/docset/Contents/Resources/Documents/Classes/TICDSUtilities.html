@@ -42,6 +42,8 @@
 	
 	<option value="//api/name/remoteGlobalAppFileStructure">&nbsp;&nbsp;&nbsp;&nbsp;+ remoteGlobalAppFileStructure</option>
 	
+	<option value="//api/name/syncWarningOfType:entityName:relatedObjectEntityName:attributes:">&nbsp;&nbsp;&nbsp;&nbsp;+ syncWarningOfType:entityName:relatedObjectEntityName:attributes:</option>
+	
 	<option value="//api/name/uuidString">&nbsp;&nbsp;&nbsp;&nbsp;+ uuidString</option>
 	
 	
@@ -81,6 +83,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/remoteGlobalAppClientDeviceFileStructure">remoteGlobalAppClientDeviceFileStructure</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/remoteGlobalAppFileStructure">remoteGlobalAppFileStructure</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncWarningOfType:entityName:relatedObjectEntityName:attributes:">syncWarningOfType:entityName:relatedObjectEntityName:attributes:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/uuidString">uuidString</a></span></li>
 	
@@ -172,6 +176,13 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/remoteDocumentFileStructure">+&nbsp;remoteDocumentFileStructure</a></code>
 		<span class="tooltip"><p>Returns a dictionary containing the basic file structure for a synchronized document.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncWarningOfType:entityName:relatedObjectEntityName:attributes:">+&nbsp;syncWarningOfType:entityName:relatedObjectEntityName:attributes:</a></code>
+		<span class="tooltip"><p>Returns a dictionary configured for a given synchronization warning.</p></span>
 	</span>
 	
 	
@@ -281,6 +292,68 @@
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>The string keys are names of sub-directories.</p>
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSUtilities.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/syncWarningOfType:entityName:relatedObjectEntityName:attributes:" title="syncWarningOfType:entityName:relatedObjectEntityName:attributes:"></a>
+	<h3 class="subsubtitle method-title">syncWarningOfType:entityName:relatedObjectEntityName:attributes:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns a dictionary configured for a given synchronization warning.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>+ (NSDictionary *)syncWarningOfType:(TICDSSyncWarningType)<em>aType</em> entityName:(NSString *)<em>entityName</em> relatedObjectEntityName:(NSString *)<em>relatedObjectEntityName</em> attributes:(NSDictionary *)<em>attributes</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aType</em></dt>
+			<dd><p>The type of the sync warning.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>entityName</em></dt>
+			<dd><p>The entity name for the affected object.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>relatedObjectEntityName</em></dt>
+			<dd><p>The entity name for any related object.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>attributes</em></dt>
+			<dd><p>Any defining attributes for the object affected by the sync change.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A dictionary configured with the given information.</p>
+	</div>
+	
+	
 	
 	
 	

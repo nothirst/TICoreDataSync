@@ -52,6 +52,8 @@
 	
 	<option value="//api/name/syncManager:encounteredSynchronizationError:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:encounteredSynchronizationError:</option>
 	
+	<option value="//api/name/syncManager:encounteredSynchronizationWarnings:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:encounteredSynchronizationWarnings:</option>
+	
 	<option value="//api/name/syncManager:encounteredWholeStoreUploadError:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:encounteredWholeStoreUploadError:</option>
 	
 	<option value="//api/name/syncManager:failedToProcessAfterMOCDidSave:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:failedToProcessAfterMOCDidSave:</option>
@@ -133,6 +135,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredDocumentRegistrationError:">syncManager:encounteredDocumentRegistrationError:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredSynchronizationError:">syncManager:encounteredSynchronizationError:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredSynchronizationWarnings:">syncManager:encounteredSynchronizationWarnings:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredWholeStoreUploadError:">syncManager:encounteredWholeStoreUploadError:</a></span></li>
 	
@@ -350,6 +354,13 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/syncManager:encounteredSynchronizationError:">&ndash;&nbsp;syncManager:encounteredSynchronizationError:</a></code>
 		<span class="tooltip"><p>Informs the delegate that the document sync manager encountered an error during the synchronization process.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManager:encounteredSynchronizationWarnings:">&ndash;&nbsp;syncManager:encounteredSynchronizationWarnings:</a></code>
+		<span class="tooltip"><p>Informs the delegate that warnings were generated during the synchronization process.</p></span>
 	</span>
 	
 	
@@ -769,6 +780,58 @@
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/syncManager:encounteredSynchronizationWarnings:" title="syncManager:encounteredSynchronizationWarnings:"></a>
+	<h3 class="subsubtitle method-title">syncManager:encounteredSynchronizationWarnings:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that warnings were generated during the synchronization process.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)syncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> encounteredSynchronizationWarnings:(NSArray *)<em>warnings</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>warnings</em></dt>
+			<dd><p>An array of <code>NSDictionary</code> objects containing information about each warning.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Warnings indicate that e.g., an object was changed locally but deleted remotely.</p>
+	</div>
 	
 	
 	

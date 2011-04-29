@@ -250,6 +250,17 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/synchronizationWarnings</TokenIdentifier>
+			<Abstract>The warnings generated during this synchronization.</Abstract>
+			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSMutableArray *synchronizationWarnings</Declaration>
+			
+			
+			<Anchor>//api/name/synchronizationWarnings</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/localSyncChangesToMergeLocation</TokenIdentifier>
 			<Abstract>The location of the SyncChangesBeingSynchronized.syncchg file for this synchronization operation.</Abstract>
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
@@ -291,17 +302,6 @@
 			
 			
 			<Anchor>//api/name/unappliedSyncChangeSetsFileLocation</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unsynchronizedSyncChangesFileLocation</TokenIdentifier>
-			<Abstract>The location of this document's local UnsynchronizedSyncChanges.syncchg file.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (retain) NSURL *unsynchronizedSyncChangesFileLocation</Declaration>
-			
-			
-			<Anchor>//api/name/unsynchronizedSyncChangesFileLocation</Anchor>
 		</Token>
 		
 		<Token>
@@ -382,25 +382,25 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unsynchronizedSyncChangesCoreDataFactory</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/localSyncChangesToMergeCoreDataFactory</TokenIdentifier>
 			<Abstract>A TICoreDataFactory to access the contents of the local, unsynchronized set of SyncChanges.</Abstract>
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, retain) TICoreDataFactory *unsynchronizedSyncChangesCoreDataFactory</Declaration>
+			<Declaration>@property (nonatomic, retain) TICoreDataFactory *localSyncChangesToMergeCoreDataFactory</Declaration>
 			
 			
-			<Anchor>//api/name/unsynchronizedSyncChangesCoreDataFactory</Anchor>
+			<Anchor>//api/name/localSyncChangesToMergeCoreDataFactory</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unsynchronizedSyncChangesContext</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/localSyncChangesToMergeContext</TokenIdentifier>
 			<Abstract>The managed object context for the local, unsynchronized set of SyncChanges.</Abstract>
 			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, retain) NSManagedObjectContext *unsynchronizedSyncChangesContext</Declaration>
+			<Declaration>@property (nonatomic, retain) NSManagedObjectContext *localSyncChangesToMergeContext</Declaration>
 			
 			
-			<Anchor>//api/name/unsynchronizedSyncChangesContext</Anchor>
+			<Anchor>//api/name/localSyncChangesToMergeContext</Anchor>
 		</Token>
 		
 		<Token>
