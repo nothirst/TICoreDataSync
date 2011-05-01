@@ -6,6 +6,8 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
+// Note this window controller is not currently displayed in the example mac app - was used for testing, may bring back in future...
+
 @interface TIDocumentSyncChangesWindowController : NSWindowController {
 @private
     NSManagedObjectContext *_managedObjectContext;

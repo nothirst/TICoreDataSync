@@ -34,7 +34,7 @@
 #pragma mark Most Recent Client Upload
 - (void)beginCheckForMostRecentClientWholeStore
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Checking which client uploaded a store most recently");
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Checking which client uploaded a store most recently");
     
     [self checkForMostRecentClientWholeStore];
 }
@@ -78,7 +78,7 @@
         return;
     }
     
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Downloading whole store file to %@", [self localWholeStoreFileLocation]);
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Downloading whole store file to %@", [self localWholeStoreFileLocation]);
     
     [self downloadWholeStoreFile];
 }
@@ -90,7 +90,7 @@
         [self setWholeStoreFileDownloadStatus:TICDSOperationPhaseStatusFailure];
         [self setAppliedSyncChangeSetsFileDownloadStatus:TICDSOperationPhaseStatusFailure];
     } else {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Successfully downloaded whole store file");
+        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Successfully downloaded whole store file");
         [self setWholeStoreFileDownloadStatus:TICDSOperationPhaseStatusSuccess];
         
         [self beginDownloadOfAppliedSyncChangeSetsFile];
@@ -119,7 +119,7 @@
         return;
     }
     
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Downloading applied sync change sets file to %@", [self localAppliedSyncChangeSetsFileLocation]);
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Downloading applied sync change sets file to %@", [self localAppliedSyncChangeSetsFileLocation]);
     
     [self downloadAppliedSyncChangeSetsFile];
 }
@@ -130,7 +130,7 @@
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to download applied sync change sets file");
         [self setAppliedSyncChangeSetsFileDownloadStatus:TICDSOperationPhaseStatusFailure];
     } else {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Successfully downloaded applied sync change sets file");
+        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Successfully downloaded applied sync change sets file");
         [self setAppliedSyncChangeSetsFileDownloadStatus:TICDSOperationPhaseStatusSuccess];
     }
     

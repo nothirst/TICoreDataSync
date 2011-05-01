@@ -131,12 +131,12 @@
     
     // Create deviceInfo.plist
     if( success ) { 
-        NSString *pathToResource = [[NSBundle mainBundle] pathForResource:@"deviceInfo" ofType:@"plist" inDirectory:nil];
+        NSString *pathToResource = [[NSBundle mainBundle] pathForResource:TICDSDeviceInfoPlistFilename ofType:TICDSDocumentInfoPlistExtension inDirectory:nil];
         NSMutableDictionary *deviceInfo = [NSMutableDictionary dictionaryWithContentsOfFile:pathToResource];
         [deviceInfo setValue:[self clientDescription] forKey:kTICDSClientDeviceDescription];
         [deviceInfo setValue:[self applicationUserInfo] forKey:kTICDSClientDeviceUserInfo];
         
-        NSString *pathToNewFile = [[self clientDevicesThisClientDeviceDirectoryPath] stringByAppendingPathComponent:@"deviceInfo.plist"];
+        NSString *pathToNewFile = [[self clientDevicesThisClientDeviceDirectoryPath] stringByAppendingPathComponent:TICDSDeviceInfoPlistFilenameWithExtension];
         success = [deviceInfo writeToFile:pathToNewFile atomically:YES];
     }
     

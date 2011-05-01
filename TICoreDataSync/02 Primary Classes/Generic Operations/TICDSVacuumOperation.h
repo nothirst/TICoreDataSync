@@ -12,8 +12,9 @@
  
  The operation carries out the following tasks:
  
- 1. Find out the date of the least recent client sync.
- 2. Remove all `SyncChangeSet` files older than the least recent sync.
+ 1. Find out the date of the oldest `WholeStore`.
+ 2. Find out the date of the least recent client sync.
+ 3. Remove all `SyncChangeSet` files older than whichever date is earlier.
  
  Currently unimplemented, it also needs to carry out the following:
  1. Create sync commands to remove the ids of these sync change sets from each client's `AppliedSyncChangeSets.ticdsync` file.

@@ -83,14 +83,14 @@
     
     // Create documentInfo.plist
     if( success ) { 
-        NSString *pathToResource = [[NSBundle mainBundle] pathForResource:@"documentInfo" ofType:@"plist" inDirectory:nil];
+        NSString *pathToResource = [[NSBundle mainBundle] pathForResource:TICDSDocumentInfoPlistFilename ofType:TICDSDocumentInfoPlistExtension inDirectory:nil];
         NSMutableDictionary *documentInfo = [NSMutableDictionary dictionaryWithContentsOfFile:pathToResource];
         [documentInfo setValue:[self documentDescription] forKey:kTICDSDocumentDescription];
         [documentInfo setValue:[self clientDescription] forKey:kTICDSOriginalDeviceDescription];
         [documentInfo setValue:[self clientIdentifier] forKey:kTICDSOriginalDeviceIdentifier];
         [documentInfo setValue:[self documentUserInfo] forKey:kTICDSDocumentUserInfo];
         
-        NSURL *fileLocation = [NSURL fileURLWithPath:[[self thisDocumentDirectoryPath] stringByAppendingPathComponent:@"documentInfo.plist"]];
+        NSURL *fileLocation = [NSURL fileURLWithPath:[[self thisDocumentDirectoryPath] stringByAppendingPathComponent:TICDSDocumentInfoPlistFilenameWithExtension]];
         success = [documentInfo writeToURL:fileLocation atomically:YES];
     }
     

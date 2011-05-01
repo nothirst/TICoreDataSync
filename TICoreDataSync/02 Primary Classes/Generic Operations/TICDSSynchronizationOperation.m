@@ -64,7 +64,7 @@
 #pragma mark LIST OF DEVICE IDENTIFIERS
 - (void)beginFetchOfListOfClientDeviceIdentifiers
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Starting to fetch list of client device identifiers");
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Starting to fetch list of client device identifiers");
     
     [self buildArrayOfClientDeviceIdentifiers];
 }
@@ -106,7 +106,7 @@
 #pragma mark LIST OF SYNC COMMAND SETS
 - (void)beginFetchOfListOfSyncCommandSetIdentifiers
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Starting to fetch list of SyncCommandSet identifiers for clients %@", [self otherSynchronizedClientDeviceIdentifiers]);
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Starting to fetch list of SyncCommandSet identifiers for clients %@", [self otherSynchronizedClientDeviceIdentifiers]);
     
     if( [[self otherSynchronizedClientDeviceIdentifiers] count] < 1 ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"No other clients are synchronizing with this document, so skipping to fetch SyncChanges");
@@ -118,7 +118,7 @@
     [self setFetchArrayOfSyncCommandSetIDsStatus:TICDSOperationPhaseStatusSuccess];
     
     // TODO: Fetch of Sync Commands
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"***Not yet implemented*** so 'finished' fetch of local sync commands");
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"***Not yet implemented*** so 'finished' fetch of local sync commands");
     
     [self beginFetchOfListOfSyncChangeSetIdentifiers];
 }
@@ -127,7 +127,7 @@
 #pragma mark LIST OF SYNC CHANGE SETS
 - (void)beginFetchOfListOfSyncChangeSetIdentifiers
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Starting to fetch list of SyncChangeSet identifiers");
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Starting to fetch list of SyncChangeSet identifiers");
     
     if( [[self otherSynchronizedClientDeviceIdentifiers] count] < 1 ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"No other clients are synchronizing with this document, so skipping to uploading SyncCommands");
@@ -204,7 +204,7 @@
 #pragma mark FETCH OF UNAPPLIED SYNC CHANGE SETS
 - (void)beginFetchOfUnappliedSyncChanges
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Fetching unapplied sync change sets");
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Fetching unapplied sync change sets");
     
     if( [[self otherSynchronizedClientDeviceSyncChangeSetIdentifiers] count] < 1 ) {
         [self setFetchUnappliedSyncChangeSetsStatus:TICDSOperationPhaseStatusSuccess];
@@ -686,7 +686,7 @@
     NSManagedObject *object = [NSEntityDescription insertNewObjectForEntityForName:[aSyncChange objectEntityName] inManagedObjectContext:[self backgroundApplicationContext]];
     [object setValuesForKeysWithDictionary:[aSyncChange changedAttributes]];
     
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Inserted object: %@", object);
+    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Inserted object: %@", object);
 }
 
 - (void)applyAttributeChangeSyncChange:(TICDSSyncChange *)aSyncChange
@@ -703,7 +703,7 @@
     
     [object setValue:[aSyncChange changedAttributes] forKey:[aSyncChange relevantKey]];
     
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Changed attribute on object: %@", object);
+    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed attribute on object: %@", object);
 }
 
 - (void)applyRelationshipSyncChange:(TICDSSyncChange *)aSyncChange
@@ -738,7 +738,7 @@
         [object setValue:relatedObject forKey:[aSyncChange relevantKey]];
     }
     
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Changed relationship on object: %@", object);
+    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed relationship on object: %@", object);
 }
 
 - (void)applyObjectDeletedSyncChange:(TICDSSyncChange *)aSyncChange
@@ -755,19 +755,19 @@
     
     [[self backgroundApplicationContext] deleteObject:object];
     
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Deleted object with ID: %@", [aSyncChange objectSyncID]);
+    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Deleted object with ID: %@", [aSyncChange objectSyncID]);
 }
 
 #pragma mark -
 #pragma mark UPLOAD OF LOCAL SYNC COMMANDS
 - (void)beginUploadOfLocalSyncCommands
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Starting to upload local sync commands");
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Starting to upload local sync commands");
     
     [self setUploadLocalSyncCommandSetStatus:TICDSOperationPhaseStatusSuccess];
     
     // TODO: Upload of Local Sync Commands
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"***Not yet implemented*** so 'finished' local sync commands");
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"***Not yet implemented*** so 'finished' local sync commands");
     
     [self beginUploadOfLocalSyncChanges];
 }
@@ -803,14 +803,14 @@
         return;
     }
     
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Starting to upload local sync changes");
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Starting to upload local sync changes");
     [self uploadLocalSyncChangeSetFileAtLocation:[NSURL fileURLWithPath:filePath]];
 }
 
 - (void)uploadedLocalSyncChangeSetFileSuccessfully:(BOOL)success
 {
     if( success ) {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Uploaded local sync changes file");
+        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Uploaded local sync changes file");
         [self setUploadLocalSyncChangeSetStatus:TICDSOperationPhaseStatusSuccess];
         
         [self beginUploadOfRecentSyncFile];

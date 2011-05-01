@@ -53,13 +53,13 @@
 - (void)ticdPrivate_operationDidCompleteSuccessfully:(BOOL)success cancelled:(BOOL)wasCancelled
 {
     if( success ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Operation completed successfully");
+        TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"TICDSOperation completed successfully");
         [self ti_alertDelegateOnMainThreadWithSelector:@selector(operationCompletedSuccessfully:) waitUntilDone:YES];
     } else if( wasCancelled ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Operation was cancelled");
+        TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"TICDSOperation was cancelled");
         [self ti_alertDelegateOnMainThreadWithSelector:@selector(operationWasCancelled:) waitUntilDone:YES];
     } else {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Operation failed to complete");
+        TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"TICDSOperation failed to complete");
         [self ti_alertDelegateOnMainThreadWithSelector:@selector(operationFailedToComplete:) waitUntilDone:YES];
     }
     
@@ -75,7 +75,7 @@
 
 - (void)operationDidStart
 {
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Operation started");
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"TICDSOperation started");
     
     [self willChangeValueForKey:@"isExecuting"];
     _isExecuting = YES;

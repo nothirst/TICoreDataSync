@@ -27,7 +27,7 @@
 #pragma mark Remote Global App File Structure
 - (void)beginCheckForRemoteGlobalAppFileStructure
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Starting to check for remote global app file structure");
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Starting to check for remote global app file structure");
     
     [self checkWhetherRemoteGlobalAppFileStructureExists];
 }
@@ -39,12 +39,12 @@
         [self setGlobalAppFileStructureStatus:TICDSOperationPhaseStatusFailure];
         [self setClientDeviceFileStructureStatus:TICDSOperationPhaseStatusFailure];
     } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesExist ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Remote global app file structure exists");
+        TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Remote global app file structure exists");
         [self setGlobalAppFileStructureStatus:TICDSOperationPhaseStatusSuccess];
         
         [self beginCheckForRemoteClientDeviceFileStructure];
     } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesNotExist ) {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Creating remote global app file structure");
+        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Creating remote global app file structure");
         
         [self createRemoteGlobalAppFileStructure];
         return;
@@ -56,11 +56,11 @@
 - (void)createdRemoteGlobalAppFileStructureSuccessfully:(BOOL)success
 {
     if( !success ) {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Failed to create remote global app file structure");
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create remote global app file structure");
         [self setGlobalAppFileStructureStatus:TICDSOperationPhaseStatusFailure];
         [self setClientDeviceFileStructureStatus:TICDSOperationPhaseStatusFailure];
     } else {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Successfully created remote global app file structure");
+        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Successfully created remote global app file structure");
         [self setGlobalAppFileStructureStatus:TICDSOperationPhaseStatusSuccess];
         
         [self beginCheckForRemoteClientDeviceFileStructure];
@@ -86,7 +86,7 @@
 #pragma mark Remote Client Device File Structure
 - (void)beginCheckForRemoteClientDeviceFileStructure
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Starting to check for remote device file structure");
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Starting to check for remote device file structure");
     
     [self checkWhetherRemoteGlobalAppThisClientDeviceFileStructureExists];    
 }
@@ -97,10 +97,10 @@
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error checking for remote client device file structure");
         [self setClientDeviceFileStructureStatus:TICDSOperationPhaseStatusFailure];
     } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesExist ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Remote client device file structure exists");
+        TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Remote client device file structure exists");
         [self setClientDeviceFileStructureStatus:TICDSOperationPhaseStatusSuccess];
     } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesNotExist ) {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Creating remote client device file structure");
+        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Creating remote client device file structure");
         
         [self createRemoteGlobalAppThisClientDeviceFileStructure];
     }
@@ -111,10 +111,10 @@
 - (void)createdRemoteClientDeviceFileStructureSuccessfully:(BOOL)success
 {
     if( !success ) {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Failed to create remote client device file structure");
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create remote client device file structure");
         [self setClientDeviceFileStructureStatus:TICDSOperationPhaseStatusFailure];
     } else {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Successfully created remote client device file structure");
+        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Successfully created remote client device file structure");
         [self setClientDeviceFileStructureStatus:TICDSOperationPhaseStatusSuccess];
     }
     

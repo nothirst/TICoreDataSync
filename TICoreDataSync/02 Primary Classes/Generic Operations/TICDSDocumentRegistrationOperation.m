@@ -30,7 +30,7 @@
 #pragma mark Document File Structure
 - (void)beginCheckForDocumentFileStructure
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Checking whether document file structure exists");
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Checking whether document file structure exists");
     [self checkWhetherRemoteDocumentFileStructureExists];    
 }
 
@@ -41,13 +41,13 @@
         [self setDocumentFileStructureStatus:TICDSOperationPhaseStatusFailure];
         [self setDocumentClientDeviceFileStructureStatus:TICDSOperationPhaseStatusFailure];
     } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesExist ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Remote document file structure exists");
+        TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Remote document file structure exists");
         [self setDocumentFileStructureStatus:TICDSOperationPhaseStatusSuccess];
         
         [self beginCheckForDocumentClientDeviceFileStructure];
     } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesNotExist ) {
         
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Remote document file structure doesn't exist so asking delegate whether we should create it");
+        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Remote document file structure doesn't exist so asking delegate whether we should create it");
         [self beginRequestWhetherToCreateRemoteFileStructure];
     }
     
@@ -70,6 +70,8 @@
         sleep(0.2);
     }
     
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Continuing registration after instruction from delegate");
+    
     [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationResumedFollowingDocumentStructureCreationInstruction:) waitUntilDone:NO];
     
     [self continueAfterRequestWhetherToCreateRemoteFileStructure];
@@ -83,11 +85,11 @@
     }
     
     if( [self shouldCreateDocumentFileStructure] ) {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Creating remote document file structure");
+        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Creating remote document file structure");
         
         [self createRemoteDocumentFileStructure];
     } else {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Cancelling document registration");
+        TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Cancelling document registration");
         [self operationWasCancelled];
     }
 }
@@ -95,11 +97,11 @@
 - (void)createdRemoteDocumentFileStructureWithSuccess:(BOOL)success
 {
     if( !success ) {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Failed to create remote document file structure");
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create remote document file structure");
         [self setDocumentFileStructureStatus:TICDSOperationPhaseStatusFailure];
         [self setDocumentClientDeviceFileStructureStatus:TICDSOperationPhaseStatusFailure];
     } else {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Successfully created remote document file structure");
+        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Successfully created remote document file structure");
         [self setDocumentFileStructureStatus:TICDSOperationPhaseStatusSuccess];
         
         [self beginCheckForDocumentClientDeviceFileStructure];
@@ -125,7 +127,7 @@
 #pragma mark Client Device File Structure
 - (void)beginCheckForDocumentClientDeviceFileStructure
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Starting to check for remote document client device file structure");
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Starting to check for remote document client device file structure");
     
     [self checkWhetherRemoteDocumentSyncChangesThisClientFileStructureExists];
 }
@@ -136,10 +138,10 @@
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error checking for remote document client device file structure");
         [self setDocumentClientDeviceFileStructureStatus:TICDSOperationPhaseStatusFailure];
     } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesExist ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Remote document client device file structure exists");
+        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Remote document client device file structure exists");
         [self setDocumentClientDeviceFileStructureStatus:TICDSOperationPhaseStatusSuccess];
     } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesNotExist ) {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Creating remote document client device file structure");
+        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Creating remote document client device file structure");
         
         [self createRemoteDocumentSyncChangesThisClientFileStructure];
     }
@@ -150,10 +152,10 @@
 - (void)createdRemoteDocumentSyncChangesThisClientFileStructureWithSuccess:(BOOL)success
 {
     if( !success ) {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Failed to create remote document client device file structure");
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create remote document client device file structure");
         [self setDocumentClientDeviceFileStructureStatus:TICDSOperationPhaseStatusFailure];
     } else {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Successfully created remote document client device file structure");
+        TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Successfully created remote document client device file structure");
         [self setDocumentClientDeviceFileStructureStatus:TICDSOperationPhaseStatusSuccess];
     }
     

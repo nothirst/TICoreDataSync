@@ -99,7 +99,7 @@
 #pragma mark Whole Store File Upload
 - (void)beginUploadOfWholeStoreFile
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Uploading whole store file");
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Uploading whole store file");
     
     [self uploadWholeStoreFile];
 }
@@ -111,7 +111,7 @@
         [self setWholeStoreFileUploadStatus:TICDSOperationPhaseStatusFailure];
         [self setAppliedSyncChangeSetsFileUploadStatus:TICDSOperationPhaseStatusFailure];
     } else {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Successfully uploaded whole store file");
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Successfully uploaded whole store file");
         [self setWholeStoreFileUploadStatus:TICDSOperationPhaseStatusSuccess];
         
         [self beginUploadOfAppliedSyncChangeSetsFile];
@@ -138,7 +138,7 @@
         return;
     }
     
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Uploading applied sync change sets file");
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Uploading applied sync change sets file");
     
     [self uploadAppliedSyncChangeSetsFile];
 }
@@ -149,7 +149,7 @@
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to upload applied sync change sets file");
         [self setAppliedSyncChangeSetsFileUploadStatus:TICDSOperationPhaseStatusFailure];
     } else {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Successfully uploaded applied sync change sets file");
+        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Successfully uploaded applied sync change sets file");
         [self setAppliedSyncChangeSetsFileUploadStatus:TICDSOperationPhaseStatusSuccess];
     }
     

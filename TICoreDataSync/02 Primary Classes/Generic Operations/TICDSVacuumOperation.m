@@ -27,7 +27,7 @@
 #pragma mark Least Recent Client Sync Date
 - (void)beginFindingOutLeastRecentClientSyncDate
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Finding out the date on which the least-recently-synchronized client performed a sync");
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Finding out the date on which the least-recently-synchronized client performed a sync");
     
     [self findOutLeastRecentClientSyncDate];
 }
@@ -60,7 +60,7 @@
 #pragma mark Remove Old Sync Change Set Files
 - (void)beginRemovingOldSyncChangeSetFiles
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Removing unneeded SyncChangeSet files uploaded by this client");
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Removing unneeded SyncChangeSet files uploaded by this client");
     
     [self removeOldSyncChangeSetFiles];
 }

@@ -33,7 +33,7 @@
 #pragma mark List of Document Sync IDs
 - (void)beginFetchOfListOfDocumentSyncIDs
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Starting to fetch list of document sync identifiers");
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Starting to fetch list of document sync identifiers");
     
     [self buildArrayOfDocumentIdentifiers];
 }
@@ -46,6 +46,7 @@
         [self setInfoDictionariesStatus:TICDSOperationPhaseStatusFailure];
         [self setLastSynchronizationDatesStatus:TICDSOperationPhaseStatusFailure];
     } else {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Fetched list of document sync identifiers successfully");
         [self setArrayOfDocumentIdentifiersStatus:TICDSOperationPhaseStatusSuccess];
         [self beginFetchOfDocumentInfoDictionariesForSyncIDs:anArray];
     }
@@ -64,14 +65,14 @@
 #pragma mark Document Info Dictionaries
 - (void)beginFetchOfDocumentInfoDictionariesForSyncIDs:(NSArray *)syncIDs
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Starting to fetch sync ids for each document sync identifier");
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Starting to fetch sync ids for each document sync identifier");
     
     [self setAvailableDocuments:[NSMutableArray arrayWithCapacity:[syncIDs count]]];
         
     if( [syncIDs count] < 1 ) {
         [self setInfoDictionariesStatus:TICDSOperationPhaseStatusSuccess];
         [self setLastSynchronizationDatesStatus:TICDSOperationPhaseStatusSuccess];
-        
+        TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"No documents available");
         [self checkForCompletion];
         return;
     }
@@ -84,9 +85,11 @@
 - (void)fetchedInfoDictionary:(NSDictionary *)anInfoDictionary forDocumentWithSyncID:(NSString *)aSyncID
 {
     if( !anInfoDictionary ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to fetch a document info dictionary");
         [self increaseNumberOfInfoDictionariesThatFailedToFetch];
         [self increaseNumberOfLastSynchronizationDatesThatFailedToFetch];
     } else {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Fetched a document info dictionary");
         [self increaseNumberOfInfoDictionariesFetched];
         
         NSMutableDictionary *dictionary = [anInfoDictionary mutableCopy];
@@ -122,8 +125,10 @@
 - (void)fetchedLastSynchronizationDate:(NSDate *)aDate forDocumentWithSyncID:(NSString *)aSyncID
 {
     if( !aDate ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to fetch a last synchronization date");
         [self increaseNumberOfLastSynchronizationDatesThatFailedToFetch];
     } else {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Fetched a last synchronization date");
         [self increaseNumberOfLastSynchronizationDatesFetched];
         
         for( NSMutableDictionary *eachDictionary in [self availableDocuments] ) {

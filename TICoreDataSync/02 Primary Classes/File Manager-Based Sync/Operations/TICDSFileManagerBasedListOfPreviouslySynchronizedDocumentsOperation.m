@@ -67,7 +67,7 @@
 #pragma mark Paths
 - (NSString *)pathToDocumentInfoForDocumentWithIdentifier:(NSString *)anIdentifier
 {
-    return [[[self documentsDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:@"documentInfo.plist"];
+    return [[[self documentsDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSDocumentInfoPlistFilenameWithExtension];
 }
 
 - (NSString *)pathToDocumentRecentSyncsDirectoryForIdentifier:(NSString *)anIdentifier

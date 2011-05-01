@@ -64,7 +64,10 @@ typedef enum _TICDSLogVerbosity {
     TICDSLogVerbosityNoLogging = 0,
     TICDSLogVerbosityErrorsOnly = 1,
     TICDSLogVerbosityStartAndEndOfMainPhase = 10,
-    TICDSLogVerbosityStartAndEndOfEachPhase = 50,
+    TICDSLogVerbosityStartAndEndOfEachPhase = 20,
+    TICDSLogVerbosityStartAndEndOfMainOperationPhase = 50,
+    TICDSLogVerbosityStartAndEndOfEachOperationPhase = 60,
+    TICDSLogVerbosityManagedObjectOutput = 80,
     TICDSLogVerbosityEveryStep = 100
 } TICDSLogVerbosity;
 

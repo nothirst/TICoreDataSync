@@ -71,6 +71,12 @@ NSString * const TICDSUnappliedChangeSetsFilename = @"UnappliedSyncChangeSets.ti
 NSString * const TICDSSyncCommandSetFileExtension = @"synccmd";
 NSString * const TICDSSyncChangeSetFileExtension = @"syncchg";
 NSString * const TICDSRecentSyncFileExtension = @"recentsync";
+NSString * const TICDSDeviceInfoPlistFilenameWithExtension = @"deviceInfo.plist";
+NSString * const TICDSDeviceInfoPlistFilename = @"deviceInfo";
+NSString * const TICDSDeviceInfoPlistExtension = @"plist";
+NSString * const TICDSDocumentInfoPlistFilenameWithExtension = @"documentInfo.plist";
+NSString * const TICDSDocumentInfoPlistFilename = @"documentInfo";
+NSString * const TICDSDocumentInfoPlistExtension = @"plist";
 
 NSString * const TICDSSyncIDAttributeName = @"ticdsSyncID";
 NSString * const TICDSSyncChangeDataModelName = @"TICDSSyncChange";

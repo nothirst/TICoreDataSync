@@ -27,10 +27,14 @@ NSString *gTICDSErrorStrings[] = {
 
 @implementation TICDSError
 
+#ifdef __MAC_OS_X_VERSION_MAX_ALLOWED
+#pragma mark -
+#pragma mark Inspection
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"%@\nUser Info:%@", [super description], [self userInfo]];
 }
+#endif
 
 #pragma mark -
 #pragma mark Error Generation

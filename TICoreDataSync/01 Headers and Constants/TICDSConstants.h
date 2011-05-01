@@ -51,6 +51,12 @@ extern NSString * const TICDSUnappliedChangeSetsFilename;
 extern NSString * const TICDSSyncCommandSetFileExtension;
 extern NSString * const TICDSSyncChangeSetFileExtension;
 extern NSString * const TICDSRecentSyncFileExtension;
+extern NSString * const TICDSDeviceInfoPlistFilenameWithExtension;
+extern NSString * const TICDSDeviceInfoPlistFilename;
+extern NSString * const TICDSDeviceInfoPlistExtension;
+extern NSString * const TICDSDocumentInfoPlistFilenameWithExtension;
+extern NSString * const TICDSDocumentInfoPlistFilename;
+extern NSString * const TICDSDocumentInfoPlistExtension;
 
 extern NSString * const TICDSSyncIDAttributeName;
 extern NSString * const TICDSSyncChangeDataModelName;
