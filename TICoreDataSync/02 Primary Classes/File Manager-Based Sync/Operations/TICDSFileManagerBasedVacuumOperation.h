@@ -15,11 +15,18 @@
 
 @interface TICDSFileManagerBasedVacuumOperation : TICDSVacuumOperation {
 @private
+    NSString *_thisDocumentWholeStoreDirectoryPath;
     NSString *_thisDocumentRecentSyncsDirectoryPath;
     NSString *_thisDocumentSyncChangesThisClientDirectoryPath;
 }
 
 /** @name Paths */
+
+/** The path to a given client's `WholeStore.ticdsync` file within this document's `WholeStore` directory. */
+- (NSString *)pathToWholeStoreFileForClientWithIdentifier:(NSString *)anIdentifier;
+
+/** The path to this document's `WholeStore` directory. */
+@property (retain) NSString *thisDocumentWholeStoreDirectoryPath;
 
 /** The path to this document's `RecentSyncs` directory. */
 @property (retain) NSString *thisDocumentRecentSyncsDirectoryPath;

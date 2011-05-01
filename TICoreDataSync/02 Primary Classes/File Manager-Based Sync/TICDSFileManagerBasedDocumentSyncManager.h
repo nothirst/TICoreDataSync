@@ -45,6 +45,9 @@
 /** The path to this client's directory inside this document's `SyncCommands` directory. */
 @property (nonatomic, readonly) NSString *thisDocumentSyncCommandsThisClientDirectoryPath;
 
+/** The path to this document's `WholeStore` directory. */
+@property (nonatomic, readonly) NSString *thisDocumentWholeStoreDirectoryPath;
+
 /** The path to this client's directory inside this document's `WholeStore` directory. */
 @property (nonatomic, readonly) NSString *thisDocumentWholeStoreThisClientDirectoryPath;
 

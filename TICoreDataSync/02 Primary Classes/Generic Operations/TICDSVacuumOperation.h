@@ -27,27 +27,40 @@
 
 @interface TICDSVacuumOperation : TICDSOperation {
 @private
-    NSDate *_leastRecentClientSyncDate;
+    NSDate *_earliestDateForFilesToKeep;
     
     BOOL _completionInProgress;
+    TICDSOperationPhaseStatus _findOutDateOfOldestWholeStoreStatus;
     TICDSOperationPhaseStatus _findOutLeastRecentClientSyncDateStatus;
     TICDSOperationPhaseStatus _removeOldSyncChangeSetFilesStatus;
 }
 
 /** @name Methods Overridden by Subclasses */
 
+/** Determine the modification date of the oldest `WholeStore` file uploaded by any client.
+ 
+ This method must call `foundOutDateOfOldestWholeStoreFile:` when finished. */
+- (void)findOutDateOfOldestWholeStore;
+
 /** Determine the date on which the least-recently-synchronized client last performed a sync.
  
  This method must call `foundOutLeastRecentClientSyncDate:` when finished. */
 - (void)findOutLeastRecentClientSyncDate;
 
-/** Remove all `SyncChangeSet` files uploaded by this client which are older than `leastRecentClientSyncDate`.
+/** Remove all `SyncChangeSet` files uploaded by this client which are older than `earliestDateForFilesToKeep`.
  
  This method must call `removedOldSyncChangeSetFilesWithSuccess:` when finished. */
 - (void)removeOldSyncChangeSetFiles;
 
 /** @name Callbacks */
 
+/** Indicate the date of the oldest `WholeStore` file.
+ 
+ If an error occurs, call `setError:` first, then specify `nil` for `aDate`. If no client has uploaded a `WholeStore`, specify `[NSDate date]`.
+ 
+ @param aDate The modification date of the oldest `WholeStore` file. */
+- (void)foundOutDateOfOldestWholeStoreFile:(NSDate *)aDate;
+ 
 /** Indicate the date of the least recent sync.
  
  If an error occurs, call `setError:` first, then specify `nil` for `aDate`.
@@ -64,13 +77,16 @@
 
 /** @name Properties */
 
-/** The date of the least recent client sync. */
-@property (nonatomic, retain ) NSDate *leastRecentClientSyncDate;
+/** The earliest modification date after which files must be kept. */
+@property (nonatomic, retain ) NSDate *earliestDateForFilesToKeep;
 
 /** @name Completion */
 
 /** Used to indicate that completion is currently in progress, and that no further checks should be made. */
 @property (nonatomic, assign) BOOL completionInProgress;
+
+/** The phase status regarding finding out the date of the oldest file in the `WholeStore` directory. */
+@property (nonatomic, assign) TICDSOperationPhaseStatus findOutDateOfOldestWholeStoreStatus;
 
 /** The phase status regarding finding out the date of the oldest file in the `RecentSyncs` directory. */
 @property (nonatomic, assign) TICDSOperationPhaseStatus findOutLeastRecentClientSyncDateStatus;

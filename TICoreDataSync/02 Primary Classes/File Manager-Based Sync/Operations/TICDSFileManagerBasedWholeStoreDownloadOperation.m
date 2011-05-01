@@ -27,7 +27,7 @@
     NSDate *eachModificationDate = nil;
     NSDictionary *attributes = nil;
     for( NSString *eachIdentifier in clientIdentifiers ) {
-        if( [[eachIdentifier substringToIndex:1] isEqualToString:@"1"] ) {
+        if( [[eachIdentifier substringToIndex:1] isEqualToString:@"."] ) {
             continue;
         }
         

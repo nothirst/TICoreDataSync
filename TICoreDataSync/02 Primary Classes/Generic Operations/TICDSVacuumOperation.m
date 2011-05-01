@@ -11,6 +11,7 @@
 @interface TICDSVacuumOperation ()
 
 - (void)checkForCompletion;
+- (void)beginFindingOutDateOfOldestWholeStoreFile;
 - (void)beginFindingOutLeastRecentClientSyncDate;
 - (void)beginRemovingOldSyncChangeSetFiles;
 
@@ -20,7 +21,41 @@
 
 - (void)main
 {
+    [self beginFindingOutDateOfOldestWholeStoreFile];
+}
+
+#pragma mark -
+#pragma mark Oldest WholeStore File Date
+- (void)beginFindingOutDateOfOldestWholeStoreFile
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Finding out the modification date of the oldest `WholeStore` file.");
+    
+    [self findOutDateOfOldestWholeStore];
+}
+
+- (void)foundOutDateOfOldestWholeStoreFile:(NSDate *)aDate
+{
+    if( !aDate ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to determine the least recent whole store date");
+        [self setFindOutDateOfOldestWholeStoreStatus:TICDSOperationPhaseStatusFailure];
+        [self setFindOutLeastRecentClientSyncDateStatus:TICDSOperationPhaseStatusFailure];
+        [self setRemoveOldSyncChangeSetFilesStatus:TICDSOperationPhaseStatusFailure];
+        [self checkForCompletion];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Oldest whole store modification date identified as: %@", aDate);
+    [self setEarliestDateForFilesToKeep:aDate];
+    [self setFindOutDateOfOldestWholeStoreStatus:TICDSOperationPhaseStatusSuccess];
+    
     [self beginFindingOutLeastRecentClientSyncDate];
+}
+
+#pragma mark Overridden Method
+- (void)findOutDateOfOldestWholeStore
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self foundOutDateOfOldestWholeStoreFile:nil];
 }
 
 #pragma mark -
@@ -43,7 +78,10 @@
     }
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Least recent client sync date identified as %@", aDate);
-    [self setLeastRecentClientSyncDate:aDate];
+    
+    if( [[self earliestDateForFilesToKeep] compare:aDate] == NSOrderedDescending ) {
+        [self setEarliestDateForFilesToKeep:aDate];
+    }
     [self setFindOutLeastRecentClientSyncDateStatus:TICDSOperationPhaseStatusSuccess];
     
     [self beginRemovingOldSyncChangeSetFiles];
@@ -93,18 +131,18 @@
         return;
     }
     
-    if( [self findOutLeastRecentClientSyncDateStatus] == TICDSOperationPhaseStatusInProgress || [self removeOldSyncChangeSetFilesStatus] == TICDSOperationPhaseStatusInProgress ) {
+    if( [self findOutDateOfOldestWholeStoreStatus] == TICDSOperationPhaseStatusInProgress || [self findOutLeastRecentClientSyncDateStatus] == TICDSOperationPhaseStatusInProgress || [self removeOldSyncChangeSetFilesStatus] == TICDSOperationPhaseStatusInProgress ) {
         return;
     }
     
-    if( [self findOutLeastRecentClientSyncDateStatus] == TICDSOperationPhaseStatusSuccess && [self removeOldSyncChangeSetFilesStatus] == TICDSOperationPhaseStatusSuccess ) {
+    if( [self findOutDateOfOldestWholeStoreStatus] == TICDSOperationPhaseStatusSuccess && [self findOutLeastRecentClientSyncDateStatus] == TICDSOperationPhaseStatusSuccess && [self removeOldSyncChangeSetFilesStatus] == TICDSOperationPhaseStatusSuccess ) {
         [self setCompletionInProgress:YES];
         
         [self operationDidCompleteSuccessfully];
         return;
     }
     
-    if( [self findOutLeastRecentClientSyncDateStatus] == TICDSOperationPhaseStatusFailure || [self removeOldSyncChangeSetFilesStatus] == TICDSOperationPhaseStatusFailure ) {
+    if( [self findOutDateOfOldestWholeStoreStatus] == TICDSOperationPhaseStatusFailure || [self findOutLeastRecentClientSyncDateStatus] == TICDSOperationPhaseStatusFailure || [self removeOldSyncChangeSetFilesStatus] == TICDSOperationPhaseStatusFailure ) {
         [self setCompletionInProgress:YES];
         
         [self operationDidFailToComplete];
@@ -116,14 +154,15 @@
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
-    [_leastRecentClientSyncDate release], _leastRecentClientSyncDate = nil;
+    [_earliestDateForFilesToKeep release], _earliestDateForFilesToKeep = nil;
     
     [super dealloc];
 }
 
 #pragma mark -
 #pragma mark Properties
-@synthesize leastRecentClientSyncDate = _leastRecentClientSyncDate;
+@synthesize findOutDateOfOldestWholeStoreStatus = _findOutDateOfOldestWholeStoreStatus;
+@synthesize earliestDateForFilesToKeep = _earliestDateForFilesToKeep;
 @synthesize completionInProgress = _completionInProgress;
 @synthesize findOutLeastRecentClientSyncDateStatus = _findOutLeastRecentClientSyncDateStatus;
 @synthesize removeOldSyncChangeSetFilesStatus = _removeOldSyncChangeSetFilesStatus;

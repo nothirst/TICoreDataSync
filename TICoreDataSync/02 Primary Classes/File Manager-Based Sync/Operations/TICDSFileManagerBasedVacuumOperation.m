@@ -11,6 +11,54 @@
 
 @implementation TICDSFileManagerBasedVacuumOperation
 
+- (void)findOutDateOfOldestWholeStore
+{
+    NSError *anyError = nil;
+    NSArray *clientIdentifiers = [[self fileManager] contentsOfDirectoryAtPath:[self thisDocumentWholeStoreDirectoryPath] error:&anyError];
+    
+    if( !clientIdentifiers ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self foundOutDateOfOldestWholeStoreFile:nil];
+        return;
+    }
+    
+    NSDate *latestModificationDate = nil;
+    NSDate *eachModificationDate = nil;
+    NSDictionary *attributes = nil;
+    for( NSString *eachIdentifier in clientIdentifiers ) {
+        if( [[eachIdentifier substringToIndex:1] isEqualToString:@"."] ) {
+            continue;
+        }
+        
+        attributes = [[self fileManager] attributesOfItemAtPath:[self pathToWholeStoreFileForClientWithIdentifier:eachIdentifier] error:&anyError];
+        
+        if( !attributes ) {
+            continue;
+        }
+        
+        eachModificationDate = [attributes valueForKey:NSFileModificationDate];
+        
+        if( !latestModificationDate ) {
+            latestModificationDate = eachModificationDate;
+            continue;
+        } else if( [eachModificationDate compare:latestModificationDate] == NSOrderedAscending ) {
+            latestModificationDate = eachModificationDate;
+        }
+    }
+    
+    if( !latestModificationDate && anyError ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self foundOutDateOfOldestWholeStoreFile:nil];
+        return;
+    }
+    
+    if( !latestModificationDate ) {
+        latestModificationDate = [NSDate date];
+    }
+    
+    [self foundOutDateOfOldestWholeStoreFile:latestModificationDate];
+}
+
 - (void)findOutLeastRecentClientSyncDate
 {
     NSError *anyError = nil;
@@ -76,7 +124,7 @@
             break;
         }
         
-        if( [(NSDate *)[attributes valueForKey:NSFileModificationDate] compare:[self leastRecentClientSyncDate]] == NSOrderedAscending ) {
+        if( [(NSDate *)[attributes valueForKey:NSFileModificationDate] compare:[self earliestDateForFilesToKeep]] == NSOrderedAscending ) {
             success = [[self fileManager] removeItemAtPath:filePath error:&anyError];
         }
         
@@ -93,9 +141,17 @@
 }
 
 #pragma mark -
+#pragma mark Paths
+- (NSString *)pathToWholeStoreFileForClientWithIdentifier:(NSString *)anIdentifier
+{
+    return [[[self thisDocumentWholeStoreDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSWholeStoreFilename];
+}
+
+#pragma mark -
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
+    [_thisDocumentWholeStoreDirectoryPath release], _thisDocumentWholeStoreDirectoryPath = nil;
     [_thisDocumentSyncChangesThisClientDirectoryPath release], _thisDocumentSyncChangesThisClientDirectoryPath = nil;
     [_thisDocumentRecentSyncsDirectoryPath release], _thisDocumentRecentSyncsDirectoryPath = nil;
 
@@ -104,6 +160,7 @@
 
 #pragma mark -
 #pragma mark Properties
+@synthesize thisDocumentWholeStoreDirectoryPath = _thisDocumentWholeStoreDirectoryPath;
 @synthesize thisDocumentRecentSyncsDirectoryPath = _thisDocumentRecentSyncsDirectoryPath;
 @synthesize thisDocumentSyncChangesThisClientDirectoryPath = _thisDocumentSyncChangesThisClientDirectoryPath;
 

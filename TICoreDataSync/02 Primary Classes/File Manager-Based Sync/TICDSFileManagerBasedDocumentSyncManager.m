@@ -61,6 +61,7 @@
 {
     TICDSFileManagerBasedVacuumOperation *operation = [[TICDSFileManagerBasedVacuumOperation alloc] initWithDelegate:self];
     
+    [operation setThisDocumentWholeStoreDirectoryPath:[self thisDocumentWholeStoreDirectoryPath]];
     [operation setThisDocumentRecentSyncsDirectoryPath:[self thisDocumentRecentSyncsDirectoryPath]];
     [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
     
@@ -97,6 +98,11 @@
 - (NSString *)thisDocumentSyncCommandsThisClientDirectoryPath
 {
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentSyncCommandsThisClientDirectory]];
+}
+
+- (NSString *)thisDocumentWholeStoreDirectoryPath
+{
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentWholeStoreDirectory]];
 }
 
 - (NSString *)thisDocumentWholeStoreThisClientDirectoryPath
