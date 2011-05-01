@@ -123,7 +123,8 @@ The framework uses quite a few files for synchronization, and stores these at th
 
 ###Document/WholeStore -- `com.identifier.application/Documents/docUUIDa/WholeStore/`
 * `/Documents/docUUIDa/WholeStore/WholeStore.ticdsync`      -- a copy of the entire store
-* `/Documents/docUUIDa/WholeStore/AppliedSyncSets.ticdsync` -- contains the UUIDs of the sync change and command sets already applied to this store
+* `/Documents/docUUIDa/WholeStore/AppliedSyncChangeSets.ticdsync` -- contains the UUIDs of sync change sets already applied to this store
+* `/Documents/docUUIDa/WholeStore/AppliedSyncCommandSets.ticdsync` -- (not yet used) contains the UUIDs of sync command sets already applied to this store 
 
 ###Document/SyncChanges -- `com.identifier.application/Documents/docUUIDa/SyncChanges/`
 

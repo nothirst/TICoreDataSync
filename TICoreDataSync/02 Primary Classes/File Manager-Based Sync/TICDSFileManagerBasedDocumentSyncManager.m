@@ -30,6 +30,7 @@
     [operation setDocumentsDirectoryPath:[self documentsDirectoryPath]];
     [operation setThisDocumentDirectoryPath:[self thisDocumentDirectoryPath]];
     [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
+    [operation setThisDocumentSyncCommandsThisClientDirectoryPath:[self thisDocumentSyncCommandsThisClientDirectoryPath]];
     
     return [operation autorelease];
 }
