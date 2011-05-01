@@ -50,6 +50,10 @@
 	
 	<option value="//api/name/thisDocumentSyncChangesThisClientDirectoryPath">&nbsp;&nbsp;&nbsp;&nbsp;thisDocumentSyncChangesThisClientDirectoryPath</option>
 	
+	<option value="//api/name/thisDocumentSyncCommandsDirectoryPath">&nbsp;&nbsp;&nbsp;&nbsp;thisDocumentSyncCommandsDirectoryPath</option>
+	
+	<option value="//api/name/thisDocumentSyncCommandsThisClientDirectoryPath">&nbsp;&nbsp;&nbsp;&nbsp;thisDocumentSyncCommandsThisClientDirectoryPath</option>
+	
 	<option value="//api/name/thisDocumentWholeStoreFilePath">&nbsp;&nbsp;&nbsp;&nbsp;thisDocumentWholeStoreFilePath</option>
 	
 	<option value="//api/name/thisDocumentWholeStoreThisClientDirectoryPath">&nbsp;&nbsp;&nbsp;&nbsp;thisDocumentWholeStoreThisClientDirectoryPath</option>
@@ -101,6 +105,10 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/thisDocumentSyncChangesDirectoryPath">thisDocumentSyncChangesDirectoryPath</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/thisDocumentSyncChangesThisClientDirectoryPath">thisDocumentSyncChangesThisClientDirectoryPath</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/thisDocumentSyncCommandsDirectoryPath">thisDocumentSyncCommandsDirectoryPath</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/thisDocumentSyncCommandsThisClientDirectoryPath">thisDocumentSyncCommandsThisClientDirectoryPath</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/thisDocumentWholeStoreFilePath">thisDocumentWholeStoreFilePath</a></span></li>
 	
@@ -203,7 +211,7 @@
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/thisDocumentSyncChangesDirectoryPath">&nbsp;&nbsp;thisDocumentSyncChangesDirectoryPath</a></code>
-		<span class="tooltip"><p>The path this document&rsquo;s <code>SyncChanges</code> directory.</p></span>
+		<span class="tooltip"><p>The path to this document&rsquo;s <code>SyncChanges</code> directory.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -211,6 +219,20 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/thisDocumentSyncChangesThisClientDirectoryPath">&nbsp;&nbsp;thisDocumentSyncChangesThisClientDirectoryPath</a></code>
 		<span class="tooltip"><p>The path to this client&rsquo;s directory inside this document&rsquo;s <code>SyncChanges</code> directory.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/thisDocumentSyncCommandsDirectoryPath">&nbsp;&nbsp;thisDocumentSyncCommandsDirectoryPath</a></code>
+		<span class="tooltip"><p>The path to this document&rsquo;s <code>SyncCommands</code> directory.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/thisDocumentSyncCommandsThisClientDirectoryPath">&nbsp;&nbsp;thisDocumentSyncCommandsThisClientDirectoryPath</a></code>
+		<span class="tooltip"><p>The path to this client&rsquo;s directory inside this document&rsquo;s <code>SyncCommands</code> directory.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -461,7 +483,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>The path this document&rsquo;s <code>SyncChanges</code> directory.</p>
+		<p>The path to this document&rsquo;s <code>SyncChanges</code> directory.</p>
 	</div>		
 	
 	
@@ -498,6 +520,70 @@
 	
 	
 	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) NSString *thisDocumentSyncChangesThisClientDirectoryPath</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSFileManagerBasedDocumentSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/thisDocumentSyncCommandsDirectoryPath" title="thisDocumentSyncCommandsDirectoryPath"></a>
+	<h3 class="subsubtitle method-title">thisDocumentSyncCommandsDirectoryPath</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The path to this document&rsquo;s <code>SyncCommands</code> directory.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) NSString *thisDocumentSyncCommandsDirectoryPath</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSFileManagerBasedDocumentSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/thisDocumentSyncCommandsThisClientDirectoryPath" title="thisDocumentSyncCommandsThisClientDirectoryPath"></a>
+	<h3 class="subsubtitle method-title">thisDocumentSyncCommandsThisClientDirectoryPath</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The path to this client&rsquo;s directory inside this document&rsquo;s <code>SyncCommands</code> directory.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) NSString *thisDocumentSyncCommandsThisClientDirectoryPath</code></div>
 	
 	
 	

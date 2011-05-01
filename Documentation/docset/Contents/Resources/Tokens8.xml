@@ -35,13 +35,24 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentRegistrationOperation/thisDocumentSyncChangesThisClientDirectoryPath</TokenIdentifier>
-			<Abstract>The path to the this client's directory inside this document's SyncChanges directory.</Abstract>
+			<Abstract>The path to this client's directory inside this document's SyncChanges directory.</Abstract>
 			<DeclaredIn>TICDSFileManagerBasedDocumentRegistrationOperation.h</DeclaredIn>			
 			
 			<Declaration>@property (retain) NSString *thisDocumentSyncChangesThisClientDirectoryPath</Declaration>
 			
 			
 			<Anchor>//api/name/thisDocumentSyncChangesThisClientDirectoryPath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentRegistrationOperation/thisDocumentSyncCommandsThisClientDirectoryPath</TokenIdentifier>
+			<Abstract>The path to this client's directory inside this document's SyncCommands directory.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedDocumentRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSString *thisDocumentSyncCommandsThisClientDirectoryPath</Declaration>
+			
+			
+			<Anchor>//api/name/thisDocumentSyncCommandsThisClientDirectoryPath</Anchor>
 		</Token>
 		
 	</File>

@@ -46,7 +46,7 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/thisDocumentSyncChangesDirectoryPath</TokenIdentifier>
-			<Abstract>The path this document's SyncChanges directory.</Abstract>
+			<Abstract>The path to this document's SyncChanges directory.</Abstract>
 			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
 			
 			<Declaration>@property (nonatomic, readonly) NSString *thisDocumentSyncChangesDirectoryPath</Declaration>
@@ -64,6 +64,28 @@
 			
 			
 			<Anchor>//api/name/thisDocumentSyncChangesThisClientDirectoryPath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/thisDocumentSyncCommandsDirectoryPath</TokenIdentifier>
+			<Abstract>The path to this document's SyncCommands directory.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *thisDocumentSyncCommandsDirectoryPath</Declaration>
+			
+			
+			<Anchor>//api/name/thisDocumentSyncCommandsDirectoryPath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/thisDocumentSyncCommandsThisClientDirectoryPath</TokenIdentifier>
+			<Abstract>The path to this client's directory inside this document's SyncCommands directory.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *thisDocumentSyncCommandsThisClientDirectoryPath</Declaration>
+			
+			
+			<Anchor>//api/name/thisDocumentSyncCommandsThisClientDirectoryPath</Anchor>
 		</Token>
 		
 		<Token>
