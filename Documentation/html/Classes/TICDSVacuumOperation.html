@@ -36,9 +36,11 @@
 	
 	<option value="//api/name/completionInProgress">&nbsp;&nbsp;&nbsp;&nbsp;completionInProgress</option>
 	
-	<option value="//api/name/findOutLeastRecentClientSyncDateStatus">&nbsp;&nbsp;&nbsp;&nbsp;findOutLeastRecentClientSyncDateStatus</option>
+	<option value="//api/name/earliestDateForFilesToKeep">&nbsp;&nbsp;&nbsp;&nbsp;earliestDateForFilesToKeep</option>
 	
-	<option value="//api/name/leastRecentClientSyncDate">&nbsp;&nbsp;&nbsp;&nbsp;leastRecentClientSyncDate</option>
+	<option value="//api/name/findOutDateOfOldestWholeStoreStatus">&nbsp;&nbsp;&nbsp;&nbsp;findOutDateOfOldestWholeStoreStatus</option>
+	
+	<option value="//api/name/findOutLeastRecentClientSyncDateStatus">&nbsp;&nbsp;&nbsp;&nbsp;findOutLeastRecentClientSyncDateStatus</option>
 	
 	<option value="//api/name/removeOldSyncChangeSetFilesStatus">&nbsp;&nbsp;&nbsp;&nbsp;removeOldSyncChangeSetFilesStatus</option>
 	
@@ -49,7 +51,11 @@
 	
 	<option value="instance_methods">Instance Methods</option>
 	
+	<option value="//api/name/findOutDateOfOldestWholeStore">&nbsp;&nbsp;&nbsp;&nbsp;- findOutDateOfOldestWholeStore</option>
+	
 	<option value="//api/name/findOutLeastRecentClientSyncDate">&nbsp;&nbsp;&nbsp;&nbsp;- findOutLeastRecentClientSyncDate</option>
+	
+	<option value="//api/name/foundOutDateOfOldestWholeStoreFile:">&nbsp;&nbsp;&nbsp;&nbsp;- foundOutDateOfOldestWholeStoreFile:</option>
 	
 	<option value="//api/name/foundOutLeastRecentClientSyncDate:">&nbsp;&nbsp;&nbsp;&nbsp;- foundOutLeastRecentClientSyncDate:</option>
 	
@@ -91,9 +97,11 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/completionInProgress">completionInProgress</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/findOutLeastRecentClientSyncDateStatus">findOutLeastRecentClientSyncDateStatus</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/earliestDateForFilesToKeep">earliestDateForFilesToKeep</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/leastRecentClientSyncDate">leastRecentClientSyncDate</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/findOutDateOfOldestWholeStoreStatus">findOutDateOfOldestWholeStoreStatus</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/findOutLeastRecentClientSyncDateStatus">findOutLeastRecentClientSyncDateStatus</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/removeOldSyncChangeSetFilesStatus">removeOldSyncChangeSetFilesStatus</a></span></li>
 	
@@ -105,7 +113,11 @@
 
 <li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/findOutDateOfOldestWholeStore">findOutDateOfOldestWholeStore</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/findOutLeastRecentClientSyncDate">findOutLeastRecentClientSyncDate</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/foundOutDateOfOldestWholeStoreFile:">foundOutDateOfOldestWholeStoreFile:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/foundOutLeastRecentClientSyncDate:">foundOutLeastRecentClientSyncDate:</a></span></li>
 	
@@ -155,8 +167,9 @@
 <p>The operation carries out the following tasks:</p>
 
 <ol>
+<li>Find out the date of the oldest <code>WholeStore</code>.</li>
 <li>Find out the date of the least recent client sync.</li>
-<li>Remove all <code>SyncChangeSet</code> files older than the least recent sync.</li>
+<li>Remove all <code>SyncChangeSet</code> files older than whichever date is earlier.</li>
 </ol>
 
 
@@ -183,6 +196,13 @@
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
+		<code><a href="#//api/name/findOutDateOfOldestWholeStore">&ndash;&nbsp;findOutDateOfOldestWholeStore</a></code>
+		<span class="tooltip"><p>Determine the modification date of the oldest <code>WholeStore</code> file uploaded by any client.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
 		<code><a href="#//api/name/findOutLeastRecentClientSyncDate">&ndash;&nbsp;findOutLeastRecentClientSyncDate</a></code>
 		<span class="tooltip"><p>Determine the date on which the least-recently-synchronized client last performed a sync.</p></span>
 	</span>
@@ -191,7 +211,7 @@
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/removeOldSyncChangeSetFiles">&ndash;&nbsp;removeOldSyncChangeSetFiles</a></code>
-		<span class="tooltip"><p>Remove all <code>SyncChangeSet</code> files uploaded by this client which are older than <a href="#//api/name/leastRecentClientSyncDate"><code>leastRecentClientSyncDate</code></a>.</p></span>
+		<span class="tooltip"><p>Remove all <code>SyncChangeSet</code> files uploaded by this client which are older than <a href="#//api/name/earliestDateForFilesToKeep"><code>earliestDateForFilesToKeep</code></a>.</p></span>
 	</span>
 	
 	
@@ -204,6 +224,13 @@
 
 						<ul class="task-list">
 							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/foundOutDateOfOldestWholeStoreFile:">&ndash;&nbsp;foundOutDateOfOldestWholeStoreFile:</a></code>
+		<span class="tooltip"><p>Indicate the date of the oldest <code>WholeStore</code> file.</p></span>
+	</span>
+	
+	
+</li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/foundOutLeastRecentClientSyncDate:">&ndash;&nbsp;foundOutLeastRecentClientSyncDate:</a></code>
 		<span class="tooltip"><p>Indicate the date of the least recent sync.</p></span>
@@ -227,8 +254,8 @@
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
-		<code><a href="#//api/name/leastRecentClientSyncDate">&nbsp;&nbsp;leastRecentClientSyncDate</a></code>
-		<span class="tooltip"><p>The date of the least recent client sync.</p></span>
+		<code><a href="#//api/name/earliestDateForFilesToKeep">&nbsp;&nbsp;earliestDateForFilesToKeep</a></code>
+		<span class="tooltip"><p>The earliest modification date after which files must be kept.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -244,6 +271,13 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/completionInProgress">&nbsp;&nbsp;completionInProgress</a></code>
 		<span class="tooltip"><p>Used to indicate that completion is currently in progress, and that no further checks should be made.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/findOutDateOfOldestWholeStoreStatus">&nbsp;&nbsp;findOutDateOfOldestWholeStoreStatus</a></code>
+		<span class="tooltip"><p>The phase status regarding finding out the date of the oldest file in the <code>WholeStore</code> directory.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -307,17 +341,17 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/findOutLeastRecentClientSyncDateStatus" title="findOutLeastRecentClientSyncDateStatus"></a>
-	<h3 class="subsubtitle method-title">findOutLeastRecentClientSyncDateStatus</h3>
+	<a name="//api/name/earliestDateForFilesToKeep" title="earliestDateForFilesToKeep"></a>
+	<h3 class="subsubtitle method-title">earliestDateForFilesToKeep</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>The phase status regarding finding out the date of the oldest file in the <code>RecentSyncs</code> directory.</p>
+		<p>The earliest modification date after which files must be kept.</p>
 	</div>		
 	
 	
-	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) TICDSOperationPhaseStatus findOutLeastRecentClientSyncDateStatus</code></div>
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSDate *earliestDateForFilesToKeep</code></div>
 	
 	
 	
@@ -339,17 +373,49 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/leastRecentClientSyncDate" title="leastRecentClientSyncDate"></a>
-	<h3 class="subsubtitle method-title">leastRecentClientSyncDate</h3>
+	<a name="//api/name/findOutDateOfOldestWholeStoreStatus" title="findOutDateOfOldestWholeStoreStatus"></a>
+	<h3 class="subsubtitle method-title">findOutDateOfOldestWholeStoreStatus</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>The date of the least recent client sync.</p>
+		<p>The phase status regarding finding out the date of the oldest file in the <code>WholeStore</code> directory.</p>
 	</div>		
 	
 	
-	<div class="method-subsection method-declaration"><code>@property (nonatomic, retain) NSDate *leastRecentClientSyncDate</code></div>
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) TICDSOperationPhaseStatus findOutDateOfOldestWholeStoreStatus</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSVacuumOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/findOutLeastRecentClientSyncDateStatus" title="findOutLeastRecentClientSyncDateStatus"></a>
+	<h3 class="subsubtitle method-title">findOutLeastRecentClientSyncDateStatus</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The phase status regarding finding out the date of the oldest file in the <code>RecentSyncs</code> directory.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) TICDSOperationPhaseStatus findOutLeastRecentClientSyncDateStatus</code></div>
 	
 	
 	
@@ -413,6 +479,43 @@
 						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
 						
 						<div class="section-method">
+	<a name="//api/name/findOutDateOfOldestWholeStore" title="findOutDateOfOldestWholeStore"></a>
+	<h3 class="subsubtitle method-title">findOutDateOfOldestWholeStore</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Determine the modification date of the oldest <code>WholeStore</code> file uploaded by any client.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)findOutDateOfOldestWholeStore</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/foundOutDateOfOldestWholeStoreFile:"><code>foundOutDateOfOldestWholeStoreFile:</code></a> when finished.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSVacuumOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/findOutLeastRecentClientSyncDate" title="findOutLeastRecentClientSyncDate"></a>
 	<h3 class="subsubtitle method-title">findOutLeastRecentClientSyncDate</h3>
 	
@@ -433,6 +536,53 @@
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>This method must call <a href="#//api/name/foundOutLeastRecentClientSyncDate:"><code>foundOutLeastRecentClientSyncDate:</code></a> when finished.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSVacuumOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/foundOutDateOfOldestWholeStoreFile:" title="foundOutDateOfOldestWholeStoreFile:"></a>
+	<h3 class="subsubtitle method-title">foundOutDateOfOldestWholeStoreFile:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate the date of the oldest <code>WholeStore</code> file.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)foundOutDateOfOldestWholeStoreFile:(NSDate *)<em>aDate</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aDate</em></dt>
+			<dd><p>The modification date of the oldest <code>WholeStore</code> file.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurs, call <code>setError:</code> first, then specify <code>nil</code> for <code>aDate</code>. If no client has uploaded a <code>WholeStore</code>, specify <code>[NSDate date]</code>.</p>
 	</div>
 	
 	
@@ -503,7 +653,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Remove all <code>SyncChangeSet</code> files uploaded by this client which are older than <a href="#//api/name/leastRecentClientSyncDate"><code>leastRecentClientSyncDate</code></a>.</p>
+		<p>Remove all <code>SyncChangeSet</code> files uploaded by this client which are older than <a href="#//api/name/earliestDateForFilesToKeep"><code>earliestDateForFilesToKeep</code></a>.</p>
 	</div>		
 	
 	

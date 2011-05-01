@@ -12,6 +12,17 @@
 		
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSVacuumOperation/findOutDateOfOldestWholeStore</TokenIdentifier>
+			<Abstract>Determine the modification date of the oldest WholeStore file uploaded by any client.</Abstract>
+			<DeclaredIn>TICDSVacuumOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)findOutDateOfOldestWholeStore</Declaration>
+			
+			
+			<Anchor>//api/name/findOutDateOfOldestWholeStore</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSVacuumOperation/findOutLeastRecentClientSyncDate</TokenIdentifier>
 			<Abstract>Determine the date on which the least-recently-synchronized client last performed a sync.</Abstract>
 			<DeclaredIn>TICDSVacuumOperation.h</DeclaredIn>			
@@ -24,13 +35,29 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSVacuumOperation/removeOldSyncChangeSetFiles</TokenIdentifier>
-			<Abstract>Remove all SyncChangeSet files uploaded by this client which are older than leastRecentClientSyncDate.</Abstract>
+			<Abstract>Remove all SyncChangeSet files uploaded by this client which are older than earliestDateForFilesToKeep.</Abstract>
 			<DeclaredIn>TICDSVacuumOperation.h</DeclaredIn>			
 			
 			<Declaration>- (void)removeOldSyncChangeSetFiles</Declaration>
 			
 			
 			<Anchor>//api/name/removeOldSyncChangeSetFiles</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSVacuumOperation/foundOutDateOfOldestWholeStoreFile:</TokenIdentifier>
+			<Abstract>Indicate the date of the oldest WholeStore file.</Abstract>
+			<DeclaredIn>TICDSVacuumOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)foundOutDateOfOldestWholeStoreFile:(NSDate *)aDate</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aDate</Name>
+					<Abstract>The modification date of the oldest WholeStore file.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/foundOutDateOfOldestWholeStoreFile:</Anchor>
 		</Token>
 		
 		<Token>
@@ -66,14 +93,14 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSVacuumOperation/leastRecentClientSyncDate</TokenIdentifier>
-			<Abstract>The date of the least recent client sync.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSVacuumOperation/earliestDateForFilesToKeep</TokenIdentifier>
+			<Abstract>The earliest modification date after which files must be kept.</Abstract>
 			<DeclaredIn>TICDSVacuumOperation.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, retain) NSDate *leastRecentClientSyncDate</Declaration>
+			<Declaration>@property (nonatomic, retain) NSDate *earliestDateForFilesToKeep</Declaration>
 			
 			
-			<Anchor>//api/name/leastRecentClientSyncDate</Anchor>
+			<Anchor>//api/name/earliestDateForFilesToKeep</Anchor>
 		</Token>
 		
 		<Token>
@@ -85,6 +112,17 @@
 			
 			
 			<Anchor>//api/name/completionInProgress</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSVacuumOperation/findOutDateOfOldestWholeStoreStatus</TokenIdentifier>
+			<Abstract>The phase status regarding finding out the date of the oldest file in the WholeStore directory.</Abstract>
+			<DeclaredIn>TICDSVacuumOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus findOutDateOfOldestWholeStoreStatus</Declaration>
+			
+			
+			<Anchor>//api/name/findOutDateOfOldestWholeStoreStatus</Anchor>
 		</Token>
 		
 		<Token>
