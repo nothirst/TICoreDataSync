@@ -66,7 +66,7 @@
 						<object class="NSTextField" id="432477745">
 							<reference key="NSNextResponder" ref="568628114"/>
 							<int key="NSvFlags">292</int>
-							<string key="NSFrame">{{39, 22}, {110, 17}}</string>
+							<string key="NSFrame">{{39, 20}, {110, 17}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="331519866"/>
@@ -105,17 +105,17 @@
 							<reference key="NSNextResponder" ref="568628114"/>
 							<int key="NSvFlags">-2147482334</int>
 							<object class="NSPSMatrix" key="NSDrawMatrix"/>
-							<string key="NSFrame">{{212, 18}, {214, 20}}</string>
+							<string key="NSFrame">{{212, 16}, {204, 20}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="592634546"/>
+							<reference key="NSNextKeyView" ref="81911589"/>
 							<int key="NSpiFlags">16394</int>
 							<double key="NSMaxValue">100</double>
 						</object>
 						<object class="NSTextField" id="331519866">
 							<reference key="NSNextResponder" ref="568628114"/>
 							<int key="NSvFlags">292</int>
-							<string key="NSFrame">{{151, 22}, {131, 17}}</string>
+							<string key="NSFrame">{{151, 20}, {131, 17}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="30359018"/>
@@ -133,10 +133,10 @@
 						<object class="NSButton" id="81911589">
 							<reference key="NSNextResponder" ref="568628114"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{357, 12}, {96, 32}}</string>
+							<string key="NSFrame">{{357, 10}, {96, 32}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
+							<reference key="NSNextKeyView" ref="592634546"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="461958442">
 								<int key="NSCellFlags">67239424</int>
@@ -759,7 +759,7 @@
 						<object class="NSButton" id="1072940936">
 							<reference key="NSNextResponder" ref="568628114"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{20, 22}, {14, 14}}</string>
+							<string key="NSFrame">{{20, 20}, {16, 16}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="432477745"/>
@@ -785,16 +785,20 @@
 						<object class="NSButton" id="592634546">
 							<reference key="NSNextResponder" ref="568628114"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{430, 21}, {17, 17}}</string>
+							<string key="NSFrame">{{426, 18}, {21, 21}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="81911589"/>
+							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="919318081">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">134217728</int>
 								<string key="NSContents">♻</string>
-								<reference key="NSSupport" ref="1066038301"/>
+								<object class="NSFont" key="NSSupport">
+									<string key="NSName">HiraKakuProN-W3</string>
+									<double key="NSSize">14</double>
+									<int key="NSfFlags">16</int>
+								</object>
 								<reference key="NSControlView" ref="592634546"/>
 								<int key="NSButtonFlags">-2041822977</int>
 								<int key="NSButtonFlags2">134</int>
@@ -1394,11 +1398,11 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="1062929917"/>
-							<reference ref="30359018"/>
-							<reference ref="81911589"/>
 							<reference ref="1072940936"/>
 							<reference ref="432477745"/>
+							<reference ref="30359018"/>
 							<reference ref="331519866"/>
+							<reference ref="81911589"/>
 							<reference ref="592634546"/>
 						</object>
 						<reference key="parent" ref="275939982"/>
