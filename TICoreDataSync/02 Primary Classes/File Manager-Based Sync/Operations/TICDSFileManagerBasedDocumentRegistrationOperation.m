@@ -125,11 +125,16 @@
 
 - (void)createRemoteDocumentSyncChangesThisClientFileStructure
 {
-    // Just create a directory with this client's UID in the doc's SyncChanges directory
+    // Just create a directory with this client's UID in the doc's SyncChanges, and in the SyncCommands directory
     NSString *pathToDirectory = [self thisDocumentSyncChangesThisClientDirectoryPath];
     
     NSError *anyError = nil;
     BOOL success = [[self fileManager] createDirectoryAtPath:pathToDirectory withIntermediateDirectories:YES attributes:nil error:&anyError];
+    
+    if( success ) {
+        pathToDirectory = [self thisDocumentSyncCommandsThisClientDirectoryPath];
+        success = [[self fileManager] createDirectoryAtPath:pathToDirectory withIntermediateDirectories:YES attributes:nil error:&anyError];
+    }
     
     if( !success ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
@@ -145,7 +150,8 @@
     [_documentsDirectoryPath release], _documentsDirectoryPath = nil;
     [_thisDocumentDirectoryPath release], _thisDocumentDirectoryPath = nil;
     [_thisDocumentSyncChangesThisClientDirectoryPath release], _thisDocumentSyncChangesThisClientDirectoryPath = nil;
-    
+    [_thisDocumentSyncCommandsThisClientDirectoryPath release], _thisDocumentSyncCommandsThisClientDirectoryPath = nil;
+
     [super dealloc];
 }
 
@@ -154,5 +160,6 @@
 @synthesize documentsDirectoryPath = _documentsDirectoryPath;
 @synthesize thisDocumentDirectoryPath = _thisDocumentDirectoryPath;
 @synthesize thisDocumentSyncChangesThisClientDirectoryPath = _thisDocumentSyncChangesThisClientDirectoryPath;
+@synthesize thisDocumentSyncCommandsThisClientDirectoryPath = _thisDocumentSyncCommandsThisClientDirectoryPath;
 
 @end

@@ -17,6 +17,7 @@
     NSString *_documentsDirectoryPath;
     NSString *_thisDocumentDirectoryPath;
     NSString *_thisDocumentSyncChangesThisClientDirectoryPath;
+    NSString *_thisDocumentSyncCommandsThisClientDirectoryPath;
 }
 
 /** @name Paths */
@@ -27,7 +28,10 @@
 /** The path to this document's directory inside the `Documents` directory. */
 @property (retain) NSString *thisDocumentDirectoryPath;
 
-/** The path to the this client's directory inside this document's `SyncChanges` directory. */
+/** The path to this client's directory inside this document's `SyncChanges` directory. */
 @property (retain) NSString *thisDocumentSyncChangesThisClientDirectoryPath;
+
+/** The path to this client's directory inside this document's `SyncCommands` directory. */
+@property (retain) NSString *thisDocumentSyncCommandsThisClientDirectoryPath;
 
 @end

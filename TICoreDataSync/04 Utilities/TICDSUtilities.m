@@ -46,6 +46,7 @@
     [dictionary setValue:[NSDictionary dictionaryWithObjectsAndKeys:
                           [NSDictionary dictionary], TICDSWholeStoreDirectoryName,
                           [NSDictionary dictionary], TICDSSyncChangesDirectoryName,
+                          [NSDictionary dictionary], TICDSSyncCommandsDirectoryName,
                           [NSDictionary dictionary], TICDSRecentSyncsDirectoryName,
                           nil]
                   forKey:kTICDSUtilitiesFileStructureDocumentUID];
@@ -53,6 +54,8 @@
     return dictionary;
 }
 
+#pragma mark -
+#pragma mark Sync Warnings
 + (NSDictionary *)syncWarningOfType:(TICDSSyncWarningType)aType entityName:(NSString *)entityName relatedObjectEntityName:(NSString *)relatedObjectEntityName attributes:(NSDictionary *)attributes
 {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];

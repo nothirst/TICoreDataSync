@@ -88,6 +88,16 @@
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentSyncChangesThisClientDirectory]];
 }
 
+- (NSString *)thisDocumentSyncCommandsDirectoryPath
+{
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentSyncCommandsDirectory]];
+}
+
+- (NSString *)thisDocumentSyncCommandsThisClientDirectoryPath
+{
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentSyncCommandsThisClientDirectory]];
+}
+
 - (NSString *)thisDocumentWholeStoreThisClientDirectoryPath
 {
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentWholeStoreThisClientDirectory]];

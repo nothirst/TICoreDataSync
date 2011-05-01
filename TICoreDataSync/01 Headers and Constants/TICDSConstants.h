@@ -39,6 +39,7 @@ extern NSString * const TICDSClientDevicesDirectoryName;
 extern NSString * const TICDSDocumentsDirectoryName;
 extern NSString * const TICDSWholeStoreDirectoryName;
 extern NSString * const TICDSSyncChangesDirectoryName;
+extern NSString * const TICDSSyncCommandsDirectoryName;
 extern NSString * const TICDSRecentSyncsDirectoryName;
 extern NSString * const TICDSUnappliedChangesDirectoryName;
 extern NSString * const TICDSUnsynchronizedSyncChangesStoreName;

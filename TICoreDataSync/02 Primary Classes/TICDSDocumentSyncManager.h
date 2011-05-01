@@ -272,6 +272,12 @@
 /** The path to this client's directory inside the `SyncChanges` directory for this document, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentSyncChangesThisClientDirectory;
 
+/** The path to the `SyncCommands` directory for this document, relative to the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToThisDocumentSyncCommandsDirectory;
+
+/** The path to this client's directory inside the `SyncCommands` directory for this document, relative to the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToThisDocumentSyncCommandsThisClientDirectory;
+
 /** The path to the `WholeStore` directory for this document, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreDirectory;
 

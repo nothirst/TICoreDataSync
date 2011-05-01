@@ -806,6 +806,16 @@
     return [[self relativePathToThisDocumentSyncChangesDirectory] stringByAppendingPathComponent:[self clientIdentifier]];
 }
 
+- (NSString *)relativePathToThisDocumentSyncCommandsDirectory
+{
+    return [[self relativePathToThisDocumentDirectory] stringByAppendingPathComponent:TICDSSyncCommandsDirectoryName];
+}
+
+- (NSString *)relativePathToThisDocumentSyncCommandsThisClientDirectory
+{
+    return [[self relativePathToThisDocumentSyncCommandsDirectory] stringByAppendingPathComponent:[self clientIdentifier]];
+}
+
 - (NSString *)relativePathToThisDocumentWholeStoreDirectory
 {
     return [[self relativePathToThisDocumentDirectory] stringByAppendingPathComponent:TICDSWholeStoreDirectoryName];
