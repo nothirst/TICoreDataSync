@@ -112,6 +112,12 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
 - (void)syncManagerDidRegisterDocumentSuccessfully:(TICDSDocumentSyncManager *)aSyncManager
 {
     [self decreaseActivity];
+    
+    if( ![aSyncManager isKindOfClass:[TICDSFileManagerBasedDocumentSyncManager class]] ) {
+        return;
+    }
+    
+    [(TICDSFileManagerBasedDocumentSyncManager *)aSyncManager enableAutomaticSynchronizationAfterChangesDetectedFromOtherClients];
 }
 
 #pragma mark Whole Store Upload

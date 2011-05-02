@@ -12,6 +12,17 @@
 		
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSFileManagerBasedDocumentSyncManager/enableAutomaticSynchronizationAfterChangesDetectedFromOtherClients</TokenIdentifier>
+			<Abstract>Configures the FileManager-based document sync manager to watch for changes uploaded by other clients, and initiate a sync operation automatically when new changes are detected.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (void)enableAutomaticSynchronizationAfterChangesDetectedFromOtherClients</Declaration>
+			
+			
+			<Anchor>//api/name/enableAutomaticSynchronizationAfterChangesDetectedFromOtherClients</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/applicationDirectoryPath</TokenIdentifier>
 			<Abstract>The path to the root of the application. This will be set automatically when you register and supply a TICDSFileManagerBasedApplicationSyncManager.</Abstract>
 			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
@@ -20,6 +31,28 @@
 			
 			
 			<Anchor>//api/name/applicationDirectoryPath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/directoryWatcher</TokenIdentifier>
+			<Abstract>A TIKQDirectoryWatcher used to watch for changes in the SyncChanges directories for this document.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) TIKQDirectoryWatcher *directoryWatcher</Declaration>
+			
+			
+			<Anchor>//api/name/directoryWatcher</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/watchedClientDirectoryIdentifiers</TokenIdentifier>
+			<Abstract>A mutable array containing the identifiers of clients currently being watched.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSMutableArray *watchedClientDirectoryIdentifiers</Declaration>
+			
+			
+			<Anchor>//api/name/watchedClientDirectoryIdentifiers</Anchor>
 		</Token>
 		
 		<Token>

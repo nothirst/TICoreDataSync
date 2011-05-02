@@ -11,6 +11,102 @@
 @implementation TICDSFileManagerBasedDocumentSyncManager
 
 #pragma mark -
+#pragma mark Automatic Change Detection
+- (void)enableAutomaticSynchronizationAfterChangesDetectedFromOtherClients
+{
+    if( _directoryWatcher ) {
+        return;
+    }
+    
+    _directoryWatcher = [[TIKQDirectoryWatcher alloc] init];
+    
+    NSError *anyError = nil;
+    BOOL success = [_directoryWatcher watchDirectory:[self thisDocumentSyncChangesDirectoryPath] error:&anyError];
+    
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to watch document's SyncChanges directory");
+        return;
+    }
+    
+    if( _watchedClientDirectoryIdentifiers ) {
+        [_watchedClientDirectoryIdentifiers release], _watchedClientDirectoryIdentifiers = nil;
+    }
+    
+    NSArray *clientIdentfiers = [[self fileManager] contentsOfDirectoryAtPath:[self thisDocumentSyncChangesDirectoryPath] error:&anyError];
+    if( !clientIdentfiers ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to get contents of document's SyncChanges directory: %@", anyError);
+        return;
+    }
+    
+    _watchedClientDirectoryIdentifiers = [[NSMutableArray alloc] initWithCapacity:[clientIdentfiers count]];
+    NSString *eachPath = nil;
+    for( NSString *eachIdentifier in clientIdentfiers ) {
+        if( [[eachIdentifier substringToIndex:1] isEqualToString:@"."] || [eachIdentifier isEqualToString:[self clientIdentifier]] ) {
+            continue;
+        }
+        
+        [_watchedClientDirectoryIdentifiers addObject:eachIdentifier];
+        
+        eachPath = [[self thisDocumentSyncChangesDirectoryPath] stringByAppendingPathComponent:eachIdentifier];
+        
+        success = [_directoryWatcher watchDirectory:eachPath error:&anyError];
+        if( !success ) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to watch %@ client's SyncChanges directory");
+            return;
+        }
+    }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(directoryContentsDidChange:) name:kTIKQDirectoryWatcherObservedDirectoryActivityNotification object:_directoryWatcher];
+    
+    success = [_directoryWatcher scheduleWatcherOnMainRunLoop:&anyError];
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to schedule directory watcher on the run loop");
+        return;
+    }
+}
+
+- (void)directoryContentsDidChange:(NSNotification *)aNotification
+{
+    NSString *aPath = [[aNotification userInfo] valueForKey:kTIKQExpandedDirectory];
+    
+    if( ![[aPath lastPathComponent] isEqualToString:TICDSSyncChangesDirectoryName] ) {
+        // another client has synchronized
+        [self initiateSynchronization];
+        return;
+    }
+    
+    NSError *anyError = nil;
+    // otherwise, go through each identifier to add another watcher
+    NSArray *clientIdentfiers = [[self fileManager] contentsOfDirectoryAtPath:[self thisDocumentSyncChangesDirectoryPath] error:&anyError];
+    if( !clientIdentfiers ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to get contents of document's SyncChanges directory: %@", anyError);
+        return;
+    }
+    
+    NSString *eachPath = nil;
+    for( NSString *eachIdentifier in clientIdentfiers ) {
+        if( [[eachIdentifier substringToIndex:1] isEqualToString:@"."] || [eachIdentifier isEqualToString:[self clientIdentifier]] ) {
+            continue;
+        }
+        
+        if( [[self watchedClientDirectoryIdentifiers] containsObject:eachIdentifier] ) {
+            continue;
+        }
+        
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Not yet watching %@, so adding a directory watcher", eachIdentifier);
+        
+        eachPath = [[self thisDocumentSyncChangesDirectoryPath] stringByAppendingPathComponent:eachIdentifier];
+        
+        BOOL success = [[self directoryWatcher] watchDirectory:eachPath error:&anyError];
+        if( !success ) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to watch directory");
+        } else {
+            [[self watchedClientDirectoryIdentifiers] addObject:eachIdentifier];
+        }
+    }
+}
+
+#pragma mark -
 #pragma mark Registration
 - (void)registerWithDelegate:(id<TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo
 {
@@ -135,12 +231,16 @@
 - (void)dealloc
 {
     [_applicationDirectoryPath release], _applicationDirectoryPath = nil;
-    
+    [_directoryWatcher release], _directoryWatcher = nil;
+    [_watchedClientDirectoryIdentifiers release], _watchedClientDirectoryIdentifiers = nil;
+
     [super dealloc];
 }
 
 #pragma mark -
 #pragma mark Properties
 @synthesize applicationDirectoryPath = _applicationDirectoryPath;
+@synthesize directoryWatcher = _directoryWatcher;
+@synthesize watchedClientDirectoryIdentifiers = _watchedClientDirectoryIdentifiers;
 
 @end

@@ -18,12 +18,26 @@
 @interface TICDSFileManagerBasedDocumentSyncManager : TICDSDocumentSyncManager {
 @private
     NSString *_applicationDirectoryPath;
+    
+    TIKQDirectoryWatcher *_directoryWatcher;
+    NSMutableArray *_watchedClientDirectoryIdentifiers;
 }
+
+/** @name Automatic Change Detection */
+
+/** Configures the FileManager-based document sync manager to watch for changes uploaded by other clients, and initiate a sync operation automatically when new changes are detected. */
+- (void)enableAutomaticSynchronizationAfterChangesDetectedFromOtherClients;
 
 /** @name Properties */
 
 /** The path to the root of the application. This will be set automatically when you register and supply a `TICDSFileManagerBasedApplicationSyncManager`. */
 @property (nonatomic, retain) NSString *applicationDirectoryPath;
+
+/** A `TIKQDirectoryWatcher` used to watch for changes in the `SyncChanges` directories for this document. */
+@property (nonatomic, retain) TIKQDirectoryWatcher *directoryWatcher;
+
+/** A mutable array containing the identifiers of clients currently being watched. */
+@property (nonatomic, retain) NSMutableArray *watchedClientDirectoryIdentifiers;
 
 /** @name Paths */
 

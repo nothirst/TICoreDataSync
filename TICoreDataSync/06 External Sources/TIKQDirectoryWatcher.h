@@ -18,8 +18,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
-
 extern NSString * const kTIKQDirectoryWatcherObservedDirectoryActivityNotification;
 extern NSString * const kTIKQDirectory;
 extern NSString * const kTIKQExpandedDirectory;
