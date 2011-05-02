@@ -305,6 +305,15 @@
     } else {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate denied whole store upload after registration");
     }
+    
+    // Perform clean-up if necessary
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Asking delegate whether to vacuum unneeded files after registration");
+    if( [self ti_boolFromDelegateWithSelector:@selector(syncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:)] ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate allowed vacuum after registration");
+        [self startVacuumProcess];
+    } else {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate denied vacuum after registration");
+    }
 }
 
 - (void)documentRegistrationOperationWasCancelled:(TICDSDocumentRegistrationOperation *)anOperation
@@ -567,7 +576,7 @@
 - (void)bailFromVacuumProcess
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from vacuum process");
-    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToVacuumUnneededFiles:)];
+    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToVacuumUnneededRemoteFiles:)];
 }
 
 - (void)startVacuumProcess
@@ -599,21 +608,21 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Vacuum Operation Completed");
     
-    [self ti_alertDelegateWithSelector:@selector(syncManagerDidFinishVacuumingUnneededFiles:)];
+    [self ti_alertDelegateWithSelector:@selector(syncManagerDidFinishVacuumingUnneededRemoteFiles:)];
 }
 
 - (void)vacuumOperationWasCancelled:(TICDSVacuumOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Vacuum Operation was Cancelled");
     
-    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToVacuumUnneededFiles:)];
+    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToVacuumUnneededRemoteFiles:)];
 }
 
 - (void)vacuumOperation:(TICDSVacuumOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Vacuum Operation Failed to Complete with Error: %@", anError);
     [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredVacuumError:), anError];
-    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToVacuumUnneededFiles:)];
+    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToVacuumUnneededRemoteFiles:)];
 }
 
 #pragma mark -

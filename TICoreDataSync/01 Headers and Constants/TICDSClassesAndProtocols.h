@@ -355,11 +355,18 @@
 #pragma mark Vacuuming
 /** @name Vacuuming Unneeded Files */
 
+/** Invoked to ask the delegate whether the document sync manager should automatically remove unneeded files at registration.
+ 
+ @param aSyncManager The document sync manager object that sent the message.
+ 
+ @return A Boolean indicating whether to initiate the vacuum. */
+- (BOOL)syncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager;
+
 /** Informs the delegate that the sync manager has begun to remove unneeded files from the remote.
  
  If an error occurs during the vacuum process, the `syncManager:encounteredVacuumError:` method will be called.
  
- At the end of the vacuum process, one of the `syncManagerFailedToVacuumUnneededFiles:` or `syncManagerDidFinishVacuumingUnneededFiles:` methods will be called.
+ At the end of the vacuum process, one of the `syncManagerFailedToVacuumUnneededRemoteFiles:` or `syncManagerDidFinishVacuumingUnneededRemoteFiles:` methods will be called.
  
  @param aSyncManager The document sync manager object that sent the message. */
 - (void)syncManagerDidBeginToVacuumUnneededRemoteFiles:(TICDSDocumentSyncManager *)aSyncManager;
@@ -375,12 +382,12 @@
  The error will previously have been supplied through the `syncManager:encounteredVacuumError:` method.
  
  @param aSyncManager The document sync manager object that sent the message. */
-- (void)syncManagerFailedToVacuumUnneededFiles:(TICDSDocumentSyncManager *)aSyncManager;
+- (void)syncManagerFailedToVacuumUnneededRemoteFiles:(TICDSDocumentSyncManager *)aSyncManager;
 
 /** Informs the delegate that the document sync manager finished vacuuming unneeded files from the remote.
  
  @param aSyncManager The document sync manager object that sent the message. */
-- (void)syncManagerDidFinishVacuumingUnneededFiles:(TICDSDocumentSyncManager *)aSyncManager;
+- (void)syncManagerDidFinishVacuumingUnneededRemoteFiles:(TICDSDocumentSyncManager *)aSyncManager;
 
 #pragma mark Processing
 /** @name Processing after Managed Object Context save */

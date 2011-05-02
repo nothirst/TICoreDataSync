@@ -74,7 +74,7 @@
 	
 	<option value="//api/name/syncManagerDidFinishSynchronization:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidFinishSynchronization:</option>
 	
-	<option value="//api/name/syncManagerDidFinishVacuumingUnneededFiles:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidFinishVacuumingUnneededFiles:</option>
+	<option value="//api/name/syncManagerDidFinishVacuumingUnneededRemoteFiles:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidFinishVacuumingUnneededRemoteFiles:</option>
 	
 	<option value="//api/name/syncManagerDidRegisterDocumentSuccessfully:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidRegisterDocumentSuccessfully:</option>
 	
@@ -92,9 +92,11 @@
 	
 	<option value="//api/name/syncManagerFailedToUploadWholeStore:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerFailedToUploadWholeStore:</option>
 	
-	<option value="//api/name/syncManagerFailedToVacuumUnneededFiles:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerFailedToVacuumUnneededFiles:</option>
+	<option value="//api/name/syncManagerFailedToVacuumUnneededRemoteFiles:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerFailedToVacuumUnneededRemoteFiles:</option>
 	
 	<option value="//api/name/syncManagerShouldUploadWholeStoreAfterDocumentRegistration:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerShouldUploadWholeStoreAfterDocumentRegistration:</option>
+	
+	<option value="//api/name/syncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:</option>
 	
 	
 	
@@ -172,7 +174,7 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidFinishSynchronization:">syncManagerDidFinishSynchronization:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidFinishVacuumingUnneededFiles:">syncManagerDidFinishVacuumingUnneededFiles:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidFinishVacuumingUnneededRemoteFiles:">syncManagerDidFinishVacuumingUnneededRemoteFiles:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidRegisterDocumentSuccessfully:">syncManagerDidRegisterDocumentSuccessfully:</a></span></li>
 	
@@ -190,9 +192,11 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerFailedToUploadWholeStore:">syncManagerFailedToUploadWholeStore:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerFailedToVacuumUnneededFiles:">syncManagerFailedToVacuumUnneededFiles:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerFailedToVacuumUnneededRemoteFiles:">syncManagerFailedToVacuumUnneededRemoteFiles:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerShouldUploadWholeStoreAfterDocumentRegistration:">syncManagerShouldUploadWholeStoreAfterDocumentRegistration:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:">syncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:</a></span></li>
 	
 </ul></li>
 
@@ -428,6 +432,13 @@
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
+		<code><a href="#//api/name/syncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:">&ndash;&nbsp;syncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:</a></code>
+		<span class="tooltip"><p>Invoked to ask the delegate whether the document sync manager should automatically remove unneeded files at registration.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
 		<code><a href="#//api/name/syncManagerDidBeginToVacuumUnneededRemoteFiles:">&ndash;&nbsp;syncManagerDidBeginToVacuumUnneededRemoteFiles:</a></code>
 		<span class="tooltip"><p>Informs the delegate that the sync manager has begun to remove unneeded files from the remote.</p></span>
 	</span>
@@ -442,14 +453,14 @@
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/syncManagerFailedToVacuumUnneededFiles:">&ndash;&nbsp;syncManagerFailedToVacuumUnneededFiles:</a></code>
+		<code><a href="#//api/name/syncManagerFailedToVacuumUnneededRemoteFiles:">&ndash;&nbsp;syncManagerFailedToVacuumUnneededRemoteFiles:</a></code>
 		<span class="tooltip"><p>Informs the delegate that the document sync manager failed to vacuum unneeded files on the remote.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/syncManagerDidFinishVacuumingUnneededFiles:">&ndash;&nbsp;syncManagerDidFinishVacuumingUnneededFiles:</a></code>
+		<code><a href="#//api/name/syncManagerDidFinishVacuumingUnneededRemoteFiles:">&ndash;&nbsp;syncManagerDidFinishVacuumingUnneededRemoteFiles:</a></code>
 		<span class="tooltip"><p>Informs the delegate that the document sync manager finished vacuuming unneeded files from the remote.</p></span>
 	</span>
 	
@@ -1365,7 +1376,7 @@
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>If an error occurs during the vacuum process, the <a href="#//api/name/syncManager:encounteredVacuumError:"><code>syncManager:encounteredVacuumError:</code></a> method will be called.</p>
 
-<p>At the end of the vacuum process, one of the <a href="#//api/name/syncManagerFailedToVacuumUnneededFiles:"><code>syncManagerFailedToVacuumUnneededFiles:</code></a> or <a href="#//api/name/syncManagerDidFinishVacuumingUnneededFiles:"><code>syncManagerDidFinishVacuumingUnneededFiles:</code></a> methods will be called.</p>
+<p>At the end of the vacuum process, one of the <a href="#//api/name/syncManagerFailedToVacuumUnneededRemoteFiles:"><code>syncManagerFailedToVacuumUnneededRemoteFiles:</code></a> or <a href="#//api/name/syncManagerDidFinishVacuumingUnneededRemoteFiles:"><code>syncManagerDidFinishVacuumingUnneededRemoteFiles:</code></a> methods will be called.</p>
 	</div>
 	
 	
@@ -1425,8 +1436,8 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/syncManagerDidFinishVacuumingUnneededFiles:" title="syncManagerDidFinishVacuumingUnneededFiles:"></a>
-	<h3 class="subsubtitle method-title">syncManagerDidFinishVacuumingUnneededFiles:</h3>
+	<a name="//api/name/syncManagerDidFinishVacuumingUnneededRemoteFiles:" title="syncManagerDidFinishVacuumingUnneededRemoteFiles:"></a>
+	<h3 class="subsubtitle method-title">syncManagerDidFinishVacuumingUnneededRemoteFiles:</h3>
 	
 	
 	
@@ -1435,7 +1446,7 @@
 	</div>		
 	
 	
-	<div class="method-subsection method-declaration"><code>- (void)syncManagerDidFinishVacuumingUnneededFiles:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)syncManagerDidFinishVacuumingUnneededRemoteFiles:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
 	
 	
 	<div class="method-subsection arguments-section parameters">
@@ -1825,8 +1836,8 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/syncManagerFailedToVacuumUnneededFiles:" title="syncManagerFailedToVacuumUnneededFiles:"></a>
-	<h3 class="subsubtitle method-title">syncManagerFailedToVacuumUnneededFiles:</h3>
+	<a name="//api/name/syncManagerFailedToVacuumUnneededRemoteFiles:" title="syncManagerFailedToVacuumUnneededRemoteFiles:"></a>
+	<h3 class="subsubtitle method-title">syncManagerFailedToVacuumUnneededRemoteFiles:</h3>
 	
 	
 	
@@ -1835,7 +1846,7 @@
 	</div>		
 	
 	
-	<div class="method-subsection method-declaration"><code>- (void)syncManagerFailedToVacuumUnneededFiles:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)syncManagerFailedToVacuumUnneededRemoteFiles:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
 	
 	
 	<div class="method-subsection arguments-section parameters">
@@ -1918,6 +1929,53 @@
 	
 </div>
 						
+						<div class="section-method">
+	<a name="//api/name/syncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:" title="syncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:"></a>
+	<h3 class="subsubtitle method-title">syncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Invoked to ask the delegate whether the document sync manager should automatically remove unneeded files at registration.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (BOOL)syncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A Boolean indicating whether to initiate the vacuum.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
 					</div>
 					
 					
@@ -1931,7 +1989,7 @@
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2011 Tim Isted. All rights reserved. (Last updated: 2011-05-01)</span><br />
+						<p><span class="copyright">&copy; 2011 Tim Isted. All rights reserved. (Last updated: 2011-05-02)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.0.3 (build 668)</a>.</span></p>
 						

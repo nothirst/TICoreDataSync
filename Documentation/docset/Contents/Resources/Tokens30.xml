@@ -393,6 +393,22 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:</TokenIdentifier>
+			<Abstract>Invoked to ask the delegate whether the document sync manager should automatically remove unneeded files at registration.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)syncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>A Boolean indicating whether to initiate the vacuum.</Abstract></ReturnValue>
+			<Anchor>//api/name/syncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidBeginToVacuumUnneededRemoteFiles:</TokenIdentifier>
 			<Abstract>Informs the delegate that the sync manager has begun to remove unneeded files from the remote.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
@@ -428,11 +444,11 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerFailedToVacuumUnneededFiles:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerFailedToVacuumUnneededRemoteFiles:</TokenIdentifier>
 			<Abstract>Informs the delegate that the document sync manager failed to vacuum unneeded files on the remote.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManagerFailedToVacuumUnneededFiles:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Declaration>- (void)syncManagerFailedToVacuumUnneededRemoteFiles:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -440,15 +456,15 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManagerFailedToVacuumUnneededFiles:</Anchor>
+			<Anchor>//api/name/syncManagerFailedToVacuumUnneededRemoteFiles:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidFinishVacuumingUnneededFiles:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidFinishVacuumingUnneededRemoteFiles:</TokenIdentifier>
 			<Abstract>Informs the delegate that the document sync manager finished vacuuming unneeded files from the remote.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManagerDidFinishVacuumingUnneededFiles:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Declaration>- (void)syncManagerDidFinishVacuumingUnneededRemoteFiles:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -456,7 +472,7 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManagerDidFinishVacuumingUnneededFiles:</Anchor>
+			<Anchor>//api/name/syncManagerDidFinishVacuumingUnneededRemoteFiles:</Anchor>
 		</Token>
 		
 		<Token>
