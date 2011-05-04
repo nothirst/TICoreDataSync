@@ -101,7 +101,7 @@
  */
 - (void)configureWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager documentIdentifier:(NSString *)aDocumentIdentifier;
 
-/** @name Whole Store Upload */
+/** @name Whole Store Upload and Download */
 
 /** Start the process manually to upload the entire store file for this document, along with the relevant `AppliedSyncChanges.ticdsync` file.
  
@@ -109,6 +109,13 @@
  
  The location of the store file (and the applied sync changes file) will be requested from the delegate immediately after calling this method. */
 - (void)initiateUploadOfWholeStore;
+
+/** Start the process to download the entire store file for this document, along with the relevant `AppliedSyncChanges.ticdsync` file.
+ 
+ This will automatically spawn a `TICDSWholeStoreDownloadOperation`, and notify you of progress through the `TICDSDocumentSyncManagerDelegate` methods.
+ 
+ The location of the store file (and the applied sync changes file) will be requested from the delegate immediately after calling this method. */
+- (void)initiateDownloadOfWholeStore;
 
 /** @name Synchronization */
 
@@ -145,6 +152,13 @@
  
  @return A correctly-configured subclass of `TICDSWholeStoreUploadOperation`. */
 - (TICDSWholeStoreUploadOperation *)wholeStoreUploadOperation;
+
+/** Returns a whole store download operation.
+ 
+ Subclasses of `TICDSDocumentSyncManager` use this method to return a correctly-configured whole store download operation (including the remote location of the document's whole store, etc) for their particular sync method.
+
+ @return A correctly-configured subclass of `TICDSWholeStoreDownloadOperation`. */
+- (TICDSWholeStoreDownloadOperation *)wholeStoreDownloadOperation;
 
 /** Returns a synchronization operation.
  

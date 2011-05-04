@@ -50,6 +50,8 @@
 	
 	<option value="//api/name/syncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:</option>
 	
+	<option value="//api/name/syncManager:didReplaceStoreWithDownloadedStoreAtLocation:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:didReplaceStoreWithDownloadedStoreAtLocation:</option>
+	
 	<option value="//api/name/syncManager:encounteredDocumentRegistrationError:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:encounteredDocumentRegistrationError:</option>
 	
 	<option value="//api/name/syncManager:encounteredSynchronizationError:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:encounteredSynchronizationError:</option>
@@ -57,6 +59,8 @@
 	<option value="//api/name/syncManager:encounteredSynchronizationWarnings:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:encounteredSynchronizationWarnings:</option>
 	
 	<option value="//api/name/syncManager:encounteredVacuumError:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:encounteredVacuumError:</option>
+	
+	<option value="//api/name/syncManager:encounteredWholeStoreDownloadError:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:encounteredWholeStoreDownloadError:</option>
 	
 	<option value="//api/name/syncManager:encounteredWholeStoreUploadError:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:encounteredWholeStoreUploadError:</option>
 	
@@ -66,11 +70,17 @@
 	
 	<option value="//api/name/syncManager:shouldInitiateSynchronizationAfterSaveOfContext:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:shouldInitiateSynchronizationAfterSaveOfContext:</option>
 	
+	<option value="//api/name/syncManager:willReplaceStoreWithDownloadedStoreAtLocation:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:willReplaceStoreWithDownloadedStoreAtLocation:</option>
+	
+	<option value="//api/name/syncManagerDidBeginToDownloadWholeStore:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidBeginToDownloadWholeStore:</option>
+	
 	<option value="//api/name/syncManagerDidBeginToSynchronize:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidBeginToSynchronize:</option>
 	
 	<option value="//api/name/syncManagerDidBeginToUploadWholeStore:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidBeginToUploadWholeStore:</option>
 	
 	<option value="//api/name/syncManagerDidBeginToVacuumUnneededRemoteFiles:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidBeginToVacuumUnneededRemoteFiles:</option>
+	
+	<option value="//api/name/syncManagerDidDownloadWholeStoreSuccessfully:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidDownloadWholeStoreSuccessfully:</option>
 	
 	<option value="//api/name/syncManagerDidFinishSynchronization:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidFinishSynchronization:</option>
 	
@@ -86,6 +96,8 @@
 	
 	<option value="//api/name/syncManagerDidUploadWholeStoreSuccessfully:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidUploadWholeStoreSuccessfully:</option>
 	
+	<option value="//api/name/syncManagerFailedToDownloadWholeStore:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerFailedToDownloadWholeStore:</option>
+	
 	<option value="//api/name/syncManagerFailedToRegisterDocument:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerFailedToRegisterDocument:</option>
 	
 	<option value="//api/name/syncManagerFailedToSynchronize:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerFailedToSynchronize:</option>
@@ -93,6 +105,8 @@
 	<option value="//api/name/syncManagerFailedToUploadWholeStore:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerFailedToUploadWholeStore:</option>
 	
 	<option value="//api/name/syncManagerFailedToVacuumUnneededRemoteFiles:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerFailedToVacuumUnneededRemoteFiles:</option>
+	
+	<option value="//api/name/syncManagerFinalURLForDownloadedStore:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerFinalURLForDownloadedStore:</option>
 	
 	<option value="//api/name/syncManagerShouldUploadWholeStoreAfterDocumentRegistration:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerShouldUploadWholeStoreAfterDocumentRegistration:</option>
 	
@@ -119,6 +133,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Helper Files">Helper Files</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Whole Store Upload">Whole Store Upload</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Whole Store Download">Whole Store Download</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Synchronization">Synchronization</a></span></li>
 	
@@ -150,6 +166,8 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:">syncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:didReplaceStoreWithDownloadedStoreAtLocation:">syncManager:didReplaceStoreWithDownloadedStoreAtLocation:</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredDocumentRegistrationError:">syncManager:encounteredDocumentRegistrationError:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredSynchronizationError:">syncManager:encounteredSynchronizationError:</a></span></li>
@@ -157,6 +175,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredSynchronizationWarnings:">syncManager:encounteredSynchronizationWarnings:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredVacuumError:">syncManager:encounteredVacuumError:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredWholeStoreDownloadError:">syncManager:encounteredWholeStoreDownloadError:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredWholeStoreUploadError:">syncManager:encounteredWholeStoreUploadError:</a></span></li>
 	
@@ -166,11 +186,17 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:shouldInitiateSynchronizationAfterSaveOfContext:">syncManager:shouldInitiateSynchronizationAfterSaveOfContext:</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:willReplaceStoreWithDownloadedStoreAtLocation:">syncManager:willReplaceStoreWithDownloadedStoreAtLocation:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidBeginToDownloadWholeStore:">syncManagerDidBeginToDownloadWholeStore:</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidBeginToSynchronize:">syncManagerDidBeginToSynchronize:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidBeginToUploadWholeStore:">syncManagerDidBeginToUploadWholeStore:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidBeginToVacuumUnneededRemoteFiles:">syncManagerDidBeginToVacuumUnneededRemoteFiles:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidDownloadWholeStoreSuccessfully:">syncManagerDidDownloadWholeStoreSuccessfully:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidFinishSynchronization:">syncManagerDidFinishSynchronization:</a></span></li>
 	
@@ -186,6 +212,8 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidUploadWholeStoreSuccessfully:">syncManagerDidUploadWholeStoreSuccessfully:</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerFailedToDownloadWholeStore:">syncManagerFailedToDownloadWholeStore:</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerFailedToRegisterDocument:">syncManagerFailedToRegisterDocument:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerFailedToSynchronize:">syncManagerFailedToSynchronize:</a></span></li>
@@ -193,6 +221,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerFailedToUploadWholeStore:">syncManagerFailedToUploadWholeStore:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerFailedToVacuumUnneededRemoteFiles:">syncManagerFailedToVacuumUnneededRemoteFiles:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerFinalURLForDownloadedStore:">syncManagerFinalURLForDownloadedStore:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerShouldUploadWholeStoreAfterDocumentRegistration:">syncManagerShouldUploadWholeStoreAfterDocumentRegistration:</a></span></li>
 	
@@ -354,6 +384,63 @@
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/syncManagerDidUploadWholeStoreSuccessfully:">&ndash;&nbsp;syncManagerDidUploadWholeStoreSuccessfully:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager finished uploading the whole store file successfully.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Whole Store Download" name="task_Whole Store Download"></a>
+						<h3 class="subsubtitle task-title">Whole Store Download</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManagerFinalURLForDownloadedStore:">&ndash;&nbsp;syncManagerFinalURLForDownloadedStore:</a></code>
+		<span class="tooltip"><p>Invoked to ask the delegate for the URL of the document&rsquo;s store once it&rsquo;s been downloaded.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManagerDidBeginToDownloadWholeStore:">&ndash;&nbsp;syncManagerDidBeginToDownloadWholeStore:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager has begun to download the whole store file, together with necessary helper files.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManager:willReplaceStoreWithDownloadedStoreAtLocation:">&ndash;&nbsp;syncManager:willReplaceStoreWithDownloadedStoreAtLocation:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager has downloaded the store to a temporary location, and is about to replace the store at the given location.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManager:didReplaceStoreWithDownloadedStoreAtLocation:">&ndash;&nbsp;syncManager:didReplaceStoreWithDownloadedStoreAtLocation:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager has replaced the store at the given location with the downloaded store.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManager:encounteredWholeStoreDownloadError:">&ndash;&nbsp;syncManager:encounteredWholeStoreDownloadError:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager encountered an error during the whole store upload.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManagerFailedToDownloadWholeStore:">&ndash;&nbsp;syncManagerFailedToDownloadWholeStore:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager failed to upload the whole store file.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncManagerDidDownloadWholeStoreSuccessfully:">&ndash;&nbsp;syncManagerDidDownloadWholeStoreSuccessfully:</a></code>
 		<span class="tooltip"><p>Informs the delegate that the document sync manager finished uploading the whole store file successfully.</p></span>
 	</span>
 	
@@ -841,6 +928,58 @@
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/syncManager:didReplaceStoreWithDownloadedStoreAtLocation:" title="syncManager:didReplaceStoreWithDownloadedStoreAtLocation:"></a>
+	<h3 class="subsubtitle method-title">syncManager:didReplaceStoreWithDownloadedStoreAtLocation:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager has replaced the store at the given location with the downloaded store.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)syncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> didReplaceStoreWithDownloadedStoreAtLocation:(NSURL *)<em>aLocation</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aLocation</em></dt>
+			<dd><p>The location of the persistent store that was replaced.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>You should add the store back for the persistent store coordinator.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/syncManager:encounteredDocumentRegistrationError:" title="syncManager:encounteredDocumentRegistrationError:"></a>
 	<h3 class="subsubtitle method-title">syncManager:encounteredDocumentRegistrationError:</h3>
 	
@@ -1011,6 +1150,53 @@
 		<dl class="argument-def parameter-def">
 			<dt><em>anError</em></dt>
 			<dd><p>The error that was encountered.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/syncManager:encounteredWholeStoreDownloadError:" title="syncManager:encounteredWholeStoreDownloadError:"></a>
+	<h3 class="subsubtitle method-title">syncManager:encounteredWholeStoreDownloadError:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager encountered an error during the whole store upload.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)syncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> encounteredWholeStoreDownloadError:(NSError *)<em>anError</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anError</em></dt>
+			<dd><p>The error.</p></dd>
 		</dl>
 		
 	</div>
@@ -1247,6 +1433,109 @@
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/syncManager:willReplaceStoreWithDownloadedStoreAtLocation:" title="syncManager:willReplaceStoreWithDownloadedStoreAtLocation:"></a>
+	<h3 class="subsubtitle method-title">syncManager:willReplaceStoreWithDownloadedStoreAtLocation:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager has downloaded the store to a temporary location, and is about to replace the store at the given location.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)syncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> willReplaceStoreWithDownloadedStoreAtLocation:(NSURL *)<em>aLocation</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aLocation</em></dt>
+			<dd><p>The location of the persistent store that will be replaced.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>You should remove the given store from the persistent store coordinator.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/syncManagerDidBeginToDownloadWholeStore:" title="syncManagerDidBeginToDownloadWholeStore:"></a>
+	<h3 class="subsubtitle method-title">syncManagerDidBeginToDownloadWholeStore:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager has begun to download the whole store file, together with necessary helper files.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)syncManagerDidBeginToDownloadWholeStore:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurs during the download process, the <a href="#//api/name/syncManager:encounteredWholeStoreDownloadError:"><code>syncManager:encounteredWholeStoreDownloadError:</code></a> method will be called.</p>
+
+<p>The store will be downloaded to a temporary location; once this has happened, the <a href="#//api/name/syncManager:willReplaceStoreWithDownloadedStoreAtLocation:"><code>syncManager:willReplaceStoreWithDownloadedStoreAtLocation:</code></a> method will be called just before the store is moved to the location given by the <a href="#//api/name/syncManagerFinalURLForDownloadedStore:"><code>syncManagerFinalURLForDownloadedStore:</code></a> method to allow you to remove the file from any persistent store coordinators. Once the file has been moved, the <a href="#//api/name/syncManager:didReplaceStoreWithDownloadedStoreAtLocation:"><code>syncManager:didReplaceStoreWithDownloadedStoreAtLocation:</code></a> method will be called.</p>
+
+<p>At the end of the download process, one of the <a href="#//api/name/syncManagerFailedToDownloadWholeStore:"><code>syncManagerFailedToDownloadWholeStore:</code></a> or <a href="#//api/name/syncManagerDidDownloadWholeStoreSuccessfully:"><code>syncManagerDidDownloadWholeStoreSuccessfully:</code></a> methods will be called.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/syncManagerDidBeginToSynchronize:" title="syncManagerDidBeginToSynchronize:"></a>
 	<h3 class="subsubtitle method-title">syncManagerDidBeginToSynchronize:</h3>
 	
@@ -1378,6 +1667,48 @@
 
 <p>At the end of the vacuum process, one of the <a href="#//api/name/syncManagerFailedToVacuumUnneededRemoteFiles:"><code>syncManagerFailedToVacuumUnneededRemoteFiles:</code></a> or <a href="#//api/name/syncManagerDidFinishVacuumingUnneededRemoteFiles:"><code>syncManagerDidFinishVacuumingUnneededRemoteFiles:</code></a> methods will be called.</p>
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/syncManagerDidDownloadWholeStoreSuccessfully:" title="syncManagerDidDownloadWholeStoreSuccessfully:"></a>
+	<h3 class="subsubtitle method-title">syncManagerDidDownloadWholeStoreSuccessfully:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager finished uploading the whole store file successfully.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)syncManagerDidDownloadWholeStoreSuccessfully:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
 	
 	
 	
@@ -1695,6 +2026,53 @@
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/syncManagerFailedToDownloadWholeStore:" title="syncManagerFailedToDownloadWholeStore:"></a>
+	<h3 class="subsubtitle method-title">syncManagerFailedToDownloadWholeStore:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager failed to upload the whole store file.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)syncManagerFailedToDownloadWholeStore:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The error will previously have been supplied through the <a href="#//api/name/syncManager:encounteredWholeStoreUploadError:"><code>syncManager:encounteredWholeStoreUploadError:</code></a> method.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/syncManagerFailedToRegisterDocument:" title="syncManagerFailedToRegisterDocument:"></a>
 	<h3 class="subsubtitle method-title">syncManagerFailedToRegisterDocument:</h3>
 	
@@ -1883,6 +2261,58 @@
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/syncManagerFinalURLForDownloadedStore:" title="syncManagerFinalURLForDownloadedStore:"></a>
+	<h3 class="subsubtitle method-title">syncManagerFinalURLForDownloadedStore:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Invoked to ask the delegate for the URL of the document&rsquo;s store once it&rsquo;s been downloaded.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (NSURL *)syncManagerFinalURLForDownloadedStore:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The location of the store file.</p>
+	</div>
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If this method is not implemented, the sync manager will ask the synchronized persistent store coordinator for the location of its <code>persistentStores</code> array&rsquo;s <code>lastObject</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/syncManagerShouldUploadWholeStoreAfterDocumentRegistration:" title="syncManagerShouldUploadWholeStoreAfterDocumentRegistration:"></a>
 	<h3 class="subsubtitle method-title">syncManagerShouldUploadWholeStoreAfterDocumentRegistration:</h3>
 	
@@ -1989,7 +2419,7 @@
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2011 Tim Isted. All rights reserved. (Last updated: 2011-05-02)</span><br />
+						<p><span class="copyright">&copy; 2011 Tim Isted. All rights reserved. (Last updated: 2011-05-04)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.0.3 (build 668)</a>.</span></p>
 						

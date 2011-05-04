@@ -13,6 +13,8 @@
 - (TICDSSyncChange *)createSyncChangeForChangeType:(TICDSSyncChangeType)aType;
 - (void)createSyncChangesForAllRelationships;
 - (void)createSyncChangeIfApplicableForRelationship:(NSRelationshipDescription *)aRelationship;
+- (void)createToOneRelationshipSyncChange:(NSRelationshipDescription *)aRelationship;
+- (void)createToManyRelationshipSyncChanges:(NSRelationshipDescription *)aRelationship;
 - (NSDictionary *)dictionaryOfAllAttributes;
 
 @end
@@ -100,39 +102,82 @@
         return;
     }
     
+    // Check if this is a self-referential relationship, and only sync one side, somehow!!!
+    
     // If we get here, this is:
     // a) a one-to-many relationship
     // b) the alphabetically lower end of a many-to-many relationship
     // c) the alphabetically lower end of a one-to-one relationship
-    // d) edge-case 1: a self-referential many-to-many relationship (will currently create 2 sync changes)
-    // e) edge-case 2: a self-referential one-to-one relationship (will currently create 2 sync changes)
+    // d) edge-case 1: a many-to-many relationship with the same relationship name at both ends (will currently create 2 sync changes)
+    // e) edge-case 2: a one-to-one relationship with the same relationship name at both ends (will currently create 2 sync changes)
     
-    TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeRelationshipChanged];
+    if( ![aRelationship isToMany] ) {
+        [self createToOneRelationshipSyncChange:aRelationship];
+    } else {
+        [self createToManyRelationshipSyncChanges:aRelationship];
+    }
+}
+
+- (void)createToOneRelationshipSyncChange:(NSRelationshipDescription *)aRelationship
+{
+    TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeToOneRelationshipChanged];
     
     [syncChange setRelatedObjectEntityName:[[aRelationship destinationEntity] name]];
     [syncChange setRelevantKey:[aRelationship name]];
     
-    if( [aRelationship isToMany] ) {
-        NSSet *relatedObjects = [self valueForKey:[aRelationship name]];
-        
-        NSMutableArray *relatedObjectSyncIDs = [NSMutableArray arrayWithCapacity:[relatedObjects count]];
-        
-        for( TICDSSynchronizedManagedObject *eachRelatedObject in relatedObjects ) {
-            // Check that the related object should be synchronized
-            if( ![eachRelatedObject isKindOfClass:[TICDSSynchronizedManagedObject class]] ) {
-                continue;
-            }
-            [relatedObjectSyncIDs addObject:[eachRelatedObject valueForKey:TICDSSyncIDAttributeName]];
+    NSManagedObject *relatedObject = [self valueForKey:[aRelationship name]];
+    
+    // Check that the related object should be synchronized
+    if( [relatedObject isKindOfClass:[TICDSSynchronizedManagedObject class]] ) {
+        [syncChange setChangedRelationships:[relatedObject valueForKey:TICDSSyncIDAttributeName]];
+    }
+}
+
+- (void)createToManyRelationshipSyncChanges:(NSRelationshipDescription *)aRelationship
+{
+    NSSet *relatedObjects = [self valueForKey:[aRelationship name]];
+    NSDictionary *committedValues = [self committedValuesForKeys:[NSArray arrayWithObject:[aRelationship name]]];
+    
+    NSSet *previouslyRelatedObjects = [committedValues valueForKey:[aRelationship name]];
+    
+    NSMutableSet *addedObjects = [NSMutableSet setWithCapacity:5];
+    for( NSManagedObject *eachObject in relatedObjects ) {
+        if( ![previouslyRelatedObjects containsObject:eachObject] ) {
+            [addedObjects addObject:eachObject];
+        }
+    }
+    
+    NSMutableSet *removedObjects = [NSMutableSet setWithCapacity:5];
+    for( NSManagedObject *eachObject in previouslyRelatedObjects ) {
+        if( ![relatedObjects containsObject:eachObject] ) {
+            [removedObjects addObject:eachObject];
+        }
+    }
+    
+    TICDSSyncChange *eachChange = nil;
+    
+    for( NSManagedObject *eachObject in addedObjects ) {
+        if( ![eachObject isKindOfClass:[TICDSSynchronizedManagedObject class]] ) {
+            continue;
         }
         
-        [syncChange setChangedRelationships:relatedObjectSyncIDs];
-    } else {
-        NSManagedObject *relatedObject = [self valueForKey:[aRelationship name]];
+        eachChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeToManyRelationshipChangedByAddingObject];
         
-        // Check that the related object should be synchronized
-        if( [relatedObject isKindOfClass:[TICDSSynchronizedManagedObject class]] ) {
-            [syncChange setChangedRelationships:[relatedObject valueForKey:TICDSSyncIDAttributeName]];
+        [eachChange setRelatedObjectEntityName:[[aRelationship destinationEntity] name]];
+        [eachChange setRelevantKey:[aRelationship name]];
+        [eachChange setChangedRelationships:[eachObject valueForKey:TICDSSyncIDAttributeName]];
+    }
+    
+    for( NSManagedObject *eachObject in removedObjects ) {
+        if( ![eachObject isKindOfClass:[TICDSSynchronizedManagedObject class]] ) {
+            continue;
         }
+        
+        eachChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeToManyRelationshipChangedByRemovingObject];
+        
+        [eachChange setRelatedObjectEntityName:[[aRelationship destinationEntity] name]];
+        [eachChange setRelevantKey:[aRelationship name]];
+        [eachChange setChangedRelationships:[eachObject valueForKey:TICDSSyncIDAttributeName]];
     }
 }
 

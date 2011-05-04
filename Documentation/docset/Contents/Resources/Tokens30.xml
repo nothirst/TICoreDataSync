@@ -253,6 +253,127 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerFinalURLForDownloadedStore:</TokenIdentifier>
+			<Abstract>Invoked to ask the delegate for the URL of the document's store once it's been downloaded.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (NSURL *)syncManagerFinalURLForDownloadedStore:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>The location of the store file.</Abstract></ReturnValue>
+			<Anchor>//api/name/syncManagerFinalURLForDownloadedStore:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidBeginToDownloadWholeStore:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager has begun to download the whole store file, together with necessary helper files.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManagerDidBeginToDownloadWholeStore:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerDidBeginToDownloadWholeStore:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:willReplaceStoreWithDownloadedStoreAtLocation:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager has downloaded the store to a temporary location, and is about to replace the store at the given location.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager willReplaceStoreWithDownloadedStoreAtLocation:(NSURL *)aLocation</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>aLocation</Name>
+					<Abstract>The location of the persistent store that will be replaced.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManager:willReplaceStoreWithDownloadedStoreAtLocation:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:didReplaceStoreWithDownloadedStoreAtLocation:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager has replaced the store at the given location with the downloaded store.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didReplaceStoreWithDownloadedStoreAtLocation:(NSURL *)aLocation</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>aLocation</Name>
+					<Abstract>The location of the persistent store that was replaced.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManager:didReplaceStoreWithDownloadedStoreAtLocation:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:encounteredWholeStoreDownloadError:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager encountered an error during the whole store upload.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredWholeStoreDownloadError:(NSError *)anError</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>anError</Name>
+					<Abstract>The error.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManager:encounteredWholeStoreDownloadError:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerFailedToDownloadWholeStore:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager failed to upload the whole store file.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManagerFailedToDownloadWholeStore:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerFailedToDownloadWholeStore:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidDownloadWholeStoreSuccessfully:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager finished uploading the whole store file successfully.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)syncManagerDidDownloadWholeStoreSuccessfully:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/syncManagerDidDownloadWholeStoreSuccessfully:</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidBeginToSynchronize:</TokenIdentifier>
 			<Abstract>Informs the delegate that the document sync manager has begun to synchronize the document.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			

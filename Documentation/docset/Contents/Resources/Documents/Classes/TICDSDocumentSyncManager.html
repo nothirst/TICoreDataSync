@@ -103,6 +103,8 @@
 	
 	<option value="//api/name/documentRegistrationOperation">&nbsp;&nbsp;&nbsp;&nbsp;- documentRegistrationOperation</option>
 	
+	<option value="//api/name/initiateDownloadOfWholeStore">&nbsp;&nbsp;&nbsp;&nbsp;- initiateDownloadOfWholeStore</option>
+	
 	<option value="//api/name/initiateSynchronization">&nbsp;&nbsp;&nbsp;&nbsp;- initiateSynchronization</option>
 	
 	<option value="//api/name/initiateUploadOfWholeStore">&nbsp;&nbsp;&nbsp;&nbsp;- initiateUploadOfWholeStore</option>
@@ -120,6 +122,8 @@
 	<option value="//api/name/synchronizedMOCWillSave:">&nbsp;&nbsp;&nbsp;&nbsp;- synchronizedMOCWillSave:</option>
 	
 	<option value="//api/name/vacuumOperation">&nbsp;&nbsp;&nbsp;&nbsp;- vacuumOperation</option>
+	
+	<option value="//api/name/wholeStoreDownloadOperation">&nbsp;&nbsp;&nbsp;&nbsp;- wholeStoreDownloadOperation</option>
 	
 	<option value="//api/name/wholeStoreUploadOperation">&nbsp;&nbsp;&nbsp;&nbsp;- wholeStoreUploadOperation</option>
 	
@@ -141,7 +145,7 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Registration">Registration</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Whole Store Upload">Whole Store Upload</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Whole Store Upload and Download">Whole Store Upload and Download</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Synchronization">Synchronization</a></span></li>
 	
@@ -235,6 +239,8 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentRegistrationOperation">documentRegistrationOperation</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initiateDownloadOfWholeStore">initiateDownloadOfWholeStore</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initiateSynchronization">initiateSynchronization</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initiateUploadOfWholeStore">initiateUploadOfWholeStore</a></span></li>
@@ -252,6 +258,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/synchronizedMOCWillSave:">synchronizedMOCWillSave:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/vacuumOperation">vacuumOperation</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/wholeStoreDownloadOperation">wholeStoreDownloadOperation</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/wholeStoreUploadOperation">wholeStoreUploadOperation</a></span></li>
 	
@@ -346,14 +354,21 @@
 						</ul>
 						
 						
-						<a title="Whole Store Upload" name="task_Whole Store Upload"></a>
-						<h3 class="subsubtitle task-title">Whole Store Upload</h3>
+						<a title="Whole Store Upload and Download" name="task_Whole Store Upload and Download"></a>
+						<h3 class="subsubtitle task-title">Whole Store Upload and Download</h3>
 
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/initiateUploadOfWholeStore">&ndash;&nbsp;initiateUploadOfWholeStore</a></code>
 		<span class="tooltip"><p>Start the process manually to upload the entire store file for this document, along with the relevant <code>AppliedSyncChanges.ticdsync</code> file.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initiateDownloadOfWholeStore">&ndash;&nbsp;initiateDownloadOfWholeStore</a></code>
+		<span class="tooltip"><p>Start the process to download the entire store file for this document, along with the relevant <code>AppliedSyncChanges.ticdsync</code> file.</p></span>
 	</span>
 	
 	
@@ -413,6 +428,13 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/wholeStoreUploadOperation">&ndash;&nbsp;wholeStoreUploadOperation</a></code>
 		<span class="tooltip"><p>Returns a whole store upload operation.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/wholeStoreDownloadOperation">&ndash;&nbsp;wholeStoreDownloadOperation</a></code>
+		<span class="tooltip"><p>Returns a whole store download operation.</p></span>
 	</span>
 	
 	
@@ -1813,6 +1835,45 @@
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/initiateDownloadOfWholeStore" title="initiateDownloadOfWholeStore"></a>
+	<h3 class="subsubtitle method-title">initiateDownloadOfWholeStore</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Start the process to download the entire store file for this document, along with the relevant <code>AppliedSyncChanges.ticdsync</code> file.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)initiateDownloadOfWholeStore</code></div>
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This will automatically spawn a <a href="../Classes/TICDSWholeStoreDownloadOperation.html"><code>TICDSWholeStoreDownloadOperation</code></a>, and notify you of progress through the <a href="../Protocols/TICDSDocumentSyncManagerDelegate.html"><code>TICDSDocumentSyncManagerDelegate</code></a> methods.</p>
+
+<p>The location of the store file (and the applied sync changes file) will be requested from the <a href="#//api/name/delegate">delegate</a> immediately after calling this method.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/initiateSynchronization" title="initiateSynchronization"></a>
 	<h3 class="subsubtitle method-title">initiateSynchronization</h3>
 	
@@ -2236,6 +2297,48 @@
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/wholeStoreDownloadOperation" title="wholeStoreDownloadOperation"></a>
+	<h3 class="subsubtitle method-title">wholeStoreDownloadOperation</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns a whole store download operation.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (TICDSWholeStoreDownloadOperation *)wholeStoreDownloadOperation</code></div>
+	
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A correctly-configured subclass of <a href="../Classes/TICDSWholeStoreDownloadOperation.html"><code>TICDSWholeStoreDownloadOperation</code></a>.</p>
+	</div>
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Subclasses of <a href="TICDSDocumentSyncManager.html"><code>TICDSDocumentSyncManager</code></a> use this method to return a correctly-configured whole store download operation (including the remote location of the document&rsquo;s whole store, etc) for their particular sync method.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/wholeStoreUploadOperation" title="wholeStoreUploadOperation"></a>
 	<h3 class="subsubtitle method-title">wholeStoreUploadOperation</h3>
 	
@@ -2290,7 +2393,7 @@
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2011 Tim Isted. All rights reserved. (Last updated: 2011-05-02)</span><br />
+						<p><span class="copyright">&copy; 2011 Tim Isted. All rights reserved. (Last updated: 2011-05-04)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.0.3 (build 668)</a>.</span></p>
 						

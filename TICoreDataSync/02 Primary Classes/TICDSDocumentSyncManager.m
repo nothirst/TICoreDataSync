@@ -24,6 +24,9 @@
 
 - (void)startVacuumProcess;
 
+- (void)startWholeStoreDownloadProcess;
+- (void)bailFromDownloadProcess;
+
 @property (nonatomic, retain) NSString *documentIdentifier;
 @property (nonatomic, retain) NSString *documentDescription;
 @property (nonatomic, retain) NSString *clientIdentifier;
@@ -352,6 +355,23 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting whole store upload process");
     [self ti_alertDelegateWithSelector:@selector(syncManagerDidBeginToUploadWholeStore:)];
     
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Checking to see if there are unsynchronized SyncChanges");
+    NSError *anyError = nil;
+    NSUInteger count = [TICDSSyncChange ti_numberOfObjectsInManagedObjectContext:[self syncChangesMOC] error:&anyError];
+    if( anyError ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to count number of SyncChange objects: %@", anyError);
+        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredWholeStoreUploadError:), [TICDSError errorWithCode:TICDSErrorCodeCoreDataFetchError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self bailFromUploadProcess];
+        return;
+    }
+    
+    if( count > 0 ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"There are unsynchronized local Sync Changes so cannot upload whole store");
+        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredWholeStoreUploadError:), [TICDSError errorWithCode:TICDSErrorCodeWholeStoreCannotBeUploadedWhileThereAreUnsynchronizedSyncChanges classAndMethod:__PRETTY_FUNCTION__]];
+        [self bailFromUploadProcess];
+        return;
+    }
+    
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Asking delegate for URL of whole store to upload");
     NSURL *storeURL = [self ti_objectFromDelegateWithSelector:@selector(syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
     
@@ -409,6 +429,133 @@
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Whole Store Upload Operation Failed to Complete with Error: %@", anError);
     [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredWholeStoreUploadError:), anError];
     [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToUploadWholeStore:)];
+}
+
+#pragma mark -
+#pragma mark WHOLE STORE DOWNLOAD
+- (void)initiateDownloadOfWholeStore
+{
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Manual initiation of whole store download");
+    [self startWholeStoreDownloadProcess];
+}
+
+- (void)bailFromDownloadProcess
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from whole store download process");
+    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToDownloadWholeStore:)];
+}
+
+- (void)bailFromDownloadPostProcessingWithFileManagerError:(NSError *)anError
+{
+    [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredWholeStoreDownloadError:), [TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anError classAndMethod:__PRETTY_FUNCTION__]];
+    [self bailFromDownloadProcess];
+}
+
+- (void)startWholeStoreDownloadProcess
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to download whole store");
+    [self ti_alertDelegateWithSelector:@selector(syncManagerDidBeginToDownloadWholeStore:)];
+    
+    // Set download to go to a temporary location
+    NSString *temporaryPath = [NSTemporaryDirectory() stringByAppendingPathComponent:TICDSFrameworkName];
+    temporaryPath = [temporaryPath stringByAppendingPathComponent:[self documentIdentifier]];
+    
+    NSError *anyError = nil;
+    BOOL success = [[self fileManager] createDirectoryAtPath:temporaryPath withIntermediateDirectories:YES attributes:nil error:&anyError];
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create temporary directory for whole store download: %@", anyError);
+        
+        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredWholeStoreDownloadError:), [TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        
+        [self bailFromDownloadProcess];
+        return;
+    }
+    
+    TICDSWholeStoreDownloadOperation *operation = [self wholeStoreDownloadOperation];
+    
+    if( !operation ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create whole store download operation");
+        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredWholeStoreDownloadError:), [TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
+        
+        [self bailFromDownloadProcess];
+        return;
+    }
+    
+    NSString *wholeStoreFilePath = [temporaryPath stringByAppendingPathComponent:TICDSWholeStoreFilename];
+    NSString *appliedSyncChangesFilePath = [temporaryPath stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
+    
+    [operation setLocalWholeStoreFileLocation:[NSURL fileURLWithPath:wholeStoreFilePath]];
+    [operation setLocalAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:appliedSyncChangesFilePath]];
+    
+    [operation setClientIdentifier:[self clientIdentifier]];
+    
+    [[self otherTasksQueue] addOperation:operation];
+}
+
+#pragma mark Operation Generation
+- (TICDSWholeStoreDownloadOperation *)wholeStoreDownloadOperation
+{
+    return [[[TICDSWholeStoreDownloadOperation alloc] initWithDelegate:self] autorelease];
+}
+
+#pragma mark Operation Communications
+- (void)wholeStoreDownloadOperationCompleted:(TICDSWholeStoreDownloadOperation *)anOperation
+{
+    NSError *anyError = nil;
+    BOOL success = YES;
+    
+    NSURL *finalWholeStoreLocation = [self ti_objectFromDelegateWithSelector:@selector(syncManagerFinalURLForDownloadedStore:)];
+    
+    if( !finalWholeStoreLocation ) {
+        NSPersistentStoreCoordinator *psc = [[self primaryDocumentMOC] persistentStoreCoordinator];
+        
+        finalWholeStoreLocation = [psc URLForPersistentStore:[[psc persistentStores] lastObject]];
+    }
+    
+    [self ti_alertDelegateWithSelector:@selector(syncManager:willReplaceStoreWithDownloadedStoreAtLocation:), finalWholeStoreLocation];
+    
+    // Remove old WholeStore
+    if( [[self fileManager] fileExistsAtPath:[finalWholeStoreLocation path]] && ![[self fileManager] removeItemAtPath:[finalWholeStoreLocation path] error:&anyError] ) {
+        [self bailFromDownloadPostProcessingWithFileManagerError:anyError];
+        return;
+    }
+    
+    // Move downloaded WholeStore
+    success = [[self fileManager] moveItemAtPath:[[anOperation localWholeStoreFileLocation] path] toPath:[finalWholeStoreLocation path] error:&anyError];
+    if( !success ) {
+        [self bailFromDownloadPostProcessingWithFileManagerError:anyError];
+        return;
+    }
+    
+    // Remove old AppliedSyncChanges
+    if( [[self fileManager] fileExistsAtPath:[self localAppliedSyncChangesFilePath]] && ![[self fileManager] removeItemAtPath:[self localAppliedSyncChangesFilePath] error:&anyError] ) {
+        [self bailFromDownloadPostProcessingWithFileManagerError:anyError];
+        return;
+    }
+    
+    // Move newly downloaded AppliedSyncChanges
+    if( [[self fileManager] fileExistsAtPath:[[anOperation localAppliedSyncChangeSetsFileLocation] path]] && ![[self fileManager] moveItemAtPath:[[anOperation localAppliedSyncChangeSetsFileLocation] path] toPath:[self localAppliedSyncChangesFilePath] error:&anyError] ) {
+        [self bailFromDownloadPostProcessingWithFileManagerError:anyError];
+        return;
+    }
+    
+    [self ti_alertDelegateWithSelector:@selector(syncManager:didReplaceStoreWithDownloadedStoreAtLocation:), finalWholeStoreLocation];
+    
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Whole Store Download complete");
+    [self ti_alertDelegateWithSelector:@selector(syncManagerDidDownloadWholeStoreSuccessfully:)];
+}
+
+- (void)wholeStoreDownloadOperationWasCancelled:(TICDSWholeStoreDownloadOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Whole Store Download operation was cancelled");
+    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToDownloadWholeStore:)];
+}
+
+- (void)wholeStoreDownloadOperation:(TICDSWholeStoreDownloadOperation *)anOperation failedToCompleteWithError:(NSError *)anError
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Whole Store Download operation failed to complete with error: %@", anError);
+    [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredWholeStoreDownloadError:), anError];
+    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToDownloadWholeStore:)];
 }
 
 #pragma mark -
@@ -696,6 +843,8 @@
         [self synchronizationOperationCompleted:(id)anOperation];
     } else if( [anOperation isKindOfClass:[TICDSVacuumOperation class]] ) {
         [self vacuumOperationCompleted:(id)anOperation];
+    } else if( [anOperation isKindOfClass:[TICDSWholeStoreDownloadOperation class]] ) {
+        [self wholeStoreDownloadOperationCompleted:(id)anOperation];
     }
 }
 
@@ -709,6 +858,8 @@
         [self synchronizationOperationWasCancelled:(id)anOperation];
     } else if( [anOperation isKindOfClass:[TICDSVacuumOperation class]] ) {
         [self vacuumOperationWasCancelled:(id)anOperation];
+    } else if( [anOperation isKindOfClass:[TICDSWholeStoreDownloadOperation class]] ) {
+        [self wholeStoreDownloadOperationWasCancelled:(id)anOperation];
     }
 }
 
@@ -722,6 +873,8 @@
         [self synchronizationOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     } else if( [anOperation isKindOfClass:[TICDSVacuumOperation class]] ) {
         [self vacuumOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
+    } else if( [anOperation isKindOfClass:[TICDSWholeStoreDownloadOperation class]] ) {
+        [self wholeStoreDownloadOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     }
 }
 

@@ -308,7 +308,7 @@
 											<string key="NSFrame">{{11, 139}, {140, 13}}</string>
 											<reference key="NSSuperview" ref="840286419"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="305388839"/>
+											<reference key="NSNextKeyView" ref="864603342"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="156148332">
 												<int key="NSCellFlags">67239424</int>
@@ -721,6 +721,29 @@
 												<string key="NSKeyEquivalent"/>
 												<int key="NSPeriodicDelay">200</int>
 												<int key="NSPeriodicInterval">25</int>
+											</object>
+										</object>
+										<object class="NSButton" id="864603342">
+											<reference key="NSNextResponder" ref="840286419"/>
+											<int key="NSvFlags">257</int>
+											<string key="NSFrame">{{102, 127}, {139, 32}}</string>
+											<reference key="NSSuperview" ref="840286419"/>
+											<reference key="NSWindow"/>
+											<reference key="NSNextKeyView" ref="305388839"/>
+											<int key="NSTag">-1</int>
+											<bool key="NSEnabled">YES</bool>
+											<object class="NSButtonCell" key="NSCell" id="637995653">
+												<int key="NSCellFlags">67239424</int>
+												<int key="NSCellFlags2">134217728</int>
+												<string key="NSContents">Stress Test Add</string>
+												<reference key="NSSupport" ref="1066038301"/>
+												<reference key="NSControlView" ref="864603342"/>
+												<int key="NSButtonFlags">-2038284033</int>
+												<int key="NSButtonFlags2">1</int>
+												<reference key="NSAlternateImage" ref="291594107"/>
+												<string key="NSKeyEquivalent"/>
+												<int key="NSPeriodicDelay">400</int>
+												<int key="NSPeriodicInterval">75</int>
 											</object>
 										</object>
 									</object>
@@ -1358,6 +1381,30 @@
 					</object>
 					<int key="connectionID">100214</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: canAdd</string>
+						<reference key="source" ref="864603342"/>
+						<reference key="destination" ref="361851136"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="864603342"/>
+							<reference key="NSDestination" ref="361851136"/>
+							<string key="NSLabel">enabled: canAdd</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">canAdd</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">100217</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">stressTestAddItemsAndShops:</string>
+						<reference key="source" ref="512844837"/>
+						<reference key="destination" ref="864603342"/>
+					</object>
+					<int key="connectionID">100219</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -1484,6 +1531,7 @@
 							<reference ref="617766873"/>
 							<reference ref="1059916035"/>
 							<reference ref="173047988"/>
+							<reference ref="864603342"/>
 						</object>
 						<reference key="parent" ref="568628114"/>
 					</object>
@@ -1787,6 +1835,20 @@
 						<reference key="object" ref="919318081"/>
 						<reference key="parent" ref="592634546"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">100215</int>
+						<reference key="object" ref="864603342"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="637995653"/>
+						</object>
+						<reference key="parent" ref="1062929917"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">100216</int>
+						<reference key="object" ref="637995653"/>
+						<reference key="parent" ref="864603342"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -1893,7 +1955,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">100214</int>
+			<int key="maxID">100219</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1910,9 +1972,11 @@
 							<string>initiateVacuum:</string>
 							<string>showShopsWindow:</string>
 							<string>showSyncChangesWindow:</string>
+							<string>stressTestAddItemsAndShops:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -1929,6 +1993,7 @@
 							<string>initiateVacuum:</string>
 							<string>showShopsWindow:</string>
 							<string>showSyncChangesWindow:</string>
+							<string>stressTestAddItemsAndShops:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1950,6 +2015,10 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">showSyncChangesWindow:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">stressTestAddItemsAndShops:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 						</object>

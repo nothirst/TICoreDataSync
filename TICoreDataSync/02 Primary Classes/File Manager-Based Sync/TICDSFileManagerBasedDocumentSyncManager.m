@@ -142,6 +142,15 @@
     return [operation autorelease];
 }
 
+- (TICDSWholeStoreDownloadOperation *)wholeStoreDownloadOperation
+{
+    TICDSFileManagerBasedWholeStoreDownloadOperation *operation = [[TICDSFileManagerBasedWholeStoreDownloadOperation alloc] initWithDelegate:self];
+    
+    [operation setThisDocumentWholeStoreDirectoryPath:[self thisDocumentWholeStoreDirectoryPath]];
+    
+    return [operation autorelease];
+}
+
 - (TICDSSynchronizationOperation *)synchronizationOperation
 {
     TICDSFileManagerBasedSynchronizationOperation *operation = [[TICDSFileManagerBasedSynchronizationOperation alloc] initWithDelegate:self];

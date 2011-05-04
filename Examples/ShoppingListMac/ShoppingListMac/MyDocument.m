@@ -366,6 +366,27 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     }
 }
 
+- (IBAction)stressTestAddItemsAndShops:(id)sender
+{
+    NSLog(@"Stress testing...");
+    NSManagedObject *shop = nil, *item = nil;
+    
+    for( int shopNumber = 0; shopNumber < 50; shopNumber++ ) {
+        
+        shop = [NSEntityDescription insertNewObjectForEntityForName:@"Shop" inManagedObjectContext:[self managedObjectContext]];
+        [shop setValue:[TICDSUtilities uuidString] forKey:@"name"];
+        
+        for( int i = 0; i < 100; i++ ) {
+            item = [NSEntityDescription insertNewObjectForEntityForName:@"Item" inManagedObjectContext:[self managedObjectContext]];
+            [item setValue:[TICDSUtilities uuidString] forKey:@"name"];
+            [item setValue:[NSNumber numberWithInt:i % 2] forKey:@"purchased"];
+            [item setValue:shop forKey:@"shop"];
+        }
+        
+    }
+    NSLog(@"Done!");
+}
+
 #pragma mark -
 #pragma mark Notifications
 - (void)managedObjectContextDidSave:(NSNotification *)aNotification

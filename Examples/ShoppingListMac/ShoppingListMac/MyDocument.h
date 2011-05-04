@@ -32,7 +32,7 @@
 - (IBAction)showSyncChangesWindow:(id)sender;
 - (IBAction)showShopsWindow:(id)sender;
 - (IBAction)configureSynchronization:(id)sender;
-
+- (IBAction)stressTestAddItemsAndShops:(id)sender;
 - (void)configureSyncManagerForDownloadedStoreWithIdentifier:(NSString *)anIdentifier;
 
 @property (nonatomic, assign, getter=isSyncEnabled) BOOL syncEnabled;
@@ -46,5 +46,4 @@
 @property (nonatomic, assign) IBOutlet NSButton *vacuumButton;
 @property (nonatomic, retain) TIDocumentSyncChangesWindowController *documentSyncChangesWindowController;
 @property (nonatomic, retain) TIDocumentShopsWindowController *documentShopsWindowController;
-
 @end

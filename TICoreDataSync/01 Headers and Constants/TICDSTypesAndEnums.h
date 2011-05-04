@@ -90,6 +90,7 @@ typedef enum _TICDSErrorCode {
     TICDSErrorCodeCoreDataFetchError,
     TICDSErrorCodeCoreDataSaveError,
     TICDSErrorCodeObjectCreationError,
+    TICDSErrorCodeWholeStoreCannotBeUploadedWhileThereAreUnsynchronizedSyncChanges,
 } TICDSErrorCode;
 
 #pragma mark Operation Phases
@@ -112,8 +113,10 @@ typedef enum _TICDSSyncChangeType {
     TICDSSyncChangeTypeUnknown = 0,
     TICDSSyncChangeTypeObjectInserted = 1,
     TICDSSyncChangeTypeAttributeChanged = 2,
-    TICDSSyncChangeTypeRelationshipChanged = 3,
-    TICDSSyncChangeTypeObjectDeleted = 4,
+    TICDSSyncChangeTypeToOneRelationshipChanged = 3,
+    TICDSSyncChangeTypeToManyRelationshipChangedByAddingObject = 4,
+    TICDSSyncChangeTypeToManyRelationshipChangedByRemovingObject = 5,
+    TICDSSyncChangeTypeObjectDeleted = 10
 } TICDSSyncChangeType;
 
 #pragma mark Sync Warnings

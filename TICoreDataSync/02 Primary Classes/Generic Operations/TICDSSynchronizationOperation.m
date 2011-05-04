@@ -45,7 +45,8 @@
 - (void)applyObjectInsertedSyncChange:(TICDSSyncChange *)aSyncChange;
 - (void)applyAttributeChangeSyncChange:(TICDSSyncChange *)aSyncChange;
 - (void)applyObjectDeletedSyncChange:(TICDSSyncChange *)aSyncChange;
-- (void)applyRelationshipSyncChange:(TICDSSyncChange *)aSyncChange;
+- (void)applyToOneRelationshipSyncChange:(TICDSSyncChange *)aSyncChange;
+- (void)applyToManyRelationshipSyncChange:(TICDSSyncChange *)aSyncChange;
 
 - (void)beginUploadOfLocalSyncCommands;
 - (void)beginUploadOfLocalSyncChanges;
@@ -462,11 +463,7 @@
     
     NSError *anyError = nil;
     NSArray *syncChanges = [TICDSSyncChange ti_allObjectsInManagedObjectContext:syncChangesContext sortedWithDescriptors:[self syncChangeSortDescriptors] error:&anyError];
-
-    for( TICDSSyncChange *eachChange in syncChanges ) {
-        NSString *syncid = [eachChange objectSyncID];
-        syncid = @"";
-    }
+    
     TICDSLog(TICDSLogVerbosityEveryStep, @"There are %u changes in this set", [syncChanges count]);
     
     syncChanges = [self syncChangesAfterCheckingForConflicts:syncChanges];
@@ -476,14 +473,20 @@
         switch( [[eachChange changeType] unsignedIntegerValue] ) {
             case TICDSSyncChangeTypeObjectInserted:
                 [self applyObjectInsertedSyncChange:eachChange];
+                [[self backgroundApplicationContext] processPendingChanges];
                 break;
                 
             case TICDSSyncChangeTypeAttributeChanged:
                 [self applyAttributeChangeSyncChange:eachChange];
                 break;
                 
-            case TICDSSyncChangeTypeRelationshipChanged:
-                [self applyRelationshipSyncChange:eachChange];
+            case TICDSSyncChangeTypeToOneRelationshipChanged:
+                [self applyToOneRelationshipSyncChange:eachChange];
+                break;
+                
+            case TICDSSyncChangeTypeToManyRelationshipChangedByAddingObject:
+            case TICDSSyncChangeTypeToManyRelationshipChangedByRemovingObject:
+                [self applyToManyRelationshipSyncChange:eachChange];
                 break;
                 
             case TICDSSyncChangeTypeObjectDeleted:
@@ -638,7 +641,9 @@
                 [[self synchronizationWarnings] addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectWithAttributesChangedRemotelyNowDeletedByLocalSyncChange entityName:[eachRemoteChange objectEntityName] relatedObjectEntityName:nil attributes:[eachRemoteChange changedAttributes]]];
                 break;
                 
-            case TICDSSyncChangeTypeRelationshipChanged:
+            case TICDSSyncChangeTypeToOneRelationshipChanged:
+            case TICDSSyncChangeTypeToManyRelationshipChangedByAddingObject:
+            case TICDSSyncChangeTypeToManyRelationshipChangedByRemovingObject:
                 [[self synchronizationWarnings] addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectWithRelationshipsChangedRemotelyNowDeletedByLocalSyncChange entityName:[eachRemoteChange objectEntityName] relatedObjectEntityName:[eachRemoteChange relatedObjectEntityName] attributes:nil]];
                 break;
         }
@@ -706,7 +711,7 @@
     TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed attribute on object: %@", object);
 }
 
-- (void)applyRelationshipSyncChange:(TICDSSyncChange *)aSyncChange
+- (void)applyToOneRelationshipSyncChange:(TICDSSyncChange *)aSyncChange
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Applying Relationship Change sync change");
     
@@ -718,10 +723,10 @@
         return;
     }
     
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:[aSyncChange objectEntityName] inManagedObjectContext:[self backgroundApplicationContext]];
-    NSRelationshipDescription *relationshipDescription = [[entityDescription relationshipsByName] valueForKey:[aSyncChange relevantKey]];
-    
-    if( [relationshipDescription isToMany] ) {
+    /*NSEntityDescription *entityDescription = [NSEntityDescription entityForName:[aSyncChange objectEntityName] inManagedObjectContext:[self backgroundApplicationContext]];*/
+    /*NSRelationshipDescription *relationshipDescription = [[entityDescription relationshipsByName] valueForKey:[aSyncChange relevantKey]];
+    */
+    /*if( [relationshipDescription isToMany] ) {
         NSMutableSet *relatedObjects = [NSMutableSet setWithCapacity:[[aSyncChange changedRelationships] count]];
         NSManagedObject *eachRelatedObject = nil;
         for( NSString *eachObjectSyncID in [aSyncChange changedRelationships] ) {
@@ -732,13 +737,43 @@
         }
         
         [object setValue:relatedObjects forKey:[aSyncChange relevantKey]];
-    } else {
+    } else {*/
         NSManagedObject *relatedObject = [self backgroundApplicationContextObjectForEntityName:[aSyncChange relatedObjectEntityName] syncIdentifier:[aSyncChange changedRelationships]];
         
         [object setValue:relatedObject forKey:[aSyncChange relevantKey]];
+    /*}*/
+    
+    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed to-one relationship on object: %@", object);
+}
+
+- (void)applyToManyRelationshipSyncChange:(TICDSSyncChange *)aSyncChange
+{
+    NSManagedObject *object = [self backgroundApplicationContextObjectForEntityName:[aSyncChange objectEntityName] syncIdentifier:[aSyncChange objectSyncID]];
+    
+    if( !object ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object not found locally for attribute change"); 
+        [[self synchronizationWarnings] addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteRelationshipSyncChange entityName:[aSyncChange objectEntityName] relatedObjectEntityName:[aSyncChange relatedObjectEntityName] attributes:[aSyncChange changedAttributes]]];
+        return;
     }
     
-    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed relationship on object: %@", object);
+    // capitalize the first char of relationship name to change e.g., someObjects into SomeObjects
+    NSString *relationshipName = [[aSyncChange relevantKey] substringToIndex:1];
+    relationshipName = [relationshipName capitalizedString];
+    relationshipName = [relationshipName stringByAppendingString:[[aSyncChange relevantKey] substringFromIndex:1]];
+    
+    NSString *selectorName = nil;
+    
+    if( [[aSyncChange changeType] unsignedIntegerValue] == TICDSSyncChangeTypeToManyRelationshipChangedByAddingObject ) {
+        selectorName = [NSString stringWithFormat:@"add%@Object:", relationshipName];
+    } else {
+        selectorName = [NSString stringWithFormat:@"remove%@Object:", relationshipName];
+    }
+    
+    NSManagedObject *relatedObject = [self backgroundApplicationContextObjectForEntityName:[aSyncChange relatedObjectEntityName] syncIdentifier:[aSyncChange changedRelationships]];
+    
+    [object performSelector:NSSelectorFromString(selectorName) withObject:relatedObject];
+    
+    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed to-many relationships on object: %@", object);
 }
 
 - (void)applyObjectDeletedSyncChange:(TICDSSyncChange *)aSyncChange
@@ -785,9 +820,11 @@
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Renaming sync changes file ready for upload");
     
+    NSString *identifier = [TICDSUtilities uuidString];
+    
     NSString *filePath = [[self localSyncChangesToMergeLocation] path];
     filePath = [filePath stringByDeletingLastPathComponent];
-    filePath = [filePath stringByAppendingPathComponent:[TICDSUtilities uuidString]];
+    filePath = [filePath stringByAppendingPathComponent:identifier];
     filePath = [filePath stringByAppendingPathExtension:TICDSSyncChangeSetFileExtension];
     
     NSError *anyError = nil;
@@ -800,6 +837,29 @@
         [self setAllInProgressStatusesToFailure];
         
         [self checkForCompletion];
+        return;
+    }
+    
+    NSDate *date = [NSDate date];
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Adding local sync change set into AppliedSyncChanges");
+    TICDSSyncChangeSet *appliedSyncChangeSet = [TICDSSyncChangeSet syncChangeSetWithIdentifier:identifier fromClient:[self clientIdentifier] creationDate:date inManagedObjectContext:[self appliedSyncChangeSetsContext]];
+    
+    if( !appliedSyncChangeSet ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Unable to create sync change set in applied sync change sets context");
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeObjectCreationError classAndMethod:__PRETTY_FUNCTION__]];
+        [self uploadedLocalSyncChangeSetFileSuccessfully:NO];
+        return;
+    }
+    
+    [appliedSyncChangeSet setLocalDateOfApplication:date];
+    
+    // Save Applied Sync Change Sets context (AppliedSyncChangeSets.ticdsync file)
+    success = [[self appliedSyncChangeSetsContext] save:&anyError];
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save applied sync change sets context, after adding local merged changes: %@", anyError);
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self uploadedLocalSyncChangeSetFileSuccessfully:NO];
         return;
     }
     
