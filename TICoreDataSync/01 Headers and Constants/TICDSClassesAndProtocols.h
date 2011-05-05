@@ -365,34 +365,25 @@
  @param aSyncManager The document sync manager object that sent the message.
  
  @return A Boolean indicating whether to initiate the vacuum. */
-- (BOOL)syncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager;
+- (BOOL)documentSyncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager;
 
-/** Informs the delegate that the sync manager has begun to remove unneeded files from the remote.
+/** Informs the delegate that the document sync manager has begun to remove unneeded files from the remote.
  
- If an error occurs during the vacuum process, the `syncManager:encounteredVacuumError:` method will be called.
- 
- At the end of the vacuum process, one of the `syncManagerFailedToVacuumUnneededRemoteFiles:` or `syncManagerDidFinishVacuumingUnneededRemoteFiles:` methods will be called.
+ At the end of the vacuum process, one of the `documentSyncManager:didFailToVacuumUnneededRemoteFilesWithError:` or `documentSyncManagerDidFinishVacuumingUnneededRemoteFiles:` methods will be called.
  
  @param aSyncManager The document sync manager object that sent the message. */
-- (void)syncManagerDidBeginToVacuumUnneededRemoteFiles:(TICDSDocumentSyncManager *)aSyncManager;
-
-/** Informs the delegate that the sync manager encountered an error wile vacuuming unneeded files from the remote.
- 
- @param aSyncManager The document sync manager object that sent the message. 
- @param anError The error that was encountered. */
-- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredVacuumError:(NSError *)anError;
+- (void)documentSyncManagerDidBeginVacuumingUnneededRemoteFiles:(TICDSDocumentSyncManager *)aSyncManager;
 
 /** Informs the delegate that the document sync manager failed to vacuum unneeded files on the remote.
  
- The error will previously have been supplied through the `syncManager:encounteredVacuumError:` method.
- 
- @param aSyncManager The document sync manager object that sent the message. */
-- (void)syncManagerFailedToVacuumUnneededRemoteFiles:(TICDSDocumentSyncManager *)aSyncManager;
+ @param aSyncManager The document sync manager object that sent the message.
+ @param anError The error that caused the vacuum process to fail. */
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToVacuumUnneededRemoteFilesWithError:(NSError *)anError;
 
 /** Informs the delegate that the document sync manager finished vacuuming unneeded files from the remote.
  
  @param aSyncManager The document sync manager object that sent the message. */
-- (void)syncManagerDidFinishVacuumingUnneededRemoteFiles:(TICDSDocumentSyncManager *)aSyncManager;
+- (void)documentSyncManagerDidFinishVacuumingUnneededRemoteFiles:(TICDSDocumentSyncManager *)aSyncManager;
 
 #pragma mark Processing
 /** @name Processing after Managed Object Context save */

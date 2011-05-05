@@ -41,7 +41,7 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
 + (void)initialize
 {
     // Set Logging Verbosity (DEBUG must be #defined to see logs, regardless of verbosity setting)
-    [TICDSLog setVerbosity:TICDSLogVerbosityErrorsOnly];
+    [TICDSLog setVerbosity:TICDSLogVerbosityEveryStep];
     [TICDSError setIncludeStackTraceInErrors:YES];
 }
 

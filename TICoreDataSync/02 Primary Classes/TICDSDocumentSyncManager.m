@@ -23,6 +23,7 @@
 - (void)moveUnsynchronizedSyncChangesToMergeLocation;
 
 - (void)startVacuumProcess;
+- (void)bailFromVacuumProcessWithError:(NSError *)anError;
 
 - (void)startWholeStoreDownloadProcess;
 - (void)bailFromDownloadProcessWithError:(NSError *)anError;
@@ -307,7 +308,7 @@
     
     // Perform clean-up if necessary
     TICDSLog(TICDSLogVerbosityEveryStep, @"Asking delegate whether to vacuum unneeded files after registration");
-    if( [self ti_boolFromDelegateWithSelector:@selector(syncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:)] ) {
+    if( [self ti_boolFromDelegateWithSelector:@selector(documentSyncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:)] ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate allowed vacuum after registration");
         [self startVacuumProcess];
     } else {
@@ -699,24 +700,22 @@
     [self startVacuumProcess];
 }
 
-- (void)bailFromVacuumProcess
+- (void)bailFromVacuumProcessWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from vacuum process");
-    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToVacuumUnneededRemoteFiles:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToVacuumUnneededRemoteFilesWithError:), anError];
 }
 
 - (void)startVacuumProcess
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting vacuum process to remove unneeded files from the remote");
-    [self ti_alertDelegateWithSelector:@selector(syncManagerDidBeginToVacuumUnneededRemoteFiles:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidBeginVacuumingUnneededRemoteFiles:)];
     
     TICDSVacuumOperation *operation = [self vacuumOperation];
     
     if( !operation ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create vacuum operation object");
-        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredVacuumError:), [TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
-        
-        [self bailFromVacuumProcess];
+        [self bailFromVacuumProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
         return;
     }
     
@@ -734,21 +733,20 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Vacuum Operation Completed");
     
-    [self ti_alertDelegateWithSelector:@selector(syncManagerDidFinishVacuumingUnneededRemoteFiles:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidFinishVacuumingUnneededRemoteFiles:)];
 }
 
 - (void)vacuumOperationWasCancelled:(TICDSVacuumOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Vacuum Operation was Cancelled");
     
-    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToVacuumUnneededRemoteFiles:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToVacuumUnneededRemoteFilesWithError:), [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
 }
 
 - (void)vacuumOperation:(TICDSVacuumOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Vacuum Operation Failed to Complete with Error: %@", anError);
-    [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredVacuumError:), anError];
-    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToVacuumUnneededRemoteFiles:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToVacuumUnneededRemoteFilesWithError:), anError];
 }
 
 #pragma mark -
@@ -884,6 +882,7 @@
     
     _otherTasksQueue = [[NSOperationQueue alloc] init];
     [_otherTasksQueue setSuspended:YES];
+    [_otherTasksQueue setMaxConcurrentOperationCount:1];
     
     return self;
 }

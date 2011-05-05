@@ -215,27 +215,23 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
 }
 
 #pragma mark Vacuuming
-- (BOOL)syncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager
+- (BOOL)documentSyncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager
 {
     return YES;
 }
 
-- (void)syncManagerDidBeginToVacuumUnneededRemoteFiles:(TICDSDocumentSyncManager *)aSyncManager
+- (void)documentSyncManagerDidBeginVacuumingUnneededRemoteFiles:(TICDSDocumentSyncManager *)aSyncManager
 {
     [self increaseActivity];
 }
 
-- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredVacuumError:(NSError *)anError
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToVacuumUnneededRemoteFilesWithError:(NSError *)anError
 {
     NSLog(@"Vacuum Error: %@", anError);
-}
-
-- (void)syncManagerFailedToVacuumUnneededRemoteFiles:(TICDSDocumentSyncManager *)aSyncManager
-{
     [self decreaseActivity];
 }
 
-- (void)syncManagerDidFinishVacuumingUnneededRemoteFiles:(TICDSDocumentSyncManager *)aSyncManager
+- (void)documentSyncManagerDidFinishVacuumingUnneededRemoteFiles:(TICDSDocumentSyncManager *)aSyncManager
 {
     [self decreaseActivity];
 }
