@@ -59,30 +59,21 @@
 
 /** Informs the delegate that the sync manager has started the application registration process.
  
- If an error occurs during application registration, the `syncManager:encounteredRegistrationError:` method will be called.
- 
- At the end of the registration process, one of the `syncManagerFailedToRegister:` or `syncManagerDidRegisterSuccessfully:` methods will be called.
+ At the end of the registration process, one of the `applicationSyncManger:didFailToRegisterWithError:` or `applicationSyncManagerDidFinishRegistering:` methods will be called.
  
  @param aSyncManager The application sync manager object that sent the message. */
-- (void)syncManagerDidStartRegistration:(TICDSApplicationSyncManager *)aSyncManager;
+- (void)applicationSyncManagerDidBeginRegistering:(TICDSApplicationSyncManager *)aSyncManager;
 
-/** Informs the delegate that the sync manager encountered an error during the application registration process.
- 
- @param aSyncManager The application sync manager object that sent the message. 
- @param anError The error that was encountered. */
-- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager encounteredRegistrationError:(NSError *)anError;
-
-/** Informs the delegate that the registration process failed to complete.
- 
- The error will previously have been supplied through the `syncManager:encounteredRegistrationError:` method.
- 
- @param aSyncManager The application sync manager object that sent the message. */
-- (void)syncManagerFailedToRegister:(TICDSApplicationSyncManager *)aSyncManager;
+/** Informs the delegate that the registration process failed to complete because of an error.
+  
+ @param aSyncManager The application sync manager object that sent the message.
+ @param anError The error that caused the registration process to fail. */
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFailToRegisterWithError:(NSError *)anError;
 
 /** Informs the delegate that the registration process completed successfully.
  
  @param aSyncManager The application sync manager object that sent the message. */
-- (void)syncManagerDidRegisterSuccessfully:(TICDSApplicationSyncManager *)aSyncManager;
+- (void)applicationSyncManagerDidFinishRegistering:(TICDSApplicationSyncManager *)aSyncManager;
 
 #pragma mark Listing Previously Synchronized Documents
 /** @name Listing Previously Synchronized Documents */

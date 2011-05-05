@@ -98,12 +98,12 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
 }
 
 #pragma mark Sync Delegate
-- (void)syncManagerDidStartRegistration:(TICDSApplicationSyncManager *)aSyncManager
+- (void)applicationSyncManagerDidBeginRegistering:(TICDSApplicationSyncManager *)aSyncManager
 {
     [self increaseSyncActivity];
 }
 
-- (void)syncManagerDidRegisterSuccessfully:(TICDSApplicationSyncManager *)aSyncManager
+- (void)applicationSyncManagerDidFinishRegistering:(TICDSApplicationSyncManager *)aSyncManager
 {
     [self decreaseSyncActivity];
     
@@ -117,7 +117,7 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
     NSLog(@"Error registering: %@", anError);
 }
 
-- (void)syncManagerFailedToRegister:(TICDSApplicationSyncManager *)aSyncManager
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFailToRegisterWithError:(NSError *)anError
 {
     NSLog(@"Failed to register");
     [self decreaseSyncActivity];

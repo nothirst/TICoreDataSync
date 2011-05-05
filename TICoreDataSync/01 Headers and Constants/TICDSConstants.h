@@ -70,5 +70,5 @@ extern NSString * const kTICDSSyncWarningEntityName;
 extern NSString * const kTICDSSyncWarningAttributes;
 extern NSString * const kTICDSSyncWarningRelatedObjectEntityName;
 
-extern NSString * const TICDSApplicationSyncManagerDidRegisterSuccessfullyNotification;
+extern NSString * const TICDSApplicationSyncManagerDidFinishRegisteringNotification;
 extern NSString * const TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification;

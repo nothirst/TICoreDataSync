@@ -91,6 +91,7 @@ typedef enum _TICDSErrorCode {
     TICDSErrorCodeCoreDataSaveError,
     TICDSErrorCodeObjectCreationError,
     TICDSErrorCodeWholeStoreCannotBeUploadedWhileThereAreUnsynchronizedSyncChanges,
+    TICDSErrorCodeTaskWasCancelled,
 } TICDSErrorCode;
 
 #pragma mark Operation Phases

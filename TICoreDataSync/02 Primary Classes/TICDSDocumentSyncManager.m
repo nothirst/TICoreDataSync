@@ -48,7 +48,7 @@
     BOOL success = [self startDocumentConfigurationProcess:&anyError];
     
     if( !success ) {
-        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredRegistrationError:), anyError];
+        [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToRegisterWithError:), anyError];
     }
 }
 
@@ -202,7 +202,7 @@
     if( [anAppSyncManager state] == TICDSApplicationSyncManagerStateAbleToSync ) {
         [[self registrationQueue] setSuspended:NO];
     } else { 
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appSyncManagerDidRegister:) name:TICDSApplicationSyncManagerDidRegisterSuccessfullyNotification object:anAppSyncManager];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appSyncManagerDidRegister:) name:TICDSApplicationSyncManagerDidFinishRegisteringNotification object:anAppSyncManager];
     }
     
     shouldContinue = [self startDocumentRegistrationProcess:&anyError];

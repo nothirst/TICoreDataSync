@@ -90,5 +90,5 @@ NSString * const kTICDSSyncWarningEntityName = @"kTICDSSyncWarningEntityName";
 NSString * const kTICDSSyncWarningAttributes = @"kTICDSSyncWarningAttributes";
 NSString * const kTICDSSyncWarningRelatedObjectEntityName = @"kTICDSSyncWarningRelatedObjectEntityName";
 
-NSString * const TICDSApplicationSyncManagerDidRegisterSuccessfullyNotification = @"TICDSApplicationSyncManagerDidRegisterSuccessfullyNotification";
+NSString * const TICDSApplicationSyncManagerDidFinishRegisteringNotification = @"TICDSApplicationSyncManagerDidFinishRegisteringNotification";
 NSString * const TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification = @"TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification";

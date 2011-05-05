@@ -38,6 +38,12 @@
 	
 	<option value="instance_methods">Instance Methods</option>
 	
+	<option value="//api/name/applicationSyncManager:didFailToRegisterWithError:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManager:didFailToRegisterWithError:</option>
+	
+	<option value="//api/name/applicationSyncManagerDidBeginRegistering:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManagerDidBeginRegistering:</option>
+	
+	<option value="//api/name/applicationSyncManagerDidFinishRegistering:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManagerDidFinishRegistering:</option>
+	
 	<option value="//api/name/syncManager:didFindPreviouslySynchronizedDocuments:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:didFindPreviouslySynchronizedDocuments:</option>
 	
 	<option value="//api/name/syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:</option>
@@ -45,8 +51,6 @@
 	<option value="//api/name/syncManager:didStartToDownloadDocumentWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:didStartToDownloadDocumentWithIdentifier:</option>
 	
 	<option value="//api/name/syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:</option>
-	
-	<option value="//api/name/syncManager:encounteredRegistrationError:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:encounteredRegistrationError:</option>
 	
 	<option value="//api/name/syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:</option>
 	
@@ -59,12 +63,6 @@
 	<option value="//api/name/syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:</option>
 	
 	<option value="//api/name/syncManagerDidNotFindAnyPreviouslySynchronizedDocuments:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidNotFindAnyPreviouslySynchronizedDocuments:</option>
-	
-	<option value="//api/name/syncManagerDidRegisterSuccessfully:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidRegisterSuccessfully:</option>
-	
-	<option value="//api/name/syncManagerDidStartRegistration:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidStartRegistration:</option>
-	
-	<option value="//api/name/syncManagerFailedToRegister:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerFailedToRegister:</option>
 	
 	
 	
@@ -100,6 +98,12 @@
 
 <li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManager:didFailToRegisterWithError:">applicationSyncManager:didFailToRegisterWithError:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManagerDidBeginRegistering:">applicationSyncManagerDidBeginRegistering:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManagerDidFinishRegistering:">applicationSyncManagerDidFinishRegistering:</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:didFindPreviouslySynchronizedDocuments:">syncManager:didFindPreviouslySynchronizedDocuments:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:">syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:</a></span></li>
@@ -107,8 +111,6 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:didStartToDownloadDocumentWithIdentifier:">syncManager:didStartToDownloadDocumentWithIdentifier:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:">syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredRegistrationError:">syncManager:encounteredRegistrationError:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:">syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:</a></span></li>
 	
@@ -121,12 +123,6 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:">syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidNotFindAnyPreviouslySynchronizedDocuments:">syncManagerDidNotFindAnyPreviouslySynchronizedDocuments:</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidRegisterSuccessfully:">syncManagerDidRegisterSuccessfully:</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidStartRegistration:">syncManagerDidStartRegistration:</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerFailedToRegister:">syncManagerFailedToRegister:</a></span></li>
 	
 </ul></li>
 
@@ -183,28 +179,21 @@
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
-		<code><a href="#//api/name/syncManagerDidStartRegistration:">&ndash;&nbsp;syncManagerDidStartRegistration:</a></code>
+		<code><a href="#//api/name/applicationSyncManagerDidBeginRegistering:">&ndash;&nbsp;applicationSyncManagerDidBeginRegistering:</a></code>
 		<span class="tooltip"><p>Informs the delegate that the sync manager has started the application registration process.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/syncManager:encounteredRegistrationError:">&ndash;&nbsp;syncManager:encounteredRegistrationError:</a></code>
-		<span class="tooltip"><p>Informs the delegate that the sync manager encountered an error during the application registration process.</p></span>
+		<code><a href="#//api/name/applicationSyncManager:didFailToRegisterWithError:">&ndash;&nbsp;applicationSyncManager:didFailToRegisterWithError:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the registration process failed to complete because of an error.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/syncManagerFailedToRegister:">&ndash;&nbsp;syncManagerFailedToRegister:</a></code>
-		<span class="tooltip"><p>Informs the delegate that the registration process failed to complete.</p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/syncManagerDidRegisterSuccessfully:">&ndash;&nbsp;syncManagerDidRegisterSuccessfully:</a></code>
+		<code><a href="#//api/name/applicationSyncManagerDidFinishRegistering:">&ndash;&nbsp;applicationSyncManagerDidFinishRegistering:</a></code>
 		<span class="tooltip"><p>Informs the delegate that the registration process completed successfully.</p></span>
 	</span>
 	
@@ -311,6 +300,142 @@
 					<div class="section section-methods">
 						<a title="Instance Methods" name="instance_methods"></a>
 						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManager:didFailToRegisterWithError:" title="applicationSyncManager:didFailToRegisterWithError:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManager:didFailToRegisterWithError:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the registration process failed to complete because of an error.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> didFailToRegisterWithError:(NSError *)<em>anError</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anError</em></dt>
+			<dd><p>The error that caused the registration process to fail.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManagerDidBeginRegistering:" title="applicationSyncManagerDidBeginRegistering:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManagerDidBeginRegistering:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the sync manager has started the application registration process.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManagerDidBeginRegistering:(TICDSApplicationSyncManager *)<em>aSyncManager</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>At the end of the registration process, one of the <code>applicationSyncManger:didFailToRegisterWithError:</code> or <a href="#//api/name/applicationSyncManagerDidFinishRegistering:"><code>applicationSyncManagerDidFinishRegistering:</code></a> methods will be called.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManagerDidFinishRegistering:" title="applicationSyncManagerDidFinishRegistering:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManagerDidFinishRegistering:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the registration process completed successfully.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManagerDidFinishRegistering:(TICDSApplicationSyncManager *)<em>aSyncManager</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
 						
 						<div class="section-method">
 	<a name="//api/name/syncManager:didFindPreviouslySynchronizedDocuments:" title="syncManager:didFindPreviouslySynchronizedDocuments:"></a>
@@ -501,53 +626,6 @@
 		<dl class="argument-def parameter-def">
 			<dt><em>anIdentifier</em></dt>
 			<dd><p>The unique synchronization identifier of the document.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/syncManager:encounteredRegistrationError:" title="syncManager:encounteredRegistrationError:"></a>
-	<h3 class="subsubtitle method-title">syncManager:encounteredRegistrationError:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Informs the delegate that the sync manager encountered an error during the application registration process.</p>
-	</div>		
-	
-	
-	<div class="method-subsection method-declaration"><code>- (void)syncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> encounteredRegistrationError:(NSError *)<em>anError</em></code></div>
-	
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>aSyncManager</em></dt>
-			<dd><p>The application sync manager object that sent the message.</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>anError</em></dt>
-			<dd><p>The error that was encountered.</p></dd>
 		</dl>
 		
 	</div>
@@ -869,144 +947,6 @@
 	
 </div>
 						
-						<div class="section-method">
-	<a name="//api/name/syncManagerDidRegisterSuccessfully:" title="syncManagerDidRegisterSuccessfully:"></a>
-	<h3 class="subsubtitle method-title">syncManagerDidRegisterSuccessfully:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Informs the delegate that the registration process completed successfully.</p>
-	</div>		
-	
-	
-	<div class="method-subsection method-declaration"><code>- (void)syncManagerDidRegisterSuccessfully:(TICDSApplicationSyncManager *)<em>aSyncManager</em></code></div>
-	
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>aSyncManager</em></dt>
-			<dd><p>The application sync manager object that sent the message.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/syncManagerDidStartRegistration:" title="syncManagerDidStartRegistration:"></a>
-	<h3 class="subsubtitle method-title">syncManagerDidStartRegistration:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Informs the delegate that the sync manager has started the application registration process.</p>
-	</div>		
-	
-	
-	<div class="method-subsection method-declaration"><code>- (void)syncManagerDidStartRegistration:(TICDSApplicationSyncManager *)<em>aSyncManager</em></code></div>
-	
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>aSyncManager</em></dt>
-			<dd><p>The application sync manager object that sent the message.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	<div class="method-subsection discussion-section">
-		<h4 class="method-subtitle">Discussion</h4>
-		<p>If an error occurs during application registration, the <a href="#//api/name/syncManager:encounteredRegistrationError:"><code>syncManager:encounteredRegistrationError:</code></a> method will be called.</p>
-
-<p>At the end of the registration process, one of the <a href="#//api/name/syncManagerFailedToRegister:"><code>syncManagerFailedToRegister:</code></a> or <a href="#//api/name/syncManagerDidRegisterSuccessfully:"><code>syncManagerDidRegisterSuccessfully:</code></a> methods will be called.</p>
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/syncManagerFailedToRegister:" title="syncManagerFailedToRegister:"></a>
-	<h3 class="subsubtitle method-title">syncManagerFailedToRegister:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Informs the delegate that the registration process failed to complete.</p>
-	</div>		
-	
-	
-	<div class="method-subsection method-declaration"><code>- (void)syncManagerFailedToRegister:(TICDSApplicationSyncManager *)<em>aSyncManager</em></code></div>
-	
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>aSyncManager</em></dt>
-			<dd><p>The application sync manager object that sent the message.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	<div class="method-subsection discussion-section">
-		<h4 class="method-subtitle">Discussion</h4>
-		<p>The error will previously have been supplied through the <a href="#//api/name/syncManager:encounteredRegistrationError:"><code>syncManager:encounteredRegistrationError:</code></a> method.</p>
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
-	</div>				
-	
-	
-</div>
-						
 					</div>
 					
 					
@@ -1020,7 +960,7 @@
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2011 Tim Isted. All rights reserved. (Last updated: 2011-05-04)</span><br />
+						<p><span class="copyright">&copy; 2011 Tim Isted. All rights reserved. (Last updated: 2011-05-05)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.0.3 (build 668)</a>.</span></p>
 						

@@ -22,6 +22,7 @@ NSString *gTICDSErrorStrings[] = {
     @"Core Data Save error",
     @"Failed to create Core Data object",
     @"Whole Store file cannot be uploaded while there are still unsynchronized local sync changes",
+    @"Task was cancelled",
 };
 
 #include <execinfo.h>

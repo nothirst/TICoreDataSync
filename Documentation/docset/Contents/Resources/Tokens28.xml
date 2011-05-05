@@ -12,11 +12,11 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManagerDidStartRegistration:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/applicationSyncManagerDidBeginRegistering:</TokenIdentifier>
 			<Abstract>Informs the delegate that the sync manager has started the application registration process.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManagerDidStartRegistration:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
+			<Declaration>- (void)applicationSyncManagerDidBeginRegistering:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -24,50 +24,35 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManagerDidStartRegistration:</Anchor>
+			<Anchor>//api/name/applicationSyncManagerDidBeginRegistering:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManager:encounteredRegistrationError:</TokenIdentifier>
-			<Abstract>Informs the delegate that the sync manager encountered an error during the application registration process.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/applicationSyncManager:didFailToRegisterWithError:</TokenIdentifier>
+			<Abstract>Informs the delegate that the registration process failed to complete because of an error.
+  </Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager encounteredRegistrationError:(NSError *)anError</Declaration>
+			<Declaration>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFailToRegisterWithError:(NSError *)anError</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
 					<Abstract>The application sync manager object that sent the message.</Abstract>
 				</Parameter><Parameter>
 					<Name>anError</Name>
-					<Abstract>The error that was encountered.</Abstract>
+					<Abstract>The error that caused the registration process to fail.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManager:encounteredRegistrationError:</Anchor>
+			<Anchor>//api/name/applicationSyncManager:didFailToRegisterWithError:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManagerFailedToRegister:</TokenIdentifier>
-			<Abstract>Informs the delegate that the registration process failed to complete.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
-			
-			<Declaration>- (void)syncManagerFailedToRegister:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/syncManagerFailedToRegister:</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManagerDidRegisterSuccessfully:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/applicationSyncManagerDidFinishRegistering:</TokenIdentifier>
 			<Abstract>Informs the delegate that the registration process completed successfully.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManagerDidRegisterSuccessfully:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
+			<Declaration>- (void)applicationSyncManagerDidFinishRegistering:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -75,7 +60,7 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManagerDidRegisterSuccessfully:</Anchor>
+			<Anchor>//api/name/applicationSyncManagerDidFinishRegistering:</Anchor>
 		</Token>
 		
 		<Token>

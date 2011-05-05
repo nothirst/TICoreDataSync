@@ -11,7 +11,7 @@
 @interface TICDSApplicationSyncManager ()
 
 - (BOOL)startRegistrationProcess:(NSError **)outError;
-- (void)bailFromRegistrationProcess;
+- (void)bailFromRegistrationProcessWithError:(NSError *)anError;
 - (BOOL)getAvailablePreviouslySynchronizedDocuments:(NSError **)outError;
 - (void)bailFromDocumentDownloadProcessForDocumentWithIdentifier:(NSString *)anIdentifier;
 - (BOOL)startDocumentDownloadProcessForDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation error:(NSError **)outError;
@@ -45,18 +45,17 @@
     BOOL shouldContinue = [self startRegistrationProcess:&anyError];
     if( !shouldContinue ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error registering: %@", anyError);
-        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredRegistrationError:), anyError];
-        [self bailFromRegistrationProcess];
+        [self bailFromRegistrationProcessWithError:anyError];
         return;
     }
     
-    [self ti_alertDelegateWithSelector:@selector(syncManagerDidStartRegistration:)];
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidBeginRegistering:)];
 }
 
-- (void)bailFromRegistrationProcess
+- (void)bailFromRegistrationProcessWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from application registration process");
-    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToRegister:)];
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManger:didFailToRegisterWithError:), anError];
 }
 
 - (BOOL)startRegistrationProcess:(NSError **)outError
@@ -96,12 +95,12 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Finished registering application sync manager");
     
     // Registration Complete
-    [self ti_alertDelegateWithSelector:@selector(syncManagerDidRegisterSuccessfully:)];
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidFinishRegistering:)];
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Resuming Operation Queues");
     [[self otherTasksQueue] setSuspended:NO];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:TICDSApplicationSyncManagerDidRegisterSuccessfullyNotification object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:TICDSApplicationSyncManagerDidFinishRegisteringNotification object:self];
 }
 
 - (void)applicationRegistrationOperationWasCancelled:(TICDSApplicationRegistrationOperation *)anOperation
@@ -109,15 +108,14 @@
     [self setState:TICDSApplicationSyncManagerStateNotYetRegistered];
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Application Registration Operation was Cancelled");
     
-    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToRegister:)];
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManger:didFailToRegisterWithError:), [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
 }
 
 - (void)applicationRegistrationOperation:(TICDSApplicationRegistrationOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
     [self setState:TICDSApplicationSyncManagerStateNotYetRegistered];
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Application Registration Operation Failed to Complete with Error: %@", anError);
-    [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredRegistrationError:), anError];
-    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToRegister:)];
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManger:didFailToRegisterWithError:), anError];
 }
 
 #pragma mark -
