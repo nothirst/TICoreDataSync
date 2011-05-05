@@ -264,55 +264,48 @@
 
 /** Invoked to ask the delegate for the URL of the document's store once it's been downloaded.
  
- If this method is not implemented, the sync manager will ask the synchronized persistent store coordinator for the location of its `persistentStores` array's `lastObject`.
+ If this method is not implemented, the sync manager will ask the synchronized managed object context's persistent store coordinator for the location of its `persistentStores` array's `lastObject`.
  
  @param aSyncManager The document sync manager object that sent the message.
  
  @return The location of the store file. */
-- (NSURL *)syncManagerFinalURLForDownloadedStore:(TICDSDocumentSyncManager *)aSyncManager;
+- (NSURL *)documentSyncManagerURLForDownloadedStore:(TICDSDocumentSyncManager *)aSyncManager;
 
 /** Informs the delegate that the document sync manager has begun to download the whole store file, together with necessary helper files.
  
- If an error occurs during the download process, the `syncManager:encounteredWholeStoreDownloadError:` method will be called.
+ The store will be downloaded to a temporary location; once this has happened, the `documentSyncManager:willReplaceStoreWithDownloadedStoreAtURL:` method will be called just before the store is moved to the location given by the `documentSyncManagerURLForDownloadedStore:` method to allow you to remove the store file from any persistent store coordinators. Once the file has been moved, the `documentSyncManager:didReplaceStoreWithDownloadedStoreAtURL:` method will be called.
  
- The store will be downloaded to a temporary location; once this has happened, the `syncManager:willReplaceStoreWithDownloadedStoreAtLocation:` method will be called just before the store is moved to the location given by the `syncManagerFinalURLForDownloadedStore:` method to allow you to remove the file from any persistent store coordinators. Once the file has been moved, the `syncManager:didReplaceStoreWithDownloadedStoreAtLocation:` method will be called.
- 
- At the end of the download process, one of the `syncManagerFailedToDownloadWholeStore:` or `syncManagerDidDownloadWholeStoreSuccessfully:` methods will be called.
+ At the end of the download process, one of the `documentSyncManager:didFailToDownloadWholeStoreWithError:` or `documentSyncManagerDidFinishDownloadingWholeStore:` methods will be called.
  
  @param aSyncManager The document sync manager object that sent the message. */
-- (void)syncManagerDidBeginToDownloadWholeStore:(TICDSDocumentSyncManager *)aSyncManager;
+- (void)documentSyncManagerDidBeginDownloadingWholeStore:(TICDSDocumentSyncManager *)aSyncManager;
 
 /** Informs the delegate that the document sync manager has downloaded the store to a temporary location, and is about to replace the store at the given location.
  
  You should remove the given store from the persistent store coordinator.
  
  @param aSyncManager The document sync manager object that sent the message.
- @param aLocation The location of the persistent store that will be replaced. */
-- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager willReplaceStoreWithDownloadedStoreAtLocation:(NSURL *)aLocation;
+ @param aStoreURL The location of the persistent store that will be replaced. */
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager willReplaceStoreWithDownloadedStoreAtURL:(NSURL *)aStoreURL;
 
 /** Informs the delegate that the document sync manager has replaced the store at the given location with the downloaded store.
  
  You should add the store back for the persistent store coordinator.
  
  @param aSyncManager The document sync manager object that sent the message.
- @param aLocation The location of the persistent store that was replaced. */
-- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didReplaceStoreWithDownloadedStoreAtLocation:(NSURL *)aLocation;
+ @param aStoreURL The location of the persistent store that was replaced. */
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didReplaceStoreWithDownloadedStoreAtURL:(NSURL *)aStoreURL;
 
-/** Informs the delegate that the document sync manager encountered an error during the whole store upload.
+/** Informs the delegate that the document sync manager failed to download the whole store file.
  
  @param aSyncManager The document sync manager object that sent the message.
- @param anError The error. */
-- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredWholeStoreDownloadError:(NSError *)anError;
+ @param anError The error that caused the download to fail. */
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToDownloadWholeStoreWithError:(NSError *)anError;
 
-/** Informs the delegate that the document sync manager failed to upload the whole store file.
+/** Informs the delegate that the document sync manager finished downloading the whole store file successfully.
  
  @param aSyncManager The document sync manager object that sent the message. */
-- (void)syncManagerFailedToDownloadWholeStore:(TICDSDocumentSyncManager *)aSyncManager;
-
-/** Informs the delegate that the document sync manager finished uploading the whole store file successfully.
- 
- @param aSyncManager The document sync manager object that sent the message. */
-- (void)syncManagerDidDownloadWholeStoreSuccessfully:(TICDSDocumentSyncManager *)aSyncManager;
+- (void)documentSyncManagerDidFinishDownloadingWholeStore:(TICDSDocumentSyncManager *)aSyncManager;
 
 #pragma mark Synchronization
 
