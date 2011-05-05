@@ -85,7 +85,7 @@ There are six primary types of operation spawned by the Sync Manager:
 * **Synchronization** (`TICDSSynchronizationOperation`)
 * **Vacuum** (`TICDSVacuumOperation`)
 
-Each of these are generic classes, designed to be overridden to add the upload/download behavior necessary to the type of sync you wish to use. If you use a `TICDSFileManagerBasedDocumentSyncManager`, for example, it will spawn its own `TICDSFileManagerBasedXXXOperation` objects and configure them correctly.
+Each of these is a generic class, designed to be overridden to add the upload/download behavior necessary to the type of sync you wish to use. If you use a `TICDSFileManagerBasedDocumentSyncManager`, for example, it will spawn its own `TICDSFileManagerBasedXXXOperation` objects and configure them correctly.
 
 All operations are (to use Apple's terminology) **concurrent** operations, and can run either on the main thread for use with e.g. asynchronous URL up/downloads (any non-transfer-related work is still carried out in the background), or entirely in the background for e.g. file-manager-based transfers.
 
