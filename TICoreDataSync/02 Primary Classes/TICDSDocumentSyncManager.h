@@ -59,7 +59,7 @@
  
  If you provide an application sync manager that isn't yet ready to sync, the document registration task will be suspended until the application has finished registering.
  
- If this is the first time you have registered this document, or the remote file structure has been removed for some reason, your delegate will be notified with the `syncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:` method. You must continue registration manually by calling the `continueRegistrationByCreatingRemoteFileStructure:` method.
+ If this is the first time you have registered this document, or the remote file structure has been removed for some reason, your delegate will be notified with the `documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:` method. You must continue registration manually by calling the `continueRegistrationByCreatingRemoteFileStructure:` method.
  
  @warning You must call this method before using the document sync manager for any other purpose.
  
@@ -74,7 +74,7 @@
 
 /** Continue Registration.
  
- If this is the first time you have registered this document, or the remote file structure has been removed for some reason, your delegate will be notified with the `syncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:` method. You must continue registration manually by calling this method, specifying whether or not the registration should continue by creating the remote file structure.
+ If this is the first time you have registered this document, or the remote file structure has been removed for some reason, your delegate will be notified with the `documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:` method. You must continue registration manually by calling this method, specifying whether or not the registration should continue by creating the remote file structure.
  
  If you specify `NO`, registration will fail with an error.
  

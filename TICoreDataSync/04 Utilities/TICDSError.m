@@ -14,6 +14,7 @@ NSString *gTICDSErrorStrings[] = {
     @"File Manager error",
     @"Unexpected or incomplete file location or directory structure",
     @"Helper File directory does not already exist",
+    @"Failed to create Sync Changes managed object context",
     @"Failed to save Sync Changes managed object context",
     @"Failed to create Operation Object",
     @"File already exists at specified location",

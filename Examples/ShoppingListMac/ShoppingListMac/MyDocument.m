@@ -87,29 +87,29 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
 #pragma mark -
 #pragma mark CALLBACKS
 #pragma mark Registration
-- (void)syncManagerDidStartDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager
+- (void)documentSyncManagerDidBeginRegistering:(TICDSDocumentSyncManager *)aSyncManager
 {
     [self increaseActivity];
 }
 
-- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo
 {
     [self decreaseActivity];
     
     [aSyncManager continueRegistrationByCreatingRemoteFileStructure:YES];
 }
 
-- (void)syncManagerDidResumeRegistration:(TICDSDocumentSyncManager *)aSyncManager
+- (void)documentSyncManagerDidContinueRegistering:(TICDSDocumentSyncManager *)aSyncManager
 {
     [self increaseActivity];
 }
 
-- (void)syncManagerFailedToRegisterDocument:(TICDSDocumentSyncManager *)aSyncManager
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToRegisterWithError:(NSError *)anError
 {
     [self decreaseActivity];
 }
 
-- (void)syncManagerDidRegisterDocumentSuccessfully:(TICDSDocumentSyncManager *)aSyncManager
+- (void)documentSyncManagerDidFinishRegistering:(TICDSDocumentSyncManager *)aSyncManager
 {
     [self decreaseActivity];
     

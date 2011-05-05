@@ -57,20 +57,20 @@
 #pragma mark Registration
 /** @name Registration */
 
-/** Informs the delegate that the sync manager has started the application registration process.
+/** Informs the delegate that the application sync manager has started the application registration process.
  
  At the end of the registration process, one of the `applicationSyncManger:didFailToRegisterWithError:` or `applicationSyncManagerDidFinishRegistering:` methods will be called.
  
  @param aSyncManager The application sync manager object that sent the message. */
 - (void)applicationSyncManagerDidBeginRegistering:(TICDSApplicationSyncManager *)aSyncManager;
 
-/** Informs the delegate that the registration process failed to complete because of an error.
+/** Informs the delegate that the application sync manager failed to register the application because of an error.
   
  @param aSyncManager The application sync manager object that sent the message.
  @param anError The error that caused the registration process to fail. */
 - (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFailToRegisterWithError:(NSError *)anError;
 
-/** Informs the delegate that the registration process completed successfully.
+/** Informs the delegate that the application sync manager finished registering the application successfully.
  
  @param aSyncManager The application sync manager object that sent the message. */
 - (void)applicationSyncManagerDidFinishRegistering:(TICDSApplicationSyncManager *)aSyncManager;
@@ -78,25 +78,25 @@
 #pragma mark Listing Previously Synchronized Documents
 /** @name Listing Previously Synchronized Documents */
 
-/** Informs the delegate that the sync manager has started to check for available documents that have previously been synchronized.
+/** Informs the delegate that the application sync manager has started to check for available documents that have previously been synchronized.
  
  At the end of the process, one of the `applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:`, `applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:`, or `applicationSyncManager:didFinishCheckingAndFoundPreviouslySynchronizedDocuments:` methods will be called.
  
  @param aSyncManager The application sync manager object that sent the message. */
 - (void)applicationSyncManagerDidBeginCheckingForPreviouslySynchronizedDocuments:(TICDSApplicationSyncManager *)aSyncManager;
 
-/** Informs the delegate that the sync manager failed to check for available documents that have previously been synchronized.
+/** Informs the delegate that the application sync manager failed to check for available documents that have previously been synchronized.
  
  @param aSyncManager The application sync manager object that sent the message. 
  @param anError The error that caused the failure. */
 - (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFailToCheckForPreviouslySynchronizedDocumentsWithError:(NSError *)anError;
 
-/** Informs the delegate that the sync manager didn't find any available documents that have previously been synchronized.
+/** Informs the delegate that the application sync manager didn't find any available documents that have previously been synchronized.
  
  @param aSyncManager The application sync manager object that sent the message. */
 - (void)applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:(TICDSApplicationSyncManager *)aSyncManager;
 
-/** Informs the delegate that the sync manager found one or more available documents that have previously been synchronized.
+/** Informs the delegate that the application sync manager found one or more available documents that have previously been synchronized.
  
  One `NSDictionary` is supplied per document, containing the following keys:
  
@@ -112,20 +112,20 @@
 #pragma mark Downloading a Previously Synchronized Document
 /** @name Downloading a Previously Synchronized Document */
 
-/** Informs the delegate that the sync manager has started to download a requested document that has previously been synchronized.
+/** Informs the delegate that the application sync manager has started to download a requested document that has previously been synchronized.
  
  @param aSyncManager The application sync manager object that sent the message.
  @param anIdentifier The unique synchronization identifier of the document. */
 - (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didBeginDownloadingDocumentWithIdentifier:(NSString *)anIdentifier;
 
-/** Informs the delegate that the download of a requested document has failed to complete because of an error.
+/** Informs the delegate that the application sync manager failed to download a requested document because of an error.
  
  @param aSyncManager The application sync manager object that sent the message. 
  @param anIdentifier The unique synchronization identifier of the document.
  @param anError The error that caused the download to fail. */
 - (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFailToDownloadDocumentWithIdentifier:(NSString *)anIdentifier error:(NSError *)anError;
 
-/** Informs the delegate that a downloaded store file file is about to replace an existing store file on disc.
+/** Informs the delegate that the application sync manager is about to replace an existing store file on disc with a newly-downloaded file.
  
  @param aSyncManager The application sync manager object that sent the message.
  @param anIdentifier The unique synchronization identifier of the document.
@@ -146,7 +146,8 @@
 @required
 - (TICDSDocumentSyncManager *)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:(NSString *)anIdentifier atURL:(NSURL *)aFileURL;
 @optional
-/** Informs the delegate that the download of a requested document has completed successfully.
+
+/** Informs the delegate that the application sync manager finished downloading a requested document successfully.
  
  @param aSyncManager The application sync manager object that sent the message. 
  @param anIdentifier The unique synchronization identifier of the document.
@@ -164,22 +165,14 @@
 #pragma mark Registration
 /** @name Registration Phase */
 
-/** Informs the delegate that the sync manager has started the document registration process.
+/** Informs the delegate that the document sync manager has started the document registration process.
  
- If an error occurs during document registration, the `syncManager:encounteredDocumentRegistrationError:` method will be called.
- 
- At the end of the registration process, one of the `syncManagerFailedToRegisterDocument:` or `syncManagerDidRegisterDocumentSuccessfully:` methods will be called.
+ At the end of the registration process, one of the `documentSyncManager:didFailToRegisterWithError:` or `documentSyncManagerDidFinishRegistering:` methods will be called.
 
  @param aSyncManager The document sync manager object that sent the message. */
-- (void)syncManagerDidStartDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager;
+- (void)documentSyncManagerDidBeginRegistering:(TICDSDocumentSyncManager *)aSyncManager;
 
-/** Informs the delegate that the sync manager encountered an error during the document registration process.
- 
- @param aSyncManager The document sync manager object that sent the message. 
- @param anError The error that was encountered. */
-- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredDocumentRegistrationError:(NSError *)anError;
-
-/** Informs the delegate that the sync manager paused the document registration process because the remote file structure does not yet exist for the specified document.
+/** Informs the delegate that the document sync manager paused the document registration process because the remote file structure does not yet exist for the specified document.
  
  @param aSyncManager The document sync manager object that sent the message. 
  @param anIdentifier The unique identifier for the document (as supplied at registration).
@@ -189,26 +182,25 @@
  @warning You *must* call the `continueRegistrationByCreatingRemoteFileStructure:` method to indicate whether registration should continue or not.
  */
 @required
-- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo;
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo;
 
 @optional
 
-/** Informs the delegate that the sync manager has resumed the document registration process.
+/** Informs the delegate that the document sync manager has resumed the document registration process.
  
  @param aSyncManager The document sync manager object that sent the message. */
-- (void)syncManagerDidResumeRegistration:(TICDSDocumentSyncManager *)aSyncManager;
+- (void)documentSyncManagerDidContinueRegistering:(TICDSDocumentSyncManager *)aSyncManager;
 
-/** Informs the delegate that the sync manager failed to complete the document registration process.
+/** Informs the delegate that the document sync manager failed to complete the document registration process.
  
- The error will previously have been supplied through the `syncManager:encounteredDocumentRegistrationError:` method.
+ @param aSyncManager The document sync manager object that sent the message.
+ @param anError The error that caused the registration process to fail. */
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToRegisterWithError:(NSError *)anError;
 
- @param aSyncManager The document sync manager object that sent the message. */
-- (void)syncManagerFailedToRegisterDocument:(TICDSDocumentSyncManager *)aSyncManager;
-
-/** Informs the delegate that the registration process completed successfully.
+/** Informs the delegate that the document sync manager finished registering the document successfully.
  
  @param aSyncManager The document sync manager object that sent the message. */
-- (void)syncManagerDidRegisterDocumentSuccessfully:(TICDSDocumentSyncManager *)aSyncManager;
+- (void)documentSyncManagerDidFinishRegistering:(TICDSDocumentSyncManager *)aSyncManager;
 
 #pragma mark Helper Files
 /** @name Helper Files */

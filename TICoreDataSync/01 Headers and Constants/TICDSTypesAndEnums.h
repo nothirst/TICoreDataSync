@@ -83,6 +83,7 @@ typedef enum _TICDSErrorCode {
     TICDSErrorCodeFileManagerError,
     TICDSErrorCodeUnexpectedOrIncompleteFileLocationOrDirectoryStructure,
     TICDSErrorCodeHelperFileDirectoryDoesNotExist,
+    TICDSErrorCodeFailedToCreateSyncChangesMOC,
     TICDSErrorCodeFailedToSaveSyncChangesMOC,
     TICDSErrorCodeFailedToCreateOperationObject,
     TICDSErrorCodeFileAlreadyExistsAtSpecifiedLocation,

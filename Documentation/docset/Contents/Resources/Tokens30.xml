@@ -12,11 +12,11 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidStartDocumentRegistration:</TokenIdentifier>
-			<Abstract>Informs the delegate that the sync manager has started the document registration process.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/documentSyncManagerDidBeginRegistering:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager has started the document registration process.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManagerDidStartDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Declaration>- (void)documentSyncManagerDidBeginRegistering:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -24,34 +24,15 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManagerDidStartDocumentRegistration:</Anchor>
+			<Anchor>//api/name/documentSyncManagerDidBeginRegistering:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:encounteredDocumentRegistrationError:</TokenIdentifier>
-			<Abstract>Informs the delegate that the sync manager encountered an error during the document registration process.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager paused the document registration process because the remote file structure does not yet exist for the specified document.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredDocumentRegistrationError:(NSError *)anError</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The document sync manager object that sent the message.</Abstract>
-				</Parameter><Parameter>
-					<Name>anError</Name>
-					<Abstract>The error that was encountered.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/syncManager:encounteredDocumentRegistrationError:</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:</TokenIdentifier>
-			<Abstract>Informs the delegate that the sync manager paused the document registration process because the remote file structure does not yet exist for the specified document.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
-			
-			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo</Declaration>
+			<Declaration>- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -68,15 +49,15 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:</Anchor>
+			<Anchor>//api/name/documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidResumeRegistration:</TokenIdentifier>
-			<Abstract>Informs the delegate that the sync manager has resumed the document registration process.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/documentSyncManagerDidContinueRegistering:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager has resumed the document registration process.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManagerDidResumeRegistration:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Declaration>- (void)documentSyncManagerDidContinueRegistering:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -84,15 +65,34 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManagerDidResumeRegistration:</Anchor>
+			<Anchor>//api/name/documentSyncManagerDidContinueRegistering:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerFailedToRegisterDocument:</TokenIdentifier>
-			<Abstract>Informs the delegate that the sync manager failed to complete the document registration process.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/documentSyncManager:didFailToRegisterWithError:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager failed to complete the document registration process.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManagerFailedToRegisterDocument:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Declaration>- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToRegisterWithError:(NSError *)anError</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aSyncManager</Name>
+					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>anError</Name>
+					<Abstract>The error that caused the registration process to fail.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/documentSyncManager:didFailToRegisterWithError:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/documentSyncManagerDidFinishRegistering:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager finished registering the document successfully.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)documentSyncManagerDidFinishRegistering:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -100,23 +100,7 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManagerFailedToRegisterDocument:</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidRegisterDocumentSuccessfully:</TokenIdentifier>
-			<Abstract>Informs the delegate that the registration process completed successfully.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
-			
-			<Declaration>- (void)syncManagerDidRegisterDocumentSuccessfully:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The document sync manager object that sent the message.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/syncManagerDidRegisterDocumentSuccessfully:</Anchor>
+			<Anchor>//api/name/documentSyncManagerDidFinishRegistering:</Anchor>
 		</Token>
 		
 		<Token>

@@ -12,7 +12,7 @@
 
 - (BOOL)startDocumentConfigurationProcess:(NSError **)outError;
 - (BOOL)startDocumentRegistrationProcess:(NSError **)outError;
-- (void)bailFromRegistrationProcess;
+- (void)bailFromRegistrationProcessWithError:(NSError *)anError;
 - (BOOL)checkForHelperFileDirectoryOrCreateIfNecessary:(NSError **)outError;
 
 - (void)startWholeStoreUploadProcess;
@@ -48,18 +48,16 @@
     BOOL success = [self startDocumentConfigurationProcess:&anyError];
     
     if( !success ) {
-        [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToRegisterWithError:), anyError];
+        [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToRegisterWithError:), anyError];
     }
 }
 
 - (BOOL)startDocumentConfigurationProcess:(NSError **)outError
 {
     // get the location of the helper file directory from the delegate, or create default location if necessary
-    NSError *anyError;
-    BOOL shouldContinue = [self checkForHelperFileDirectoryOrCreateIfNecessary:&anyError];
+    BOOL shouldContinue = [self checkForHelperFileDirectoryOrCreateIfNecessary:outError];
     
     if( !shouldContinue ) {
-        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredDocumentRegistrationError:), anyError];
         return NO;
     }
     
@@ -182,8 +180,7 @@
     }
     
     if( !shouldContinue ) {
-        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredDocumentRegistrationError:), anyError];
-        [self bailFromRegistrationProcess];
+        [self bailFromRegistrationProcessWithError:anyError];
         return;
     }
     
@@ -208,18 +205,17 @@
     shouldContinue = [self startDocumentRegistrationProcess:&anyError];
     if( !shouldContinue ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error registering: %@", anyError);
-        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredDocumentRegistrationError:), anyError];
-        [self bailFromRegistrationProcess];
+        [self bailFromRegistrationProcessWithError:anyError];
         return;
     }
     
-    [self ti_alertDelegateWithSelector:@selector(syncManagerDidStartDocumentRegistration:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidBeginRegistering:)];
 }
 
-- (void)bailFromRegistrationProcess
+- (void)bailFromRegistrationProcessWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from registration process");
-    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToRegisterDocument:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToRegisterWithError:), anError];
 }
 
 - (BOOL)startDocumentRegistrationProcess:(NSError **)outError
@@ -249,13 +245,13 @@
 - (void)registrationOperationPausedToFindOutWhetherToCreateRemoteDocumentStructure:(TICDSDocumentRegistrationOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Registration operation paused to find out whether to create document structure");
-    [self ti_alertDelegateWithSelector:@selector(syncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
 }
 
 - (void)registrationOperationResumedFollowingDocumentStructureCreationInstruction:(TICDSDocumentRegistrationOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Registration operation resumed after finding out whether to create document structure");
-    [self ti_alertDelegateWithSelector:@selector(syncManagerDidResumeRegistration:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidContinueRegistering:)];
 }
 
 
@@ -283,7 +279,7 @@
     [self setSyncChangesMOC:[[self coreDataFactory] managedObjectContext]];
     if( ![self syncChangesMOC] ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create sync changes MOC");
-        [self bailFromRegistrationProcess];
+        [self bailFromRegistrationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateSyncChangesMOC classAndMethod:__PRETTY_FUNCTION__]];
         return;
     }
     TICDSLog(TICDSLogVerbosityEveryStep, @"Finished creating SyncChangesMOC");
@@ -292,7 +288,7 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Finished registering document sync manager");
     
     // Registration Complete
-    [self ti_alertDelegateWithSelector:@selector(syncManagerDidRegisterDocumentSuccessfully:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidFinishRegistering:)];
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Resuming Operation Queues");
     [[self synchronizationQueue] setSuspended:NO];
@@ -324,15 +320,14 @@
     [self setState:TICDSDocumentSyncManagerStateNotYetRegistered];
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Registration Operation was Cancelled");
     
-    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToRegisterDocument:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToRegisterWithError:), [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
 }
 
 - (void)documentRegistrationOperation:(TICDSDocumentRegistrationOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
     [self setState:TICDSDocumentSyncManagerStateNotYetRegistered];
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Registration Operation Failed to Complete with Error: %@", anError);
-    [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredDocumentRegistrationError:), anError];
-    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToRegisterDocument:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToRegisterWithError:), anError];
 }
 
 #pragma mark -
@@ -652,7 +647,7 @@
     [self setSyncChangesMOC:[[self coreDataFactory] managedObjectContext]];
     if( ![self syncChangesMOC] ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create sync changes MOC");
-        [self bailFromRegistrationProcess];
+        [self bailFromSynchronizationProcess];
         return;
     }
     TICDSLog(TICDSLogVerbosityEveryStep, @"Finished creating SyncChangesMOC");

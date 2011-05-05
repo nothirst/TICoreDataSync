@@ -1716,7 +1716,7 @@
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>If this is the first time you have registered this document, or the remote file structure has been removed for some reason, your <a href="#//api/name/delegate">delegate</a> will be notified with the <code>syncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:</code> method. You must continue registration manually by calling this method, specifying whether or not the registration should continue by creating the remote file structure.</p>
+		<p>If this is the first time you have registered this document, or the remote file structure has been removed for some reason, your <a href="#//api/name/delegate">delegate</a> will be notified with the <code>documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:</code> method. You must continue registration manually by calling this method, specifying whether or not the registration should continue by creating the remote file structure.</p>
 
 <p>If you specify <code>NO</code>, registration will fail with an error.</p>
 	</div>
@@ -2034,7 +2034,7 @@
 
 <p>If you provide an application sync manager that isn&rsquo;t yet ready to sync, the document registration task will be suspended until the application has finished registering.</p>
 
-<p>If this is the first time you have registered this document, or the remote file structure has been removed for some reason, your <a href="#//api/name/delegate">delegate</a> will be notified with the <code>syncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:</code> method. You must continue registration manually by calling the <a href="#//api/name/continueRegistrationByCreatingRemoteFileStructure:"><code>continueRegistrationByCreatingRemoteFileStructure:</code></a> method.</p><div class="warning"><p>You must call this method before using the document sync manager for any other purpose.</p></div>
+<p>If this is the first time you have registered this document, or the remote file structure has been removed for some reason, your <a href="#//api/name/delegate">delegate</a> will be notified with the <code>documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:</code> method. You must continue registration manually by calling the <a href="#//api/name/continueRegistrationByCreatingRemoteFileStructure:"><code>continueRegistrationByCreatingRemoteFileStructure:</code></a> method.</p><div class="warning"><p>You must call this method before using the document sync manager for any other purpose.</p></div>
 	</div>
 	
 	
