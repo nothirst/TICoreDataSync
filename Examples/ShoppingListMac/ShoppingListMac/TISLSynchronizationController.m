@@ -181,32 +181,27 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
 }
 
 #pragma mark Download Doc Delegate
-- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager didStartToDownloadDocumentWithIdentifier:(NSString *)anIdentifier
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didBeginDownloadingDocumentWithIdentifier:(NSString *)anIdentifier
 {
     [self increaseSyncActivity];
 }
 
-- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager encounteredDownloadError:(NSError *)anError forDownloadOfDocumentWithIdentifier:(NSString *)anIdentifier
-{
-    NSLog(@"Error downloading: %@", anError);
-}
-
-- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager failedToDownloadDocumentWithIdentifier:(NSString *)anIdentifier
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFailToDownloadDocumentWithIdentifier:(NSString *)anIdentifier error:(NSError *)anError
 {
     [self decreaseSyncActivity];
 }
 
-- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager willReplaceWholeStoreFileForDocumentWithIdentifier:(NSString *)anIdentifier atLocation:(NSURL *)aLocation
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager willReplaceWholeStoreFileForDocumentWithIdentifier:(NSString *)anIdentifier atURL:(NSURL *)aFileURL
 {
-    NSLog(@"Replacing the document at %@", aLocation);
+    NSLog(@"Replacing the document at %@", aFileURL);
 }
 
-- (TICDSDocumentSyncManager *)syncManager:(TICDSApplicationSyncManager *)aSyncManager preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:(NSString *)anIdentifier atLocation:(NSURL *)aLocation
+- (TICDSDocumentSyncManager *)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:(NSString *)anIdentifier atURL:(NSURL *)aFileURL
 {
-    NSLog(@"Downloaded %@ to %@", anIdentifier, aLocation);
+    NSLog(@"Downloaded %@ to %@", anIdentifier, aFileURL);
     
     NSError *anyError = nil;
-    MyDocument *document = [[NSDocumentController sharedDocumentController] makeDocumentWithContentsOfURL:aLocation ofType:@"SQLite" error:&anyError];
+    MyDocument *document = [[NSDocumentController sharedDocumentController] makeDocumentWithContentsOfURL:aFileURL ofType:@"SQLite" error:&anyError];
     if( !document ) { 
         NSLog(@"Error opening downloaded store: %@", anyError);
         return nil;
@@ -219,11 +214,11 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
     return [document documentSyncManager];
 }
 
-- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishDownloadingDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishDownloadingDocumentWithIdentifier:(NSString *)anIdentifier atURL:(NSURL *)aFileURL
 {
     [self decreaseSyncActivity];
     NSError *anyError = nil;
-    MyDocument *document = [[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:aLocation display:YES error:&anyError];
+    MyDocument *document = [[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:aFileURL display:YES error:&anyError];
     
     if( !document ) {
         NSLog(@"Error opening document: %@", anyError);

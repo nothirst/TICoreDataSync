@@ -84,7 +84,7 @@
 
 /** Configure a sync manager for a document that's just been downloaded, but without carrying out full registration.
  
- Use this method to provide basic configuration of the sync manager for a document that's been downloaded by calling the `TICDSApplicationSyncManager` method `requestDownloadOfDocumentWithIdentifier:toLocation:`, normally in response to the `TICDSApplicationSyncManager` delegate method `syncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atLocation:`.
+ Use this method to provide basic configuration of the sync manager for a document that's been downloaded by calling the `TICDSApplicationSyncManager` method `requestDownloadOfDocumentWithIdentifier:toLocation:`, normally in response to the `TICDSApplicationSyncManager` delegate method `applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:`.
  
  This will setup the necessary helper file location and do any local configuration, but won't register the document with the remote.
  

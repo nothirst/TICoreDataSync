@@ -13,7 +13,7 @@
 - (BOOL)startRegistrationProcess:(NSError **)outError;
 - (void)bailFromRegistrationProcessWithError:(NSError *)anError;
 - (BOOL)getAvailablePreviouslySynchronizedDocuments:(NSError **)outError;
-- (void)bailFromDocumentDownloadProcessForDocumentWithIdentifier:(NSString *)anIdentifier;
+- (void)bailFromDocumentDownloadProcessForDocumentWithIdentifier:(NSString *)anIdentifier error:(NSError *)anError;
 - (BOOL)startDocumentDownloadProcessForDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation error:(NSError **)outError;
 
 @property (nonatomic, assign) TICDSApplicationSyncManagerState state;
@@ -199,21 +199,21 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to download a previously synchronized document %@ to %@", anIdentifier, aLocation);
     
-    [self ti_alertDelegateWithSelector:@selector(syncManager:didStartToDownloadDocumentWithIdentifier:), anIdentifier];
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didBeginDownloadingDocumentWithIdentifier:), anIdentifier];
     
     NSError *anyError = nil;
     BOOL success = [self startDocumentDownloadProcessForDocumentWithIdentifier:anIdentifier toLocation:aLocation error:&anyError];
     
     if( !success ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Request for list of previously-synchronized documents failed with error: %@", anyError);
-        [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:), anyError];
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Download of previously-synchronized document failed with error: %@", anyError);
+        [self bailFromDocumentDownloadProcessForDocumentWithIdentifier:anIdentifier error:anyError];
     }
 }
 
-- (void)bailFromDocumentDownloadProcessForDocumentWithIdentifier:(NSString *)anIdentifier
+- (void)bailFromDocumentDownloadProcessForDocumentWithIdentifier:(NSString *)anIdentifier error:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from document download process");
-    [self ti_alertDelegateWithSelector:@selector(syncManager:failedToDownloadDocumentWithIdentifier:), anIdentifier];
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:), anIdentifier, anError];
 }
 
 - (BOOL)startDocumentDownloadProcessForDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation error:(NSError **)outError
@@ -270,8 +270,7 @@
 #pragma mark Post-Operation Work
 - (void)bailFromDocumentDownloadPostProcessingForOperation:(TICDSWholeStoreDownloadOperation *)anOperation withError:(NSError *)anError
 {
-    [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:), anError, [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier]];
-    [self ti_alertDelegateWithSelector:@selector(syncManager:failedToDownloadDocumentWithIdentifier:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier]];
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], anError];
 }
 
 #pragma mark Operation Communications
@@ -284,7 +283,7 @@
     
     // Remove existing WholeStore, if necessary
     if( [[self fileManager] fileExistsAtPath:[finalWholeStoreLocation path]] ) {
-        [self ti_alertDelegateWithSelector:@selector(syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], finalWholeStoreLocation];
+        [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atURL:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], finalWholeStoreLocation];
         
         success = [[self fileManager] removeItemAtPath:[finalWholeStoreLocation path] error:&anyError];
         
@@ -302,7 +301,7 @@
     }
     
     // Get document sync manager from delegate
-    TICDSDocumentSyncManager *documentSyncManager = [self ti_objectFromDelegateWithSelector:@selector(syncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atLocation:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], finalWholeStoreLocation];
+    TICDSDocumentSyncManager *documentSyncManager = [self ti_objectFromDelegateWithSelector:@selector(applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], finalWholeStoreLocation];
     
     if( !documentSyncManager ) {
         // TODO: ALERT DELEGATE AND BAIL
@@ -323,20 +322,19 @@
     }
     
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Document Download Operation Completed");
-    [self ti_alertDelegateWithSelector:@selector(syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], finalWholeStoreLocation];
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], finalWholeStoreLocation];
 }
 
 - (void)documentDownloadOperationWasCancelled:(TICDSWholeStoreDownloadOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Download Operation was Cancelled");
-    [self ti_alertDelegateWithSelector:@selector(syncManager:failedToDownloadDocumentWithIdentifier:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier]];
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
 }
 
 - (void)documentDownloadOperation:(TICDSWholeStoreDownloadOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Download Operation Failed to Complete with Error: %@", anError);
-    [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:), anError, [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier]];
-    [self ti_alertDelegateWithSelector:@selector(syncManager:failedToDownloadDocumentWithIdentifier:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier]];
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], anError];
 }
 
 #pragma mark -

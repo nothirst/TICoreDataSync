@@ -88,7 +88,7 @@
 /** Informs the delegate that the sync manager failed to check for available documents that have previously been synchronized.
  
  @param aSyncManager The application sync manager object that sent the message. 
- @param anError The error related to the failure. */
+ @param anError The error that caused the failure. */
 - (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFailToCheckForPreviouslySynchronizedDocumentsWithError:(NSError *)anError;
 
 /** Informs the delegate that the sync manager didn't find any available documents that have previously been synchronized.
@@ -116,49 +116,42 @@
  
  @param aSyncManager The application sync manager object that sent the message.
  @param anIdentifier The unique synchronization identifier of the document. */
-- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager didStartToDownloadDocumentWithIdentifier:(NSString *)anIdentifier;
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didBeginDownloadingDocumentWithIdentifier:(NSString *)anIdentifier;
 
-/** Informs the delegate that the sync manager encountered an error during the document download process.
+/** Informs the delegate that the download of a requested document has failed to complete because of an error.
  
  @param aSyncManager The application sync manager object that sent the message. 
- @param anError The error that was encountered.
- @param anIdentifier The unique synchronization identifier of the document. */
-- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager encounteredDownloadError:(NSError *)anError forDownloadOfDocumentWithIdentifier:(NSString *)anIdentifier;
-
-/** Informs the delegate that the download of a requested document has failed to complete.
- 
- The error will previously have been supplied through the `syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:` method.
- 
- @param aSyncManager The application sync manager object that sent the message. 
- @param anIdentifier The unique synchronization identifier of the document. */
-- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager failedToDownloadDocumentWithIdentifier:(NSString *)anIdentifier;
+ @param anIdentifier The unique synchronization identifier of the document.
+ @param anError The error that caused the download to fail. */
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFailToDownloadDocumentWithIdentifier:(NSString *)anIdentifier error:(NSError *)anError;
 
 /** Informs the delegate that a downloaded store file file is about to replace an existing store file on disc.
  
  @param aSyncManager The application sync manager object that sent the message.
  @param anIdentifier The unique synchronization identifier of the document.
- @param aLocation The location on disc of the existing document that will be replaced. */
-- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager willReplaceWholeStoreFileForDocumentWithIdentifier:(NSString *)anIdentifier atLocation:(NSURL *)aLocation;
+ @param aFileURL The location on disc of the existing document that will be replaced. */
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager willReplaceWholeStoreFileForDocumentWithIdentifier:(NSString *)anIdentifier atURL:(NSURL *)aFileURL;
 
 /** Invoked to request the delegate to return a configured (though not yet registered) document sync manager for a downloaded document.
  
  This method will be called once the whole store has been replaced for the document. You should create a suitable document sync manager for the downloaded store, and configure it by calling `configureWithDelegate:appSyncManager:documentIdentifier:`;
  
- Do not register the document sync manager until after the `syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:` method is called.
+ Do not register the document sync manager until after the `applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:` method is called.
  
  @param aSyncManager The document sync manager object that sent the message.
  @param anIdentifier The unique synchronization identifier for the document.
+ @param aFileURL The location on disc of the downloaded document.
  
  @return The pre-configured, unregistered sync manager for the document. */
 @required
-- (TICDSDocumentSyncManager *)syncManager:(TICDSApplicationSyncManager *)aSyncManager preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:(NSString *)anIdentifier atLocation:(NSURL *)aLocation;
+- (TICDSDocumentSyncManager *)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:(NSString *)anIdentifier atURL:(NSURL *)aFileURL;
 @optional
 /** Informs the delegate that the download of a requested document has completed successfully.
  
  @param aSyncManager The application sync manager object that sent the message. 
  @param anIdentifier The unique synchronization identifier of the document.
- @param aLocation The location of the downloaded store file. */
-- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishDownloadingDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation;
+ @param aFileURL The location of the downloaded store file. */
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishDownloadingDocumentWithIdentifier:(NSString *)anIdentifier atURL:(NSURL *)aFileURL;
 @end
 
 #pragma mark Document Sync Manager

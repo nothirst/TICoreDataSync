@@ -91,7 +91,7 @@
 					<Abstract>The application sync manager object that sent the message.</Abstract>
 				</Parameter><Parameter>
 					<Name>anError</Name>
-					<Abstract>The error related to the failure.</Abstract>
+					<Abstract>The error that caused the failure.</Abstract>
 				</Parameter>
 			</Parameters>
 			
@@ -134,11 +134,11 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManager:didStartToDownloadDocumentWithIdentifier:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/applicationSyncManager:didBeginDownloadingDocumentWithIdentifier:</TokenIdentifier>
 			<Abstract>Informs the delegate that the sync manager has started to download a requested document that has previously been synchronized.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager didStartToDownloadDocumentWithIdentifier:(NSString *)anIdentifier</Declaration>
+			<Declaration>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didBeginDownloadingDocumentWithIdentifier:(NSString *)anIdentifier</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -149,56 +149,37 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManager:didStartToDownloadDocumentWithIdentifier:</Anchor>
+			<Anchor>//api/name/applicationSyncManager:didBeginDownloadingDocumentWithIdentifier:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:</TokenIdentifier>
-			<Abstract>Informs the delegate that the sync manager encountered an error during the document download process.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:</TokenIdentifier>
+			<Abstract>Informs the delegate that the download of a requested document has failed to complete because of an error.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager encounteredDownloadError:(NSError *)anError forDownloadOfDocumentWithIdentifier:(NSString *)anIdentifier</Declaration>
+			<Declaration>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFailToDownloadDocumentWithIdentifier:(NSString *)anIdentifier error:(NSError *)anError</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
 					<Abstract>The application sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>anIdentifier</Name>
+					<Abstract>The unique synchronization identifier of the document.</Abstract>
 				</Parameter><Parameter>
 					<Name>anError</Name>
-					<Abstract>The error that was encountered.</Abstract>
-				</Parameter><Parameter>
-					<Name>anIdentifier</Name>
-					<Abstract>The unique synchronization identifier of the document.</Abstract>
+					<Abstract>The error that caused the download to fail.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManager:encounteredDownloadError:forDownloadOfDocumentWithIdentifier:</Anchor>
+			<Anchor>//api/name/applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManager:failedToDownloadDocumentWithIdentifier:</TokenIdentifier>
-			<Abstract>Informs the delegate that the download of a requested document has failed to complete.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
-			
-			<Declaration>- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager failedToDownloadDocumentWithIdentifier:(NSString *)anIdentifier</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter><Parameter>
-					<Name>anIdentifier</Name>
-					<Abstract>The unique synchronization identifier of the document.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/syncManager:failedToDownloadDocumentWithIdentifier:</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/applicationSyncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atURL:</TokenIdentifier>
 			<Abstract>Informs the delegate that a downloaded store file file is about to replace an existing store file on disc.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager willReplaceWholeStoreFileForDocumentWithIdentifier:(NSString *)anIdentifier atLocation:(NSURL *)aLocation</Declaration>
+			<Declaration>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager willReplaceWholeStoreFileForDocumentWithIdentifier:(NSString *)anIdentifier atURL:(NSURL *)aFileURL</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -207,20 +188,20 @@
 					<Name>anIdentifier</Name>
 					<Abstract>The unique synchronization identifier of the document.</Abstract>
 				</Parameter><Parameter>
-					<Name>aLocation</Name>
+					<Name>aFileURL</Name>
 					<Abstract>The location on disc of the existing document that will be replaced.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atLocation:</Anchor>
+			<Anchor>//api/name/applicationSyncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atURL:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atLocation:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:</TokenIdentifier>
 			<Abstract>Invoked to request the delegate to return a configured (though not yet registered) document sync manager for a downloaded document.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (TICDSDocumentSyncManager *)syncManager:(TICDSApplicationSyncManager *)aSyncManager preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:(NSString *)anIdentifier atLocation:(NSURL *)aLocation</Declaration>
+			<Declaration>- (TICDSDocumentSyncManager *)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:(NSString *)anIdentifier atURL:(NSURL *)aFileURL</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -228,18 +209,21 @@
 				</Parameter><Parameter>
 					<Name>anIdentifier</Name>
 					<Abstract>The unique synchronization identifier for the document.</Abstract>
+				</Parameter><Parameter>
+					<Name>aFileURL</Name>
+					<Abstract>The location on disc of the downloaded document.</Abstract>
 				</Parameter>
 			</Parameters>
 			<ReturnValue><Abstract>The pre-configured, unregistered sync manager for the document.</Abstract></ReturnValue>
-			<Anchor>//api/name/syncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atLocation:</Anchor>
+			<Anchor>//api/name/applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:</TokenIdentifier>
 			<Abstract>Informs the delegate that the download of a requested document has completed successfully.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishDownloadingDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation</Declaration>
+			<Declaration>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishDownloadingDocumentWithIdentifier:(NSString *)anIdentifier atURL:(NSURL *)aFileURL</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -248,12 +232,12 @@
 					<Name>anIdentifier</Name>
 					<Abstract>The unique synchronization identifier of the document.</Abstract>
 				</Parameter><Parameter>
-					<Name>aLocation</Name>
+					<Name>aFileURL</Name>
 					<Abstract>The location of the downloaded store file.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManager:didFinishDownloadingDocumentWithIdentifier:toLocation:</Anchor>
+			<Anchor>//api/name/applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:</Anchor>
 		</Token>
 		
 	</File>
