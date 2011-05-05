@@ -112,11 +112,6 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
     [[self mainStatusTextField] setStringValue:NSLocalizedString(@"Sync is On", @"Sync is On")];
 }
 
-- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager encounteredRegistrationError:(NSError *)anError
-{
-    NSLog(@"Error registering: %@", anError);
-}
-
 - (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFailToRegisterWithError:(NSError *)anError
 {
     NSLog(@"Failed to register");
@@ -133,22 +128,22 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
 }
 
 #pragma mark Available Docs Delegate
-- (void)syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:(TICDSApplicationSyncManager *)aSyncManager
+- (void)applicationSyncManagerDidBeginCheckingForPreviouslySynchronizedDocuments:(TICDSApplicationSyncManager *)aSyncManager
 {
     [self increaseSyncActivity];
 }
 
-- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager failedToCheckForPreviouslySynchronizedDocumentsWithError:(NSError *)anError
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFailToCheckForPreviouslySynchronizedDocumentsWithError:(NSError *)anError
 {
     [self decreaseSyncActivity];
 }
 
-- (void)syncManagerDidNotFindAnyPreviouslySynchronizedDocuments:(TICDSApplicationSyncManager *)aSyncManager
+- (void)applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:(TICDSApplicationSyncManager *)aSyncManager
 {
     [self decreaseSyncActivity];
 }
 
-- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager didFindPreviouslySynchronizedDocuments:(NSArray *)documentsArray
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishCheckingAndFoundPreviouslySynchronizedDocuments:(NSArray *)documentsArray
 {
     [self decreaseSyncActivity];
     

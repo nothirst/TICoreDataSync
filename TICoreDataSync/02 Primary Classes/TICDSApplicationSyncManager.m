@@ -123,14 +123,14 @@
 - (void)requestListOfPreviouslySynchronizedDocuments
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to check for remote documents that have been previously synchronized");
-    [self ti_alertDelegateWithSelector:@selector(syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:)];
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidBeginCheckingForPreviouslySynchronizedDocuments:)];
     
     NSError *anyError = nil;
     BOOL success = [self getAvailablePreviouslySynchronizedDocuments:&anyError];
     
     if( !success ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Request for list of previously-synchronized documents failed with error: %@", anyError);
-        [self ti_alertDelegateWithSelector:@selector(syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:), anyError];
+        [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:), anyError];
     }
 }
 
@@ -154,7 +154,7 @@
 - (void)gotNoPreviouslySynchronizedDocuments
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Didn't get any available documents");
-    [self ti_alertDelegateWithSelector:@selector(syncManagerDidNotFindAnyPreviouslySynchronizedDocuments:)];
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:)];
 }
 
 - (void)gotAvailablePreviouslySynchronizedDocuments:(NSArray *)anArray
@@ -165,7 +165,7 @@
     }
     
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Found previously-synchronized remote documents: %@", anArray);
-    [self ti_alertDelegateWithSelector:@selector(syncManager:didFindPreviouslySynchronizedDocuments:), anArray];
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFinishCheckingAndFoundPreviouslySynchronizedDocuments:), anArray];
 }
 
 #pragma mark Operation Generation
@@ -190,7 +190,7 @@
 - (void)listOfDocumentsOperation:(TICDSListOfPreviouslySynchronizedDocumentsOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"List of Previously-Synchronized Documents Operation Failed to Complete with Error: %@", anError);
-    [self ti_alertDelegateWithSelector:@selector(syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:), anError];
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:), anError];
 }
 
 #pragma mark -
@@ -206,7 +206,7 @@
     
     if( !success ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Request for list of previously-synchronized documents failed with error: %@", anyError);
-        [self ti_alertDelegateWithSelector:@selector(syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:), anyError];
+        [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:), anyError];
     }
 }
 

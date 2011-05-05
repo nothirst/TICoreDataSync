@@ -80,21 +80,21 @@
 
 /** Informs the delegate that the sync manager has started to check for available documents that have previously been synchronized.
  
- At the end of the process, one of the `syncManager:failedToCheckForPreviouslySynchronizedDocumentsWithError:`, `syncManagerDidNotFindAnyPreviouslySynchronizedDocuments:`, or `syncManager:didFindPreviouslySynchronizedDocuments` methods will be called.
+ At the end of the process, one of the `applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:`, `applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:`, or `applicationSyncManager:didFinishCheckingAndFoundPreviouslySynchronizedDocuments:` methods will be called.
  
  @param aSyncManager The application sync manager object that sent the message. */
-- (void)syncManagerDidBeginToCheckForPreviouslySynchronizedDocuments:(TICDSApplicationSyncManager *)aSyncManager;
+- (void)applicationSyncManagerDidBeginCheckingForPreviouslySynchronizedDocuments:(TICDSApplicationSyncManager *)aSyncManager;
 
 /** Informs the delegate that the sync manager failed to check for available documents that have previously been synchronized.
  
  @param aSyncManager The application sync manager object that sent the message. 
  @param anError The error related to the failure. */
-- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager failedToCheckForPreviouslySynchronizedDocumentsWithError:(NSError *)anError;
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFailToCheckForPreviouslySynchronizedDocumentsWithError:(NSError *)anError;
 
 /** Informs the delegate that the sync manager didn't find any available documents that have previously been synchronized.
  
  @param aSyncManager The application sync manager object that sent the message. */
-- (void)syncManagerDidNotFindAnyPreviouslySynchronizedDocuments:(TICDSApplicationSyncManager *)aSyncManager;
+- (void)applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:(TICDSApplicationSyncManager *)aSyncManager;
 
 /** Informs the delegate that the sync manager found one or more available documents that have previously been synchronized.
  
@@ -107,7 +107,7 @@
  
  @param aSyncManager The application sync manager object that sent the message. 
  @param documentsArray An array of `NSDictionary` objects containing information about each available document. */
-- (void)syncManager:(TICDSApplicationSyncManager *)aSyncManager didFindPreviouslySynchronizedDocuments:(NSArray *)documentsArray;
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishCheckingAndFoundPreviouslySynchronizedDocuments:(NSArray *)documentsArray;
 
 #pragma mark Downloading a Previously Synchronized Document
 /** @name Downloading a Previously Synchronized Document */
