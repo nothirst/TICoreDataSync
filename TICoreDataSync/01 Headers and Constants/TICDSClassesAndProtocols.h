@@ -390,23 +390,24 @@
 
 /** Informs the delegate that the sync manager has begun to process the changes that have occurred since the previous `save:` of the managed object context.
  
- At the end of the process, one of the `syncManager:failedToProcessAfterMOCDidSave:` or `syncManager:didFinishProcessingAfterMOCDidSave` methods will be called.
+ At the end of the process, one of the `documentSyncManager:didFailToProcessSyncChangesAfterManagedObjectContextDidSave:withError:` or `documentSyncManager:didFinishProcessingSyncChangesAfterManagedObjectContextDidSave:` methods will be called.
  
  @param aSyncManager The document sync manager object that sent the message.
  @param aMoc The managed object context. */
-- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didBeginProcessingAfterMOCDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc;
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didBeginProcessingSyncChangesAfterManagedObjectContextDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc;
 
 /** Informs the delegate that the sync manager failed to process the changes that have occurred since the previous `save:` of the managed object context.
  
  @param aSyncManager The document sync manager object that sent the message.
- @param aMoc The managed object context. */
-- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager failedToProcessAfterMOCDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc;
+ @param aMoc The managed object context.
+ @param anError The error that caused processing to fail. */
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToProcessSyncChangesAfterManagedObjectContextDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc withError:(NSError *)anError;
 
 /** Informs the delegate that the sync manager finished processing the changes that have occurred since the previous `save:` of the managed object context.
  
  @param aSyncManager The document sync manager object that sent the message.
  @param aMoc The managed object context. */
-- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didFinishProcessingAfterMOCDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc;
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFinishProcessingSyncChangesAfterManagedObjectContextDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc;
 
 /** Invoked to ask the delegate whether the document sync manager should automatically initiate Synchronization after finishing processing changes in a synchronized managed object context.
  
@@ -414,7 +415,7 @@
  @param aMoc The managed object context that saved.
  
  @return A Boolean indicating whether to initiate the upload. */
-- (BOOL)syncManager:(TICDSDocumentSyncManager *)aSyncManager shouldInitiateSynchronizationAfterSaveOfContext:(TICDSSynchronizedManagedObjectContext *)aMoc;
+- (BOOL)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager shouldBeginSynchronizingAfterManagedObjectContextDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc;
 
 @end
 

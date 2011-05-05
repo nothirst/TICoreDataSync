@@ -759,7 +759,7 @@
 - (void)synchronizedMOCDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"MOC saved, so beginning post-save processing");
-    [self ti_alertDelegateWithSelector:@selector(syncManager:didBeginProcessingAfterMOCDidSave:), aMoc];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didBeginProcessingSyncChangesAfterManagedObjectContextDidSave:), aMoc];
     
     NSError *anyError = nil;
     
@@ -768,20 +768,18 @@
     BOOL success = [[self syncChangesMOC] save:&anyError];
     
     if( !success ) {
-        NSError *ticdsError = [TICDSError errorWithCode:TICDSErrorCodeFailedToSaveSyncChangesMOC underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__];
-        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredSynchronizationError:), ticdsError];
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Sync Manager failed to save Sync Changes context with error: %@", anyError);
-        /* TODO!!! */
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Sync Manager cannot continue processing any further, so bailing");
-        [self ti_alertDelegateWithSelector:@selector(syncManager:failedToProcessAfterMOCDidSave:), aMoc];
+        [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToProcessSyncChangesAfterManagedObjectContextDidSave:withError:), aMoc, [TICDSError errorWithCode:TICDSErrorCodeFailedToSaveSyncChangesMOC underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
         
         return;
     }
     
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Sync Manager saved Sync Changes context successfully");
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFinishProcessingSyncChangesAfterManagedObjectContextDidSave:), aMoc];
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Asking delegate if we should sync after saving");
-    BOOL shouldSync = [self ti_boolFromDelegateWithSelector:@selector(syncManager:shouldInitiateSynchronizationAfterSaveOfContext:), aMoc];
+    BOOL shouldSync = [self ti_boolFromDelegateWithSelector:@selector(documentSyncManager:shouldBeginSynchronizingAfterManagedObjectContextDidSave:), aMoc];
     if( !shouldSync ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate denied synchronization after saving");
         return;

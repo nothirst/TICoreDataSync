@@ -514,11 +514,11 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:didBeginProcessingAfterMOCDidSave:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/documentSyncManager:didBeginProcessingSyncChangesAfterManagedObjectContextDidSave:</TokenIdentifier>
 			<Abstract>Informs the delegate that the sync manager has begun to process the changes that have occurred since the previous save: of the managed object context.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didBeginProcessingAfterMOCDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc</Declaration>
+			<Declaration>- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didBeginProcessingSyncChangesAfterManagedObjectContextDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -529,15 +529,15 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManager:didBeginProcessingAfterMOCDidSave:</Anchor>
+			<Anchor>//api/name/documentSyncManager:didBeginProcessingSyncChangesAfterManagedObjectContextDidSave:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:failedToProcessAfterMOCDidSave:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/documentSyncManager:didFailToProcessSyncChangesAfterManagedObjectContextDidSave:withError:</TokenIdentifier>
 			<Abstract>Informs the delegate that the sync manager failed to process the changes that have occurred since the previous save: of the managed object context.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager failedToProcessAfterMOCDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc</Declaration>
+			<Declaration>- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToProcessSyncChangesAfterManagedObjectContextDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc withError:(NSError *)anError</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -545,18 +545,21 @@
 				</Parameter><Parameter>
 					<Name>aMoc</Name>
 					<Abstract>The managed object context.</Abstract>
+				</Parameter><Parameter>
+					<Name>anError</Name>
+					<Abstract>The error that caused processing to fail.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManager:failedToProcessAfterMOCDidSave:</Anchor>
+			<Anchor>//api/name/documentSyncManager:didFailToProcessSyncChangesAfterManagedObjectContextDidSave:withError:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:didFinishProcessingAfterMOCDidSave:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/documentSyncManager:didFinishProcessingSyncChangesAfterManagedObjectContextDidSave:</TokenIdentifier>
 			<Abstract>Informs the delegate that the sync manager finished processing the changes that have occurred since the previous save: of the managed object context.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didFinishProcessingAfterMOCDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc</Declaration>
+			<Declaration>- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFinishProcessingSyncChangesAfterManagedObjectContextDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -567,15 +570,15 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManager:didFinishProcessingAfterMOCDidSave:</Anchor>
+			<Anchor>//api/name/documentSyncManager:didFinishProcessingSyncChangesAfterManagedObjectContextDidSave:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:shouldInitiateSynchronizationAfterSaveOfContext:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/documentSyncManager:shouldBeginSynchronizingAfterManagedObjectContextDidSave:</TokenIdentifier>
 			<Abstract>Invoked to ask the delegate whether the document sync manager should automatically initiate Synchronization after finishing processing changes in a synchronized managed object context.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (BOOL)syncManager:(TICDSDocumentSyncManager *)aSyncManager shouldInitiateSynchronizationAfterSaveOfContext:(TICDSSynchronizedManagedObjectContext *)aMoc</Declaration>
+			<Declaration>- (BOOL)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager shouldBeginSynchronizingAfterManagedObjectContextDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -586,7 +589,7 @@
 				</Parameter>
 			</Parameters>
 			<ReturnValue><Abstract>A Boolean indicating whether to initiate the upload.</Abstract></ReturnValue>
-			<Anchor>//api/name/syncManager:shouldInitiateSynchronizationAfterSaveOfContext:</Anchor>
+			<Anchor>//api/name/documentSyncManager:shouldBeginSynchronizingAfterManagedObjectContextDidSave:</Anchor>
 		</Token>
 		
 	</File>

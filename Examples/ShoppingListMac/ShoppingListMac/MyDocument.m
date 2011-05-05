@@ -148,7 +148,7 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
 }
 
 #pragma mark Synchronization
-- (BOOL)syncManager:(TICDSDocumentSyncManager *)aSyncManager shouldInitiateSynchronizationAfterSaveOfContext:(TICDSSynchronizedManagedObjectContext *)aMoc
+- (BOOL)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager shouldBeginSynchronizingAfterManagedObjectContextDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc
 {
     return YES;
 }
