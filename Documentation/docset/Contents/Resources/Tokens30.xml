@@ -326,11 +326,11 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidBeginToSynchronize:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/documentSyncManagerDidBeginSynchronizing:</TokenIdentifier>
 			<Abstract>Informs the delegate that the document sync manager has begun to synchronize the document.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManagerDidBeginToSynchronize:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Declaration>- (void)documentSyncManagerDidBeginSynchronizing:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -338,34 +338,34 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManagerDidBeginToSynchronize:</Anchor>
+			<Anchor>//api/name/documentSyncManagerDidBeginSynchronizing:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:</TokenIdentifier>
-			<Abstract>Informs the delegate that the sychronization process was paused because a conflict was detected.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/documentSyncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager paused the sychronization process because a conflict was detected.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseSynchronizationAwaitingResolutionOfSyncConflict:(id)aConflict</Declaration>
+			<Declaration>- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseSynchronizationAwaitingResolutionOfSyncConflict:(id)aConflict</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
 					<Abstract>The document sync manager object that sent the message.</Abstract>
 				</Parameter><Parameter>
 					<Name>aConflict</Name>
-					<Abstract>The conflict.</Abstract>
+					<Abstract>The conflict that was detected.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:</Anchor>
+			<Anchor>//api/name/documentSyncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidResumeSynchronization:</TokenIdentifier>
-			<Abstract>Informs the delegate that the synchronization process continue after a conflict was resolved.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/documentSyncManagerDidContinueSynchronizing:</TokenIdentifier>
+			<Abstract>Informs the delegate that the synchronization process has continued after a conflict was resolved.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManagerDidResumeSynchronization:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Declaration>- (void)documentSyncManagerDidContinueSynchronizing:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -373,15 +373,15 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManagerDidResumeSynchronization:</Anchor>
+			<Anchor>//api/name/documentSyncManagerDidContinueSynchronizing:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/documentSyncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:</TokenIdentifier>
 			<Abstract>Informs the delegate that changes were made to managed objects in the application's context on a background thread during the synchronization process.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:(NSNotification *)aNotification</Declaration>
+			<Declaration>- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:(NSNotification *)aNotification</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -392,34 +392,15 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:</Anchor>
+			<Anchor>//api/name/documentSyncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:encounteredSynchronizationError:</TokenIdentifier>
-			<Abstract>Informs the delegate that the document sync manager encountered an error during the synchronization process.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
-			
-			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredSynchronizationError:(NSError *)anError</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The document sync manager object that sent the message.</Abstract>
-				</Parameter><Parameter>
-					<Name>anError</Name>
-					<Abstract>The error.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/syncManager:encounteredSynchronizationError:</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:encounteredSynchronizationWarnings:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/documentSyncManager:didEncounterWarningsWhileSynchronizing:</TokenIdentifier>
 			<Abstract>Informs the delegate that warnings were generated during the synchronization process.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredSynchronizationWarnings:(NSArray *)warnings</Declaration>
+			<Declaration>- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didEncounterWarningsWhileSynchronizing:(NSArray *)warnings</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -430,15 +411,15 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManager:encounteredSynchronizationWarnings:</Anchor>
+			<Anchor>//api/name/documentSyncManager:didEncounterWarningsWhileSynchronizing:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerFailedToSynchronize:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/documentSyncManager:didFailToSynchronizeWithError:</TokenIdentifier>
 			<Abstract>Informs the delegate that the document sync manager failed to synchronize the document.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManagerFailedToSynchronize:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Declaration>- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToSynchronizeWithError:(NSError *)anError</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -446,15 +427,15 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManagerFailedToSynchronize:</Anchor>
+			<Anchor>//api/name/documentSyncManager:didFailToSynchronizeWithError:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidFinishSynchronization:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/documentSyncManagerDidFinishSynchronizing:</TokenIdentifier>
 			<Abstract>Informs the delegate that the document sync manager finished synchronizing the document.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManagerDidFinishSynchronization:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Declaration>- (void)documentSyncManagerDidFinishSynchronizing:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -462,7 +443,7 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManagerDidFinishSynchronization:</Anchor>
+			<Anchor>//api/name/documentSyncManagerDidFinishSynchronizing:</Anchor>
 		</Token>
 		
 		<Token>

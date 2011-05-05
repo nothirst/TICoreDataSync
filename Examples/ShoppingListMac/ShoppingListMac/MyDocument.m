@@ -153,12 +153,12 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     return YES;
 }
 
-- (void)syncManagerDidBeginToSynchronize:(TICDSDocumentSyncManager *)aSyncManager
+- (void)documentSyncManagerDidBeginSynchronizing:(TICDSDocumentSyncManager *)aSyncManager
 {
     [self increaseActivity];
 }
 
-- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseSynchronizationAwaitingResolutionOfSyncConflict:(id)aConflict
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseSynchronizationAwaitingResolutionOfSyncConflict:(id)aConflict
 {
     [self decreaseActivity];
     
@@ -167,12 +167,12 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     [aSyncManager continueSynchronizationByResolvingConflictWithResolutionType:TICDSSyncConflictResolutionTypeLocalWins];
 }
 
-- (void)syncManagerDidResumeSynchronization:(TICDSDocumentSyncManager *)aSyncManager
+- (void)documentSyncManagerDidContinueSynchronizing:(TICDSDocumentSyncManager *)aSyncManager
 {
     [self increaseActivity];
 }
 
-- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:(NSNotification *)aNotification
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:(NSNotification *)aNotification
 {
     [[[self managedObjectContext] undoManager] disableUndoRegistration];
     [[self managedObjectContext] mergeChangesFromContextDidSaveNotification:aNotification];
@@ -202,17 +202,13 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     [self updateChangeCount:NSChangeCleared];
 }
 
-- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredSynchronizationError:(NSError *)anError
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToSynchronizeWithError:(NSError *)anError
 {
     NSLog(@"Sync Error: %@", anError);
-}
-
-- (void)syncManagerFailedToSynchronize:(TICDSDocumentSyncManager *)aSyncManager
-{
     [self decreaseActivity];
 }
 
-- (void)syncManagerDidFinishSynchronization:(TICDSDocumentSyncManager *)aSyncManager
+- (void)documentSyncManagerDidFinishSynchronizing:(TICDSDocumentSyncManager *)aSyncManager
 {
     [[self documentSyncChangesWindowController] setManagedObjectContext:[[self documentSyncManager] syncChangesMOC]];
     [self decreaseActivity];

@@ -19,7 +19,7 @@
 - (void)bailFromUploadProcessWithError:(NSError *)anError;
 
 - (void)startSynchronizationProcess;
-- (void)bailFromSynchronizationProcess;
+- (void)bailFromSynchronizationProcessWithError:(NSError *)anError;
 - (void)moveUnsynchronizedSyncChangesToMergeLocation;
 
 - (void)startVacuumProcess;
@@ -549,16 +549,16 @@
     [self startSynchronizationProcess];
 }
 
-- (void)bailFromSynchronizationProcess
+- (void)bailFromSynchronizationProcessWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from synchronization process");
-    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToSynchronize:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToSynchronizeWithError:), anError];
 }
 
 - (void)startSynchronizationProcess
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting synchronization process");
-    [self ti_alertDelegateWithSelector:@selector(syncManagerDidBeginToSynchronize:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidBeginSynchronizing:)];
     
     [self moveUnsynchronizedSyncChangesToMergeLocation];
     
@@ -566,9 +566,7 @@
     
     if( !operation ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create synchronization operation object");
-        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredSynchronizationError:), [TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
-        
-        [self bailFromSynchronizationProcess];
+        [self bailFromSynchronizationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
         return;
     }
     
@@ -606,8 +604,7 @@
     
     if( !syncChanges ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to fetch local sync changes");
-        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredSynchronizationError:), [TICDSError errorWithCode:TICDSErrorCodeCoreDataFetchError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [self bailFromSynchronizationProcess];
+        [self bailFromSynchronizationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataFetchError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
         return;
     }
     
@@ -626,7 +623,8 @@
     
     if( !success ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to move UnsynchronizedSyncChanges.syncchg to SyncChangesBeingSynchronized.syncchg");
-        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredSynchronizationError:), [TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self bailFromSynchronizationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        return;
     }
     
     // setup the syncChangesMOC
@@ -634,7 +632,7 @@
     [self setSyncChangesMOC:[[self coreDataFactory] managedObjectContext]];
     if( ![self syncChangesMOC] ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create sync changes MOC");
-        [self bailFromSynchronizationProcess];
+        [self bailFromSynchronizationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateSyncChangesMOC classAndMethod:__PRETTY_FUNCTION__]];
         return;
     }
     TICDSLog(TICDSLogVerbosityEveryStep, @"Finished creating SyncChangesMOC");
@@ -643,12 +641,12 @@
 #pragma mark Conflict Resolution
 - (void)synchronizationOperation:(TICDSSynchronizationOperation *)anOperation pausedToDetermineResolutionOfConflict:(id)aConflict
 {
-    [self ti_alertDelegateWithSelector:@selector(syncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:), aConflict];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:), aConflict];
 }
 
 - (void)synchronizationOperationResumedFollowingResolutionOfConflict:(TICDSSynchronizationOperation *)anOperation
 {
-    [self ti_alertDelegateWithSelector:@selector(syncManagerDidResumeSynchronization:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidContinueSynchronizing:)];
 }
 
 - (void)continueSynchronizationByResolvingConflictWithResolutionType:(TICDSSyncConflictResolutionType)aType
@@ -673,24 +671,23 @@
     
     if( [[anOperation synchronizationWarnings] count] > 0 ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Synchronization encountered warnings: \n%@", [anOperation synchronizationWarnings]);
-        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredSynchronizationWarnings:), [anOperation synchronizationWarnings]];
+        [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didEncounterWarningsWhileSynchronizing:), [anOperation synchronizationWarnings]];
     }
     
-    [self ti_alertDelegateWithSelector:@selector(syncManagerDidFinishSynchronization:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidFinishSynchronizing:)];
 }
 
 - (void)synchronizationOperationWasCancelled:(TICDSSynchronizationOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Synchronization Operation was Cancelled");
     
-    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToSynchronize:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToSynchronizeWithError:), [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
 }
 
 - (void)synchronizationOperation:(TICDSSynchronizationOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Synchronization Operation Failed to Complete with Error: %@", anError);
-    [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredSynchronizationError:), anError];
-    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToSynchronize:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToSynchronizeWithError:), anError];
 }
 
 #pragma mark -
@@ -776,7 +773,7 @@
         NSError *ticdsError = [TICDSError errorWithCode:TICDSErrorCodeFailedToSaveSyncChangesMOC underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__];
         [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredSynchronizationError:), ticdsError];
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Sync Manager failed to save Sync Changes context with error: %@", anyError);
-        
+        /* TODO!!! */
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Sync Manager cannot continue processing any further, so bailing");
         [self ti_alertDelegateWithSelector:@selector(syncManager:failedToProcessAfterMOCDidSave:), aMoc];
         
@@ -810,7 +807,7 @@
 
 - (void)backgroundManagedObjectContextDidSave:(NSNotification *)aNotification
 {
-    [self ti_alertDelegateOnMainThreadWithSelector:@selector(syncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:) waitUntilDone:YES, aNotification];
+    [self ti_alertDelegateOnMainThreadWithSelector:@selector(documentSyncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:) waitUntilDone:YES, aNotification];
 }
 
 #pragma mark -

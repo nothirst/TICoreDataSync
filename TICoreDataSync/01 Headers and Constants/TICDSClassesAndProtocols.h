@@ -313,39 +313,31 @@
 
 /** Informs the delegate that the document sync manager has begun to synchronize the document.
  
- If an error occurs during the upload process, the `syncManager:encounteredSynchronizationError:` method will be called.
- 
- At the end of the synchronization process, one of the `syncManagerFailedToSynchronize:` or `syncManagerDidFinishSynchronization:` methods will be called.
+ At the end of the synchronization process, one of the `documentSyncManager:didFailToSynchronizeWithError:` or `documentSyncManagerDidFinishSynchronizing:` methods will be called.
  
  @param aSyncManager The document sync manager object that sent the message. */
-- (void)syncManagerDidBeginToSynchronize:(TICDSDocumentSyncManager *)aSyncManager;
+- (void)documentSyncManagerDidBeginSynchronizing:(TICDSDocumentSyncManager *)aSyncManager;
 
-/** Informs the delegate that the sychronization process was paused because a conflict was detected.
+/** Informs the delegate that the document sync manager paused the sychronization process because a conflict was detected.
  
  @param aSyncManager The document sync manager object that sent the message. 
- @param aConflict The conflict.
+ @param aConflict The conflict that was detected.
  
  @warning You *must* call the `continueSynchronizationByResolvingConflictWithResolutionType:` method to indicate whether registration should continue or not. */
 @required
-- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseSynchronizationAwaitingResolutionOfSyncConflict:(id)aConflict;
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseSynchronizationAwaitingResolutionOfSyncConflict:(id)aConflict;
 @optional
 
-/** Informs the delegate that the synchronization process continue after a conflict was resolved.
+/** Informs the delegate that the synchronization process has continued after a conflict was resolved.
  
  @param aSyncManager The document sync manager object that sent the message. */
-- (void)syncManagerDidResumeSynchronization:(TICDSDocumentSyncManager *)aSyncManager;
+- (void)documentSyncManagerDidContinueSynchronizing:(TICDSDocumentSyncManager *)aSyncManager;
 
 /** Informs the delegate that changes were made to managed objects in the application's context on a background thread during the synchronization process.
  
  @param aSyncManager The document sync manager object that sent the message.
  @param aNotification The `NSManagedObjectContextDidSave` notification object containing changes made to objects. */
-- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:(NSNotification *)aNotification;
-
-/** Informs the delegate that the document sync manager encountered an error during the synchronization process.
- 
- @param aSyncManager The document sync manager object that sent the message.
- @param anError The error. */
-- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredSynchronizationError:(NSError *)anError;
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:(NSNotification *)aNotification;
 
 /** Informs the delegate that warnings were generated during the synchronization process.
  
@@ -353,19 +345,17 @@
  
  @param aSyncManager The document sync manager object that sent the message.
  @param warnings An array of `NSDictionary` objects containing information about each warning. */
-- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredSynchronizationWarnings:(NSArray *)warnings;
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didEncounterWarningsWhileSynchronizing:(NSArray *)warnings;
 
 /** Informs the delegate that the document sync manager failed to synchronize the document.
  
- The error will previously have been supplied through the `syncManager:encounteredSynchronizationError:` method.
- 
  @param aSyncManager The document sync manager object that sent the message. */
-- (void)syncManagerFailedToSynchronize:(TICDSDocumentSyncManager *)aSyncManager;
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToSynchronizeWithError:(NSError *)anError;
 
 /** Informs the delegate that the document sync manager finished synchronizing the document.
  
  @param aSyncManager The document sync manager object that sent the message. */
-- (void)syncManagerDidFinishSynchronization:(TICDSDocumentSyncManager *)aSyncManager;
+- (void)documentSyncManagerDidFinishSynchronizing:(TICDSDocumentSyncManager *)aSyncManager;
 
 #pragma mark Vacuuming
 /** @name Vacuuming Unneeded Files */
