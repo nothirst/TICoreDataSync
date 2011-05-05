@@ -217,7 +217,7 @@
  @return The `NSURL` for the location you wish to use.
  
  @warning The location you specify *must* already exist. */
-- (NSURL *)syncManager:(TICDSDocumentSyncManager *)aSyncManager helperFileDirectoryLocationForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo;
+- (NSURL *)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager helperFileDirectoryURLForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo;
 
 #pragma mark Whole Store Upload
 /** @name Whole Store Upload */

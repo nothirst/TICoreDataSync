@@ -243,7 +243,7 @@
 
 /** The location of a directory used by the `TICoreDataSync` framework to store local helper files for this document.
  
- You typically set this property by implementing the `TICDSDocumentSyncManagerDelegate` method `syncManager:helperFileDirectoryLocationForDocumentWithIdentifier:description:userInfo:`.
+ You typically set this property by implementing the `TICDSDocumentSyncManagerDelegate` method `documentSyncManager:helperFileDirectoryURLForDocumentWithIdentifier:description:userInfo:`.
  
  By default, the framework will use the location `~/Library/Application Support/ApplicationName/Documents/documentIdentifier`.
  */

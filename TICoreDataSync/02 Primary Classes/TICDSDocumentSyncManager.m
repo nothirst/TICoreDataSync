@@ -111,7 +111,7 @@
 - (BOOL)checkForHelperFileDirectoryOrCreateIfNecessary:(NSError **)outError
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Asking delegate for location of helper file directory");
-    NSURL *finalURL = [self ti_objectFromDelegateWithSelector:@selector(syncManager:helperFileDirectoryLocationForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
+    NSURL *finalURL = [self ti_objectFromDelegateWithSelector:@selector(documentSyncManager:helperFileDirectoryURLForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Checking that delegate-provided helper file directory exists");
     

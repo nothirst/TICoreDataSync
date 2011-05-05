@@ -104,11 +104,11 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:helperFileDirectoryLocationForDocumentWithIdentifier:description:userInfo:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/documentSyncManager:helperFileDirectoryURLForDocumentWithIdentifier:description:userInfo:</TokenIdentifier>
 			<Abstract>Invoked to allow the delegate to return a custom location for a local directory to contain the helper files the TICoreDataSync framework uses to synchronize a document.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (NSURL *)syncManager:(TICDSDocumentSyncManager *)aSyncManager helperFileDirectoryLocationForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo</Declaration>
+			<Declaration>- (NSURL *)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager helperFileDirectoryURLForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -125,7 +125,7 @@
 				</Parameter>
 			</Parameters>
 			<ReturnValue><Abstract>The NSURL for the location you wish to use.</Abstract></ReturnValue>
-			<Anchor>//api/name/syncManager:helperFileDirectoryLocationForDocumentWithIdentifier:description:userInfo:</Anchor>
+			<Anchor>//api/name/documentSyncManager:helperFileDirectoryURLForDocumentWithIdentifier:description:userInfo:</Anchor>
 		</Token>
 		
 		<Token>
