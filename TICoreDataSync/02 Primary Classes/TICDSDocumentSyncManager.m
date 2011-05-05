@@ -16,7 +16,7 @@
 - (BOOL)checkForHelperFileDirectoryOrCreateIfNecessary:(NSError **)outError;
 
 - (void)startWholeStoreUploadProcess;
-- (void)bailFromUploadProcess;
+- (void)bailFromUploadProcessWithError:(NSError *)anError;
 
 - (void)startSynchronizationProcess;
 - (void)bailFromSynchronizationProcess;
@@ -298,7 +298,7 @@
     
     // Upload whole store if necessary
     TICDSLog(TICDSLogVerbosityEveryStep, @"Asking delegate whether to upload whole store after registration");
-    if( [self ti_boolFromDelegateWithSelector:@selector(syncManagerShouldUploadWholeStoreAfterDocumentRegistration:)] ) {
+    if( [self ti_boolFromDelegateWithSelector:@selector(documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:)] ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate allowed whole store upload after registration");
         [self startWholeStoreUploadProcess];
     } else {
@@ -339,42 +339,38 @@
     [self startWholeStoreUploadProcess];
 }
 
-- (void)bailFromUploadProcess
+- (void)bailFromUploadProcessWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from whole store upload process");
-    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToUploadWholeStore:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToUploadWholeStoreWithError:), anError];
 }
 
 - (void)startWholeStoreUploadProcess
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting whole store upload process");
-    [self ti_alertDelegateWithSelector:@selector(syncManagerDidBeginToUploadWholeStore:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidBeginUploadingWholeStore:)];
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Checking to see if there are unsynchronized SyncChanges");
     NSError *anyError = nil;
     NSUInteger count = [TICDSSyncChange ti_numberOfObjectsInManagedObjectContext:[self syncChangesMOC] error:&anyError];
     if( anyError ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to count number of SyncChange objects: %@", anyError);
-        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredWholeStoreUploadError:), [TICDSError errorWithCode:TICDSErrorCodeCoreDataFetchError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [self bailFromUploadProcess];
+        [self bailFromUploadProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataFetchError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
         return;
     }
     
     if( count > 0 ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"There are unsynchronized local Sync Changes so cannot upload whole store");
-        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredWholeStoreUploadError:), [TICDSError errorWithCode:TICDSErrorCodeWholeStoreCannotBeUploadedWhileThereAreUnsynchronizedSyncChanges classAndMethod:__PRETTY_FUNCTION__]];
-        [self bailFromUploadProcess];
+        [self bailFromUploadProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeWholeStoreCannotBeUploadedWhileThereAreUnsynchronizedSyncChanges classAndMethod:__PRETTY_FUNCTION__]];
         return;
     }
     
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Asking delegate for URL of whole store to upload");
-    NSURL *storeURL = [self ti_objectFromDelegateWithSelector:@selector(syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
+    NSURL *storeURL = [self ti_objectFromDelegateWithSelector:@selector(documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
     
     if( !storeURL || ![[self fileManager] fileExistsAtPath:[storeURL path]] ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Store does not exist at provided path");
-        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredWholeStoreUploadError:), [TICDSError errorWithCode:TICDSErrorCodeUnexpectedOrIncompleteFileLocationOrDirectoryStructure classAndMethod:__PRETTY_FUNCTION__]];
-
-        [self bailFromUploadProcess];
+        [self bailFromUploadProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeUnexpectedOrIncompleteFileLocationOrDirectoryStructure classAndMethod:__PRETTY_FUNCTION__]];
         return;
     }
     
@@ -382,9 +378,7 @@
     
     if( !operation ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create whole store operation object");
-        [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredWholeStoreUploadError:), [TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
-        
-        [self bailFromUploadProcess];
+        [self bailFromUploadProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
         return;
     }
     
@@ -409,21 +403,20 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Whole Store Upload Operation Completed");
     
-    [self ti_alertDelegateWithSelector:@selector(syncManagerDidUploadWholeStoreSuccessfully:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidFinishUploadingWholeStore:)];
 }
 
 - (void)wholeStoreUploadOperationWasCancelled:(TICDSWholeStoreUploadOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Whole Store Upload Operation was Cancelled");
     
-    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToUploadWholeStore:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToUploadWholeStoreWithError:), [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
 }
 
 - (void)wholeStoreUploadOperation:(TICDSDocumentRegistrationOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Whole Store Upload Operation Failed to Complete with Error: %@", anError);
-    [self ti_alertDelegateWithSelector:@selector(syncManager:encounteredWholeStoreUploadError:), anError];
-    [self ti_alertDelegateWithSelector:@selector(syncManagerFailedToUploadWholeStore:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToUploadWholeStoreWithError:), anError];
 }
 
 #pragma mark -

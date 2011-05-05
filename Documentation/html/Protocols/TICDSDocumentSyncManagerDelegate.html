@@ -38,7 +38,11 @@
 	
 	<option value="instance_methods">Instance Methods</option>
 	
+	<option value="//api/name/documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</option>
+	
 	<option value="//api/name/documentSyncManager:didFailToRegisterWithError:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:didFailToRegisterWithError:</option>
+	
+	<option value="//api/name/documentSyncManager:didFailToUploadWholeStoreWithError:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:didFailToUploadWholeStoreWithError:</option>
 	
 	<option value="//api/name/documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:</option>
 	
@@ -46,11 +50,15 @@
 	
 	<option value="//api/name/documentSyncManagerDidBeginRegistering:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerDidBeginRegistering:</option>
 	
+	<option value="//api/name/documentSyncManagerDidBeginUploadingWholeStore:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerDidBeginUploadingWholeStore:</option>
+	
 	<option value="//api/name/documentSyncManagerDidContinueRegistering:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerDidContinueRegistering:</option>
 	
 	<option value="//api/name/documentSyncManagerDidFinishRegistering:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerDidFinishRegistering:</option>
 	
-	<option value="//api/name/syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</option>
+	<option value="//api/name/documentSyncManagerDidFinishUploadingWholeStore:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerDidFinishUploadingWholeStore:</option>
+	
+	<option value="//api/name/documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:</option>
 	
 	<option value="//api/name/syncManager:didBeginProcessingAfterMOCDidSave:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:didBeginProcessingAfterMOCDidSave:</option>
 	
@@ -70,8 +78,6 @@
 	
 	<option value="//api/name/syncManager:encounteredWholeStoreDownloadError:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:encounteredWholeStoreDownloadError:</option>
 	
-	<option value="//api/name/syncManager:encounteredWholeStoreUploadError:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:encounteredWholeStoreUploadError:</option>
-	
 	<option value="//api/name/syncManager:failedToProcessAfterMOCDidSave:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:failedToProcessAfterMOCDidSave:</option>
 	
 	<option value="//api/name/syncManager:shouldInitiateSynchronizationAfterSaveOfContext:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManager:shouldInitiateSynchronizationAfterSaveOfContext:</option>
@@ -81,8 +87,6 @@
 	<option value="//api/name/syncManagerDidBeginToDownloadWholeStore:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidBeginToDownloadWholeStore:</option>
 	
 	<option value="//api/name/syncManagerDidBeginToSynchronize:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidBeginToSynchronize:</option>
-	
-	<option value="//api/name/syncManagerDidBeginToUploadWholeStore:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidBeginToUploadWholeStore:</option>
 	
 	<option value="//api/name/syncManagerDidBeginToVacuumUnneededRemoteFiles:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidBeginToVacuumUnneededRemoteFiles:</option>
 	
@@ -94,19 +98,13 @@
 	
 	<option value="//api/name/syncManagerDidResumeSynchronization:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidResumeSynchronization:</option>
 	
-	<option value="//api/name/syncManagerDidUploadWholeStoreSuccessfully:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerDidUploadWholeStoreSuccessfully:</option>
-	
 	<option value="//api/name/syncManagerFailedToDownloadWholeStore:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerFailedToDownloadWholeStore:</option>
 	
 	<option value="//api/name/syncManagerFailedToSynchronize:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerFailedToSynchronize:</option>
 	
-	<option value="//api/name/syncManagerFailedToUploadWholeStore:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerFailedToUploadWholeStore:</option>
-	
 	<option value="//api/name/syncManagerFailedToVacuumUnneededRemoteFiles:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerFailedToVacuumUnneededRemoteFiles:</option>
 	
 	<option value="//api/name/syncManagerFinalURLForDownloadedStore:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerFinalURLForDownloadedStore:</option>
-	
-	<option value="//api/name/syncManagerShouldUploadWholeStoreAfterDocumentRegistration:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerShouldUploadWholeStoreAfterDocumentRegistration:</option>
 	
 	<option value="//api/name/syncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:">&nbsp;&nbsp;&nbsp;&nbsp;- syncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:</option>
 	
@@ -152,7 +150,11 @@
 
 <li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:">documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:didFailToRegisterWithError:">documentSyncManager:didFailToRegisterWithError:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:didFailToUploadWholeStoreWithError:">documentSyncManager:didFailToUploadWholeStoreWithError:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:">documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:</a></span></li>
 	
@@ -160,11 +162,15 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerDidBeginRegistering:">documentSyncManagerDidBeginRegistering:</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerDidBeginUploadingWholeStore:">documentSyncManagerDidBeginUploadingWholeStore:</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerDidContinueRegistering:">documentSyncManagerDidContinueRegistering:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerDidFinishRegistering:">documentSyncManagerDidFinishRegistering:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:">syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerDidFinishUploadingWholeStore:">documentSyncManagerDidFinishUploadingWholeStore:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:">documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:didBeginProcessingAfterMOCDidSave:">syncManager:didBeginProcessingAfterMOCDidSave:</a></span></li>
 	
@@ -184,8 +190,6 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredWholeStoreDownloadError:">syncManager:encounteredWholeStoreDownloadError:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:encounteredWholeStoreUploadError:">syncManager:encounteredWholeStoreUploadError:</a></span></li>
-	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:failedToProcessAfterMOCDidSave:">syncManager:failedToProcessAfterMOCDidSave:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManager:shouldInitiateSynchronizationAfterSaveOfContext:">syncManager:shouldInitiateSynchronizationAfterSaveOfContext:</a></span></li>
@@ -195,8 +199,6 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidBeginToDownloadWholeStore:">syncManagerDidBeginToDownloadWholeStore:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidBeginToSynchronize:">syncManagerDidBeginToSynchronize:</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidBeginToUploadWholeStore:">syncManagerDidBeginToUploadWholeStore:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidBeginToVacuumUnneededRemoteFiles:">syncManagerDidBeginToVacuumUnneededRemoteFiles:</a></span></li>
 	
@@ -208,19 +210,13 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidResumeSynchronization:">syncManagerDidResumeSynchronization:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerDidUploadWholeStoreSuccessfully:">syncManagerDidUploadWholeStoreSuccessfully:</a></span></li>
-	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerFailedToDownloadWholeStore:">syncManagerFailedToDownloadWholeStore:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerFailedToSynchronize:">syncManagerFailedToSynchronize:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerFailedToUploadWholeStore:">syncManagerFailedToUploadWholeStore:</a></span></li>
-	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerFailedToVacuumUnneededRemoteFiles:">syncManagerFailedToVacuumUnneededRemoteFiles:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerFinalURLForDownloadedStore:">syncManagerFinalURLForDownloadedStore:</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerShouldUploadWholeStoreAfterDocumentRegistration:">syncManagerShouldUploadWholeStoreAfterDocumentRegistration:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:">syncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:</a></span></li>
 	
@@ -337,42 +333,35 @@
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
-		<code><a href="#//api/name/syncManagerShouldUploadWholeStoreAfterDocumentRegistration:">&ndash;&nbsp;syncManagerShouldUploadWholeStoreAfterDocumentRegistration:</a></code>
+		<code><a href="#//api/name/documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:">&ndash;&nbsp;documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:</a></code>
 		<span class="tooltip"><p>Invoked to ask the delegate whether the document sync manager should automatically initiate a Whole Store Upload at registration.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:">&ndash;&nbsp;syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</a></code>
+		<code><a href="#//api/name/documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:">&ndash;&nbsp;documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</a></code>
 		<span class="tooltip"><p>Invoked to ask the delegate for the URL of the document&rsquo;s SQLite store to upload.</p></span>
 	</span>
 	
 	<span class="task-item-suffix">required method</span>
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/syncManagerDidBeginToUploadWholeStore:">&ndash;&nbsp;syncManagerDidBeginToUploadWholeStore:</a></code>
+		<code><a href="#//api/name/documentSyncManagerDidBeginUploadingWholeStore:">&ndash;&nbsp;documentSyncManagerDidBeginUploadingWholeStore:</a></code>
 		<span class="tooltip"><p>Informs the delegate that the document sync manager has begun to upload the whole store file, together with necessary helper files.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/syncManager:encounteredWholeStoreUploadError:">&ndash;&nbsp;syncManager:encounteredWholeStoreUploadError:</a></code>
-		<span class="tooltip"><p>Informs the delegate that the document sync manager encountered an error during the whole store upload.</p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/syncManagerFailedToUploadWholeStore:">&ndash;&nbsp;syncManagerFailedToUploadWholeStore:</a></code>
+		<code><a href="#//api/name/documentSyncManager:didFailToUploadWholeStoreWithError:">&ndash;&nbsp;documentSyncManager:didFailToUploadWholeStoreWithError:</a></code>
 		<span class="tooltip"><p>Informs the delegate that the document sync manager failed to upload the whole store file.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/syncManagerDidUploadWholeStoreSuccessfully:">&ndash;&nbsp;syncManagerDidUploadWholeStoreSuccessfully:</a></code>
+		<code><a href="#//api/name/documentSyncManagerDidFinishUploadingWholeStore:">&ndash;&nbsp;documentSyncManagerDidFinishUploadingWholeStore:</a></code>
 		<span class="tooltip"><p>Informs the delegate that the document sync manager finished uploading the whole store file successfully.</p></span>
 	</span>
 	
@@ -595,6 +584,68 @@
 						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
 						
 						<div class="section-method">
+	<a name="//api/name/documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:" title="documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Invoked to ask the delegate for the URL of the document&rsquo;s SQLite store to upload.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (NSURL *)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> URLForWholeStoreToUploadForDocumentWithIdentifier:(NSString *)<em>anIdentifier</em> description:(NSString *)<em>aDescription</em> userInfo:(NSDictionary *)<em>userInfo</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The unique identifier for the document (as supplied at registration).</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aDescription</em></dt>
+			<dd><p>The description of the document (as supplied at registration).</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>userInfo</em></dt>
+			<dd><p>The user info dictionary (as supplied at registration).</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The location of the store file.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/documentSyncManager:didFailToRegisterWithError:" title="documentSyncManager:didFailToRegisterWithError:"></a>
 	<h3 class="subsubtitle method-title">documentSyncManager:didFailToRegisterWithError:</h3>
 	
@@ -619,6 +670,53 @@
 		<dl class="argument-def parameter-def">
 			<dt><em>anError</em></dt>
 			<dd><p>The error that caused the registration process to fail.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:didFailToUploadWholeStoreWithError:" title="documentSyncManager:didFailToUploadWholeStoreWithError:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:didFailToUploadWholeStoreWithError:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager failed to upload the whole store file.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> didFailToUploadWholeStoreWithError:(NSError *)<em>anError</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anError</em></dt>
+			<dd><p>The error that caused the upload to fail.</p></dd>
 		</dl>
 		
 	</div>
@@ -818,6 +916,53 @@
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/documentSyncManagerDidBeginUploadingWholeStore:" title="documentSyncManagerDidBeginUploadingWholeStore:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManagerDidBeginUploadingWholeStore:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager has begun to upload the whole store file, together with necessary helper files.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManagerDidBeginUploadingWholeStore:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>At the end of the upload process, one of the <a href="#//api/name/documentSyncManager:didFailToUploadWholeStoreWithError:"><code>documentSyncManager:didFailToUploadWholeStoreWithError:</code></a> or <a href="#//api/name/documentSyncManagerDidFinishUploadingWholeStore:"><code>documentSyncManagerDidFinishUploadingWholeStore:</code></a> methods will be called.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/documentSyncManagerDidContinueRegistering:" title="documentSyncManagerDidContinueRegistering:"></a>
 	<h3 class="subsubtitle method-title">documentSyncManagerDidContinueRegistering:</h3>
 	
@@ -902,17 +1047,17 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:" title="syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:"></a>
-	<h3 class="subsubtitle method-title">syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</h3>
+	<a name="//api/name/documentSyncManagerDidFinishUploadingWholeStore:" title="documentSyncManagerDidFinishUploadingWholeStore:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManagerDidFinishUploadingWholeStore:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Invoked to ask the delegate for the URL of the document&rsquo;s SQLite store to upload.</p>
+		<p>Informs the delegate that the document sync manager finished uploading the whole store file successfully.</p>
 	</div>		
 	
 	
-	<div class="method-subsection method-declaration"><code>- (NSURL *)syncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> URLForWholeStoreToUploadForDocumentWithIdentifier:(NSString *)<em>anIdentifier</em> description:(NSString *)<em>aDescription</em> userInfo:(NSDictionary *)<em>userInfo</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManagerDidFinishUploadingWholeStore:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
 	
 	
 	<div class="method-subsection arguments-section parameters">
@@ -923,19 +1068,46 @@
 			<dd><p>The document sync manager object that sent the message.</p></dd>
 		</dl>
 		
-		<dl class="argument-def parameter-def">
-			<dt><em>anIdentifier</em></dt>
-			<dd><p>The unique identifier for the document (as supplied at registration).</p></dd>
-		</dl>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:" title="documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Invoked to ask the delegate whether the document sync manager should automatically initiate a Whole Store Upload at registration.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (BOOL)documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>aDescription</em></dt>
-			<dd><p>The description of the document (as supplied at registration).</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>userInfo</em></dt>
-			<dd><p>The user info dictionary (as supplied at registration).</p></dd>
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
 		</dl>
 		
 	</div>
@@ -944,7 +1116,7 @@
 	
 	<div class="method-subsection return">
 		<h4 class="method-subtitle parameter-title">Return Value</h4>
-		<p>The location of the store file.</p>
+		<p>A Boolean indicating whether to initiate the upload.</p>
 	</div>
 	
 	
@@ -1407,53 +1579,6 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/syncManager:encounteredWholeStoreUploadError:" title="syncManager:encounteredWholeStoreUploadError:"></a>
-	<h3 class="subsubtitle method-title">syncManager:encounteredWholeStoreUploadError:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Informs the delegate that the document sync manager encountered an error during the whole store upload.</p>
-	</div>		
-	
-	
-	<div class="method-subsection method-declaration"><code>- (void)syncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> encounteredWholeStoreUploadError:(NSError *)<em>anError</em></code></div>
-	
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>aSyncManager</em></dt>
-			<dd><p>The document sync manager object that sent the message.</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>anError</em></dt>
-			<dd><p>The error.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
 	<a name="//api/name/syncManager:failedToProcessAfterMOCDidSave:" title="syncManager:failedToProcessAfterMOCDidSave:"></a>
 	<h3 class="subsubtitle method-title">syncManager:failedToProcessAfterMOCDidSave:</h3>
 	
@@ -1705,55 +1830,6 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/syncManagerDidBeginToUploadWholeStore:" title="syncManagerDidBeginToUploadWholeStore:"></a>
-	<h3 class="subsubtitle method-title">syncManagerDidBeginToUploadWholeStore:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Informs the delegate that the document sync manager has begun to upload the whole store file, together with necessary helper files.</p>
-	</div>		
-	
-	
-	<div class="method-subsection method-declaration"><code>- (void)syncManagerDidBeginToUploadWholeStore:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
-	
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>aSyncManager</em></dt>
-			<dd><p>The document sync manager object that sent the message.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	<div class="method-subsection discussion-section">
-		<h4 class="method-subtitle">Discussion</h4>
-		<p>If an error occurs during the upload process, the <a href="#//api/name/syncManager:encounteredWholeStoreUploadError:"><code>syncManager:encounteredWholeStoreUploadError:</code></a> method will be called.</p>
-
-<p>At the end of the upload process, one of the <a href="#//api/name/syncManagerFailedToUploadWholeStore:"><code>syncManagerFailedToUploadWholeStore:</code></a> or <a href="#//api/name/syncManagerDidUploadWholeStoreSuccessfully:"><code>syncManagerDidUploadWholeStoreSuccessfully:</code></a> methods will be called.</p>
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
 	<a name="//api/name/syncManagerDidBeginToVacuumUnneededRemoteFiles:" title="syncManagerDidBeginToVacuumUnneededRemoteFiles:"></a>
 	<h3 class="subsubtitle method-title">syncManagerDidBeginToVacuumUnneededRemoteFiles:</h3>
 	
@@ -1971,48 +2047,6 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/syncManagerDidUploadWholeStoreSuccessfully:" title="syncManagerDidUploadWholeStoreSuccessfully:"></a>
-	<h3 class="subsubtitle method-title">syncManagerDidUploadWholeStoreSuccessfully:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Informs the delegate that the document sync manager finished uploading the whole store file successfully.</p>
-	</div>		
-	
-	
-	<div class="method-subsection method-declaration"><code>- (void)syncManagerDidUploadWholeStoreSuccessfully:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
-	
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>aSyncManager</em></dt>
-			<dd><p>The document sync manager object that sent the message.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
 	<a name="//api/name/syncManagerFailedToDownloadWholeStore:" title="syncManagerFailedToDownloadWholeStore:"></a>
 	<h3 class="subsubtitle method-title">syncManagerFailedToDownloadWholeStore:</h3>
 	
@@ -2039,11 +2073,6 @@
 	
 	
 	
-	
-	<div class="method-subsection discussion-section">
-		<h4 class="method-subtitle">Discussion</h4>
-		<p>The error will previously have been supplied through the <a href="#//api/name/syncManager:encounteredWholeStoreUploadError:"><code>syncManager:encounteredWholeStoreUploadError:</code></a> method.</p>
-	</div>
 	
 	
 	
@@ -2090,53 +2119,6 @@
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>The error will previously have been supplied through the <a href="#//api/name/syncManager:encounteredSynchronizationError:"><code>syncManager:encounteredSynchronizationError:</code></a> method.</p>
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/syncManagerFailedToUploadWholeStore:" title="syncManagerFailedToUploadWholeStore:"></a>
-	<h3 class="subsubtitle method-title">syncManagerFailedToUploadWholeStore:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Informs the delegate that the document sync manager failed to upload the whole store file.</p>
-	</div>		
-	
-	
-	<div class="method-subsection method-declaration"><code>- (void)syncManagerFailedToUploadWholeStore:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
-	
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>aSyncManager</em></dt>
-			<dd><p>The document sync manager object that sent the message.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	<div class="method-subsection discussion-section">
-		<h4 class="method-subtitle">Discussion</h4>
-		<p>The error will previously have been supplied through the <a href="#//api/name/syncManager:encounteredWholeStoreUploadError:"><code>syncManager:encounteredWholeStoreUploadError:</code></a> method.</p>
 	</div>
 	
 	
@@ -2237,53 +2219,6 @@
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>If this method is not implemented, the sync manager will ask the synchronized persistent store coordinator for the location of its <code>persistentStores</code> array&rsquo;s <code>lastObject</code>.</p>
 	</div>
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/syncManagerShouldUploadWholeStoreAfterDocumentRegistration:" title="syncManagerShouldUploadWholeStoreAfterDocumentRegistration:"></a>
-	<h3 class="subsubtitle method-title">syncManagerShouldUploadWholeStoreAfterDocumentRegistration:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Invoked to ask the delegate whether the document sync manager should automatically initiate a Whole Store Upload at registration.</p>
-	</div>		
-	
-	
-	<div class="method-subsection method-declaration"><code>- (BOOL)syncManagerShouldUploadWholeStoreAfterDocumentRegistration:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
-	
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>aSyncManager</em></dt>
-			<dd><p>The document sync manager object that sent the message.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	<div class="method-subsection return">
-		<h4 class="method-subtitle parameter-title">Return Value</h4>
-		<p>A Boolean indicating whether to initiate the upload.</p>
-	</div>
-	
-	
 	
 	
 	

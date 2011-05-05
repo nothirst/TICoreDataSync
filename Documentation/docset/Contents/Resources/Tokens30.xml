@@ -129,11 +129,11 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerShouldUploadWholeStoreAfterDocumentRegistration:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:</TokenIdentifier>
 			<Abstract>Invoked to ask the delegate whether the document sync manager should automatically initiate a Whole Store Upload at registration.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (BOOL)syncManagerShouldUploadWholeStoreAfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Declaration>- (BOOL)documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -141,15 +141,15 @@
 				</Parameter>
 			</Parameters>
 			<ReturnValue><Abstract>A Boolean indicating whether to initiate the upload.</Abstract></ReturnValue>
-			<Anchor>//api/name/syncManagerShouldUploadWholeStoreAfterDocumentRegistration:</Anchor>
+			<Anchor>//api/name/documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</TokenIdentifier>
 			<Abstract>Invoked to ask the delegate for the URL of the document's SQLite store to upload.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (NSURL *)syncManager:(TICDSDocumentSyncManager *)aSyncManager URLForWholeStoreToUploadForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo</Declaration>
+			<Declaration>- (NSURL *)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager URLForWholeStoreToUploadForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -166,15 +166,15 @@
 				</Parameter>
 			</Parameters>
 			<ReturnValue><Abstract>The location of the store file.</Abstract></ReturnValue>
-			<Anchor>//api/name/syncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</Anchor>
+			<Anchor>//api/name/documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidBeginToUploadWholeStore:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/documentSyncManagerDidBeginUploadingWholeStore:</TokenIdentifier>
 			<Abstract>Informs the delegate that the document sync manager has begun to upload the whole store file, together with necessary helper files.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManagerDidBeginToUploadWholeStore:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Declaration>- (void)documentSyncManagerDidBeginUploadingWholeStore:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -182,50 +182,34 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManagerDidBeginToUploadWholeStore:</Anchor>
+			<Anchor>//api/name/documentSyncManagerDidBeginUploadingWholeStore:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManager:encounteredWholeStoreUploadError:</TokenIdentifier>
-			<Abstract>Informs the delegate that the document sync manager encountered an error during the whole store upload.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/documentSyncManager:didFailToUploadWholeStoreWithError:</TokenIdentifier>
+			<Abstract>Informs the delegate that the document sync manager failed to upload the whole store file.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredWholeStoreUploadError:(NSError *)anError</Declaration>
+			<Declaration>- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToUploadWholeStoreWithError:(NSError *)anError</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
 					<Abstract>The document sync manager object that sent the message.</Abstract>
 				</Parameter><Parameter>
 					<Name>anError</Name>
-					<Abstract>The error.</Abstract>
+					<Abstract>The error that caused the upload to fail.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManager:encounteredWholeStoreUploadError:</Anchor>
+			<Anchor>//api/name/documentSyncManager:didFailToUploadWholeStoreWithError:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerFailedToUploadWholeStore:</TokenIdentifier>
-			<Abstract>Informs the delegate that the document sync manager failed to upload the whole store file.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
-			
-			<Declaration>- (void)syncManagerFailedToUploadWholeStore:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The document sync manager object that sent the message.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/syncManagerFailedToUploadWholeStore:</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/syncManagerDidUploadWholeStoreSuccessfully:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentSyncManagerDelegate/documentSyncManagerDidFinishUploadingWholeStore:</TokenIdentifier>
 			<Abstract>Informs the delegate that the document sync manager finished uploading the whole store file successfully.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)syncManagerDidUploadWholeStoreSuccessfully:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
+			<Declaration>- (void)documentSyncManagerDidFinishUploadingWholeStore:(TICDSDocumentSyncManager *)aSyncManager</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aSyncManager</Name>
@@ -233,7 +217,7 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/syncManagerDidUploadWholeStoreSuccessfully:</Anchor>
+			<Anchor>//api/name/documentSyncManagerDidFinishUploadingWholeStore:</Anchor>
 		</Token>
 		
 		<Token>

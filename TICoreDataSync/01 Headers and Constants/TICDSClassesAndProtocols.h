@@ -227,7 +227,7 @@
  @param aSyncManager The document sync manager object that sent the message.
  
  @return A Boolean indicating whether to initiate the upload. */
-- (BOOL)syncManagerShouldUploadWholeStoreAfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager;
+- (BOOL)documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager;
 
 /** Invoked to ask the delegate for the URL of the document's SQLite store to upload.
  
@@ -238,35 +238,26 @@
  
  @return The location of the store file. */
 @required
-- (NSURL *)syncManager:(TICDSDocumentSyncManager *)aSyncManager URLForWholeStoreToUploadForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo;
+- (NSURL *)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager URLForWholeStoreToUploadForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo;
 @optional
 
 /** Informs the delegate that the document sync manager has begun to upload the whole store file, together with necessary helper files.
  
- If an error occurs during the upload process, the `syncManager:encounteredWholeStoreUploadError:` method will be called.
- 
- At the end of the upload process, one of the `syncManagerFailedToUploadWholeStore:` or `syncManagerDidUploadWholeStoreSuccessfully:` methods will be called.
+ At the end of the upload process, one of the `documentSyncManager:didFailToUploadWholeStoreWithError:` or `documentSyncManagerDidFinishUploadingWholeStore:` methods will be called.
 
  @param aSyncManager The document sync manager object that sent the message. */
-- (void)syncManagerDidBeginToUploadWholeStore:(TICDSDocumentSyncManager *)aSyncManager;
-
-/** Informs the delegate that the document sync manager encountered an error during the whole store upload.
- 
- @param aSyncManager The document sync manager object that sent the message.
- @param anError The error. */
-- (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredWholeStoreUploadError:(NSError *)anError;
+- (void)documentSyncManagerDidBeginUploadingWholeStore:(TICDSDocumentSyncManager *)aSyncManager;
 
 /** Informs the delegate that the document sync manager failed to upload the whole store file.
  
- The error will previously have been supplied through the `syncManager:encounteredWholeStoreUploadError:` method.
- 
- @param aSyncManager The document sync manager object that sent the message. */
-- (void)syncManagerFailedToUploadWholeStore:(TICDSDocumentSyncManager *)aSyncManager;
+ @param aSyncManager The document sync manager object that sent the message.
+ @param anError The error that caused the upload to fail. */
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToUploadWholeStoreWithError:(NSError *)anError;
 
 /** Informs the delegate that the document sync manager finished uploading the whole store file successfully.
  
  @param aSyncManager The document sync manager object that sent the message. */
-- (void)syncManagerDidUploadWholeStoreSuccessfully:(TICDSDocumentSyncManager *)aSyncManager;
+- (void)documentSyncManagerDidFinishUploadingWholeStore:(TICDSDocumentSyncManager *)aSyncManager;
 
 #pragma mark Whole Store Download
 /** @name Whole Store Download */
@@ -314,8 +305,6 @@
 - (void)syncManager:(TICDSDocumentSyncManager *)aSyncManager encounteredWholeStoreDownloadError:(NSError *)anError;
 
 /** Informs the delegate that the document sync manager failed to upload the whole store file.
- 
- The error will previously have been supplied through the `syncManager:encounteredWholeStoreUploadError:` method.
  
  @param aSyncManager The document sync manager object that sent the message. */
 - (void)syncManagerFailedToDownloadWholeStore:(TICDSDocumentSyncManager *)aSyncManager;
