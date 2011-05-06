@@ -87,18 +87,20 @@
 {
     NSRelationshipDescription *inverseRelationship = [aRelationship inverseRelationship];
     
+    // Each check makes sure there _is_ an inverse relationship before checking its type, to allow for relationships with no inverse set
+    
     // Check if this is a many-to-one relationship (only sync the -to-one side)
-    if( ([aRelationship isToMany]) && (![inverseRelationship isToMany]) ) {
+    if( ([aRelationship isToMany]) && inverseRelationship && (![inverseRelationship isToMany]) ) {
         return;
     }
     
     // Check if this is a many to many relationship, and only sync the first relationship name alphabetically
-    if( ([aRelationship isToMany]) && ([inverseRelationship isToMany]) && ([[aRelationship name] caseInsensitiveCompare:[inverseRelationship name]] == NSOrderedDescending) ) {
+    if( ([aRelationship isToMany]) && inverseRelationship && ([inverseRelationship isToMany]) && ([[aRelationship name] caseInsensitiveCompare:[inverseRelationship name]] == NSOrderedDescending) ) {
         return;
     }
     
     // Check if this is a one to one relationship, and only sync the first relationship name alphabetically
-    if( (![aRelationship isToMany]) && (![inverseRelationship isToMany]) && ([[aRelationship name] caseInsensitiveCompare:[inverseRelationship name]] == NSOrderedDescending) ) {
+    if( (![aRelationship isToMany]) && inverseRelationship && (![inverseRelationship isToMany]) && ([[aRelationship name] caseInsensitiveCompare:[inverseRelationship name]] == NSOrderedDescending) ) {
         return;
     }
     
