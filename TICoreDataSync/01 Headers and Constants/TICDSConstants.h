@@ -23,6 +23,7 @@ extern NSString * const kTICDSStackTrace;
 
 extern NSString * const kTICDSClientDeviceDescription;
 extern NSString * const kTICDSClientDeviceUserInfo;
+extern NSString * const kTICDSClientDeviceIdentifier;
 extern NSString * const kTICDSLastSyncDate;
 extern NSString * const kTICDSDocumentIdentifier;
 extern NSString * const kTICDSDocumentDescription;
@@ -57,6 +58,7 @@ extern NSString * const TICDSDeviceInfoPlistExtension;
 extern NSString * const TICDSDocumentInfoPlistFilenameWithExtension;
 extern NSString * const TICDSDocumentInfoPlistFilename;
 extern NSString * const TICDSDocumentInfoPlistExtension;
+extern NSString * const TICDSSaltFilenameWithExtension;
 
 extern NSString * const TICDSSyncIDAttributeName;
 extern NSString * const TICDSSyncChangeDataModelName;

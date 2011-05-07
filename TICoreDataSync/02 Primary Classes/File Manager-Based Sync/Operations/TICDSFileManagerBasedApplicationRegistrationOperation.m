@@ -46,105 +46,111 @@
 }
 
 #pragma mark -
-#pragma mark Overridden Methods
-- (void)checkWhetherRemoteGlobalAppFileStructureExists
+#pragma mark Overridden Global App Directory Methods
+- (void)checkWhetherRemoteGlobalAppDirectoryExists
 {
-    if( ![[self fileManager] fileExistsAtPath:[self applicationDirectoryPath]] ) {
-        // The directory does not exist at all
-        [self discoveredStatusOfRemoteGlobalAppFileStructure:TICDSRemoteFileStructureExistsResponseTypeDoesNotExist];
-        return;
+    if( [[self fileManager] fileExistsAtPath:[self applicationDirectoryPath]] ) {
+        [self discoveredStatusOfRemoteGlobalAppDirectory:TICDSRemoteFileStructureExistsResponseTypeDoesExist];
+    } else {
+        [self discoveredStatusOfRemoteGlobalAppDirectory:TICDSRemoteFileStructureExistsResponseTypeDoesNotExist];
     }
-    
-    NSError *anyError = nil;
-    NSArray *contents = [[self fileManager] contentsOfDirectoryAtPath:[self applicationDirectoryPath] error:&anyError];
-    
-    if( !contents ) {
-        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [self discoveredStatusOfRemoteGlobalAppFileStructure:TICDSRemoteFileStructureExistsResponseTypeError];
-        return;
-    }
-    
-    if( [contents count] > 1 ) {
-        [self discoveredStatusOfRemoteGlobalAppFileStructure:TICDSRemoteFileStructureExistsResponseTypeDoesExist];
-        return;
-    }
-    
-    // if we reach here, there's a problem with the structure...
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeUnexpectedOrIncompleteFileLocationOrDirectoryStructure classAndMethod:__PRETTY_FUNCTION__]];
-    [self discoveredStatusOfRemoteGlobalAppFileStructure:TICDSRemoteFileStructureExistsResponseTypeError];
 }
 
-- (void)createRemoteGlobalAppFileStructure
+- (void)createRemoteGlobalAppDirectoryStructure
 {
-    NSDictionary *fileStructure = [TICDSUtilities remoteGlobalAppFileStructure];
+    NSDictionary *appStructure = [TICDSUtilities remoteGlobalAppFileStructure];
     
     NSError *anyError = nil;
-    BOOL success = [self createDirectoryContentsFromDictionary:fileStructure inDirectory:[self applicationDirectoryPath]];
-    
-    // Create Read Me.txt
-    if( success ) { 
-        NSString *pathToResource = [[NSBundle mainBundle] pathForResource:@"ReadMe" ofType:@"txt" inDirectory:nil];
-        NSString *pathToNewFile = [[self applicationDirectoryPath] stringByAppendingPathComponent:@"ReadMe.txt"];
-        success = [[self fileManager] copyItemAtPath:pathToResource toPath:pathToNewFile error:&anyError];
-    }
+    BOOL success = [self createDirectoryContentsFromDictionary:appStructure inDirectory:[self applicationDirectoryPath]];
     
     if( !success ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
     }
     
-    [self createdRemoteGlobalAppFileStructureSuccessfully:success];
+    [self createdRemoteGlobalAppDirectoryStructureWithSuccess:success];
 }
 
-- (void)checkWhetherRemoteGlobalAppThisClientDeviceFileStructureExists
+- (void)copyReadMeTxtFileToRootOfGlobalAppDirectoryFromPath:(NSString *)aPath
 {
-    if( ![[self fileManager] fileExistsAtPath:[self clientDevicesThisClientDeviceDirectoryPath]] ) {
-        [self discoveredStatusOfRemoteClientDeviceFileStructure:TICDSRemoteFileStructureExistsResponseTypeDoesNotExist];
-        return;
-    }
+    NSString *remotePath = [[self applicationDirectoryPath] stringByAppendingPathComponent:[aPath lastPathComponent]];
     
     NSError *anyError = nil;
-    NSArray *contents = [[self fileManager] contentsOfDirectoryAtPath:[self clientDevicesThisClientDeviceDirectoryPath] error:&anyError];
-    
-    if( !contents ) {
+    BOOL success = [[self fileManager] copyItemAtPath:aPath toPath:remotePath error:&anyError];
+    if( !success ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [self discoveredStatusOfRemoteClientDeviceFileStructure:TICDSRemoteFileStructureExistsResponseTypeError];
-        return;
     }
     
-    if( [contents count] > 0 ) {
-        [self discoveredStatusOfRemoteClientDeviceFileStructure:TICDSRemoteFileStructureExistsResponseTypeDoesExist];
-        return;
-    }
-    
-    // Currently won't get here until we make a better check that the entire directory structure exists
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-    
-    [self discoveredStatusOfRemoteClientDeviceFileStructure:TICDSRemoteFileStructureExistsResponseTypeError];
+    [self copiedReadMeTxtFileToRootOfGlobalAppDirectoryWithSuccess:success];
 }
 
-- (void)createRemoteGlobalAppThisClientDeviceFileStructure
+- (void)checkWhetherSaltFileExists
 {
-    NSDictionary *fileStructure = [TICDSUtilities remoteGlobalAppClientDeviceFileStructure];
+    NSString *remotePath = [[self applicationDirectoryPath] stringByAppendingPathComponent:TICDSSaltFilenameWithExtension];
+    
+    if( [[self fileManager] fileExistsAtPath:remotePath] ) {
+        [self discoveredStatusOfSaltFile:TICDSRemoteFileStructureExistsResponseTypeDoesExist];
+    } else {
+        [self discoveredStatusOfSaltFile:TICDSRemoteFileStructureExistsResponseTypeDoesNotExist];
+    }
+}
+
+- (void)fetchSaltData
+{
+    NSString *remotePath = [[self applicationDirectoryPath] stringByAppendingPathComponent:TICDSSaltFilenameWithExtension];
+    
+    NSData *saltData = [NSData dataWithContentsOfFile:remotePath];
+    
+    [self fetchedSaltData:saltData];
+}
+
+- (void)saveSaltDataToRootOfGlobalAppDirectory:(NSData *)saltData
+{
+    NSString *remotePath = [[self applicationDirectoryPath] stringByAppendingPathComponent:TICDSSaltFilenameWithExtension];
     
     NSError *anyError = nil;
-    BOOL success = [self createDirectoryContentsFromDictionary:fileStructure inDirectory:[self clientDevicesDirectoryPath]];
-    
-    // Create deviceInfo.plist
-    if( success ) { 
-        NSString *pathToResource = [[NSBundle mainBundle] pathForResource:TICDSDeviceInfoPlistFilename ofType:TICDSDocumentInfoPlistExtension inDirectory:nil];
-        NSMutableDictionary *deviceInfo = [NSMutableDictionary dictionaryWithContentsOfFile:pathToResource];
-        [deviceInfo setValue:[self clientDescription] forKey:kTICDSClientDeviceDescription];
-        [deviceInfo setValue:[self applicationUserInfo] forKey:kTICDSClientDeviceUserInfo];
-        
-        NSString *pathToNewFile = [[self clientDevicesThisClientDeviceDirectoryPath] stringByAppendingPathComponent:TICDSDeviceInfoPlistFilenameWithExtension];
-        success = [deviceInfo writeToFile:pathToNewFile atomically:YES];
-    }
+    BOOL success = [saltData writeToFile:remotePath options:0 error:&anyError];
     
     if( !success ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
     }
     
-    [self createdRemoteClientDeviceFileStructureSuccessfully:success];
+    [self savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:success];
+}
+
+#pragma mark -
+#pragma mark Overridden Client Device Directory Methods
+- (void)checkWhetherRemoteClientDeviceDirectoryExists
+{
+    if( [[self fileManager] fileExistsAtPath:[self clientDevicesThisClientDeviceDirectoryPath]] ) {
+        [self discoveredStatusOfRemoteClientDeviceDirectory:TICDSRemoteFileStructureExistsResponseTypeDoesExist];
+    } else {
+        [self discoveredStatusOfRemoteClientDeviceDirectory:TICDSRemoteFileStructureExistsResponseTypeDoesNotExist];
+    }
+}
+
+- (void)createRemoteClientDeviceDirectory
+{
+    NSError *anyError = nil;
+    BOOL success = [[self fileManager] createDirectoryAtPath:[self clientDevicesThisClientDeviceDirectoryPath] withIntermediateDirectories:YES attributes:nil error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    [self createdRemoteClientDeviceDirectoryWithSuccess:success];
+}
+
+- (void)saveRemoteClientDeviceInfoPlistFromDictionary:(NSDictionary *)aDictionary
+{
+    NSString *filePath = [[self clientDevicesThisClientDeviceDirectoryPath] stringByAppendingPathComponent:TICDSDeviceInfoPlistFilenameWithExtension];
+    
+    BOOL success = [aDictionary writeToFile:filePath atomically:NO];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    [self savedRemoteClientDeviceInfoPlistWithSuccess:success];
 }
 
 #pragma mark -
@@ -152,7 +158,6 @@
 - (void)dealloc
 {
     [_applicationDirectoryPath release], _applicationDirectoryPath = nil;
-    [_documentsDirectoryPath release], _documentsDirectoryPath = nil;
     [_clientDevicesDirectoryPath release], _clientDevicesDirectoryPath = nil;
     [_clientDevicesThisClientDeviceDirectoryPath release], _clientDevicesThisClientDeviceDirectoryPath = nil;
     
@@ -162,7 +167,6 @@
 #pragma mark -
 #pragma mark Properties
 @synthesize applicationDirectoryPath = _applicationDirectoryPath;
-@synthesize documentsDirectoryPath = _documentsDirectoryPath;
 @synthesize clientDevicesDirectoryPath = _clientDevicesDirectoryPath;
 @synthesize clientDevicesThisClientDeviceDirectoryPath = _clientDevicesThisClientDeviceDirectoryPath;
 

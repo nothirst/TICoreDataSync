@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>TICDSOperationDelegate Protocol Reference</title>
+		<title>TICDSApplicationRegistrationOperationDelegate Protocol Reference</title>
 		<meta http-equiv="Content-Type" content="application/xhtml+xml;charset=utf-8" />
 		<meta id="xcode-display" name="xcode-display" content="render"/>
 		<meta name="viewport" content="width=550" />
@@ -11,7 +11,7 @@
 	<body>
 		<header id="top_header">
 			<div id="title" role="banner">
-				<h1 class="hideInXcode">TICDSOperationDelegate Protocol Reference</h1>
+				<h1 class="hideInXcode">TICDSApplicationRegistrationOperationDelegate Protocol Reference</h1>
 			</div>
 			<ul id="headerButtons" role="toolbar">
 				<li id="toc_button">
@@ -38,11 +38,13 @@
 	
 	<option value="instance_methods">Instance Methods</option>
 	
-	<option value="//api/name/operationCompletedSuccessfully:">&nbsp;&nbsp;&nbsp;&nbsp;- operationCompletedSuccessfully:</option>
+	<option value="//api/name/registrationOperationPausedToFindOutWhetherToEnableEncryption:">&nbsp;&nbsp;&nbsp;&nbsp;- registrationOperationPausedToFindOutWhetherToEnableEncryption:</option>
 	
-	<option value="//api/name/operationFailedToComplete:">&nbsp;&nbsp;&nbsp;&nbsp;- operationFailedToComplete:</option>
+	<option value="//api/name/registrationOperationPausedToRequestEncryptionPassword:">&nbsp;&nbsp;&nbsp;&nbsp;- registrationOperationPausedToRequestEncryptionPassword:</option>
 	
-	<option value="//api/name/operationWasCancelled:">&nbsp;&nbsp;&nbsp;&nbsp;- operationWasCancelled:</option>
+	<option value="//api/name/registrationOperationResumedFollowingEncryptionInstruction:">&nbsp;&nbsp;&nbsp;&nbsp;- registrationOperationResumedFollowingEncryptionInstruction:</option>
+	
+	<option value="//api/name/registrationOperationResumedFollowingPasswordProvision:">&nbsp;&nbsp;&nbsp;&nbsp;- registrationOperationResumedFollowingPasswordProvision:</option>
 	
 	
 	
@@ -72,11 +74,13 @@
 
 <li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/operationCompletedSuccessfully:">operationCompletedSuccessfully:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/registrationOperationPausedToFindOutWhetherToEnableEncryption:">registrationOperationPausedToFindOutWhetherToEnableEncryption:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/operationFailedToComplete:">operationFailedToComplete:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/registrationOperationPausedToRequestEncryptionPassword:">registrationOperationPausedToRequestEncryptionPassword:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/operationWasCancelled:">operationWasCancelled:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/registrationOperationResumedFollowingEncryptionInstruction:">registrationOperationResumedFollowingEncryptionInstruction:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/registrationOperationResumedFollowingPasswordProvision:">registrationOperationResumedFollowingPasswordProvision:</a></span></li>
 	
 </ul></li>
 
@@ -85,7 +89,7 @@
 		</nav>
 		<article>
 			<div id="contents" class="isShowingTOC" role="main">
-				<a title="TICDSOperationDelegate Protocol Reference" name="top"></a>
+				<a title="TICDSApplicationRegistrationOperationDelegate Protocol Reference" name="top"></a>
 				<div class="main-navigation navigation-top">
 					<ul>
 	<li><a href="../index.html">Index</a></li>
@@ -94,7 +98,7 @@
 				</div>
 				<div id="header">
 					<div class="section-header">
-						<h1 class="title title-header">TICDSOperationDelegate Protocol Reference</h1>
+						<h1 class="title title-header">TICDSApplicationRegistrationOperationDelegate Protocol Reference</h1>
 					</div>		
 				</div>
 				<div id="container">	
@@ -102,7 +106,7 @@
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
 	<td class="specification-title">Conforms to</td>
-	<td class="specification-value">NSObject</td>
+	<td class="specification-value"><a href="../Protocols/TICDSOperationDelegate.html">TICDSOperationDelegate</a></td>
 </tr><tr>
 	<td class="specification-title">Declared in</td>
 	<td class="specification-value">TICDSClassesAndProtocols.h</td>
@@ -115,7 +119,7 @@
 					<div class="section section-overview">
 						<a title="Overview" name="overview"></a>
 						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p>The <a href="TICDSOperationDelegate.html"><code>TICDSOperationDelegate</code></a> protocol defines the methods implemented by delegates of any generic <a href="../Classes/TICDSOperation.html"><code>TICDSOperation</code></a>. In the <code>TICoreDataSync</code> framework, these delegate methods are implemented by the application and document sync managers.</p>
+						<p>The <a href="TICDSApplicationRegistrationOperationDelegate.html"><code>TICDSApplicationRegistrationOperationDelegate</code></a> protocol defines the methods implemented by delegates of <a href="../Classes/TICDSApplicationRegistrationOperation.html"><code>TICDSApplicationRegistrationOperation</code></a> or one of its subclasses. In the <code>TICoreDataSync</code> framework, these delegate methods are implemented by the application sync manager.</p>
 					</div>
 					
 					
@@ -133,22 +137,29 @@
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
-		<code><a href="#//api/name/operationCompletedSuccessfully:">&ndash;&nbsp;operationCompletedSuccessfully:</a></code>
-		<span class="tooltip"><p>Informs the delegate that the operation has completely and successfully finished its tasks.</p></span>
+		<code><a href="#//api/name/registrationOperationPausedToFindOutWhetherToEnableEncryption:">&ndash;&nbsp;registrationOperationPausedToFindOutWhetherToEnableEncryption:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the operation has been paused because the global app directory does not exist. The delegate should query its own delegate to ask whether to enable encryption for this application, and if so find out the password to use.</p></span>
 	</span>
 	
 	<span class="task-item-suffix">required method</span>
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/operationWasCancelled:">&ndash;&nbsp;operationWasCancelled:</a></code>
-		<span class="tooltip"><p>Informs the delegate that the operation was cancelled before it could finish its tasks.</p></span>
+		<code><a href="#//api/name/registrationOperationResumedFollowingEncryptionInstruction:">&ndash;&nbsp;registrationOperationResumedFollowingEncryptionInstruction:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the operation has resumed after being told whether to use encryption.</p></span>
 	</span>
 	
 	<span class="task-item-suffix">required method</span>
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/operationFailedToComplete:">&ndash;&nbsp;operationFailedToComplete:</a></code>
-		<span class="tooltip"><p>Informs the delegate that the operation failed to complete before it could finish its tasks.</p></span>
+		<code><a href="#//api/name/registrationOperationPausedToRequestEncryptionPassword:">&ndash;&nbsp;registrationOperationPausedToRequestEncryptionPassword:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the operation has been paused because this is the first time this client has registered to synchronize with this application, and the existing data is encrypted.</p></span>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/registrationOperationResumedFollowingPasswordProvision:">&ndash;&nbsp;registrationOperationResumedFollowingPasswordProvision:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the operation has resumed after being given a password.</p></span>
 	</span>
 	
 	<span class="task-item-suffix">required method</span>
@@ -170,17 +181,17 @@
 						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
 						
 						<div class="section-method">
-	<a name="//api/name/operationCompletedSuccessfully:" title="operationCompletedSuccessfully:"></a>
-	<h3 class="subsubtitle method-title">operationCompletedSuccessfully:</h3>
+	<a name="//api/name/registrationOperationPausedToFindOutWhetherToEnableEncryption:" title="registrationOperationPausedToFindOutWhetherToEnableEncryption:"></a>
+	<h3 class="subsubtitle method-title">registrationOperationPausedToFindOutWhetherToEnableEncryption:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Informs the delegate that the operation has completely and successfully finished its tasks.</p>
+		<p>Informs the delegate that the operation has been paused because the global app directory does not exist. The delegate should query its own delegate to ask whether to enable encryption for this application, and if so find out the password to use.</p>
 	</div>		
 	
 	
-	<div class="method-subsection method-declaration"><code>- (void)operationCompletedSuccessfully:(TICDSOperation *)<em>anOperation</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)registrationOperationPausedToFindOutWhetherToEnableEncryption:(TICDSApplicationRegistrationOperation *)<em>anOperation</em></code></div>
 	
 	
 	<div class="method-subsection arguments-section parameters">
@@ -212,17 +223,17 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/operationFailedToComplete:" title="operationFailedToComplete:"></a>
-	<h3 class="subsubtitle method-title">operationFailedToComplete:</h3>
+	<a name="//api/name/registrationOperationPausedToRequestEncryptionPassword:" title="registrationOperationPausedToRequestEncryptionPassword:"></a>
+	<h3 class="subsubtitle method-title">registrationOperationPausedToRequestEncryptionPassword:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Informs the delegate that the operation failed to complete before it could finish its tasks.</p>
+		<p>Informs the delegate that the operation has been paused because this is the first time this client has registered to synchronize with this application, and the existing data is encrypted.</p>
 	</div>		
 	
 	
-	<div class="method-subsection method-declaration"><code>- (void)operationFailedToComplete:(TICDSOperation *)<em>anOperation</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)registrationOperationPausedToRequestEncryptionPassword:(TICDSApplicationRegistrationOperation *)<em>anOperation</em></code></div>
 	
 	
 	<div class="method-subsection arguments-section parameters">
@@ -254,17 +265,59 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/operationWasCancelled:" title="operationWasCancelled:"></a>
-	<h3 class="subsubtitle method-title">operationWasCancelled:</h3>
+	<a name="//api/name/registrationOperationResumedFollowingEncryptionInstruction:" title="registrationOperationResumedFollowingEncryptionInstruction:"></a>
+	<h3 class="subsubtitle method-title">registrationOperationResumedFollowingEncryptionInstruction:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Informs the delegate that the operation was cancelled before it could finish its tasks.</p>
+		<p>Informs the delegate that the operation has resumed after being told whether to use encryption.</p>
 	</div>		
 	
 	
-	<div class="method-subsection method-declaration"><code>- (void)operationWasCancelled:(TICDSOperation *)<em>anOperation</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)registrationOperationResumedFollowingEncryptionInstruction:(TICDSApplicationRegistrationOperation *)<em>anOperation</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anOperation</em></dt>
+			<dd><p>The operation object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/registrationOperationResumedFollowingPasswordProvision:" title="registrationOperationResumedFollowingPasswordProvision:"></a>
+	<h3 class="subsubtitle method-title">registrationOperationResumedFollowingPasswordProvision:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the operation has resumed after being given a password.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)registrationOperationResumedFollowingPasswordProvision:(TICDSApplicationRegistrationOperation *)<em>anOperation</em></code></div>
 	
 	
 	<div class="method-subsection arguments-section parameters">

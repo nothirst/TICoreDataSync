@@ -52,6 +52,7 @@
 						<NodeRef refid="30"/>
 						<NodeRef refid="31"/>
 						<NodeRef refid="32"/>
+						<NodeRef refid="33"/>
 						
 					</Subnodes>
 				</Node>
@@ -171,22 +172,26 @@
 		
 		
 		<Node id="28">
+			<Name>TICDSApplicationRegistrationOperationDelegate</Name>
+			<Path>Protocols/TICDSApplicationRegistrationOperationDelegate.html</Path>
+		</Node>
+		<Node id="29">
 			<Name>TICDSApplicationSyncManagerDelegate</Name>
 			<Path>Protocols/TICDSApplicationSyncManagerDelegate.html</Path>
 		</Node>
-		<Node id="29">
+		<Node id="30">
 			<Name>TICDSDocumentRegistrationOperationDelegate</Name>
 			<Path>Protocols/TICDSDocumentRegistrationOperationDelegate.html</Path>
 		</Node>
-		<Node id="30">
+		<Node id="31">
 			<Name>TICDSDocumentSyncManagerDelegate</Name>
 			<Path>Protocols/TICDSDocumentSyncManagerDelegate.html</Path>
 		</Node>
-		<Node id="31">
+		<Node id="32">
 			<Name>TICDSOperationDelegate</Name>
 			<Path>Protocols/TICDSOperationDelegate.html</Path>
 		</Node>
-		<Node id="32">
+		<Node id="33">
 			<Name>TICDSSynchronizationOperationDelegate</Name>
 			<Path>Protocols/TICDSSynchronizationOperationDelegate.html</Path>
 		</Node>

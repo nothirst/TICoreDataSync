@@ -103,6 +103,25 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
     [self increaseSyncActivity];
 }
 
+- (void)applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:(TICDSApplicationSyncManager *)aSyncManager
+{
+    [self decreaseSyncActivity];
+    
+    [self replaceAnyExistingViewWithView:[self dropboxEncryptionView]];
+}
+
+- (void)applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:(TICDSApplicationSyncManager *)aSyncManager
+{
+    [self decreaseSyncActivity];
+    
+    [self replaceAnyExistingViewWithView:[self dropboxRequestExistingPasswordView]];
+}
+
+- (void)applicationSyncManagerDidContinueRegistering:(TICDSApplicationSyncManager *)aSyncManager
+{
+    [self increaseSyncActivity];
+}
+
 - (void)applicationSyncManagerDidFinishRegistering:(TICDSApplicationSyncManager *)aSyncManager
 {
     [self decreaseSyncActivity];
@@ -362,6 +381,65 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
     [self registerDropboxClient];
 }
 
+#pragma mark Dropbox Encryption
+- (IBAction)dropboxEncryptionDoNotUseEncryptionAction:(id)sender
+{
+    TICDSApplicationSyncManager *syncManager = [TICDSFileManagerBasedApplicationSyncManager defaultApplicationSyncManager];
+    
+    [syncManager continueRegisteringWithEncryption:NO password:nil];
+}
+
+- (IBAction)dropboxEncryptionUseEncryptionAction:(id)sender;
+{
+    [self replaceView:[self dropboxEncryptionView] andGoForwardToView:[self dropboxSetEncryptionPasswordView]];
+}
+
+#pragma mark Dropbox Set Encryption Password
+- (IBAction)dropboxSetEncryptionPasswordBackAction:(id)sender
+{
+    [self replaceView:[self dropboxSetEncryptionPasswordView] andGoBackwardToView:[self dropboxEncryptionView]];
+    [[self dropboxSetEncryptionPasswordTextField] setStringValue:@""];
+    [[self dropboxSetEncryptionPasswordErrorLabel] setHidden:YES];
+}
+
+- (IBAction)dropboxSetEncryptionPasswordContinueAction:(id)sender
+{
+    NSString *password = [[self dropboxSetEncryptionPasswordTextField] stringValue];
+    password = [password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    if( !password || ([password length] < 1) ) {
+        [[self dropboxSetEncryptionPasswordErrorLabel] setHidden:NO];
+        return;
+    }
+    
+    TICDSApplicationSyncManager *syncManager = [TICDSFileManagerBasedApplicationSyncManager defaultApplicationSyncManager];
+    
+    [syncManager continueRegisteringWithEncryption:YES password:password];
+}
+
+#pragma mark Dropbox Request Encryption Password
+- (IBAction)dropboxRequestExistingPasswordBackAction:(id)sender
+{
+    [self replaceView:[self dropboxRequestExistingPasswordView] andGoBackwardToView:[self dropboxCreateView]];
+    [[self dropboxRequestExistingPasswordTextField] setStringValue:@""];
+    [[self dropboxRequestExistingPasswordErrorLabel] setHidden:YES];
+}
+
+- (IBAction)dropboxRequestExistingPasswordContinueAction:(id)sender
+{
+    NSString *password = [[self dropboxRequestExistingPasswordTextField] stringValue];
+    password = [password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    if( !password || ([password length] < 1) ) {
+        [[self dropboxRequestExistingPasswordErrorLabel] setHidden:NO];
+        return;
+    }
+    
+    TICDSApplicationSyncManager *syncManager = [TICDSFileManagerBasedApplicationSyncManager defaultApplicationSyncManager];
+    
+    [syncManager continueRegisteringWithUserPassword:password];
+}
+
 #pragma mark Dropbox Configured
 - (IBAction)dropboxConfiguredDisableSyncAction:(id)sender
 {
@@ -526,6 +604,13 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
 @synthesize dropboxCreateContinueButton = _dropboxCreateContinueButton;
 @synthesize dropboxConfiguringView = _dropboxConfiguringView;
 @synthesize dropboxConfiguringProgressIndicator = _dropboxConfiguringProgressIndicator;
+@synthesize dropboxEncryptionView = _dropboxEncryptionView;
+@synthesize dropboxSetEncryptionPasswordView = _dropboxSetEncryptionPasswordView;
+@synthesize dropboxSetEncryptionPasswordErrorLabel = _dropboxSetEncryptionPasswordErrorLabel;
+@synthesize dropboxSetEncryptionPasswordTextField = _dropboxSetEncryptionPasswordTextField;
+@synthesize dropboxRequestExistingPasswordView = _dropboxRequestExistingPasswordView;
+@synthesize dropboxRequestExistingPasswordErrorLabel = _dropboxRequestExistingPasswordErrorLabel;
+@synthesize dropboxRequestExistingPasswordTextField = _dropboxRequestExistingPasswordTextField;
 @synthesize dropboxConfiguredView = _dropboxConfiguredView;
 @synthesize dropboxErrorView = _dropboxErrorView;
 @synthesize dropboxErrorMessageTextField = _dropboxErrorMessageTextField;

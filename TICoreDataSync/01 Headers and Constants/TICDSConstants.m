@@ -43,6 +43,7 @@ NSString * const kTICDSStackTrace = @"kTICDSStackTrace";
 
 NSString * const kTICDSClientDeviceDescription = @"kTICDSClientDeviceDescription";
 NSString * const kTICDSClientDeviceUserInfo = @"kTICDSClientDeviceUserInfo";
+NSString * const kTICDSClientDeviceIdentifier = @"kTICDSClientDeviceIdentifier";
 NSString * const kTICDSLastSyncDate = @"kTICDSLastSyncDate";
 NSString * const kTICDSDocumentIdentifier = @"kTICDSDocumentIdentifier";
 NSString * const kTICDSDocumentDescription = @"kTICDSDocumentDescription";
@@ -77,6 +78,7 @@ NSString * const TICDSDeviceInfoPlistExtension = @"plist";
 NSString * const TICDSDocumentInfoPlistFilenameWithExtension = @"documentInfo.plist";
 NSString * const TICDSDocumentInfoPlistFilename = @"documentInfo";
 NSString * const TICDSDocumentInfoPlistExtension = @"plist";
+NSString * const TICDSSaltFilenameWithExtension = @"salt.ticdsync";
 
 NSString * const TICDSSyncIDAttributeName = @"ticdsSyncID";
 NSString * const TICDSSyncChangeDataModelName = @"TICDSSyncChange";

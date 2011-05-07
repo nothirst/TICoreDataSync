@@ -21,7 +21,7 @@
  @warning You must register the application sync manager before you can use it to register any documents.
 */
 
-@interface TICDSApplicationSyncManager : NSObject <TICDSOperationDelegate> {
+@interface TICDSApplicationSyncManager : NSObject <TICDSApplicationRegistrationOperationDelegate> {
 @private
     TICDSApplicationSyncManagerState _state;
     
@@ -75,6 +75,21 @@
  @param userInfo A dictionary of information that will be saved throughout all future synchronizations. Because this information is saved in a plist, everything in the dictionary must be archivable using `NSKeyedArchiver`.
  */
 - (void)registerWithDelegate:(id <TICDSApplicationSyncManagerDelegate>)aDelegate globalAppIdentifier:(NSString *)anAppIdentifier uniqueClientIdentifier:(NSString *)aClientIdentifier description:(NSString *)aClientDescription userInfo:(NSDictionary *)someUserInfo;
+
+/** Continue registering an application for the first time by using encryption.
+ 
+ @warning If you specify `YES` for `shouldUseEncryption`, the password must not be `nil`, or an empty string.
+ 
+ @param shouldUseEncryption A Boolean indicating whether to use encryption for this application's sync data.
+ @param aPassword The password to use if encryption is specified. */
+- (void)continueRegisteringWithEncryption:(BOOL)shouldUseEncryption password:(NSString *)aPassword;
+
+/** Contine registering an existing application, using a user-provided password.
+ 
+ @warning The password must not be `nil`, or an empty string.
+ 
+ @param aPassword The password to use for encryption. */
+- (void)continueRegisteringWithUserPassword:(NSString *)aPassword;
 
 /** @name Accessing Previously Synchronized Documents */
 

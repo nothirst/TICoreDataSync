@@ -37,6 +37,16 @@
     NSView *_dropboxConfiguringView;
     NSView *_dropboxConfiguringProgressIndicator;
     
+    NSView *_dropboxEncryptionView;
+    
+    NSView *_dropboxSetEncryptionPasswordView;
+    NSTextField *_dropboxSetEncryptionPasswordErrorLabel;
+    NSTextField *_dropboxSetEncryptionPasswordTextField;
+    
+    NSView *_dropboxRequestExistingPasswordView;
+    NSTextField *_dropboxRequestExistingPasswordErrorLabel;
+    NSTextField *_dropboxRequestExistingPasswordTextField;
+    
     NSView *_dropboxConfiguredView;
     
     NSView *_dropboxErrorView;
@@ -77,6 +87,18 @@
 - (IBAction)dropboxCreateBackAction:(id)sender;
 - (IBAction)dropboxCreateContinueAction:(id)sender;
 
+// Dropbox Encryption View
+- (IBAction)dropboxEncryptionDoNotUseEncryptionAction:(id)sender;
+- (IBAction)dropboxEncryptionUseEncryptionAction:(id)sender;
+
+// Dropbox Set Encryption Password View
+- (IBAction)dropboxSetEncryptionPasswordBackAction:(id)sender;
+- (IBAction)dropboxSetEncryptionPasswordContinueAction:(id)sender;
+
+// Dropbox Request Encryption Password View
+- (IBAction)dropboxRequestExistingPasswordBackAction:(id)sender;
+- (IBAction)dropboxRequestExistingPasswordContinueAction:(id)sender;
+
 // Dropbox Configured View
 - (IBAction)dropboxConfiguredDisableSyncAction:(id)sender;
 - (IBAction)dropboxConfiguredViewAvailableDocumentsAction:(id)sender;
@@ -103,6 +125,13 @@
 @property (nonatomic, assign) IBOutlet NSButton *dropboxCreateContinueButton;
 @property (nonatomic, assign) IBOutlet NSView *dropboxConfiguringView;
 @property (nonatomic, assign) IBOutlet NSView *dropboxConfiguringProgressIndicator;
+@property (nonatomic, assign) IBOutlet NSView *dropboxEncryptionView;
+@property (nonatomic, assign) IBOutlet NSView *dropboxSetEncryptionPasswordView;
+@property (nonatomic, assign) IBOutlet NSTextField *dropboxSetEncryptionPasswordErrorLabel;
+@property (nonatomic, assign) IBOutlet NSTextField *dropboxSetEncryptionPasswordTextField;
+@property (nonatomic, assign) IBOutlet NSView *dropboxRequestExistingPasswordView;
+@property (nonatomic, assign) IBOutlet NSTextField *dropboxRequestExistingPasswordErrorLabel;
+@property (nonatomic, assign) IBOutlet NSTextField *dropboxRequestExistingPasswordTextField;
 @property (nonatomic, assign) IBOutlet NSView *dropboxConfiguredView;
 @property (nonatomic, assign) IBOutlet NSView *dropboxErrorView;
 @property (nonatomic, assign) IBOutlet NSTextField *dropboxErrorMessageTextField;

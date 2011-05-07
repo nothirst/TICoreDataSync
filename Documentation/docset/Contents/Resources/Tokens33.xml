@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/TICDSSynchronizationOperationDelegate.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/TICDSSynchronizationOperationDelegate</TokenIdentifier>
+			<Abstract>The TICDSSynchronizationOperationDelegate protocol defines the methods implemented by delegates of TICDSSynchronizationOperation or one of its subclasses. In the TICoreDataSync framework, these delegate methods are implemented by the document sync manager.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>
+			
+			<NodeRef refid="33"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSSynchronizationOperationDelegate/synchronizationOperation:pausedToDetermineResolutionOfConflict:</TokenIdentifier>
+			<Abstract>Informs the delegate that the operation has been paused because of a conflict. The delegate should query its own delegate to ask how to resolve the conflict.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)synchronizationOperation:(TICDSSynchronizationOperation *)anOperation pausedToDetermineResolutionOfConflict:(id)aConflict</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>anOperation</Name>
+					<Abstract>The operation object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>aConflict</Name>
+					<Abstract>The conflict.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/synchronizationOperation:pausedToDetermineResolutionOfConflict:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSSynchronizationOperationDelegate/synchronizationOperationResumedFollowingResolutionOfConflict:</TokenIdentifier>
+			<Abstract>Informs the delegate that the operation has resumed after being told how to resolve the conflict.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)synchronizationOperationResumedFollowingResolutionOfConflict:(TICDSSynchronizationOperation *)anOperation</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>anOperation</Name>
+					<Abstract>The operation object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/synchronizationOperationResumedFollowingResolutionOfConflict:</Anchor>
+		</Token>
+		
+	</File>
+</Tokens>

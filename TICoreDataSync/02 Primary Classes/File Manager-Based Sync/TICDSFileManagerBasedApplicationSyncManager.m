@@ -17,7 +17,6 @@
     TICDSFileManagerBasedApplicationRegistrationOperation *operation = [[TICDSFileManagerBasedApplicationRegistrationOperation alloc] initWithDelegate:self];
     
     [operation setApplicationDirectoryPath:[self applicationDirectoryPath]];
-    [operation setDocumentsDirectoryPath:[self documentsDirectoryPath]];
     [operation setClientDevicesDirectoryPath:[self clientDevicesDirectoryPath]];
     [operation setClientDevicesThisClientDeviceDirectoryPath:[self clientDevicesThisClientDeviceDirectoryPath]];
     

@@ -74,6 +74,10 @@
 	
 	<option value="//api/name/applicationRegistrationOperation">&nbsp;&nbsp;&nbsp;&nbsp;- applicationRegistrationOperation</option>
 	
+	<option value="//api/name/continueRegisteringWithEncryption:password:">&nbsp;&nbsp;&nbsp;&nbsp;- continueRegisteringWithEncryption:password:</option>
+	
+	<option value="//api/name/continueRegisteringWithUserPassword:">&nbsp;&nbsp;&nbsp;&nbsp;- continueRegisteringWithUserPassword:</option>
+	
 	<option value="//api/name/listOfPreviouslySynchronizedDocumentsOperation">&nbsp;&nbsp;&nbsp;&nbsp;- listOfPreviouslySynchronizedDocumentsOperation</option>
 	
 	<option value="//api/name/registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:">&nbsp;&nbsp;&nbsp;&nbsp;- registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:</option>
@@ -168,6 +172,10 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationRegistrationOperation">applicationRegistrationOperation</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/continueRegisteringWithEncryption:password:">continueRegisteringWithEncryption:password:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/continueRegisteringWithUserPassword:">continueRegisteringWithUserPassword:</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/listOfPreviouslySynchronizedDocumentsOperation">listOfPreviouslySynchronizedDocumentsOperation</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:">registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:</a></span></li>
@@ -209,7 +217,7 @@
 	<td class="specification-value">NSObject</td>
 </tr><tr>
 	<td class="specification-title">Conforms to</td>
-	<td class="specification-value"><a href="../Protocols/TICDSOperationDelegate.html">TICDSOperationDelegate</a></td>
+	<td class="specification-value"><a href="../Protocols/TICDSApplicationRegistrationOperationDelegate.html">TICDSApplicationRegistrationOperationDelegate</a></td>
 </tr><tr>
 	<td class="specification-title">Declared in</td>
 	<td class="specification-value">TICDSApplicationSyncManager.h</td>
@@ -274,6 +282,20 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:">&ndash;&nbsp;registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:</a></code>
 		<span class="tooltip"><p>Register an application ready for future synchronization.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/continueRegisteringWithEncryption:password:">&ndash;&nbsp;continueRegisteringWithEncryption:password:</a></code>
+		<span class="tooltip"><p>Continue registering an application for the first time by using encryption.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/continueRegisteringWithUserPassword:">&ndash;&nbsp;continueRegisteringWithUserPassword:</a></code>
+		<span class="tooltip"><p>Contine registering an existing application, using a user-provided password.</p></span>
 	</span>
 	
 	
@@ -1027,6 +1049,105 @@
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/continueRegisteringWithEncryption:password:" title="continueRegisteringWithEncryption:password:"></a>
+	<h3 class="subsubtitle method-title">continueRegisteringWithEncryption:password:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Continue registering an application for the first time by using encryption.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)continueRegisteringWithEncryption:(BOOL)<em>shouldUseEncryption</em> password:(NSString *)<em>aPassword</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>shouldUseEncryption</em></dt>
+			<dd><p>A Boolean indicating whether to use encryption for this application&rsquo;s sync data.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aPassword</em></dt>
+			<dd><p>The password to use if encryption is specified.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p>If you specify <code>YES</code> for <code>shouldUseEncryption</code>, the password must not be <code>nil</code>, or an empty string.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/continueRegisteringWithUserPassword:" title="continueRegisteringWithUserPassword:"></a>
+	<h3 class="subsubtitle method-title">continueRegisteringWithUserPassword:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Contine registering an existing application, using a user-provided password.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)continueRegisteringWithUserPassword:(NSString *)<em>aPassword</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aPassword</em></dt>
+			<dd><p>The password to use for encryption.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p>The password must not be <code>nil</code>, or an empty string.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationSyncManager.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/listOfPreviouslySynchronizedDocumentsOperation" title="listOfPreviouslySynchronizedDocumentsOperation"></a>
 	<h3 class="subsubtitle method-title">listOfPreviouslySynchronizedDocumentsOperation</h3>
 	
@@ -1357,7 +1478,7 @@
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2011 Tim Isted. All rights reserved. (Last updated: 2011-05-05)</span><br />
+						<p><span class="copyright">&copy; 2011 Tim Isted. All rights reserved. (Last updated: 2011-05-07)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.0.3 (build 668)</a>.</span></p>
 						

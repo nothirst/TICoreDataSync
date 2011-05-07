@@ -43,7 +43,7 @@
 
 - (void)createSyncChangesForChangedProperties
 {
-    // separate sync changes are created for each property change, whether it be relationship or 
+    // separate sync changes are created for each property change, whether it be relationship or attribute
     NSDictionary *changedValues = [self changedValues];
     
     for( NSString *eachPropertyName in changedValues ) {

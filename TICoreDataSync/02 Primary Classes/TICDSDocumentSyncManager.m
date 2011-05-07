@@ -258,7 +258,7 @@
 
 - (void)continueRegistrationByCreatingRemoteFileStructure:(BOOL)shouldCreateFileStructure
 {
-    // Just start the sync operation again
+    // Just start the registration operation again
     [(TICDSDocumentRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setShouldCreateDocumentFileStructure:shouldCreateFileStructure];
     [(TICDSDocumentRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setPaused:NO];
 }

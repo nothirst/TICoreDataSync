@@ -59,10 +59,33 @@
 
 /** Informs the delegate that the application sync manager has started the application registration process.
  
- At the end of the registration process, one of the `applicationSyncManger:didFailToRegisterWithError:` or `applicationSyncManagerDidFinishRegistering:` methods will be called.
+ At the end of the registration process, one of the `applicationSyncManager:didFailToRegisterWithError:` or `applicationSyncManagerDidFinishRegistering:` methods will be called.
  
  @param aSyncManager The application sync manager object that sent the message. */
 - (void)applicationSyncManagerDidBeginRegistering:(TICDSApplicationSyncManager *)aSyncManager;
+
+/** Informs the delegate that the application sync manager paused the application registration process to find out whether to use encryption for this application, because this is the first time this application has been registered.
+ 
+ @param aSyncManager The application sync manager object that sent the message. 
+ 
+ @warning You *must* call the `continueRegisteringWithEncryption:password:` method to indicate whether registration should use encryption, or the registration process will be left permanently suspended. */
+@required
+- (void)applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:(TICDSApplicationSyncManager *)aSyncManager;
+@optional
+
+/** Informs the delegate that the application sync manager paused the application registration process because a password is needed to work with this application's encrypted data.
+ 
+ @param aSyncManager The application sync manager object that sent the message.
+ 
+ @warning You *must* call the `continueRegisteringWithUserPassword:` method to indicate the password to use, or the registration process will be left permanently suspended. */
+@required
+- (void)applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:(TICDSApplicationSyncManager *)aSyncManager;
+@optional
+
+/** Informs the delegate that the application sync manager has resumed the application registration process.
+ 
+ @param aSyncManager The application sync manager object that sent the message. */
+- (void)applicationSyncManagerDidContinueRegistering:(TICDSApplicationSyncManager *)aSyncManager;
 
 /** Informs the delegate that the application sync manager failed to register the application because of an error.
   
@@ -440,6 +463,33 @@
  
  @param anOperation The operation object that sent the message. */
 - (void)operationFailedToComplete:(TICDSOperation *)anOperation;
+
+@end
+
+#pragma mark Application Registration Operation Delegate
+/** The `TICDSApplicationRegistrationOperationDelegate` protocol defines the methods implemented by delegates of `TICDSApplicationRegistrationOperation` or one of its subclasses. In the `TICoreDataSync` framework, these delegate methods are implemented by the application sync manager. */
+
+@protocol TICDSApplicationRegistrationOperationDelegate <TICDSOperationDelegate>
+
+/** Informs the delegate that the operation has been paused because the global app directory does not exist. The delegate should query its own delegate to ask whether to enable encryption for this application, and if so find out the password to use.
+ 
+ @param anOperation The operation object that sent the message. */
+- (void)registrationOperationPausedToFindOutWhetherToEnableEncryption:(TICDSApplicationRegistrationOperation *)anOperation;
+
+/** Informs the delegate that the operation has resumed after being told whether to use encryption.
+ 
+ @param anOperation The operation object that sent the message. */
+- (void)registrationOperationResumedFollowingEncryptionInstruction:(TICDSApplicationRegistrationOperation *)anOperation;
+
+/** Informs the delegate that the operation has been paused because this is the first time this client has registered to synchronize with this application, and the existing data is encrypted.
+ 
+ @param anOperation The operation object that sent the message. */
+- (void)registrationOperationPausedToRequestEncryptionPassword:(TICDSApplicationRegistrationOperation *)anOperation;
+
+/** Informs the delegate that the operation has resumed after being given a password.
+ 
+ @param anOperation The operation object that sent the message. */
+- (void)registrationOperationResumedFollowingPasswordProvision:(TICDSApplicationRegistrationOperation *)anOperation;
 
 @end
 

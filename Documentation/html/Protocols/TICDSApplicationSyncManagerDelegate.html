@@ -58,9 +58,15 @@
 	
 	<option value="//api/name/applicationSyncManagerDidBeginRegistering:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManagerDidBeginRegistering:</option>
 	
+	<option value="//api/name/applicationSyncManagerDidContinueRegistering:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManagerDidContinueRegistering:</option>
+	
 	<option value="//api/name/applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:</option>
 	
 	<option value="//api/name/applicationSyncManagerDidFinishRegistering:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManagerDidFinishRegistering:</option>
+	
+	<option value="//api/name/applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:</option>
+	
+	<option value="//api/name/applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:</option>
 	
 	
 	
@@ -116,9 +122,15 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManagerDidBeginRegistering:">applicationSyncManagerDidBeginRegistering:</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManagerDidContinueRegistering:">applicationSyncManagerDidContinueRegistering:</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:">applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManagerDidFinishRegistering:">applicationSyncManagerDidFinishRegistering:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:">applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:">applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:</a></span></li>
 	
 </ul></li>
 
@@ -177,6 +189,27 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/applicationSyncManagerDidBeginRegistering:">&ndash;&nbsp;applicationSyncManagerDidBeginRegistering:</a></code>
 		<span class="tooltip"><p>Informs the delegate that the application sync manager has started the application registration process.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:">&ndash;&nbsp;applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager paused the application registration process to find out whether to use encryption for this application, because this is the first time this application has been registered.</p></span>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:">&ndash;&nbsp;applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager paused the application registration process because a password is needed to work with this application&rsquo;s encrypted data.</p></span>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManagerDidContinueRegistering:">&ndash;&nbsp;applicationSyncManagerDidContinueRegistering:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager has resumed the application registration process.</p></span>
 	</span>
 	
 	
@@ -788,8 +821,50 @@
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>At the end of the registration process, one of the <code>applicationSyncManger:didFailToRegisterWithError:</code> or <a href="#//api/name/applicationSyncManagerDidFinishRegistering:"><code>applicationSyncManagerDidFinishRegistering:</code></a> methods will be called.</p>
+		<p>At the end of the registration process, one of the <a href="#//api/name/applicationSyncManager:didFailToRegisterWithError:"><code>applicationSyncManager:didFailToRegisterWithError:</code></a> or <a href="#//api/name/applicationSyncManagerDidFinishRegistering:"><code>applicationSyncManagerDidFinishRegistering:</code></a> methods will be called.</p>
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManagerDidContinueRegistering:" title="applicationSyncManagerDidContinueRegistering:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManagerDidContinueRegistering:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager has resumed the application registration process.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManagerDidContinueRegistering:(TICDSApplicationSyncManager *)<em>aSyncManager</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
 	
 	
 	
@@ -889,6 +964,100 @@
 	
 </div>
 						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:" title="applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager paused the application registration process to find out whether to use encryption for this application, because this is the first time this application has been registered.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:(TICDSApplicationSyncManager *)<em>aSyncManager</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p>You <strong>must</strong> call the <code>continueRegisteringWithEncryption:password:</code> method to indicate whether registration should use encryption, or the registration process will be left permanently suspended.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:" title="applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager paused the application registration process because a password is needed to work with this application&rsquo;s encrypted data.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:(TICDSApplicationSyncManager *)<em>aSyncManager</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<div class="warning"><p>You <strong>must</strong> call the <code>continueRegisteringWithUserPassword:</code> method to indicate the password to use, or the registration process will be left permanently suspended.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
 					</div>
 					
 					
@@ -902,7 +1071,7 @@
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2011 Tim Isted. All rights reserved. (Last updated: 2011-05-05)</span><br />
+						<p><span class="copyright">&copy; 2011 Tim Isted. All rights reserved. (Last updated: 2011-05-07)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.0.3 (build 668)</a>.</span></p>
 						

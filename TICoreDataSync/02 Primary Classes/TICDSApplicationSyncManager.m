@@ -55,7 +55,7 @@
 - (void)bailFromRegistrationProcessWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from application registration process");
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManger:didFailToRegisterWithError:), anError];
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToRegisterWithError:), anError];
 }
 
 - (BOOL)startRegistrationProcess:(NSError **)outError
@@ -78,6 +78,50 @@
     [[self registrationQueue] addOperation:operation];
     
     return YES;
+}
+
+#pragma mark Asking Whether to Use Encryption on First Registration
+- (void)registrationOperationPausedToFindOutWhetherToEnableEncryption:(TICDSApplicationRegistrationOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"First-time Application Registration paused to find out whether to use encryption for this application");
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:)];
+}
+
+- (void)registrationOperationResumedFollowingEncryptionInstruction:(TICDSApplicationRegistrationOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"First-time Application Registration resumed after finding out whether to use encryption");
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidContinueRegistering:)];
+}
+
+- (void)continueRegisteringWithEncryption:(BOOL)shouldUseEncryption password:(NSString *)aPassword
+{
+    // Just start the registration operation again
+    [(TICDSApplicationRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setShouldUseEncryption:shouldUseEncryption];
+    if( shouldUseEncryption ) {
+        [(TICDSApplicationRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setPassword:aPassword];
+    }
+    [(TICDSApplicationRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setPaused:NO];
+}
+
+#pragma mark Asking for the Encryption Password on Subsequent Registrations
+- (void)registrationOperationPausedToRequestEncryptionPassword:(TICDSApplicationRegistrationOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Encrypted application registration paused to ask for a password");
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:)];
+}
+
+- (void)registrationOperationResumedFollowingPasswordProvision:(TICDSApplicationRegistrationOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Encrypted application registration resumed after being given a password");
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidContinueRegistering:)];
+}
+
+- (void)continueRegisteringWithUserPassword:(NSString *)aPassword
+{
+    // Just start the registration operation again
+    [(TICDSApplicationRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setPassword:aPassword];
+    
+    [(TICDSApplicationRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setPaused:NO];
 }
 
 #pragma mark Operation Generation
@@ -108,14 +152,14 @@
     [self setState:TICDSApplicationSyncManagerStateNotYetRegistered];
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Application Registration Operation was Cancelled");
     
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManger:didFailToRegisterWithError:), [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToRegisterWithError:), [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
 }
 
 - (void)applicationRegistrationOperation:(TICDSApplicationRegistrationOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
     [self setState:TICDSApplicationSyncManagerStateNotYetRegistered];
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Application Registration Operation Failed to Complete with Error: %@", anError);
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManger:didFailToRegisterWithError:), anError];
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToRegisterWithError:), anError];
 }
 
 #pragma mark -

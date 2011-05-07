@@ -12,10 +12,37 @@
  
  The operation carries out the following tasks:
  
- 1. Check whether the application has been previously registered with the remote (i.e., whether the file structure exists).
- 2. If not, register the app and create the file structure.
- 3. Check whether this client has previously been registered for this application (i.e., whether client-specific file structures exist).
- 4. If not, create the necessary file structure for this client.
+ 1. Subclass checks whether the appIdentifier directory exists on the remote.
+ 
+    1. If not, ask the application sync manager whether to use encryption (get a password, if so), then:
+ 
+       1. Subclass creates the `appIdentifier` directory on the remote, and general file structure (directories only).
+ 
+       2. Subclass saves the `ReadMe.txt` file at the root.
+ 
+       3. If encryption is enabled, create the `FZACryptor` and set its password.
+ 
+       4. If encryption is enabled, subclass saves the generated salt file at the root.
+ 
+       5. Continue by creating the client's directory (main step 3) inside `ClientDevices`.
+ 
+    2. If app has been registered before, subclass checks whether the salt file exists on the remote.
+ 
+       1. If not, encryption is disabled, so continue by checking whether the client has registered before.
+ 
+       2. If salt file exists, encryption is enabled, so check whether the `FZACryptor` has a password and salt.
+ 
+          1. If not, subclass downloads the salt, the application sync manager is asked to get the password from the user, then the `FZACryptor` is configured.
+ 
+          2. Once downloaded, or if `FZACryptor` already has the password, continue by subclass checking whether the client's directory exists inside `ClientDevices`.
+  
+ 2. Subclass checks whether the client's directory exists inside `ClientDevices`.
+ 
+ 3. If not, subclass creates client's directory inside `ClientDevices`, then:
+
+     1. `documentInfo.plist` is created, and encrypted, if necessary.
+ 
+     2. Subclass uploads the `documentInfo.plist` file to the remote.
  
  Operations are typically created automatically by the relevant sync manager.
  
@@ -28,66 +55,131 @@
     NSString *_clientDescription;
     NSDictionary *_applicationUserInfo;
     
-    BOOL _completionInProgress;
-    TICDSOperationPhaseStatus _globalAppFileStructureStatus;
-    TICDSOperationPhaseStatus _clientDeviceFileStructureStatus;
+    BOOL _paused;
+    BOOL _shouldUseEncryption;
+    NSString *_password;
 }
+
+/** @name Designated Initializer */
+- (id)initWithDelegate:(NSObject<TICDSApplicationRegistrationOperationDelegate> *)aDelegate;
 
 /** @name Methods Overridden by Subclasses */
 
-/** Check whether this application has previously been registered; i.e., whether the remote file structure for this application already exists.
+/** Check whether a directory exists for this application.
  
- This method must call `discoveredStatusOfRemoteGlobalAppFileStructure:` to indicate the status.
- */
-- (void)checkWhetherRemoteGlobalAppFileStructureExists;
+ This method must call `discoveredStatusOfGlobalAppDirectory:` to indicate the status. */
+- (void)checkWhetherRemoteGlobalAppDirectoryExists;
 
-/** Create the file structure for this application; this method will be called automatically if the file structure dosn't already exist.
+/** Create global application directory structure.
  
- This method must call `createdRemoteGlobalAppFileStructureSuccessfully:` to indicate whether the creation was successful.
- */
-- (void)createRemoteGlobalAppFileStructure;
+ This method must call `createdGlobalAppDirectoryStructureWithSuccess:` to indicate whether the creation was successful. */
+- (void)createRemoteGlobalAppDirectoryStructure;
 
-/** Check whether this client has previously been registered for this application; i.e., whether the files for this client device already exist.
+/** Copy the `ReadMe.txt` file from the bundle to the root of this application's remote directory. 
  
- This method must call `discoveredStatusOfRemoteClientDeviceFileStructure:` to indicate the status.
- */
-- (void)checkWhetherRemoteGlobalAppThisClientDeviceFileStructureExists;
+ This method must call `copiedReadMeTxtFileToRootOfGlobalAppDirectoryWithSuccess:` to indicate whether the copy was successful.
+ 
+ @param aPath The local path to the `ReadMe.txt` file. */
+- (void)copyReadMeTxtFileToRootOfGlobalAppDirectoryFromPath:(NSString *)aPath;
 
-/** Create the file structure for this client device for this application; this method will be called automatically if the file structure doesn't already exist.
+/** Check whether the `salt.ticdsync` file exists at the root of the application's remote directory.
  
- This method must call `createdRemoteClientDeviceFileStructureSuccessfully:` to indicate whether the creation was successful.
- */
-- (void)createRemoteGlobalAppThisClientDeviceFileStructure;
+ This method must call `discoveredStatusOfSaltFile:` to indicate the status. */
+- (void)checkWhetherSaltFileExists;
+
+/** Fetch the data from the `salt.ticdsync` file.
+ 
+ This method must call `` when the data has been fetched. */
+- (void)fetchSaltData;
+
+/** Save the salt data to a `salt.ticdsync` file at the root of the application's remote directory.
+ 
+ This method must call `savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:` to indicate whether the save was successful.
+ 
+ @param saltData The data to be saved. */
+- (void)saveSaltDataToRootOfGlobalAppDirectory:(NSData *)saltData;
+
+/** Check whether the client's directory already exists in `ClientDevices`.
+ 
+ This method must call `discoveredStatusOfRemoteClientDeviceDirectory:` to indicate the status. */
+- (void)checkWhetherRemoteClientDeviceDirectoryExists;
+
+/** Create the client's directory in `ClientDevices`.
+ 
+ This method must call `createdRemoteClientDeviceDirectoryWithSuccess:` to indicate whether the creation was successful. */
+- (void)createRemoteClientDeviceDirectory;
+
+/** Save the dictionary to a `deviceInfo.plist` file in this client's directory inside the `ClientDevices` directory.
+ 
+ This method must call `savedRemoteClientDeviceInfoPlistWithSuccess:` to indicate whether the save was successful.
+ 
+ @param aDictionary The dictionary to save as the `deviceInfo.plist`. */
+- (void)saveRemoteClientDeviceInfoPlistFromDictionary:(NSDictionary *)aDictionary;
 
 /** @name Callbacks */
 
-/** Indicate the status of the remote global app file structure; i.e., whether the application has previously been registered.
+/** Indicate the status of the global application directory.
  
  If an error occurred, call `setError:` first, then specify `TICDSRemoteFileStructureExistsResponseTypeError` for `status`.
  
- @param status The status of the structure: does exist, does not exist, or error (see `TICDSTypesAndEnums.h` for possible values). */
-- (void)discoveredStatusOfRemoteGlobalAppFileStructure:(TICDSRemoteFileStructureExistsResponseType)status;
+ @param status The status of the directory: does exist, does not exist, or error (see `TICDSTypesAndEnums.h` for possible values). */
+- (void)discoveredStatusOfRemoteGlobalAppDirectory:(TICDSRemoteFileStructureExistsResponseType)status;
 
-/** Indicate whether the creation of the global app file structure was successful.
+/** Indicate whether the creation of the global app directory structure was successful.
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the global app file structure was created or not. */
-- (void)createdRemoteGlobalAppFileStructureSuccessfully:(BOOL)success;
+ @param success A Boolean indicating whether the directory structure was created or not */
+- (void)createdRemoteGlobalAppDirectoryStructureWithSuccess:(BOOL)success;
 
-/** Indicate the status of the file structure for this client; i.e. whether this client device has previously been registered.
+/** Indicate whether the `ReadMe.txt` file was copied from the bundle. 
+ 
+ If not, call `setError:` first, then specify `NO` for `success`.
+ 
+ @param success A Boolean indicating whether the `ReadMe.txt` file was copied or not. */
+- (void)copiedReadMeTxtFileToRootOfGlobalAppDirectoryWithSuccess:(BOOL)success;
+
+/** Indicate the status of the `salt.ticdsync` file.
  
  If an error occurred, call `setError:` first, then specify `TICDSRemoteFileStructureExistsResponseTypeError` for `status`.
  
- @param status The status of the structure: does exist, does not exist, or error (see `TICDSTypesAndEnums.h` for possible values). */
-- (void)discoveredStatusOfRemoteClientDeviceFileStructure:(TICDSRemoteFileStructureExistsResponseType)status;
+ @param status The status of the file: does exist, does not exist, or error (see `TICDSTypesAndEnums.h` for possible values). */
+- (void)discoveredStatusOfSaltFile:(TICDSRemoteFileStructureExistsResponseType)status;
 
-/** Indicate whether the creation of the file structure for this client was successful.
+/** Provide the data from the `salt.ticdsync` file.
+ 
+ If an error occurred, call `setError:` first, then specify `nil` for `saltData`.
+ 
+ @param saltData The `NSData` contents of the `salt.ticdsync` file, or `nil` if an error occurred. */
+- (void)fetchedSaltData:(NSData *)saltData;
+
+/** Indicate whether the salt data was saved successfully.
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the global app file structure was created or not. */
-- (void)createdRemoteClientDeviceFileStructureSuccessfully:(BOOL)success;
+ @param success A Boolean indicating whether the `salt.ticdsync` file was saved or not. */
+- (void)savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:(BOOL)success;
+
+/* Indicate the status of the client's directory in `ClientDevices`.
+ 
+ If an error occurred, call `setError:` first, then specify `TICDSRemoteFileStructureExistsResponseTypeError` for `status`.
+ 
+ @param status The status of the directory: does exist, does not exist, or error (see `TICDSTypesAndEnums.h` for possible values). */
+- (void)discoveredStatusOfRemoteClientDeviceDirectory:(TICDSRemoteFileStructureExistsResponseType)status;
+
+/** Indicate whether the client's directory was created successful in `ClientDevices`.
+ 
+ If not, call `setError:` first, then specify `NO` for `success`.
+ 
+ @param success A Boolean indicating whether the client's directory was created or not. */
+- (void)createdRemoteClientDeviceDirectoryWithSuccess:(BOOL)success;
+
+/** Indicate whether the `deviceInfo.plist` file was saved successfully.
+ 
+ If not, call `setError:` first, then specify `NO` for `success`.
+ 
+ @para success A Boolean indicating whether the `deviceInfo.plist` file was saved or not. */
+- (void)savedRemoteClientDeviceInfoPlistWithSuccess:(BOOL)success;
 
 /** @name Properties */
 
@@ -100,15 +192,13 @@
 /** The user info. */
 @property (nonatomic, retain) NSDictionary *applicationUserInfo;
 
-/** @name Completion */
+/** Used to indicate whether the operation is currently paused awaiting input from the operation delegate, or in turn the application sync manager delegate. */
+@property (assign, getter = isPaused) BOOL paused;
 
-/** Used to indicate that completion is currently in progress, and no further checks should be made. */
-@property (nonatomic, assign) BOOL completionInProgress;
+/** Used by the `TICDSApplicationSyncManager` to indicate whether to enable encryption after finding out this is the first time the global app has been registered. */
+@property (assign) BOOL shouldUseEncryption;
 
-/** The phase status of the global app file structure tests/creation. */
-@property (nonatomic, assign) TICDSOperationPhaseStatus globalAppFileStructureStatus;
-
-/** The phase status of the client device file structure tests/creation. */
-@property (nonatomic, assign) TICDSOperationPhaseStatus clientDeviceFileStructureStatus;
+/** The password to use for encryption at initial global app registration, if `shouldUseEncryption` is `YES`. */
+@property (retain) NSString *password;
 
 @end

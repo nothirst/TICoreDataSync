@@ -23,17 +23,6 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedApplicationRegistrationOperation/documentsDirectoryPath</TokenIdentifier>
-			<Abstract>The path to the Documents directory.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedApplicationRegistrationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (retain) NSString *documentsDirectoryPath</Declaration>
-			
-			
-			<Anchor>//api/name/documentsDirectoryPath</Anchor>
-		</Token>
-		
-		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedApplicationRegistrationOperation/clientDevicesDirectoryPath</TokenIdentifier>
 			<Abstract>The path to the ClientDevices directory.</Abstract>
 			<DeclaredIn>TICDSFileManagerBasedApplicationRegistrationOperation.h</DeclaredIn>			

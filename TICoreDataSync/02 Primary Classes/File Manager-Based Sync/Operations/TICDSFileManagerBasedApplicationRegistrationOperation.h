@@ -15,7 +15,6 @@
 @interface TICDSFileManagerBasedApplicationRegistrationOperation : TICDSApplicationRegistrationOperation {
 @private
     NSString *_applicationDirectoryPath;
-    NSString *_documentsDirectoryPath;
     NSString *_clientDevicesDirectoryPath;
     NSString *_clientDevicesThisClientDeviceDirectoryPath;
 }
@@ -24,9 +23,6 @@
 
 /** The application root path. */
 @property (retain) NSString *applicationDirectoryPath;
-
-/** The path to the `Documents` directory. */
-@property (retain) NSString *documentsDirectoryPath;
 
 /** The path to the `ClientDevices` directory. */
 @property (retain) NSString *clientDevicesDirectoryPath;
