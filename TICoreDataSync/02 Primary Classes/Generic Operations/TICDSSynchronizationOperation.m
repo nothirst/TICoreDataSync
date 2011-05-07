@@ -280,6 +280,8 @@
     }
     
     set = [TICDSSyncChangeSet syncChangeSetWithIdentifier:aChangeSetIdentifier fromClient:aClientIdentifier creationDate:aDate inManagedObjectContext:[self unappliedSyncChangeSetsContext]];
+    
+    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Added sync change set: %@", set);
 }
 
 #pragma mark Overridden Method
@@ -545,12 +547,13 @@
     NSError *anyError = nil;
     NSArray *localSyncChanges = [TICDSSyncChange ti_objectsMatchingPredicate:[NSPredicate predicateWithFormat:@"objectSyncID == %@", anIdentifier] inManagedObjectContext:[self localSyncChangesToMergeContext] sortedByKey:@"changeType" ascending:YES error:&anyError];
     
-    NSArray *allSyncChanges = [TICDSSyncChange ti_allObjectsInManagedObjectContext:[self localSyncChangesToMergeContext] error:&anyError];
+// Used to trigger faults on all objects if debugging     
+/*    NSArray *allSyncChanges = [TICDSSyncChange ti_allObjectsInManagedObjectContext:[self localSyncChangesToMergeContext] error:&anyError];
     for( TICDSSyncChange *eachChange in allSyncChanges ) {
         NSString *something = [eachChange objectEntityName];
         something = [eachChange relatedObjectEntityName];
     }
-    
+*/    
     if( !localSyncChanges ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to fetch local sync changes while checking for conflicts: %@", anyError);
         return remoteSyncChanges;
