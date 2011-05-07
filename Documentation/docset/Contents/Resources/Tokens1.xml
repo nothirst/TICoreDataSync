@@ -259,7 +259,12 @@
 			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
 			
 			<Declaration>- (void)savedRemoteClientDeviceInfoPlistWithSuccess:(BOOL)success</Declaration>
-			
+			<Parameters>
+				<Parameter>
+					<Name>success</Name>
+					<Abstract>A Boolean indicating whether the deviceInfo.plist file was saved or not.</Abstract>
+				</Parameter>
+			</Parameters>
 			
 			<Anchor>//api/name/savedRemoteClientDeviceInfoPlistWithSuccess:</Anchor>
 		</Token>

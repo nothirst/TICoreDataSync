@@ -22,7 +22,9 @@
 
 /** @name Paths */
 
-/** The path to a given client's `WholeStore.ticdsync` file within this document's `WholeStore` directory. */
+/** The path to a given client's `WholeStore.ticdsync` file within this document's `WholeStore` directory.
+ 
+ @param anIdentifier The unique sync identifier for the client. */
 - (NSString *)pathToWholeStoreFileForClientWithIdentifier:(NSString *)anIdentifier;
 
 /** The path to this document's `WholeStore` directory. */

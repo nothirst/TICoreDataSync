@@ -30,10 +30,15 @@
 /** The path this client's RecentSync file inside this document's `RecentSyncs` directory. */
 @property (retain) NSString *thisDocumentRecentSyncsThisClientFilePath;
 
-/** The path to a given client's `SyncChanges` directory. */
+/** The path to a given client's `SyncChanges` directory.
+ 
+ @param anIdentifier The unique sync identifier of the document. */
 - (NSString *)pathToSyncChangesDirectoryForClientWithIdentifier:(NSString *)anIdentifier;
 
-/** The path to a `SyncChangeSet` uploaded by a given client. */
+/** The path to a `SyncChangeSet` uploaded by a given client.
+ 
+ @param aChangeSetIdentifier The unique identifier of the sync change set.
+ @param aClientIdentifier The unique sync identifier of the client. */
 - (NSString *)pathToSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientWithIdentifier:(NSString *)aClientIdentifier;
 
 @end

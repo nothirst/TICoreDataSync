@@ -43,7 +43,9 @@
 /** The path to this client's directory inside the `ClientDevices` directory at the root of the application. */
 @property (nonatomic, readonly) NSString *clientDevicesThisClientDeviceDirectoryPath;
 
-/** The path to the `WholeStore` directory for a document with a given identifier. */
+/** The path to the `WholeStore` directory for a document with a given identifier.
+ 
+ @param anIdentifier The unique sync identifier of the document. */
 - (NSString *)pathToWholeStoreDirectoryForDocumentWithIdentifier:(NSString *)anIdentifier;
 
 @end

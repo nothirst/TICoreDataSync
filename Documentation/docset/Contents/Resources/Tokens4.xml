@@ -39,7 +39,7 @@
 					<Name>aDocumentDescription</Name>
 					<Abstract>A human-readable string used to identify this document, e.g. the full name of the document.</Abstract>
 				</Parameter><Parameter>
-					<Name>userInfo</Name>
+					<Name>someUserInfo</Name>
 					<Abstract>A dictionary of information that will be saved throughout all future synchronizations. Because this information is saved in a plist, everything in the dictionary must be archivable using NSKeyedArchiver.</Abstract>
 				</Parameter>
 			</Parameters>

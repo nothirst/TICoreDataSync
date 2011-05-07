@@ -18,10 +18,14 @@
 
 /** @name Paths */
 
-/** The path to a given client's `WholeStore.ticdsync` file within this document's `WholeStore` directory. */
+/** The path to a given client's `WholeStore.ticdsync` file within this document's `WholeStore` directory.
+ 
+ @param anIdentifier The unique sync identifier of the document. */
 - (NSString *)pathToWholeStoreFileForClientWithIdentifier:(NSString *)anIdentifier;
 
-/** The path to a given client's `AppliedSyncChanges.ticdsync` file within this document's `WholeStore` directory .*/
+/** The path to a given client's `AppliedSyncChanges.ticdsync` file within this document's `WholeStore` directory.
+ 
+ @param anIdentifier The unique sync identifier of the document. */
 - (NSString *)pathToAppliedSyncChangesFileForClientWithIdentifier:(NSString *)anIdentifier;
 
 /** The path to this document's `WholeStore` directory. */

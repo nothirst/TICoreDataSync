@@ -372,7 +372,8 @@
 
 /** Informs the delegate that the document sync manager failed to synchronize the document.
  
- @param aSyncManager The document sync manager object that sent the message. */
+ @param aSyncManager The document sync manager object that sent the message.
+ @param anError The error that caused synchronization to fail. */
 - (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToSynchronizeWithError:(NSError *)anError;
 
 /** Informs the delegate that the document sync manager finished synchronizing the document.

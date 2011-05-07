@@ -35,7 +35,9 @@
 /** Returns the current verbosity level for logging. */
 + (NSInteger)verbosity;
 
-/** Sets the verbosity level for logging. */
+/** Sets the verbosity level for logging.
+ 
+ @param verbosity The verbosity level to use; specify `TICDSLogVerbosityEveryStep` to see all output, or check the `TICDSTypesAndEnums.h` file for a list. */
 + (void)setVerbosity:(NSInteger)verbosity;
 
 /** @name Logging */

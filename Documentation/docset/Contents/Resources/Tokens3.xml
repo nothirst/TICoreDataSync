@@ -127,7 +127,7 @@
 			<Declaration>- (void)createdRemoteDocumentSyncChangesThisClientFileStructureWithSuccess:(BOOL)success</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>someSuccess</Name>
+					<Name>success</Name>
 					<Abstract>A Boolean indicating whether the document file structure was created or not.</Abstract>
 				</Parameter>
 			</Parameters>

@@ -83,7 +83,12 @@
 			<DeclaredIn>TICDSFileManagerBasedApplicationSyncManager.h</DeclaredIn>			
 			
 			<Declaration>- (NSString *)pathToWholeStoreDirectoryForDocumentWithIdentifier:(NSString *)anIdentifier</Declaration>
-			
+			<Parameters>
+				<Parameter>
+					<Name>anIdentifier</Name>
+					<Abstract>The unique sync identifier of the document.</Abstract>
+				</Parameter>
+			</Parameters>
 			
 			<Anchor>//api/name/pathToWholeStoreDirectoryForDocumentWithIdentifier:</Anchor>
 		</Token>

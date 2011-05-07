@@ -72,7 +72,7 @@
  @param anAppIdentifier The identification string used to identify the synchronization information across multiple clients. If you wish to be able to synchronize Mac and iOS, this app identifier should be the same on both platforms. This identifier will also be used as the root level of the remote file structure.
  @param aClientIdentifier An identification string for this client. Every client wishing to synchronize must have a string to identify itself (i.e., the application instance on a machine) uniquely. You would typically create a UUID string the first time your app is launched and store this in preferences.
  @param aClientDescription A human-readable string used to identify this client, e.g. the computer name.
- @param userInfo A dictionary of information that will be saved throughout all future synchronizations. Because this information is saved in a plist, everything in the dictionary must be archivable using `NSKeyedArchiver`.
+ @param someUserInfo A dictionary of information that will be saved throughout all future synchronizations. Because this information is saved in a plist, everything in the dictionary must be archivable using `NSKeyedArchiver`.
  */
 - (void)registerWithDelegate:(id <TICDSApplicationSyncManagerDelegate>)aDelegate globalAppIdentifier:(NSString *)anAppIdentifier uniqueClientIdentifier:(NSString *)aClientIdentifier description:(NSString *)aClientDescription userInfo:(NSDictionary *)someUserInfo;
 
@@ -193,10 +193,14 @@
 /** The path to this client's directory inside the `ClientDevices` directory, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToClientDevicesThisClientDeviceDirectory;
 
-/** The path to a document's directory within the `Documents` directory, relative to the root of the remote file structure. */
+/** The path to a document's directory within the `Documents` directory, relative to the root of the remote file structure.
+ 
+ @param anIdentifier The unique sync identifier of the document. */
 - (NSString *)relativePathToDocumentDirectoryForDocumentWithIdentifier:(NSString *)anIdentifier;
 
-/** The path to a document's `WholeStore` directory, relative to the root of the remote file structure. */
+/** The path to a document's `WholeStore` directory, relative to the root of the remote file structure.
+ 
+ @param anIdentifier The unique sync identifier of the document. */
 - (NSString *)relativePathToWholeStoreDirectoryForDocumentWithIdentifier:(NSString *)anIdentifier;
 
 @end

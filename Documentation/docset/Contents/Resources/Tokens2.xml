@@ -58,7 +58,7 @@
 					<Name>aClientDescription</Name>
 					<Abstract>A human-readable string used to identify this client, e.g. the computer name.</Abstract>
 				</Parameter><Parameter>
-					<Name>userInfo</Name>
+					<Name>someUserInfo</Name>
 					<Abstract>A dictionary of information that will be saved throughout all future synchronizations. Because this information is saved in a plist, everything in the dictionary must be archivable using NSKeyedArchiver.</Abstract>
 				</Parameter>
 			</Parameters>
@@ -310,7 +310,12 @@
 			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
 			
 			<Declaration>- (NSString *)relativePathToDocumentDirectoryForDocumentWithIdentifier:(NSString *)anIdentifier</Declaration>
-			
+			<Parameters>
+				<Parameter>
+					<Name>anIdentifier</Name>
+					<Abstract>The unique sync identifier of the document.</Abstract>
+				</Parameter>
+			</Parameters>
 			
 			<Anchor>//api/name/relativePathToDocumentDirectoryForDocumentWithIdentifier:</Anchor>
 		</Token>
@@ -321,7 +326,12 @@
 			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
 			
 			<Declaration>- (NSString *)relativePathToWholeStoreDirectoryForDocumentWithIdentifier:(NSString *)anIdentifier</Declaration>
-			
+			<Parameters>
+				<Parameter>
+					<Name>anIdentifier</Name>
+					<Abstract>The unique sync identifier of the document.</Abstract>
+				</Parameter>
+			</Parameters>
 			
 			<Anchor>//api/name/relativePathToWholeStoreDirectoryForDocumentWithIdentifier:</Anchor>
 		</Token>

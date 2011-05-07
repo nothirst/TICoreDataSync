@@ -68,7 +68,7 @@
  @param aContext The primary managed object context in your application; this must be an instance of `TICDSSynchronizedManagedObjectContext` and not just a plain `NSManagedObjectContext`.
  @param aDocumentIdentifier An identification string to identify this document uniquely. You would typically create a UUID string the first time this doc is registered and store this in e.g. the store metadata.
  @param aDocumentDescription A human-readable string used to identify this document, e.g. the full name of the document.
- @param userInfo A dictionary of information that will be saved throughout all future synchronizations. Because this information is saved in a plist, everything in the dictionary must be archivable using `NSKeyedArchiver`.
+ @param someUserInfo A dictionary of information that will be saved throughout all future synchronizations. Because this information is saved in a plist, everything in the dictionary must be archivable using `NSKeyedArchiver`.
  */
 - (void)registerWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo;
 

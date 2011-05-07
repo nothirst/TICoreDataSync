@@ -424,6 +424,9 @@
 				<Parameter>
 					<Name>aSyncManager</Name>
 					<Abstract>The document sync manager object that sent the message.</Abstract>
+				</Parameter><Parameter>
+					<Name>anError</Name>
+					<Abstract>The error that caused synchronization to fail.</Abstract>
 				</Parameter>
 			</Parameters>
 			

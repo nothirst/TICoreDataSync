@@ -102,7 +102,7 @@
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param someSuccess A Boolean indicating whether the document file structure was created or not. */
+ @param success A Boolean indicating whether the document file structure was created or not. */
 - (void)createdRemoteDocumentSyncChangesThisClientFileStructureWithSuccess:(BOOL)success;
 
 /** @name Properties */

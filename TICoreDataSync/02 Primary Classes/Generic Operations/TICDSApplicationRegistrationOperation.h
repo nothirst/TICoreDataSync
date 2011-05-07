@@ -178,7 +178,7 @@
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @para success A Boolean indicating whether the `deviceInfo.plist` file was saved or not. */
+ @param success A Boolean indicating whether the `deviceInfo.plist` file was saved or not. */
 - (void)savedRemoteClientDeviceInfoPlistWithSuccess:(BOOL)success;
 
 /** @name Properties */

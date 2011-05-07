@@ -17,7 +17,12 @@
 			<DeclaredIn>TICDSFileManagerBasedVacuumOperation.h</DeclaredIn>			
 			
 			<Declaration>- (NSString *)pathToWholeStoreFileForClientWithIdentifier:(NSString *)anIdentifier</Declaration>
-			
+			<Parameters>
+				<Parameter>
+					<Name>anIdentifier</Name>
+					<Abstract>The unique sync identifier for the client.</Abstract>
+				</Parameter>
+			</Parameters>
 			
 			<Anchor>//api/name/pathToWholeStoreFileForClientWithIdentifier:</Anchor>
 		</Token>

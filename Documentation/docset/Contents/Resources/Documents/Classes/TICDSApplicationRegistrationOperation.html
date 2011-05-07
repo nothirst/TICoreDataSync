@@ -277,7 +277,7 @@
 							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/initWithDelegate:">&ndash;&nbsp;initWithDelegate:</a></code>
-		<span class="tooltip"><p>Initialize the operation with a provided <a href="#//api/name/delegate">delegate</a>.</p></span>
+		<span class="tooltip"><p>Initialize the operation with a provided <a href="../Classes/TICDSOperation.html#//api/name/delegate">delegate</a>.</p></span>
 	</span>
 	
 	
@@ -1239,7 +1239,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Initialize the operation with a provided <a href="#//api/name/delegate">delegate</a>.</p>
+		<p>Initialize the operation with a provided <a href="../Classes/TICDSOperation.html#//api/name/delegate">delegate</a>.</p>
 	</div>		
 	
 	
@@ -1251,7 +1251,7 @@
 		
 		<dl class="argument-def parameter-def">
 			<dt><em>aDelegate</em></dt>
-			<dd><p>The <a href="#//api/name/delegate">delegate</a> object for the operation, notified when the operation starts, ends, fails, or is cancelled using methods defined in the <a href="../Protocols/TICDSOperationDelegate.html"><code>TICDSOperationDelegate</code></a> protocol.</p></dd>
+			<dd><p>The <a href="../Classes/TICDSOperation.html#//api/name/delegate">delegate</a> object for the operation, notified when the operation starts, ends, fails, or is cancelled using methods defined in the <a href="../Protocols/TICDSOperationDelegate.html"><code>TICDSOperationDelegate</code></a> protocol.</p></dd>
 		</dl>
 		
 	</div>
@@ -1387,6 +1387,16 @@
 	<div class="method-subsection method-declaration"><code>- (void)savedRemoteClientDeviceInfoPlistWithSuccess:(BOOL)<em>success</em></code></div>
 	
 	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p>A Boolean indicating whether the <code>deviceInfo.plist</code> file was saved or not.</p></dd>
+		</dl>
+		
+	</div>
+	
 	
 	
 	
@@ -1394,8 +1404,6 @@
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>If not, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
-
-<p>@para success A Boolean indicating whether the <code>deviceInfo.plist</code> file was saved or not.</p>
 	</div>
 	
 	

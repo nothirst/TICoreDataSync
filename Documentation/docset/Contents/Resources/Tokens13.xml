@@ -17,18 +17,28 @@
 			<DeclaredIn>TICDSFileManagerBasedWholeStoreDownloadOperation.h</DeclaredIn>			
 			
 			<Declaration>- (NSString *)pathToWholeStoreFileForClientWithIdentifier:(NSString *)anIdentifier</Declaration>
-			
+			<Parameters>
+				<Parameter>
+					<Name>anIdentifier</Name>
+					<Abstract>The unique sync identifier of the document.</Abstract>
+				</Parameter>
+			</Parameters>
 			
 			<Anchor>//api/name/pathToWholeStoreFileForClientWithIdentifier:</Anchor>
 		</Token>
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/TICDSFileManagerBasedWholeStoreDownloadOperation/pathToAppliedSyncChangesFileForClientWithIdentifier:</TokenIdentifier>
-			<Abstract>The path to a given client's AppliedSyncChanges.ticdsync file within this document's WholeStore directory .</Abstract>
+			<Abstract>The path to a given client's AppliedSyncChanges.ticdsync file within this document's WholeStore directory.</Abstract>
 			<DeclaredIn>TICDSFileManagerBasedWholeStoreDownloadOperation.h</DeclaredIn>			
 			
 			<Declaration>- (NSString *)pathToAppliedSyncChangesFileForClientWithIdentifier:(NSString *)anIdentifier</Declaration>
-			
+			<Parameters>
+				<Parameter>
+					<Name>anIdentifier</Name>
+					<Abstract>The unique sync identifier of the document.</Abstract>
+				</Parameter>
+			</Parameters>
 			
 			<Anchor>//api/name/pathToAppliedSyncChangesFileForClientWithIdentifier:</Anchor>
 		</Token>

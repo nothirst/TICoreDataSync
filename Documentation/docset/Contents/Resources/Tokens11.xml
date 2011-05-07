@@ -50,7 +50,12 @@
 			<DeclaredIn>TICDSFileManagerBasedSynchronizationOperation.h</DeclaredIn>			
 			
 			<Declaration>- (NSString *)pathToSyncChangesDirectoryForClientWithIdentifier:(NSString *)anIdentifier</Declaration>
-			
+			<Parameters>
+				<Parameter>
+					<Name>anIdentifier</Name>
+					<Abstract>The unique sync identifier of the document.</Abstract>
+				</Parameter>
+			</Parameters>
 			
 			<Anchor>//api/name/pathToSyncChangesDirectoryForClientWithIdentifier:</Anchor>
 		</Token>
@@ -61,7 +66,15 @@
 			<DeclaredIn>TICDSFileManagerBasedSynchronizationOperation.h</DeclaredIn>			
 			
 			<Declaration>- (NSString *)pathToSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientWithIdentifier:(NSString *)aClientIdentifier</Declaration>
-			
+			<Parameters>
+				<Parameter>
+					<Name>aChangeSetIdentifier</Name>
+					<Abstract>The unique identifier of the sync change set.</Abstract>
+				</Parameter><Parameter>
+					<Name>aClientIdentifier</Name>
+					<Abstract>The unique sync identifier of the client.</Abstract>
+				</Parameter>
+			</Parameters>
 			
 			<Anchor>//api/name/pathToSyncChangeSetWithIdentifier:forClientWithIdentifier:</Anchor>
 		</Token>
