@@ -88,11 +88,11 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationRegistrationOperation/saveSaltDataToRootOfGlobalAppDirectory:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationRegistrationOperation/saveSaltDataToRemote:</TokenIdentifier>
 			<Abstract>Save the salt data to a salt.ticdsync file at the root of the application's remote directory.</Abstract>
 			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)saveSaltDataToRootOfGlobalAppDirectory:(NSData *)saltData</Declaration>
+			<Declaration>- (void)saveSaltDataToRemote:(NSData *)saltData</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>saltData</Name>
@@ -100,7 +100,7 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/saveSaltDataToRootOfGlobalAppDirectory:</Anchor>
+			<Anchor>//api/name/saveSaltDataToRemote:</Anchor>
 		</Token>
 		
 		<Token>

@@ -40,7 +40,7 @@
 	
 	<option value="//api/name/remoteGlobalAppClientDeviceFileStructure">&nbsp;&nbsp;&nbsp;&nbsp;+ remoteGlobalAppClientDeviceFileStructure</option>
 	
-	<option value="//api/name/remoteGlobalAppFileStructure">&nbsp;&nbsp;&nbsp;&nbsp;+ remoteGlobalAppFileStructure</option>
+	<option value="//api/name/remoteGlobalAppDirectoryHierarchy">&nbsp;&nbsp;&nbsp;&nbsp;+ remoteGlobalAppDirectoryHierarchy</option>
 	
 	<option value="//api/name/syncWarningOfType:entityName:relatedObjectEntityName:attributes:">&nbsp;&nbsp;&nbsp;&nbsp;+ syncWarningOfType:entityName:relatedObjectEntityName:attributes:</option>
 	
@@ -66,7 +66,7 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Unique Strings">Unique Strings</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_File Structure">File Structure</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Directory Hierarchy">Directory Hierarchy</a></span></li>
 	
 </ul></li>
 
@@ -82,7 +82,7 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/remoteGlobalAppClientDeviceFileStructure">remoteGlobalAppClientDeviceFileStructure</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/remoteGlobalAppFileStructure">remoteGlobalAppFileStructure</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/remoteGlobalAppDirectoryHierarchy">remoteGlobalAppDirectoryHierarchy</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncWarningOfType:entityName:relatedObjectEntityName:attributes:">syncWarningOfType:entityName:relatedObjectEntityName:attributes:</a></span></li>
 	
@@ -154,13 +154,13 @@
 						</ul>
 						
 						
-						<a title="File Structure" name="task_File Structure"></a>
-						<h3 class="subsubtitle task-title">File Structure</h3>
+						<a title="Directory Hierarchy" name="task_Directory Hierarchy"></a>
+						<h3 class="subsubtitle task-title">Directory Hierarchy</h3>
 
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
-		<code><a href="#//api/name/remoteGlobalAppFileStructure">+&nbsp;remoteGlobalAppFileStructure</a></code>
+		<code><a href="#//api/name/remoteGlobalAppDirectoryHierarchy">+&nbsp;remoteGlobalAppDirectoryHierarchy</a></code>
 		<span class="tooltip"><p>Returns a dictionary containing the basic file structure for Global Application synchronization.</p></span>
 	</span>
 	
@@ -271,8 +271,8 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/remoteGlobalAppFileStructure" title="remoteGlobalAppFileStructure"></a>
-	<h3 class="subsubtitle method-title">remoteGlobalAppFileStructure</h3>
+	<a name="//api/name/remoteGlobalAppDirectoryHierarchy" title="remoteGlobalAppDirectoryHierarchy"></a>
+	<h3 class="subsubtitle method-title">remoteGlobalAppDirectoryHierarchy</h3>
 	
 	
 	
@@ -281,7 +281,7 @@
 	</div>		
 	
 	
-	<div class="method-subsection method-declaration"><code>+ (NSDictionary *)remoteGlobalAppFileStructure</code></div>
+	<div class="method-subsection method-declaration"><code>+ (NSDictionary *)remoteGlobalAppDirectoryHierarchy</code></div>
 	
 	
 	
@@ -290,7 +290,7 @@
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<p>The string keys are names of sub-directories.</p>
+		<p>The string keys are names of sub-directories, the values are dictionaries, which may contain further sub-directory keys.</p>
 	</div>
 	
 	

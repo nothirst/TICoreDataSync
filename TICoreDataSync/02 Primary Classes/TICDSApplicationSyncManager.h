@@ -64,7 +64,7 @@
  
  This will automatically spawn a `TICDSApplicationRegistrationOperation`, and notify you of progress through the `TICDSApplicationSyncManagerDelegate` methods.
  
- If this is the first time you have registered a client with this app identifier, registration will automatically create the file structure necessary at the remote end for this and other clients to synchronize. See `[TICDSUtilities remoteGlobalAppFileStructure]` for the structure that will be created.
+ If this is the first time you have registered a client with this app identifier, registration will automatically create the file structure necessary at the remote end for this and other clients to synchronize. See `[TICDSUtilities remoteGlobalAppDirectoryHierarchy]` for the structure that will be created.
  
  @warning You must call this method before using the application sync manager for any other purpose.
  
@@ -186,6 +186,12 @@
 
 /** The path to the `Documents` directory, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToDocumentsDirectory;
+
+/** The path to the `Encryption` directory, relative to the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToEncryptionDirectory;
+
+/** The path to the `salt.ticdsync` file inside the `Encryption` directory, relative to the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToEncryptionDirectorySaltDataFilePath;
 
 /** The path to the `ClientDevices` directory, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToClientDevicesDirectory;

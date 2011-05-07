@@ -18,12 +18,12 @@
 /** Returns a globally unique string, currently created using `[[NSProcessInfo processInfo] globallyUniqueString]`. */
 + (NSString *)uuidString;
 
-/** @name File Structure */
+/** @name Directory Hierarchy */
 
 /** Returns a dictionary containing the basic file structure for Global Application synchronization.
  
- The string keys are names of sub-directories. */
-+ (NSDictionary *)remoteGlobalAppFileStructure;
+ The string keys are names of sub-directories, the values are dictionaries, which may contain further sub-directory keys. */
++ (NSDictionary *)remoteGlobalAppDirectoryHierarchy;
 
 /** Returns a dictionary containing the basic client device file structure for Global Application synchronization.
  

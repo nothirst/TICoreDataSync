@@ -23,14 +23,14 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/TICDSUtilities/remoteGlobalAppFileStructure</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSUtilities/remoteGlobalAppDirectoryHierarchy</TokenIdentifier>
 			<Abstract>Returns a dictionary containing the basic file structure for Global Application synchronization.</Abstract>
 			<DeclaredIn>TICDSUtilities.h</DeclaredIn>			
 			
-			<Declaration>+ (NSDictionary *)remoteGlobalAppFileStructure</Declaration>
+			<Declaration>+ (NSDictionary *)remoteGlobalAppDirectoryHierarchy</Declaration>
 			
 			
-			<Anchor>//api/name/remoteGlobalAppFileStructure</Anchor>
+			<Anchor>//api/name/remoteGlobalAppDirectoryHierarchy</Anchor>
 		</Token>
 		
 		<Token>

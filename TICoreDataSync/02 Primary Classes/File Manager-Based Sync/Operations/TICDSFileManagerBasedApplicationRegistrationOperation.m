@@ -20,10 +20,6 @@
         
         id object = [aDictionary valueForKey:eachName];
         
-        if( eachName == kTICDSUtilitiesFileStructureClientDeviceUID ) {
-            eachName = [self clientIdentifier];
-        }
-        
         if( [object isKindOfClass:[NSDictionary class]] ) {
             NSString *thisPath = [aDirectoryPath stringByAppendingPathComponent:eachName];
             
@@ -58,7 +54,7 @@
 
 - (void)createRemoteGlobalAppDirectoryStructure
 {
-    NSDictionary *appStructure = [TICDSUtilities remoteGlobalAppFileStructure];
+    NSDictionary *appStructure = [TICDSUtilities remoteGlobalAppDirectoryHierarchy];
     
     NSError *anyError = nil;
     BOOL success = [self createDirectoryContentsFromDictionary:appStructure inDirectory:[self applicationDirectoryPath]];
@@ -85,9 +81,7 @@
 
 - (void)checkWhetherSaltFileExists
 {
-    NSString *remotePath = [[self applicationDirectoryPath] stringByAppendingPathComponent:TICDSSaltFilenameWithExtension];
-    
-    if( [[self fileManager] fileExistsAtPath:remotePath] ) {
+    if( [[self fileManager] fileExistsAtPath:[self encryptionDirectorySaltDataFilePath]] ) {
         [self discoveredStatusOfSaltFile:TICDSRemoteFileStructureExistsResponseTypeDoesExist];
     } else {
         [self discoveredStatusOfSaltFile:TICDSRemoteFileStructureExistsResponseTypeDoesNotExist];
@@ -96,19 +90,20 @@
 
 - (void)fetchSaltData
 {
-    NSString *remotePath = [[self applicationDirectoryPath] stringByAppendingPathComponent:TICDSSaltFilenameWithExtension];
+    NSError *anyError = nil;
+    NSData *saltData = [NSData dataWithContentsOfFile:[self encryptionDirectorySaltDataFilePath] options:0 error:&anyError];
     
-    NSData *saltData = [NSData dataWithContentsOfFile:remotePath];
+    if( !saltData ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
     
     [self fetchedSaltData:saltData];
 }
 
-- (void)saveSaltDataToRootOfGlobalAppDirectory:(NSData *)saltData
+- (void)saveSaltDataToRemote:(NSData *)saltData
 {
-    NSString *remotePath = [[self applicationDirectoryPath] stringByAppendingPathComponent:TICDSSaltFilenameWithExtension];
-    
     NSError *anyError = nil;
-    BOOL success = [saltData writeToFile:remotePath options:0 error:&anyError];
+    BOOL success = [saltData writeToFile:[self encryptionDirectorySaltDataFilePath] options:0 error:&anyError];
     
     if( !success ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
@@ -158,6 +153,7 @@
 - (void)dealloc
 {
     [_applicationDirectoryPath release], _applicationDirectoryPath = nil;
+    [_encryptionDirectorySaltDataFilePath release], _encryptionDirectorySaltDataFilePath = nil;
     [_clientDevicesDirectoryPath release], _clientDevicesDirectoryPath = nil;
     [_clientDevicesThisClientDeviceDirectoryPath release], _clientDevicesThisClientDeviceDirectoryPath = nil;
     
@@ -167,6 +163,7 @@
 #pragma mark -
 #pragma mark Properties
 @synthesize applicationDirectoryPath = _applicationDirectoryPath;
+@synthesize encryptionDirectorySaltDataFilePath = _encryptionDirectorySaltDataFilePath;
 @synthesize clientDevicesDirectoryPath = _clientDevicesDirectoryPath;
 @synthesize clientDevicesThisClientDeviceDirectoryPath = _clientDevicesThisClientDeviceDirectoryPath;
 

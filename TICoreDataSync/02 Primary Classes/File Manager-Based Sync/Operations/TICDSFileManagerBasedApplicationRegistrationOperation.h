@@ -15,6 +15,7 @@
 @interface TICDSFileManagerBasedApplicationRegistrationOperation : TICDSApplicationRegistrationOperation {
 @private
     NSString *_applicationDirectoryPath;
+    NSString *_encryptionDirectorySaltDataFilePath;
     NSString *_clientDevicesDirectoryPath;
     NSString *_clientDevicesThisClientDeviceDirectoryPath;
 }
@@ -23,6 +24,9 @@
 
 /** The application root path. */
 @property (retain) NSString *applicationDirectoryPath;
+
+/** The path to the `salt.ticdsync` file inside this application's `Encryption` directory. */
+@property (retain) NSString *encryptionDirectorySaltDataFilePath;
 
 /** The path to the `ClientDevices` directory. */
 @property (retain) NSString *clientDevicesDirectoryPath;

@@ -19,13 +19,15 @@
 
 #pragma mark -
 #pragma mark File Structure
-+ (NSDictionary *)remoteGlobalAppFileStructure
++ (NSDictionary *)remoteGlobalAppDirectoryHierarchy
 {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     
     [dictionary setValue:[NSDictionary dictionary] forKey:TICDSClientDevicesDirectoryName];
     
     [dictionary setValue:[NSDictionary dictionary] forKey:TICDSDocumentsDirectoryName];
+    
+    [dictionary setValue:[NSDictionary dictionary] forKey:TICDSEncryptionDirectoryName];
     
     return dictionary;
 }

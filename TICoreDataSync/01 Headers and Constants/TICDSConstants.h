@@ -38,6 +38,7 @@ extern NSString * const kTICDSDocumentDownloadFinalWholeStoreLocation;
 
 extern NSString * const TICDSClientDevicesDirectoryName;
 extern NSString * const TICDSDocumentsDirectoryName;
+extern NSString * const TICDSEncryptionDirectoryName;
 extern NSString * const TICDSWholeStoreDirectoryName;
 extern NSString * const TICDSSyncChangesDirectoryName;
 extern NSString * const TICDSSyncCommandsDirectoryName;

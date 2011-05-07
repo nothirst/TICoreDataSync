@@ -17,6 +17,7 @@
     TICDSFileManagerBasedApplicationRegistrationOperation *operation = [[TICDSFileManagerBasedApplicationRegistrationOperation alloc] initWithDelegate:self];
     
     [operation setApplicationDirectoryPath:[self applicationDirectoryPath]];
+    [operation setEncryptionDirectorySaltDataFilePath:[self encryptionDirectorySaltDataFilePath]];
     [operation setClientDevicesDirectoryPath:[self clientDevicesDirectoryPath]];
     [operation setClientDevicesThisClientDeviceDirectoryPath:[self clientDevicesThisClientDeviceDirectoryPath]];
     
@@ -46,6 +47,11 @@
 - (NSString *)applicationDirectoryPath
 {
     return [[[self applicationContainingDirectoryLocation] path] stringByAppendingPathComponent:[self appIdentifier]];
+}
+
+- (NSString *)encryptionDirectorySaltDataFilePath
+{
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToEncryptionDirectorySaltDataFilePath]];
 }
 
 - (NSString *)documentsDirectoryPath

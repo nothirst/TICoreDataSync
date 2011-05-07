@@ -272,7 +272,7 @@
     NSData *saltData = [NSKeyedArchiver archivedDataWithRootObject:@"HELLOTHISISMYSALT"];
     // NSData *saltData = [self setEncryptor:[FZAEncryptor encryptorWithPassword:[self password] salt:nil]];
     
-    [self saveSaltDataToRootOfGlobalAppDirectory:saltData];
+    [self saveSaltDataToRemote:saltData];
 }
 
 - (void)savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:(BOOL)success
@@ -301,7 +301,7 @@
     [self fetchedSaltData:nil];
 }
 
-- (void)saveSaltDataToRootOfGlobalAppDirectory:(NSData *)saltData
+- (void)saveSaltDataToRemote:(NSData *)saltData
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
     [self savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:NO];

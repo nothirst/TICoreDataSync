@@ -23,6 +23,17 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedApplicationRegistrationOperation/encryptionDirectorySaltDataFilePath</TokenIdentifier>
+			<Abstract>The path to the salt.ticdsync file inside this application's Encryption directory.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSString *encryptionDirectorySaltDataFilePath</Declaration>
+			
+			
+			<Anchor>//api/name/encryptionDirectorySaltDataFilePath</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedApplicationRegistrationOperation/clientDevicesDirectoryPath</TokenIdentifier>
 			<Abstract>The path to the ClientDevices directory.</Abstract>
 			<DeclaredIn>TICDSFileManagerBasedApplicationRegistrationOperation.h</DeclaredIn>			

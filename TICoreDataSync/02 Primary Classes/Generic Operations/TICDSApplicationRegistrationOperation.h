@@ -97,7 +97,7 @@
  This method must call `savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:` to indicate whether the save was successful.
  
  @param saltData The data to be saved. */
-- (void)saveSaltDataToRootOfGlobalAppDirectory:(NSData *)saltData;
+- (void)saveSaltDataToRemote:(NSData *)saltData;
 
 /** Check whether the client's directory already exists in `ClientDevices`.
  

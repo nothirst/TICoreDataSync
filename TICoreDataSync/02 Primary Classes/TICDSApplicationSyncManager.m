@@ -443,6 +443,16 @@ id gTICDSDefaultApplicationSyncManager = nil;
 
 #pragma mark -
 #pragma mark Paths
+- (NSString *)relativePathToEncryptionDirectory
+{
+    return TICDSEncryptionDirectoryName;
+}
+
+- (NSString *)relativePathToEncryptionDirectorySaltDataFilePath
+{
+    return [[self relativePathToEncryptionDirectory] stringByAppendingPathComponent:TICDSSaltFilenameWithExtension];
+}
+
 - (NSString *)relativePathToDocumentsDirectory
 {
     return TICDSDocumentsDirectoryName;

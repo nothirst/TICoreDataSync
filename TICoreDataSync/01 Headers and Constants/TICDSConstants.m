@@ -58,6 +58,7 @@ NSString * const kTICDSDocumentDownloadFinalWholeStoreLocation = @"kTICDSDocumen
 
 NSString * const TICDSClientDevicesDirectoryName = @"ClientDevices";
 NSString * const TICDSDocumentsDirectoryName = @"Documents";
+NSString * const TICDSEncryptionDirectoryName = @"Encryption";
 NSString * const TICDSWholeStoreDirectoryName = @"WholeStore";
 NSString * const TICDSSyncChangesDirectoryName = @"SyncChanges";
 NSString * const TICDSSyncCommandsDirectoryName = @"SyncCommands";

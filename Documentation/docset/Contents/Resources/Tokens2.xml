@@ -280,6 +280,28 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/relativePathToEncryptionDirectory</TokenIdentifier>
+			<Abstract>The path to the Encryption directory, relative to the root of the remote file structure.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *relativePathToEncryptionDirectory</Declaration>
+			
+			
+			<Anchor>//api/name/relativePathToEncryptionDirectory</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/relativePathToEncryptionDirectorySaltDataFilePath</TokenIdentifier>
+			<Abstract>The path to the salt.ticdsync file inside the Encryption directory, relative to the root of the remote file structure.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *relativePathToEncryptionDirectorySaltDataFilePath</Declaration>
+			
+			
+			<Anchor>//api/name/relativePathToEncryptionDirectorySaltDataFilePath</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/relativePathToClientDevicesDirectory</TokenIdentifier>
 			<Abstract>The path to the ClientDevices directory, relative to the root of the remote file structure.</Abstract>
 			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			

@@ -31,6 +31,9 @@
 /** The path to the root application directory. */
 @property (nonatomic, readonly) NSString *applicationDirectoryPath;
 
+/** The path to the `salt.ticds` file inside the `Encryption` directory at the root of the application. */
+@property (nonatomic, readonly) NSString *encryptionDirectorySaltDataFilePath;
+
 /** The path to the `Documents` directory at the root of the application. */
 @property (nonatomic, readonly) NSString *documentsDirectoryPath;
 
