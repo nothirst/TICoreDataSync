@@ -76,20 +76,14 @@
  */
 - (void)registerWithDelegate:(id <TICDSApplicationSyncManagerDelegate>)aDelegate globalAppIdentifier:(NSString *)anAppIdentifier uniqueClientIdentifier:(NSString *)aClientIdentifier description:(NSString *)aClientDescription userInfo:(NSDictionary *)someUserInfo;
 
-/** Continue registering an application for the first time by using encryption.
+/** Continue registering an application for the first time specifying whether to use encryption, or an existing application that requires an encryption password.
  
- @warning If you specify `YES` for `shouldUseEncryption`, the password must not be `nil`, or an empty string.
+ If you are requesting the registration process continue for a **new** application, and do not want to enable encryption, specify `nil` for the password, otherwise supply the password the user wishes to use.
  
- @param shouldUseEncryption A Boolean indicating whether to use encryption for this application's sync data.
- @param aPassword The password to use if encryption is specified. */
-- (void)continueRegisteringWithEncryption:(BOOL)shouldUseEncryption password:(NSString *)aPassword;
-
-/** Contine registering an existing application, using a user-provided password.
+ If you are requesting the registration process continue for an **existing** application that requires an encryption password, you must specify a password other than `nil`.
  
- @warning The password must not be `nil`, or an empty string.
- 
- @param aPassword The password to use for encryption. */
-- (void)continueRegisteringWithUserPassword:(NSString *)aPassword;
+ @param aPassword The password to use, or `nil` to specify no encryption on a new application registration. */
+- (void)continueRegisteringWithEncryptionPassword:(NSString *)aPassword;
 
 /** @name Accessing Previously Synchronized Documents */
 

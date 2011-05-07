@@ -67,38 +67,19 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationSyncManager/continueRegisteringWithEncryption:password:</TokenIdentifier>
-			<Abstract>Continue registering an application for the first time by using encryption.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationSyncManager/continueRegisteringWithEncryptionPassword:</TokenIdentifier>
+			<Abstract>Continue registering an application for the first time specifying whether to use encryption, or an existing application that requires an encryption password.</Abstract>
 			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
 			
-			<Declaration>- (void)continueRegisteringWithEncryption:(BOOL)shouldUseEncryption password:(NSString *)aPassword</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>shouldUseEncryption</Name>
-					<Abstract>A Boolean indicating whether to use encryption for this application's sync data.</Abstract>
-				</Parameter><Parameter>
-					<Name>aPassword</Name>
-					<Abstract>The password to use if encryption is specified.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/continueRegisteringWithEncryption:password:</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationSyncManager/continueRegisteringWithUserPassword:</TokenIdentifier>
-			<Abstract>Contine registering an existing application, using a user-provided password.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
-			
-			<Declaration>- (void)continueRegisteringWithUserPassword:(NSString *)aPassword</Declaration>
+			<Declaration>- (void)continueRegisteringWithEncryptionPassword:(NSString *)aPassword</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aPassword</Name>
-					<Abstract>The password to use for encryption.</Abstract>
+					<Abstract>The password to use, or nil to specify no encryption on a new application registration.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/continueRegisteringWithUserPassword:</Anchor>
+			<Anchor>//api/name/continueRegisteringWithEncryptionPassword:</Anchor>
 		</Token>
 		
 		<Token>

@@ -68,7 +68,7 @@
  
  @param aSyncManager The application sync manager object that sent the message. 
  
- @warning You *must* call the `continueRegisteringWithEncryption:password:` method to indicate whether registration should use encryption, or the registration process will be left permanently suspended. */
+ @warning You *must* call the `continueRegisteringWithEncryptionPassword:` method to indicate whether registration should use an encryption password, or stay unencrypted, otherwise the registration process will be left permanently suspended. */
 @required
 - (void)applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:(TICDSApplicationSyncManager *)aSyncManager;
 @optional
@@ -77,7 +77,7 @@
  
  @param aSyncManager The application sync manager object that sent the message.
  
- @warning You *must* call the `continueRegisteringWithUserPassword:` method to indicate the password to use, or the registration process will be left permanently suspended. */
+ @warning You *must* call the `continueRegisteringWithEncryptionPassword::` method to indicate the password to use, or the registration process will be left permanently suspended. */
 @required
 - (void)applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:(TICDSApplicationSyncManager *)aSyncManager;
 @optional

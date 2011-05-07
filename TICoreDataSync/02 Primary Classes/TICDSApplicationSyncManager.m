@@ -93,16 +93,6 @@
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidContinueRegistering:)];
 }
 
-- (void)continueRegisteringWithEncryption:(BOOL)shouldUseEncryption password:(NSString *)aPassword
-{
-    // Just start the registration operation again
-    [(TICDSApplicationRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setShouldUseEncryption:shouldUseEncryption];
-    if( shouldUseEncryption ) {
-        [(TICDSApplicationRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setPassword:aPassword];
-    }
-    [(TICDSApplicationRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setPaused:NO];
-}
-
 #pragma mark Asking for the Encryption Password on Subsequent Registrations
 - (void)registrationOperationPausedToRequestEncryptionPassword:(TICDSApplicationRegistrationOperation *)anOperation
 {
@@ -116,9 +106,11 @@
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidContinueRegistering:)];
 }
 
-- (void)continueRegisteringWithUserPassword:(NSString *)aPassword
+#pragma mark Continuing after Gaining an Encryption Password
+- (void)continueRegisteringWithEncryptionPassword:(NSString *)aPassword
 {
     // Just start the registration operation again
+    [(TICDSApplicationRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setShouldUseEncryption:(aPassword != nil)];
     [(TICDSApplicationRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setPassword:aPassword];
     
     [(TICDSApplicationRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setPaused:NO];

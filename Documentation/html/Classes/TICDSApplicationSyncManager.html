@@ -78,9 +78,7 @@
 	
 	<option value="//api/name/applicationRegistrationOperation">&nbsp;&nbsp;&nbsp;&nbsp;- applicationRegistrationOperation</option>
 	
-	<option value="//api/name/continueRegisteringWithEncryption:password:">&nbsp;&nbsp;&nbsp;&nbsp;- continueRegisteringWithEncryption:password:</option>
-	
-	<option value="//api/name/continueRegisteringWithUserPassword:">&nbsp;&nbsp;&nbsp;&nbsp;- continueRegisteringWithUserPassword:</option>
+	<option value="//api/name/continueRegisteringWithEncryptionPassword:">&nbsp;&nbsp;&nbsp;&nbsp;- continueRegisteringWithEncryptionPassword:</option>
 	
 	<option value="//api/name/listOfPreviouslySynchronizedDocumentsOperation">&nbsp;&nbsp;&nbsp;&nbsp;- listOfPreviouslySynchronizedDocumentsOperation</option>
 	
@@ -180,9 +178,7 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationRegistrationOperation">applicationRegistrationOperation</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/continueRegisteringWithEncryption:password:">continueRegisteringWithEncryption:password:</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/continueRegisteringWithUserPassword:">continueRegisteringWithUserPassword:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/continueRegisteringWithEncryptionPassword:">continueRegisteringWithEncryptionPassword:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/listOfPreviouslySynchronizedDocumentsOperation">listOfPreviouslySynchronizedDocumentsOperation</a></span></li>
 	
@@ -295,15 +291,8 @@
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/continueRegisteringWithEncryption:password:">&ndash;&nbsp;continueRegisteringWithEncryption:password:</a></code>
-		<span class="tooltip"><p>Continue registering an application for the first time by using encryption.</p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/continueRegisteringWithUserPassword:">&ndash;&nbsp;continueRegisteringWithUserPassword:</a></code>
-		<span class="tooltip"><p>Contine registering an existing application, using a user-provided password.</p></span>
+		<code><a href="#//api/name/continueRegisteringWithEncryptionPassword:">&ndash;&nbsp;continueRegisteringWithEncryptionPassword:</a></code>
+		<span class="tooltip"><p>Continue registering an application for the first time specifying whether to use encryption, or an existing application that requires an encryption password.</p></span>
 	</span>
 	
 	
@@ -1135,30 +1124,25 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/continueRegisteringWithEncryption:password:" title="continueRegisteringWithEncryption:password:"></a>
-	<h3 class="subsubtitle method-title">continueRegisteringWithEncryption:password:</h3>
+	<a name="//api/name/continueRegisteringWithEncryptionPassword:" title="continueRegisteringWithEncryptionPassword:"></a>
+	<h3 class="subsubtitle method-title">continueRegisteringWithEncryptionPassword:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Continue registering an application for the first time by using encryption.</p>
+		<p>Continue registering an application for the first time specifying whether to use encryption, or an existing application that requires an encryption password.</p>
 	</div>		
 	
 	
-	<div class="method-subsection method-declaration"><code>- (void)continueRegisteringWithEncryption:(BOOL)<em>shouldUseEncryption</em> password:(NSString *)<em>aPassword</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)continueRegisteringWithEncryptionPassword:(NSString *)<em>aPassword</em></code></div>
 	
 	
 	<div class="method-subsection arguments-section parameters">
 		<h4 class="method-subtitle parameter-title">Parameters</h4>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>shouldUseEncryption</em></dt>
-			<dd><p>A Boolean indicating whether to use encryption for this application&rsquo;s sync data.</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
 			<dt><em>aPassword</em></dt>
-			<dd><p>The password to use if encryption is specified.</p></dd>
+			<dd><p>The password to use, or <code>nil</code> to specify no encryption on a new application registration.</p></dd>
 		</dl>
 		
 	</div>
@@ -1169,54 +1153,9 @@
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<div class="warning"><p>If you specify <code>YES</code> for <code>shouldUseEncryption</code>, the password must not be <code>nil</code>, or an empty string.</p></div>
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">TICDSApplicationSyncManager.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/continueRegisteringWithUserPassword:" title="continueRegisteringWithUserPassword:"></a>
-	<h3 class="subsubtitle method-title">continueRegisteringWithUserPassword:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Contine registering an existing application, using a user-provided password.</p>
-	</div>		
-	
-	
-	<div class="method-subsection method-declaration"><code>- (void)continueRegisteringWithUserPassword:(NSString *)<em>aPassword</em></code></div>
-	
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>aPassword</em></dt>
-			<dd><p>The password to use for encryption.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	<div class="method-subsection discussion-section">
-		<h4 class="method-subtitle">Discussion</h4>
-		<div class="warning"><p>The password must not be <code>nil</code>, or an empty string.</p></div>
+		<p>If you are requesting the registration process continue for a <strong>new</strong> application, and do not want to enable encryption, specify <code>nil</code> for the password, otherwise supply the password the user wishes to use.</p>
+
+<p>If you are requesting the registration process continue for an <strong>existing</strong> application that requires an encryption password, you must specify a password other than <code>nil</code>.</p>
 	</div>
 	
 	

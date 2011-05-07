@@ -386,7 +386,7 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
 {
     TICDSApplicationSyncManager *syncManager = [TICDSFileManagerBasedApplicationSyncManager defaultApplicationSyncManager];
     
-    [syncManager continueRegisteringWithEncryption:NO password:nil];
+    [syncManager continueRegisteringWithEncryptionPassword:nil];
 }
 
 - (IBAction)dropboxEncryptionUseEncryptionAction:(id)sender;
@@ -414,7 +414,7 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
     
     TICDSApplicationSyncManager *syncManager = [TICDSFileManagerBasedApplicationSyncManager defaultApplicationSyncManager];
     
-    [syncManager continueRegisteringWithEncryption:YES password:password];
+    [syncManager continueRegisteringWithEncryptionPassword:password];
 }
 
 #pragma mark Dropbox Request Encryption Password
@@ -437,7 +437,7 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
     
     TICDSApplicationSyncManager *syncManager = [TICDSFileManagerBasedApplicationSyncManager defaultApplicationSyncManager];
     
-    [syncManager continueRegisteringWithUserPassword:password];
+    [syncManager continueRegisteringWithEncryptionPassword:password];
 }
 
 #pragma mark Dropbox Configured
