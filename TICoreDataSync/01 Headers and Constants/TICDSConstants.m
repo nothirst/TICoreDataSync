@@ -41,6 +41,10 @@ NSString * const kTICDSErrorClassAndMethod = @"kTICDSErrorClassAndMethod";
 NSString * const kTICDSErrorDomain = @"com.timisted.ticoredatasync";
 NSString * const kTICDSStackTrace = @"kTICDSStackTrace";
 
+NSString * const FZACryptorErrorDomain = @"com.fuzzyaliens.fzacryptor";
+NSString * const FZAKeyManagerErrorDomain = @"com.fuzzyaliens.fzacryptor.keymanager";
+NSString * const kFZAKeyManagerSecurityFrameworkError = @"kFZAKeyManagerSecurityFrameworkError";
+
 NSString * const kTICDSClientDeviceDescription = @"kTICDSClientDeviceDescription";
 NSString * const kTICDSClientDeviceUserInfo = @"kTICDSClientDeviceUserInfo";
 NSString * const kTICDSClientDeviceIdentifier = @"kTICDSClientDeviceIdentifier";

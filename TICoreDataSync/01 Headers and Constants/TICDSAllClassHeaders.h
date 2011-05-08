@@ -46,6 +46,15 @@
 #import "TICDSLog.h"
 #import "TICDSError.h"
 
+#pragma mark Encryption
+#import "FZACryptor.h"
+#import "FZAKeyManager.h"
+#if (TARGET_OS_IPHONE)
+#import "FZAKeyManageriPhone.h"
+#else
+#import "FZAKeyManagerMac.h"
+#endif
+
 #pragma mark -
 #pragma mark External Sources
 #import "NSObject+TIDelegateCommunications.h"

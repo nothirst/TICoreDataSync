@@ -1,190 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/TICDSFileManagerBasedDocumentSyncManager.html">
+	<File path="Classes/TICDSError.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/TICDSFileManagerBasedDocumentSyncManager</TokenIdentifier>
-			<Abstract>The TICDSFileManagerBasedDocumentSyncManager describes a class used to synchronize documents with a remote service that can be accessed via an NSFileManager. This includes:</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/TICDSError</TokenIdentifier>
+			<Abstract>TICDSError is a utility class to generate NSError objects with certain characteristics.</Abstract>
+			<DeclaredIn>TICDSError.h</DeclaredIn>
 			
 			<NodeRef refid="9"/>
 		</Token>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSFileManagerBasedDocumentSyncManager/enableAutomaticSynchronizationAfterChangesDetectedFromOtherClients</TokenIdentifier>
-			<Abstract>Configures the FileManager-based document sync manager to watch for changes uploaded by other clients, and initiate a sync operation automatically when new changes are detected.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSError/errorWithCode:userInfo:</TokenIdentifier>
+			<Abstract>Generate an error with the given code.</Abstract>
+			<DeclaredIn>TICDSError.h</DeclaredIn>			
 			
-			<Declaration>- (void)enableAutomaticSynchronizationAfterChangesDetectedFromOtherClients</Declaration>
-			
-			
-			<Anchor>//api/name/enableAutomaticSynchronizationAfterChangesDetectedFromOtherClients</Anchor>
+			<Declaration>+ (NSError *)errorWithCode:(TICDSErrorCode)aCode userInfo:(id)someInfo</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aCode</Name>
+					<Abstract>The error code to use.</Abstract>
+				</Parameter><Parameter>
+					<Name>someInfo</Name>
+					<Abstract>The user info to set on the NSError object.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>A properly-configured NSError object.</Abstract></ReturnValue>
+			<Anchor>//api/name/errorWithCode:userInfo:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/applicationDirectoryPath</TokenIdentifier>
-			<Abstract>The path to the root of the application. This will be set automatically when you register and supply a TICDSFileManagerBasedApplicationSyncManager.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSError/errorWithCode:classAndMethod:</TokenIdentifier>
+			<Abstract>Generate an error with the given code in a specific class and method.</Abstract>
+			<DeclaredIn>TICDSError.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, retain) NSString *applicationDirectoryPath</Declaration>
-			
-			
-			<Anchor>//api/name/applicationDirectoryPath</Anchor>
+			<Declaration>+ (NSError *)errorWithCode:(TICDSErrorCode)aCode classAndMethod:(const char *)aClassAndMethod</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aCode</Name>
+					<Abstract>The error code to use.</Abstract>
+				</Parameter><Parameter>
+					<Name>aClassAndMethod</Name>
+					<Abstract>A C-string, typically provided by PRETTY_FUNCTION.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>A properly-configured NSError object with the class and method specified in the user info.</Abstract></ReturnValue>
+			<Anchor>//api/name/errorWithCode:classAndMethod:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/directoryWatcher</TokenIdentifier>
-			<Abstract>A TIKQDirectoryWatcher used to watch for changes in the SyncChanges directories for this document.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSError/errorWithCode:underlyingError:classAndMethod:</TokenIdentifier>
+			<Abstract>Generate an error with the given code and another underlying error in a specific class and method.</Abstract>
+			<DeclaredIn>TICDSError.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, retain) TIKQDirectoryWatcher *directoryWatcher</Declaration>
-			
-			
-			<Anchor>//api/name/directoryWatcher</Anchor>
+			<Declaration>+ (NSError *)errorWithCode:(TICDSErrorCode)aCode underlyingError:(NSError *)anUnderlyingError classAndMethod:(const char *)aClassAndMethod</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aCode</Name>
+					<Abstract>The error code to use.</Abstract>
+				</Parameter><Parameter>
+					<Name>anUnderlyingError</Name>
+					<Abstract>The underlying NSError that caused this particular TICoreDataSync error.</Abstract>
+				</Parameter><Parameter>
+					<Name>aClassAndMethod</Name>
+					<Abstract>A C-string, typically provided by PRETTY_FUNCTION.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>A properly-configured NSError object, with the underlying error, and class and method specified in the user info.</Abstract></ReturnValue>
+			<Anchor>//api/name/errorWithCode:underlyingError:classAndMethod:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/watchedClientDirectoryIdentifiers</TokenIdentifier>
-			<Abstract>A mutable array containing the identifiers of clients currently being watched.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSError/errorWithCode:underlyingError:userInfo:classAndMethod:</TokenIdentifier>
+			<Abstract>Generate an error with the given code and another underlying error in a specific class and method, also providing your own user info.</Abstract>
+			<DeclaredIn>TICDSError.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, retain) NSMutableArray *watchedClientDirectoryIdentifiers</Declaration>
-			
-			
-			<Anchor>//api/name/watchedClientDirectoryIdentifiers</Anchor>
+			<Declaration>+ (NSError *)errorWithCode:(TICDSErrorCode)aCode underlyingError:(NSError *)anUnderlyingError userInfo:(id)someInfo classAndMethod:(const char *)aClassAndMethod</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aCode</Name>
+					<Abstract>The error code to use.</Abstract>
+				</Parameter><Parameter>
+					<Name>anUnderlyingError</Name>
+					<Abstract>The underlying NSError that caused this particular TICoreDataSync error.</Abstract>
+				</Parameter><Parameter>
+					<Name>someInfo</Name>
+					<Abstract>The user info you wish to supply (in addition that created automatically) for this error.</Abstract>
+				</Parameter><Parameter>
+					<Name>aClassAndMethod</Name>
+					<Abstract>A C-string, typically provided by PRETTY_FUNCTION.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>A properly-configured NSError object, with the underlying error and class and method, specified in the user info, which will be merged with the provided someInfo.</Abstract></ReturnValue>
+			<Anchor>//api/name/errorWithCode:underlyingError:userInfo:classAndMethod:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/documentsDirectoryPath</TokenIdentifier>
-			<Abstract>The path to the Documents directory.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSError/setIncludeStackTraceInErrors:</TokenIdentifier>
+			<Abstract>Specify whether to include a stack trace in errors generated by TICDSError class factory methods.</Abstract>
+			<DeclaredIn>TICDSError.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, readonly) NSString *documentsDirectoryPath</Declaration>
+			<Declaration>+ (void)setIncludeStackTraceInErrors:(BOOL)shouldInclude</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>shouldInclude</Name>
+					<Abstract>A Boolean indicating whether to include a stack trace.</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/documentsDirectoryPath</Anchor>
+			<Anchor>//api/name/setIncludeStackTraceInErrors:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/thisDocumentDirectoryPath</TokenIdentifier>
-			<Abstract>The path to this document's directory inside the Documents directory.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSError/includeStackTraceInErrors</TokenIdentifier>
+			<Abstract>Indicates whether a stack trace will be included in  errors generated by TICDSError class factory methods.</Abstract>
+			<DeclaredIn>TICDSError.h</DeclaredIn>			
 			
-			<Declaration>@property (nonatomic, readonly) NSString *thisDocumentDirectoryPath</Declaration>
+			<Declaration>+ (BOOL)includeStackTraceInErrors</Declaration>
 			
-			
-			<Anchor>//api/name/thisDocumentDirectoryPath</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/thisDocumentSyncChangesDirectoryPath</TokenIdentifier>
-			<Abstract>The path to this document's SyncChanges directory.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, readonly) NSString *thisDocumentSyncChangesDirectoryPath</Declaration>
-			
-			
-			<Anchor>//api/name/thisDocumentSyncChangesDirectoryPath</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/thisDocumentSyncChangesThisClientDirectoryPath</TokenIdentifier>
-			<Abstract>The path to this client's directory inside this document's SyncChanges directory.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, readonly) NSString *thisDocumentSyncChangesThisClientDirectoryPath</Declaration>
-			
-			
-			<Anchor>//api/name/thisDocumentSyncChangesThisClientDirectoryPath</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/thisDocumentSyncCommandsDirectoryPath</TokenIdentifier>
-			<Abstract>The path to this document's SyncCommands directory.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, readonly) NSString *thisDocumentSyncCommandsDirectoryPath</Declaration>
-			
-			
-			<Anchor>//api/name/thisDocumentSyncCommandsDirectoryPath</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/thisDocumentSyncCommandsThisClientDirectoryPath</TokenIdentifier>
-			<Abstract>The path to this client's directory inside this document's SyncCommands directory.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, readonly) NSString *thisDocumentSyncCommandsThisClientDirectoryPath</Declaration>
-			
-			
-			<Anchor>//api/name/thisDocumentSyncCommandsThisClientDirectoryPath</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/thisDocumentWholeStoreDirectoryPath</TokenIdentifier>
-			<Abstract>The path to this document's WholeStore directory.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, readonly) NSString *thisDocumentWholeStoreDirectoryPath</Declaration>
-			
-			
-			<Anchor>//api/name/thisDocumentWholeStoreDirectoryPath</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/thisDocumentWholeStoreThisClientDirectoryPath</TokenIdentifier>
-			<Abstract>The path to this client's directory inside this document's WholeStore directory.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, readonly) NSString *thisDocumentWholeStoreThisClientDirectoryPath</Declaration>
-			
-			
-			<Anchor>//api/name/thisDocumentWholeStoreThisClientDirectoryPath</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/thisDocumentWholeStoreFilePath</TokenIdentifier>
-			<Abstract>The path to this client's WholeStore.ticdsync file.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, readonly) NSString *thisDocumentWholeStoreFilePath</Declaration>
-			
-			
-			<Anchor>//api/name/thisDocumentWholeStoreFilePath</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/thisDocumentAppliedSyncChangeSetsFilePath</TokenIdentifier>
-			<Abstract>The path to this client's AppliedSyncChangeSets.ticdsync file.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, readonly) NSString *thisDocumentAppliedSyncChangeSetsFilePath</Declaration>
-			
-			
-			<Anchor>//api/name/thisDocumentAppliedSyncChangeSetsFilePath</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/thisDocumentRecentSyncsDirectoryPath</TokenIdentifier>
-			<Abstract>The path to this document's RecentSyncs directory.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, readonly) NSString *thisDocumentRecentSyncsDirectoryPath</Declaration>
-			
-			
-			<Anchor>//api/name/thisDocumentRecentSyncsDirectoryPath</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentSyncManager/thisDocumentRecentSyncsThisClientFilePath</TokenIdentifier>
-			<Abstract>The path to this client's RecentSync file inside this document's RecentSyncs directory.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedDocumentSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, readonly) NSString *thisDocumentRecentSyncsThisClientFilePath</Declaration>
-			
-			
-			<Anchor>//api/name/thisDocumentRecentSyncsThisClientFilePath</Anchor>
+			<ReturnValue><Abstract>A Boolean indicating whether a stack trace will be included.</Abstract></ReturnValue>
+			<Anchor>//api/name/includeStackTraceInErrors</Anchor>
 		</Token>
 		
 	</File>

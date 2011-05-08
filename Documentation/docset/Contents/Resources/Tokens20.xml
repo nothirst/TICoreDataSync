@@ -1,91 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/TICDSSyncConflict.html">
+	<File path="Classes/TICDSLog.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/TICDSSyncConflict</TokenIdentifier>
-			<Abstract>A TICDSSyncConflict object describes a conflict found between changes made locally, and changes made by another client who has already posted their SyncChanges.</Abstract>
-			<DeclaredIn>TICDSSyncConflict.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/TICDSLog</TokenIdentifier>
+			<Abstract>TICDLog is a utility class to provide the primary logging behavior for the TICoreDataSync framework.</Abstract>
+			<DeclaredIn>TICDSLog.h</DeclaredIn>
 			
 			<NodeRef refid="20"/>
 		</Token>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSyncConflict/conflictType</TokenIdentifier>
-			<Abstract>The type of conflict.</Abstract>
-			<DeclaredIn>TICDSSyncConflict.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSLog/verbosity</TokenIdentifier>
+			<Abstract>Returns the current verbosity level for logging.</Abstract>
+			<DeclaredIn>TICDSLog.h</DeclaredIn>			
 			
-			<Declaration>@property (assign) TICDSSyncConflictType conflictType</Declaration>
+			<Declaration>+ (NSInteger)verbosity</Declaration>
 			
 			
-			<Anchor>//api/name/conflictType</Anchor>
+			<Anchor>//api/name/verbosity</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSyncConflict/conflictDescription</TokenIdentifier>
-			<Abstract>A description of this type of conflict.</Abstract>
-			<DeclaredIn>TICDSSyncConflict.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSLog/setVerbosity:</TokenIdentifier>
+			<Abstract>Sets the verbosity level for logging.</Abstract>
+			<DeclaredIn>TICDSLog.h</DeclaredIn>			
 			
-			<Declaration>@property (readonly) NSString *conflictDescription</Declaration>
+			<Declaration>+ (void)setVerbosity:(NSInteger)verbosity</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>verbosity</Name>
+					<Abstract>The verbosity level to use; specify TICDSLogVerbosityEveryStep to see all output, or check the TICDSTypesAndEnums.h file for a list.</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/conflictDescription</Anchor>
+			<Anchor>//api/name/setVerbosity:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSyncConflict/entityName</TokenIdentifier>
-			<Abstract>The name of the entity for which conflicting changes were made to an object.</Abstract>
-			<DeclaredIn>TICDSSyncConflict.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSLog/logWithVerbosity:information:</TokenIdentifier>
+			<Abstract>Log some information (assuming DEBUG is set).</Abstract>
+			<DeclaredIn>TICDSLog.h</DeclaredIn>			
 			
-			<Declaration>@property (retain) NSString *entityName</Declaration>
+			<Declaration>+ (void)logWithVerbosity:(NSInteger)someVerbosity information:(NSString *)formatString, ...</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>someVerbosity</Name>
+					<Abstract>The verbosity level of this information (if the current verbosity is less than this, the information won't be logged).</Abstract>
+				</Parameter><Parameter>
+					<Name>formatString</Name>
+					<Abstract>The format string (using NSLog() format specifiers).</Abstract>
+				</Parameter><Parameter>
+					<Name>...</Name>
+					<Abstract>A comma-separated list of arguments to substitute into formatString.</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/entityName</Anchor>
+			<Anchor>//api/name/logWithVerbosity:information:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSyncConflict/relevantKey</TokenIdentifier>
-			<Abstract>The name of the key for which a conflict exists.</Abstract>
-			<DeclaredIn>TICDSSyncConflict.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSLog/logWithVerbosity:formatString:args:</TokenIdentifier>
+			<Abstract>Log some information (assuming DEBUG is set).</Abstract>
+			<DeclaredIn>TICDSLog.h</DeclaredIn>			
 			
-			<Declaration>@property (retain) NSString *relevantKey</Declaration>
+			<Declaration>+ (void)logWithVerbosity:(NSInteger)someVerbosity formatString:(NSString *)formatString args:(va_list)args</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>someVerbosity</Name>
+					<Abstract>The verbosity level of this information (if the current verbosity is less than this, the information won't be logged).</Abstract>
+				</Parameter><Parameter>
+					<Name>formatString</Name>
+					<Abstract>The format string (using NSLog() format specifiers).</Abstract>
+				</Parameter><Parameter>
+					<Name>args</Name>
+					<Abstract>A correctly started va_list with the arguments to substitute into formatString.</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/relevantKey</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSyncConflict/objectSyncID</TokenIdentifier>
-			<Abstract>The sync id (ticdsSyncID attribute) of the object for which the conflict was found.</Abstract>
-			<DeclaredIn>TICDSSyncConflict.h</DeclaredIn>			
-			
-			<Declaration>@property (retain) NSString *objectSyncID</Declaration>
-			
-			
-			<Anchor>//api/name/objectSyncID</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSyncConflict/localInformation</TokenIdentifier>
-			<Abstract>Information about the conflicting information on the local change.</Abstract>
-			<DeclaredIn>TICDSSyncConflict.h</DeclaredIn>			
-			
-			<Declaration>@property (retain) NSDictionary *localInformation</Declaration>
-			
-			
-			<Anchor>//api/name/localInformation</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSyncConflict/remoteInformation</TokenIdentifier>
-			<Abstract>Information about the conflicting information on the remote change.</Abstract>
-			<DeclaredIn>TICDSSyncConflict.h</DeclaredIn>			
-			
-			<Declaration>@property (retain) NSDictionary *remoteInformation</Declaration>
-			
-			
-			<Anchor>//api/name/remoteInformation</Anchor>
+			<Anchor>//api/name/logWithVerbosity:formatString:args:</Anchor>
 		</Token>
 		
 	</File>

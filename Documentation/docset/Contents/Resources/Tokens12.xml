@@ -1,63 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/TICDSFileManagerBasedVacuumOperation.html">
+	<File path="Classes/TICDSFileManagerBasedDocumentRegistrationOperation.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/TICDSFileManagerBasedVacuumOperation</TokenIdentifier>
-			<Abstract>TICDSFileManagerBasedVacuumOperation is a vacuum operation designed for use with a TICDSFileManagerBasedDocumentSyncManager.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedVacuumOperation.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/TICDSFileManagerBasedDocumentRegistrationOperation</TokenIdentifier>
+			<Abstract>TICDSFileManagerBasedDocumentRegistrationOperation is a document registration operation designed for use with a TICDSFileManagerBasedDocumentSyncManager.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedDocumentRegistrationOperation.h</DeclaredIn>
 			
 			<NodeRef refid="12"/>
 		</Token>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSFileManagerBasedVacuumOperation/pathToWholeStoreFileForClientWithIdentifier:</TokenIdentifier>
-			<Abstract>The path to a given client's WholeStore.ticdsync file within this document's WholeStore directory.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedVacuumOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentRegistrationOperation/documentsDirectoryPath</TokenIdentifier>
+			<Abstract>The path to the Documents directory.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedDocumentRegistrationOperation.h</DeclaredIn>			
 			
-			<Declaration>- (NSString *)pathToWholeStoreFileForClientWithIdentifier:(NSString *)anIdentifier</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>anIdentifier</Name>
-					<Abstract>The unique sync identifier for the client.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (retain) NSString *documentsDirectoryPath</Declaration>
 			
-			<Anchor>//api/name/pathToWholeStoreFileForClientWithIdentifier:</Anchor>
+			
+			<Anchor>//api/name/documentsDirectoryPath</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedVacuumOperation/thisDocumentWholeStoreDirectoryPath</TokenIdentifier>
-			<Abstract>The path to this document's WholeStore directory.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedVacuumOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentRegistrationOperation/thisDocumentDirectoryPath</TokenIdentifier>
+			<Abstract>The path to this document's directory inside the Documents directory.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedDocumentRegistrationOperation.h</DeclaredIn>			
 			
-			<Declaration>@property (retain) NSString *thisDocumentWholeStoreDirectoryPath</Declaration>
+			<Declaration>@property (retain) NSString *thisDocumentDirectoryPath</Declaration>
 			
 			
-			<Anchor>//api/name/thisDocumentWholeStoreDirectoryPath</Anchor>
+			<Anchor>//api/name/thisDocumentDirectoryPath</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedVacuumOperation/thisDocumentRecentSyncsDirectoryPath</TokenIdentifier>
-			<Abstract>The path to this document's RecentSyncs directory.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedVacuumOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (retain) NSString *thisDocumentRecentSyncsDirectoryPath</Declaration>
-			
-			
-			<Anchor>//api/name/thisDocumentRecentSyncsDirectoryPath</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedVacuumOperation/thisDocumentSyncChangesThisClientDirectoryPath</TokenIdentifier>
-			<Abstract>The path to this client's directory inside the RecentSyncs directory for this document.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedVacuumOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentRegistrationOperation/thisDocumentSyncChangesThisClientDirectoryPath</TokenIdentifier>
+			<Abstract>The path to this client's directory inside this document's SyncChanges directory.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedDocumentRegistrationOperation.h</DeclaredIn>			
 			
 			<Declaration>@property (retain) NSString *thisDocumentSyncChangesThisClientDirectoryPath</Declaration>
 			
 			
 			<Anchor>//api/name/thisDocumentSyncChangesThisClientDirectoryPath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentRegistrationOperation/thisDocumentSyncCommandsThisClientDirectoryPath</TokenIdentifier>
+			<Abstract>The path to this client's directory inside this document's SyncCommands directory.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedDocumentRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSString *thisDocumentSyncCommandsThisClientDirectoryPath</Declaration>
+			
+			
+			<Anchor>//api/name/thisDocumentSyncCommandsThisClientDirectoryPath</Anchor>
 		</Token>
 		
 	</File>

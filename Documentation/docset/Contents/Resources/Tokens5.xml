@@ -1,126 +1,338 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/TICDSError.html">
+	<File path="Classes/TICDSApplicationRegistrationOperation.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/TICDSError</TokenIdentifier>
-			<Abstract>TICDSError is a utility class to generate NSError objects with certain characteristics.</Abstract>
-			<DeclaredIn>TICDSError.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/TICDSApplicationRegistrationOperation</TokenIdentifier>
+			<Abstract>The TICDSApplicationRegistrationOperation class describes a generic operation used by the TICoreDataSync framework to register an application for future synchronization of documents.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>
 			
 			<NodeRef refid="5"/>
 		</Token>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/TICDSError/errorWithCode:userInfo:</TokenIdentifier>
-			<Abstract>Generate an error with the given code.</Abstract>
-			<DeclaredIn>TICDSError.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationRegistrationOperation/initWithDelegate:</TokenIdentifier>
+			<Abstract>Initialize the operation with a provided delegate.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
 			
-			<Declaration>+ (NSError *)errorWithCode:(TICDSErrorCode)aCode userInfo:(id)someInfo</Declaration>
+			<Declaration>- (id)initWithDelegate:(NSObject&lt;TICDSApplicationRegistrationOperationDelegate&gt; *)aDelegate</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>aCode</Name>
-					<Abstract>The error code to use.</Abstract>
-				</Parameter><Parameter>
-					<Name>someInfo</Name>
-					<Abstract>The user info to set on the NSError object.</Abstract>
+					<Name>aDelegate</Name>
+					<Abstract>The delegate object for the operation, notified when the operation starts, ends, fails, or is cancelled using methods defined in the TICDSOperationDelegate protocol.</Abstract>
 				</Parameter>
 			</Parameters>
-			<ReturnValue><Abstract>A properly-configured NSError object.</Abstract></ReturnValue>
-			<Anchor>//api/name/errorWithCode:userInfo:</Anchor>
+			<ReturnValue><Abstract>A properly-initialized operation.</Abstract></ReturnValue>
+			<Anchor>//api/name/initWithDelegate:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/TICDSError/errorWithCode:classAndMethod:</TokenIdentifier>
-			<Abstract>Generate an error with the given code in a specific class and method.</Abstract>
-			<DeclaredIn>TICDSError.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationRegistrationOperation/checkWhetherRemoteGlobalAppDirectoryExists</TokenIdentifier>
+			<Abstract>Check whether a directory exists for this application.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
 			
-			<Declaration>+ (NSError *)errorWithCode:(TICDSErrorCode)aCode classAndMethod:(const char *)aClassAndMethod</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aCode</Name>
-					<Abstract>The error code to use.</Abstract>
-				</Parameter><Parameter>
-					<Name>aClassAndMethod</Name>
-					<Abstract>A C-string, typically provided by PRETTY_FUNCTION.</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract>A properly-configured NSError object with the class and method specified in the user info.</Abstract></ReturnValue>
-			<Anchor>//api/name/errorWithCode:classAndMethod:</Anchor>
+			<Declaration>- (void)checkWhetherRemoteGlobalAppDirectoryExists</Declaration>
+			
+			
+			<Anchor>//api/name/checkWhetherRemoteGlobalAppDirectoryExists</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/TICDSError/errorWithCode:underlyingError:classAndMethod:</TokenIdentifier>
-			<Abstract>Generate an error with the given code and another underlying error in a specific class and method.</Abstract>
-			<DeclaredIn>TICDSError.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationRegistrationOperation/createRemoteGlobalAppDirectoryStructure</TokenIdentifier>
+			<Abstract>Create global application directory structure.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
 			
-			<Declaration>+ (NSError *)errorWithCode:(TICDSErrorCode)aCode underlyingError:(NSError *)anUnderlyingError classAndMethod:(const char *)aClassAndMethod</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aCode</Name>
-					<Abstract>The error code to use.</Abstract>
-				</Parameter><Parameter>
-					<Name>anUnderlyingError</Name>
-					<Abstract>The underlying NSError that caused this particular TICoreDataSync error.</Abstract>
-				</Parameter><Parameter>
-					<Name>aClassAndMethod</Name>
-					<Abstract>A C-string, typically provided by PRETTY_FUNCTION.</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract>A properly-configured NSError object, with the underlying error, and class and method specified in the user info.</Abstract></ReturnValue>
-			<Anchor>//api/name/errorWithCode:underlyingError:classAndMethod:</Anchor>
+			<Declaration>- (void)createRemoteGlobalAppDirectoryStructure</Declaration>
+			
+			
+			<Anchor>//api/name/createRemoteGlobalAppDirectoryStructure</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/TICDSError/errorWithCode:underlyingError:userInfo:classAndMethod:</TokenIdentifier>
-			<Abstract>Generate an error with the given code and another underlying error in a specific class and method, also providing your own user info.</Abstract>
-			<DeclaredIn>TICDSError.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationRegistrationOperation/copyReadMeTxtFileToRootOfGlobalAppDirectoryFromPath:</TokenIdentifier>
+			<Abstract>Copy the ReadMe.txt file from the bundle to the root of this application's remote directory.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
 			
-			<Declaration>+ (NSError *)errorWithCode:(TICDSErrorCode)aCode underlyingError:(NSError *)anUnderlyingError userInfo:(id)someInfo classAndMethod:(const char *)aClassAndMethod</Declaration>
+			<Declaration>- (void)copyReadMeTxtFileToRootOfGlobalAppDirectoryFromPath:(NSString *)aPath</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>aCode</Name>
-					<Abstract>The error code to use.</Abstract>
-				</Parameter><Parameter>
-					<Name>anUnderlyingError</Name>
-					<Abstract>The underlying NSError that caused this particular TICoreDataSync error.</Abstract>
-				</Parameter><Parameter>
-					<Name>someInfo</Name>
-					<Abstract>The user info you wish to supply (in addition that created automatically) for this error.</Abstract>
-				</Parameter><Parameter>
-					<Name>aClassAndMethod</Name>
-					<Abstract>A C-string, typically provided by PRETTY_FUNCTION.</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract>A properly-configured NSError object, with the underlying error and class and method, specified in the user info, which will be merged with the provided someInfo.</Abstract></ReturnValue>
-			<Anchor>//api/name/errorWithCode:underlyingError:userInfo:classAndMethod:</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/TICDSError/setIncludeStackTraceInErrors:</TokenIdentifier>
-			<Abstract>Specify whether to include a stack trace in errors generated by TICDSError class factory methods.</Abstract>
-			<DeclaredIn>TICDSError.h</DeclaredIn>			
-			
-			<Declaration>+ (void)setIncludeStackTraceInErrors:(BOOL)shouldInclude</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>shouldInclude</Name>
-					<Abstract>A Boolean indicating whether to include a stack trace.</Abstract>
+					<Name>aPath</Name>
+					<Abstract>The local path to the ReadMe.txt file.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/setIncludeStackTraceInErrors:</Anchor>
+			<Anchor>//api/name/copyReadMeTxtFileToRootOfGlobalAppDirectoryFromPath:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/TICDSError/includeStackTraceInErrors</TokenIdentifier>
-			<Abstract>Indicates whether a stack trace will be included in  errors generated by TICDSError class factory methods.</Abstract>
-			<DeclaredIn>TICDSError.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationRegistrationOperation/checkWhetherSaltFileExists</TokenIdentifier>
+			<Abstract>Check whether the salt.ticdsync file exists at the root of the application's remote directory.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
 			
-			<Declaration>+ (BOOL)includeStackTraceInErrors</Declaration>
+			<Declaration>- (void)checkWhetherSaltFileExists</Declaration>
 			
-			<ReturnValue><Abstract>A Boolean indicating whether a stack trace will be included.</Abstract></ReturnValue>
-			<Anchor>//api/name/includeStackTraceInErrors</Anchor>
+			
+			<Anchor>//api/name/checkWhetherSaltFileExists</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationRegistrationOperation/fetchSaltData</TokenIdentifier>
+			<Abstract>Fetch the data from the salt.ticdsync file.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)fetchSaltData</Declaration>
+			
+			
+			<Anchor>//api/name/fetchSaltData</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationRegistrationOperation/saveSaltDataToRemote:</TokenIdentifier>
+			<Abstract>Save the salt data to a salt.ticdsync file at the root of the application's remote directory.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)saveSaltDataToRemote:(NSData *)saltData</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>saltData</Name>
+					<Abstract>The data to be saved.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/saveSaltDataToRemote:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationRegistrationOperation/checkWhetherRemoteClientDeviceDirectoryExists</TokenIdentifier>
+			<Abstract>Check whether the client's directory already exists in ClientDevices.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)checkWhetherRemoteClientDeviceDirectoryExists</Declaration>
+			
+			
+			<Anchor>//api/name/checkWhetherRemoteClientDeviceDirectoryExists</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationRegistrationOperation/createRemoteClientDeviceDirectory</TokenIdentifier>
+			<Abstract>Create the client's directory in ClientDevices.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)createRemoteClientDeviceDirectory</Declaration>
+			
+			
+			<Anchor>//api/name/createRemoteClientDeviceDirectory</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationRegistrationOperation/saveRemoteClientDeviceInfoPlistFromDictionary:</TokenIdentifier>
+			<Abstract>Save the dictionary to a deviceInfo.plist file in this client's directory inside the ClientDevices directory.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)saveRemoteClientDeviceInfoPlistFromDictionary:(NSDictionary *)aDictionary</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aDictionary</Name>
+					<Abstract>The dictionary to save as the deviceInfo.plist.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/saveRemoteClientDeviceInfoPlistFromDictionary:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationRegistrationOperation/discoveredStatusOfRemoteGlobalAppDirectory:</TokenIdentifier>
+			<Abstract>Indicate the status of the global application directory.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)discoveredStatusOfRemoteGlobalAppDirectory:(TICDSRemoteFileStructureExistsResponseType)status</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>status</Name>
+					<Abstract>The status of the directory: does exist, does not exist, or error (see TICDSTypesAndEnums.h for possible values).</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/discoveredStatusOfRemoteGlobalAppDirectory:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationRegistrationOperation/createdRemoteGlobalAppDirectoryStructureWithSuccess:</TokenIdentifier>
+			<Abstract>Indicate whether the creation of the global app directory structure was successful.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)createdRemoteGlobalAppDirectoryStructureWithSuccess:(BOOL)success</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>success</Name>
+					<Abstract>A Boolean indicating whether the directory structure was created or not</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/createdRemoteGlobalAppDirectoryStructureWithSuccess:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationRegistrationOperation/copiedReadMeTxtFileToRootOfGlobalAppDirectoryWithSuccess:</TokenIdentifier>
+			<Abstract>Indicate whether the ReadMe.txt file was copied from the bundle.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)copiedReadMeTxtFileToRootOfGlobalAppDirectoryWithSuccess:(BOOL)success</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>success</Name>
+					<Abstract>A Boolean indicating whether the ReadMe.txt file was copied or not.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/copiedReadMeTxtFileToRootOfGlobalAppDirectoryWithSuccess:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationRegistrationOperation/discoveredStatusOfSaltFile:</TokenIdentifier>
+			<Abstract>Indicate the status of the salt.ticdsync file.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)discoveredStatusOfSaltFile:(TICDSRemoteFileStructureExistsResponseType)status</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>status</Name>
+					<Abstract>The status of the file: does exist, does not exist, or error (see TICDSTypesAndEnums.h for possible values).</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/discoveredStatusOfSaltFile:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationRegistrationOperation/fetchedSaltData:</TokenIdentifier>
+			<Abstract>Provide the data from the salt.ticdsync file.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)fetchedSaltData:(NSData *)saltData</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>saltData</Name>
+					<Abstract>The NSData contents of the salt.ticdsync file, or nil if an error occurred.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/fetchedSaltData:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationRegistrationOperation/savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:</TokenIdentifier>
+			<Abstract>Indicate whether the salt data was saved successfully.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:(BOOL)success</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>success</Name>
+					<Abstract>A Boolean indicating whether the salt.ticdsync file was saved or not.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationRegistrationOperation/createdRemoteClientDeviceDirectoryWithSuccess:</TokenIdentifier>
+			<Abstract>Indicate whether the client's directory was created successful in ClientDevices.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)createdRemoteClientDeviceDirectoryWithSuccess:(BOOL)success</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>success</Name>
+					<Abstract>A Boolean indicating whether the client's directory was created or not.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/createdRemoteClientDeviceDirectoryWithSuccess:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationRegistrationOperation/savedRemoteClientDeviceInfoPlistWithSuccess:</TokenIdentifier>
+			<Abstract>Indicate whether the deviceInfo.plist file was saved successfully.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)savedRemoteClientDeviceInfoPlistWithSuccess:(BOOL)success</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>success</Name>
+					<Abstract>A Boolean indicating whether the deviceInfo.plist file was saved or not.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/savedRemoteClientDeviceInfoPlistWithSuccess:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationRegistrationOperation/appIdentifier</TokenIdentifier>
+			<Abstract>The application identifier.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *appIdentifier</Declaration>
+			
+			
+			<Anchor>//api/name/appIdentifier</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationRegistrationOperation/clientDescription</TokenIdentifier>
+			<Abstract>The client description.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSString *clientDescription</Declaration>
+			
+			
+			<Anchor>//api/name/clientDescription</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationRegistrationOperation/applicationUserInfo</TokenIdentifier>
+			<Abstract>The user info.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSDictionary *applicationUserInfo</Declaration>
+			
+			
+			<Anchor>//api/name/applicationUserInfo</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationRegistrationOperation/paused</TokenIdentifier>
+			<Abstract>Used to indicate whether the operation is currently paused awaiting input from the operation delegate, or in turn the application sync manager delegate.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (assign, getter=isPaused) BOOL paused</Declaration>
+			
+			
+			<Anchor>//api/name/paused</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationRegistrationOperation/shouldUseEncryption</TokenIdentifier>
+			<Abstract>Used by the TICDSApplicationSyncManager to indicate whether to enable encryption after finding out this is the first time the global app has been registered.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (assign) BOOL shouldUseEncryption</Declaration>
+			
+			
+			<Anchor>//api/name/shouldUseEncryption</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationRegistrationOperation/password</TokenIdentifier>
+			<Abstract>The password to use for encryption at initial global app registration, if shouldUseEncryption is YES.</Abstract>
+			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSString *password</Declaration>
+			
+			
+			<Anchor>//api/name/password</Anchor>
 		</Token>
 		
 	</File>

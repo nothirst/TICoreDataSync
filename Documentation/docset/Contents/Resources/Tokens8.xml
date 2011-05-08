@@ -1,58 +1,551 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/TICDSFileManagerBasedDocumentRegistrationOperation.html">
+	<File path="Classes/TICDSDocumentSyncManager.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/TICDSFileManagerBasedDocumentRegistrationOperation</TokenIdentifier>
-			<Abstract>TICDSFileManagerBasedDocumentRegistrationOperation is a document registration operation designed for use with a TICDSFileManagerBasedDocumentSyncManager.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedDocumentRegistrationOperation.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/TICDSDocumentSyncManager</TokenIdentifier>
+			<Abstract>TICDSDocumentSyncManager describes the generic behavior provided by a Document Sync Manager in the TICoreDataSync framework.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>
 			
+	<RelatedTokens>
+		<TokenIdentifier>//apple_ref/occ/cl/TICDSFileManagerBasedDocumentSyncManager</TokenIdentifier>
+		
+	</RelatedTokens>
+	
 			<NodeRef refid="8"/>
 		</Token>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentRegistrationOperation/documentsDirectoryPath</TokenIdentifier>
-			<Abstract>The path to the Documents directory.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedDocumentRegistrationOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:</TokenIdentifier>
+			<Abstract>Register a document ready for synchronization.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
 			
-			<Declaration>@property (retain) NSString *documentsDirectoryPath</Declaration>
+			<Declaration>- (void)registerWithDelegate:(id&lt;TICDSDocumentSyncManagerDelegate&gt;)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aDelegate</Name>
+					<Abstract>The object you wish to be notified regarding document-related sync information; this object must conform to the TICDSDocumentSyncManagerDelegate protocol, which includes some required methods.</Abstract>
+				</Parameter><Parameter>
+					<Name>anAppSyncManager</Name>
+					<Abstract>The application sync manager responsible for overseeing this document.</Abstract>
+				</Parameter><Parameter>
+					<Name>aContext</Name>
+					<Abstract>The primary managed object context in your application; this must be an instance of TICDSSynchronizedManagedObjectContext and not just a plain NSManagedObjectContext.</Abstract>
+				</Parameter><Parameter>
+					<Name>aDocumentIdentifier</Name>
+					<Abstract>An identification string to identify this document uniquely. You would typically create a UUID string the first time this doc is registered and store this in e.g. the store metadata.</Abstract>
+				</Parameter><Parameter>
+					<Name>aDocumentDescription</Name>
+					<Abstract>A human-readable string used to identify this document, e.g. the full name of the document.</Abstract>
+				</Parameter><Parameter>
+					<Name>someUserInfo</Name>
+					<Abstract>A dictionary of information that will be saved throughout all future synchronizations. Because this information is saved in a plist, everything in the dictionary must be archivable using NSKeyedArchiver.</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/documentsDirectoryPath</Anchor>
+			<Anchor>//api/name/registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentRegistrationOperation/thisDocumentDirectoryPath</TokenIdentifier>
-			<Abstract>The path to this document's directory inside the Documents directory.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedDocumentRegistrationOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/continueRegistrationByCreatingRemoteFileStructure:</TokenIdentifier>
+			<Abstract>Continue Registration.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
 			
-			<Declaration>@property (retain) NSString *thisDocumentDirectoryPath</Declaration>
+			<Declaration>- (void)continueRegistrationByCreatingRemoteFileStructure:(BOOL)shouldCreateFileStructure</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>shouldCreateFileStructure</Name>
+					<Abstract>A Boolean indicating whether the registration should continue and create the necessary remote file structure.</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/thisDocumentDirectoryPath</Anchor>
+			<Anchor>//api/name/continueRegistrationByCreatingRemoteFileStructure:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentRegistrationOperation/thisDocumentSyncChangesThisClientDirectoryPath</TokenIdentifier>
-			<Abstract>The path to this client's directory inside this document's SyncChanges directory.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedDocumentRegistrationOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/configureWithDelegate:appSyncManager:documentIdentifier:</TokenIdentifier>
+			<Abstract>Configure a sync manager for a document that's just been downloaded, but without carrying out full registration.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
 			
-			<Declaration>@property (retain) NSString *thisDocumentSyncChangesThisClientDirectoryPath</Declaration>
+			<Declaration>- (void)configureWithDelegate:(id&lt;TICDSDocumentSyncManagerDelegate&gt;)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager documentIdentifier:(NSString *)aDocumentIdentifier</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aDelegate</Name>
+					<Abstract>The object you wish to be notified regarding document-related sync information; this object must conform to the TICDSDocumentSyncManagerDelegate protocol, which includes some required methods.</Abstract>
+				</Parameter><Parameter>
+					<Name>anAppSyncManager</Name>
+					<Abstract>The application sync manager responsible for overseeing this document.</Abstract>
+				</Parameter><Parameter>
+					<Name>aDocumentIdentifier</Name>
+					<Abstract>An identification string to identify this document uniquely. You would typically create a UUID string the first time this doc is registered and store this in e.g. the store metadata.</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/thisDocumentSyncChangesThisClientDirectoryPath</Anchor>
+			<Anchor>//api/name/configureWithDelegate:appSyncManager:documentIdentifier:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedDocumentRegistrationOperation/thisDocumentSyncCommandsThisClientDirectoryPath</TokenIdentifier>
-			<Abstract>The path to this client's directory inside this document's SyncCommands directory.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedDocumentRegistrationOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/initiateUploadOfWholeStore</TokenIdentifier>
+			<Abstract>Start the process manually to upload the entire store file for this document, along with the relevant AppliedSyncChanges.ticdsync file.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
 			
-			<Declaration>@property (retain) NSString *thisDocumentSyncCommandsThisClientDirectoryPath</Declaration>
+			<Declaration>- (void)initiateUploadOfWholeStore</Declaration>
 			
 			
-			<Anchor>//api/name/thisDocumentSyncCommandsThisClientDirectoryPath</Anchor>
+			<Anchor>//api/name/initiateUploadOfWholeStore</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/initiateDownloadOfWholeStore</TokenIdentifier>
+			<Abstract>Start the process to download the entire store file for this document, along with the relevant AppliedSyncChanges.ticdsync file.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (void)initiateDownloadOfWholeStore</Declaration>
+			
+			
+			<Anchor>//api/name/initiateDownloadOfWholeStore</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/initiateSynchronization</TokenIdentifier>
+			<Abstract>Start synchronizing the document with the remote location.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (void)initiateSynchronization</Declaration>
+			
+			
+			<Anchor>//api/name/initiateSynchronization</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/continueSynchronizationByResolvingConflictWithResolutionType:</TokenIdentifier>
+			<Abstract>If a conflict is encountered during synchronization, your delegate will be notified with the solveConflict: method. You must decide whether the remote or local SyncChange wins, and inform the document sync manager using this method to continue synchronization.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (void)continueSynchronizationByResolvingConflictWithResolutionType:(TICDSSyncConflictResolutionType)aType</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aType</Name>
+					<Abstract>The type of conflict resolution; see TICDSTypesAndEnums.h for possible values.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/continueSynchronizationByResolvingConflictWithResolutionType:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/initiateVacuumOfUnneededRemoteFiles</TokenIdentifier>
+			<Abstract>Initiate a vacuum operation to clean up files hanging around on the remote that are no longer needed by any registered clients.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (void)initiateVacuumOfUnneededRemoteFiles</Declaration>
+			
+			
+			<Anchor>//api/name/initiateVacuumOfUnneededRemoteFiles</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/documentRegistrationOperation</TokenIdentifier>
+			<Abstract>Returns a document registration operation.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (TICDSDocumentRegistrationOperation *)documentRegistrationOperation</Declaration>
+			
+			<ReturnValue><Abstract>A correctly-configured subclass of TICDSDocumentRegistrationOperation.</Abstract></ReturnValue>
+			<Anchor>//api/name/documentRegistrationOperation</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/wholeStoreUploadOperation</TokenIdentifier>
+			<Abstract>Returns a whole store upload operation.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (TICDSWholeStoreUploadOperation *)wholeStoreUploadOperation</Declaration>
+			
+			<ReturnValue><Abstract>A correctly-configured subclass of TICDSWholeStoreUploadOperation.</Abstract></ReturnValue>
+			<Anchor>//api/name/wholeStoreUploadOperation</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/wholeStoreDownloadOperation</TokenIdentifier>
+			<Abstract>Returns a whole store download operation.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (TICDSWholeStoreDownloadOperation *)wholeStoreDownloadOperation</Declaration>
+			
+			<ReturnValue><Abstract>A correctly-configured subclass of TICDSWholeStoreDownloadOperation.</Abstract></ReturnValue>
+			<Anchor>//api/name/wholeStoreDownloadOperation</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/synchronizationOperation</TokenIdentifier>
+			<Abstract>Returns a synchronization operation.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (TICDSSynchronizationOperation *)synchronizationOperation</Declaration>
+			
+			<ReturnValue><Abstract>A correctly-configured subclass of TICDSSynchronizationOperation.</Abstract></ReturnValue>
+			<Anchor>//api/name/synchronizationOperation</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/vacuumOperation</TokenIdentifier>
+			<Abstract>Returns a vacuum operation.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (TICDSVacuumOperation *)vacuumOperation</Declaration>
+			
+			<ReturnValue><Abstract>A correctly-configured subclass of TICDSVacuumOperation.</Abstract></ReturnValue>
+			<Anchor>//api/name/vacuumOperation</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/synchronizedMOCWillSave:</TokenIdentifier>
+			<Abstract>Indicate that the synchronized managed object context is about to save.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (void)synchronizedMOCWillSave:(TICDSSynchronizedManagedObjectContext *)aMoc</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aMoc</Name>
+					<Abstract>The synchronized managed object context.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/synchronizedMOCWillSave:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/synchronizedMOCDidSave:</TokenIdentifier>
+			<Abstract>Indicate that the synchronized managed object context completed a successful save.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (void)synchronizedMOCDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aMoc</Name>
+					<Abstract>The synchronized managed object context.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/synchronizedMOCDidSave:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentSyncManager/synchronizedMOCFailedToSave:withError:</TokenIdentifier>
+			<Abstract>Indicate that the synchronized managed object context failed to save.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (void)synchronizedMOCFailedToSave:(TICDSSynchronizedManagedObjectContext *)aMoc withError:(NSError *)anError</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aMoc</Name>
+					<Abstract>The synchronized managed object context.</Abstract>
+				</Parameter><Parameter>
+					<Name>anError</Name>
+					<Abstract>The relevant saving error.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/synchronizedMOCFailedToSave:withError:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/state</TokenIdentifier>
+			<Abstract>Document Sync Manager State.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) TICDSDocumentSyncManagerState state</Declaration>
+			
+			
+			<Anchor>//api/name/state</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/delegate</TokenIdentifier>
+			<Abstract>The Document Sync Manager Delegate.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) id&lt;TICDSDocumentSyncManagerDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/applicationSyncManager</TokenIdentifier>
+			<Abstract>The Application Sync Manager responsible for this document.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) TICDSApplicationSyncManager *applicationSyncManager</Declaration>
+			
+			
+			<Anchor>//api/name/applicationSyncManager</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/documentIdentifier</TokenIdentifier>
+			<Abstract>The Document Identifier used for registration.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly, retain) NSString *documentIdentifier</Declaration>
+			
+			
+			<Anchor>//api/name/documentIdentifier</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/documentDescription</TokenIdentifier>
+			<Abstract>The Document Description used for registration.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly, retain) NSString *documentDescription</Declaration>
+			
+			
+			<Anchor>//api/name/documentDescription</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/clientIdentifier</TokenIdentifier>
+			<Abstract>The Client Identifier used for registration.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly, retain) NSString *clientIdentifier</Declaration>
+			
+			
+			<Anchor>//api/name/clientIdentifier</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/documentUserInfo</TokenIdentifier>
+			<Abstract>The User Info used for registration.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly, retain) NSDictionary *documentUserInfo</Declaration>
+			
+			
+			<Anchor>//api/name/documentUserInfo</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/fileManager</TokenIdentifier>
+			<Abstract>An NSFileManager suitable for use in document registration tasks.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly, retain) NSFileManager *fileManager</Declaration>
+			
+			
+			<Anchor>//api/name/fileManager</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/helperFileDirectoryLocation</TokenIdentifier>
+			<Abstract>The location of a directory used by the TICoreDataSync framework to store local helper files for this document.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (readonly, retain) NSURL *helperFileDirectoryLocation</Declaration>
+			
+			
+			<Anchor>//api/name/helperFileDirectoryLocation</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/registrationQueue</TokenIdentifier>
+			<Abstract>The operation queue used for registration operations.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSOperationQueue *registrationQueue</Declaration>
+			
+			
+			<Anchor>//api/name/registrationQueue</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/synchronizationQueue</TokenIdentifier>
+			<Abstract>The operation queue used for synchronization operations.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSOperationQueue *synchronizationQueue</Declaration>
+			
+			
+			<Anchor>//api/name/synchronizationQueue</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/otherTasksQueue</TokenIdentifier>
+			<Abstract>The operation queue used for other tasks.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, retain) NSOperationQueue *otherTasksQueue</Declaration>
+			
+			
+			<Anchor>//api/name/otherTasksQueue</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/relativePathToDocumentsDirectory</TokenIdentifier>
+			<Abstract>The path to the Documents directory, relative to the root of the remote file structure.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *relativePathToDocumentsDirectory</Declaration>
+			
+			
+			<Anchor>//api/name/relativePathToDocumentsDirectory</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/relativePathToThisDocumentDirectory</TokenIdentifier>
+			<Abstract>The path to this document's directory inside the Documents directory, relative to the root of the remote file structure.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *relativePathToThisDocumentDirectory</Declaration>
+			
+			
+			<Anchor>//api/name/relativePathToThisDocumentDirectory</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/relativePathToThisDocumentSyncChangesDirectory</TokenIdentifier>
+			<Abstract>The path to the SyncChanges directory for this document, relative to the root of the remote file structure.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *relativePathToThisDocumentSyncChangesDirectory</Declaration>
+			
+			
+			<Anchor>//api/name/relativePathToThisDocumentSyncChangesDirectory</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/relativePathToThisDocumentSyncChangesThisClientDirectory</TokenIdentifier>
+			<Abstract>The path to this client's directory inside the SyncChanges directory for this document, relative to the root of the remote file structure.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *relativePathToThisDocumentSyncChangesThisClientDirectory</Declaration>
+			
+			
+			<Anchor>//api/name/relativePathToThisDocumentSyncChangesThisClientDirectory</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/relativePathToThisDocumentSyncCommandsDirectory</TokenIdentifier>
+			<Abstract>The path to the SyncCommands directory for this document, relative to the root of the remote file structure.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *relativePathToThisDocumentSyncCommandsDirectory</Declaration>
+			
+			
+			<Anchor>//api/name/relativePathToThisDocumentSyncCommandsDirectory</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/relativePathToThisDocumentSyncCommandsThisClientDirectory</TokenIdentifier>
+			<Abstract>The path to this client's directory inside the SyncCommands directory for this document, relative to the root of the remote file structure.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *relativePathToThisDocumentSyncCommandsThisClientDirectory</Declaration>
+			
+			
+			<Anchor>//api/name/relativePathToThisDocumentSyncCommandsThisClientDirectory</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/relativePathToThisDocumentWholeStoreDirectory</TokenIdentifier>
+			<Abstract>The path to the WholeStore directory for this document, relative to the root of the remote file structure.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreDirectory</Declaration>
+			
+			
+			<Anchor>//api/name/relativePathToThisDocumentWholeStoreDirectory</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/relativePathToThisDocumentWholeStoreThisClientDirectory</TokenIdentifier>
+			<Abstract>The path to this client's directory inside the WholeStore directory for this document, relative to the root of the remote file structure.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreThisClientDirectory</Declaration>
+			
+			
+			<Anchor>//api/name/relativePathToThisDocumentWholeStoreThisClientDirectory</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/relativePathToThisDocumentWholeStoreThisClientDirectoryWholeStoreFile</TokenIdentifier>
+			<Abstract>The path to this client's WholeStore.ticdsync file inside it's directory inside the WholeStore directory for this document, relative to the root of the remote file structure.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreThisClientDirectoryWholeStoreFile</Declaration>
+			
+			
+			<Anchor>//api/name/relativePathToThisDocumentWholeStoreThisClientDirectoryWholeStoreFile</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/relativePathToThisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFile</TokenIdentifier>
+			<Abstract>The path to this client's AppliedSyncChangeSets.ticdsync file inside it's directory inside the WholeStore directory for this document, relative to the root of the remote file structure.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFile</Declaration>
+			
+			
+			<Anchor>//api/name/relativePathToThisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFile</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/relativePathToThisDocumentRecentSyncsDirectory</TokenIdentifier>
+			<Abstract>The path to this document's RecentSyncs directory, relative to the root of the remote file structure.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *relativePathToThisDocumentRecentSyncsDirectory</Declaration>
+			
+			
+			<Anchor>//api/name/relativePathToThisDocumentRecentSyncsDirectory</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/relativePathToThisDocumentRecentSyncsDirectoryThisClientFile</TokenIdentifier>
+			<Abstract>The path this client's RecentSync file inside this document's RecentSyncs directory, relative to the root of the remote file structure.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *relativePathToThisDocumentRecentSyncsDirectoryThisClientFile</Declaration>
+			
+			
+			<Anchor>//api/name/relativePathToThisDocumentRecentSyncsDirectoryThisClientFile</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/localAppliedSyncChangesFilePath</TokenIdentifier>
+			<Abstract>The path to the AppliedSyncChanges.ticdsync file, located in the helperFileDirectoryLocation.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *localAppliedSyncChangesFilePath</Declaration>
+			
+			
+			<Anchor>//api/name/localAppliedSyncChangesFilePath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/syncChangesBeingSynchronizedStorePath</TokenIdentifier>
+			<Abstract>The path to the SyncChangesBeingSynchronized.syncchg file, located in the helperFileDirectoryLocation.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *syncChangesBeingSynchronizedStorePath</Declaration>
+			
+			
+			<Anchor>//api/name/syncChangesBeingSynchronizedStorePath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/unsynchronizedSyncChangesStorePath</TokenIdentifier>
+			<Abstract>The path to the UnsynchronizedSyncChanges.syncchg file, located in the helperFileDirectoryLocation.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *unsynchronizedSyncChangesStorePath</Declaration>
+			
+			
+			<Anchor>//api/name/unsynchronizedSyncChangesStorePath</Anchor>
 		</Token>
 		
 	</File>

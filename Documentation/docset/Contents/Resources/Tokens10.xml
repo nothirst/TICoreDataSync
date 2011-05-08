@@ -1,57 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation.html">
+	<File path="Classes/TICDSFileManagerBasedApplicationRegistrationOperation.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation</TokenIdentifier>
-			<Abstract>TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation is a "list of previously-synchronized documents" operation designed for use with a TICDSFileManagerBasedDocumentSyncManager.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/TICDSFileManagerBasedApplicationRegistrationOperation</TokenIdentifier>
+			<Abstract>TICDSFileManagerBasedApplicationRegistrationOperation is an application registration operation designed for use with a TICDSFileManagerBasedApplicationSyncManager.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedApplicationRegistrationOperation.h</DeclaredIn>
 			
 			<NodeRef refid="10"/>
 		</Token>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation/documentsDirectoryPath</TokenIdentifier>
-			<Abstract>The path to the Documents directory.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedApplicationRegistrationOperation/applicationDirectoryPath</TokenIdentifier>
+			<Abstract>The application root path.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedApplicationRegistrationOperation.h</DeclaredIn>			
 			
-			<Declaration>@property (retain) NSString *documentsDirectoryPath</Declaration>
+			<Declaration>@property (retain) NSString *applicationDirectoryPath</Declaration>
 			
 			
-			<Anchor>//api/name/documentsDirectoryPath</Anchor>
+			<Anchor>//api/name/applicationDirectoryPath</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation/pathToDocumentInfoForDocumentWithIdentifier:</TokenIdentifier>
-			<Abstract>Returns the path to the documentInfo.plist file for a document with the specified identifier.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedApplicationRegistrationOperation/encryptionDirectorySaltDataFilePath</TokenIdentifier>
+			<Abstract>The path to the salt.ticdsync file inside this application's Encryption directory.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedApplicationRegistrationOperation.h</DeclaredIn>			
 			
-			<Declaration>- (NSString *)pathToDocumentInfoForDocumentWithIdentifier:(NSString *)anIdentifier</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>anIdentifier</Name>
-					<Abstract>The identifier of the document.</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract>A path to the specified document.</Abstract></ReturnValue>
-			<Anchor>//api/name/pathToDocumentInfoForDocumentWithIdentifier:</Anchor>
+			<Declaration>@property (retain) NSString *encryptionDirectorySaltDataFilePath</Declaration>
+			
+			
+			<Anchor>//api/name/encryptionDirectorySaltDataFilePath</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation/pathToDocumentRecentSyncsDirectoryForIdentifier:</TokenIdentifier>
-			<Abstract>Returns the path to the RecentSyncs directory for a document with the specified identifier.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedApplicationRegistrationOperation/clientDevicesDirectoryPath</TokenIdentifier>
+			<Abstract>The path to the ClientDevices directory.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedApplicationRegistrationOperation.h</DeclaredIn>			
 			
-			<Declaration>- (NSString *)pathToDocumentRecentSyncsDirectoryForIdentifier:(NSString *)anIdentifier</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>anIdentifier</Name>
-					<Abstract>The identifier of the document.</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract>A path to the RecentSyncs directory.</Abstract></ReturnValue>
-			<Anchor>//api/name/pathToDocumentRecentSyncsDirectoryForIdentifier:</Anchor>
+			<Declaration>@property (retain) NSString *clientDevicesDirectoryPath</Declaration>
+			
+			
+			<Anchor>//api/name/clientDevicesDirectoryPath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedApplicationRegistrationOperation/clientDevicesThisClientDeviceDirectoryPath</TokenIdentifier>
+			<Abstract>The path to the this client's directory inside the ClientDevices directory.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedApplicationRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSString *clientDevicesThisClientDeviceDirectoryPath</Declaration>
+			
+			
+			<Anchor>//api/name/clientDevicesThisClientDeviceDirectoryPath</Anchor>
 		</Token>
 		
 	</File>

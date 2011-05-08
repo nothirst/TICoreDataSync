@@ -1,291 +1,150 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/TICDSApplicationSyncManagerDelegate.html">
+	<File path="Classes/TICDSVacuumOperation.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/TICDSApplicationSyncManagerDelegate</TokenIdentifier>
-			<Abstract>The TICDSApplicationSyncManagerDelegate protocol defines the methods implemented by delegates of a TICDSApplicationSyncManager object.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/TICDSVacuumOperation</TokenIdentifier>
+			<Abstract>The TICDSVacuumOperation class describes a generic operation used by the TICoreDataSync framework to clean up unneeded files used to synchronize documents.</Abstract>
+			<DeclaredIn>TICDSVacuumOperation.h</DeclaredIn>
 			
 			<NodeRef refid="29"/>
 		</Token>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/applicationSyncManagerDidBeginRegistering:</TokenIdentifier>
-			<Abstract>Informs the delegate that the application sync manager has started the application registration process.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSVacuumOperation/findOutDateOfOldestWholeStore</TokenIdentifier>
+			<Abstract>Determine the modification date of the oldest WholeStore file uploaded by any client.</Abstract>
+			<DeclaredIn>TICDSVacuumOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)applicationSyncManagerDidBeginRegistering:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>- (void)findOutDateOfOldestWholeStore</Declaration>
 			
-			<Anchor>//api/name/applicationSyncManagerDidBeginRegistering:</Anchor>
+			
+			<Anchor>//api/name/findOutDateOfOldestWholeStore</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:</TokenIdentifier>
-			<Abstract>Informs the delegate that the application sync manager paused the application registration process to find out whether to use encryption for this application, because this is the first time this application has been registered.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSVacuumOperation/findOutLeastRecentClientSyncDate</TokenIdentifier>
+			<Abstract>Determine the date on which the least-recently-synchronized client last performed a sync.</Abstract>
+			<DeclaredIn>TICDSVacuumOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>- (void)findOutLeastRecentClientSyncDate</Declaration>
 			
-			<Anchor>//api/name/applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:</Anchor>
+			
+			<Anchor>//api/name/findOutLeastRecentClientSyncDate</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:</TokenIdentifier>
-			<Abstract>Informs the delegate that the application sync manager paused the application registration process because a password is needed to work with this application's encrypted data.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSVacuumOperation/removeOldSyncChangeSetFiles</TokenIdentifier>
+			<Abstract>Remove all SyncChangeSet files uploaded by this client which are older than earliestDateForFilesToKeep.</Abstract>
+			<DeclaredIn>TICDSVacuumOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>- (void)removeOldSyncChangeSetFiles</Declaration>
 			
-			<Anchor>//api/name/applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:</Anchor>
+			
+			<Anchor>//api/name/removeOldSyncChangeSetFiles</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/applicationSyncManagerDidContinueRegistering:</TokenIdentifier>
-			<Abstract>Informs the delegate that the application sync manager has resumed the application registration process.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSVacuumOperation/foundOutDateOfOldestWholeStoreFile:</TokenIdentifier>
+			<Abstract>Indicate the date of the oldest WholeStore file.</Abstract>
+			<DeclaredIn>TICDSVacuumOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)applicationSyncManagerDidContinueRegistering:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
+			<Declaration>- (void)foundOutDateOfOldestWholeStoreFile:(NSDate *)aDate</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
+					<Name>aDate</Name>
+					<Abstract>The modification date of the oldest WholeStore file.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/applicationSyncManagerDidContinueRegistering:</Anchor>
+			<Anchor>//api/name/foundOutDateOfOldestWholeStoreFile:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/applicationSyncManager:didFailToRegisterWithError:</TokenIdentifier>
-			<Abstract>Informs the delegate that the application sync manager failed to register the application because of an error.
-  </Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSVacuumOperation/foundOutLeastRecentClientSyncDate:</TokenIdentifier>
+			<Abstract>Indicate the date of the least recent sync.</Abstract>
+			<DeclaredIn>TICDSVacuumOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFailToRegisterWithError:(NSError *)anError</Declaration>
+			<Declaration>- (void)foundOutLeastRecentClientSyncDate:(NSDate *)aDate</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter><Parameter>
-					<Name>anError</Name>
-					<Abstract>The error that caused the registration process to fail.</Abstract>
+					<Name>aDate</Name>
+					<Abstract>The date of the least recent sync.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/applicationSyncManager:didFailToRegisterWithError:</Anchor>
+			<Anchor>//api/name/foundOutLeastRecentClientSyncDate:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/applicationSyncManagerDidFinishRegistering:</TokenIdentifier>
-			<Abstract>Informs the delegate that the application sync manager finished registering the application successfully.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSVacuumOperation/removedOldSyncChangeSetFilesWithSuccess:</TokenIdentifier>
+			<Abstract>Indicate whether the removal of old SyncChangeSet files was successful.</Abstract>
+			<DeclaredIn>TICDSVacuumOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)applicationSyncManagerDidFinishRegistering:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
+			<Declaration>- (void)removedOldSyncChangeSetFilesWithSuccess:(BOOL)success</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
+					<Name>success</Name>
+					<Abstract>A Boolean indicating whether the old sync change set files for this operation were removed or not.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/applicationSyncManagerDidFinishRegistering:</Anchor>
+			<Anchor>//api/name/removedOldSyncChangeSetFilesWithSuccess:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/applicationSyncManagerDidBeginCheckingForPreviouslySynchronizedDocuments:</TokenIdentifier>
-			<Abstract>Informs the delegate that the application sync manager has started to check for available documents that have previously been synchronized.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSVacuumOperation/earliestDateForFilesToKeep</TokenIdentifier>
+			<Abstract>The earliest modification date after which files must be kept.</Abstract>
+			<DeclaredIn>TICDSVacuumOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)applicationSyncManagerDidBeginCheckingForPreviouslySynchronizedDocuments:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (nonatomic, retain) NSDate *earliestDateForFilesToKeep</Declaration>
 			
-			<Anchor>//api/name/applicationSyncManagerDidBeginCheckingForPreviouslySynchronizedDocuments:</Anchor>
+			
+			<Anchor>//api/name/earliestDateForFilesToKeep</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:</TokenIdentifier>
-			<Abstract>Informs the delegate that the application sync manager failed to check for available documents that have previously been synchronized.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSVacuumOperation/completionInProgress</TokenIdentifier>
+			<Abstract>Used to indicate that completion is currently in progress, and that no further checks should be made.</Abstract>
+			<DeclaredIn>TICDSVacuumOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFailToCheckForPreviouslySynchronizedDocumentsWithError:(NSError *)anError</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter><Parameter>
-					<Name>anError</Name>
-					<Abstract>The error that caused the failure.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (nonatomic, assign) BOOL completionInProgress</Declaration>
 			
-			<Anchor>//api/name/applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:</Anchor>
+			
+			<Anchor>//api/name/completionInProgress</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:</TokenIdentifier>
-			<Abstract>Informs the delegate that the application sync manager didn't find any available documents that have previously been synchronized.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSVacuumOperation/findOutDateOfOldestWholeStoreStatus</TokenIdentifier>
+			<Abstract>The phase status regarding finding out the date of the oldest file in the WholeStore directory.</Abstract>
+			<DeclaredIn>TICDSVacuumOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus findOutDateOfOldestWholeStoreStatus</Declaration>
 			
-			<Anchor>//api/name/applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:</Anchor>
+			
+			<Anchor>//api/name/findOutDateOfOldestWholeStoreStatus</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/applicationSyncManager:didFinishCheckingAndFoundPreviouslySynchronizedDocuments:</TokenIdentifier>
-			<Abstract>Informs the delegate that the application sync manager found one or more available documents that have previously been synchronized.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSVacuumOperation/findOutLeastRecentClientSyncDateStatus</TokenIdentifier>
+			<Abstract>The phase status regarding finding out the date of the oldest file in the RecentSyncs directory.</Abstract>
+			<DeclaredIn>TICDSVacuumOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishCheckingAndFoundPreviouslySynchronizedDocuments:(NSArray *)documentsArray</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter><Parameter>
-					<Name>documentsArray</Name>
-					<Abstract>An array of NSDictionary objects containing information about each available document.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus findOutLeastRecentClientSyncDateStatus</Declaration>
 			
-			<Anchor>//api/name/applicationSyncManager:didFinishCheckingAndFoundPreviouslySynchronizedDocuments:</Anchor>
+			
+			<Anchor>//api/name/findOutLeastRecentClientSyncDateStatus</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/applicationSyncManager:didBeginDownloadingDocumentWithIdentifier:</TokenIdentifier>
-			<Abstract>Informs the delegate that the application sync manager has started to download a requested document that has previously been synchronized.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSVacuumOperation/removeOldSyncChangeSetFilesStatus</TokenIdentifier>
+			<Abstract>The phase status regarding finding removing old, unneeded sync change set files from this client.</Abstract>
+			<DeclaredIn>TICDSVacuumOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didBeginDownloadingDocumentWithIdentifier:(NSString *)anIdentifier</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter><Parameter>
-					<Name>anIdentifier</Name>
-					<Abstract>The unique synchronization identifier of the document.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus removeOldSyncChangeSetFilesStatus</Declaration>
 			
-			<Anchor>//api/name/applicationSyncManager:didBeginDownloadingDocumentWithIdentifier:</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:</TokenIdentifier>
-			<Abstract>Informs the delegate that the application sync manager failed to download a requested document because of an error.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFailToDownloadDocumentWithIdentifier:(NSString *)anIdentifier error:(NSError *)anError</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter><Parameter>
-					<Name>anIdentifier</Name>
-					<Abstract>The unique synchronization identifier of the document.</Abstract>
-				</Parameter><Parameter>
-					<Name>anError</Name>
-					<Abstract>The error that caused the download to fail.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/applicationSyncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atURL:</TokenIdentifier>
-			<Abstract>Informs the delegate that the application sync manager is about to replace an existing store file on disc with a newly-downloaded file.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
-			
-			<Declaration>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager willReplaceWholeStoreFileForDocumentWithIdentifier:(NSString *)anIdentifier atURL:(NSURL *)aFileURL</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter><Parameter>
-					<Name>anIdentifier</Name>
-					<Abstract>The unique synchronization identifier of the document.</Abstract>
-				</Parameter><Parameter>
-					<Name>aFileURL</Name>
-					<Abstract>The location on disc of the existing document that will be replaced.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/applicationSyncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atURL:</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:</TokenIdentifier>
-			<Abstract>Invoked to request the delegate to return a configured (though not yet registered) document sync manager for a downloaded document.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
-			
-			<Declaration>- (TICDSDocumentSyncManager *)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:(NSString *)anIdentifier atURL:(NSURL *)aFileURL</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The document sync manager object that sent the message.</Abstract>
-				</Parameter><Parameter>
-					<Name>anIdentifier</Name>
-					<Abstract>The unique synchronization identifier for the document.</Abstract>
-				</Parameter><Parameter>
-					<Name>aFileURL</Name>
-					<Abstract>The location on disc of the downloaded document.</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract>The pre-configured, unregistered sync manager for the document.</Abstract></ReturnValue>
-			<Anchor>//api/name/applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationSyncManagerDelegate/applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:</TokenIdentifier>
-			<Abstract>Informs the delegate that the application sync manager finished downloading a requested document successfully.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
-			
-			<Declaration>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishDownloadingDocumentWithIdentifier:(NSString *)anIdentifier atURL:(NSURL *)aFileURL</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The application sync manager object that sent the message.</Abstract>
-				</Parameter><Parameter>
-					<Name>anIdentifier</Name>
-					<Abstract>The unique synchronization identifier of the document.</Abstract>
-				</Parameter><Parameter>
-					<Name>aFileURL</Name>
-					<Abstract>The location of the downloaded store file.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:</Anchor>
+			<Anchor>//api/name/removeOldSyncChangeSetFilesStatus</Anchor>
 		</Token>
 		
 	</File>

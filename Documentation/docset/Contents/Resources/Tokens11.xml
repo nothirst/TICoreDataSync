@@ -1,55 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/TICDSFileManagerBasedSynchronizationOperation.html">
+	<File path="Classes/TICDSFileManagerBasedApplicationSyncManager.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/TICDSFileManagerBasedSynchronizationOperation</TokenIdentifier>
-			<Abstract>TICDSFileManagerBasedSynchronizationOperation is a synchronization operation designed for use with a TICDSFileManagerBasedDocumentSyncManager.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedSynchronizationOperation.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/TICDSFileManagerBasedApplicationSyncManager</TokenIdentifier>
+			<Abstract>The TICDSFileManagerBasedApplicationSyncManager describes a class used to synchronize an application with a remote service that can be accessed via an NSFileManager. This includes:</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedApplicationSyncManager.h</DeclaredIn>
 			
 			<NodeRef refid="11"/>
 		</Token>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedSynchronizationOperation/thisDocumentSyncChangesDirectoryPath</TokenIdentifier>
-			<Abstract>The path to this document's SyncChanges directory.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedSynchronizationOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedApplicationSyncManager/applicationContainingDirectoryLocation</TokenIdentifier>
+			<Abstract>The location of the directory that should contain the file structure for this application's synchronization.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedApplicationSyncManager.h</DeclaredIn>			
 			
-			<Declaration>@property (retain) NSString *thisDocumentSyncChangesDirectoryPath</Declaration>
+			<Declaration>@property (nonatomic, retain) NSURL *applicationContainingDirectoryLocation</Declaration>
 			
 			
-			<Anchor>//api/name/thisDocumentSyncChangesDirectoryPath</Anchor>
+			<Anchor>//api/name/applicationContainingDirectoryLocation</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedSynchronizationOperation/thisDocumentSyncChangesThisClientDirectoryPath</TokenIdentifier>
-			<Abstract>The path this client's directory inside this document's SyncChanges directory.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedSynchronizationOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedApplicationSyncManager/applicationDirectoryPath</TokenIdentifier>
+			<Abstract>The path to the root application directory.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedApplicationSyncManager.h</DeclaredIn>			
 			
-			<Declaration>@property (retain) NSString *thisDocumentSyncChangesThisClientDirectoryPath</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *applicationDirectoryPath</Declaration>
 			
 			
-			<Anchor>//api/name/thisDocumentSyncChangesThisClientDirectoryPath</Anchor>
+			<Anchor>//api/name/applicationDirectoryPath</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedSynchronizationOperation/thisDocumentRecentSyncsThisClientFilePath</TokenIdentifier>
-			<Abstract>The path this client's RecentSync file inside this document's RecentSyncs directory.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedSynchronizationOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedApplicationSyncManager/encryptionDirectorySaltDataFilePath</TokenIdentifier>
+			<Abstract>The path to the salt.ticds file inside the Encryption directory at the root of the application.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedApplicationSyncManager.h</DeclaredIn>			
 			
-			<Declaration>@property (retain) NSString *thisDocumentRecentSyncsThisClientFilePath</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *encryptionDirectorySaltDataFilePath</Declaration>
 			
 			
-			<Anchor>//api/name/thisDocumentRecentSyncsThisClientFilePath</Anchor>
+			<Anchor>//api/name/encryptionDirectorySaltDataFilePath</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSFileManagerBasedSynchronizationOperation/pathToSyncChangesDirectoryForClientWithIdentifier:</TokenIdentifier>
-			<Abstract>The path to a given client's SyncChanges directory.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedSynchronizationOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedApplicationSyncManager/documentsDirectoryPath</TokenIdentifier>
+			<Abstract>The path to the Documents directory at the root of the application.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedApplicationSyncManager.h</DeclaredIn>			
 			
-			<Declaration>- (NSString *)pathToSyncChangesDirectoryForClientWithIdentifier:(NSString *)anIdentifier</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *documentsDirectoryPath</Declaration>
+			
+			
+			<Anchor>//api/name/documentsDirectoryPath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedApplicationSyncManager/clientDevicesDirectoryPath</TokenIdentifier>
+			<Abstract>The path to the ClientDevices directory at the root of the application.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *clientDevicesDirectoryPath</Declaration>
+			
+			
+			<Anchor>//api/name/clientDevicesDirectoryPath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedApplicationSyncManager/clientDevicesThisClientDeviceDirectoryPath</TokenIdentifier>
+			<Abstract>The path to this client's directory inside the ClientDevices directory at the root of the application.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *clientDevicesThisClientDeviceDirectoryPath</Declaration>
+			
+			
+			<Anchor>//api/name/clientDevicesThisClientDeviceDirectoryPath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSFileManagerBasedApplicationSyncManager/pathToWholeStoreDirectoryForDocumentWithIdentifier:</TokenIdentifier>
+			<Abstract>The path to the WholeStore directory for a document with a given identifier.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>- (NSString *)pathToWholeStoreDirectoryForDocumentWithIdentifier:(NSString *)anIdentifier</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>anIdentifier</Name>
@@ -57,26 +90,7 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/pathToSyncChangesDirectoryForClientWithIdentifier:</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSFileManagerBasedSynchronizationOperation/pathToSyncChangeSetWithIdentifier:forClientWithIdentifier:</TokenIdentifier>
-			<Abstract>The path to a SyncChangeSet uploaded by a given client.</Abstract>
-			<DeclaredIn>TICDSFileManagerBasedSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>- (NSString *)pathToSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientWithIdentifier:(NSString *)aClientIdentifier</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aChangeSetIdentifier</Name>
-					<Abstract>The unique identifier of the sync change set.</Abstract>
-				</Parameter><Parameter>
-					<Name>aClientIdentifier</Name>
-					<Abstract>The unique sync identifier of the client.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/pathToSyncChangeSetWithIdentifier:forClientWithIdentifier:</Anchor>
+			<Anchor>//api/name/pathToWholeStoreDirectoryForDocumentWithIdentifier:</Anchor>
 		</Token>
 		
 	</File>

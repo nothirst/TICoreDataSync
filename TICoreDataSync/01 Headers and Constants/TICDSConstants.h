@@ -21,6 +21,10 @@ extern NSString * const kTICDSErrorClassAndMethod;
 extern NSString * const kTICDSErrorDomain;
 extern NSString * const kTICDSStackTrace;
 
+extern NSString * const FZACryptorErrorDomain;
+extern NSString * const FZAKeyManagerErrorDomain;
+extern NSString * const kFZAKeyManagerSecurityFrameworkError;
+
 extern NSString * const kTICDSClientDeviceDescription;
 extern NSString * const kTICDSClientDeviceUserInfo;
 extern NSString * const kTICDSClientDeviceIdentifier;

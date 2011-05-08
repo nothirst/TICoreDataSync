@@ -1,620 +1,173 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/TICDSSynchronizationOperation.html">
+	<File path="Classes/TICDSOperation.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/TICDSSynchronizationOperation</TokenIdentifier>
-			<Abstract>The TICDSSynchronizationOperation class describes a generic operation used by the TICoreDataSync framework to synchronize changes made to a document.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/TICDSOperation</TokenIdentifier>
+			<Abstract>The TICDSOperation class provides the abstract behavior typical of any operation used by the TICoreDataSync framework.</Abstract>
+			<DeclaredIn>TICDSOperation.h</DeclaredIn>
 			
 			<NodeRef refid="21"/>
 		</Token>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/initWithDelegate:</TokenIdentifier>
-			<Abstract>Initialize a synchronization operation using a delegate that supports the TICDSSynchronizationOperationDelegate protocol.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSOperation/initWithDelegate:</TokenIdentifier>
+			<Abstract>Initialize the operation with a provided delegate.</Abstract>
+			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
 			
-			<Declaration>- (id)initWithDelegate:(NSObject&lt;TICDSSynchronizationOperationDelegate&gt; *)aDelegate</Declaration>
+			<Declaration>- (id)initWithDelegate:(NSObject&lt;TICDSOperationDelegate&gt; *)aDelegate</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>aDelegate</Name>
-					<Abstract>The delegate to use for this operation.</Abstract>
+					<Abstract>The delegate object for the operation, notified when the operation starts, ends, fails, or is cancelled using methods defined in the TICDSOperationDelegate protocol.</Abstract>
 				</Parameter>
 			</Parameters>
-			<ReturnValue><Abstract>An initialized synchronization operation.</Abstract></ReturnValue>
+			<ReturnValue><Abstract>A properly-initialized operation.</Abstract></ReturnValue>
 			<Anchor>//api/name/initWithDelegate:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/buildArrayOfClientDeviceIdentifiers</TokenIdentifier>
-			<Abstract>Build an array of NSString identifiers for all clients that have synchronized with this document.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSOperation/operationDidStart</TokenIdentifier>
+			<Abstract>Notify the delegate when the operation starts, and set the necessary values for isExecuting and isFinished.</Abstract>
+			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)buildArrayOfClientDeviceIdentifiers</Declaration>
+			<Declaration>- (void)operationDidStart</Declaration>
 			
 			
-			<Anchor>//api/name/buildArrayOfClientDeviceIdentifiers</Anchor>
+			<Anchor>//api/name/operationDidStart</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/buildArrayOfSyncChangeSetIdentifiersForClientIdentifier:</TokenIdentifier>
-			<Abstract>Build an array of NSString identifiers for each SyncChangeSet for the given client device.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSOperation/operationDidCompleteSuccessfully</TokenIdentifier>
+			<Abstract>Notify the delegate when the operation completes, and set the necessary values for isExecuting and isFinished.</Abstract>
+			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)buildArrayOfSyncChangeSetIdentifiersForClientIdentifier:(NSString *)anIdentifier</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>anIdentifier</Name>
-					<Abstract>The unique identifier of the client.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>- (void)operationDidCompleteSuccessfully</Declaration>
 			
-			<Anchor>//api/name/buildArrayOfSyncChangeSetIdentifiersForClientIdentifier:</Anchor>
+			
+			<Anchor>//api/name/operationDidCompleteSuccessfully</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/fetchSyncChangeSetWithIdentifier:forClientIdentifier:toLocation:</TokenIdentifier>
-			<Abstract>Fetch a SyncChangeSet with a given identifier from a client's SyncChanges directory.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSOperation/operationDidFailToComplete</TokenIdentifier>
+			<Abstract>Notify the delegate if the operation has failed for some reason. Set the relevant error property before calling this method. This will set the required values for isExecuting and isFinished.</Abstract>
+			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)fetchSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier toLocation:(NSURL *)aLocation</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aChangeSetIdentifier</Name>
-					<Abstract>The identifier of the sync change set to fetch.</Abstract>
-				</Parameter><Parameter>
-					<Name>aClientIdentifier</Name>
-					<Abstract>The identifier of the client who created the sync change set.</Abstract>
-				</Parameter><Parameter>
-					<Name>aLocation</Name>
-					<Abstract>The location of the file to upload.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>- (void)operationDidFailToComplete</Declaration>
 			
-			<Anchor>//api/name/fetchSyncChangeSetWithIdentifier:forClientIdentifier:toLocation:</Anchor>
+			
+			<Anchor>//api/name/operationDidFailToComplete</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/uploadLocalSyncChangeSetFileAtLocation:</TokenIdentifier>
-			<Abstract>Upload the specified sync changes file to the client device's directory inside the document's SyncChanges directory.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSOperation/operationWasCancelled</TokenIdentifier>
+			<Abstract>Call this method if the operation is cancelled midway through its work. This will set the required values for isExecuting and isFinished.</Abstract>
+			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)uploadLocalSyncChangeSetFileAtLocation:(NSURL *)aLocation</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aLocation</Name>
-					<Abstract>The location of the file to upload.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>- (void)operationWasCancelled</Declaration>
 			
-			<Anchor>//api/name/uploadLocalSyncChangeSetFileAtLocation:</Anchor>
+			
+			<Anchor>//api/name/operationWasCancelled</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/uploadRecentSyncFileAtLocation:</TokenIdentifier>
-			<Abstract>Upload the specified RecentSync file to the document's RecentSync directory.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSOperation/delegate</TokenIdentifier>
+			<Abstract>The operation delegate.</Abstract>
+			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)uploadRecentSyncFileAtLocation:(NSURL *)aLocation</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aLocation</Name>
-					<Abstract>The location of the file to upload.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (nonatomic, assign) NSObject&lt;TICDSOperationDelegate&gt; *delegate</Declaration>
 			
-			<Anchor>//api/name/uploadRecentSyncFileAtLocation:</Anchor>
+			
+			<Anchor>//api/name/delegate</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/builtArrayOfClientDeviceIdentifiers:</TokenIdentifier>
-			<Abstract>Pass back the assembled NSArray of NSString ClientDevice identifiers.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSOperation/userInfo</TokenIdentifier>
+			<Abstract>A user info dictionary for sync managers to keep task-specific information.</Abstract>
+			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)builtArrayOfClientDeviceIdentifiers:(NSArray *)anArray</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>anArray</Name>
-					<Abstract>The array of identifiers. Pass nil if an error occurred.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (retain) NSDictionary *userInfo</Declaration>
 			
-			<Anchor>//api/name/builtArrayOfClientDeviceIdentifiers:</Anchor>
+			
+			<Anchor>//api/name/userInfo</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/builtArrayOfClientSyncChangeSetIdentifiers:forClientIdentifier:</TokenIdentifier>
-			<Abstract>Pass back the assembled NSArray of NSString SyncChangeSet identifiers.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSOperation/needsMainThread</TokenIdentifier>
+			<Abstract>By default returns NO, but override if your operation needs its code to execute on the main thread, such as for an NSURLConnection.</Abstract>
+			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)builtArrayOfClientSyncChangeSetIdentifiers:(NSArray *)anArray forClientIdentifier:(NSString *)anIdentifier</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>anArray</Name>
-					<Abstract>The array of identifiers. Pass nil if an error occurred.</Abstract>
-				</Parameter><Parameter>
-					<Name>anIdentifier</Name>
-					<Abstract>The client identifier for this array of SyncChangeSet identifiers.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (readonly) BOOL needsMainThread</Declaration>
 			
-			<Anchor>//api/name/builtArrayOfClientSyncChangeSetIdentifiers:forClientIdentifier:</Anchor>
+			
+			<Anchor>//api/name/needsMainThread</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/fetchedSyncChangeSetWithIdentifier:forClientIdentifier:modificationDate:withSuccess:</TokenIdentifier>
-			<Abstract>Indicate whether the download of the specified SyncChangeSet was successful.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSOperation/isExecuting</TokenIdentifier>
+			<Abstract>Indicates the operation is currently executing; this is set automatically through the operation phase methods.</Abstract>
+			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)fetchedSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier modificationDate:(NSDate *)aDate withSuccess:(BOOL)success</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aChangeSetIdentifier</Name>
-					<Abstract>The identifier for the change set to fetch.</Abstract>
-				</Parameter><Parameter>
-					<Name>aClientIdentifier</Name>
-					<Abstract>The identifier of the client who uploaded the change set.</Abstract>
-				</Parameter><Parameter>
-					<Name>aDate</Name>
-					<Abstract>The modification date of the change set.</Abstract>
-				</Parameter><Parameter>
-					<Name>success</Name>
-					<Abstract>A Boolean indicating whether the sync change set file was downloaded or not.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (readonly) BOOL isExecuting</Declaration>
 			
-			<Anchor>//api/name/fetchedSyncChangeSetWithIdentifier:forClientIdentifier:modificationDate:withSuccess:</Anchor>
+			
+			<Anchor>//api/name/isExecuting</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/uploadedLocalSyncChangeSetFileSuccessfully:</TokenIdentifier>
-			<Abstract>Indicate whether the upload of the sync change set file was successful.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSOperation/isFinished</TokenIdentifier>
+			<Abstract>Indicates the operation has completed; this is set automatically through the operation phase methods.</Abstract>
+			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)uploadedLocalSyncChangeSetFileSuccessfully:(BOOL)success</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>success</Name>
-					<Abstract>A Boolean indicating whether the sync change set file was uploaded or not.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (readonly) BOOL isFinished</Declaration>
 			
-			<Anchor>//api/name/uploadedLocalSyncChangeSetFileSuccessfully:</Anchor>
+			
+			<Anchor>//api/name/isFinished</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/uploadedRecentSyncFileSuccessfully:</TokenIdentifier>
-			<Abstract>Indicate whether the upload of the RecentSync file was successful.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSOperation/error</TokenIdentifier>
+			<Abstract>The most recent error; set this before calling operationDidFailToComplete.</Abstract>
+			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)uploadedRecentSyncFileSuccessfully:(BOOL)success</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>success</Name>
-					<Abstract>A Boolean indicating whether the RecentSync file was uploaded or not.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (retain) NSError *error</Declaration>
 			
-			<Anchor>//api/name/uploadedRecentSyncFileSuccessfully:</Anchor>
+			
+			<Anchor>//api/name/error</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/contextForSyncChangesInUnappliedSyncChangeSet:</TokenIdentifier>
-			<Abstract>Releases any existing unappliedSyncChangesContext and unappliedSyncChangesCoreDataFactory and sets new ones, linked to the set of sync changes specified in the given sync change set.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSOperation/fileManager</TokenIdentifier>
+			<Abstract>An NSFileManager object suitable for use by this operation.</Abstract>
+			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
 			
-			<Declaration>- (NSManagedObjectContext *)contextForSyncChangesInUnappliedSyncChangeSet:(TICDSSyncChangeSet *)aChangeSet</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aChangeSet</Name>
-					<Abstract>The TICDSSyncChangeSet object specifying the set of changes to use.</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract>A managed object context to access the sync changes.</Abstract></ReturnValue>
-			<Anchor>//api/name/contextForSyncChangesInUnappliedSyncChangeSet:</Anchor>
+			<Declaration>@property (nonatomic, readonly, retain) NSFileManager *fileManager</Declaration>
+			
+			
+			<Anchor>//api/name/fileManager</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSSynchronizationOperation/configureBackgroundApplicationContextForPersistentStoreCoordinator:</TokenIdentifier>
-			<Abstract>Configure a background context (for applying sync changes) using the same persistent store coordinator as the main application context.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSOperation/helperFileDirectoryLocation</TokenIdentifier>
+			<Abstract>The local location on disc of helper files needed by TICoreDataSync for this operation (not set automatically).</Abstract>
+			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)configureBackgroundApplicationContextForPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)aPersistentStoreCoordinator</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aPersistentStoreCoordinator</Name>
-					<Abstract>The persistent store coordinator to use for the background context.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (retain) NSURL *helperFileDirectoryLocation</Declaration>
 			
-			<Anchor>//api/name/configureBackgroundApplicationContextForPersistentStoreCoordinator:</Anchor>
+			
+			<Anchor>//api/name/helperFileDirectoryLocation</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/paused</TokenIdentifier>
-			<Abstract>A boolean indicating whether the operation is currently paused awaiting an instruction to continue, e.g. for conflict resolution.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSOperation/clientIdentifier</TokenIdentifier>
+			<Abstract>The identifier of the client application (not set automatically, but may be used whenever necessary by subclasses).</Abstract>
+			<DeclaredIn>TICDSOperation.h</DeclaredIn>			
 			
-			<Declaration>@property (assign, getter=isPaused) BOOL paused</Declaration>
+			<Declaration>@property (retain) NSString *clientIdentifier</Declaration>
 			
 			
-			<Anchor>//api/name/paused</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/mostRecentConflictResolutionType</TokenIdentifier>
-			<Abstract>The resolution type for the most recent conflict, set before resuming the operation after a conflict is detected.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (assign) TICDSSyncConflictResolutionType mostRecentConflictResolutionType</Declaration>
-			
-			
-			<Anchor>//api/name/mostRecentConflictResolutionType</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/otherSynchronizedClientDeviceIdentifiers</TokenIdentifier>
-			<Abstract>An array of client identifiers for clients that synchronize with this document, excluding this client.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, retain) NSArray *otherSynchronizedClientDeviceIdentifiers</Declaration>
-			
-			
-			<Anchor>//api/name/otherSynchronizedClientDeviceIdentifiers</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/otherSynchronizedClientDeviceSyncChangeSetIdentifiers</TokenIdentifier>
-			<Abstract>A dictionary of arrays; keys are client identifiers, values are sync change set identifiers for each of those clients.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (retain) NSMutableDictionary *otherSynchronizedClientDeviceSyncChangeSetIdentifiers</Declaration>
-			
-			
-			<Anchor>//api/name/otherSynchronizedClientDeviceSyncChangeSetIdentifiers</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/syncChangeSortDescriptors</TokenIdentifier>
-			<Abstract>The sort descriptors used to sort sync change objects in a SyncChangeSet before being applied.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, retain) NSArray *syncChangeSortDescriptors</Declaration>
-			
-			
-			<Anchor>//api/name/syncChangeSortDescriptors</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/synchronizationWarnings</TokenIdentifier>
-			<Abstract>The warnings generated during this synchronization.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (retain) NSMutableArray *synchronizationWarnings</Declaration>
-			
-			
-			<Anchor>//api/name/synchronizationWarnings</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/localSyncChangesToMergeLocation</TokenIdentifier>
-			<Abstract>The location of the SyncChangesBeingSynchronized.syncchg file for this synchronization operation.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (retain) NSURL *localSyncChangesToMergeLocation</Declaration>
-			
-			
-			<Anchor>//api/name/localSyncChangesToMergeLocation</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/appliedSyncChangeSetsFileLocation</TokenIdentifier>
-			<Abstract>The location of this document's AppliedSyncChangeSets.ticdsync file.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (retain) NSURL *appliedSyncChangeSetsFileLocation</Declaration>
-			
-			
-			<Anchor>//api/name/appliedSyncChangeSetsFileLocation</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unappliedSyncChangesDirectoryLocation</TokenIdentifier>
-			<Abstract>The location of the UnappliedSyncChanges directory for this synchronization operation.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (retain) NSURL *unappliedSyncChangesDirectoryLocation</Declaration>
-			
-			
-			<Anchor>//api/name/unappliedSyncChangesDirectoryLocation</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unappliedSyncChangeSetsFileLocation</TokenIdentifier>
-			<Abstract>The location of this document's UnappliedSyncChangeSets.ticdsync file.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (retain) NSURL *unappliedSyncChangeSetsFileLocation</Declaration>
-			
-			
-			<Anchor>//api/name/unappliedSyncChangeSetsFileLocation</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/localRecentSyncFileLocation</TokenIdentifier>
-			<Abstract>The location of the local RecentSync file to upload at the end of the synchronization process.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (retain) NSURL *localRecentSyncFileLocation</Declaration>
-			
-			
-			<Anchor>//api/name/localRecentSyncFileLocation</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/appliedSyncChangeSetsCoreDataFactory</TokenIdentifier>
-			<Abstract>A TICoreDataFactory to access the contents of the AppliedSyncChangeSets.ticdsync file.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, retain) TICoreDataFactory *appliedSyncChangeSetsCoreDataFactory</Declaration>
-			
-			
-			<Anchor>//api/name/appliedSyncChangeSetsCoreDataFactory</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/appliedSyncChangeSetsContext</TokenIdentifier>
-			<Abstract>The managed object context for the AppliedSyncChangeSets.ticdsync file.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, retain) NSManagedObjectContext *appliedSyncChangeSetsContext</Declaration>
-			
-			
-			<Anchor>//api/name/appliedSyncChangeSetsContext</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unappliedSyncChangeSetsCoreDataFactory</TokenIdentifier>
-			<Abstract>A TICoreDataFactory to access the contents of the UnappliedSyncChangeSets.ticdsync file.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, retain) TICoreDataFactory *unappliedSyncChangeSetsCoreDataFactory</Declaration>
-			
-			
-			<Anchor>//api/name/unappliedSyncChangeSetsCoreDataFactory</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unappliedSyncChangeSetsContext</TokenIdentifier>
-			<Abstract>The managed object context for the UnappliedSyncChangeSets.ticdsync file.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, retain) NSManagedObjectContext *unappliedSyncChangeSetsContext</Declaration>
-			
-			
-			<Anchor>//api/name/unappliedSyncChangeSetsContext</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unappliedSyncChangesCoreDataFactory</TokenIdentifier>
-			<Abstract>A TICoreDataFactory to access the contents of a single, unapplied SyncChangeSet file.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, retain) TICoreDataFactory *unappliedSyncChangesCoreDataFactory</Declaration>
-			
-			
-			<Anchor>//api/name/unappliedSyncChangesCoreDataFactory</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/unappliedSyncChangesContext</TokenIdentifier>
-			<Abstract>The managed object context for the changes in a single, unapplied SyncChangeSet file.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, retain) NSManagedObjectContext *unappliedSyncChangesContext</Declaration>
-			
-			
-			<Anchor>//api/name/unappliedSyncChangesContext</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/localSyncChangesToMergeCoreDataFactory</TokenIdentifier>
-			<Abstract>A TICoreDataFactory to access the contents of the local, unsynchronized set of SyncChanges.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, retain) TICoreDataFactory *localSyncChangesToMergeCoreDataFactory</Declaration>
-			
-			
-			<Anchor>//api/name/localSyncChangesToMergeCoreDataFactory</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/localSyncChangesToMergeContext</TokenIdentifier>
-			<Abstract>The managed object context for the local, unsynchronized set of SyncChanges.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, retain) NSManagedObjectContext *localSyncChangesToMergeContext</Declaration>
-			
-			
-			<Anchor>//api/name/localSyncChangesToMergeContext</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/backgroundApplicationContext</TokenIdentifier>
-			<Abstract>The managed object context (tied to the application's persistent store coordinator) in which SyncChanges are applied.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, retain) NSManagedObjectContext *backgroundApplicationContext</Declaration>
-			
-			
-			<Anchor>//api/name/backgroundApplicationContext</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/completionInProgress</TokenIdentifier>
-			<Abstract>Used to indicate that completion is currently in progress, and that no further checks should be made.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, assign) BOOL completionInProgress</Declaration>
-			
-			
-			<Anchor>//api/name/completionInProgress</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/fetchArrayOfClientDeviceIDsStatus</TokenIdentifier>
-			<Abstract>The phase status regarding fetching an array of client devices that have synchronized this document.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus fetchArrayOfClientDeviceIDsStatus</Declaration>
-			
-			
-			<Anchor>//api/name/fetchArrayOfClientDeviceIDsStatus</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/fetchArrayOfSyncCommandSetIDsStatus</TokenIdentifier>
-			<Abstract>The phase status regarding fetching an array of available SyncCommand sets.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus fetchArrayOfSyncCommandSetIDsStatus</Declaration>
-			
-			
-			<Anchor>//api/name/fetchArrayOfSyncCommandSetIDsStatus</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/numberOfSyncChangeSetIDArraysToFetch</TokenIdentifier>
-			<Abstract>The total number of arrays of SyncChangeSet identifiers that need to be fetched.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, assign) NSUInteger numberOfSyncChangeSetIDArraysToFetch</Declaration>
-			
-			
-			<Anchor>//api/name/numberOfSyncChangeSetIDArraysToFetch</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/numberOfSyncChangeSetIDArraysFetched</TokenIdentifier>
-			<Abstract>The number of arrays of SyncChangeSet identifiers that have already been fetched.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, assign) NSUInteger numberOfSyncChangeSetIDArraysFetched</Declaration>
-			
-			
-			<Anchor>//api/name/numberOfSyncChangeSetIDArraysFetched</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/numberOfSyncChangeSetIDArraysThatFailedToFetch</TokenIdentifier>
-			<Abstract>The number of arrays of SyncChangeSet identifiers that failed to fetch because of an error.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, assign) NSUInteger numberOfSyncChangeSetIDArraysThatFailedToFetch</Declaration>
-			
-			
-			<Anchor>//api/name/numberOfSyncChangeSetIDArraysThatFailedToFetch</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/fetchArrayOfSyncChangeSetIDsStatus</TokenIdentifier>
-			<Abstract>The phase status regarding fetching an array of available SyncChangeSet identifiers.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus fetchArrayOfSyncChangeSetIDsStatus</Declaration>
-			
-			
-			<Anchor>//api/name/fetchArrayOfSyncChangeSetIDsStatus</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/numberOfUnappliedSyncChangeSetsToFetch</TokenIdentifier>
-			<Abstract>The number of unapplied sync change sets that need to be fetched.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, assign) NSUInteger numberOfUnappliedSyncChangeSetsToFetch</Declaration>
-			
-			
-			<Anchor>//api/name/numberOfUnappliedSyncChangeSetsToFetch</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/numberOfUnappliedSyncChangeSetsFetched</TokenIdentifier>
-			<Abstract>The number of unapplied sync change sets that have already been fetched.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, assign) NSUInteger numberOfUnappliedSyncChangeSetsFetched</Declaration>
-			
-			
-			<Anchor>//api/name/numberOfUnappliedSyncChangeSetsFetched</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/numberOfUnappliedSyncChangeSetsThatFailedToFetch</TokenIdentifier>
-			<Abstract>The number of unapplied sync change sets that failed to fetch because of an error.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, assign) NSUInteger numberOfUnappliedSyncChangeSetsThatFailedToFetch</Declaration>
-			
-			
-			<Anchor>//api/name/numberOfUnappliedSyncChangeSetsThatFailedToFetch</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/fetchUnappliedSyncChangeSetsStatus</TokenIdentifier>
-			<Abstract>The phase status regarding fetching all unapplied SyncChangeSets.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus fetchUnappliedSyncChangeSetsStatus</Declaration>
-			
-			
-			<Anchor>//api/name/fetchUnappliedSyncChangeSetsStatus</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/applyUnappliedSyncChangeSetsStatus</TokenIdentifier>
-			<Abstract>The phase status regarding application of unapplied SyncChangeSets.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus applyUnappliedSyncChangeSetsStatus</Declaration>
-			
-			
-			<Anchor>//api/name/applyUnappliedSyncChangeSetsStatus</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/uploadLocalSyncCommandSetStatus</TokenIdentifier>
-			<Abstract>The phase status regarding upload of the local set of sync commands.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus uploadLocalSyncCommandSetStatus</Declaration>
-			
-			
-			<Anchor>//api/name/uploadLocalSyncCommandSetStatus</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/uploadLocalSyncChangeSetStatus</TokenIdentifier>
-			<Abstract>The phase status regarding upload of the local set of sync changes.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus uploadLocalSyncChangeSetStatus</Declaration>
-			
-			
-			<Anchor>//api/name/uploadLocalSyncChangeSetStatus</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSSynchronizationOperation/uploadRecentSyncFileStatus</TokenIdentifier>
-			<Abstract>The phase status regarding upload of this client's file in the document's RecentSync directory.</Abstract>
-			<DeclaredIn>TICDSSynchronizationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus uploadRecentSyncFileStatus</Declaration>
-			
-			
-			<Anchor>//api/name/uploadRecentSyncFileStatus</Anchor>
+			<Anchor>//api/name/clientIdentifier</Anchor>
 		</Token>
 		
 	</File>

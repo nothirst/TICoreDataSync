@@ -1,339 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/TICDSApplicationSyncManager.html">
+	<File path="Classes/FZAKeyManager.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/TICDSApplicationSyncManager</TokenIdentifier>
-			<Abstract>TICDSDocumentSyncManager describes the generic behavior provided by an Application Sync Manager in the TICoreDataSync framework.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/FZAKeyManager</TokenIdentifier>
+			<Abstract>FZAKeyManager is an abstract class for creating and managing encryption keys.</Abstract>
+			<DeclaredIn>FZAKeyManager.h</DeclaredIn>
 			
 			<NodeRef refid="2"/>
 		</Token>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/TICDSApplicationSyncManager/defaultApplicationSyncManager</TokenIdentifier>
-			<Abstract>Returns an application-wide sync manager.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/FZAKeyManager/hasKey</TokenIdentifier>
+			<Abstract>Report on whether the key manager already has a key to use.</Abstract>
+			<DeclaredIn>FZAKeyManager.h</DeclaredIn>			
 			
-			<Declaration>+ (id)defaultApplicationSyncManager</Declaration>
+			<Declaration>- (BOOL)hasKey</Declaration>
 			
-			<ReturnValue><Abstract>The default application-wide sync manager (if one doesn't exist, it will be created).</Abstract></ReturnValue>
-			<Anchor>//api/name/defaultApplicationSyncManager</Anchor>
+			
+			<Anchor>//api/name/hasKey</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/TICDSApplicationSyncManager/setDefaultApplicationSyncManager:</TokenIdentifier>
-			<Abstract>Set the application-wide sync manager.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/FZAKeyManager/randomDataOfLength:</TokenIdentifier>
+			<Abstract>Create some random data.</Abstract>
+			<DeclaredIn>FZAKeyManager.h</DeclaredIn>			
 			
-			<Declaration>+ (void)setDefaultApplicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager</Declaration>
+			<Declaration>- (NSData *)randomDataOfLength:(NSInteger)length</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>aSyncManager</Name>
-					<Abstract>The new sync manager to set as the application-wide default.</Abstract>
+					<Name>length</Name>
+					<Abstract>The number of bytes of randomness needed.</Abstract>
 				</Parameter>
 			</Parameters>
-			
-			<Anchor>//api/name/setDefaultApplicationSyncManager:</Anchor>
+			<ReturnValue><Abstract>The random data.</Abstract></ReturnValue>
+			<Anchor>//api/name/randomDataOfLength:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationSyncManager/registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:</TokenIdentifier>
-			<Abstract>Register an application ready for future synchronization.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/FZAKeyManager/keyFromPassword:salt:</TokenIdentifier>
+			<Abstract>Generate a key from a password.</Abstract>
+			<DeclaredIn>FZAKeyManager.h</DeclaredIn>			
 			
-			<Declaration>- (void)registerWithDelegate:(id&lt;TICDSApplicationSyncManagerDelegate&gt;)aDelegate globalAppIdentifier:(NSString *)anAppIdentifier uniqueClientIdentifier:(NSString *)aClientIdentifier description:(NSString *)aClientDescription userInfo:(NSDictionary *)someUserInfo</Declaration>
+			<Declaration>- (NSData *)keyFromPassword:(NSString *)password salt:(NSData *)salt</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>aDelegate</Name>
-					<Abstract>The object you wish to be notified regarding application-related sync information; this object must conform to the TICDSApplicationSyncManagerDelegate protocol, which includes some required methods.</Abstract>
+					<Name>password</Name>
+					<Abstract>The string to use as the password.</Abstract>
 				</Parameter><Parameter>
-					<Name>anAppIdentifier</Name>
-					<Abstract>The identification string used to identify the synchronization information across multiple clients. If you wish to be able to synchronize Mac and iOS, this app identifier should be the same on both platforms. This identifier will also be used as the root level of the remote file structure.</Abstract>
+					<Name>salt</Name>
+					<Abstract>The salt data to use.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract>A data key.</Abstract></ReturnValue>
+			<Anchor>//api/name/keyFromPassword:salt:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/FZAKeyManager/storeKeyDerivedFromPassword:salt:error:</TokenIdentifier>
+			<Abstract>Set a new key derived from a password supplied by the user.</Abstract>
+			<DeclaredIn>FZAKeyManager.h</DeclaredIn>			
+			
+			<Declaration>- (BOOL)storeKeyDerivedFromPassword:(NSString *)password salt:(NSData *)salt error:(NSError **)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>password</Name>
+					<Abstract>The string to use as the password.</Abstract>
 				</Parameter><Parameter>
-					<Name>aClientIdentifier</Name>
-					<Abstract>An identification string for this client. Every client wishing to synchronize must have a string to identify itself (i.e., the application instance on a machine) uniquely. You would typically create a UUID string the first time your app is launched and store this in preferences.</Abstract>
+					<Name>salt</Name>
+					<Abstract>Some random data fed into the key derivation function.</Abstract>
 				</Parameter><Parameter>
-					<Name>aClientDescription</Name>
-					<Abstract>A human-readable string used to identify this client, e.g. the computer name.</Abstract>
-				</Parameter><Parameter>
-					<Name>someUserInfo</Name>
-					<Abstract>A dictionary of information that will be saved throughout all future synchronizations. Because this information is saved in a plist, everything in the dictionary must be archivable using NSKeyedArchiver.</Abstract>
+					<Name>error</Name>
+					<Abstract>Any error that occurs.</Abstract>
 				</Parameter>
 			</Parameters>
-			
-			<Anchor>//api/name/registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:</Anchor>
+			<ReturnValue><Abstract>YES if the key was stored succcessfully, NO if not (error will be set).</Abstract></ReturnValue>
+			<Anchor>//api/name/storeKeyDerivedFromPassword:salt:error:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationSyncManager/continueRegisteringWithEncryptionPassword:</TokenIdentifier>
-			<Abstract>Continue registering an application for the first time specifying whether to use encryption, or an existing application that requires an encryption password.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/FZAKeyManager/key</TokenIdentifier>
+			<Abstract>Retrieve and return the key from cryptographic storage.</Abstract>
+			<DeclaredIn>FZAKeyManager.h</DeclaredIn>			
 			
-			<Declaration>- (void)continueRegisteringWithEncryptionPassword:(NSString *)aPassword</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>aPassword</Name>
-					<Abstract>The password to use, or nil to specify no encryption on a new application registration.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>- (NSData *)key</Declaration>
 			
-			<Anchor>//api/name/continueRegisteringWithEncryptionPassword:</Anchor>
+			
+			<Anchor>//api/name/key</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationSyncManager/requestListOfPreviouslySynchronizedDocuments</TokenIdentifier>
-			<Abstract>Request a list of documents that have previously been synchronized for this application, by any client.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/clm/FZAKeyManager/newKeyManager</TokenIdentifier>
+			<Abstract>Return a new subclass of this class, appropriate to the current platform.</Abstract>
+			<DeclaredIn>FZAKeyManager.h</DeclaredIn>			
 			
-			<Declaration>- (void)requestListOfPreviouslySynchronizedDocuments</Declaration>
-			
-			
-			<Anchor>//api/name/requestListOfPreviouslySynchronizedDocuments</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationSyncManager/requestDownloadOfDocumentWithIdentifier:toLocation:</TokenIdentifier>
-			<Abstract>Download a document that has previously been synchronized for this application.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
-			
-			<Declaration>- (void)requestDownloadOfDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>anIdentifier</Name>
-					<Abstract>The unique synchronization identifier string for the requested document. If you're requesting the download of a document represented by a dictionary supplied from a request for the list of previously synchronized documents, use the value for its kTICDSDocumentIdentifier key.</Abstract>
-				</Parameter><Parameter>
-					<Name>aLocation</Name>
-					<Abstract>The location on disc to which the persistent store file should be downloaded.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/requestDownloadOfDocumentWithIdentifier:toLocation:</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationSyncManager/applicationRegistrationOperation</TokenIdentifier>
-			<Abstract>Returns an application registration operation.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
-			
-			<Declaration>- (TICDSApplicationRegistrationOperation *)applicationRegistrationOperation</Declaration>
-			
-			<ReturnValue><Abstract>A correctly-configured subclass of TICDSApplicationRegistrationOperation.</Abstract></ReturnValue>
-			<Anchor>//api/name/applicationRegistrationOperation</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationSyncManager/listOfPreviouslySynchronizedDocumentsOperation</TokenIdentifier>
-			<Abstract>Returns an operation to fetch a list of previously synchronized documents.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
-			
-			<Declaration>- (TICDSListOfPreviouslySynchronizedDocumentsOperation *)listOfPreviouslySynchronizedDocumentsOperation</Declaration>
-			
-			<ReturnValue><Abstract>A correctly-configured subclass of TICDSListOfPreviouslySynchronizedDocumentsOperation.</Abstract></ReturnValue>
-			<Anchor>//api/name/listOfPreviouslySynchronizedDocumentsOperation</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationSyncManager/wholeStoreDownloadOperationForDocumentWithIdentifier:</TokenIdentifier>
-			<Abstract>Returns an operation to download a document with a given identifier.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
-			
-			<Declaration>- (TICDSWholeStoreDownloadOperation *)wholeStoreDownloadOperationForDocumentWithIdentifier:(NSString *)anIdentifier</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>anIdentifier</Name>
-					<Abstract>The unique synchronization identifier of the document to download.</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract>A correctly-configured subclass of TICDSWholeStoreDownloadOperation.</Abstract></ReturnValue>
-			<Anchor>//api/name/wholeStoreDownloadOperationForDocumentWithIdentifier:</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/state</TokenIdentifier>
-			<Abstract>Application Sync Manager State.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, readonly) TICDSApplicationSyncManagerState state</Declaration>
+			<Declaration>+ (FZAKeyManager *)newKeyManager</Declaration>
 			
 			
-			<Anchor>//api/name/state</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/delegate</TokenIdentifier>
-			<Abstract>The Application Sync Manager Delegate.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, assign) id&lt;TICDSApplicationSyncManagerDelegate&gt; delegate</Declaration>
-			
-			
-			<Anchor>//api/name/delegate</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/appIdentifier</TokenIdentifier>
-			<Abstract>The App Identifier used for registration.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, readonly, retain) NSString *appIdentifier</Declaration>
-			
-			
-			<Anchor>//api/name/appIdentifier</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/clientIdentifier</TokenIdentifier>
-			<Abstract>The Client Identifier used for registration.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, readonly, retain) NSString *clientIdentifier</Declaration>
-			
-			
-			<Anchor>//api/name/clientIdentifier</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/clientDescription</TokenIdentifier>
-			<Abstract>The Client Description used for registration.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, readonly, retain) NSString *clientDescription</Declaration>
-			
-			
-			<Anchor>//api/name/clientDescription</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/applicationUserInfo</TokenIdentifier>
-			<Abstract>The User Info used for registration.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, readonly, retain) NSDictionary *applicationUserInfo</Declaration>
-			
-			
-			<Anchor>//api/name/applicationUserInfo</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/fileManager</TokenIdentifier>
-			<Abstract>A File Manager for use by the application sync manager.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, readonly, retain) NSFileManager *fileManager</Declaration>
-			
-			
-			<Anchor>//api/name/fileManager</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/registrationQueue</TokenIdentifier>
-			<Abstract>The operation queue used for registration operations.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, retain) NSOperationQueue *registrationQueue</Declaration>
-			
-			
-			<Anchor>//api/name/registrationQueue</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/otherTasksQueue</TokenIdentifier>
-			<Abstract>The operation queue used for non-registration tasks.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, retain) NSOperationQueue *otherTasksQueue</Declaration>
-			
-			
-			<Anchor>//api/name/otherTasksQueue</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/relativePathToDocumentsDirectory</TokenIdentifier>
-			<Abstract>The path to the Documents directory, relative to the root of the remote file structure.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, readonly) NSString *relativePathToDocumentsDirectory</Declaration>
-			
-			
-			<Anchor>//api/name/relativePathToDocumentsDirectory</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/relativePathToEncryptionDirectory</TokenIdentifier>
-			<Abstract>The path to the Encryption directory, relative to the root of the remote file structure.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, readonly) NSString *relativePathToEncryptionDirectory</Declaration>
-			
-			
-			<Anchor>//api/name/relativePathToEncryptionDirectory</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/relativePathToEncryptionDirectorySaltDataFilePath</TokenIdentifier>
-			<Abstract>The path to the salt.ticdsync file inside the Encryption directory, relative to the root of the remote file structure.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, readonly) NSString *relativePathToEncryptionDirectorySaltDataFilePath</Declaration>
-			
-			
-			<Anchor>//api/name/relativePathToEncryptionDirectorySaltDataFilePath</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/relativePathToClientDevicesDirectory</TokenIdentifier>
-			<Abstract>The path to the ClientDevices directory, relative to the root of the remote file structure.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, readonly) NSString *relativePathToClientDevicesDirectory</Declaration>
-			
-			
-			<Anchor>//api/name/relativePathToClientDevicesDirectory</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/relativePathToClientDevicesThisClientDeviceDirectory</TokenIdentifier>
-			<Abstract>The path to this client's directory inside the ClientDevices directory, relative to the root of the remote file structure.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, readonly) NSString *relativePathToClientDevicesThisClientDeviceDirectory</Declaration>
-			
-			
-			<Anchor>//api/name/relativePathToClientDevicesThisClientDeviceDirectory</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationSyncManager/relativePathToDocumentDirectoryForDocumentWithIdentifier:</TokenIdentifier>
-			<Abstract>The path to a document's directory within the Documents directory, relative to the root of the remote file structure.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
-			
-			<Declaration>- (NSString *)relativePathToDocumentDirectoryForDocumentWithIdentifier:(NSString *)anIdentifier</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>anIdentifier</Name>
-					<Abstract>The unique sync identifier of the document.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/relativePathToDocumentDirectoryForDocumentWithIdentifier:</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSApplicationSyncManager/relativePathToWholeStoreDirectoryForDocumentWithIdentifier:</TokenIdentifier>
-			<Abstract>The path to a document's WholeStore directory, relative to the root of the remote file structure.</Abstract>
-			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
-			
-			<Declaration>- (NSString *)relativePathToWholeStoreDirectoryForDocumentWithIdentifier:(NSString *)anIdentifier</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>anIdentifier</Name>
-					<Abstract>The unique sync identifier of the document.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/relativePathToWholeStoreDirectoryForDocumentWithIdentifier:</Anchor>
+			<Anchor>//api/name/newKeyManager</Anchor>
 		</Token>
 		
 	</File>

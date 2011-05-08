@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/TICDSOperationDelegate.html">
+	<File path="Protocols/TICDSApplicationRegistrationOperationDelegate.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/TICDSOperationDelegate</TokenIdentifier>
-			<Abstract>The TICDSOperationDelegate protocol defines the methods implemented by delegates of any generic TICDSOperation. In the TICoreDataSync framework, these delegate methods are implemented by the application and document sync managers.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intf/TICDSApplicationRegistrationOperationDelegate</TokenIdentifier>
+			<Abstract>The TICDSApplicationRegistrationOperationDelegate protocol defines the methods implemented by delegates of TICDSApplicationRegistrationOperation or one of its subclasses. In the TICoreDataSync framework, these delegate methods are implemented by the application sync manager.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>
 			
 			<NodeRef refid="32"/>
@@ -12,11 +12,11 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSOperationDelegate/operationCompletedSuccessfully:</TokenIdentifier>
-			<Abstract>Informs the delegate that the operation has completely and successfully finished its tasks.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationRegistrationOperationDelegate/registrationOperationPausedToFindOutWhetherToEnableEncryption:</TokenIdentifier>
+			<Abstract>Informs the delegate that the operation has been paused because the global app directory does not exist. The delegate should query its own delegate to ask whether to enable encryption for this application, and if so find out the password to use.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)operationCompletedSuccessfully:(TICDSOperation *)anOperation</Declaration>
+			<Declaration>- (void)registrationOperationPausedToFindOutWhetherToEnableEncryption:(TICDSApplicationRegistrationOperation *)anOperation</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>anOperation</Name>
@@ -24,15 +24,15 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/operationCompletedSuccessfully:</Anchor>
+			<Anchor>//api/name/registrationOperationPausedToFindOutWhetherToEnableEncryption:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSOperationDelegate/operationWasCancelled:</TokenIdentifier>
-			<Abstract>Informs the delegate that the operation was cancelled before it could finish its tasks.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationRegistrationOperationDelegate/registrationOperationResumedFollowingEncryptionInstruction:</TokenIdentifier>
+			<Abstract>Informs the delegate that the operation has resumed after being told whether to use encryption.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)operationWasCancelled:(TICDSOperation *)anOperation</Declaration>
+			<Declaration>- (void)registrationOperationResumedFollowingEncryptionInstruction:(TICDSApplicationRegistrationOperation *)anOperation</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>anOperation</Name>
@@ -40,15 +40,15 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/operationWasCancelled:</Anchor>
+			<Anchor>//api/name/registrationOperationResumedFollowingEncryptionInstruction:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSOperationDelegate/operationFailedToComplete:</TokenIdentifier>
-			<Abstract>Informs the delegate that the operation failed to complete before it could finish its tasks.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationRegistrationOperationDelegate/registrationOperationPausedToRequestEncryptionPassword:</TokenIdentifier>
+			<Abstract>Informs the delegate that the operation has been paused because this is the first time this client has registered to synchronize with this application, and the existing data is encrypted.</Abstract>
 			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
 			
-			<Declaration>- (void)operationFailedToComplete:(TICDSOperation *)anOperation</Declaration>
+			<Declaration>- (void)registrationOperationPausedToRequestEncryptionPassword:(TICDSApplicationRegistrationOperation *)anOperation</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>anOperation</Name>
@@ -56,7 +56,23 @@
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/operationFailedToComplete:</Anchor>
+			<Anchor>//api/name/registrationOperationPausedToRequestEncryptionPassword:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/TICDSApplicationRegistrationOperationDelegate/registrationOperationResumedFollowingPasswordProvision:</TokenIdentifier>
+			<Abstract>Informs the delegate that the operation has resumed after being given a password.</Abstract>
+			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			
+			<Declaration>- (void)registrationOperationResumedFollowingPasswordProvision:(TICDSApplicationRegistrationOperation *)anOperation</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>anOperation</Name>
+					<Abstract>The operation object that sent the message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/registrationOperationResumedFollowingPasswordProvision:</Anchor>
 		</Token>
 		
 	</File>

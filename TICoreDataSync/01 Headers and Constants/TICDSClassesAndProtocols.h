@@ -41,6 +41,16 @@
 @class TICDSSyncChangeSet;
 
 #pragma mark -
+#pragma mark UTILITIES - ENCRYPTION
+@class FZACryptor;
+@class FZAKeyManager;
+#if (TARGET_OS_IPHONE)
+@class FZAKeyManagerMac;
+#else
+@class FZAKeyManageriPhone;
+#endif
+
+#pragma mark -
 #pragma mark EXTERNAL CLASSES
 @class TICoreDataFactory;
 @class TIKQDirectoryWatcher;

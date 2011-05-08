@@ -1,46 +1,172 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/TICDSDocumentRegistrationOperationDelegate.html">
+	<File path="Classes/TICDSWholeStoreDownloadOperation.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/TICDSDocumentRegistrationOperationDelegate</TokenIdentifier>
-			<Abstract>The TICDSDocumentRegistrationOperationDelegate protocol defines the methods implemented by delegates of TICDSDocumentRegistrationOperation or one of its subclasses. In the TICoreDataSync framework, these delegate methods are implemented by the document sync manager.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/TICDSWholeStoreDownloadOperation</TokenIdentifier>
+			<Abstract>The TICDSWholeStoreDownloadOperation class describes a generic operation used by the TICoreDataSync framework to download the whole store for a document.</Abstract>
+			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>
 			
 			<NodeRef refid="30"/>
 		</Token>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentRegistrationOperationDelegate/registrationOperationPausedToFindOutWhetherToCreateRemoteDocumentStructure:</TokenIdentifier>
-			<Abstract>Informs the delegate that the operation has been paused because the remote document file structure does not exist. The delegate should query its own delegate to ask whether to continue registration by creating the structure.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreDownloadOperation/checkForMostRecentClientWholeStore</TokenIdentifier>
+			<Abstract>Determine which client uploaded a WholeStore most recently.</Abstract>
+			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)registrationOperationPausedToFindOutWhetherToCreateRemoteDocumentStructure:(TICDSDocumentRegistrationOperation *)anOperation</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>anOperation</Name>
-					<Abstract>The operation object that sent the message.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>- (void)checkForMostRecentClientWholeStore</Declaration>
 			
-			<Anchor>//api/name/registrationOperationPausedToFindOutWhetherToCreateRemoteDocumentStructure:</Anchor>
+			
+			<Anchor>//api/name/checkForMostRecentClientWholeStore</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/TICDSDocumentRegistrationOperationDelegate/registrationOperationResumedFollowingDocumentStructureCreationInstruction:</TokenIdentifier>
-			<Abstract>Informs the delegate that the operation has resumed after being told whether or not to create the remote document file structure.</Abstract>
-			<DeclaredIn>TICDSClassesAndProtocols.h</DeclaredIn>			
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreDownloadOperation/downloadWholeStoreFile</TokenIdentifier>
+			<Abstract>Download the store at the remote document store path to the localWholeStoreFileLocation.</Abstract>
+			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)registrationOperationResumedFollowingDocumentStructureCreationInstruction:(TICDSDocumentRegistrationOperation *)anOperation</Declaration>
+			<Declaration>- (void)downloadWholeStoreFile</Declaration>
+			
+			
+			<Anchor>//api/name/downloadWholeStoreFile</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreDownloadOperation/downloadAppliedSyncChangeSetsFile</TokenIdentifier>
+			<Abstract>Download the applied sync change sets file at the remote document store path to the localAppliedSyncChangeSetsFileLocation.</Abstract>
+			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)downloadAppliedSyncChangeSetsFile</Declaration>
+			
+			
+			<Anchor>//api/name/downloadAppliedSyncChangeSetsFile</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreDownloadOperation/determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:</TokenIdentifier>
+			<Abstract>Indicate which client uploaded the most recent WholeStore.</Abstract>
+			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:(NSString *)anIdentifier</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>anOperation</Name>
-					<Abstract>The operation object that sent the message.</Abstract>
+					<Name>anIdentifier</Name>
+					<Abstract>The identifier of the client.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/registrationOperationResumedFollowingDocumentStructureCreationInstruction:</Anchor>
+			<Anchor>//api/name/determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreDownloadOperation/downloadedWholeStoreFileWithSuccess:</TokenIdentifier>
+			<Abstract>Indicate whether the download of the whole store file was successful.</Abstract>
+			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)downloadedWholeStoreFileWithSuccess:(BOOL)success</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>success</Name>
+					<Abstract>A Boolean indicating whether the whole store file was downloaded or not.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/downloadedWholeStoreFileWithSuccess:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSWholeStoreDownloadOperation/downloadedAppliedSyncChangeSetsFileWithSuccess:</TokenIdentifier>
+			<Abstract>Indicate whether the download of the applied sync change sets file was successful.</Abstract>
+			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)downloadedAppliedSyncChangeSetsFileWithSuccess:(BOOL)success</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>success</Name>
+					<Abstract>A Boolean indicating whether the applied sync change sets file was downloaded or not.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/downloadedAppliedSyncChangeSetsFileWithSuccess:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSWholeStoreDownloadOperation/requestedWholeStoreClientIdentifier</TokenIdentifier>
+			<Abstract>The client identifier for the WholeStore to download. If this is not specified before the operation executes, the operation will determine which client uploaded a store most recently.</Abstract>
+			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSString *requestedWholeStoreClientIdentifier</Declaration>
+			
+			
+			<Anchor>//api/name/requestedWholeStoreClientIdentifier</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSWholeStoreDownloadOperation/localWholeStoreFileLocation</TokenIdentifier>
+			<Abstract>The location of the whole store file to upload.</Abstract>
+			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSURL *localWholeStoreFileLocation</Declaration>
+			
+			
+			<Anchor>//api/name/localWholeStoreFileLocation</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSWholeStoreDownloadOperation/localAppliedSyncChangeSetsFileLocation</TokenIdentifier>
+			<Abstract>The location of the applied sync change sets file to upload.</Abstract>
+			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (retain) NSURL *localAppliedSyncChangeSetsFileLocation</Declaration>
+			
+			
+			<Anchor>//api/name/localAppliedSyncChangeSetsFileLocation</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSWholeStoreDownloadOperation/completionInProgress</TokenIdentifier>
+			<Abstract>Used to indicate that completion is currently in progress, and that no further checks should be made.</Abstract>
+			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) BOOL completionInProgress</Declaration>
+			
+			
+			<Anchor>//api/name/completionInProgress</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSWholeStoreDownloadOperation/determineMostRecentlyUploadedStoreStatus</TokenIdentifier>
+			<Abstract>The phase status of the check for which client uploaded a store most recently.</Abstract>
+			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus determineMostRecentlyUploadedStoreStatus</Declaration>
+			
+			
+			<Anchor>//api/name/determineMostRecentlyUploadedStoreStatus</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSWholeStoreDownloadOperation/wholeStoreFileDownloadStatus</TokenIdentifier>
+			<Abstract>The phase status of the whole store file upload.</Abstract>
+			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus wholeStoreFileDownloadStatus</Declaration>
+			
+			
+			<Anchor>//api/name/wholeStoreFileDownloadStatus</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSWholeStoreDownloadOperation/appliedSyncChangeSetsFileDownloadStatus</TokenIdentifier>
+			<Abstract>The phase status of the applied sync change sets file upload.</Abstract>
+			<DeclaredIn>TICDSWholeStoreDownloadOperation.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus appliedSyncChangeSetsFileDownloadStatus</Declaration>
+			
+			
+			<Anchor>//api/name/appliedSyncChangeSetsFileDownloadStatus</Anchor>
 		</Token>
 		
 	</File>

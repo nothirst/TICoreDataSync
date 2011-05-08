@@ -95,6 +95,10 @@ typedef enum _TICDSErrorCode {
     TICDSErrorCodeTaskWasCancelled,
 } TICDSErrorCode;
 
+typedef enum _FZACryptorErrorCode {
+    FZACryptorErrorCodeFailedIntegrityCheck = 10000,
+} FZACryptorErrorCode;
+
 #pragma mark Operation Phases
 /** @name Operation Phases */
 /** The status of any particular phase of an operation 

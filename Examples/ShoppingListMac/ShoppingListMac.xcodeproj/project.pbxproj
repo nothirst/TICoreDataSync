@@ -17,6 +17,11 @@
 		385878121363406B0015A40F /* DocumentShopsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 385878111363406B0015A40F /* DocumentShopsWindow.xib */; };
 		3863105B13634163003D8EE3 /* TIDocumentShopsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3863105A13634163003D8EE3 /* TIDocumentShopsWindowController.m */; };
 		3863106813636BDD003D8EE3 /* TICDSConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 3863106713636BDD003D8EE3 /* TICDSConstants.m */; };
+		3883FE2B1376AD3B004D26B2 /* FZACryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 3883FE241376AD3B004D26B2 /* FZACryptor.m */; };
+		3883FE2C1376AD3B004D26B2 /* FZAKeyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3883FE261376AD3B004D26B2 /* FZAKeyManager.m */; };
+		3883FE2D1376AD3B004D26B2 /* FZAKeyManageriPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 3883FE281376AD3B004D26B2 /* FZAKeyManageriPhone.m */; };
+		3883FE2E1376AD3B004D26B2 /* FZAKeyManagerMac.m in Sources */ = {isa = PBXBuildFile; fileRef = 3883FE2A1376AD3B004D26B2 /* FZAKeyManagerMac.m */; };
+		3883FE301376B0E7004D26B2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3883FE2F1376B0E7004D26B2 /* Security.framework */; };
 		388A3E80135707CA00824C88 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 388A3E7F135707CA00824C88 /* Cocoa.framework */; };
 		388A3E8A135707CA00824C88 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 388A3E88135707CA00824C88 /* InfoPlist.strings */; };
 		388A3E8D135707CA00824C88 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 388A3E8C135707CA00824C88 /* main.m */; };
@@ -87,6 +92,15 @@
 		3863105A13634163003D8EE3 /* TIDocumentShopsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TIDocumentShopsWindowController.m; sourceTree = "<group>"; };
 		3863106613636BDD003D8EE3 /* TICDSConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TICDSConstants.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		3863106713636BDD003D8EE3 /* TICDSConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TICDSConstants.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		3883FE231376AD3B004D26B2 /* FZACryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FZACryptor.h; sourceTree = "<group>"; };
+		3883FE241376AD3B004D26B2 /* FZACryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FZACryptor.m; sourceTree = "<group>"; };
+		3883FE251376AD3B004D26B2 /* FZAKeyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FZAKeyManager.h; sourceTree = "<group>"; };
+		3883FE261376AD3B004D26B2 /* FZAKeyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FZAKeyManager.m; sourceTree = "<group>"; };
+		3883FE271376AD3B004D26B2 /* FZAKeyManageriPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FZAKeyManageriPhone.h; sourceTree = "<group>"; };
+		3883FE281376AD3B004D26B2 /* FZAKeyManageriPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FZAKeyManageriPhone.m; sourceTree = "<group>"; };
+		3883FE291376AD3B004D26B2 /* FZAKeyManagerMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FZAKeyManagerMac.h; sourceTree = "<group>"; };
+		3883FE2A1376AD3B004D26B2 /* FZAKeyManagerMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FZAKeyManagerMac.m; sourceTree = "<group>"; };
+		3883FE2F1376B0E7004D26B2 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		388A3E7B135707CA00824C88 /* ShoppingListMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShoppingListMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		388A3E7F135707CA00824C88 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		388A3E82135707CA00824C88 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -179,6 +193,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3883FE301376B0E7004D26B2 /* Security.framework in Frameworks */,
 				389F86CA1360934800004CA4 /* SystemConfiguration.framework in Frameworks */,
 				389F86C81360933F00004CA4 /* QuartzCore.framework in Frameworks */,
 				388A3E80135707CA00824C88 /* Cocoa.framework in Frameworks */,
@@ -191,6 +206,7 @@
 		382390CB1360874B0068EB37 /* 04 Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				3883FE221376AD06004D26B2 /* FZACryptor */,
 				382390CC136087850068EB37 /* TICDSLog.h */,
 				382390CD136087850068EB37 /* TICDSLog.m */,
 				382390D313608AAE0068EB37 /* TICDSError.h */,
@@ -224,6 +240,21 @@
 			path = "Generic Operations";
 			sourceTree = "<group>";
 		};
+		3883FE221376AD06004D26B2 /* FZACryptor */ = {
+			isa = PBXGroup;
+			children = (
+				3883FE231376AD3B004D26B2 /* FZACryptor.h */,
+				3883FE241376AD3B004D26B2 /* FZACryptor.m */,
+				3883FE251376AD3B004D26B2 /* FZAKeyManager.h */,
+				3883FE261376AD3B004D26B2 /* FZAKeyManager.m */,
+				3883FE271376AD3B004D26B2 /* FZAKeyManageriPhone.h */,
+				3883FE281376AD3B004D26B2 /* FZAKeyManageriPhone.m */,
+				3883FE291376AD3B004D26B2 /* FZAKeyManagerMac.h */,
+				3883FE2A1376AD3B004D26B2 /* FZAKeyManagerMac.m */,
+			);
+			path = FZACryptor;
+			sourceTree = "<group>";
+		};
 		388A3E70135707CA00824C88 = {
 			isa = PBXGroup;
 			children = (
@@ -246,6 +277,7 @@
 		388A3E7E135707CA00824C88 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3883FE2F1376B0E7004D26B2 /* Security.framework */,
 				389F86C91360934700004CA4 /* SystemConfiguration.framework */,
 				389F86C71360933F00004CA4 /* QuartzCore.framework */,
 				388A3E7F135707CA00824C88 /* Cocoa.framework */,
@@ -541,6 +573,10 @@
 				38A7348E136AFED300311ED5 /* TICDSSyncConflict.m in Sources */,
 				3824C82C136B1AE000B67E09 /* TICDSVacuumOperation.m in Sources */,
 				38D1D470136B2E31009FD0FF /* TICDSFileManagerBasedVacuumOperation.m in Sources */,
+				3883FE2B1376AD3B004D26B2 /* FZACryptor.m in Sources */,
+				3883FE2C1376AD3B004D26B2 /* FZAKeyManager.m in Sources */,
+				3883FE2D1376AD3B004D26B2 /* FZAKeyManageriPhone.m in Sources */,
+				3883FE2E1376AD3B004D26B2 /* FZAKeyManagerMac.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
