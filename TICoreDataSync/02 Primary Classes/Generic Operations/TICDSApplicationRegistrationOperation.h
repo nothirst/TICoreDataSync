@@ -22,7 +22,9 @@
  
        3. If encryption is enabled, create the `FZACryptor` and set its password.
  
-       4. If encryption is enabled, subclass saves the generated salt file at the root.
+       4. If encryption is enabled, subclass saves the generated salt file in the remote `Encryption` directory.
+ 
+       5. If encryption is enabled, subclass saves a suitable file for password testing in the remote `Encryption` directory.
  
        5. Continue by creating the client's directory (main step 3) inside `ClientDevices`.
  
@@ -98,6 +100,18 @@
  @param saltData The data to be saved. */
 - (void)saveSaltDataToRemote:(NSData *)saltData;
 
+/** Save the test data to a `test.ticdsync` file in the `Encryption` directory at the root of the application's remote directory.
+ 
+ This method must call `savedTestDataWithSuccess:` to indicate whether the save was successful.
+ 
+ @param testData The data to be saved. */
+- (void)savePasswordTestData:(NSData *)testData;
+
+/** Fetch the test data from the `test.ticdsync` file in the `Encryption` directory.
+ 
+ This method must call `fetchedPasswordTestData:` when done. */
+- (void)fetchPasswordTestData;
+
 /** Check whether the client's directory already exists in `ClientDevices`.
  
  This method must call `discoveredStatusOfRemoteClientDeviceDirectory:` to indicate the status. */
@@ -158,6 +172,20 @@
  
  @param success A Boolean indicating whether the `salt.ticdsync` file was saved or not. */
 - (void)savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:(BOOL)success;
+
+/** Indicate whether the test data was saved successfuly.
+ 
+ If not, call `setError:` first, then specify `NO` for `success`.
+ 
+ @param success A Boolean indicating whether the `test.ticdsync` file was saved or not. */
+- (void)savedPasswordTestDataWithSuccess:(BOOL)success;
+
+/** Provide the test data from the `test.ticdsync` file.
+ 
+ If an error occurred, call `setError:` first, then specify `nil` for `testData`.
+ 
+ @param testData The `NSData` contents of the `test.ticdsync` file, or `nil` if an error occurred. */
+- (void)fetchedPasswordTestData:(NSData *)testData;
 
 /* Indicate the status of the client's directory in `ClientDevices`.
  

@@ -16,6 +16,7 @@
 @private
     NSString *_applicationDirectoryPath;
     NSString *_encryptionDirectorySaltDataFilePath;
+    NSString *_encryptionDirectoryTestDataFilePath;
     NSString *_clientDevicesDirectoryPath;
     NSString *_clientDevicesThisClientDeviceDirectoryPath;
 }
@@ -27,6 +28,9 @@
 
 /** The path to the `salt.ticdsync` file inside this application's `Encryption` directory. */
 @property (retain) NSString *encryptionDirectorySaltDataFilePath;
+
+/** The path to the `test.ticdsync` file inside this application's `Encryption` directory. */
+@property (retain) NSString *encryptionDirectoryTestDataFilePath;
 
 /** The path to the `ClientDevices` directory. */
 @property (retain) NSString *clientDevicesDirectoryPath;

@@ -114,6 +114,13 @@ NSString * const kTISLUserDropboxLocation = @"kTISLUserDropboxLocation";
 {
     [self decreaseSyncActivity];
     
+    NSView *currentView = [[[self panelContainerView] subviews] lastObject];
+    if( currentView == [self dropboxRequestExistingPasswordView] ) {
+        // previous password was incorrect
+        [[self dropboxRequestExistingPasswordErrorLabel] setHidden:NO];
+        return;
+    }
+    
     [self replaceAnyExistingViewWithView:[self dropboxRequestExistingPasswordView]];
 }
 

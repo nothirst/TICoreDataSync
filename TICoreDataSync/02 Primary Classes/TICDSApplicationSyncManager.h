@@ -194,6 +194,9 @@
 /** The path to the `salt.ticdsync` file inside the `Encryption` directory, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToEncryptionDirectorySaltDataFilePath;
 
+/** The path to the `test.ticdsync` file inside the `Encryption` directory, relative to the rot of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToEncryptionDirectoryTestDataFilePath;
+
 /** The path to the `ClientDevices` directory, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToClientDevicesDirectory;
 

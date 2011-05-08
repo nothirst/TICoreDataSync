@@ -64,6 +64,7 @@ extern NSString * const TICDSDocumentInfoPlistFilenameWithExtension;
 extern NSString * const TICDSDocumentInfoPlistFilename;
 extern NSString * const TICDSDocumentInfoPlistExtension;
 extern NSString * const TICDSSaltFilenameWithExtension;
+extern NSString * const TICDSEncryptionTestFilenameWithExtension;
 
 extern NSString * const TICDSSyncIDAttributeName;
 extern NSString * const TICDSSyncChangeDataModelName;

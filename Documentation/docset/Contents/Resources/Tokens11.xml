@@ -35,13 +35,24 @@
 		
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedApplicationSyncManager/encryptionDirectorySaltDataFilePath</TokenIdentifier>
-			<Abstract>The path to the salt.ticds file inside the Encryption directory at the root of the application.</Abstract>
+			<Abstract>The path to the salt.ticdsync file inside the Encryption directory at the root of the application.</Abstract>
 			<DeclaredIn>TICDSFileManagerBasedApplicationSyncManager.h</DeclaredIn>			
 			
 			<Declaration>@property (nonatomic, readonly) NSString *encryptionDirectorySaltDataFilePath</Declaration>
 			
 			
 			<Anchor>//api/name/encryptionDirectorySaltDataFilePath</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSFileManagerBasedApplicationSyncManager/encryptionDirectoryTestDataFilePath</TokenIdentifier>
+			<Abstract>The path to the test.ticdsync file inside the Encryption directory at the root of the application.</Abstract>
+			<DeclaredIn>TICDSFileManagerBasedApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *encryptionDirectoryTestDataFilePath</Declaration>
+			
+			
+			<Anchor>//api/name/encryptionDirectoryTestDataFilePath</Anchor>
 		</Token>
 		
 		<Token>

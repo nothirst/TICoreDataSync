@@ -112,6 +112,51 @@
     [self savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:success];
 }
 
+
+- (void)savePasswordTestData:(NSData *)testData
+{
+    // save to temp directory first
+    NSString *tmpFilePath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:TICDSEncryptionTestFilenameWithExtension];
+    
+    NSError *anyError = nil;
+    BOOL success = [testData writeToFile:tmpFilePath options:0 error:&anyError];
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self savedPasswordTestDataWithSuccess:success];
+        return;
+    }
+    
+    success = [[self cryptor] encryptFileAtLocation:[NSURL fileURLWithPath:tmpFilePath] writingToLocation:[NSURL fileURLWithPath:[self encryptionDirectoryTestDataFilePath]] error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    [self savedPasswordTestDataWithSuccess:success];
+}
+
+- (void)fetchPasswordTestData
+{
+    // decrypt data to temp directory first
+    NSString *tmpFilePath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:TICDSEncryptionTestFilenameWithExtension];
+    
+    NSError *anyError = nil;
+    BOOL success = [[self cryptor] decryptFileAtLocation:[NSURL fileURLWithPath:[self encryptionDirectoryTestDataFilePath]] writingToLocation:[NSURL fileURLWithPath:tmpFilePath] error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self fetchedPasswordTestData:nil];
+        return;
+    }
+    
+    NSData *fetchedData = [NSData dataWithContentsOfFile:tmpFilePath options:0 error:&anyError];
+    if( !fetchedData ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    [self fetchedPasswordTestData:fetchedData];
+}
+
 #pragma mark -
 #pragma mark Overridden Client Device Directory Methods
 - (void)checkWhetherRemoteClientDeviceDirectoryExists
@@ -179,6 +224,7 @@
 {
     [_applicationDirectoryPath release], _applicationDirectoryPath = nil;
     [_encryptionDirectorySaltDataFilePath release], _encryptionDirectorySaltDataFilePath = nil;
+    [_encryptionDirectoryTestDataFilePath release], _encryptionDirectoryTestDataFilePath = nil;
     [_clientDevicesDirectoryPath release], _clientDevicesDirectoryPath = nil;
     [_clientDevicesThisClientDeviceDirectoryPath release], _clientDevicesThisClientDeviceDirectoryPath = nil;
     
@@ -189,6 +235,7 @@
 #pragma mark Properties
 @synthesize applicationDirectoryPath = _applicationDirectoryPath;
 @synthesize encryptionDirectorySaltDataFilePath = _encryptionDirectorySaltDataFilePath;
+@synthesize encryptionDirectoryTestDataFilePath = _encryptionDirectoryTestDataFilePath;
 @synthesize clientDevicesDirectoryPath = _clientDevicesDirectoryPath;
 @synthesize clientDevicesThisClientDeviceDirectoryPath = _clientDevicesThisClientDeviceDirectoryPath;
 

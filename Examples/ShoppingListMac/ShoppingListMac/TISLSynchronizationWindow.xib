@@ -87,6 +87,7 @@
 							</object>
 							<string key="NSFrame">{{42, 132}, {192, 192}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="21015171"/>
 							<int key="NSViewLayerContentsRedrawPolicy">2</int>
 							<bool key="NSEnabled">YES</bool>
@@ -109,6 +110,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{37, 95}, {203, 29}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="785183878"/>
 							<int key="NSViewLayerContentsRedrawPolicy">2</int>
 							<bool key="NSEnabled">YES</bool>
@@ -157,7 +159,7 @@
 											<int key="NSvFlags">268</int>
 											<string key="NSFrame">{{2, 2}, {410, 300}}</string>
 											<reference key="NSSuperview" ref="575125399"/>
-											<reference key="NSNextKeyView"/>
+											<reference key="NSWindow"/>
 											<bool key="NSViewIsLayerTreeHost">YES</bool>
 											<int key="NSViewLayerContentsRedrawPolicy">2</int>
 											<string key="NSClassName">NSView</string>
@@ -165,12 +167,14 @@
 									</object>
 									<string key="NSFrame">{{1, 1}, {414, 304}}</string>
 									<reference key="NSSuperview" ref="340309202"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="624179273"/>
 									<int key="NSViewLayerContentsRedrawPolicy">2</int>
 								</object>
 							</object>
 							<string key="NSFrame">{{278, 20}, {416, 306}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="575125399"/>
 							<int key="NSViewLayerContentsRedrawPolicy">2</int>
 							<string key="NSOffsets">{0, 0}</string>
@@ -217,6 +221,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{9, 20}, {259, 17}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="340309202"/>
 							<int key="NSViewLayerContentsRedrawPolicy">2</int>
 							<bool key="NSEnabled">YES</bool>
@@ -240,6 +245,7 @@
 							<object class="NSPSMatrix" key="NSDrawMatrix"/>
 							<string key="NSFrame">{{18, 67}, {242, 20}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="978068311"/>
 							<bool key="NSViewCanDrawConcurrently">YES</bool>
 							<int key="NSpiFlags">16394</int>
@@ -250,6 +256,7 @@
 							<int key="NSvFlags">-2147483380</int>
 							<string key="NSFrame">{{85, 46}, {107, 17}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="765605884"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="199602084">
@@ -265,6 +272,7 @@
 					</object>
 					<string key="NSFrame">{{7, 11}, {714, 346}}</string>
 					<reference key="NSSuperview"/>
+					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="344938421"/>
 					<int key="NSViewLayerContentsRedrawPolicy">2</int>
 				</object>
@@ -2118,7 +2126,7 @@ A</string>
 						<object class="NSTextFieldCell" key="NSCell" id="651034988">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272630784</int>
-							<string key="NSContents">You must specify a password to use synchronization.</string>
+							<string key="NSContents">Sorry, that password is incorrect. Please try again.</string>
 							<reference key="NSSupport" ref="787435479"/>
 							<reference key="NSControlView" ref="726887143"/>
 							<bool key="NSDrawsBackground">YES</bool>
@@ -2177,7 +2185,6 @@ A</string>
 						<string key="NSFrame">{{18, 16}, {76, 29}}</string>
 						<reference key="NSSuperview" ref="392985379"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="589714370">
 							<int key="NSCellFlags">-2080244224</int>

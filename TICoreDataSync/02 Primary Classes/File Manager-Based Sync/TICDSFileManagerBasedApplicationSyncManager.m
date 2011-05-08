@@ -18,6 +18,7 @@
     
     [operation setApplicationDirectoryPath:[self applicationDirectoryPath]];
     [operation setEncryptionDirectorySaltDataFilePath:[self encryptionDirectorySaltDataFilePath]];
+    [operation setEncryptionDirectoryTestDataFilePath:[self encryptionDirectoryTestDataFilePath]];
     [operation setClientDevicesDirectoryPath:[self clientDevicesDirectoryPath]];
     [operation setClientDevicesThisClientDeviceDirectoryPath:[self clientDevicesThisClientDeviceDirectoryPath]];
     
@@ -52,6 +53,11 @@
 - (NSString *)encryptionDirectorySaltDataFilePath
 {
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToEncryptionDirectorySaltDataFilePath]];
+}
+
+- (NSString *)encryptionDirectoryTestDataFilePath
+{
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToEncryptionDirectoryTestDataFilePath]];
 }
 
 - (NSString *)documentsDirectoryPath

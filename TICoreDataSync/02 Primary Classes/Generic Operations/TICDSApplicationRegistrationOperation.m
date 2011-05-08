@@ -20,6 +20,7 @@
 - (void)beginFetchOfSaltFileData;
 - (void)beginRequestForEncryptionPassword;
 - (void)continueAfterRequestForEncryptionPassword;
+- (void)beginSavingPasswordTestData;
 - (void)beginTestForCorrectPassword;
 
 - (void)beginCheckForRemoteClientDeviceDirectory;
@@ -205,20 +206,76 @@
         return;
     }
     
-    // Cryptor won't have been set when this registration operation was created...
-    FZACryptor *aCryptor = [[FZACryptor alloc] init];
-    [self setCryptor:aCryptor];
-    [aCryptor release];
-    
     [self beginFetchOfSaltFileData];
+}
+
+#pragma mark Password Test File Creation
+- (void)beginSavingPasswordTestData
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Saving password test data");
+    
+    NSString *testString = [NSString stringWithFormat:@"%@%@", [self appIdentifier], [TICDSUtilities uuidString]];
+    
+    NSData *testData = [NSKeyedArchiver archivedDataWithRootObject:testString];
+    
+    [self savePasswordTestData:testData];
+}
+
+- (void)savedPasswordTestDataWithSuccess:(BOOL)success
+{
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save password test data");
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    [self beginCreatingRemoteClientDeviceDirectory];
 }
 
 #pragma mark Password Testing
 - (void)beginTestForCorrectPassword
 {
     // Assume password is correct...
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Fetching encryption password test file");
     
-    [self beginCheckForRemoteClientDeviceDirectory];
+    [self fetchPasswordTestData];
+}
+
+- (void)fetchedPasswordTestData:(NSData *)testData
+{
+    if( testData ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Fetched test data and decrypted successfully");
+        [self beginCheckForRemoteClientDeviceDirectory];
+        return;
+    }
+    
+    // an error occurred
+    NSError *underlyingError = [[[self error] userInfo] valueForKey:kTICDSErrorUnderlyingError];
+    
+    // incorrect password
+    if( [underlyingError code] == FZACryptorErrorCodeFailedIntegrityCheck && [[underlyingError domain] isEqualTo:FZACryptorErrorDomain] ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Password was incorrect, so ask the delegate for a new one");
+        
+        [self beginRequestForEncryptionPassword];
+        return;
+    }
+    
+    // generic error
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to fetch test data");
+    [self operationDidFailToComplete];
+}
+
+#pragma mark Overridden Methods
+- (void)savePasswordTestData:(NSData *)testData
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self savedPasswordTestDataWithSuccess:NO];
+}
+
+- (void)fetchPasswordTestData
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self fetchedPasswordTestData:nil];
 }
 
 #pragma mark -
@@ -239,7 +296,15 @@
     } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesExist ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Salt file exists");
         
-        [self beginRequestForEncryptionPassword];
+        // set encryptor
+        FZACryptor *cryptor = [[FZACryptor alloc] init];
+        [self setCryptor:cryptor];
+        if( [cryptor isConfigured] ) {
+            [self beginCheckForRemoteClientDeviceDirectory];
+        } else {
+            [self beginRequestForEncryptionPassword];
+        }
+        
     } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesNotExist ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Salt file does not exist");
         
@@ -299,9 +364,9 @@
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Saved salt file");
     
-    //[self beginSavingPasswordTestFile];
+    [self beginSavingPasswordTestData];
     
-    [self beginCreatingRemoteClientDeviceDirectory];
+    //[self beginCreatingRemoteClientDeviceDirectory];
 }
 
 #pragma mark Overridden Methods

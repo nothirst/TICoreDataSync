@@ -294,6 +294,17 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/relativePathToEncryptionDirectoryTestDataFilePath</TokenIdentifier>
+			<Abstract>The path to the test.ticdsync file inside the Encryption directory, relative to the rot of the remote file structure.</Abstract>
+			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, readonly) NSString *relativePathToEncryptionDirectoryTestDataFilePath</Declaration>
+			
+			
+			<Anchor>//api/name/relativePathToEncryptionDirectoryTestDataFilePath</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationSyncManager/relativePathToClientDevicesDirectory</TokenIdentifier>
 			<Abstract>The path to the ClientDevices directory, relative to the root of the remote file structure.</Abstract>
 			<DeclaredIn>TICDSApplicationSyncManager.h</DeclaredIn>			
