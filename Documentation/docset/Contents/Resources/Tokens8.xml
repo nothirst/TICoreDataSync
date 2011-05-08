@@ -263,6 +263,17 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/shouldUseEncryption</TokenIdentifier>
+			<Abstract>Used to indicate whether the document sync manager should use encryption for the remote files.</Abstract>
+			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			
+			
+			<Declaration>@property (nonatomic, assign) BOOL shouldUseEncryption</Declaration>
+			
+			
+			<Anchor>//api/name/shouldUseEncryption</Anchor>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentSyncManager/delegate</TokenIdentifier>
 			<Abstract>The Document Sync Manager Delegate.</Abstract>
 			<DeclaredIn>TICDSDocumentSyncManager.h</DeclaredIn>			

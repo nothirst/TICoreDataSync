@@ -138,8 +138,8 @@
 		389D76B513632643007F19DC /* TICDSSyncChange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSyncChange.h; sourceTree = "<group>"; };
 		389D76B613632643007F19DC /* TICDSSyncChange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSyncChange.m; sourceTree = "<group>"; };
 		389D76B8136329BC007F19DC /* DocumentSyncChangesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DocumentSyncChangesWindow.xib; sourceTree = "<group>"; };
-		389F86B113608C7900004CA4 /* TICDSOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSOperation.h; sourceTree = "<group>"; };
-		389F86B213608C7900004CA4 /* TICDSOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSOperation.m; sourceTree = "<group>"; };
+		389F86B113608C7900004CA4 /* TICDSOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TICDSOperation.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		389F86B213608C7900004CA4 /* TICDSOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TICDSOperation.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		389F86B51360902900004CA4 /* DropboxBoth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DropboxBoth.png; sourceTree = "<group>"; };
 		389F86B61360902900004CA4 /* DropboxText.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DropboxText.png; sourceTree = "<group>"; };
 		389F86B71360902900004CA4 /* DropboxLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DropboxLogo.png; sourceTree = "<group>"; };

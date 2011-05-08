@@ -56,7 +56,6 @@
     NSDictionary *_applicationUserInfo;
     
     BOOL _paused;
-    BOOL _shouldUseEncryption;
     NSString *_password;
 }
 
@@ -194,9 +193,6 @@
 
 /** Used to indicate whether the operation is currently paused awaiting input from the operation delegate, or in turn the application sync manager delegate. */
 @property (assign, getter = isPaused) BOOL paused;
-
-/** Used by the `TICDSApplicationSyncManager` to indicate whether to enable encryption after finding out this is the first time the global app has been registered. */
-@property (assign) BOOL shouldUseEncryption;
 
 /** The password to use for encryption at initial global app registration, if `shouldUseEncryption` is `YES`. */
 @property (retain) NSString *password;

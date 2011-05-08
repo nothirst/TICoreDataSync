@@ -27,6 +27,8 @@
 @private
     TICDSDocumentSyncManagerState _state;
     
+    BOOL shouldUseEncryption;
+    
     id <TICDSDocumentSyncManagerDelegate> _delegate;
     TICDSApplicationSyncManager *_applicationSyncManager;
     NSString *_documentIdentifier;
@@ -207,6 +209,11 @@
  Possible values are defined in `TICDSTypesAndEnums.h`.
  */
 @property (nonatomic, assign) TICDSDocumentSyncManagerState state;
+
+/** Used to indicate whether the document sync manager should use encryption for the remote files.
+ 
+ This value is set automatically by the application sync manager. */
+@property (nonatomic, assign) BOOL shouldUseEncryption;
 
 /** The Document Sync Manager Delegate. */
 @property (nonatomic, assign) id <TICDSDocumentSyncManagerDelegate> delegate;

@@ -159,6 +159,13 @@
         return;
     }
     
+    // Cryptor won't have been set when this registration operation was created...
+    if( [self shouldUseEncryption] ) {
+        FZACryptor *aCryptor = [[FZACryptor alloc] init];
+        [self setCryptor:aCryptor];
+        [aCryptor release];
+    }
+    
     [self beginCreatingRemoteGlobalAppDirectoryStructure];
 }
 
@@ -198,7 +205,12 @@
         return;
     }
     
-    [self beginTestForCorrectPassword];
+    // Cryptor won't have been set when this registration operation was created...
+    FZACryptor *aCryptor = [[FZACryptor alloc] init];
+    [self setCryptor:aCryptor];
+    [aCryptor release];
+    
+    [self beginFetchOfSaltFileData];
 }
 
 #pragma mark Password Testing
@@ -227,7 +239,7 @@
     } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesExist ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Salt file exists");
         
-        [self beginFetchOfSaltFileData];
+        [self beginRequestForEncryptionPassword];
     } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesNotExist ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Salt file does not exist");
         
@@ -257,7 +269,9 @@
     
     [self setShouldUseEncryption:YES];
     
-    [self beginRequestForEncryptionPassword];
+    [[self cryptor] setPassword:[self password] salt:saltData];
+    
+    [self beginTestForCorrectPassword];
 }
 
 #pragma mark Saving Salt File
@@ -269,8 +283,8 @@
     }
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Using encryption");
-    NSData *saltData = [NSKeyedArchiver archivedDataWithRootObject:@"HELLOTHISISMYSALT"];
-    // NSData *saltData = [self setEncryptor:[FZAEncryptor encryptorWithPassword:[self password] salt:nil]];
+    //NSData *saltData = [NSKeyedArchiver archivedDataWithRootObject:@"HELLOTHISISMYSALT"];
+    NSData *saltData = [[self cryptor] setPassword:[self password] salt:nil];
     
     [self saveSaltDataToRemote:saltData];
 }
@@ -284,6 +298,8 @@
     }
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Saved salt file");
+    
+    //[self beginSavingPasswordTestFile];
     
     [self beginCreatingRemoteClientDeviceDirectory];
 }
@@ -424,7 +440,6 @@
 @synthesize clientDescription = _clientDescription;
 @synthesize applicationUserInfo = _applicationUserInfo;
 @synthesize paused = _paused;
-@synthesize shouldUseEncryption = _shouldUseEncryption;
 @synthesize password = _password;
 
 @end

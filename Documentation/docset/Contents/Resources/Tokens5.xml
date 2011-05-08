@@ -314,17 +314,6 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationRegistrationOperation/shouldUseEncryption</TokenIdentifier>
-			<Abstract>Used by the TICDSApplicationSyncManager to indicate whether to enable encryption after finding out this is the first time the global app has been registered.</Abstract>
-			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (assign) BOOL shouldUseEncryption</Declaration>
-			
-			
-			<Anchor>//api/name/shouldUseEncryption</Anchor>
-		</Token>
-		
-		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/TICDSApplicationRegistrationOperation/password</TokenIdentifier>
 			<Abstract>The password to use for encryption at initial global app registration, if shouldUseEncryption is YES.</Abstract>
 			<DeclaredIn>TICDSApplicationRegistrationOperation.h</DeclaredIn>			

@@ -25,6 +25,8 @@
 @private
     TICDSApplicationSyncManagerState _state;
     
+    BOOL _shouldUseEncryption;
+    
     id <TICDSApplicationSyncManagerDelegate> _delegate;
     NSString *_appIdentifier;
     NSString *_clientIdentifier;
@@ -135,6 +137,11 @@
  Possible values are defined in `TICDSTypesAndEnums.h`.
  */
 @property (nonatomic, readonly) TICDSApplicationSyncManagerState state;
+
+/** Used to indicate whether the application sync manager should use encryption for the remote files.
+ 
+ This value is set automatically during the application registration process. */
+@property (nonatomic, assign) BOOL shouldUseEncryption;
 
 /** The Application Sync Manager Delegate. */
 @property (nonatomic, assign) id <TICDSApplicationSyncManagerDelegate> delegate;

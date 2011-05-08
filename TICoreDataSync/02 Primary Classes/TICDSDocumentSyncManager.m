@@ -44,6 +44,7 @@
 {
     [self setDelegate:aDelegate];
     [self setDocumentIdentifier:aDocumentIdentifier];
+    [self setShouldUseEncryption:[anAppSyncManager shouldUseEncryption]];
     
     NSError *anyError = nil;
     BOOL success = [self startDocumentConfigurationProcess:&anyError];
@@ -231,6 +232,7 @@
         return NO;
     }
     
+    [operation setShouldUseEncryption:[self shouldUseEncryption]];
     [operation setDocumentIdentifier:[self documentIdentifier]];
     [operation setClientIdentifier:[self clientIdentifier]];
     [operation setClientDescription:[[self applicationSyncManager] clientDescription]];
@@ -383,6 +385,7 @@
         return;
     }
     
+    [operation setShouldUseEncryption:[self shouldUseEncryption]];
     [operation setLocalWholeStoreFileLocation:storeURL];
     
     NSString *appliedSyncChangeSetsFilePath = [[self helperFileDirectoryLocation] path];
@@ -464,6 +467,8 @@
         [self bailFromDownloadProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
         return;
     }
+    
+    [operation setShouldUseEncryption:[self shouldUseEncryption]];
     
     NSString *wholeStoreFilePath = [temporaryPath stringByAppendingPathComponent:TICDSWholeStoreFilename];
     NSString *appliedSyncChangesFilePath = [temporaryPath stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
@@ -571,6 +576,7 @@
         return;
     }
     
+    [operation setShouldUseEncryption:[self shouldUseEncryption]];
     [operation setClientIdentifier:[self clientIdentifier]];
     // Set location of sync changes to merge file
     NSURL *syncChangesToMergeLocation = nil;
@@ -718,6 +724,8 @@
         [self bailFromVacuumProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
         return;
     }
+    
+    [operation setShouldUseEncryption:[self shouldUseEncryption]];
     
     [[self otherTasksQueue] addOperation:operation];
 }
@@ -1010,6 +1018,7 @@
 #pragma mark -
 #pragma mark Properties
 @synthesize delegate = _delegate;
+@synthesize shouldUseEncryption = _shouldUseEncryption;
 @synthesize state = _state;
 @synthesize applicationSyncManager = _applicationSyncManager;
 @synthesize documentIdentifier = _documentIdentifier;

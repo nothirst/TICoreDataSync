@@ -44,8 +44,6 @@
 	
 	<option value="//api/name/paused">&nbsp;&nbsp;&nbsp;&nbsp;paused</option>
 	
-	<option value="//api/name/shouldUseEncryption">&nbsp;&nbsp;&nbsp;&nbsp;shouldUseEncryption</option>
-	
 	
 	
 	
@@ -130,8 +128,6 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/password">password</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/paused">paused</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/shouldUseEncryption">shouldUseEncryption</a></span></li>
 	
 </ul></li>
 
@@ -277,7 +273,7 @@
 							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/initWithDelegate:">&ndash;&nbsp;initWithDelegate:</a></code>
-		<span class="tooltip"><p>Initialize the operation with a provided <a href="../Classes/TICDSOperation.html#//api/name/delegate">delegate</a>.</p></span>
+		<span class="tooltip"><p>Initialize the operation with a provided <a href="#//api/name/delegate">delegate</a>.</p></span>
 	</span>
 	
 	
@@ -454,15 +450,8 @@
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/shouldUseEncryption">&nbsp;&nbsp;shouldUseEncryption</a></code>
-		<span class="tooltip"><p>Used by the <a href="../Classes/TICDSApplicationSyncManager.html"><code>TICDSApplicationSyncManager</code></a> to indicate whether to enable encryption after finding out this is the first time the global app has been registered.</p></span>
-	</span>
-	<span class="task-item-suffix">property</span>
-	
-</li><li>
-	<span class="tooltip">
 		<code><a href="#//api/name/password">&nbsp;&nbsp;password</a></code>
-		<span class="tooltip"><p>The <a href="#//api/name/password">password</a> to use for encryption at initial global app registration, if <a href="#//api/name/shouldUseEncryption"><code>shouldUseEncryption</code></a> is <code>YES</code>.</p></span>
+		<span class="tooltip"><p>The <a href="#//api/name/password">password</a> to use for encryption at initial global app registration, if <code>shouldUseEncryption</code> is <code>YES</code>.</p></span>
 	</span>
 	<span class="task-item-suffix">property</span>
 	
@@ -582,7 +571,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>The <a href="#//api/name/password">password</a> to use for encryption at initial global app registration, if <a href="#//api/name/shouldUseEncryption"><code>shouldUseEncryption</code></a> is <code>YES</code>.</p>
+		<p>The <a href="#//api/name/password">password</a> to use for encryption at initial global app registration, if <code>shouldUseEncryption</code> is <code>YES</code>.</p>
 	</div>		
 	
 	
@@ -619,38 +608,6 @@
 	
 	
 	<div class="method-subsection method-declaration"><code>@property (assign, getter=isPaused) BOOL paused</code></div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/shouldUseEncryption" title="shouldUseEncryption"></a>
-	<h3 class="subsubtitle method-title">shouldUseEncryption</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Used by the <a href="../Classes/TICDSApplicationSyncManager.html"><code>TICDSApplicationSyncManager</code></a> to indicate whether to enable encryption after finding out this is the first time the global app has been registered.</p>
-	</div>		
-	
-	
-	<div class="method-subsection method-declaration"><code>@property (assign) BOOL shouldUseEncryption</code></div>
 	
 	
 	
@@ -1239,7 +1196,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Initialize the operation with a provided <a href="../Classes/TICDSOperation.html#//api/name/delegate">delegate</a>.</p>
+		<p>Initialize the operation with a provided <a href="#//api/name/delegate">delegate</a>.</p>
 	</div>		
 	
 	
@@ -1251,7 +1208,7 @@
 		
 		<dl class="argument-def parameter-def">
 			<dt><em>aDelegate</em></dt>
-			<dd><p>The <a href="../Classes/TICDSOperation.html#//api/name/delegate">delegate</a> object for the operation, notified when the operation starts, ends, fails, or is cancelled using methods defined in the <a href="../Protocols/TICDSOperationDelegate.html"><code>TICDSOperationDelegate</code></a> protocol.</p></dd>
+			<dd><p>The <a href="#//api/name/delegate">delegate</a> object for the operation, notified when the operation starts, ends, fails, or is cancelled using methods defined in the <a href="../Protocols/TICDSOperationDelegate.html"><code>TICDSOperationDelegate</code></a> protocol.</p></dd>
 		</dl>
 		
 	</div>

@@ -24,6 +24,13 @@
         return;
     }
     
+    // Configure the Cryptor object, if encryption is enabled
+    if( [self shouldUseEncryption] ) {
+        FZACryptor *aCryptor = [[FZACryptor alloc] init];
+        [self setCryptor:aCryptor];
+        [aCryptor release];
+    }
+
     [self operationDidStart];
     
     [self main];
@@ -52,6 +59,11 @@
 #pragma mark Completion
 - (void)ticdPrivate_operationDidCompleteSuccessfully:(BOOL)success cancelled:(BOOL)wasCancelled
 {
+    // cleanup temporary directory, if necessary
+    if( _tempFileDirectoryPath ) {
+        [[self fileManager] removeItemAtPath:_tempFileDirectoryPath error:nil];
+    }
+    
     if( success ) {
         TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"TICDSOperation completed successfully");
         [self ti_alertDelegateOnMainThreadWithSelector:@selector(operationCompletedSuccessfully:) waitUntilDone:YES];
@@ -125,23 +137,50 @@
 
 - (void)dealloc
 {
+    [_cryptor release], _cryptor = nil;
     [_userInfo release], _userInfo = nil;
     [_error release], _error = nil;
     [_clientIdentifier release], _clientIdentifier = nil;
     [_fileManager release], _fileManager = nil;
-    
+    [_tempFileDirectoryPath release], _tempFileDirectoryPath = nil;
+
     [super dealloc];
 }
 
 #pragma mark -
+#pragma mark Lazy Accessors
+- (NSString *)tempFileDirectoryPath
+{
+    if( _tempFileDirectoryPath ) {
+        return _tempFileDirectoryPath;
+    }
+    
+    NSString *aDirectoryPath = [NSTemporaryDirectory() stringByAppendingPathComponent:[TICDSUtilities uuidString]];
+    
+    NSError *anyError = nil;
+    BOOL success = [[self fileManager] createDirectoryAtPath:aDirectoryPath withIntermediateDirectories:NO attributes:nil error:&anyError];
+    
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Internal error: unable to create temp file directory");
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    _tempFileDirectoryPath = [aDirectoryPath retain];
+    
+    return _tempFileDirectoryPath;
+}
+
+#pragma mark -
 #pragma mark Properties
+@synthesize shouldUseEncryption = _shouldUseEncryption;
+@synthesize cryptor = _cryptor;
 @synthesize delegate = _delegate;
 @synthesize userInfo = _userInfo;
 @synthesize isExecuting = _isExecuting;
 @synthesize isFinished = _isFinished;
 @synthesize error = _error;
 @synthesize fileManager = _fileManager;
-@synthesize helperFileDirectoryLocation = _helperFileDirectoryLocation;
+@synthesize tempFileDirectoryPath = _tempFileDirectoryPath;
 @synthesize clientIdentifier = _clientIdentifier;
 
 @end

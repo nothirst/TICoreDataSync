@@ -70,6 +70,7 @@
         return NO;
     }
     
+    [operation setShouldUseEncryption:[self shouldUseEncryption]];
     [operation setAppIdentifier:[self appIdentifier]];
     [operation setClientDescription:[self clientDescription]];
     [operation setClientIdentifier:[self clientIdentifier]];
@@ -182,6 +183,8 @@
         return NO;
     }
     
+    [operation setShouldUseEncryption:[self shouldUseEncryption]];
+    
     [[self otherTasksQueue] addOperation:operation];
     
     return YES;
@@ -281,6 +284,7 @@
         return NO;
     }
     
+    [operation setShouldUseEncryption:[self shouldUseEncryption]];
     [operation setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:aLocation, kTICDSDocumentDownloadFinalWholeStoreLocation, anIdentifier, kTICDSDocumentIdentifier, nil]];
     
     NSString *wholeStoreFilePath = [temporaryPath stringByAppendingPathComponent:TICDSWholeStoreFilename];
@@ -516,6 +520,7 @@ id gTICDSDefaultApplicationSyncManager = nil;
 #pragma mark -
 #pragma mark Properties
 @synthesize state = _state;
+@synthesize shouldUseEncryption = _shouldUseEncryption;
 @synthesize delegate = _delegate;
 @synthesize appIdentifier = _appIdentifier;
 @synthesize clientIdentifier = _clientIdentifier;

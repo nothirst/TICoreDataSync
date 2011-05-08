@@ -25,6 +25,9 @@
 
 @interface TICDSOperation : NSOperation {
 @private
+    BOOL _shouldUseEncryption;
+    FZACryptor *_cryptor;
+    
     NSObject <TICDSOperationDelegate> *_delegate;
     NSDictionary *_userInfo;
     
@@ -33,7 +36,7 @@
     NSError *_error;
     
     NSFileManager *_fileManager;
-    NSURL *_helperFileDirectoryLocation;
+    NSString *_tempFileDirectoryPath;
     
     NSString *_clientIdentifier;
 }
@@ -66,6 +69,12 @@
 
 /** @name Properties */
 
+/** Used to indicate whether the operation should encrypt files stored on the remote. */
+@property (assign) BOOL shouldUseEncryption;
+
+/** The `FZACryptor` object used to encrypt and decrypt files used by this operation, if `shouldUseEncryption` is `YES`. */
+@property (nonatomic, retain) FZACryptor *cryptor;
+
 /** The operation delegate. */
 @property (nonatomic, assign) NSObject <TICDSOperationDelegate> *delegate;
 
@@ -87,8 +96,8 @@
 /** An `NSFileManager` object suitable for use by this operation. */
 @property (nonatomic, readonly, retain) NSFileManager *fileManager;
 
-/** The local location on disc of helper files needed by `TICoreDataSync` for this operation (not set automatically). */
-@property (retain) NSURL *helperFileDirectoryLocation;
+/** The path to a directory inside `NSTemporaryDirectory()` guaranteed to be unique to this operation, created when path first requested and removed when operation finishes. */
+@property (nonatomic, retain) NSString *tempFileDirectoryPath;
 
 /** The identifier of the client application (not set automatically, but may be used whenever necessary by subclasses). */
 @property (retain) NSString *clientIdentifier;

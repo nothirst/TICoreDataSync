@@ -137,12 +137,37 @@
 
 - (void)saveRemoteClientDeviceInfoPlistFromDictionary:(NSDictionary *)aDictionary
 {
-    NSString *filePath = [[self clientDevicesThisClientDeviceDirectoryPath] stringByAppendingPathComponent:TICDSDeviceInfoPlistFilenameWithExtension];
+    BOOL success = YES;
+    NSString *finalFilePath = [[self clientDevicesThisClientDeviceDirectoryPath] stringByAppendingPathComponent:TICDSDeviceInfoPlistFilenameWithExtension];
     
-    BOOL success = [aDictionary writeToFile:filePath atomically:NO];
+    // if no encryption, just write the file straight to the remote
+    if( ![self shouldUseEncryption] ) {
+        success = [aDictionary writeToFile:finalFilePath atomically:NO];
+        
+        if( !success ) {
+            [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError classAndMethod:__PRETTY_FUNCTION__]];
+        }
+        
+        [self savedRemoteClientDeviceInfoPlistWithSuccess:success];
+        return;
+    }
+    
+    // if encryption, save to temporary directory first, then encrypt, writing directly to final location
+    NSString *tmpFilePath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:TICDSDeviceInfoPlistFilenameWithExtension];
+    
+    success = [aDictionary writeToFile:tmpFilePath atomically:NO];
     
     if( !success ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError classAndMethod:__PRETTY_FUNCTION__]];
+        [self savedRemoteClientDeviceInfoPlistWithSuccess:success];
+        return;
+    }
+    
+    NSError *anyError = nil;
+    success = [[self cryptor] encryptFileAtLocation:[NSURL fileURLWithPath:tmpFilePath] writingToLocation:[NSURL fileURLWithPath:finalFilePath] error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
     }
     
     [self savedRemoteClientDeviceInfoPlistWithSuccess:success];
