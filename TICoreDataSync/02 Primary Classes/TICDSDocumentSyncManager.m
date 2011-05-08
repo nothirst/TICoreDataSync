@@ -176,6 +176,7 @@
     
     [self setDelegate:aDelegate];
     [self setDocumentIdentifier:aDocumentIdentifier];
+    [self setShouldUseEncryption:[anAppSyncManager shouldUseEncryption]];
     
     if( [self state] != TICDSApplicationSyncManagerStateConfigured ) {
         shouldContinue = [self startDocumentConfigurationProcess:&anyError];

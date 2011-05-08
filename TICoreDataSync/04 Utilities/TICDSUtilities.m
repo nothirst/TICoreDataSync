@@ -24,34 +24,20 @@
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     
     [dictionary setValue:[NSDictionary dictionary] forKey:TICDSClientDevicesDirectoryName];
-    
     [dictionary setValue:[NSDictionary dictionary] forKey:TICDSDocumentsDirectoryName];
-    
     [dictionary setValue:[NSDictionary dictionary] forKey:TICDSEncryptionDirectoryName];
     
     return dictionary;
 }
 
-+ (NSDictionary *)remoteGlobalAppClientDeviceFileStructure
++ (NSDictionary *)remoteDocumentDirectoryHierarchy
 {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
     
-    [dictionary setValue:[NSDictionary dictionary] forKey:kTICDSUtilitiesFileStructureClientDeviceUID];
-    
-    return dictionary;
-}
-
-+ (NSDictionary *)remoteDocumentFileStructure
-{
-    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-    
-    [dictionary setValue:[NSDictionary dictionaryWithObjectsAndKeys:
-                          [NSDictionary dictionary], TICDSWholeStoreDirectoryName,
-                          [NSDictionary dictionary], TICDSSyncChangesDirectoryName,
-                          [NSDictionary dictionary], TICDSSyncCommandsDirectoryName,
-                          [NSDictionary dictionary], TICDSRecentSyncsDirectoryName,
-                          nil]
-                  forKey:kTICDSUtilitiesFileStructureDocumentUID];
+    [dictionary setValue:[NSDictionary dictionary] forKey:TICDSWholeStoreDirectoryName];
+    [dictionary setValue:[NSDictionary dictionary] forKey:TICDSSyncChangesDirectoryName];
+    [dictionary setValue:[NSDictionary dictionary] forKey:TICDSSyncCommandsDirectoryName];
+    [dictionary setValue:[NSDictionary dictionary] forKey:TICDSRecentSyncsDirectoryName];
     
     return dictionary;
 }

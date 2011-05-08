@@ -20,10 +20,6 @@
         
         id object = [aDictionary valueForKey:eachName];
         
-        if( eachName == kTICDSUtilitiesFileStructureDocumentUID ) {
-            eachName = [self documentIdentifier];
-        }
-        
         if( [object isKindOfClass:[NSDictionary class]] ) {
             NSString *thisPath = [aPath stringByAppendingPathComponent:eachName];
             
@@ -46,101 +42,97 @@
 }
 
 #pragma mark -
-#pragma mark Overridden Methods
-#pragma mark Document File Structure
-- (void)checkWhetherRemoteDocumentFileStructureExists
+#pragma mark Overridden Document Methods
+- (void)checkWhetherRemoteDocumentDirectoryExists
 {
-    if( ![[self fileManager] fileExistsAtPath:[self thisDocumentDirectoryPath]] ) {
-        [self discoveredStatusOfRemoteDocumentFileStructure:TICDSRemoteFileStructureExistsResponseTypeDoesNotExist];
-        return;
+    if( [[self fileManager] fileExistsAtPath:[self thisDocumentDirectoryPath]] ) {
+        [self discoveredStatusOfRemoteDocumentDirectory:TICDSRemoteFileStructureExistsResponseTypeDoesExist];
+    } else {
+        [self discoveredStatusOfRemoteDocumentDirectory:TICDSRemoteFileStructureExistsResponseTypeDoesNotExist];
     }
-    
-    NSError *anyError = nil;
-    NSArray *contents = [[self fileManager] contentsOfDirectoryAtPath:[self thisDocumentDirectoryPath] error:&anyError];
-    
-    if( !contents ) {
-        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [self discoveredStatusOfRemoteDocumentFileStructure:TICDSRemoteFileStructureExistsResponseTypeError];
-        return;
-    }
-    
-    if( [contents count] > 1 ) {
-        [self discoveredStatusOfRemoteDocumentFileStructure:TICDSRemoteFileStructureExistsResponseTypeDoesExist];
-        return;
-    }
-    
-    // Currently won't get here until we make a better check that the entire directory structure exists
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeUnexpectedOrIncompleteFileLocationOrDirectoryStructure classAndMethod:__PRETTY_FUNCTION__]];
-    
-    [self discoveredStatusOfRemoteDocumentFileStructure:TICDSRemoteFileStructureExistsResponseTypeError];
 }
 
-- (void)createRemoteDocumentFileStructure
+- (void)createRemoteDocumentDirectoryStructure
 {
-    NSDictionary *fileStructure = [TICDSUtilities remoteDocumentFileStructure];
-    
-    BOOL success = [self createDirectoryContentsFromDictionary:fileStructure inDirectory:[self documentsDirectoryPath]];
-    
-    // Create documentInfo.plist
-    if( success ) { 
-        NSString *pathToResource = [[NSBundle mainBundle] pathForResource:TICDSDocumentInfoPlistFilename ofType:TICDSDocumentInfoPlistExtension inDirectory:nil];
-        NSMutableDictionary *documentInfo = [NSMutableDictionary dictionaryWithContentsOfFile:pathToResource];
-        [documentInfo setValue:[self documentDescription] forKey:kTICDSDocumentDescription];
-        [documentInfo setValue:[self clientDescription] forKey:kTICDSOriginalDeviceDescription];
-        [documentInfo setValue:[self clientIdentifier] forKey:kTICDSOriginalDeviceIdentifier];
-        [documentInfo setValue:[self documentUserInfo] forKey:kTICDSDocumentUserInfo];
-        
-        NSURL *fileLocation = [NSURL fileURLWithPath:[[self thisDocumentDirectoryPath] stringByAppendingPathComponent:TICDSDocumentInfoPlistFilenameWithExtension]];
-        success = [documentInfo writeToURL:fileLocation atomically:YES];
-    }
-    
-    [self createdRemoteDocumentFileStructureWithSuccess:success];
-}
-
-#pragma mark Document Client Device
-- (void)checkWhetherRemoteDocumentSyncChangesThisClientFileStructureExists
-{
-    if( ![[self fileManager] fileExistsAtPath:[self thisDocumentSyncChangesThisClientDirectoryPath]] ) {
-        [self discoveredStatusOfRemoteDocumentSyncChangesThisClientFileStructure:TICDSRemoteFileStructureExistsResponseTypeDoesNotExist];
-        return;
-    }
+    NSDictionary *documentStructure = [TICDSUtilities remoteDocumentDirectoryHierarchy];
     
     NSError *anyError = nil;
-    NSArray *contents = [[self fileManager] contentsOfDirectoryAtPath:[self thisDocumentSyncChangesThisClientDirectoryPath] error:&anyError];
-    
-    if( !contents ) {
-        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [self discoveredStatusOfRemoteDocumentSyncChangesThisClientFileStructure:TICDSRemoteFileStructureExistsResponseTypeError];
-        return;
-    } else { // there may not be any contents, but as long as the array is !nil, the directory exists
-        [self discoveredStatusOfRemoteDocumentSyncChangesThisClientFileStructure:TICDSRemoteFileStructureExistsResponseTypeDoesExist];
-        return;
-    }
-    
-    // Currently won't get here until we make a better check that the entire directory structure exists
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeUnexpectedOrIncompleteFileLocationOrDirectoryStructure classAndMethod:__PRETTY_FUNCTION__]];
-    
-    [self discoveredStatusOfRemoteDocumentSyncChangesThisClientFileStructure:TICDSRemoteFileStructureExistsResponseTypeError];
-}
-
-- (void)createRemoteDocumentSyncChangesThisClientFileStructure
-{
-    // Just create a directory with this client's UID in the doc's SyncChanges, and in the SyncCommands directory
-    NSString *pathToDirectory = [self thisDocumentSyncChangesThisClientDirectoryPath];
-    
-    NSError *anyError = nil;
-    BOOL success = [[self fileManager] createDirectoryAtPath:pathToDirectory withIntermediateDirectories:YES attributes:nil error:&anyError];
-    
-    if( success ) {
-        pathToDirectory = [self thisDocumentSyncCommandsThisClientDirectoryPath];
-        success = [[self fileManager] createDirectoryAtPath:pathToDirectory withIntermediateDirectories:YES attributes:nil error:&anyError];
-    }
+    BOOL success = [self createDirectoryContentsFromDictionary:documentStructure inDirectory:[self thisDocumentDirectoryPath]];
     
     if( !success ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
     }
     
-    [self createdRemoteDocumentSyncChangesThisClientFileStructureWithSuccess:success];
+    [self createdRemoteDocumentDirectoryStructureWithSuccess:success];
+}
+
+- (void)saveRemoteDocumentInfoPlistFromDictionary:(NSDictionary *)aDictionary
+{
+    BOOL success = YES;
+    NSString *finalFilePath = [[self thisDocumentDirectoryPath] stringByAppendingPathComponent:TICDSDocumentInfoPlistFilenameWithExtension];
+    
+    if( ![self shouldUseEncryption] ) {
+        success = [aDictionary writeToFile:finalFilePath atomically:NO];
+        
+        if( !success ) {
+            [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError classAndMethod:__PRETTY_FUNCTION__]];
+        }
+        
+        [self savedRemoteDocumentInfoPlistWithSuccess:success];
+        return;
+    }
+    
+    // if encryption, save to temporary directory first, then encrypt, writing directly to final location
+    NSString *tmpFilePath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:TICDSDocumentInfoPlistFilenameWithExtension];
+    
+    success = [aDictionary writeToFile:tmpFilePath atomically:NO];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError classAndMethod:__PRETTY_FUNCTION__]];
+        [self savedRemoteDocumentInfoPlistWithSuccess:success];
+        return;
+    }
+    
+    NSError *anyError = nil;
+    success = [[self cryptor] encryptFileAtLocation:[NSURL fileURLWithPath:tmpFilePath] writingToLocation:[NSURL fileURLWithPath:finalFilePath] error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    [self savedRemoteDocumentInfoPlistWithSuccess:success];
+}
+
+#pragma mark -
+#pragma mark Overridden Client Device Directories
+- (void)checkWhetherClientDirectoryExistsInRemoteDocumentSyncChangesDirectory
+{
+    if( [[self fileManager] fileExistsAtPath:[self thisDocumentSyncChangesThisClientDirectoryPath]] ) {
+        [self discoveredStatusOfClientDirectoryInRemoteDocumentSyncChangesDirectory:TICDSRemoteFileStructureExistsResponseTypeDoesExist];
+    } else {
+        [self discoveredStatusOfClientDirectoryInRemoteDocumentSyncChangesDirectory:TICDSRemoteFileStructureExistsResponseTypeDoesNotExist];
+    }
+}
+
+- (void)createClientDirectoriesInRemoteDocumentDirectories
+{
+    NSError *anyError = nil;
+    BOOL success = NO;
+    success = [[self fileManager] createDirectoryAtPath:[self thisDocumentSyncChangesThisClientDirectoryPath] withIntermediateDirectories:NO attributes:nil error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self createdClientDirectoriesInRemoteDocumentDirectoriesWithSuccess:NO];
+        return;
+    }
+    
+    success = [[self fileManager] createDirectoryAtPath:[self thisDocumentSyncCommandsThisClientDirectoryPath] withIntermediateDirectories:NO attributes:nil error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    [self createdClientDirectoriesInRemoteDocumentDirectoriesWithSuccess:success];
 }
 
 #pragma mark -

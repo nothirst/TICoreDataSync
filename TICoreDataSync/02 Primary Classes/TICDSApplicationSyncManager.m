@@ -128,6 +128,8 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Application Registration Operation Completed");
     
+    [self setShouldUseEncryption:[anOperation shouldUseEncryption]];
+    
     [self setState:TICDSApplicationSyncManagerStateAbleToSync];
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Finished registering application sync manager");
     

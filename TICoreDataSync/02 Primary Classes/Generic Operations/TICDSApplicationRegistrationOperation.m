@@ -52,11 +52,11 @@
         [self operationDidFailToComplete];
         return;
     } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesExist ) {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Global App directory exists");
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Global App directory exists");
         [self beginCheckForSaltFile];
     } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesNotExist ) {
         
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Remote app directory doesn't exist so asking delegate whether we should create it");
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Remote app directory doesn't exist so asking delegate whether to create it");
         [self beginRequestWhetherToEnableEncryption];
     }
 }
@@ -295,6 +295,8 @@
         return;
     } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesExist ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Salt file exists");
+        
+        [self setShouldUseEncryption:YES];
         
         // set encryptor
         FZACryptor *cryptor = [[FZACryptor alloc] init];

@@ -25,13 +25,8 @@
  The string keys are names of sub-directories, the values are dictionaries, which may contain further sub-directory keys. */
 + (NSDictionary *)remoteGlobalAppDirectoryHierarchy;
 
-/** Returns a dictionary containing the basic client device file structure for Global Application synchronization.
- 
- The string keys etc are names of sub-directories, with exception of certain keys to be substitued with ClientDeviceUID, etc. */
-+ (NSDictionary *)remoteGlobalAppClientDeviceFileStructure;
-
 /** Returns a dictionary containing the basic file structure for a synchronized document. */
-+ (NSDictionary *)remoteDocumentFileStructure;
++ (NSDictionary *)remoteDocumentDirectoryHierarchy;
 
 /** Returns a dictionary configured for a given synchronization warning. 
  

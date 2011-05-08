@@ -61,9 +61,11 @@
     NSString *_password;
 }
 
+#pragma mark Designated Initializer
 /** @name Designated Initializer */
 - (id)initWithDelegate:(NSObject<TICDSApplicationRegistrationOperationDelegate> *)aDelegate;
 
+#pragma mark Methods Overridden by Subclasses
 /** @name Methods Overridden by Subclasses */
 
 /** Check whether a directory exists for this application.
@@ -129,6 +131,7 @@
  @param aDictionary The dictionary to save as the `deviceInfo.plist`. */
 - (void)saveRemoteClientDeviceInfoPlistFromDictionary:(NSDictionary *)aDictionary;
 
+#pragma mark Callbacks
 /** @name Callbacks */
 
 /** Indicate the status of the global application directory.
@@ -208,6 +211,7 @@
  @param success A Boolean indicating whether the `deviceInfo.plist` file was saved or not. */
 - (void)savedRemoteClientDeviceInfoPlistWithSuccess:(BOOL)success;
 
+#pragma mark Properties
 /** @name Properties */
 
 /** The application identifier. */
