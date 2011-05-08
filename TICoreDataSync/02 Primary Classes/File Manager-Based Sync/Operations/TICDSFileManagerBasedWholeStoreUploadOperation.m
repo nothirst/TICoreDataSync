@@ -40,6 +40,22 @@
     NSError *anyError = nil;
     BOOL success = YES;
     
+    NSString *localWholeStorePath = [[self localWholeStoreFileLocation] path];
+    
+    if( [self shouldUseEncryption] ) {
+        NSString *tmpFilePath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:[localWholeStorePath lastPathComponent]];
+        
+        success = [[self cryptor] encryptFileAtLocation:[self localWholeStoreFileLocation] writingToLocation:[NSURL fileURLWithPath:tmpFilePath] error:&anyError];
+        
+        if( !success ) {
+            [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+            [self uploadedWholeStoreFileWithSuccess:NO];
+            return;
+        }
+        
+        localWholeStorePath = tmpFilePath;
+    }
+    
     NSString *backupFilePath = [[self thisDocumentWholeStoreThisClientDirectoryPath] stringByAppendingPathComponent:@"WholeStoreBackup.ticdsync"];
     
     // Delete the backup, if it exists
@@ -65,7 +81,7 @@
     }
     
     // Copy the whole store to the correct location
-    success = [[self fileManager] copyItemAtPath:[[self localWholeStoreFileLocation] path] toPath:[self thisDocumentWholeStoreThisClientDirectoryWholeStoreFilePath] error:&anyError];
+    success = [[self fileManager] copyItemAtPath:localWholeStorePath toPath:[self thisDocumentWholeStoreThisClientDirectoryWholeStoreFilePath] error:&anyError];
     
     if( !success ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];

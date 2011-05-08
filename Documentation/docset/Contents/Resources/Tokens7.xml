@@ -28,111 +28,143 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentRegistrationOperation/checkWhetherRemoteDocumentFileStructureExists</TokenIdentifier>
-			<Abstract>Check whether this document has previously been registered; i.e., whether the remote file structure for this document already exists.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentRegistrationOperation/checkWhetherRemoteDocumentDirectoryExists</TokenIdentifier>
+			<Abstract>Check whether a remote directory exists for this document.</Abstract>
 			<DeclaredIn>TICDSDocumentRegistrationOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)checkWhetherRemoteDocumentFileStructureExists</Declaration>
+			<Declaration>- (void)checkWhetherRemoteDocumentDirectoryExists</Declaration>
 			
 			
-			<Anchor>//api/name/checkWhetherRemoteDocumentFileStructureExists</Anchor>
+			<Anchor>//api/name/checkWhetherRemoteDocumentDirectoryExists</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentRegistrationOperation/createRemoteDocumentFileStructure</TokenIdentifier>
-			<Abstract>Create the file structure for this document; this method will be called automatically if the file structure dosn't already exist.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentRegistrationOperation/createRemoteDocumentDirectoryStructure</TokenIdentifier>
+			<Abstract>Create remote document directory structure.</Abstract>
 			<DeclaredIn>TICDSDocumentRegistrationOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)createRemoteDocumentFileStructure</Declaration>
+			<Declaration>- (void)createRemoteDocumentDirectoryStructure</Declaration>
 			
 			
-			<Anchor>//api/name/createRemoteDocumentFileStructure</Anchor>
+			<Anchor>//api/name/createRemoteDocumentDirectoryStructure</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentRegistrationOperation/checkWhetherRemoteDocumentSyncChangesThisClientFileStructureExists</TokenIdentifier>
-			<Abstract>Check whether this client has previously been registered for this document; i.e., whether the files for this client device already exist.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentRegistrationOperation/saveRemoteDocumentInfoPlistFromDictionary:</TokenIdentifier>
+			<Abstract>Save the dictionary to a documentInfo.plist file in this document's directory.</Abstract>
 			<DeclaredIn>TICDSDocumentRegistrationOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)checkWhetherRemoteDocumentSyncChangesThisClientFileStructureExists</Declaration>
+			<Declaration>- (void)saveRemoteDocumentInfoPlistFromDictionary:(NSDictionary *)aDictionary</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>aDictionary</Name>
+					<Abstract>The dictionary to save as the documentInfo.plist.</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/checkWhetherRemoteDocumentSyncChangesThisClientFileStructureExists</Anchor>
+			<Anchor>//api/name/saveRemoteDocumentInfoPlistFromDictionary:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentRegistrationOperation/createRemoteDocumentSyncChangesThisClientFileStructure</TokenIdentifier>
-			<Abstract>Create the file structure for this client device for this document; this method will be called automatically if the file structure doesn't already exist.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentRegistrationOperation/checkWhetherClientDirectoryExistsInRemoteDocumentSyncChangesDirectory</TokenIdentifier>
+			<Abstract>Check whether a directory exists for this client inside the document's SyncChanges directory.</Abstract>
 			<DeclaredIn>TICDSDocumentRegistrationOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)createRemoteDocumentSyncChangesThisClientFileStructure</Declaration>
+			<Declaration>- (void)checkWhetherClientDirectoryExistsInRemoteDocumentSyncChangesDirectory</Declaration>
 			
 			
-			<Anchor>//api/name/createRemoteDocumentSyncChangesThisClientFileStructure</Anchor>
+			<Anchor>//api/name/checkWhetherClientDirectoryExistsInRemoteDocumentSyncChangesDirectory</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentRegistrationOperation/discoveredStatusOfRemoteDocumentFileStructure:</TokenIdentifier>
-			<Abstract>Indicate the status of the remote document file structure; i.e., whether the document has previously been registered.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentRegistrationOperation/createClientDirectoriesInRemoteDocumentDirectories</TokenIdentifier>
+			<Abstract>Create directories for this client inside the SyncChanges and SyncCommands directories for this client.</Abstract>
 			<DeclaredIn>TICDSDocumentRegistrationOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)discoveredStatusOfRemoteDocumentFileStructure:(TICDSRemoteFileStructureExistsResponseType)status</Declaration>
+			<Declaration>- (void)createClientDirectoriesInRemoteDocumentDirectories</Declaration>
+			
+			
+			<Anchor>//api/name/createClientDirectoriesInRemoteDocumentDirectories</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentRegistrationOperation/discoveredStatusOfRemoteDocumentDirectory:</TokenIdentifier>
+			<Abstract>Indicate the status of the remote document directory.</Abstract>
+			<DeclaredIn>TICDSDocumentRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)discoveredStatusOfRemoteDocumentDirectory:(TICDSRemoteFileStructureExistsResponseType)status</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>status</Name>
-					<Abstract>The status of the structure: does exist, does not exist, or error (see TICDSTypesAndEnums.h for possible values).</Abstract>
+					<Abstract>The status of the directory: does exist, does not exist, or error (see TICDSTypesAndEnums.h for possible values).</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/discoveredStatusOfRemoteDocumentFileStructure:</Anchor>
+			<Anchor>//api/name/discoveredStatusOfRemoteDocumentDirectory:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentRegistrationOperation/createdRemoteDocumentFileStructureWithSuccess:</TokenIdentifier>
-			<Abstract>Indicate whether the creation of the document file structure was successful.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentRegistrationOperation/createdRemoteDocumentDirectoryStructureWithSuccess:</TokenIdentifier>
+			<Abstract>Indicate whether the creation of the remote document directory structure was successful.</Abstract>
 			<DeclaredIn>TICDSDocumentRegistrationOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)createdRemoteDocumentFileStructureWithSuccess:(BOOL)success</Declaration>
+			<Declaration>- (void)createdRemoteDocumentDirectoryStructureWithSuccess:(BOOL)success</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>success</Name>
-					<Abstract>A Boolean indicating whether the document file structure was created or not</Abstract>
+					<Abstract>A Boolean indicating whether the directory structure was created or not</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/createdRemoteDocumentFileStructureWithSuccess:</Anchor>
+			<Anchor>//api/name/createdRemoteDocumentDirectoryStructureWithSuccess:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentRegistrationOperation/discoveredStatusOfRemoteDocumentSyncChangesThisClientFileStructure:</TokenIdentifier>
-			<Abstract>Indicate the status of the file structure for this client; i.e. whether this client device has previously been registered.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentRegistrationOperation/savedRemoteDocumentInfoPlistWithSuccess:</TokenIdentifier>
+			<Abstract>Indicate whether the documentInfo.plist file was saved successfully.</Abstract>
 			<DeclaredIn>TICDSDocumentRegistrationOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)discoveredStatusOfRemoteDocumentSyncChangesThisClientFileStructure:(TICDSRemoteFileStructureExistsResponseType)status</Declaration>
+			<Declaration>- (void)savedRemoteDocumentInfoPlistWithSuccess:(BOOL)success</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>success</Name>
+					<Abstract>A Boolean indicating whether the documentInfo.plist file was saved or not.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/savedRemoteDocumentInfoPlistWithSuccess:</Anchor>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentRegistrationOperation/discoveredStatusOfClientDirectoryInRemoteDocumentSyncChangesDirectory:</TokenIdentifier>
+			<Abstract>Indicate the status of this client's directory inside the remote document SyncChanges directory.</Abstract>
+			<DeclaredIn>TICDSDocumentRegistrationOperation.h</DeclaredIn>			
+			
+			<Declaration>- (void)discoveredStatusOfClientDirectoryInRemoteDocumentSyncChangesDirectory:(TICDSRemoteFileStructureExistsResponseType)status</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>status</Name>
-					<Abstract>The status of the structure: does exist, does not exist, or error (see TICDSTypesAndEnums.h for possible values).</Abstract>
+					<Abstract>The status of the directory: does exist, does not exist, or error (see TICDSTypesAndEnums.h for possible values).</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/discoveredStatusOfRemoteDocumentSyncChangesThisClientFileStructure:</Anchor>
+			<Anchor>//api/name/discoveredStatusOfClientDirectoryInRemoteDocumentSyncChangesDirectory:</Anchor>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentRegistrationOperation/createdRemoteDocumentSyncChangesThisClientFileStructureWithSuccess:</TokenIdentifier>
-			<Abstract>Indicate whether the creation of the file structure for this client was successful.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/instm/TICDSDocumentRegistrationOperation/createdClientDirectoriesInRemoteDocumentDirectoriesWithSuccess:</TokenIdentifier>
+			<Abstract>Indicate whether the creation of the client directories was successful.</Abstract>
 			<DeclaredIn>TICDSDocumentRegistrationOperation.h</DeclaredIn>			
 			
-			<Declaration>- (void)createdRemoteDocumentSyncChangesThisClientFileStructureWithSuccess:(BOOL)success</Declaration>
+			<Declaration>- (void)createdClientDirectoriesInRemoteDocumentDirectoriesWithSuccess:(BOOL)success</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>success</Name>
-					<Abstract>A Boolean indicating whether the document file structure was created or not.</Abstract>
+					<Abstract>A Boolean indicating whether the directory structure was created or not</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/createdRemoteDocumentSyncChangesThisClientFileStructureWithSuccess:</Anchor>
+			<Anchor>//api/name/createdClientDirectoriesInRemoteDocumentDirectoriesWithSuccess:</Anchor>
 		</Token>
 		
 		<Token>
@@ -199,39 +231,6 @@
 			
 			
 			<Anchor>//api/name/documentUserInfo</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentRegistrationOperation/completionInProgress</TokenIdentifier>
-			<Abstract>Used to indicate that completion is currently in progress, and that no further checks should be made.</Abstract>
-			<DeclaredIn>TICDSDocumentRegistrationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, assign) BOOL completionInProgress</Declaration>
-			
-			
-			<Anchor>//api/name/completionInProgress</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentRegistrationOperation/documentFileStructureStatus</TokenIdentifier>
-			<Abstract>The phase status of the document file structure tests/creation.</Abstract>
-			<DeclaredIn>TICDSDocumentRegistrationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus documentFileStructureStatus</Declaration>
-			
-			
-			<Anchor>//api/name/documentFileStructureStatus</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/TICDSDocumentRegistrationOperation/documentClientDeviceFileStructureStatus</TokenIdentifier>
-			<Abstract>The phase status of the client device file structure tests/creation.</Abstract>
-			<DeclaredIn>TICDSDocumentRegistrationOperation.h</DeclaredIn>			
-			
-			<Declaration>@property (nonatomic, assign) TICDSOperationPhaseStatus documentClientDeviceFileStructureStatus</Declaration>
-			
-			
-			<Anchor>//api/name/documentClientDeviceFileStructureStatus</Anchor>
 		</Token>
 		
 	</File>

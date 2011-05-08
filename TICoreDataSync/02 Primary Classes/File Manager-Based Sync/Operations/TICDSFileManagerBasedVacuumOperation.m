@@ -72,8 +72,7 @@
     }
     
     if( [fileNames count] < 1 ) {
-        [self setError:[TICDSError errorWithCode:TICDSErrorCodeUnexpectedOrIncompleteFileLocationOrDirectoryStructure classAndMethod:__PRETTY_FUNCTION__]];
-        [self foundOutLeastRecentClientSyncDate:nil];
+        [self foundOutLeastRecentClientSyncDate:[NSDate date]];
         return;
     }
     

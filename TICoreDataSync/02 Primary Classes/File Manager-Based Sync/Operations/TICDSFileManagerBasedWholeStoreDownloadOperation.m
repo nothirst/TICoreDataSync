@@ -67,10 +67,34 @@
 - (void)downloadWholeStoreFile
 {
     NSError *anyError = nil;
-    BOOL success = [[self fileManager] copyItemAtPath:[self pathToWholeStoreFileForClientWithIdentifier:[self requestedWholeStoreClientIdentifier]] toPath:[[self localWholeStoreFileLocation] path] error:&anyError];
+    BOOL success = YES;
+    NSString *wholeStorePath = [self pathToWholeStoreFileForClientWithIdentifier:[self requestedWholeStoreClientIdentifier]];
+    
+    if( ![self shouldUseEncryption] ) {
+        // just copy the file straight across
+        success = [[self fileManager] copyItemAtPath:wholeStorePath toPath:[[self localWholeStoreFileLocation] path] error:&anyError];
+    }
     
     if( !success ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self downloadedWholeStoreFileWithSuccess:success];
+        return;
+    }
+    
+    // otherwise, copy the file to temp location, and decrypt it
+    NSString *tmpStorePath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:[wholeStorePath lastPathComponent]];
+    
+    success = [[self fileManager] copyItemAtPath:wholeStorePath toPath:tmpStorePath error:&anyError];
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self downloadedWholeStoreFileWithSuccess:success];
+        return;
+    }
+    
+    success = [[self cryptor] decryptFileAtLocation:[NSURL fileURLWithPath:wholeStorePath] writingToLocation:[self localWholeStoreFileLocation] error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
     }
     
     [self downloadedWholeStoreFileWithSuccess:success];

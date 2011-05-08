@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		380B2CEA137707FF0005E297 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 380B2CE9137707FF0005E297 /* Security.framework */; };
+		380B2CF5137708170005E297 /* FZACryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 380B2CEE137708170005E297 /* FZACryptor.m */; };
+		380B2CF6137708170005E297 /* FZAKeyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 380B2CF0137708170005E297 /* FZAKeyManager.m */; };
+		380B2CF7137708170005E297 /* FZAKeyManageriPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 380B2CF2137708170005E297 /* FZAKeyManageriPhone.m */; };
+		380B2CF8137708170005E297 /* FZAKeyManagerMac.m in Sources */ = {isa = PBXBuildFile; fileRef = 380B2CF4137708170005E297 /* FZAKeyManagerMac.m */; };
 		3852A474136D950F00F50523 /* TICDSVacuumOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3852A473136D950F00F50523 /* TICDSVacuumOperation.m */; };
 		3852A478136D952900F50523 /* TICDSFileManagerBasedVacuumOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3852A477136D952900F50523 /* TICDSFileManagerBasedVacuumOperation.m */; };
 		38A73491136B02BC00311ED5 /* TICDSSyncConflict.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A73490136B02BC00311ED5 /* TICDSSyncConflict.m */; };
@@ -67,6 +72,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		380B2CE9137707FF0005E297 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		380B2CED137708170005E297 /* FZACryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FZACryptor.h; sourceTree = "<group>"; };
+		380B2CEE137708170005E297 /* FZACryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FZACryptor.m; sourceTree = "<group>"; };
+		380B2CEF137708170005E297 /* FZAKeyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FZAKeyManager.h; sourceTree = "<group>"; };
+		380B2CF0137708170005E297 /* FZAKeyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FZAKeyManager.m; sourceTree = "<group>"; };
+		380B2CF1137708170005E297 /* FZAKeyManageriPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FZAKeyManageriPhone.h; sourceTree = "<group>"; };
+		380B2CF2137708170005E297 /* FZAKeyManageriPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FZAKeyManageriPhone.m; sourceTree = "<group>"; };
+		380B2CF3137708170005E297 /* FZAKeyManagerMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FZAKeyManagerMac.h; sourceTree = "<group>"; };
+		380B2CF4137708170005E297 /* FZAKeyManagerMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FZAKeyManagerMac.m; sourceTree = "<group>"; };
 		3852A472136D950F00F50523 /* TICDSVacuumOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSVacuumOperation.h; sourceTree = "<group>"; };
 		3852A473136D950F00F50523 /* TICDSVacuumOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSVacuumOperation.m; sourceTree = "<group>"; };
 		3852A476136D952900F50523 /* TICDSFileManagerBasedVacuumOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSFileManagerBasedVacuumOperation.h; sourceTree = "<group>"; };
@@ -179,6 +193,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				380B2CEA137707FF0005E297 /* Security.framework in Frameworks */,
 				38CBE6BA1367346E00523599 /* SystemConfiguration.framework in Frameworks */,
 				38CBE6B81367345A00523599 /* QuartzCore.framework in Frameworks */,
 				38CBE606136733AB00523599 /* Cocoa.framework in Frameworks */,
@@ -188,6 +203,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		380B2CEC137708170005E297 /* FZACryptor */ = {
+			isa = PBXGroup;
+			children = (
+				380B2CED137708170005E297 /* FZACryptor.h */,
+				380B2CEE137708170005E297 /* FZACryptor.m */,
+				380B2CEF137708170005E297 /* FZAKeyManager.h */,
+				380B2CF0137708170005E297 /* FZAKeyManager.m */,
+				380B2CF1137708170005E297 /* FZAKeyManageriPhone.h */,
+				380B2CF2137708170005E297 /* FZAKeyManageriPhone.m */,
+				380B2CF3137708170005E297 /* FZAKeyManagerMac.h */,
+				380B2CF4137708170005E297 /* FZAKeyManagerMac.m */,
+			);
+			path = FZACryptor;
+			sourceTree = "<group>";
+		};
 		38CBE5F6136733AB00523599 = {
 			isa = PBXGroup;
 			children = (
@@ -217,6 +247,7 @@
 		38CBE607136733AB00523599 /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				380B2CE9137707FF0005E297 /* Security.framework */,
 				38CBE6B91367346E00523599 /* SystemConfiguration.framework */,
 				38CBE6B71367345A00523599 /* QuartzCore.framework */,
 				38CBE608136733AB00523599 /* AppKit.framework */,
@@ -384,6 +415,7 @@
 		38CBE6821367344100523599 /* 04 Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				380B2CEC137708170005E297 /* FZACryptor */,
 				38CBE6831367344100523599 /* TICDSError.h */,
 				38CBE6841367344100523599 /* TICDSError.m */,
 				38CBE6851367344100523599 /* TICDSLog.h */,
@@ -533,6 +565,10 @@
 				38A73491136B02BC00311ED5 /* TICDSSyncConflict.m in Sources */,
 				3852A474136D950F00F50523 /* TICDSVacuumOperation.m in Sources */,
 				3852A478136D952900F50523 /* TICDSFileManagerBasedVacuumOperation.m in Sources */,
+				380B2CF5137708170005E297 /* FZACryptor.m in Sources */,
+				380B2CF6137708170005E297 /* FZAKeyManager.m in Sources */,
+				380B2CF7137708170005E297 /* FZAKeyManageriPhone.m in Sources */,
+				380B2CF8137708170005E297 /* FZAKeyManagerMac.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

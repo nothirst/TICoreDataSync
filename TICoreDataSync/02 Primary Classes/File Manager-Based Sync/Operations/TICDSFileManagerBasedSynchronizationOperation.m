@@ -37,10 +37,25 @@
 - (void)uploadLocalSyncChangeSetFileAtLocation:(NSURL *)aLocation
 {
     NSError *anyError = nil;
+    BOOL success = YES;
+    
+    if( [self shouldUseEncryption] ) {
+        // encrypt file first
+        NSURL *tmpFileLocation = [NSURL fileURLWithPath:[[self tempFileDirectoryPath] stringByAppendingPathComponent:[[aLocation path] lastPathComponent]]];
+        
+        success = [[self cryptor] encryptFileAtLocation:aLocation writingToLocation:tmpFileLocation error:&anyError];
+        if( !success ) {
+            [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+            [self uploadedLocalSyncChangeSetFileSuccessfully:success];
+            return;
+        }
+        
+        aLocation = tmpFileLocation;
+    }
     
     NSString *uploadPath = [[self thisDocumentSyncChangesThisClientDirectoryPath] stringByAppendingPathComponent:[[aLocation path] lastPathComponent]];
     
-    BOOL success = [[self fileManager] moveItemAtPath:[aLocation path] toPath:uploadPath error:&anyError];
+    success = [[self fileManager] moveItemAtPath:[aLocation path] toPath:uploadPath error:&anyError];
     
     if( !success ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
@@ -77,18 +92,44 @@
     NSError *anyError = nil;
     
     // Get modification date first
+    NSDate *modificationDate = nil;
     NSDictionary *attributes = [[self fileManager] attributesOfItemAtPath:remoteFileToFetch error:&anyError];
     if( !attributes ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:modificationDate withSuccess:NO];
+        return;
     }
     
-    BOOL success = [[self fileManager] copyItemAtPath:remoteFileToFetch toPath:[aLocation path] error:&anyError];
+    modificationDate = [attributes valueForKey:NSFileModificationDate];
+    
+    NSString *destinationPath = [aLocation path];
+    
+    // if we're encrypted, we need to copy to temporary file location first, ready for cryptor to decrypt later...
+    if( [self shouldUseEncryption] ) {
+        destinationPath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:[aLocation lastPathComponent]];
+    }
+    
+    BOOL success = [[self fileManager] copyItemAtPath:remoteFileToFetch toPath:destinationPath error:&anyError];
     
     if( !success ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:modificationDate withSuccess:success];
+        return;
     }
     
-    [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:[attributes valueForKey:NSFileModificationDate] withSuccess:success];
+    // if unencrypted, we're done
+    if( ![self shouldUseEncryption] ) {
+        [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:modificationDate withSuccess:success];
+        return;
+    }
+    
+    success = [[self cryptor] decryptFileAtLocation:[NSURL fileURLWithPath:destinationPath] writingToLocation:aLocation error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:modificationDate withSuccess:success];
 }
 
 - (void)uploadRecentSyncFileAtLocation:(NSURL *)aLocation

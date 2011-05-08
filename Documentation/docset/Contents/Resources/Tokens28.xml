@@ -34,25 +34,14 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/TICDSUtilities/remoteGlobalAppClientDeviceFileStructure</TokenIdentifier>
-			<Abstract>Returns a dictionary containing the basic client device file structure for Global Application synchronization.</Abstract>
-			<DeclaredIn>TICDSUtilities.h</DeclaredIn>			
-			
-			<Declaration>+ (NSDictionary *)remoteGlobalAppClientDeviceFileStructure</Declaration>
-			
-			
-			<Anchor>//api/name/remoteGlobalAppClientDeviceFileStructure</Anchor>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/TICDSUtilities/remoteDocumentFileStructure</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/clm/TICDSUtilities/remoteDocumentDirectoryHierarchy</TokenIdentifier>
 			<Abstract>Returns a dictionary containing the basic file structure for a synchronized document.</Abstract>
 			<DeclaredIn>TICDSUtilities.h</DeclaredIn>			
 			
-			<Declaration>+ (NSDictionary *)remoteDocumentFileStructure</Declaration>
+			<Declaration>+ (NSDictionary *)remoteDocumentDirectoryHierarchy</Declaration>
 			
 			
-			<Anchor>//api/name/remoteDocumentFileStructure</Anchor>
+			<Anchor>//api/name/remoteDocumentDirectoryHierarchy</Anchor>
 		</Token>
 		
 		<Token>
