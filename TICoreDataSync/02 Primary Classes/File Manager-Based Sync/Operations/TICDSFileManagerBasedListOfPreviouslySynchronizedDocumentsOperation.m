@@ -34,19 +34,40 @@
     [self builtArrayOfDocumentIdentifiers:contentsToReturn];
 }
 
-- (void)fetchInfoDictionariesForDocumentsWithSyncIDs:(NSArray *)syncIDs
+- (void)fetchInfoDictionaryForIdentifier:(NSString *)anIdentifier
 {
     NSError *anyError = nil;
     NSDictionary *dictionary = nil;
+    NSString *filePath = [self pathToDocumentInfoForDocumentWithIdentifier:anIdentifier];
     
-    for( NSString *eachSyncID in syncIDs ) {
-        dictionary = [NSDictionary dictionaryWithContentsOfFile:[self pathToDocumentInfoForDocumentWithIdentifier:eachSyncID]];
+    if( [self shouldUseEncryption] ) {
+        NSString *tmpFilePath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:[filePath lastPathComponent]];
         
-        if( !dictionary ) {
-            [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        BOOL success = [[self cryptor] decryptFileAtLocation:[NSURL fileURLWithPath:filePath] writingToLocation:[NSURL fileURLWithPath:tmpFilePath] error:&anyError];
+        
+        if( !success ) {
+            [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+            [self fetchedInfoDictionary:nil forDocumentWithSyncID:anIdentifier];
+            return;
         }
         
-        [self fetchedInfoDictionary:dictionary forDocumentWithSyncID:eachSyncID];
+        filePath = tmpFilePath;
+    }
+    
+    dictionary = [NSDictionary dictionaryWithContentsOfFile:filePath];
+        
+    if( !dictionary ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    [self fetchedInfoDictionary:dictionary forDocumentWithSyncID:anIdentifier];
+}
+
+- (void)fetchInfoDictionariesForDocumentsWithSyncIDs:(NSArray *)syncIDs
+{
+    for( NSString *eachSyncID in syncIDs ) {
+        
+        [self fetchInfoDictionaryForIdentifier:eachSyncID];
     }
 }
 
