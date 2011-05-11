@@ -26,7 +26,7 @@ Your application will need to keep track of one instance of `TICDSApplicationSyn
 
 ##Documentation
 
-Documentation for the framework can be found at:
+Documentation for the framework can be found at:  
 http://timisted.github.com/ticoredatasync
 
 ***IMPORTANT:*** At the moment, the documentation is not available at this public link, but CNAME-d under an unregistered domain. To view the documentation, add an entry in your `/etc/hosts` file to point `ticoredatasync.com` at `207.97.227.245`:
@@ -44,7 +44,7 @@ http://timisted.github.com/ticoredatasync
 
     207.97.227.245    ticoredatasync.com
     
-You can then view the documentation at:
+You can then view the documentation at:  
 http://ticoredatasync.com
 
 ###Xcode Docset
@@ -52,7 +52,7 @@ The framework comes with an Xcode docset containing documentation for all `TICor
 
 You can build it yourself if you have `appledoc` installed, by executing `appledoc .` in the root of the repository; this will also install the docset.
 
-Alternatively, the docset can be found online:
+Alternatively, the docset can be found online:  
 http://timisted.github.com/ticoredatasync/docset/html
 
 ##How it Works
