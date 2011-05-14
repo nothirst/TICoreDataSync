@@ -41,6 +41,7 @@
 #import "TICDSDropboxSDKBasedDocumentSyncManager.h"
 #import "TICDSDropboxSDKBasedApplicationRegistrationOperation.h"
 #import "TICDSDropboxSDKBasedDocumentRegistrationOperation.h"
+#import "TICDSDropboxSDKBasedWholeStoreUploadOperation.h"
 #import "TICDSDropboxSDKBasedWholeStoreDownloadOperation.h"
 #endif
 

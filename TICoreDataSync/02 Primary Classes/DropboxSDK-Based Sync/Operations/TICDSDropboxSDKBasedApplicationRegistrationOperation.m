@@ -97,18 +97,29 @@
 #pragma mark Password Test
 - (void)savePasswordTestData:(NSData *)testData
 {
-    NSString *tempFile = [[self tempFileDirectoryPath] stringByAppendingPathComponent:TICDSEncryptionTestFilenameWithExtension];
-    
     NSError *anyError = nil;
-    BOOL success = [testData writeToFile:tempFile options:0 error:&anyError];
+    BOOL success = YES;
     
+    NSString *finalFilePath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:TICDSEncryptionTestFilenameWithExtension];
+    
+    NSString *tmpFilePath = [finalFilePath stringByAppendingPathExtension:@"crypt"];
+    
+    success = [testData writeToFile:tmpFilePath options:0 error:&anyError];
     if( !success ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
         [self savedPasswordTestDataWithSuccess:success];
         return;
     }
     
-    [[self appDirectoryRestClient] uploadFile:TICDSEncryptionTestFilenameWithExtension toPath:[[self encryptionDirectoryTestDataFilePath] stringByDeletingLastPathComponent] fromPath:tempFile];
+    success = [[self cryptor] encryptFileAtLocation:[NSURL fileURLWithPath:tmpFilePath] writingToLocation:[NSURL fileURLWithPath:finalFilePath] error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self savedPasswordTestDataWithSuccess:success];
+        return;
+    }
+    
+    [[self appDirectoryRestClient] uploadFile:TICDSEncryptionTestFilenameWithExtension toPath:[[self encryptionDirectoryTestDataFilePath] stringByDeletingLastPathComponent] fromPath:finalFilePath];
 }
 
 - (void)fetchPasswordTestData

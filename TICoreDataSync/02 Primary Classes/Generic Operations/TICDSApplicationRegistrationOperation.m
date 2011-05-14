@@ -302,8 +302,10 @@
         FZACryptor *cryptor = [[FZACryptor alloc] init];
         [self setCryptor:cryptor];
         if( [cryptor isConfigured] ) {
+            TICDSLog(TICDSLogVerbosityEveryStep, @"FZACryptor is configured");
             [self beginCheckForRemoteClientDeviceDirectory];
         } else {
+            TICDSLog(TICDSLogVerbosityEveryStep, @"FZACryptor is not yet configured");
             [self beginRequestForEncryptionPassword];
         }
         
