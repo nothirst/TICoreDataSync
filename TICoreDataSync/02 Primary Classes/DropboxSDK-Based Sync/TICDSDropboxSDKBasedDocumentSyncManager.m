@@ -58,6 +58,18 @@
     return [operation autorelease];
 }
 
+- (TICDSSynchronizationOperation *)synchronizationOperation
+{
+    TICDSDropboxSDKBasedSynchronizationOperation *operation = [[TICDSDropboxSDKBasedSynchronizationOperation alloc] initWithDelegate:self];
+    
+    [operation setDbSession:[self dbSession]];
+    [operation setThisDocumentSyncChangesDirectoryPath:[self thisDocumentSyncChangesDirectoryPath]];
+    [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
+    [operation setThisDocumentRecentSyncsThisClientFilePath:[self thisDocumentRecentSyncsThisClientFilePath]];
+    
+    return [operation autorelease];
+}
+
 #pragma mark -
 #pragma mark Paths
 - (NSString *)documentsDirectoryPath

@@ -36,13 +36,14 @@
 #import "TICDSFileManagerBasedVacuumOperation.h"
 
 #pragma mark DropboxSDK-Based
-#ifdef __IPHONE_OS_VERSION_MIN_REQUIRED
+#if TARGET_OS_IPHONE
 #import "TICDSDropboxSDKBasedApplicationSyncManager.h"
 #import "TICDSDropboxSDKBasedDocumentSyncManager.h"
 #import "TICDSDropboxSDKBasedApplicationRegistrationOperation.h"
 #import "TICDSDropboxSDKBasedDocumentRegistrationOperation.h"
 #import "TICDSDropboxSDKBasedWholeStoreUploadOperation.h"
 #import "TICDSDropboxSDKBasedWholeStoreDownloadOperation.h"
+#import "TICDSDropboxSDKBasedSynchronizationOperation.h"
 #endif
 
 #pragma mark -
