@@ -24,6 +24,7 @@ NSString *gTICDSErrorStrings[] = {
     @"Failed to create Core Data object",
     @"Whole Store file cannot be uploaded while there are still unsynchronized local sync changes",
     @"Task was cancelled",
+    @"DropboxSDK Rest Client error",
     @"Encryption error",
 };
 

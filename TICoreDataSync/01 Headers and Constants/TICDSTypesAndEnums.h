@@ -93,6 +93,7 @@ typedef enum _TICDSErrorCode {
     TICDSErrorCodeObjectCreationError,
     TICDSErrorCodeWholeStoreCannotBeUploadedWhileThereAreUnsynchronizedSyncChanges,
     TICDSErrorCodeTaskWasCancelled,
+    TICDSErrorCodeDropboxSDKRestClientError,
     TICDSErrorCodeEncryptionError,
 } TICDSErrorCode;
 

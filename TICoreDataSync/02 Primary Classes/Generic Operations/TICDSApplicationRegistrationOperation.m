@@ -253,7 +253,7 @@
     NSError *underlyingError = [[[self error] userInfo] valueForKey:kTICDSErrorUnderlyingError];
     
     // incorrect password
-    if( [underlyingError code] == FZACryptorErrorCodeFailedIntegrityCheck && [[underlyingError domain] isEqualTo:FZACryptorErrorDomain] ) {
+    if( [underlyingError code] == FZACryptorErrorCodeFailedIntegrityCheck && [[underlyingError domain] isEqualToString:FZACryptorErrorDomain] ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Password was incorrect, so ask the delegate for a new one");
         
         [self beginRequestForEncryptionPassword];

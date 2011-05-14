@@ -35,6 +35,15 @@
 @class TICDSFileManagerBasedSynchronizationOperation;
 @class TICDSFileManagerBasedVacuumOperation;
 
+#pragma mark DropboxSDK-Based
+#ifdef __IPHONE_OS_VERSION_MIN_REQUIRED
+@class TICDSDropboxSDKBasedApplicationSyncManager;
+@class TICDSDropboxSDKBasedDocumentSyncManager;
+@class TICDSDropboxSDKBasedApplicationRegistrationOperation;
+@class TICDSDropboxSDKBasedDocumentRegistrationOperation;
+@class TICDSDropboxSDKBasedWholeStoreDownloadOperation;
+#endif
+
 #pragma mark -
 #pragma mark INTERNAL DATA MODEL
 @class TICDSSyncChange;

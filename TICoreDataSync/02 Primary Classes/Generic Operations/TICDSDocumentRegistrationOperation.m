@@ -126,7 +126,7 @@
 - (void)beginRequestWhetherToCreateRemoteDocumentFileStructure
 {
     if( [NSThread isMainThread] ) {
-        [self performSelectorInBackground:@selector(beginRequestWhetherToCreateRemoteFileStructure) withObject:nil];
+        [self performSelectorInBackground:@selector(beginRequestWhetherToCreateRemoteDocumentFileStructure) withObject:nil];
         return;
     }
     
@@ -149,7 +149,7 @@
 - (void)continueAfterRequestWhetherToCreateRemoteDocumentFileStructure
 {
     if( [self needsMainThread] && ![NSThread isMainThread] ) {
-        [self performSelectorOnMainThread:@selector(continueAfterRequestWhetherToCreateRemoteFileStructure) withObject:nil waitUntilDone:NO];
+        [self performSelectorOnMainThread:@selector(continueAfterRequestWhetherToCreateRemoteDocumentFileStructure) withObject:nil waitUntilDone:NO];
         return;
     }
     
