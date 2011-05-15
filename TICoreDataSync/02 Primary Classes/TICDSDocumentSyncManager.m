@@ -39,6 +39,18 @@
 @implementation TICDSDocumentSyncManager
 
 #pragma mark -
+#pragma mark ACTIVITY
+- (void)postIncreaseActivityNotification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:TICDSDocumentSyncManagerDidIncreaseActivityNotification object:self];
+}
+
+- (void)postDecreaseActivityNotification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:TICDSDocumentSyncManagerDidDecreaseActivityNotification object:self];
+}
+
+#pragma mark -
 #pragma mark CONFIGURATION
 - (void)configureWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager documentIdentifier:(NSString *)aDocumentIdentifier
 {
@@ -46,12 +58,16 @@
     [self setDocumentIdentifier:aDocumentIdentifier];
     [self setShouldUseEncryption:[anAppSyncManager shouldUseEncryption]];
     
+    [self postIncreaseActivityNotification];
+    
     NSError *anyError = nil;
     BOOL success = [self startDocumentConfigurationProcess:&anyError];
     
     if( !success ) {
         [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToRegisterWithError:), anyError];
     }
+    
+    [self postDecreaseActivityNotification];
 }
 
 - (BOOL)startDocumentConfigurationProcess:(NSError **)outError
@@ -174,6 +190,9 @@
     NSError *anyError;
     BOOL shouldContinue = YES;
     
+    [self postIncreaseActivityNotification];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidBeginRegistering:)];
+    
     [self setDelegate:aDelegate];
     [self setDocumentIdentifier:aDocumentIdentifier];
     [self setShouldUseEncryption:[anAppSyncManager shouldUseEncryption]];
@@ -211,14 +230,13 @@
         [self bailFromRegistrationProcessWithError:anyError];
         return;
     }
-    
-    [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidBeginRegistering:)];
 }
 
 - (void)bailFromRegistrationProcessWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from registration process");
     [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToRegisterWithError:), anError];
+    [self postDecreaseActivityNotification];
 }
 
 - (BOOL)startDocumentRegistrationProcess:(NSError **)outError
@@ -250,12 +268,14 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Registration operation paused to find out whether to create document structure");
     [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
+    [self postDecreaseActivityNotification];
 }
 
 - (void)registrationOperationResumedFollowingDocumentStructureCreationInstruction:(TICDSDocumentRegistrationOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Registration operation resumed after finding out whether to create document structure");
     [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidContinueRegistering:)];
+    [self postIncreaseActivityNotification];
 }
 
 
@@ -293,6 +313,7 @@
     
     // Registration Complete
     [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidFinishRegistering:)];
+    [self postDecreaseActivityNotification];
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Resuming Operation Queues");
     [[self synchronizationQueue] setSuspended:NO];
@@ -325,6 +346,7 @@
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Registration Operation was Cancelled");
     
     [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToRegisterWithError:), [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+    [self postDecreaseActivityNotification];
 }
 
 - (void)documentRegistrationOperation:(TICDSDocumentRegistrationOperation *)anOperation failedToCompleteWithError:(NSError *)anError
@@ -332,6 +354,7 @@
     [self setState:TICDSDocumentSyncManagerStateNotYetRegistered];
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Registration Operation Failed to Complete with Error: %@", anError);
     [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToRegisterWithError:), anError];
+    [self postDecreaseActivityNotification];
 }
 
 #pragma mark -
@@ -347,11 +370,13 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from whole store upload process");
     [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToUploadWholeStoreWithError:), anError];
+    [self postDecreaseActivityNotification];
 }
 
 - (void)startWholeStoreUploadProcess
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting whole store upload process");
+    [self postIncreaseActivityNotification];
     [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidBeginUploadingWholeStore:)];
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Checking to see if there are unsynchronized SyncChanges");
@@ -409,6 +434,7 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Whole Store Upload Operation Completed");
     
     [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidFinishUploadingWholeStore:)];
+    [self postDecreaseActivityNotification];
 }
 
 - (void)wholeStoreUploadOperationWasCancelled:(TICDSWholeStoreUploadOperation *)anOperation
@@ -416,12 +442,14 @@
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Whole Store Upload Operation was Cancelled");
     
     [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToUploadWholeStoreWithError:), [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+    [self postDecreaseActivityNotification];
 }
 
 - (void)wholeStoreUploadOperation:(TICDSDocumentRegistrationOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Whole Store Upload Operation Failed to Complete with Error: %@", anError);
     [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToUploadWholeStoreWithError:), anError];
+    [self postDecreaseActivityNotification];
 }
 
 #pragma mark -
@@ -436,16 +464,19 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from whole store download process");
     [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToDownloadWholeStoreWithError:), anError];
+    [self postDecreaseActivityNotification];
 }
 
 - (void)bailFromDownloadPostProcessingWithFileManagerError:(NSError *)anError
 {
     [self bailFromDownloadProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anError classAndMethod:__PRETTY_FUNCTION__]];
+    [self postDecreaseActivityNotification];
 }
 
 - (void)startWholeStoreDownloadProcess
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to download whole store");
+    [self postIncreaseActivityNotification];
     [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidBeginDownloadingWholeStore:)];
     
     // Set download to go to a temporary location
@@ -533,18 +564,21 @@
     
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Whole Store Download complete");
     [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidFinishDownloadingWholeStore:)];
+    [self postDecreaseActivityNotification];
 }
 
 - (void)wholeStoreDownloadOperationWasCancelled:(TICDSWholeStoreDownloadOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Whole Store Download operation was cancelled");
     [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToDownloadWholeStoreWithError:), [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+    [self postDecreaseActivityNotification];
 }
 
 - (void)wholeStoreDownloadOperation:(TICDSWholeStoreDownloadOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Whole Store Download operation failed to complete with error: %@", anError);
     [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToDownloadWholeStoreWithError:), anError];
+    [self postDecreaseActivityNotification];
 }
 
 #pragma mark -
@@ -560,11 +594,13 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from synchronization process");
     [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToSynchronizeWithError:), anError];
+    [self postDecreaseActivityNotification];
 }
 
 - (void)startSynchronizationProcess
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting synchronization process");
+    [self postIncreaseActivityNotification];
     [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidBeginSynchronizing:)];
     
     [self moveUnsynchronizedSyncChangesToMergeLocation];
@@ -650,11 +686,13 @@
 - (void)synchronizationOperation:(TICDSSynchronizationOperation *)anOperation pausedToDetermineResolutionOfConflict:(id)aConflict
 {
     [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:), aConflict];
+    [self postDecreaseActivityNotification];
 }
 
 - (void)synchronizationOperationResumedFollowingResolutionOfConflict:(TICDSSynchronizationOperation *)anOperation
 {
     [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidContinueSynchronizing:)];
+    [self postIncreaseActivityNotification];
 }
 
 - (void)continueSynchronizationByResolvingConflictWithResolutionType:(TICDSSyncConflictResolutionType)aType
@@ -683,6 +721,7 @@
     }
     
     [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidFinishSynchronizing:)];
+    [self postDecreaseActivityNotification];
 }
 
 - (void)synchronizationOperationWasCancelled:(TICDSSynchronizationOperation *)anOperation
@@ -690,12 +729,14 @@
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Synchronization Operation was Cancelled");
     
     [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToSynchronizeWithError:), [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+    [self postDecreaseActivityNotification];
 }
 
 - (void)synchronizationOperation:(TICDSSynchronizationOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Synchronization Operation Failed to Complete with Error: %@", anError);
     [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToSynchronizeWithError:), anError];
+    [self postDecreaseActivityNotification];
 }
 
 #pragma mark -
@@ -711,11 +752,13 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from vacuum process");
     [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToVacuumUnneededRemoteFilesWithError:), anError];
+    [self postDecreaseActivityNotification];
 }
 
 - (void)startVacuumProcess
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting vacuum process to remove unneeded files from the remote");
+    [self postIncreaseActivityNotification];
     [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidBeginVacuumingUnneededRemoteFiles:)];
     
     TICDSVacuumOperation *operation = [self vacuumOperation];
@@ -743,6 +786,7 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Vacuum Operation Completed");
     
     [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidFinishVacuumingUnneededRemoteFiles:)];
+    [self postDecreaseActivityNotification];
 }
 
 - (void)vacuumOperationWasCancelled:(TICDSVacuumOperation *)anOperation
@@ -750,12 +794,14 @@
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Vacuum Operation was Cancelled");
     
     [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToVacuumUnneededRemoteFilesWithError:), [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+    [self postDecreaseActivityNotification];
 }
 
 - (void)vacuumOperation:(TICDSVacuumOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Vacuum Operation Failed to Complete with Error: %@", anError);
     [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToVacuumUnneededRemoteFilesWithError:), anError];
+    [self postDecreaseActivityNotification];
 }
 
 #pragma mark -

@@ -27,11 +27,25 @@
 @implementation TICDSApplicationSyncManager
 
 #pragma mark -
+#pragma mark ACTIVITY
+- (void)postIncreaseActivityNotification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:TICDSApplicationSyncManagerDidIncreaseActivityNotification object:self];
+}
+
+- (void)postDecreaseActivityNotification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:TICDSApplicationSyncManagerDidDecreaseActivityNotification object:self];
+}
+
+#pragma mark -
 #pragma mark REGISTRATION
 - (void)registerWithDelegate:(id <TICDSApplicationSyncManagerDelegate>)aDelegate globalAppIdentifier:(NSString *)anAppIdentifier uniqueClientIdentifier:(NSString *)aClientIdentifier description:(NSString *)aClientDescription userInfo:(NSDictionary *)someUserInfo
 {
     [self setState:TICDSApplicationSyncManagerStateRegistering];
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to register application sync manager");
+    [self postIncreaseActivityNotification];
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidBeginRegistering:)];
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Registration Information:\n   Delegate: %@,\n   Global App ID: %@,\n   Client ID: %@,\n   Description: %@\nUser Info: %@", aDelegate, anAppIdentifier, aClientIdentifier, aClientDescription, someUserInfo);
     
@@ -49,13 +63,13 @@
         return;
     }
     
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidBeginRegistering:)];
 }
 
 - (void)bailFromRegistrationProcessWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from application registration process");
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToRegisterWithError:), anError];
+    [self postDecreaseActivityNotification];
 }
 
 - (BOOL)startRegistrationProcess:(NSError **)outError
@@ -86,11 +100,13 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"First-time Application Registration paused to find out whether to use encryption for this application");
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:)];
+    [self postDecreaseActivityNotification];
 }
 
 - (void)registrationOperationResumedFollowingEncryptionInstruction:(TICDSApplicationRegistrationOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"First-time Application Registration resumed after finding out whether to use encryption");
+    [self postIncreaseActivityNotification];
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidContinueRegistering:)];
 }
 
@@ -99,11 +115,13 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Encrypted application registration paused to ask for a password");
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:)];
+    [self postDecreaseActivityNotification];
 }
 
 - (void)registrationOperationResumedFollowingPasswordProvision:(TICDSApplicationRegistrationOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Encrypted application registration resumed after being given a password");
+    [self postIncreaseActivityNotification];
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidContinueRegistering:)];
 }
 
@@ -135,6 +153,7 @@
     
     // Registration Complete
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidFinishRegistering:)];
+    [self postDecreaseActivityNotification];
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Resuming Operation Queues");
     [[self otherTasksQueue] setSuspended:NO];
@@ -148,6 +167,7 @@
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Application Registration Operation was Cancelled");
     
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToRegisterWithError:), [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+    [self postDecreaseActivityNotification];
 }
 
 - (void)applicationRegistrationOperation:(TICDSApplicationRegistrationOperation *)anOperation failedToCompleteWithError:(NSError *)anError
@@ -155,6 +175,7 @@
     [self setState:TICDSApplicationSyncManagerStateNotYetRegistered];
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Application Registration Operation Failed to Complete with Error: %@", anError);
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToRegisterWithError:), anError];
+    [self postDecreaseActivityNotification];
 }
 
 #pragma mark -
@@ -163,6 +184,7 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to check for remote documents that have been previously synchronized");
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidBeginCheckingForPreviouslySynchronizedDocuments:)];
+    [self postIncreaseActivityNotification];
     
     NSError *anyError = nil;
     BOOL success = [self getAvailablePreviouslySynchronizedDocuments:&anyError];
@@ -170,6 +192,7 @@
     if( !success ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Request for list of previously-synchronized documents failed with error: %@", anyError);
         [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:), anyError];
+        [self postDecreaseActivityNotification];
     }
 }
 
@@ -196,6 +219,7 @@
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Didn't get any available documents");
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:)];
+    [self postDecreaseActivityNotification];
 }
 
 - (void)gotAvailablePreviouslySynchronizedDocuments:(NSArray *)anArray
@@ -207,6 +231,7 @@
     
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Found previously-synchronized remote documents: %@", anArray);
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFinishCheckingAndFoundPreviouslySynchronizedDocuments:), anArray];
+    [self postDecreaseActivityNotification];
 }
 
 #pragma mark Operation Generation
@@ -232,6 +257,7 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"List of Previously-Synchronized Documents Operation Failed to Complete with Error: %@", anError);
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:), anError];
+    [self postDecreaseActivityNotification];
 }
 
 #pragma mark -
@@ -240,6 +266,7 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to download a previously synchronized document %@ to %@", anIdentifier, aLocation);
     
+    [self postIncreaseActivityNotification];
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didBeginDownloadingDocumentWithIdentifier:), anIdentifier];
     
     NSError *anyError = nil;
@@ -255,6 +282,7 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from document download process");
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:), anIdentifier, anError];
+    [self postDecreaseActivityNotification];
 }
 
 - (BOOL)startDocumentDownloadProcessForDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation error:(NSError **)outError
@@ -313,6 +341,7 @@
 - (void)bailFromDocumentDownloadPostProcessingForOperation:(TICDSWholeStoreDownloadOperation *)anOperation withError:(NSError *)anError
 {
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], anError];
+    [self postDecreaseActivityNotification];
 }
 
 #pragma mark Operation Communications
@@ -365,18 +394,21 @@
     
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Document Download Operation Completed");
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], finalWholeStoreLocation];
+    [self postDecreaseActivityNotification];
 }
 
 - (void)documentDownloadOperationWasCancelled:(TICDSWholeStoreDownloadOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Download Operation was Cancelled");
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+    [self postDecreaseActivityNotification];
 }
 
 - (void)documentDownloadOperation:(TICDSWholeStoreDownloadOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Download Operation Failed to Complete with Error: %@", anError);
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], anError];
+    [self postDecreaseActivityNotification];
 }
 
 #pragma mark -
