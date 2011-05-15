@@ -71,6 +71,10 @@
     
 }
 
+- (void)clearPasswordAndSalt {
+    [[NSException exceptionWithName:@"FZAKeyManagerAbstractClassException" reason:@"Use +[FZAKeyManager newKeyManager] to get an appropriate subclass" userInfo:nil] raise];
+}
+
 + (FZAKeyManager *)newKeyManager {
     id keyManager = nil;
 #if TARGET_OS_IPHONE

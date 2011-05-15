@@ -38,8 +38,8 @@
 
 - (NSDictionary *)searchAttributes {
     return [NSDictionary dictionaryWithObjectsAndKeys:
-            @"fza-sync", kSecAttrAccount,
-            @"fza-sync", kSecAttrService,
+            [NSString stringWithFormat:@"%@-fza-sync", [self applicationName]], kSecAttrAccount,
+            [NSString stringWithFormat:@"%@-fza-sync", [self applicationName]], kSecAttrService,
             kSecClassGenericPassword, kSecClass,
             kCFBooleanTrue, kSecReturnAttributes,
             nil];
@@ -116,11 +116,25 @@
                                                 (CFTypeRef *)&theKey);
     [searchAttributes release];
     if (noErr != searchResult) {
-        NSLog(@"Search error: %ld", searchResult);
+        if( searchResult == errSecItemNotFound ) {
+            NSLog(@"Keychain item not found");
+        } else {
+            NSLog(@"Search error: %ld", searchResult);
+        }
     }
     return [theKey autorelease];
 }
 
+- (void)clearPasswordAndSalt {
+    NSDictionary *searchAttributes = [self searchAttributes];
+    OSStatus clearResult = SecItemDelete((CFDictionaryRef)searchAttributes);
+    
+    if( clearResult == errSecSuccess ) {
+        NSLog(@"Deleted keychain items");
+    } else {
+        NSLog(@"Failed to delete keychain items: %ld", clearResult);
+    }
+}
 
 @end
 

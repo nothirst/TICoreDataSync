@@ -35,6 +35,9 @@
 /** Report on whether the key manager already has a key to use. */
 - (BOOL)hasKey;
 
+/** Clear existing key chain items for password and salt. */
+- (void)clearPasswordAndSalt;
+
 /** Create some random data.
  
  @param length The number of bytes of randomness needed.

@@ -132,6 +132,7 @@
         return;
     }
     
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     [self setPaused:YES];
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Pausing registration as this is the first time this application has been registered");
@@ -144,6 +145,8 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"Continuing application registration after instruction from delegate");
     
     [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationResumedFollowingEncryptionInstruction:) waitUntilDone:NO];
+    
+    [pool release];
     
     [self continueAfterRequestWhetherToEnableEncryption];
 }
@@ -178,6 +181,7 @@
         return;
     }
     
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     [self setPaused:YES];
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Pausing registration because an encryption password is needed");
@@ -191,6 +195,7 @@
     
     [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationResumedFollowingPasswordProvision:) waitUntilDone:NO];
     
+    [pool release];
     [self continueAfterRequestForEncryptionPassword];
 }
 

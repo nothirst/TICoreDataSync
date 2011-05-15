@@ -54,6 +54,9 @@
  @warning This class uses the keychain for secure storage, so it's possible for a newly-created instance not to need a password if the key material has already been created. Check -isConfigured to see whether this is the case. */
 - (NSData *)setPassword: (NSString *)password salt: (NSData *)salt;
 
+/** Clears any previously-existing keychain password and salt. */
+- (void)clearPasswordAndSalt;
+
 /** @name Encryption and Decryption */
 
 /** Encrypt the content of a file, storing the encrypted data in another file.

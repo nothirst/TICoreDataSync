@@ -37,6 +37,11 @@ const NSInteger FZAFileBlockLength = 4096;
     return [keyManager hasKey];
 }
 
+- (void)clearPasswordAndSalt
+{
+    [keyManager clearPasswordAndSalt];
+}
+
 - (NSData *)setPassword: (NSString *)password salt: (NSData *)salt {
     if (salt == nil) {
         salt = [keyManager randomDataOfLength: FZASaltLength];

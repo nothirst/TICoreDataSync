@@ -167,7 +167,7 @@
         success = [[self fileManager] moveItemAtPath:destPath toPath:[[self localAppliedSyncChangeSetsFileLocation] path] error:&anyError];
         
         if( !success ) {
-            [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+            [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
         }
         
         [self downloadedAppliedSyncChangeSetsFileWithSuccess:success];
@@ -187,7 +187,12 @@
     }
     
     if( [[path lastPathComponent] isEqualToString:TICDSAppliedSyncChangeSetsFilename] ) {
-        [self downloadedAppliedSyncChangeSetsFileWithSuccess:NO];
+        if( [error code] == 404 ) {
+            [self setError:nil];
+            [self downloadedAppliedSyncChangeSetsFileWithSuccess:YES];
+        } else {
+            [self downloadedAppliedSyncChangeSetsFileWithSuccess:NO];
+        }
         return;
     }
 }

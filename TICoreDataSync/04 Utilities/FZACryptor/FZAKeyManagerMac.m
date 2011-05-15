@@ -85,6 +85,25 @@ void FZAReportKeychainError(OSStatus keychainStatus, NSString *msg) {
     return keychainStatus;
 }
 
+- (void)clearPasswordAndSalt
+{
+    SecKeychainItemRef item = NULL;
+    OSStatus keychainStatus = [self createKeychainItemForKey:&item];
+    
+    if( keychainStatus != noErr ) {
+        // keychain item not found
+        return;
+    }
+    
+    keychainStatus = SecKeychainItemDelete(item);
+    
+    if( keychainStatus == noErr ) {
+        NSLog(@"Deleted keychain item");
+    } else {
+        NSLog(@"Failed to delete keychain item: %d", keychainStatus);
+    }
+}
+
 - (NSData *)key {
     OSStatus keychainStatus = noErr;
     SecKeychainItemRef item;
