@@ -53,20 +53,7 @@
 #pragma mark Applied Sync Changes
 - (void)uploadAppliedSyncChangeSetsFile
 {
-    NSError *anyError = nil;
-    BOOL success = YES;
-    
-    NSString *finalFilePath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
-    
-    if( [self shouldUseEncryption] ) {
-        success = [[self cryptor] encryptFileAtLocation:[self localAppliedSyncChangeSetsFileLocation] writingToLocation:[NSURL fileURLWithPath:finalFilePath] error:&anyError];
-        
-        if( !success ) {
-            [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            [self uploadedAppliedSyncChangeSetsFileWithSuccess:NO];
-            return;
-        }
-    }
+    NSString *finalFilePath = [[self localAppliedSyncChangeSetsFileLocation] path];
     
     [[self restClient] uploadFile:TICDSAppliedSyncChangeSetsFilename toPath:[self thisDocumentWholeStoreThisClientDirectoryPath] fromPath:finalFilePath];
 }

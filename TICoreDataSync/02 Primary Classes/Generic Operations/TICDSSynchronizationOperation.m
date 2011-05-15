@@ -334,6 +334,7 @@
         if( !success ) {
             TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save background context: %@", anyError);
             [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+            [pool release];
             [self continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully];
             return;
         }
@@ -342,6 +343,7 @@
         if( [self localSyncChangesToMergeContext] && ![[self localSyncChangesToMergeContext] save:&anyError] ) {
             TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save unsynchroinzed sync changes context, after saving background context: %@", anyError);
             [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+            [pool release];
             [self continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully];
             return;
         }
@@ -351,6 +353,7 @@
         if( !success ) {
             TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save applied sync change sets context, after saving background context: %@", anyError);
             [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+            [pool release];
             [self continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully];
             return;
         }
@@ -360,6 +363,7 @@
         if( !success ) {
             TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save unapplied sync change sets context, after saving applied sync change sets context: %@", anyError);
             [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+            [pool release];
             [self continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully];
             return;
         }
@@ -504,6 +508,8 @@
                 break;
         }
     }
+    
+    [[self backgroundApplicationContext] processPendingChanges];
     
     return YES;
 }
