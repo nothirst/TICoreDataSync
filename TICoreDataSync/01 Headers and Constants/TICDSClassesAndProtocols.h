@@ -41,6 +41,7 @@
 @class TICDSDropboxSDKBasedDocumentSyncManager;
 @class TICDSDropboxSDKBasedApplicationRegistrationOperation;
 @class TICDSDropboxSDKBasedDocumentRegistrationOperation;
+@class TICDSDropboxSDKBasedListOfPreviouslySynchronizedDocumentsOperation;
 @class TICDSDropboxSDKBasedWholeStoreUploadOperation;
 @class TICDSDropboxSDKBasedWholeStoreDownloadOperation;
 @class TICDSDropboxSDKBasedSynchronizationOperation;

@@ -9,6 +9,9 @@
 #import "TICDSSynchronizationOperation.h"
 #import "DropboxSDK.h"
 
+/**
+ `TICDSDropboxSDKBasedSynchronizationOperation` is a synchronization operation designed for use with a `TICDSDropboxSDKBasedDocumentSyncManager`.
+ */
 
 @interface TICDSDropboxSDKBasedSynchronizationOperation : TICDSSynchronizationOperation <DBRestClientDelegate> {
 @private

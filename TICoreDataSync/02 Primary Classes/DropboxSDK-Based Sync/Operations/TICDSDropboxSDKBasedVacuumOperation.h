@@ -10,6 +10,10 @@
 
 #import "DropboxSDK.h"
 
+/**
+ `TICDSDropboxSDKBasedVacuumOperation` is a vacuum operation designed for use with a `TICDSDropboxSDKBasedDocumentSyncManager`.
+ */
+
 @interface TICDSDropboxSDKBasedVacuumOperation : TICDSVacuumOperation <DBRestClientDelegate> {
 @private
     DBSession *_dbSession;

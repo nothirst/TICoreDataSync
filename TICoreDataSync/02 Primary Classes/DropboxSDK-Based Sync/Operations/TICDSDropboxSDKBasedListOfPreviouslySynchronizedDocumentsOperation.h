@@ -1,0 +1,51 @@
+//
+//  TICDSDropboxSDKBasedListOfPreviouslySynchronizedDocumentsOperation.h
+//  iOSNotebook
+//
+//  Created by Tim Isted on 15/05/2011.
+//  Copyright 2011 Tim Isted. All rights reserved.
+//
+
+#import "TICDSListOfPreviouslySynchronizedDocumentsOperation.h"
+#import "DropboxSDK.h"
+
+/**
+ `TICDSDropboxSDKBasedListOfPreviouslySynchronizedDocumentsOperation` is a "List of Previously Synchronized Documents" operation designed for use with a `TICDSDropboxSDKBasedDocumentSyncManager`.
+ */
+
+@interface TICDSDropboxSDKBasedListOfPreviouslySynchronizedDocumentsOperation : TICDSListOfPreviouslySynchronizedDocumentsOperation <DBRestClientDelegate> {
+@private
+    DBSession *_dbSession;
+    DBRestClient *_restClient;
+    
+    NSString *_documentsDirectoryPath;
+}
+
+/** @name Properties */
+
+/** The DropboxSDK `DBSession` for use by this operation's `DBRestClient`. */
+@property (retain) DBSession *dbSession;
+
+/** The DropboxSDK `DBRestClient` for use by this operation for methods relating to the global application directory. */
+@property (nonatomic, retain) DBRestClient *restClient;
+
+/** @name Paths */
+
+/** The path to the `Documents` directory. */
+@property (retain) NSString *documentsDirectoryPath;
+
+/** Returns the path to the `documentInfo.plist` file for a document with the specified identifier.
+ 
+ @param anIdentifier The identifier of the document.
+ 
+ @return A path to the specified document. */
+- (NSString *)pathToDocumentInfoForDocumentWithIdentifier:(NSString *)anIdentifier;
+
+/** Returns the path to the `RecentSyncs` directory for a document with the specified identifier.
+ 
+ @param anIdentifier The identifier of the document.
+ 
+ @return A path to the `RecentSyncs` directory. */
+- (NSString *)pathToDocumentRecentSyncsDirectoryForIdentifier:(NSString *)anIdentifier;
+
+@end
