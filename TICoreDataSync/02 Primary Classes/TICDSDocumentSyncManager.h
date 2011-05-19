@@ -42,7 +42,7 @@
     
     TICDSSynchronizedManagedObjectContext *_primaryDocumentMOC;
     TICoreDataFactory *_coreDataFactory;
-    NSManagedObjectContext *_syncChangesMOC;
+    NSMutableDictionary *_syncChangesMOCs;
     
     NSOperationQueue *_registrationQueue;
     NSOperationQueue *_synchronizationQueue;
@@ -99,6 +99,13 @@
  @param aDocumentIdentifier An identification string to identify this document uniquely. You would typically create a UUID string the first time this doc is registered and store this in e.g. the store metadata.
  */
 - (void)configureWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager documentIdentifier:(NSString *)aDocumentIdentifier;
+
+/** Add an additional background managed object context to this document sync manager.
+ 
+ Use this method to add an additional managed object context in which changes should be tracked, for example a context used to add items in the background. 
+ 
+ @param aContext The additional managed object context to add. */
+- (void)addManagedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext;
 
 /** @name Whole Store Upload and Download */
 
@@ -256,9 +263,17 @@
  */
 @property (readonly, retain) NSURL *helperFileDirectoryLocation;
 
+/** A dictionary containing the SyncChanges managed object contexts to use for each document managed object context. */
+@property (retain) NSMutableDictionary *syncChangesMOCs;
+
+/** Returns a SyncChanges managed object context for a given document managed object context. */
+- (NSManagedObjectContext *)syncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext;
+
+/** The document managed object context that was supplied at registration, and therefore treated as the primary context. */
 @property (nonatomic, retain) TICDSSynchronizedManagedObjectContext *primaryDocumentMOC;
+
+/** The `TICoreDataFactory` object used for SyncChange managed object contexts. */
 @property (nonatomic, retain) TICoreDataFactory *coreDataFactory;
-@property (nonatomic, retain) NSManagedObjectContext *syncChangesMOC;
 
 /** @name Operation Queues */
 

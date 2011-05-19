@@ -28,6 +28,9 @@
 - (void)startWholeStoreDownloadProcess;
 - (void)bailFromDownloadProcessWithError:(NSError *)anError;
 
+- (void)addSyncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext;
+- (NSString *)keyForContext:(NSManagedObjectContext *)aContext;
+
 @property (nonatomic, retain) NSString *documentIdentifier;
 @property (nonatomic, retain) NSString *documentDescription;
 @property (nonatomic, retain) NSString *clientIdentifier;
@@ -300,8 +303,10 @@
     
     // setup the syncChangesMOC
     TICDSLog(TICDSLogVerbosityEveryStep, @"Creating SyncChangesMOC");
-    [self setSyncChangesMOC:[[self coreDataFactory] managedObjectContext]];
-    if( ![self syncChangesMOC] ) {
+    
+    //[self setSyncChangesMOC:[[self coreDataFactory] managedObjectContext]];
+    [self addSyncChangesMocForDocumentMoc:[self primaryDocumentMOC]];
+    if( ![self syncChangesMocForDocumentMoc:[self primaryDocumentMOC]] ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create sync changes MOC");
         [self bailFromRegistrationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateSyncChangesMOC classAndMethod:__PRETTY_FUNCTION__]];
         return;
@@ -381,7 +386,7 @@
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Checking to see if there are unsynchronized SyncChanges");
     NSError *anyError = nil;
-    NSUInteger count = [TICDSSyncChange ti_numberOfObjectsInManagedObjectContext:[self syncChangesMOC] error:&anyError];
+    NSUInteger count = [TICDSSyncChange ti_numberOfObjectsInManagedObjectContext:[self syncChangesMocForDocumentMoc:[self primaryDocumentMOC]] error:&anyError];
     if( anyError ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to count number of SyncChange objects: %@", anyError);
         [self bailFromUploadProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataFetchError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
@@ -644,7 +649,7 @@
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Checking if there are local sync changes to merge and push");
     NSError *anyError = nil;
-    NSArray *syncChanges = [TICDSSyncChange ti_allObjectsInManagedObjectContext:[self syncChangesMOC] error:&anyError];
+    NSArray *syncChanges = [TICDSSyncChange ti_allObjectsInManagedObjectContext:[self syncChangesMocForDocumentMoc:[self primaryDocumentMOC]] error:&anyError];
     
     if( !syncChanges ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to fetch local sync changes");
@@ -660,7 +665,7 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"Moving UnsynchronizedSyncChanges to SyncChangesBeingSynchronized");
     
     [self setCoreDataFactory:nil];
-    [self setSyncChangesMOC:nil];
+    [[self syncChangesMOCs] setValue:nil forKey:[self keyForContext:[self primaryDocumentMOC]]];
     
     // move UnsynchronizedSyncChanges file to SyncChangesBeingSynchronized
     BOOL success = [[self fileManager] moveItemAtPath:[self unsynchronizedSyncChangesStorePath] toPath:[self syncChangesBeingSynchronizedStorePath] error:&anyError];
@@ -673,8 +678,8 @@
     
     // setup the syncChangesMOC
     TICDSLog(TICDSLogVerbosityEveryStep, @"Re-Creating SyncChangesMOC");
-    [self setSyncChangesMOC:[[self coreDataFactory] managedObjectContext]];
-    if( ![self syncChangesMOC] ) {
+    [self addSyncChangesMocForDocumentMoc:[self primaryDocumentMOC]];
+    if( ![self syncChangesMocForDocumentMoc:[self primaryDocumentMOC]] ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create sync changes MOC");
         [self bailFromSynchronizationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateSyncChangesMOC classAndMethod:__PRETTY_FUNCTION__]];
         return;
@@ -804,6 +809,57 @@
     [self postDecreaseActivityNotification];
 }
 
+#pragma mark - 
+#pragma mark ADDITIONAL MANAGED OBJECT CONTEXTS
+- (void)addManagedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext
+{
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Adding SyncChanges MOC for document context: %@", aContext);
+    [self addSyncChangesMocForDocumentMoc:aContext];
+}
+
+- (void)addSyncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext
+{
+    NSManagedObjectContext *context = [[self syncChangesMOCs] valueForKey:[self keyForContext:aContext]];
+    
+    if( context ) {
+        return;
+    }
+    
+    [aContext setDocumentSyncManager:self];
+    
+    context = [[NSManagedObjectContext alloc] init];
+    [context setPersistentStoreCoordinator:[[self coreDataFactory] persistentStoreCoordinator]];
+    [[self syncChangesMOCs] setValue:context forKey:[self keyForContext:aContext]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncChangesMocDidSave:) name:NSManagedObjectContextDidSaveNotification object:context];
+    [context release];
+}
+
+- (NSManagedObjectContext *)syncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext
+{
+    NSManagedObjectContext *context = [[self syncChangesMOCs] valueForKey:[self keyForContext:aContext]];
+    
+    if( !context ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"SyncChanges MOC was requested for a managed object context that hasn't yet been added");
+    }
+    
+    return context;
+}
+
+- (NSString *)keyForContext:(NSManagedObjectContext *)aContext
+{
+    return [NSString stringWithFormat:@"%p", aContext];
+}
+
+- (void)syncChangesMocDidSave:(NSNotification *)aNotification
+{
+    if( ![NSThread isMainThread] ) {
+        [self performSelectorOnMainThread:@selector(syncChangesMocDidSave:) withObject:aNotification waitUntilDone:NO];
+        return;
+    }
+    
+    [[self syncChangesMocForDocumentMoc:[self primaryDocumentMOC]] mergeChangesFromContextDidSaveNotification:aNotification];
+}
+
 #pragma mark -
 #pragma mark MANAGED OBJECT CONTEXT DID SAVE BEHAVIOR
 - (void)synchronizedMOCWillSave:(TICDSSynchronizedManagedObjectContext *)aMoc
@@ -820,7 +876,7 @@
     
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Sync Manager will save Sync Changes context");
     
-    BOOL success = [[self syncChangesMOC] save:&anyError];
+    BOOL success = [[self syncChangesMocForDocumentMoc:aMoc] save:&anyError];
     
     if( !success ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Sync Manager failed to save Sync Changes context with error: %@", anyError);
@@ -924,6 +980,9 @@
         return nil;
     }
     
+    // Create the dictionary for the sync changes managed object contexts
+    _syncChangesMOCs = [[NSMutableDictionary alloc] initWithCapacity:5];
+    
     // Create Registration Queue (suspended, but unsuspended if App Sync Man is registered when registerWithDelegate:... is called)
     _registrationQueue = [[NSOperationQueue alloc] init];
     [_registrationQueue setSuspended:YES];
@@ -951,7 +1010,7 @@
     [_fileManager release], _fileManager = nil;
     [_helperFileDirectoryLocation release], _helperFileDirectoryLocation = nil;
     [_primaryDocumentMOC release], _primaryDocumentMOC = nil;
-    [_syncChangesMOC release], _syncChangesMOC = nil;
+    [_syncChangesMOCs release], _syncChangesMOCs = nil;
     [_coreDataFactory release], _coreDataFactory = nil;
     [_registrationQueue release], _registrationQueue = nil;
     [_synchronizationQueue release], _synchronizationQueue = nil;
@@ -1076,7 +1135,7 @@
 @synthesize helperFileDirectoryLocation = _helperFileDirectoryLocation;
 @synthesize primaryDocumentMOC = _primaryDocumentMOC;
 @synthesize coreDataFactory = _coreDataFactory;
-@synthesize syncChangesMOC = _syncChangesMOC;
+@synthesize syncChangesMOCs = _syncChangesMOCs;
 @synthesize registrationQueue = _registrationQueue;
 @synthesize synchronizationQueue = _synchronizationQueue;
 @synthesize otherTasksQueue = _otherTasksQueue;
