@@ -16,16 +16,17 @@
 - (void)beginCreatingRemoteGlobalAppDirectoryStructure;
 - (void)beginCopyingReadMeToGlobalAppDirectory;
 - (void)beginCheckForSaltFile;
-- (void)beginSavingSaltDataIfNecessary;
+- (void)beginSavingSaltData:(NSData *)saltData;
 - (void)beginFetchOfSaltFileData;
 - (void)beginRequestForEncryptionPassword;
 - (void)continueAfterRequestForEncryptionPassword;
 - (void)beginSavingPasswordTestData;
 - (void)beginTestForCorrectPassword;
-
 - (void)beginCheckForRemoteClientDeviceDirectory;
 - (void)beginCreatingRemoteClientDeviceDirectory;
 - (void)beginCreatingDeviceInfoFile;
+- (void)blitzKeychainItems;
+- (void)createCryptorIfNecessary;
 
 @end
 
@@ -33,11 +34,12 @@
 
 - (void)main
 {
+    [self createCryptorIfNecessary];
+    
     [self beginCheckForRemoteGlobalAppDirectory];
 }
 
-#pragma mark -
-#pragma mark Global App Directory
+#pragma mark - Global App Directory Check
 - (void)beginCheckForRemoteGlobalAppDirectory
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Checking whether the global app directory exists");
@@ -56,75 +58,21 @@
         [self beginCheckForSaltFile];
     } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesNotExist ) {
         
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Remote app directory doesn't exist so asking delegate whether to create it");
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Remote app directory doesn't exist so blitzing keychain, then asking delegate whether to create it");
+        [self blitzKeychainItems];
+        
         [self beginRequestWhetherToEnableEncryption];
     }
 }
 
-#pragma mark Creating App Directory Structure
-- (void)beginCreatingRemoteGlobalAppDirectoryStructure
-{
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Creating remote global app directory structure");
-    [self createRemoteGlobalAppDirectoryStructure];
-}
-
-- (void)createdRemoteGlobalAppDirectoryStructureWithSuccess:(BOOL)success
-{
-    if( !success ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create global app directory structure");
-        [self operationDidFailToComplete];
-        return;
-    }
-    
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Created Remote global app directory structure");
-        
-    [self beginCopyingReadMeToGlobalAppDirectory];
-}
-
-#pragma mark ReadMe.txt File
-- (void)beginCopyingReadMeToGlobalAppDirectory
-{
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Creating ReadMe.txt in root of global app directory structure");
-    
-    NSString *pathToFile = [[NSBundle bundleForClass:[self class]] pathForResource:@"ReadMe" ofType:@"txt"];
-    
-    [self copyReadMeTxtFileToRootOfGlobalAppDirectoryFromPath:pathToFile];
-}
-
-- (void)copiedReadMeTxtFileToRootOfGlobalAppDirectoryWithSuccess:(BOOL)success
-{
-    if( !success ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to copy ReadMe.txt file");
-        [self operationDidFailToComplete];
-        return;
-    }
-    
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Copied ReadMe.txt file");
-    
-    [self beginSavingSaltDataIfNecessary];
-}
-
-#pragma mark Overridden Methods
+#pragma mark Overridden Method
 - (void)checkWhetherRemoteGlobalAppDirectoryExists
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
     [self discoveredStatusOfRemoteGlobalAppDirectory:TICDSRemoteFileStructureExistsResponseTypeError];
 }
 
-- (void)createRemoteGlobalAppDirectoryStructure
-{
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self createdRemoteGlobalAppDirectoryStructureWithSuccess:NO];
-}
-
-- (void)copyReadMeTxtFileToRootOfGlobalAppDirectoryFromPath:(NSString *)aPath
-{
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self copiedReadMeTxtFileToRootOfGlobalAppDirectoryWithSuccess:NO];
-}
-
-#pragma mark -
-#pragma mark Encryption
+#pragma mark - General Encryption
 - (void)beginRequestWhetherToEnableEncryption
 {
     if( [NSThread isMainThread] ) {
@@ -163,17 +111,354 @@
         return;
     }
     
-    // Cryptor won't have been set when this registration operation was created...
-    if( [self shouldUseEncryption] ) {
-        FZACryptor *aCryptor = [[FZACryptor alloc] init];
-        [self setCryptor:aCryptor];
-        [aCryptor release];
-    }
-    
     [self beginCreatingRemoteGlobalAppDirectoryStructure];
 }
 
-#pragma mark Existing Encryption Password
+#pragma mark - Global App Directory Creation
+- (void)beginCreatingRemoteGlobalAppDirectoryStructure
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Creating remote global app directory structure");
+    [self createRemoteGlobalAppDirectoryStructure];
+}
+
+- (void)createdRemoteGlobalAppDirectoryStructureWithSuccess:(BOOL)success
+{
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create global app directory structure");
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Created Remote global app directory structure");
+    
+    [self beginCopyingReadMeToGlobalAppDirectory];
+}
+
+#pragma mark Overridden Method
+- (void)createRemoteGlobalAppDirectoryStructure
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self createdRemoteGlobalAppDirectoryStructureWithSuccess:NO];
+}
+
+#pragma mark - Copy ReadMe.txt File
+- (void)beginCopyingReadMeToGlobalAppDirectory
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Creating ReadMe.txt in root of global app directory structure");
+    
+    NSString *pathToFile = [[NSBundle bundleForClass:[self class]] pathForResource:@"ReadMe" ofType:@"txt"];
+    
+    [self copyReadMeTxtFileToRootOfGlobalAppDirectoryFromPath:pathToFile];
+}
+
+- (void)copiedReadMeTxtFileToRootOfGlobalAppDirectoryWithSuccess:(BOOL)success
+{
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to copy ReadMe.txt file");
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Copied ReadMe.txt file");
+    
+    if( [self shouldUseEncryption] ) {
+        [self createCryptorIfNecessary];
+        
+        NSData *saltData = [[self cryptor] setPassword:[self password] salt:nil];
+        
+        [self beginSavingSaltData:saltData];
+    } else {
+        [self beginCreatingRemoteClientDeviceDirectory];
+    }
+}
+
+#pragma mark Overridden Method
+- (void)copyReadMeTxtFileToRootOfGlobalAppDirectoryFromPath:(NSString *)aPath
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self copiedReadMeTxtFileToRootOfGlobalAppDirectoryWithSuccess:NO];
+}
+
+#pragma mark - Saving Salt File
+- (void)beginSavingSaltData:(NSData *)saltData
+{
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Saving salt data to remote");
+    
+    [self saveSaltDataToRemote:saltData];
+}
+
+- (void)savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:(BOOL)success
+{
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save salt file");
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Saved salt file");
+    
+    [self beginSavingPasswordTestData];
+}
+
+#pragma mark Overridden Method
+- (void)saveSaltDataToRemote:(NSData *)saltData
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:NO];
+}
+
+#pragma mark - Password Test File Creation
+- (void)beginSavingPasswordTestData
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Saving password test data");
+    
+    NSString *testString = [NSString stringWithFormat:@"%@%@", [self appIdentifier], [TICDSUtilities uuidString]];
+    
+    NSData *testData = [NSKeyedArchiver archivedDataWithRootObject:testString];
+    
+    [self savePasswordTestData:testData];
+}
+
+- (void)savedPasswordTestDataWithSuccess:(BOOL)success
+{
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save password test data");
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    [self beginCreatingRemoteClientDeviceDirectory];
+}
+
+#pragma mark Overridden Method
+- (void)savePasswordTestData:(NSData *)testData
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self savedPasswordTestDataWithSuccess:NO];
+}
+
+#pragma mark - Client Device Directory Creation
+- (void)beginCreatingRemoteClientDeviceDirectory
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Creating client device directory");
+    
+    [self createRemoteClientDeviceDirectory];
+}
+
+- (void)createdRemoteClientDeviceDirectoryWithSuccess:(BOOL)success
+{
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create remote client device directory");
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Created remote client device directory");
+    [self beginCreatingDeviceInfoFile];
+}
+
+#pragma mark Overridden Method
+- (void)createRemoteClientDeviceDirectory
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self createdRemoteClientDeviceDirectoryWithSuccess:NO];
+}
+
+#pragma mark - Client deviceInfo.plist File
+- (void)beginCreatingDeviceInfoFile
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Creating deviceInfo.plist");
+    
+    NSString *pathToFile = [[NSBundle bundleForClass:[self class]] pathForResource:TICDSDeviceInfoPlistFilename ofType:TICDSDeviceInfoPlistExtension];
+    
+    NSMutableDictionary *deviceInfo = [NSMutableDictionary dictionaryWithContentsOfFile:pathToFile];
+    
+    [deviceInfo setValue:[self clientDescription] forKey:kTICDSClientDeviceDescription];
+    [deviceInfo setValue:[self clientIdentifier] forKey:kTICDSClientDeviceIdentifier];
+    [deviceInfo setValue:[self applicationUserInfo] forKey:kTICDSClientDeviceUserInfo];
+    
+    [self saveRemoteClientDeviceInfoPlistFromDictionary:deviceInfo];
+}
+
+- (void)savedRemoteClientDeviceInfoPlistWithSuccess:(BOOL)success
+{
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save deviceInfo.plist");
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Saved deviceInfo.plist");
+    
+    [self operationDidCompleteSuccessfully];
+}
+
+#pragma mark Overridden Method
+- (void)saveRemoteClientDeviceInfoPlistFromDictionary:(NSDictionary *)aDictionary
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self savedRemoteClientDeviceInfoPlistWithSuccess:NO];
+}
+
+#pragma mark - Salt File Existence
+- (void)beginCheckForSaltFile
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Checking for salt file");
+    
+    [self checkWhetherSaltFileExists];
+}
+
+- (void)discoveredStatusOfSaltFile:(TICDSRemoteFileStructureExistsResponseType)status
+{
+    if( status == TICDSRemoteFileStructureExistsResponseTypeError ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to check for salt file");
+        [self operationDidFailToComplete];
+        return;
+    } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesExist ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Salt file exists");
+        
+        [self setShouldUseEncryption:YES];
+        
+        [self beginFetchOfSaltFileData];
+        
+    } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesNotExist ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Salt file does not exist");
+        
+        [self setShouldUseEncryption:NO];
+        
+        [self beginCheckForRemoteClientDeviceDirectory];
+    }
+}
+
+#pragma mark Overridden Method
+- (void)checkWhetherSaltFileExists
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self discoveredStatusOfSaltFile:TICDSRemoteFileStructureExistsResponseTypeError];
+}
+
+#pragma mark - Salt File Fetch
+- (void)beginFetchOfSaltFileData
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Fetching salt data");
+    
+    [self fetchSaltData];
+}
+
+- (void)fetchedSaltData:(NSData *)saltData
+{
+    if( !saltData ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error fetching salt data");
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Fetched salt data");
+    
+    [self setSaltData:saltData];
+    
+    [self beginCheckForRemoteClientDeviceDirectory];
+}
+
+#pragma mark Overridden Method
+- (void)fetchSaltData
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self fetchedSaltData:nil];
+}
+
+#pragma mark - Check for Client Device Directory
+- (void)beginCheckForRemoteClientDeviceDirectory
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Checking for remote client device directory");
+    
+    [self checkWhetherRemoteClientDeviceDirectoryExists];
+}
+
+- (void)discoveredStatusOfRemoteClientDeviceDirectory:(TICDSRemoteFileStructureExistsResponseType)status
+{
+    if( status == TICDSRemoteFileStructureExistsResponseTypeError ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error checking for remote client device directory");
+        [self operationDidFailToComplete];
+        return;
+    } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesExist ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Client Device Directory exists!");
+        [self setShouldCreateClientDirectory:NO];
+        
+        if( [self shouldUseEncryption] ) {
+            [self beginTestForCorrectPassword];
+        } else {
+            [self operationDidCompleteSuccessfully];
+        }
+    } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesNotExist ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Client Device Directory does not exist");
+        
+        [self setShouldCreateClientDirectory:YES];
+        
+        if( [self shouldUseEncryption] ) {
+            [self blitzKeychainItems];
+            
+            [self beginRequestForEncryptionPassword];
+        } else {
+            [self beginCreatingRemoteClientDeviceDirectory];
+        }
+    }
+}
+
+#pragma mark Overridden Method
+- (void)checkWhetherRemoteClientDeviceDirectoryExists
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self discoveredStatusOfRemoteClientDeviceDirectory:TICDSRemoteFileStructureExistsResponseTypeError];
+}
+
+#pragma mark - Password Testing
+- (void)beginTestForCorrectPassword
+{
+    // Assume password is correct...
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Fetching encryption password test file");
+    
+    [self fetchPasswordTestData];
+}
+
+- (void)fetchedPasswordTestData:(NSData *)testData
+{
+    if( testData ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Fetched test data and decrypted successfully");
+        
+        if( [self shouldCreateClientDirectory] ) {
+            [self beginCreatingRemoteClientDeviceDirectory];
+        } else {
+            [self operationDidCompleteSuccessfully];
+        }
+        return;
+    }
+    
+    // an error occurred
+    NSError *underlyingError = [[[self error] userInfo] valueForKey:kTICDSErrorUnderlyingError];
+    
+    // incorrect password
+    if( [underlyingError code] == FZACryptorErrorCodeFailedIntegrityCheck && [[underlyingError domain] isEqualToString:FZACryptorErrorDomain] ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Password was incorrect, so ask the delegate for a new one");
+        
+        [self blitzKeychainItems];
+        [self beginRequestForEncryptionPassword];
+        return;
+    }
+    
+    // generic error
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to fetch test data");
+    [self operationDidFailToComplete];
+}
+
+#pragma mark Overridden Method
+- (void)fetchPasswordTestData
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self fetchedPasswordTestData:nil];
+}
+
+#pragma mark - Existing Encryption Password
 - (void)beginRequestForEncryptionPassword
 {
     if( [NSThread isMainThread] ) {
@@ -211,284 +496,32 @@
         return;
     }
     
-    [self beginFetchOfSaltFileData];
-}
-
-#pragma mark Password Test File Creation
-- (void)beginSavingPasswordTestData
-{
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Saving password test data");
-    
-    NSString *testString = [NSString stringWithFormat:@"%@%@", [self appIdentifier], [TICDSUtilities uuidString]];
-    
-    NSData *testData = [NSKeyedArchiver archivedDataWithRootObject:testString];
-    
-    [self savePasswordTestData:testData];
-}
-
-- (void)savedPasswordTestDataWithSuccess:(BOOL)success
-{
-    if( !success ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save password test data");
-        [self operationDidFailToComplete];
-        return;
-    }
-    
-    [self beginCreatingRemoteClientDeviceDirectory];
-}
-
-#pragma mark Password Testing
-- (void)beginTestForCorrectPassword
-{
-    // Assume password is correct...
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Fetching encryption password test file");
-    
-    [self fetchPasswordTestData];
-}
-
-- (void)fetchedPasswordTestData:(NSData *)testData
-{
-    if( testData ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Fetched test data and decrypted successfully");
-        [self beginCheckForRemoteClientDeviceDirectory];
-        return;
-    }
-    
-    // an error occurred
-    NSError *underlyingError = [[[self error] userInfo] valueForKey:kTICDSErrorUnderlyingError];
-    
-    // incorrect password
-    if( [underlyingError code] == FZACryptorErrorCodeFailedIntegrityCheck && [[underlyingError domain] isEqualToString:FZACryptorErrorDomain] ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Password was incorrect, so ask the delegate for a new one");
-        
-        [self beginRequestForEncryptionPassword];
-        return;
-    }
-    
-    // generic error
-    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to fetch test data");
-    [self operationDidFailToComplete];
-}
-
-#pragma mark Overridden Methods
-- (void)savePasswordTestData:(NSData *)testData
-{
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self savedPasswordTestDataWithSuccess:NO];
-}
-
-- (void)fetchPasswordTestData
-{
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self fetchedPasswordTestData:nil];
-}
-
-#pragma mark -
-#pragma mark Salt File Existence
-- (void)beginCheckForSaltFile
-{
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Checking for salt file");
-    
-    [self checkWhetherSaltFileExists];
-}
-
-- (void)discoveredStatusOfSaltFile:(TICDSRemoteFileStructureExistsResponseType)status
-{
-    if( status == TICDSRemoteFileStructureExistsResponseTypeError ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to check for salt file");
-        [self operationDidFailToComplete];
-        return;
-    } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesExist ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Salt file exists");
-        
-        [self setShouldUseEncryption:YES];
-        
-        // set encryptor
-        FZACryptor *cryptor = [[FZACryptor alloc] init];
-        [self setCryptor:cryptor];
-        if( [cryptor isConfigured] ) {
-            TICDSLog(TICDSLogVerbosityEveryStep, @"FZACryptor is configured");
-            [self beginCheckForRemoteClientDeviceDirectory];
-        } else {
-            TICDSLog(TICDSLogVerbosityEveryStep, @"FZACryptor is not yet configured");
-            [self beginRequestForEncryptionPassword];
-        }
-        
-    } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesNotExist ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Salt file does not exist");
-        
-        [self setShouldUseEncryption:NO];
-        
-        [self beginCheckForRemoteClientDeviceDirectory];
-    }
-}
-
-#pragma mark Salt File Fetch
-- (void)beginFetchOfSaltFileData
-{
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Fetching salt data");
-    
-    [self fetchSaltData];
-}
-
-- (void)fetchedSaltData:(NSData *)saltData
-{
-    if( !saltData ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error fetching salt data");
-        [self operationDidFailToComplete];
-        return;
-    }
-    
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Fetched salt data");
-    
-    [self setShouldUseEncryption:YES];
-    
-    [[self cryptor] setPassword:[self password] salt:saltData];
+    [[self cryptor] setPassword:[self password] salt:[self saltData]];
     
     [self beginTestForCorrectPassword];
 }
 
-#pragma mark Saving Salt File
-- (void)beginSavingSaltDataIfNecessary
-{
-    if( ![self shouldUseEncryption] ) {
-        [self beginCreatingRemoteClientDeviceDirectory];
-        return;
-    }
-    
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Using encryption");
-    //NSData *saltData = [NSKeyedArchiver archivedDataWithRootObject:@"HELLOTHISISMYSALT"];
-    NSData *saltData = [[self cryptor] setPassword:[self password] salt:nil];
-    
-    [self saveSaltDataToRemote:saltData];
-}
-
-- (void)savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:(BOOL)success
-{
-    if( !success ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save salt file");
-        [self operationDidFailToComplete];
-        return;
-    }
-    
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Saved salt file");
-    
-    [self beginSavingPasswordTestData];
-    
-    //[self beginCreatingRemoteClientDeviceDirectory];
-}
-
-#pragma mark Overridden Methods
-- (void)checkWhetherSaltFileExists
-{
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self discoveredStatusOfSaltFile:TICDSRemoteFileStructureExistsResponseTypeError];
-}
-
-- (void)fetchSaltData
-{
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self fetchedSaltData:nil];
-}
-
-- (void)saveSaltDataToRemote:(NSData *)saltData
-{
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:NO];
-}
-
 #pragma mark -
-#pragma mark Client Device Directory and Info
-- (void)beginCheckForRemoteClientDeviceDirectory
+#pragma mark Keychain
+- (void)createCryptorIfNecessary
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Checking for remote client device directory");
-    
-    [self checkWhetherRemoteClientDeviceDirectoryExists];
-}
-
-- (void)discoveredStatusOfRemoteClientDeviceDirectory:(TICDSRemoteFileStructureExistsResponseType)status
-{
-    if( status == TICDSRemoteFileStructureExistsResponseTypeError ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error checking for remote client device directory");
-        [self operationDidFailToComplete];
-        return;
-    } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesExist ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Client Device Directory exists!");
-        [self operationDidCompleteSuccessfully];
-        return;
-    } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesNotExist ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Client Device Directory does not exist");
-        
-        [self beginCreatingRemoteClientDeviceDirectory];
-    }
-}
-
-#pragma Directory Creation
-- (void)beginCreatingRemoteClientDeviceDirectory
-{
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Creating client device directory");
-    
-    [self createRemoteClientDeviceDirectory];
-}
-
-- (void)createdRemoteClientDeviceDirectoryWithSuccess:(BOOL)success
-{
-    if( !success ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create remote client device directory");
-        [self operationDidFailToComplete];
+    if( [self cryptor] ) {
         return;
     }
     
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Created remote client device directory");
-    [self beginCreatingDeviceInfoFile];
+    FZACryptor *cryptor = [[FZACryptor alloc] init];
+    [self setCryptor:cryptor];
+    [cryptor release];
 }
 
-#pragma Client deviceInfo.plist File
-- (void)beginCreatingDeviceInfoFile
+- (void)blitzKeychainItems
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Creating deviceInfo.plist");
+    [self createCryptorIfNecessary];
     
-    NSString *pathToFile = [[NSBundle bundleForClass:[self class]] pathForResource:TICDSDeviceInfoPlistFilename ofType:TICDSDeviceInfoPlistExtension];
-    
-    NSMutableDictionary *deviceInfo = [NSMutableDictionary dictionaryWithContentsOfFile:pathToFile];
-    
-    [deviceInfo setValue:[self clientDescription] forKey:kTICDSClientDeviceDescription];
-    [deviceInfo setValue:[self clientIdentifier] forKey:kTICDSClientDeviceIdentifier];
-    [deviceInfo setValue:[self applicationUserInfo] forKey:kTICDSClientDeviceUserInfo];
-    
-    [self saveRemoteClientDeviceInfoPlistFromDictionary:deviceInfo];
-}
-
-- (void)savedRemoteClientDeviceInfoPlistWithSuccess:(BOOL)success
-{
-    if( !success ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save deviceInfo.plist");
-        [self operationDidFailToComplete];
-        return;
+    if( [[self cryptor] isConfigured] ) {
+        NSLog(@"Deconfiguring cryptor for new registration");
+        [[self cryptor] clearPasswordAndSalt];
     }
-    
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Saved deviceInfo.plist");
-    
-    [self operationDidCompleteSuccessfully];
-}
-
-#pragma mark Overridden Methods
-- (void)checkWhetherRemoteClientDeviceDirectoryExists
-{
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self discoveredStatusOfRemoteClientDeviceDirectory:TICDSRemoteFileStructureExistsResponseTypeError];
-}
-
-- (void)createRemoteClientDeviceDirectory
-{
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self createdRemoteClientDeviceDirectoryWithSuccess:NO];
-}
-
-- (void)saveRemoteClientDeviceInfoPlistFromDictionary:(NSDictionary *)aDictionary
-{
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self savedRemoteClientDeviceInfoPlistWithSuccess:NO];
 }
 
 #pragma mark -
@@ -504,7 +537,8 @@
     [_clientDescription release], _clientDescription = nil;
     [_applicationUserInfo release], _applicationUserInfo = nil;
     [_password release], _password = nil;
-    
+    [_saltData release], _saltData = nil;
+
     [super dealloc];
 }
 
@@ -515,5 +549,7 @@
 @synthesize applicationUserInfo = _applicationUserInfo;
 @synthesize paused = _paused;
 @synthesize password = _password;
+@synthesize saltData = _saltData;
+@synthesize shouldCreateClientDirectory = _shouldCreateClientDirectory;
 
 @end

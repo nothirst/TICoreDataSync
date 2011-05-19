@@ -12,23 +12,39 @@
  
  The operation carries out the following tasks:
  
- 1. Subclass checks whether the appIdentifier directory exists on the remote.
+ 1. Subclass checks whether the `appIdentifier` directory exists on the remote.
  
-    1. If not, ask the application sync manager whether to use encryption (get a password, if so), then:
+    1. If not, blitz any existing keychain items, then ask the application sync manager whether to use encryption (get a password, if so), then:
  
        1. Subclass creates the `appIdentifier` directory on the remote, and general file structure (directories only).
- 
+       
        2. Subclass saves the `ReadMe.txt` file at the root.
  
        3. If encryption is enabled, create the `FZACryptor` and set its password.
- 
+    
        4. If encryption is enabled, subclass saves the generated salt file in the remote `Encryption` directory.
  
        5. If encryption is enabled, subclass saves a suitable file for password testing in the remote `Encryption` directory.
  
-       5. Continue by creating the client's directory (main step 3) inside `ClientDevices`.
+       6. Continue by creating the client's directory (main step 3) inside `ClientDevices`.
  
-    2. If app has been registered before, subclass checks whether the salt file exists on the remote.
+    2. If app has been registered before, subclass checks whether the salt file exists on the remote, and `shouldUseEncryption` is set accordingly, then:
+ 
+       1. Subclass checks whether the client's directory exists inside `ClientDevices`.
+ 
+       2. If not, any existing keychain items are blitzed, then:
+ 
+          1. If encryption is disabled, continue by creating the client's directory (main step 3) inside `ClientDevices`.
+ 
+          2. If encryption is enabled, subclass downloads the salt file and sets the `saltData` operation property.
+ 
+          3. The application sync manager is asked for the password.
+ 
+          4. The `FZACryptor` is configured with password and salt, and the test file is downloaded.
+ 
+       3. If the directory exists, and encryption is disabled, then operation is complete.
+ 
+     2. If app has been registered before, subclass checks whether the salt file exists on the remote.
  
        1. If not, encryption is disabled, so continue by checking whether the client has registered before.
  
@@ -59,6 +75,8 @@
     
     BOOL _paused;
     NSString *_password;
+    NSData *_saltData;
+    BOOL _shouldCreateClientDirectory;
 }
 
 #pragma mark Designated Initializer
@@ -228,5 +246,11 @@
 
 /** The password to use for encryption at initial global app registration, if `shouldUseEncryption` is `YES`. */
 @property (retain) NSString *password;
+
+/** The cached salt data, set only after fetching from the remote. */
+@property (nonatomic, retain) NSData *saltData;
+
+/** Used mid-operation to indicate whether the client directory needs to be created after configuring encryption. */
+@property (nonatomic, assign) BOOL shouldCreateClientDirectory;
 
 @end
