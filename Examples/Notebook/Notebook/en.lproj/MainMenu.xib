@@ -30,6 +30,7 @@
 			<string>NSView</string>
 			<string>NSTokenFieldCell</string>
 			<string>NSScrollView</string>
+			<string>NSProgressIndicator</string>
 			<string>NSScroller</string>
 			<string>NSMenuItem</string>
 			<string>NSTableHeaderView</string>
@@ -2022,6 +2023,16 @@
 								<int key="NSPeriodicInterval">75</int>
 							</object>
 						</object>
+						<object class="NSProgressIndicator" id="190566200">
+							<reference key="NSNextResponder" ref="439893737"/>
+							<int key="NSvFlags">-2147482356</int>
+							<object class="NSPSMatrix" key="NSDrawMatrix"/>
+							<string key="NSFrame">{{42, 377}, {16, 16}}</string>
+							<reference key="NSSuperview" ref="439893737"/>
+							<reference key="NSWindow"/>
+							<int key="NSpiFlags">20746</int>
+							<double key="NSMaxValue">100</double>
+						</object>
 					</object>
 					<string key="NSFrame">{{7, 11}, {706, 416}}</string>
 					<reference key="NSSuperview"/>
@@ -3301,6 +3312,14 @@
 					</object>
 					<int key="connectionID">737</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">activityIndicator</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="190566200"/>
+					</object>
+					<int key="connectionID">739</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -3865,6 +3884,7 @@
 							<reference ref="73973619"/>
 							<reference ref="453311504"/>
 							<reference ref="857009688"/>
+							<reference ref="190566200"/>
 						</object>
 						<reference key="parent" ref="972006081"/>
 					</object>
@@ -4703,6 +4723,11 @@
 						<reference key="object" ref="796118673"/>
 						<reference key="parent" ref="857009688"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">738</int>
+						<reference key="object" ref="190566200"/>
+						<reference key="parent" ref="439893737"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -4965,6 +4990,7 @@
 					<string>73.ImportedFromIB2</string>
 					<string>734.IBPluginDependency</string>
 					<string>735.IBPluginDependency</string>
+					<string>738.IBPluginDependency</string>
 					<string>74.IBPluginDependency</string>
 					<string>74.ImportedFromIB2</string>
 					<string>75.IBPluginDependency</string>
@@ -5279,6 +5305,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<integer value="1"/>
@@ -5314,7 +5341,7 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">737</int>
+			<int key="maxID">739</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5425,11 +5452,13 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>activityIndicator</string>
 							<string>notesArrayController</string>
 							<string>window</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSProgressIndicator</string>
 							<string>NSArrayController</string>
 							<string>NSWindow</string>
 						</object>
@@ -5438,11 +5467,16 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>activityIndicator</string>
 							<string>notesArrayController</string>
 							<string>window</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">activityIndicator</string>
+								<string key="candidateClassName">NSProgressIndicator</string>
+							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">notesArrayController</string>
 								<string key="candidateClassName">NSArrayController</string>

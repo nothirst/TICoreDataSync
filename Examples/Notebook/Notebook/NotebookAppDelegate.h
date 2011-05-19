@@ -21,6 +21,9 @@
     
     TICDSDocumentSyncManager *_documentSyncManager;
     BOOL _downloadStoreAfterRegistering;
+    
+    NSUInteger _activity;
+    NSProgressIndicator *_activityIndicator;
 }
 
 @property (assign) IBOutlet NSWindow *window;
@@ -41,5 +44,7 @@ BOOL downloadStoreAfterRegistering;
 - (NSURL *)applicationFilesDirectory;
 
 - (IBAction)beginSynchronizing:(id)sender;
+@property (nonatomic, assign) IBOutlet 
+NSProgressIndicator *activityIndicator;
 
 @end

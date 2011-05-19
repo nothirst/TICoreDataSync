@@ -43,6 +43,9 @@
     [NSString stringWithString:(NSString *)name];
     CFRelease(name);
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(activityDidIncrease:) name:TICDSApplicationSyncManagerDidIncreaseActivityNotification object:manager];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(activityDidDecrease:) name:TICDSApplicationSyncManagerDidDecreaseActivityNotification object:manager];
+    
     [manager registerWithDelegate:self
               globalAppIdentifier:@"com.timisted.notebook" 
            uniqueClientIdentifier:clientUuid 
@@ -79,6 +82,11 @@ preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:
 {
     TICDSFileManagerBasedDocumentSyncManager *docSyncManager = 
     [[TICDSFileManagerBasedDocumentSyncManager alloc] init];
+    
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(activityDidIncrease:) name:TICDSDocumentSyncManagerDidIncreaseActivityNotification object:docSyncManager];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(activityDidDecrease:) name:TICDSDocumentSyncManagerDidDecreaseActivityNotification object:docSyncManager];
     
     [docSyncManager registerWithDelegate:self 
                           appSyncManager:aSyncManager 
@@ -121,22 +129,6 @@ userInfo:(NSDictionary *)userInfo
     [self setDownloadStoreAfterRegistering:NO];
     
     [aSyncManager continueRegistrationByCreatingRemoteFileStructure:YES];
-}
-
-- (void)documentSyncManagerDidFinishRegistering:
-(TICDSDocumentSyncManager *)aSyncManager
-{
-    if( [self shouldDownloadStoreAfterRegistering] ) {
-        [[self documentSyncManager] initiateDownloadOfWholeStore];
-    }
-    
-    if( ![aSyncManager isKindOfClass:
-          [TICDSFileManagerBasedDocumentSyncManager class]] ) {
-        return;
-    }
-    
-    [(TICDSFileManagerBasedDocumentSyncManager *)aSyncManager 
-     enableAutomaticSynchronizationAfterChangesDetectedFromOtherClients];
 }
 
 - (BOOL)documentSyncManagerShouldUploadWholeStore\
@@ -191,6 +183,46 @@ shouldBeginSynchronizingAfterManagedObjectContextDidSave:
     return YES;
 }
 
+- (void)documentSyncManagerDidFinishRegistering:
+(TICDSDocumentSyncManager *)aSyncManager
+{
+    if( [self shouldDownloadStoreAfterRegistering] ) {
+        [[self documentSyncManager] initiateDownloadOfWholeStore];
+    }
+    
+    if( ![aSyncManager isKindOfClass:
+          [TICDSFileManagerBasedDocumentSyncManager class]] ) {
+        return;
+    }
+    
+    [(TICDSFileManagerBasedDocumentSyncManager *)aSyncManager 
+     enableAutomaticSynchronizationAfterChangesDetectedFromOtherClients];
+}
+
+#pragma mark -
+#pragma mark Notifications
+- (void)activityDidIncrease:(NSNotification *)aNotification
+{
+    _activity++;
+    
+    if( _activity > 0 ) {
+        [[self activityIndicator] setHidden:NO];
+        [[self activityIndicator] startAnimation:self];
+    }
+}
+
+- (void)activityDidDecrease:(NSNotification *)aNotification
+{
+    if( _activity > 0) {
+        _activity--;
+    }
+    
+    if( _activity < 1 ) {
+        [[self activityIndicator] stopAnimation:self];
+        [[self activityIndicator] setHidden:YES];
+    }
+}
+
 #pragma mark -
 #pragma mark Actions
 - (IBAction)beginSynchronizing:(id)sender
@@ -237,6 +269,7 @@ shouldBeginSynchronizingAfterManagedObjectContextDidSave:
 @synthesize documentSyncManager = _documentSyncManager;
 @synthesize downloadStoreAfterRegistering = 
 _downloadStoreAfterRegistering;
+@synthesize activityIndicator;
 
 #pragma mark -
 #pragma mark Apple Stuff

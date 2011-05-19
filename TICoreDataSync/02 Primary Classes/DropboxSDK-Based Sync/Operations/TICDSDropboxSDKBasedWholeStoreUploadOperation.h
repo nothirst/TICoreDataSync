@@ -6,6 +6,8 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
+#if TARGET_OS_IPHONE
+
 #import "TICDSWholeStoreUploadOperation.h"
 #import "DropboxSDK.h"
 
@@ -43,3 +45,5 @@
 @property (retain) NSString *thisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath;
 
 @end
+
+#endif

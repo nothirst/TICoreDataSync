@@ -6,6 +6,8 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
+#if TARGET_OS_IPHONE
+
 #import "TICDSDropboxSDKBasedApplicationRegistrationOperation.h"
 
 @implementation TICDSDropboxSDKBasedApplicationRegistrationOperation
@@ -417,3 +419,5 @@
 @synthesize clientDevicesThisClientDeviceDirectoryPath = _clientDevicesThisClientDeviceDirectoryPath;
 
 @end
+
+#endif

@@ -6,6 +6,8 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
+#if TARGET_OS_IPHONE
+
 #import "TICDSSynchronizationOperation.h"
 #import "DropboxSDK.h"
 
@@ -63,3 +65,5 @@
 - (NSString *)pathToSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientWithIdentifier:(NSString *)aClientIdentifier;
 
 @end
+
+#endif

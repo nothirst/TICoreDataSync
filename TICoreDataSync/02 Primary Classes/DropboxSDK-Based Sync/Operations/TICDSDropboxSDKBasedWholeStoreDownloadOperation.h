@@ -6,8 +6,14 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
+#if TARGET_OS_IPHONE
+
 #import "TICDSWholeStoreDownloadOperation.h"
 #import "DropboxSDK.h"
+
+/**
+ `TICDSDropboxSDKBasedWholeStoreDownloadOperation` is a "whole store download" operation designed for use with a `TICDSDropboxSDKBasedDocumentSyncManager`.
+ */
 
 @interface TICDSDropboxSDKBasedWholeStoreDownloadOperation : TICDSWholeStoreDownloadOperation <DBRestClientDelegate> {
 @private
@@ -47,3 +53,5 @@
 @property (retain) NSString *thisDocumentWholeStoreDirectoryPath;
 
 @end
+
+#endif

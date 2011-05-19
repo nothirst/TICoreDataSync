@@ -6,6 +6,8 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
+#if TARGET_OS_IPHONE
+
 #import "TICDSApplicationSyncManager.h"
 
 /** The `TICDSDropboxSDKBasedApplicationSyncManager` describes a class used to synchronize an iOS application with a remote service that can be accessed via the Dropbox SDK.
@@ -47,3 +49,5 @@
 - (NSString *)pathToWholeStoreDirectoryForDocumentWithIdentifier:(NSString *)anIdentifier;
 
 @end
+
+#endif

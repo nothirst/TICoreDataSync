@@ -6,6 +6,8 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
+#if TARGET_OS_IPHONE
+
 #import "TICoreDataSync.h"
 #import "DropboxSDK.h"
 
@@ -48,3 +50,5 @@
 @property (retain) NSString *clientDevicesThisClientDeviceDirectoryPath;
 
 @end
+
+#endif
