@@ -1,0 +1,324 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		386D4C701371712600020F72 /* TINBNote.m in Sources */ = {isa = PBXBuildFile; fileRef = 386D4C6F1371712600020F72 /* TINBNote.m */; };
+		386D4C731371712600020F72 /* TINBTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 386D4C721371712600020F72 /* TINBTag.m */; };
+		386D4C7F1371893500020F72 /* TIManagedObjectsToStringsValueTransfomer.m in Sources */ = {isa = PBXBuildFile; fileRef = 386D4C7E1371893500020F72 /* TIManagedObjectsToStringsValueTransfomer.m */; };
+		386F07D113715D0800D4F31B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 386F07D013715D0800D4F31B /* Cocoa.framework */; };
+		386F07DB13715D0800D4F31B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 386F07D913715D0800D4F31B /* InfoPlist.strings */; };
+		386F07DE13715D0800D4F31B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 386F07DD13715D0800D4F31B /* main.m */; };
+		386F07E113715D0800D4F31B /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 386F07DF13715D0800D4F31B /* Credits.rtf */; };
+		386F07E413715D0800D4F31B /* NotebookAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 386F07E313715D0800D4F31B /* NotebookAppDelegate.m */; };
+		386F07E713715D0800D4F31B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 386F07E513715D0800D4F31B /* MainMenu.xib */; };
+		386F07EA13715D0800D4F31B /* Notebook.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 386F07E813715D0800D4F31B /* Notebook.xcdatamodeld */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		386D4C6E1371712600020F72 /* TINBNote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TINBNote.h; sourceTree = "<group>"; };
+		386D4C6F1371712600020F72 /* TINBNote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TINBNote.m; sourceTree = "<group>"; };
+		386D4C711371712600020F72 /* TINBTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TINBTag.h; sourceTree = "<group>"; };
+		386D4C721371712600020F72 /* TINBTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TINBTag.m; sourceTree = "<group>"; };
+		386D4C7D1371893500020F72 /* TIManagedObjectsToStringsValueTransfomer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TIManagedObjectsToStringsValueTransfomer.h; sourceTree = "<group>"; };
+		386D4C7E1371893500020F72 /* TIManagedObjectsToStringsValueTransfomer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TIManagedObjectsToStringsValueTransfomer.m; sourceTree = "<group>"; };
+		386F07CC13715D0800D4F31B /* Notebook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notebook.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		386F07D013715D0800D4F31B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		386F07D313715D0800D4F31B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		386F07D413715D0800D4F31B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		386F07D513715D0800D4F31B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		386F07D813715D0800D4F31B /* Notebook-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Notebook-Info.plist"; sourceTree = "<group>"; };
+		386F07DA13715D0800D4F31B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		386F07DC13715D0800D4F31B /* Notebook-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Notebook-Prefix.pch"; sourceTree = "<group>"; };
+		386F07DD13715D0800D4F31B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		386F07E013715D0800D4F31B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		386F07E213715D0800D4F31B /* NotebookAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotebookAppDelegate.h; sourceTree = "<group>"; };
+		386F07E313715D0800D4F31B /* NotebookAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotebookAppDelegate.m; sourceTree = "<group>"; };
+		386F07E613715D0800D4F31B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		386F07E913715D0800D4F31B /* Notebook.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Notebook.xcdatamodel; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		386F07C913715D0800D4F31B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				386F07D113715D0800D4F31B /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		386F07C113715D0800D4F31B = {
+			isa = PBXGroup;
+			children = (
+				386F07D613715D0800D4F31B /* Notebook */,
+				386F07CF13715D0800D4F31B /* Frameworks */,
+				386F07CD13715D0800D4F31B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		386F07CD13715D0800D4F31B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				386F07CC13715D0800D4F31B /* Notebook.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		386F07CF13715D0800D4F31B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				386F07D013715D0800D4F31B /* Cocoa.framework */,
+				386F07D213715D0800D4F31B /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		386F07D213715D0800D4F31B /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				386F07D313715D0800D4F31B /* AppKit.framework */,
+				386F07D413715D0800D4F31B /* CoreData.framework */,
+				386F07D513715D0800D4F31B /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		386F07D613715D0800D4F31B /* Notebook */ = {
+			isa = PBXGroup;
+			children = (
+				386D4C7D1371893500020F72 /* TIManagedObjectsToStringsValueTransfomer.h */,
+				386D4C7E1371893500020F72 /* TIManagedObjectsToStringsValueTransfomer.m */,
+				386F07E213715D0800D4F31B /* NotebookAppDelegate.h */,
+				386F07E313715D0800D4F31B /* NotebookAppDelegate.m */,
+				386F07E513715D0800D4F31B /* MainMenu.xib */,
+				386F07E813715D0800D4F31B /* Notebook.xcdatamodeld */,
+				386D4C711371712600020F72 /* TINBTag.h */,
+				386D4C721371712600020F72 /* TINBTag.m */,
+				386D4C6E1371712600020F72 /* TINBNote.h */,
+				386D4C6F1371712600020F72 /* TINBNote.m */,
+				386F07D713715D0800D4F31B /* Supporting Files */,
+			);
+			path = Notebook;
+			sourceTree = "<group>";
+		};
+		386F07D713715D0800D4F31B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				386F07D813715D0800D4F31B /* Notebook-Info.plist */,
+				386F07D913715D0800D4F31B /* InfoPlist.strings */,
+				386F07DC13715D0800D4F31B /* Notebook-Prefix.pch */,
+				386F07DD13715D0800D4F31B /* main.m */,
+				386F07DF13715D0800D4F31B /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		386F07CB13715D0800D4F31B /* Notebook */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 386F07ED13715D0800D4F31B /* Build configuration list for PBXNativeTarget "Notebook" */;
+			buildPhases = (
+				386F07C813715D0800D4F31B /* Sources */,
+				386F07C913715D0800D4F31B /* Frameworks */,
+				386F07CA13715D0800D4F31B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Notebook;
+			productName = Notebook;
+			productReference = 386F07CC13715D0800D4F31B /* Notebook.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		386F07C313715D0800D4F31B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Tim Isted";
+			};
+			buildConfigurationList = 386F07C613715D0800D4F31B /* Build configuration list for PBXProject "Notebook" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 386F07C113715D0800D4F31B;
+			productRefGroup = 386F07CD13715D0800D4F31B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				386F07CB13715D0800D4F31B /* Notebook */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		386F07CA13715D0800D4F31B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				386F07DB13715D0800D4F31B /* InfoPlist.strings in Resources */,
+				386F07E113715D0800D4F31B /* Credits.rtf in Resources */,
+				386F07E713715D0800D4F31B /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		386F07C813715D0800D4F31B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				386F07DE13715D0800D4F31B /* main.m in Sources */,
+				386F07E413715D0800D4F31B /* NotebookAppDelegate.m in Sources */,
+				386F07EA13715D0800D4F31B /* Notebook.xcdatamodeld in Sources */,
+				386D4C701371712600020F72 /* TINBNote.m in Sources */,
+				386D4C731371712600020F72 /* TINBTag.m in Sources */,
+				386D4C7F1371893500020F72 /* TIManagedObjectsToStringsValueTransfomer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		386F07D913715D0800D4F31B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				386F07DA13715D0800D4F31B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		386F07DF13715D0800D4F31B /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				386F07E013715D0800D4F31B /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		386F07E513715D0800D4F31B /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				386F07E613715D0800D4F31B /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		386F07EB13715D0800D4F31B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		386F07EC13715D0800D4F31B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		386F07EE13715D0800D4F31B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Notebook/Notebook-Prefix.pch";
+				INFOPLIST_FILE = "Notebook/Notebook-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		386F07EF13715D0800D4F31B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Notebook/Notebook-Prefix.pch";
+				INFOPLIST_FILE = "Notebook/Notebook-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		386F07C613715D0800D4F31B /* Build configuration list for PBXProject "Notebook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				386F07EB13715D0800D4F31B /* Debug */,
+				386F07EC13715D0800D4F31B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		386F07ED13715D0800D4F31B /* Build configuration list for PBXNativeTarget "Notebook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				386F07EE13715D0800D4F31B /* Debug */,
+				386F07EF13715D0800D4F31B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		386F07E813715D0800D4F31B /* Notebook.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				386F07E913715D0800D4F31B /* Notebook.xcdatamodel */,
+			);
+			currentVersion = 386F07E913715D0800D4F31B /* Notebook.xcdatamodel */;
+			path = Notebook.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 386F07C313715D0800D4F31B /* Project object */;
+}

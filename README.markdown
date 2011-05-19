@@ -53,7 +53,7 @@ The framework comes with an Xcode docset containing documentation for all `TICor
 You can build it yourself if you have `appledoc` installed, by executing `appledoc .` in the root of the repository; this will also install the docset.
 
 Alternatively, the docset can be found online:  
-http://timisted.github.com/ticoredatasync/docset/html
+http://timisted.github.com/ticoredatasync/reference/html
 
 ##How it Works
 

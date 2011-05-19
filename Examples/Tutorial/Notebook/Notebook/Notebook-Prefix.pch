@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'Notebook' target in the 'Notebook' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
