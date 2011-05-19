@@ -39,6 +39,10 @@
     [dictionary setValue:[NSDictionary dictionary] forKey:TICDSSyncCommandsDirectoryName];
     [dictionary setValue:[NSDictionary dictionary] forKey:TICDSRecentSyncsDirectoryName];
     
+    NSMutableDictionary *tempFilesDictionary = [NSMutableDictionary dictionary];
+    [tempFilesDictionary setValue:[NSDictionary dictionary] forKey:TICDSWholeStoreDirectoryName];
+    [dictionary setValue:tempFilesDictionary forKey:TICDSTemporaryFilesDirectoryName];
+    
     return dictionary;
 }
 

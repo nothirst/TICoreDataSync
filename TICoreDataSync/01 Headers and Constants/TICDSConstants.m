@@ -67,6 +67,7 @@ NSString * const TICDSWholeStoreDirectoryName = @"WholeStore";
 NSString * const TICDSSyncChangesDirectoryName = @"SyncChanges";
 NSString * const TICDSSyncCommandsDirectoryName = @"SyncCommands";
 NSString * const TICDSRecentSyncsDirectoryName = @"RecentSyncs";
+NSString * const TICDSTemporaryFilesDirectoryName = @"TemporaryFiles";
 NSString * const TICDSUnappliedSyncChangesDirectoryName = @"UnappliedSyncChanges";
 NSString * const TICDSUnappliedSyncCommandsDirectoryName = @"UnappliedSyncCommands";
 NSString * const TICDSUnsynchronizedSyncChangesStoreName = @"UnsynchronizedSyncChanges.syncchg";
