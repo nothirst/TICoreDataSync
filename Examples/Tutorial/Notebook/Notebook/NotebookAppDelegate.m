@@ -129,9 +129,7 @@
     
     NSURL *url = [applicationFilesDirectory URLByAppendingPathComponent:@"Notebook.storedata"];
     
-    if( [[NSFileManager defaultManager] fileExistsAtPath:[url path]] ) {
-        [self setExistingStore:YES];
-    }
+    /* Add the check for an existing store here... */
     
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom];
     if (![__persistentStoreCoordinator addPersistentStoreWithType:NSXMLStoreType configuration:nil URL:url options:nil error:&error]) {
