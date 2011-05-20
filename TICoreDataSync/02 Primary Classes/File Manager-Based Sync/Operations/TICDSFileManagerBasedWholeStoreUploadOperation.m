@@ -11,165 +11,130 @@
 
 @implementation TICDSFileManagerBasedWholeStoreUploadOperation
 
-- (void)checkWhetherThisClientWholeStoreDirectoryExists
+- (void)checkWhetherThisClientTemporaryWholeStoreDirectoryExists
 {
-    if( [[self fileManager] fileExistsAtPath:[self thisDocumentWholeStoreThisClientDirectoryPath]] ) {
-        [self discoveredStatusOfWholeStoreDirectory:TICDSRemoteFileStructureExistsResponseTypeDoesExist];
-    } else {
-        [self discoveredStatusOfWholeStoreDirectory:TICDSRemoteFileStructureExistsResponseTypeDoesNotExist];
-    }
+    TICDSRemoteFileStructureExistsResponseType status = [[self fileManager] fileExistsAtPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath]] ? TICDSRemoteFileStructureExistsResponseTypeDoesExist : TICDSRemoteFileStructureExistsResponseTypeDoesNotExist;
+    
+    [self discoveredStatusOfThisClientTemporaryWholeStoreDirectory:status];
 }
 
-- (void)createThisClientWholeStoreDirectory
+- (void)deleteThisClientTemporaryWholeStoreDirectory
 {
     NSError *anyError = nil;
     
-    BOOL success = [[self fileManager] createDirectoryAtPath:[self thisDocumentWholeStoreThisClientDirectoryPath] withIntermediateDirectories:NO attributes:nil error:&anyError];
+    BOOL success = [[self fileManager] removeItemAtPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] error:&anyError];
     
     if( !success ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [self createdThisClientWholeStoreDirectorySuccessfully:NO];
-        return;
     }
     
-    [self createdThisClientWholeStoreDirectorySuccessfully:YES];
+    [self deletedThisClientTemporaryWholeStoreDirectoryWithSuccess:success];
 }
 
-- (void)uploadWholeStoreFile
+- (void)createThisClientTemporaryWholeStoreDirectory
+{
+    NSError *anyError = nil;
+    
+    BOOL success = [[self fileManager] createDirectoryAtPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] withIntermediateDirectories:NO attributes:nil error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    [self createdThisClientTemporaryWholeStoreDirectoryWithSuccess:success];
+}
+
+- (void)uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectory
 {
     NSError *anyError = nil;
     BOOL success = YES;
-    
-    NSString *localWholeStorePath = [[self localWholeStoreFileLocation] path];
+    NSString *filePath = [[self localWholeStoreFileLocation] path];
     
     if( [self shouldUseEncryption] ) {
-        NSString *tmpFilePath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:[localWholeStorePath lastPathComponent]];
+        NSString *tempPath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:[filePath lastPathComponent]];
         
-        success = [[self cryptor] encryptFileAtLocation:[self localWholeStoreFileLocation] writingToLocation:[NSURL fileURLWithPath:tmpFilePath] error:&anyError];
-        
+        success = [[self cryptor] encryptFileAtLocation:[NSURL fileURLWithPath:filePath] writingToLocation:[NSURL fileURLWithPath:tempPath] error:&anyError];
         if( !success ) {
             [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            [self uploadedWholeStoreFileWithSuccess:NO];
+            [self uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:NO];
             return;
         }
         
-        localWholeStorePath = tmpFilePath;
+        filePath = tempPath;
     }
     
-    NSString *backupFilePath = [[self thisDocumentWholeStoreThisClientDirectoryPath] stringByAppendingPathComponent:@"WholeStoreBackup.ticdsync"];
-    
-    // Delete the backup, if it exists
-    if( [[self fileManager] fileExistsAtPath:backupFilePath] ) {
-        success = [[self fileManager] removeItemAtPath:backupFilePath error:&anyError];
-    }
+    success = [[self fileManager] copyItemAtPath:filePath toPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFilePath] error:&anyError];
     
     if( !success ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [self uploadedWholeStoreFileWithSuccess:NO];
-        return;
     }
     
-    // Move the existing file, if it exists, to the backup location
-    if( [[self fileManager] fileExistsAtPath:[self thisDocumentWholeStoreThisClientDirectoryWholeStoreFilePath]] ) {
-        success = [[self fileManager] moveItemAtPath:[self thisDocumentWholeStoreThisClientDirectoryWholeStoreFilePath] toPath:backupFilePath error:&anyError];
-    }
-    
-    if( !success ) {
-        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [self uploadedWholeStoreFileWithSuccess:NO];
-        return;
-    }
-    
-    // Copy the whole store to the correct location
-    success = [[self fileManager] copyItemAtPath:localWholeStorePath toPath:[self thisDocumentWholeStoreThisClientDirectoryWholeStoreFilePath] error:&anyError];
-    
-    if( !success ) {
-        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [self uploadedWholeStoreFileWithSuccess:NO];
-        return;
-    }
-    
-    // Delete the backup, if it exists
-    if( [[self fileManager] fileExistsAtPath:backupFilePath] ) {
-        success = [[self fileManager] removeItemAtPath:backupFilePath error:&anyError];
-    }
-    
-    if( !success ) {
-        // not being able to delete the backup file isn't catastrophic...
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to delete the whole store backup file, but carrying on as it's not catastrophic");
-    }
-    
-    // If we get this far, everything went to plan
-    [self uploadedWholeStoreFileWithSuccess:YES];
+    [self uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:success];
 }
 
-- (void)uploadAppliedSyncChangeSetsFile
+- (void)uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectory
 {
     NSError *anyError = nil;
-    BOOL success = YES;
     
-    NSString *backupFilePath = [[self thisDocumentWholeStoreThisClientDirectoryPath] stringByAppendingPathComponent:@"AppliedSyncChangeSetsBackup.ticdsync"];
-    
-    // Delete the backup, if it exists
-    if( [[self fileManager] fileExistsAtPath:backupFilePath] ) {
-        success = [[self fileManager] removeItemAtPath:backupFilePath error:&anyError];
-    }
+    BOOL success = [[self fileManager] copyItemAtPath:[[self localAppliedSyncChangeSetsFileLocation] path] toPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath] error:&anyError];
     
     if( !success ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [self uploadedAppliedSyncChangeSetsFileWithSuccess:NO];
-        return;
     }
     
-    // Move the existing file, if it exists, to the backup location
-    if( [[self fileManager] fileExistsAtPath:[self thisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath]] ) {
-        success = [[self fileManager] moveItemAtPath:[self thisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath] toPath:backupFilePath error:&anyError];
-    }
+    [self uploadedAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:success];
+}
+
+- (void)checkWhetherThisClientWholeStoreDirectoryExists
+{
+    TICDSRemoteFileStructureExistsResponseType status = [[self fileManager] fileExistsAtPath:[self thisDocumentWholeStoreThisClientDirectoryPath]] ? TICDSRemoteFileStructureExistsResponseTypeDoesExist : TICDSRemoteFileStructureExistsResponseTypeDoesNotExist;
+    
+    [self discoveredStatusOfThisClientWholeStoreDirectory:status];
+}
+
+- (void)deleteThisClientWholeStoreDirectory
+{
+    NSError *anyError = nil;
+    
+    BOOL success = [[self fileManager] removeItemAtPath:[self thisDocumentWholeStoreThisClientDirectoryPath] error:&anyError];
     
     if( !success ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [self uploadedAppliedSyncChangeSetsFileWithSuccess:NO];
-        return;
     }
     
-    // Copy the whole store to the correct location
-    success = [[self fileManager] copyItemAtPath:[[self localAppliedSyncChangeSetsFileLocation] path] toPath:[self thisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath] error:&anyError];
+    [self deletedThisClientWholeStoreDirectoryWithSuccess:success];
+}
+
+- (void)copyThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectory
+{
+    NSError *anyError = nil;
+    
+    BOOL success = [[self fileManager] copyItemAtPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] toPath:[self thisDocumentWholeStoreThisClientDirectoryPath] error:&anyError];
     
     if( !success ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [self uploadedAppliedSyncChangeSetsFileWithSuccess:NO];
-        return;
     }
     
-    // Delete the backup, if it exists
-    if( [[self fileManager] fileExistsAtPath:backupFilePath] ) {
-        success = [[self fileManager] removeItemAtPath:backupFilePath error:&anyError];
-    }
-    
-    if( !success ) {
-        // not being able to delete the backup file isn't catastrophic...
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to delete the applied sync changes backup file, but carrying on as it's not catastrophic");
-    }
-    
-    // If we get this far, everything went to plan
-    [self uploadedAppliedSyncChangeSetsFileWithSuccess:YES];
+    [self copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:success];
 }
 
 #pragma mark -
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
+    [_thisDocumentTemporaryWholeStoreThisClientDirectoryPath release], _thisDocumentTemporaryWholeStoreThisClientDirectoryPath = nil;
+    [_thisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFilePath release], _thisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFilePath = nil;
+    [_thisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath release], _thisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath = nil;
     [_thisDocumentWholeStoreThisClientDirectoryPath release], _thisDocumentWholeStoreThisClientDirectoryPath = nil;
-    [_thisDocumentWholeStoreThisClientDirectoryWholeStoreFilePath release], _thisDocumentWholeStoreThisClientDirectoryWholeStoreFilePath = nil;
-    [_thisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath release], _thisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath = nil;
 
     [super dealloc];
 }
 
 #pragma mark -
 #pragma mark Properties
+@synthesize thisDocumentTemporaryWholeStoreThisClientDirectoryPath = _thisDocumentTemporaryWholeStoreThisClientDirectoryPath;
+@synthesize thisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFilePath = _thisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFilePath;
+@synthesize thisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath = _thisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath;
 @synthesize thisDocumentWholeStoreThisClientDirectoryPath = _thisDocumentWholeStoreThisClientDirectoryPath;
-@synthesize thisDocumentWholeStoreThisClientDirectoryWholeStoreFilePath = _thisDocumentWholeStoreThisClientDirectoryWholeStoreFilePath;
-@synthesize thisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath = _thisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath;
 
 @end

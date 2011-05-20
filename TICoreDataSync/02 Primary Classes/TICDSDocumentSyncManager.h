@@ -317,6 +317,21 @@
 /** The path to this client's directory inside the `WholeStore` directory for this document, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreThisClientDirectory;
 
+/** The path to the `TemporaryFiles` directory for this document, relative to the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToThisDocumentTemporaryFilesDirectory;
+
+/** The path to the `WholeStore` directory inside the `TemporaryFiles` directory for this document, relative to the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToThisDocumentTemporaryWholeStoreDirectory;
+
+/** The path to this client's directory inside the `WholeStore` directory inside the `TemporaryFiles` directory for this document, relative to the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToThisDocumentTemporaryWholeStoreThisClientDirectory;
+
+/** The path to this client's `WholeStore.ticdsync` file inside it's directory inside the `WholeStore` directory inside the `TemporaryFiles` directory for this document, relative to the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToThisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFile;
+
+/** The path to this client's `AppliedSyncChangeSets.ticdsync` file inside it's directory inside the `WholeStore` directory inside the `TemporaryFiles` directory for this document, relative to the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToThisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFile;
+
 /** The path to this client's `WholeStore.ticdsync` file inside it's directory inside the `WholeStore` directory for this document, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreThisClientDirectoryWholeStoreFile;
 

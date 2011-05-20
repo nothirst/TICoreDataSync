@@ -10,11 +10,14 @@
 
 @interface TICDSWholeStoreUploadOperation ()
 
+- (void)beginCheckForThisClientTemporaryWholeStoreDirectory;
+- (void)beginDeletingThisClientTemporaryWholeStoreDirectory;
+- (void)beginCreatingThisClientTemporaryWholeStoreDirectory;
+- (void)beginUploadingLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectory;
+- (void)beginUploadingLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectory;
 - (void)beginCheckForThisClientWholeStoreDirectory;
-- (void)beginCreationOfThisClientWholeStoreDirectory;
-- (void)beginUploadOfWholeStoreFile;
-- (void)beginUploadOfAppliedSyncChangeSetsFile;
-- (void)checkForCompletion;
+- (void)beginDeletingThisClientWholeStoreDirectory;
+- (void)beginCopyingThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectory;
 
 @end
 
@@ -22,172 +25,246 @@
 
 - (void)main
 {
+    [self beginCheckForThisClientTemporaryWholeStoreDirectory];
+}
+
+#pragma mark - Check for Temporary WholeStore Directory
+- (void)beginCheckForThisClientTemporaryWholeStoreDirectory
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Checking whether this client's temporary WholeStore directory exists");
+    
+    [self checkWhetherThisClientTemporaryWholeStoreDirectoryExists];
+}
+
+- (void)discoveredStatusOfThisClientTemporaryWholeStoreDirectory:(TICDSRemoteFileStructureExistsResponseType)status
+{
+    switch( status ) {
+        case TICDSRemoteFileStructureExistsResponseTypeError:
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error checking whether this client's temporary WholeStore directory exists");
+            [self operationDidFailToComplete];
+            return;
+        
+        case TICDSRemoteFileStructureExistsResponseTypeDoesExist:
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Temporary WholeStore directory exists");
+            
+            [self beginDeletingThisClientTemporaryWholeStoreDirectory];
+            return;
+            
+        case TICDSRemoteFileStructureExistsResponseTypeDoesNotExist:
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Temporary WholeStore directory does not exist");
+            
+            [self beginCreatingThisClientTemporaryWholeStoreDirectory];
+            return;
+    }
+}
+
+#pragma mark Overridden Method
+- (void)checkWhetherThisClientTemporaryWholeStoreDirectoryExists
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self discoveredStatusOfThisClientTemporaryWholeStoreDirectory:TICDSRemoteFileStructureExistsResponseTypeError];
+}
+
+#pragma mark - Deleting Temporary WholeStore Directory
+- (void)beginDeletingThisClientTemporaryWholeStoreDirectory
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Checking whether this client's temporary WholeStore directory exists");
+    
+    [self deleteThisClientTemporaryWholeStoreDirectory];
+}
+
+- (void)deletedThisClientTemporaryWholeStoreDirectoryWithSuccess:(BOOL)success
+{
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to delete this client's temporary WholeStore directory");
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Deleted this client's temporary WholeStore directory");
+    [self beginCreatingThisClientTemporaryWholeStoreDirectory];
+}
+
+#pragma mark Overridden Method
+- (void)deleteThisClientTemporaryWholeStoreDirectory
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self deletedThisClientTemporaryWholeStoreDirectoryWithSuccess:NO];
+}
+
+#pragma mark - Creating Temporary WholeStore Directory
+- (void)beginCreatingThisClientTemporaryWholeStoreDirectory
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Creating this client's temporary WholeStore directory");
+    
+    [self createThisClientTemporaryWholeStoreDirectory];
+}
+
+#pragma mark Overridden Method
+- (void)createThisClientTemporaryWholeStoreDirectory
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self createdThisClientTemporaryWholeStoreDirectoryWithSuccess:NO];
+}
+
+- (void)createdThisClientTemporaryWholeStoreDirectoryWithSuccess:(BOOL)success
+{
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create this client's temporary WholeStore directory");
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    [self beginUploadingLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectory];
+}
+
+#pragma mark - Uploading WholeStore file to Temporary WholeStore directory
+- (void)beginUploadingLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectory
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Uploading the WholeStore file to this client's temporary WholeStore directory");
+    
+    [self uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectory];
+}
+
+- (void)uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:(BOOL)success
+{
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to upload this client's  WholeStore file");
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    [self beginUploadingLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectory];
+}
+
+#pragma mark Overridden Method
+- (void)uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectory
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:NO];
+}
+
+#pragma mark - Uploading AppliedSyncChanges file
+- (void)beginUploadingLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectory
+{
+    if( ![[self fileManager] fileExistsAtPath:[[self localAppliedSyncChangeSetsFileLocation] path]] ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Local applied sync change sets file doesn't exist locally");
+        
+        [self beginCheckForThisClientWholeStoreDirectory];
+    }
+    
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Uploading the AppliedSyncChanges file to this client's temporary WholeStore directory");
+    
+    [self uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectory];
+}
+
+- (void)uploadedAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:(BOOL)success
+{
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to upload this client's  AppliedSyncChangeSets file");
+        [self operationDidFailToComplete];
+        return;
+    }
+    
     [self beginCheckForThisClientWholeStoreDirectory];
 }
 
-#pragma mark -
-#pragma mark Whole Store Directory Check
+#pragma mark Overridden Method
+- (void)uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectory
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self uploadedAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:NO];
+}
+
+#pragma mark - Check for Non-Temporary Whole Store Directory
 - (void)beginCheckForThisClientWholeStoreDirectory
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Checking whether this client's WholeStore directory exists");
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Checking whether this client's WholeStore directory exists");
     
     [self checkWhetherThisClientWholeStoreDirectoryExists];
 }
 
-- (void)discoveredStatusOfWholeStoreDirectory:(TICDSRemoteFileStructureExistsResponseType)status
+- (void)discoveredStatusOfThisClientWholeStoreDirectory:(TICDSRemoteFileStructureExistsResponseType)status
 {
-    if( status == TICDSRemoteFileStructureExistsResponseTypeError ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error checking whether this client's WholeStore directory exists");
-        [self setWholeStoreDirectoryStatus:TICDSOperationPhaseStatusFailure];
-        [self setWholeStoreFileUploadStatus:TICDSOperationPhaseStatusFailure];
-        [self setAppliedSyncChangeSetsFileUploadStatus:TICDSOperationPhaseStatusFailure];
-    } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesExist ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"WholeStore directory exists");
-        [self setWholeStoreDirectoryStatus:TICDSOperationPhaseStatusSuccess];
-        
-        [self beginUploadOfWholeStoreFile];
-    } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesNotExist ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"WholeStore directory does not exist");
-        
-        [self beginCreationOfThisClientWholeStoreDirectory];
+    switch( status ) {
+        case TICDSRemoteFileStructureExistsResponseTypeError:
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error checking whether this client's temporary WholeStore directory exists");
+            [self operationDidFailToComplete];
+            return;
+            
+        case TICDSRemoteFileStructureExistsResponseTypeDoesExist:
+            TICDSLog(TICDSLogVerbosityEveryStep, @"WholeStore directory does exist for this client");
+            
+            [self beginDeletingThisClientWholeStoreDirectory];
+            return;
+            
+        case TICDSRemoteFileStructureExistsResponseTypeDoesNotExist:
+            TICDSLog(TICDSLogVerbosityEveryStep, @"WholeStore directory does not exist for this client");
+            
+            [self beginCopyingThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectory];
+            return;
     }
-    
-    [self checkForCompletion];
 }
 
 #pragma mark Overridden Method
 - (void)checkWhetherThisClientWholeStoreDirectoryExists
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self discoveredStatusOfWholeStoreDirectory:TICDSRemoteFileStructureExistsResponseTypeError];
+    [self discoveredStatusOfThisClientWholeStoreDirectory:TICDSRemoteFileStructureExistsResponseTypeError];
 }
 
-#pragma mark -
-#pragma mark Whole Store Directory Creation
-- (void)beginCreationOfThisClientWholeStoreDirectory
+#pragma mark - Deleting Non-Temporary WholeStore Directory
+- (void)beginDeletingThisClientWholeStoreDirectory
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Creating this client's WholeStore directory");
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Checking whether this client's temporary WholeStore directory exists");
     
-    [self createThisClientWholeStoreDirectory];
+    [self deleteThisClientWholeStoreDirectory];
 }
 
-- (void)createdThisClientWholeStoreDirectorySuccessfully:(BOOL)someSuccess
-{
-    if( !someSuccess ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create this client's WholeStore directory");
-        [self setWholeStoreDirectoryStatus:TICDSOperationPhaseStatusFailure];
-        [self setWholeStoreFileUploadStatus:TICDSOperationPhaseStatusFailure];
-        [self setAppliedSyncChangeSetsFileUploadStatus:TICDSOperationPhaseStatusFailure];
-    } else {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Created this client's WholeStore directory");
-        [self setWholeStoreDirectoryStatus:TICDSOperationPhaseStatusSuccess];
-        
-        [self beginUploadOfWholeStoreFile];
-    }
-    
-    [self checkForCompletion];
-}
-
-#pragma mark Overridden Method
-- (void)createThisClientWholeStoreDirectory
-{
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self createdThisClientWholeStoreDirectorySuccessfully:NO];
-}
-
-#pragma mark -
-#pragma mark Whole Store File Upload
-- (void)beginUploadOfWholeStoreFile
-{
-    TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Uploading whole store file");
-    
-    [self uploadWholeStoreFile];
-}
-
-- (void)uploadedWholeStoreFileWithSuccess:(BOOL)success
+- (void)deletedThisClientWholeStoreDirectoryWithSuccess:(BOOL)success
 {
     if( !success ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to upload whole store file");
-        [self setWholeStoreFileUploadStatus:TICDSOperationPhaseStatusFailure];
-        [self setAppliedSyncChangeSetsFileUploadStatus:TICDSOperationPhaseStatusFailure];
-    } else {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Successfully uploaded whole store file");
-        [self setWholeStoreFileUploadStatus:TICDSOperationPhaseStatusSuccess];
-        
-        [self beginUploadOfAppliedSyncChangeSetsFile];
-    }
-    
-    [self checkForCompletion];
-}
-
-#pragma mark Overridden Method
-- (void)uploadWholeStoreFile
-{
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self uploadedWholeStoreFileWithSuccess:NO];
-}
-
-#pragma mark -
-#pragma mark Applied Sync Change Sets File Upload
-- (void)beginUploadOfAppliedSyncChangeSetsFile
-{
-    if( ![[self fileManager] fileExistsAtPath:[[self localAppliedSyncChangeSetsFileLocation] path]] ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Local applied sync change sets file doesn't exist locally");
-        [self setAppliedSyncChangeSetsFileUploadStatus:TICDSOperationPhaseStatusSuccess];
-        [self checkForCompletion];
-        return;
-    }
-    
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Uploading applied sync change sets file");
-    
-    [self uploadAppliedSyncChangeSetsFile];
-}
-
-- (void)uploadedAppliedSyncChangeSetsFileWithSuccess:(BOOL)success
-{
-    if( !success ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to upload applied sync change sets file");
-        [self setAppliedSyncChangeSetsFileUploadStatus:TICDSOperationPhaseStatusFailure];
-    } else {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Successfully uploaded applied sync change sets file");
-        [self setAppliedSyncChangeSetsFileUploadStatus:TICDSOperationPhaseStatusSuccess];
-    }
-    
-    [self checkForCompletion];
-}
-
-#pragma mark Overridden Method
-- (void)uploadAppliedSyncChangeSetsFile
-{
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self uploadedAppliedSyncChangeSetsFileWithSuccess:NO];
-}
-
-#pragma mark -
-#pragma mark Completion
-- (void)checkForCompletion
-{
-    if( [self completionInProgress] ) {
-        return;
-    }
-    
-    if( [self wholeStoreDirectoryStatus] == TICDSOperationPhaseStatusInProgress || [self wholeStoreFileUploadStatus] == TICDSOperationPhaseStatusInProgress || [self appliedSyncChangeSetsFileUploadStatus] == TICDSOperationPhaseStatusInProgress ) {
-        return;
-    }
-    
-    if( [self wholeStoreDirectoryStatus] == TICDSOperationPhaseStatusSuccess && [self wholeStoreFileUploadStatus] == TICDSOperationPhaseStatusSuccess && [self appliedSyncChangeSetsFileUploadStatus] == TICDSOperationPhaseStatusSuccess ) {
-        [self setCompletionInProgress:YES];
-        
-        [self operationDidCompleteSuccessfully];
-        return;
-    }
-    
-    if( [self wholeStoreDirectoryStatus] == TICDSOperationPhaseStatusFailure || [self wholeStoreFileUploadStatus] == TICDSOperationPhaseStatusFailure || [self appliedSyncChangeSetsFileUploadStatus] == TICDSOperationPhaseStatusFailure ) {
-        [self setCompletionInProgress:YES];
-        
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to delete this client's  WholeStore directory");
         [self operationDidFailToComplete];
         return;
     }
+    
+    [self beginCopyingThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectory];
+}
+
+#pragma mark Overridden Method
+- (void)deleteThisClientWholeStoreDirectory
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self deletedThisClientWholeStoreDirectoryWithSuccess:NO];
+}
+
+#pragma mark - Copying Temporary WholeStore to WholeStore Directory
+- (void)beginCopyingThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectory
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Copying this client's temporary WholeStore directory to the non-temporary directory");
+    
+    [self copyThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectory];
+}
+
+- (void)copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:(BOOL)success
+{
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to copy this client's  WholeStore directory");
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Finished copying WholeStore directory");
+    
+    [self operationDidCompleteSuccessfully];
+}
+
+#pragma mark Overridden Method
+- (void)copyThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectory
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:NO];
 }
 
 #pragma mark -
@@ -204,9 +281,5 @@
 #pragma mark Properties
 @synthesize localWholeStoreFileLocation = _localWholeStoreFileLocation;
 @synthesize localAppliedSyncChangeSetsFileLocation = _localAppliedSyncChangeSetsFileLocation;
-@synthesize completionInProgress = _completionInProgress;
-@synthesize wholeStoreDirectoryStatus = _wholeStoreDirectoryStatus;
-@synthesize wholeStoreFileUploadStatus = _wholeStoreFileUploadStatus;
-@synthesize appliedSyncChangeSetsFileUploadStatus = _appliedSyncChangeSetsFileUploadStatus;
 
 @end

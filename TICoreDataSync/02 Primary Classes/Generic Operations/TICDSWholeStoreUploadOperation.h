@@ -12,10 +12,14 @@
  
  The operation carries out the following tasks:
  
- 1. Check whether a directory exists for this client inside the document's `WholeStore` directory.
- 2. If not, create one.
- 3. Upload the whole store file.
- 4. Upload the applied sync change sets file that goes with this whole store.
+ 1. Check whether a directory exists for this client inside the `WholeStore` directory inside the document's `TemporaryFiles` directory.
+ 2. If so, delete it.
+ 3. Create a directory for this client inside the `WholeStore` directory inside the document's `TemporaryFiles` directory.
+ 3. Upload the whole store file to this temporary directory.
+ 4. Upload the applied sync change sets file that goes with this whole store to this temporary directory.
+ 5. Check whether a directory exists for this client inside the document's `WholeStore` directory.
+ 6. If so, delete it.
+ 7. Copy the temporary directory the non-temporary location.
  
  Operations are typically created automatically by the relevant sync manager.
  
@@ -25,67 +29,112 @@
 @private
     NSURL *_localWholeStoreFileLocation;
     NSURL *_localAppliedSyncChangeSetsFileLocation;
-    
-    BOOL _completionInProgress;
-    TICDSOperationPhaseStatus _wholeStoreDirectoryStatus;
-    TICDSOperationPhaseStatus _wholeStoreFileUploadStatus;
-    TICDSOperationPhaseStatus _appliedSyncChangeSetsFileUploadStatus;
 }
 
+#pragma mark - Overridden Methods
 /** @name Methods Overridden by Subclasses */
+
+/** Check whether a directory exists for this client inside the `WholeStore` directory inside the document's `TemporaryFiles` directory.
+ 
+ This method must call `discoveredStatusOfTemporaryWholeStoreDirectory:` to indicate the status. */
+- (void)checkWhetherThisClientTemporaryWholeStoreDirectoryExists;
+
+/** Delete the directory for this client inside the `WholeStore` directory inside the document's `TemporaryFiles` directory.
+ 
+ This method must call `deletedThisClientTemporaryWholeStoreDirectoryWithSuccess:` to indicate whether the deletion was successful. */
+- (void)deleteThisClientTemporaryWholeStoreDirectory;
+
+/** Create this client's directory inside the `WholeStore` directory inside this document's `TemporaryFiles` directory.
+ 
+ This method must call `createdThisClientTemporaryWholeStoreDirectoryWithSuccess:` to indicate whether the creation was successful. */
+- (void)createThisClientTemporaryWholeStoreDirectory;
+
+/** Upload the store at `localWholeStoreFileLocation` to the remote path `/Documents/documentIdentifier/TemporaryFiles/WholeStore/clientIdentifier/WholeStore.ticdsync`.
+ 
+ This method must call `uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:` when finished. */
+- (void)uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectory;
+
+/** Upload the file at `localAppliedSyncChangeSetsFileLocation` to the remote path `/Documents/documentIdentifier/TemporaryFiles/WholeStore/clientIdentifier/AppliedSyncChangeSets.ticdsync`.
+ 
+ This method must call `uploadedAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:` when finished. */
+- (void)uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectory;
 
 /** Check whether a directory exists for this client inside the document's `WholeStore` directory.
  
- This method must call `discoveredStatusOfWholeStoreDirectory:` to indicate the status.
+ This method must call `discoveredStatusOfThisClientWholeStoreDirectory:` to indicate the status.
  */
 - (void)checkWhetherThisClientWholeStoreDirectoryExists;
 
-/** Create this client's directory inside this document's `WholeStore` directory; this method will be called automatically if the directory doesn't already exist.
+/** Delete the directory for this client inside this document's `WholeStore` directory.
  
- This method must call `createdThisClientWholeStoreDirectorySuccessfully:` to indicate whether the creation was successful.
- */
-- (void)createThisClientWholeStoreDirectory;
+ This method must call `deletedThisClientWholeStoreDirectoryWithSuccess:` to indicate whether the deletion was successful. */
+- (void)deleteThisClientWholeStoreDirectory;
 
-/** Upload the store at `localWholeStoreFileLocation` to the remote path `/Documents/documentIdentifier/WholeStore/clientIdentifier/WholeStore.ticdsync`.
+/** Copy the entire directory at `/Documents/documentIdentifier/TemporaryFiles/WholeStore/` to `/Documents/documentIdentifier/WholeStore/`.
  
-    This method must call `uploadedWholeStoreFileWithSuccess:` when finished. */
-- (void)uploadWholeStoreFile;
+ This method must call `copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:` when finished. */
+- (void)copyThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectory;
 
-/** Upload the applied sync change sets file at `localAppliedSyncChangeSetsFileLocation` to the remote path `/Documents/documentIdentifier/WholeStore/clientIdentifier/AppliedSyncChangeSets.ticdsync`. 
- 
- This method must call `uploadedWholeStoreFileWithSuccess:` when finished. */
-- (void)uploadAppliedSyncChangeSetsFile;
-
+#pragma mark - Callbacks
 /** @name Callbacks */
+
+/** Indicate the status of this client's directory inside the `WholeStore` directory inside the `TemporaryFiles` directory for this document.
+ 
+ If an error occurred, call `setError:` first, then specify `TICDSRemoteFileStructureExistsResponseTypeError` for `status`.
+ 
+ @param status The status of the directory: does exist, does not exist, or error (see `TICDSTypesAndEnums.h` for possible values). */
+- (void)discoveredStatusOfThisClientTemporaryWholeStoreDirectory:(TICDSRemoteFileStructureExistsResponseType)status;
+
+/** Indicate whether the deletion of this client's directory inside the `WholeStore` directory inside the document's `TemporaryFiles` directory was successful.
+ 
+ If not, call `setError:` first, then specify `NO` for `success`.
+ 
+ @param success A Boolean indicating whether the directory was deleted or not. */
+- (void)deletedThisClientTemporaryWholeStoreDirectoryWithSuccess:(BOOL)success;
+
+/** Indicate whether the creation of this client's directory inside the `WholeStore` directory inside the document's `TemporaryFiles` directory was successful.
+ 
+ If not, call `setError:` first, then specify `NO` for `success`.
+ 
+ @param success A Boolean indicating whether the directory was created or not. */
+- (void)createdThisClientTemporaryWholeStoreDirectoryWithSuccess:(BOOL)success;
+
+/** Indicate whether the upload of the whole store file was successful.
+ 
+ If not, call `setError:` first, then specify `NO` for `success`.
+ 
+ @param success A Boolean indicating whether the file was uploaded or not. */
+- (void)uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:(BOOL)success;
+
+/** Indicate whether the upload of the applied sync change sets file was successful.
+ 
+ If not, call `setError:` first, then specify `NO` for `success`.
+ 
+ @param success A Boolean indicating whether the file was uploaded or not. */
+- (void)uploadedAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:(BOOL)success;
 
 /** Indicate the status of this client's directory inside the `WholeStore` directory for this document.
  
  If an error occurred, call `setError:` first, then specify `TICDSRemoteFileStructureExistsResponseTypeError` for `status`.
  
  @param status The status of the directory: does exist, does not exist, or error (see `TICDSTypesAndEnums.h` for possible values). */
-- (void)discoveredStatusOfWholeStoreDirectory:(TICDSRemoteFileStructureExistsResponseType)status;
+- (void)discoveredStatusOfThisClientWholeStoreDirectory:(TICDSRemoteFileStructureExistsResponseType)status;
 
-/** Indicate whether the upload of the whole store file was successful.
+/** Indicate whether the deletion of this client's directory inside the document's `WholeStore` directory was successful.
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the whole store file was uploaded or not. */
-- (void)uploadedWholeStoreFileWithSuccess:(BOOL)success;
+ @param success A Boolean indicating whether the directory was deleted or not. */
+- (void)deletedThisClientWholeStoreDirectoryWithSuccess:(BOOL)success;
 
-/** Indicate whether the creation of this client's directory inside this document's `WholeStore` directory was successful.
+/** Indicate whether the temporary WholeStore directory was copied to the non-temporary directory location successfully.
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the directory was created or not. */
-- (void)createdThisClientWholeStoreDirectorySuccessfully:(BOOL)success;
+ @param success A Boolean indicating whether the directory was copied or not. */
+- (void)copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:(BOOL)success;
 
-/** Indicate whether the upload of the applied sync change sets file was successful.
- 
- If not, call `setError:` first, then specify `NO` for `success`.
- 
- @param success A Boolean indicating whether the applied sync change sets file was uploaded or not. */
-- (void)uploadedAppliedSyncChangeSetsFileWithSuccess:(BOOL)success;
-
+#pragma mark - Properties
 /** @name Properties */
 
 /** The location of the whole store file to upload. */
@@ -93,19 +142,5 @@
 
 /** The location of the applied sync change sets file to upload. */
 @property (retain) NSURL *localAppliedSyncChangeSetsFileLocation;
-
-/** @name Completion */
-
-/** Used to indicate that completion is currently in progress, and that no further checks should be made. */
-@property (nonatomic, assign) BOOL completionInProgress;
-
-/** The phase status regarding checking (and creating if necessary) this client's directory inside the `WholeStore` directory for this document. */
-@property (nonatomic, assign) TICDSOperationPhaseStatus wholeStoreDirectoryStatus;
-
-/** The phase status of the whole store file upload. */
-@property (nonatomic, assign) TICDSOperationPhaseStatus wholeStoreFileUploadStatus;
-
-/** The phase status of the applied sync change sets file upload. */
-@property (nonatomic, assign) TICDSOperationPhaseStatus appliedSyncChangeSetsFileUploadStatus;
 
 @end

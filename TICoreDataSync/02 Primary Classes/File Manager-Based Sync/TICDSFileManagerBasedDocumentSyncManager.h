@@ -59,6 +59,15 @@
 /** The path to this client's directory inside this document's `SyncCommands` directory. */
 @property (nonatomic, readonly) NSString *thisDocumentSyncCommandsThisClientDirectoryPath;
 
+/** The path to this client's temporary `WholeStore` directory. */
+@property (nonatomic, readonly) NSString *thisDocumentTemporaryWholeStoreThisClientDirectoryPath;
+
+/** The path to this client's temporary `WholeStore.ticdsync` file. */
+@property (nonatomic, readonly) NSString *thisDocumentTemporaryWholeStoreFilePath;
+
+/** The path to this client's temporary `AppliedSyncChangeSets.ticdsync` file. */
+@property (nonatomic, readonly) NSString *thisDocumentTemporaryAppliedSyncChangeSetsFilePath;
+
 /** The path to this document's `WholeStore` directory. */
 @property (nonatomic, readonly) NSString *thisDocumentWholeStoreDirectoryPath;
 

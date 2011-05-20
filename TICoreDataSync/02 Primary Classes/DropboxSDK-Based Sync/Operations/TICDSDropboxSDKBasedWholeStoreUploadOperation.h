@@ -20,9 +20,10 @@
     DBSession *_dbSession;
     DBRestClient *_restClient;
     
+    NSString *_thisDocumentTemporaryWholeStoreThisClientDirectoryPath;
+    NSString *_thisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFilePath;
+    NSString *_thisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath;
     NSString *_thisDocumentWholeStoreThisClientDirectoryPath;
-    NSString *_thisDocumentWholeStoreThisClientDirectoryWholeStoreFilePath;
-    NSString *_thisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath;
 }
 
 /** @name Properties */
@@ -35,14 +36,17 @@
 
 /** @name Paths */
 
-/** The path to this client's directory within this document's `WholeStore` directory. */
-@property (retain) NSString *thisDocumentWholeStoreThisClientDirectoryPath;
+/** The path to this client's directory within the temporary directory in this document's `WholeStore` directory. */
+@property (retain) NSString *thisDocumentTemporaryWholeStoreThisClientDirectoryPath;
 
 /** The path to which the whole store file should be copied. */
-@property (retain) NSString *thisDocumentWholeStoreThisClientDirectoryWholeStoreFilePath;
+@property (retain) NSString *thisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFilePath;
 
 /** The path to which the applied sync change sets file should be copied. */
-@property (retain) NSString *thisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath;
+@property (retain) NSString *thisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath;
+
+/** The path to this client's directory within this document's `WholeStore` directory. */
+@property (retain) NSString *thisDocumentWholeStoreThisClientDirectoryPath;
 
 @end
 

@@ -53,9 +53,10 @@
     TICDSDropboxSDKBasedWholeStoreUploadOperation *operation = [[TICDSDropboxSDKBasedWholeStoreUploadOperation alloc] initWithDelegate:self];
     
     [operation setDbSession:[self dbSession]];
+    [operation setThisDocumentTemporaryWholeStoreThisClientDirectoryPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath]];
+    [operation setThisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFilePath:[self thisDocumentTemporaryWholeStoreFilePath]];
+    [operation setThisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath:[self thisDocumentTemporaryAppliedSyncChangeSetsFilePath]];
     [operation setThisDocumentWholeStoreThisClientDirectoryPath:[self thisDocumentWholeStoreThisClientDirectoryPath]];
-    [operation setThisDocumentWholeStoreThisClientDirectoryWholeStoreFilePath:[self thisDocumentWholeStoreFilePath]];
-    [operation setThisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath:[self thisDocumentAppliedSyncChangeSetsFilePath]];
     
     return [operation autorelease];
 }
@@ -114,6 +115,21 @@
 - (NSString *)thisDocumentSyncCommandsThisClientDirectoryPath
 {
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentSyncCommandsThisClientDirectory]];
+}
+
+- (NSString *)thisDocumentTemporaryWholeStoreThisClientDirectoryPath
+{
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentTemporaryWholeStoreThisClientDirectory]];
+}
+
+- (NSString *)thisDocumentTemporaryWholeStoreFilePath
+{
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFile]];
+}
+
+- (NSString *)thisDocumentTemporaryAppliedSyncChangeSetsFilePath
+{
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFile]];
 }
 
 - (NSString *)thisDocumentWholeStoreDirectoryPath

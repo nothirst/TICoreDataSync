@@ -20,44 +20,61 @@
     return YES;
 }
 
-#pragma mark Directories
+- (void)checkWhetherThisClientTemporaryWholeStoreDirectoryExists
+{
+    [[self restClient] loadMetadata:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath]];
+}
+
+- (void)deleteThisClientTemporaryWholeStoreDirectory
+{
+    [[self restClient] deletePath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath]];
+}
+
+- (void)createThisClientTemporaryWholeStoreDirectory
+{
+    [[self restClient] createFolder:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath]];
+}
+
+- (void)uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectory
+{
+    NSError *anyError = nil;
+    BOOL success = YES;
+    NSString *filePath = [[self localWholeStoreFileLocation] path];
+    
+    if( [self shouldUseEncryption] ) {
+        NSString *tempPath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:[filePath lastPathComponent]];
+        
+        success = [[self cryptor] encryptFileAtLocation:[NSURL fileURLWithPath:filePath] writingToLocation:[NSURL fileURLWithPath:tempPath] error:&anyError];
+        if( !success ) {
+            [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+            [self uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:NO];
+            return;
+        }
+        
+        filePath = tempPath;
+    }
+    
+    [[self restClient] uploadFile:TICDSWholeStoreFilename toPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] fromPath:filePath];
+}
+
+- (void)uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectory
+{
+    [[self restClient] uploadFile:TICDSAppliedSyncChangeSetsFilename toPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] fromPath:[[self localAppliedSyncChangeSetsFileLocation] path]];
+}
+
 - (void)checkWhetherThisClientWholeStoreDirectoryExists
 {
     [[self restClient] loadMetadata:[self thisDocumentWholeStoreThisClientDirectoryPath]];
 }
 
-- (void)createThisClientWholeStoreDirectory
+- (void)deleteThisClientWholeStoreDirectory
 {
-    [[self restClient] createFolder:[self thisDocumentWholeStoreThisClientDirectoryPath]];
+    [[self restClient] deletePath:[self thisDocumentWholeStoreThisClientDirectoryPath]];
 }
 
-#pragma mark Whole Store
-- (void)uploadWholeStoreFile
+- (void)copyThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectory
 {
-    NSError *anyError = nil;
-    BOOL success = YES;
-    
-    NSString *finalFilePath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:TICDSWholeStoreFilename];
-    
-    if( [self shouldUseEncryption] ) {
-        success = [[self cryptor] encryptFileAtLocation:[self localWholeStoreFileLocation] writingToLocation:[NSURL fileURLWithPath:finalFilePath] error:&anyError];
-        
-        if( !success ) {
-            [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            [self uploadedWholeStoreFileWithSuccess:NO];
-            return;
-        }
-    }
-    
-    [[self restClient] uploadFile:TICDSWholeStoreFilename toPath:[self thisDocumentWholeStoreThisClientDirectoryPath] fromPath:finalFilePath];
-}
-
-#pragma mark Applied Sync Changes
-- (void)uploadAppliedSyncChangeSetsFile
-{
-    NSString *finalFilePath = [[self localAppliedSyncChangeSetsFileLocation] path];
-    
-    [[self restClient] uploadFile:TICDSAppliedSyncChangeSetsFilename toPath:[self thisDocumentWholeStoreThisClientDirectoryPath] fromPath:finalFilePath];
+    [[self restClient] copyFrom:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] toPath:[self thisDocumentWholeStoreThisClientDirectoryPath]];
 }
 
 #pragma mark -
@@ -68,8 +85,13 @@
     NSString *path = [metadata path];
     TICDSRemoteFileStructureExistsResponseType status = [metadata isDeleted] ? TICDSRemoteFileStructureExistsResponseTypeDoesNotExist : TICDSRemoteFileStructureExistsResponseTypeDoesExist;
     
+    if( [path isEqualToString:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath]] ) {
+        [self discoveredStatusOfThisClientTemporaryWholeStoreDirectory:status];
+        return;
+    }
+    
     if( [path isEqualToString:[self thisDocumentWholeStoreThisClientDirectoryPath]] ) {
-        [self discoveredStatusOfWholeStoreDirectory:status];
+        [self discoveredStatusOfThisClientWholeStoreDirectory:status];
         return;
     }
 }
@@ -91,8 +113,42 @@
         status = TICDSRemoteFileStructureExistsResponseTypeError;
     }
     
+    if( [path isEqualToString:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath]] ) {
+        [self discoveredStatusOfThisClientTemporaryWholeStoreDirectory:status];
+        return;
+    }
+    
     if( [path isEqualToString:[self thisDocumentWholeStoreThisClientDirectoryPath]] ) {
-        [self discoveredStatusOfWholeStoreDirectory:status];
+        [self discoveredStatusOfThisClientWholeStoreDirectory:status];
+    }
+}
+
+#pragma mark Deletion
+- (void)restClient:(DBRestClient*)client deletedPath:(NSString *)path
+{
+    if( [path isEqualToString:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath]] ) {
+        [self deletedThisClientTemporaryWholeStoreDirectoryWithSuccess:YES];
+        return;
+    }
+    
+    if( [path isEqualToString:[self thisDocumentWholeStoreThisClientDirectoryPath]] ) {
+        [self deletedThisClientWholeStoreDirectoryWithSuccess:YES];
+        return;
+    }
+}
+
+- (void)restClient:(DBRestClient*)client deletePathFailedWithError:(NSError*)error
+{
+    NSString *path = [[error userInfo] valueForKey:@"path"];
+    
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
+    if( [path isEqualToString:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath]] ) {
+        [self deletedThisClientTemporaryWholeStoreDirectoryWithSuccess:NO];
+        return;
+    }
+    
+    if( [path isEqualToString:[self thisDocumentWholeStoreThisClientDirectoryPath]] ) {
+        [self deletedThisClientWholeStoreDirectoryWithSuccess:NO];
         return;
     }
 }
@@ -102,8 +158,8 @@
 {
     NSString *path = [folder path];
     
-    if( [path isEqualToString:[self thisDocumentWholeStoreThisClientDirectoryPath]] ) {
-        [self createdThisClientWholeStoreDirectorySuccessfully:YES];
+    if( [path isEqualToString:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath]] ) {
+        [self createdThisClientTemporaryWholeStoreDirectoryWithSuccess:YES];
         return;
     }
 }
@@ -114,8 +170,8 @@
     
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
-    if( [path isEqualToString:[self thisDocumentWholeStoreThisClientDirectoryPath]] ) {
-        [self createdThisClientWholeStoreDirectorySuccessfully:NO];
+    if( [path isEqualToString:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath]] ) {
+        [self createdThisClientTemporaryWholeStoreDirectoryWithSuccess:NO];
         return;
     }
 }
@@ -124,12 +180,12 @@
 - (void)restClient:(DBRestClient*)client uploadedFile:(NSString*)destPath from:(NSString*)srcPath
 {
     if( [[destPath lastPathComponent] isEqualToString:TICDSWholeStoreFilename] ) {
-        [self uploadedWholeStoreFileWithSuccess:YES];
+        [self uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:YES];
         return;
     }
     
     if( [[destPath lastPathComponent] isEqualToString:TICDSAppliedSyncChangeSetsFilename] ) {
-        [self uploadedAppliedSyncChangeSetsFileWithSuccess:YES];
+        [self uploadedAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:YES];
         return;
     }
 }
@@ -141,14 +197,28 @@
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
     if( [[path lastPathComponent] isEqualToString:TICDSWholeStoreFilename] ) {
-        [self uploadedWholeStoreFileWithSuccess:NO];
+        [self uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:NO];
         return;
     }
     
     if( [[path lastPathComponent] isEqualToString:TICDSAppliedSyncChangeSetsFilename] ) {
-        [self uploadedAppliedSyncChangeSetsFileWithSuccess:NO];
+        [self uploadedAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:NO];
         return;
     }
+}
+
+- (void)restClient:(DBRestClient*)client copiedPath:(NSString *)from_path toPath:(NSString *)to_path
+{
+    // should really check the paths, but there's only one copy procedure in this operation...
+    [self copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:YES];
+}
+
+- (void)restClient:(DBRestClient*)client copyPathFailedWithError:(NSError*)error
+{
+    // should really check the paths, but there's only one copy procedure in this operation...
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
+    
+    [self copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:NO];
 }
 
 #pragma mark -
@@ -158,10 +228,11 @@
     [_dbSession release], _dbSession = nil;
     [_restClient release], _restClient = nil;
     
+    [_thisDocumentTemporaryWholeStoreThisClientDirectoryPath release], _thisDocumentTemporaryWholeStoreThisClientDirectoryPath = nil;
+    [_thisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFilePath release], _thisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFilePath = nil;
+    [_thisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath release], _thisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath = nil;
     [_thisDocumentWholeStoreThisClientDirectoryPath release], _thisDocumentWholeStoreThisClientDirectoryPath = nil;
-    [_thisDocumentWholeStoreThisClientDirectoryWholeStoreFilePath release], _thisDocumentWholeStoreThisClientDirectoryWholeStoreFilePath = nil;
-    [_thisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath release], _thisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath = nil;
-    
+
     [super dealloc];
 }
 
@@ -181,9 +252,10 @@
 #pragma mark Properties
 @synthesize dbSession = _dbSession;
 @synthesize restClient = _restClient;
+@synthesize thisDocumentTemporaryWholeStoreThisClientDirectoryPath = _thisDocumentTemporaryWholeStoreThisClientDirectoryPath;
+@synthesize thisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFilePath = _thisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFilePath;
+@synthesize thisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath = _thisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath;
 @synthesize thisDocumentWholeStoreThisClientDirectoryPath = _thisDocumentWholeStoreThisClientDirectoryPath;
-@synthesize thisDocumentWholeStoreThisClientDirectoryWholeStoreFilePath = _thisDocumentWholeStoreThisClientDirectoryWholeStoreFilePath;
-@synthesize thisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath = _thisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath;
 
 @end
 
