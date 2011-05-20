@@ -11,6 +11,10 @@
 #import "TICoreDataSync.h"
 #import "DropboxSDK.h"
 
+/**
+ `TICDSDropboxSDKBasedDocumentRegistrationOperation` is a document registration operation designed for use with a `TICDSDropboxSDKBasedApplicationSyncManager`.
+ */
+
 @interface TICDSDropboxSDKBasedDocumentRegistrationOperation : TICDSDocumentRegistrationOperation <DBRestClientDelegate> {
 @private
     DBSession *_dbSession;
