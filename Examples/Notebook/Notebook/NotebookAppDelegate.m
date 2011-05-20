@@ -59,14 +59,14 @@
 ToUseEncryptionForFirstTimeRegistration:
 (TICDSApplicationSyncManager *)aSyncManager
 {
-    [aSyncManager continueRegisteringWithEncryptionPassword:nil];
+    [aSyncManager continueRegisteringWithEncryptionPassword:@"password"];
 }
 
 - (void)applicationSyncManagerDidPauseRegistrationToRequestPassword\
 ForEncryptedApplicationSyncData:
 (TICDSApplicationSyncManager *)aSyncManager
 {
-    [aSyncManager continueRegisteringWithEncryptionPassword:nil];
+    [aSyncManager continueRegisteringWithEncryptionPassword:@"password"];
 }
 
 - (TICDSDocumentSyncManager *)applicationSyncManager:
@@ -82,8 +82,6 @@ preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:
 {
     TICDSFileManagerBasedDocumentSyncManager *docSyncManager = 
     [[TICDSFileManagerBasedDocumentSyncManager alloc] init];
-    
-    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(activityDidIncrease:) name:TICDSDocumentSyncManagerDidIncreaseActivityNotification object:docSyncManager];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(activityDidDecrease:) name:TICDSDocumentSyncManagerDidDecreaseActivityNotification object:docSyncManager];
@@ -342,12 +340,12 @@ _downloadStoreAfterRegistering;
     
     NSURL *url = [applicationFilesDirectory URLByAppendingPathComponent:@"Notebook.storedata"];
     
-    if( [[NSFileManager defaultManager] fileExistsAtPath:[url path]] ) {
+    if( ![[NSFileManager defaultManager] fileExistsAtPath:[url path]] ) {
         [self setDownloadStoreAfterRegistering:YES];
     }
     
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom];
-    if (![__persistentStoreCoordinator addPersistentStoreWithType:NSXMLStoreType configuration:nil URL:url options:nil error:&error]) {
+    if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:url options:nil error:&error]) {
         [[NSApplication sharedApplication] presentError:error];
         [__persistentStoreCoordinator release], __persistentStoreCoordinator = nil;
         return nil;

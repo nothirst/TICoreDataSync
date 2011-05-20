@@ -152,7 +152,7 @@
 		389E1C0E13856B7D00E9E7C1 /* TICDSApplicationSyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSApplicationSyncManager.h; sourceTree = "<group>"; };
 		389E1C0F13856B7D00E9E7C1 /* TICDSApplicationSyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSApplicationSyncManager.m; sourceTree = "<group>"; };
 		389E1C1013856B7D00E9E7C1 /* TICDSDocumentSyncManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSDocumentSyncManager.h; sourceTree = "<group>"; };
-		389E1C1113856B7D00E9E7C1 /* TICDSDocumentSyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSDocumentSyncManager.m; sourceTree = "<group>"; };
+		389E1C1113856B7D00E9E7C1 /* TICDSDocumentSyncManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSDocumentSyncManager.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		389E1C1213856B7D00E9E7C1 /* TICDSSyncConflict.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSyncConflict.h; sourceTree = "<group>"; };
 		389E1C1313856B7D00E9E7C1 /* TICDSSyncConflict.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSyncConflict.m; sourceTree = "<group>"; };
 		389E1C1413856B7D00E9E7C1 /* TICDSSynchronizedManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSynchronizedManagedObject.h; sourceTree = "<group>"; };
