@@ -10,8 +10,6 @@
 
 @interface TICDSSynchronizationOperation () <TICoreDataFactoryDelegate>
 
-- (void)setAllInProgressStatusesToFailure;
-- (void)checkForCompletion;
 - (void)beginFetchOfListOfClientDeviceIdentifiers;
 - (void)beginFetchOfListOfSyncCommandSetIdentifiers;
 
@@ -127,8 +125,6 @@
     for( NSString *eachClientIdentifier in [self otherSynchronizedClientDeviceIdentifiers] ) {
         [self buildArrayOfSyncChangeSetIdentifiersForClientIdentifier:eachClientIdentifier];
     }
-    
-    [self checkForCompletion];
 }
 
 - (void)builtArrayOfClientSyncChangeSetIdentifiers:(NSArray *)anArray forClientIdentifier:(NSString *)aClientIdentifier
@@ -900,43 +896,6 @@
     [self uploadedRecentSyncFileSuccessfully:NO];
 }
 
-#pragma mark -
-#pragma mark Completion
-- (void)setAllInProgressStatusesToFailure
-{
-    if( [self fetchArrayOfClientDeviceIDsStatus] == TICDSOperationPhaseStatusInProgress ) {
-        [self setFetchArrayOfClientDeviceIDsStatus:TICDSOperationPhaseStatusFailure];
-    }
-    
-    if( [self fetchArrayOfSyncCommandSetIDsStatus] == TICDSOperationPhaseStatusInProgress ) {
-        [self setFetchArrayOfSyncCommandSetIDsStatus:TICDSOperationPhaseStatusFailure];
-    }
-    
-    if( [self fetchArrayOfSyncChangeSetIDsStatus] == TICDSOperationPhaseStatusInProgress ) {
-        [self setFetchArrayOfSyncChangeSetIDsStatus:TICDSOperationPhaseStatusFailure];
-    }
-    
-    if( [self fetchUnappliedSyncChangeSetsStatus] == TICDSOperationPhaseStatusInProgress ) {
-        [self setFetchUnappliedSyncChangeSetsStatus:TICDSOperationPhaseStatusFailure];
-    }
-    
-    if( [self applyUnappliedSyncChangeSetsStatus] == TICDSOperationPhaseStatusInProgress ) {
-        [self setApplyUnappliedSyncChangeSetsStatus:TICDSOperationPhaseStatusFailure];
-    }
-    
-    if( [self uploadLocalSyncCommandSetStatus] == TICDSOperationPhaseStatusInProgress ) {
-        [self setUploadLocalSyncCommandSetStatus:TICDSOperationPhaseStatusFailure];
-    }
-    
-    if( [self uploadLocalSyncChangeSetStatus] == TICDSOperationPhaseStatusInProgress ) {
-        [self setUploadLocalSyncChangeSetStatus:TICDSOperationPhaseStatusFailure];
-    }
-    
-    if( [self uploadRecentSyncFileStatus] == TICDSOperationPhaseStatusInProgress ) {
-        [self setUploadRecentSyncFileStatus:TICDSOperationPhaseStatusFailure];
-    }
-}
-
 - (void)increaseNumberOfSyncChangeSetIdentifierArraysToFetch
 {
     [self setNumberOfSyncChangeSetIDArraysToFetch:[self numberOfSyncChangeSetIDArraysToFetch] + 1];
@@ -965,40 +924,6 @@
 - (void)increaseNumberOfUnappliedSyncChangeSetsThatFailedToFetch
 {
     [self setNumberOfUnappliedSyncChangeSetsThatFailedToFetch:[self numberOfUnappliedSyncChangeSetsThatFailedToFetch] + 1];
-}
-
-- (void)checkForCompletion
-{
-    if( [self completionInProgress] ) {
-        return;
-    }
-    
-    if( [self fetchArrayOfClientDeviceIDsStatus] == TICDSOperationPhaseStatusInProgress || [self fetchArrayOfSyncCommandSetIDsStatus] == TICDSOperationPhaseStatusInProgress || [self fetchArrayOfSyncChangeSetIDsStatus] == TICDSOperationPhaseStatusInProgress || [self fetchUnappliedSyncChangeSetsStatus] == TICDSOperationPhaseStatusInProgress || [self applyUnappliedSyncChangeSetsStatus] == TICDSOperationPhaseStatusInProgress
-       
-       || [self uploadLocalSyncCommandSetStatus] == TICDSOperationPhaseStatusInProgress || [self uploadLocalSyncChangeSetStatus] == TICDSOperationPhaseStatusInProgress
-       || [self uploadRecentSyncFileStatus] == TICDSOperationPhaseStatusInProgress ) {
-        return;
-    }
-    
-    if( [self fetchArrayOfClientDeviceIDsStatus] == TICDSOperationPhaseStatusSuccess && [self fetchArrayOfSyncCommandSetIDsStatus] == TICDSOperationPhaseStatusSuccess && [self fetchArrayOfSyncChangeSetIDsStatus] == TICDSOperationPhaseStatusSuccess && [self fetchUnappliedSyncChangeSetsStatus] == TICDSOperationPhaseStatusSuccess && [self applyUnappliedSyncChangeSetsStatus] == TICDSOperationPhaseStatusSuccess
-       
-       && [self uploadLocalSyncCommandSetStatus] == TICDSOperationPhaseStatusSuccess && [self uploadLocalSyncChangeSetStatus] == TICDSOperationPhaseStatusSuccess
-       && [self uploadRecentSyncFileStatus] == TICDSOperationPhaseStatusSuccess ) {
-        [self setCompletionInProgress:YES];
-        
-        [self operationDidCompleteSuccessfully];
-        return;
-    }
-    
-    if( [self fetchArrayOfClientDeviceIDsStatus] == TICDSOperationPhaseStatusFailure || [self fetchArrayOfSyncCommandSetIDsStatus] == TICDSOperationPhaseStatusFailure || [self fetchArrayOfSyncChangeSetIDsStatus] == TICDSOperationPhaseStatusFailure || [self fetchUnappliedSyncChangeSetsStatus] == TICDSOperationPhaseStatusFailure || [self applyUnappliedSyncChangeSetsStatus] == TICDSOperationPhaseStatusFailure
-       
-       || [self uploadLocalSyncCommandSetStatus] == TICDSOperationPhaseStatusFailure || [self uploadLocalSyncChangeSetStatus] == TICDSOperationPhaseStatusFailure
-       || [self uploadRecentSyncFileStatus] == TICDSOperationPhaseStatusFailure ) {
-        [self setCompletionInProgress:YES];
-        
-        [self operationDidFailToComplete];
-        return;
-    }
 }
 
 #pragma mark -
@@ -1182,20 +1107,11 @@
 @synthesize localSyncChangesToMergeContext = _localSyncChangesToMergeContext;
 @synthesize backgroundApplicationContext = _backgroundApplicationContext;
 
-@synthesize completionInProgress = _completionInProgress;
-@synthesize fetchArrayOfClientDeviceIDsStatus = _fetchArrayOfClientDeviceIDsStatus;
-@synthesize fetchArrayOfSyncCommandSetIDsStatus = _fetchArrayOfSyncCommandSetIDsStatus;
 @synthesize numberOfSyncChangeSetIDArraysToFetch = _numberOfSyncChangeSetIDArraysToFetch;
 @synthesize numberOfSyncChangeSetIDArraysFetched = _numberOfSyncChangeSetIDArraysFetched;
 @synthesize numberOfSyncChangeSetIDArraysThatFailedToFetch = _numberOfSyncChangeSetIDArraysThatFailedToFetch;
-@synthesize fetchArrayOfSyncChangeSetIDsStatus = _fetchArrayOfSyncChangeSetIDsStatus;
 @synthesize numberOfUnappliedSyncChangeSetsToFetch = _numberOfUnappliedSyncChangeSetsToFetch;
 @synthesize numberOfUnappliedSyncChangeSetsFetched = _numberOfUnappliedSyncChangeSetsFetched;
 @synthesize numberOfUnappliedSyncChangeSetsThatFailedToFetch = _numberOfUnappliedSyncChangeSetsThatFailedToFetch;
-@synthesize fetchUnappliedSyncChangeSetsStatus = _fetchUnappliedSyncChangeSetsStatus;
-@synthesize applyUnappliedSyncChangeSetsStatus = _applyUnappliedSyncChangeSetsStatus;
-@synthesize uploadLocalSyncCommandSetStatus = _uploadLocalSyncCommandSetStatus;
-@synthesize uploadLocalSyncChangeSetStatus = _uploadLocalSyncChangeSetStatus;
-@synthesize uploadRecentSyncFileStatus = _uploadRecentSyncFileStatus;
 
 @end

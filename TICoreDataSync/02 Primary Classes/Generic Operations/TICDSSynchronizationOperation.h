@@ -12,7 +12,7 @@
  
  In brief, a synchronization operation pulls down remote sync commands and changes, applies them locally (fixing any conflicts if necessary), and then pushes out the local set of unsynchronized sync changes.
  
- In full, the operation carries out the following tasks:
+ In full, the operation carries out the following tasks: (Sync Command tasks are included below, although not yet implemented)
  
  1. Fetch an array containing UUID strings for each client device that has synchronized this document.
  2. For each client device that isn't the current device:
@@ -68,26 +68,13 @@
     
     NSManagedObjectContext *_backgroundApplicationContext;
     
-    BOOL _completionInProgress;
-    TICDSOperationPhaseStatus _fetchArrayOfClientDeviceIDsStatus;
-    TICDSOperationPhaseStatus _fetchArrayOfSyncCommandSetIDsStatus;
-    
     NSUInteger _numberOfSyncChangeSetIDArraysToFetch;
     NSUInteger _numberOfSyncChangeSetIDArraysFetched;
     NSUInteger _numberOfSyncChangeSetIDArraysThatFailedToFetch;
-    TICDSOperationPhaseStatus _fetchArrayOfSyncChangeSetIDsStatus;
     
     NSUInteger _numberOfUnappliedSyncChangeSetsToFetch;
     NSUInteger _numberOfUnappliedSyncChangeSetsFetched;
     NSUInteger _numberOfUnappliedSyncChangeSetsThatFailedToFetch;
-    TICDSOperationPhaseStatus _fetchUnappliedSyncChangeSetsStatus;
-    
-    TICDSOperationPhaseStatus _applyUnappliedSyncChangeSetsStatus;
-    
-    TICDSOperationPhaseStatus _uploadLocalSyncCommandSetStatus;
-    TICDSOperationPhaseStatus _uploadLocalSyncChangeSetStatus;
-    
-    TICDSOperationPhaseStatus _uploadRecentSyncFileStatus;
 }
 
 #pragma mark Designated Initializer
@@ -266,15 +253,6 @@
 #pragma mark Completion
 /** @name Completion */
 
-/** Used to indicate that completion is currently in progress, and that no further checks should be made. */
-@property (nonatomic, assign) BOOL completionInProgress;
-
-/** The phase status regarding fetching an array of client devices that have synchronized this document. */
-@property (nonatomic, assign) TICDSOperationPhaseStatus fetchArrayOfClientDeviceIDsStatus;
-
-/** The phase status regarding fetching an array of available SyncCommand sets. */
-@property (nonatomic, assign) TICDSOperationPhaseStatus fetchArrayOfSyncCommandSetIDsStatus;
-
 /** The total number of arrays of `SyncChangeSet` identifiers that need to be fetched. */
 @property (nonatomic, assign) NSUInteger numberOfSyncChangeSetIDArraysToFetch;
 
@@ -284,9 +262,6 @@
 /** The number of arrays of `SyncChangeSet` identifiers that failed to fetch because of an error. */
 @property (nonatomic, assign) NSUInteger numberOfSyncChangeSetIDArraysThatFailedToFetch;
 
-/** The phase status regarding fetching an array of available `SyncChangeSet` identifiers. */
-@property (nonatomic, assign) TICDSOperationPhaseStatus fetchArrayOfSyncChangeSetIDsStatus;
-
 /** The number of unapplied sync change sets that need to be fetched. */
 @property (nonatomic, assign) NSUInteger numberOfUnappliedSyncChangeSetsToFetch;
 
@@ -295,20 +270,5 @@
 
 /** The number of unapplied sync change sets that failed to fetch because of an error. */
 @property (nonatomic, assign) NSUInteger numberOfUnappliedSyncChangeSetsThatFailedToFetch;
-
-/** The phase status regarding fetching all unapplied `SyncChangeSet`s. */
-@property (nonatomic, assign) TICDSOperationPhaseStatus fetchUnappliedSyncChangeSetsStatus;
-
-/** The phase status regarding application of unapplied `SyncChangeSet`s. */
-@property (nonatomic, assign) TICDSOperationPhaseStatus applyUnappliedSyncChangeSetsStatus;
-
-/** The phase status regarding upload of the local set of sync commands. */
-@property (nonatomic, assign) TICDSOperationPhaseStatus uploadLocalSyncCommandSetStatus;
-
-/** The phase status regarding upload of the local set of sync changes. */
-@property (nonatomic, assign) TICDSOperationPhaseStatus uploadLocalSyncChangeSetStatus;
-
-/** The phase status regarding upload of this client's file in the document's `RecentSync` directory. */
-@property (nonatomic, assign) TICDSOperationPhaseStatus uploadRecentSyncFileStatus;
 
 @end
