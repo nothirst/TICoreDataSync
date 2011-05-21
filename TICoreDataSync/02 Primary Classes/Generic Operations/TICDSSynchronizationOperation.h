@@ -21,7 +21,7 @@
  3. If any `SyncCommandSet`s haven't yet been applied, fetch them to the `UnappliedSyncCommandSets` helper file directory.
  4. Go through each `SyncCommandSet` and:
      1. Carry out the command, determining whether synchronization can continue, or whether e.g. the entire store needs to be downloaded.
-     2. Add the UUID of the set to the list of `AppliedSyncChangeCommands.ticdsync`.
+     2. Add the UUID of the set to the list of `AppliedSyncCommands.ticdsync`.
  5. If synchronization can continue, then for each client device that isn't the current device:
      1. Fetch an array containing UUID strings for each available `SyncChangeSet`.
      2. Determine which `SyncChangeSet`s haven't yet been applied locally.
