@@ -15,7 +15,7 @@
 
 + (void)initialize
 {
-    //[TICDSLog setVerbosity:TICDSLogVerbosityEveryStep];
+    [TICDSLog setVerbosity:TICDSLogVerbosityEveryStep];
 }
 
 - (void)awakeFromNib
@@ -182,6 +182,11 @@ didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:
 - (BOOL)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager
 shouldBeginSynchronizingAfterManagedObjectContextDidSave:
 (TICDSSynchronizedManagedObjectContext *)aMoc
+{
+    return YES;
+}
+
+- (BOOL)documentSyncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager
 {
     return YES;
 }

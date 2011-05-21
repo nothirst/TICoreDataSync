@@ -28,11 +28,6 @@
 @interface TICDSVacuumOperation : TICDSOperation {
 @private
     NSDate *_earliestDateForFilesToKeep;
-    
-    BOOL _completionInProgress;
-    TICDSOperationPhaseStatus _findOutDateOfOldestWholeStoreStatus;
-    TICDSOperationPhaseStatus _findOutLeastRecentClientSyncDateStatus;
-    TICDSOperationPhaseStatus _removeOldSyncChangeSetFilesStatus;
 }
 
 /** @name Methods Overridden by Subclasses */
@@ -79,19 +74,5 @@
 
 /** The earliest modification date after which files must be kept. */
 @property (nonatomic, retain ) NSDate *earliestDateForFilesToKeep;
-
-/** @name Completion */
-
-/** Used to indicate that completion is currently in progress, and that no further checks should be made. */
-@property (nonatomic, assign) BOOL completionInProgress;
-
-/** The phase status regarding finding out the date of the oldest file in the `WholeStore` directory. */
-@property (nonatomic, assign) TICDSOperationPhaseStatus findOutDateOfOldestWholeStoreStatus;
-
-/** The phase status regarding finding out the date of the oldest file in the `RecentSyncs` directory. */
-@property (nonatomic, assign) TICDSOperationPhaseStatus findOutLeastRecentClientSyncDateStatus;
-
-/** The phase status regarding finding removing old, unneeded sync change set files from this client. */
-@property (nonatomic, assign) TICDSOperationPhaseStatus removeOldSyncChangeSetFilesStatus;
 
 @end
