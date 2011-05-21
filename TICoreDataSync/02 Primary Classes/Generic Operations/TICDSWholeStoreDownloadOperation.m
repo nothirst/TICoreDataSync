@@ -10,7 +10,6 @@
 
 @interface TICDSWholeStoreDownloadOperation ()
 
-- (void)checkForCompletion;
 - (void)beginCheckForMostRecentClientWholeStore;
 - (void)beginDownloadOfWholeStoreFile;
 - (void)beginDownloadOfAppliedSyncChangeSetsFile;
@@ -23,15 +22,13 @@
 - (void)main
 {
     if( [self requestedWholeStoreClientIdentifier] ) {
-        [self setDetermineMostRecentlyUploadedStoreStatus:TICDSOperationPhaseStatusSuccess];
         [self beginDownloadOfWholeStoreFile];
     } else {
         [self beginCheckForMostRecentClientWholeStore];
     }
 }
 
-#pragma mark -
-#pragma mark Most Recent Client Upload
+#pragma mark - Checking Most Recent Client Upload
 - (void)beginCheckForMostRecentClientWholeStore
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Checking which client uploaded a store most recently");
@@ -43,17 +40,12 @@
 {
     if( !anIdentifier ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to determine which client uploaded store most recently");
-        [self setDetermineMostRecentlyUploadedStoreStatus:TICDSOperationPhaseStatusFailure];
-        [self setWholeStoreFileDownloadStatus:TICDSOperationPhaseStatusFailure];
-        [self setAppliedSyncChangeSetsFileDownloadStatus:TICDSOperationPhaseStatusFailure];
-        
-        [self checkForCompletion];
+        [self operationDidFailToComplete];
         return;
     }
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Client %@ uploaded store most recently", anIdentifier);
     [self setRequestedWholeStoreClientIdentifier:anIdentifier];
-    [self setDetermineMostRecentlyUploadedStoreStatus:TICDSOperationPhaseStatusSuccess];
     
     [self beginDownloadOfWholeStoreFile];
 }
@@ -65,8 +57,7 @@
     [self determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:nil];
 }
 
-#pragma mark -
-#pragma mark Whole Store File Download
+#pragma mark - Whole Store File Download
 - (void)beginDownloadOfWholeStoreFile
 {
     NSError *anyError = nil;
@@ -87,16 +78,13 @@
 {
     if( !success ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to download whole store file");
-        [self setWholeStoreFileDownloadStatus:TICDSOperationPhaseStatusFailure];
-        [self setAppliedSyncChangeSetsFileDownloadStatus:TICDSOperationPhaseStatusFailure];
-    } else {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Successfully downloaded whole store file");
-        [self setWholeStoreFileDownloadStatus:TICDSOperationPhaseStatusSuccess];
-        
-        [self beginDownloadOfAppliedSyncChangeSetsFile];
+        [self operationDidFailToComplete];
+        return;
     }
     
-    [self checkForCompletion];
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Successfully downloaded whole store file");
+    
+    [self beginDownloadOfAppliedSyncChangeSetsFile];
 }
 
 #pragma mark Overridden Method
@@ -106,8 +94,7 @@
     [self downloadedWholeStoreFileWithSuccess:NO];
 }
 
-#pragma mark -
-#pragma mark Applied Sync Change Sets File Download
+#pragma mark - Applied Sync Change Sets File Download
 - (void)beginDownloadOfAppliedSyncChangeSetsFile
 {
     NSError *anyError = nil;
@@ -128,13 +115,12 @@
 {
     if( !success ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to download applied sync change sets file");
-        [self setAppliedSyncChangeSetsFileDownloadStatus:TICDSOperationPhaseStatusFailure];
-    } else {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Successfully downloaded applied sync change sets file");
-        [self setAppliedSyncChangeSetsFileDownloadStatus:TICDSOperationPhaseStatusSuccess];
+        [self operationDidFailToComplete];
+        return;
     }
     
-    [self checkForCompletion];
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Successfully downloaded applied sync change sets file");
+    [self operationDidCompleteSuccessfully];
 }
 
 #pragma mark Overridden Method
@@ -142,33 +128,6 @@
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
     [self downloadedAppliedSyncChangeSetsFileWithSuccess:NO];
-}
-
-#pragma mark -
-#pragma mark Completion
-- (void)checkForCompletion
-{
-    if( [self completionInProgress] ) {
-        return;
-    }
-    
-    if( [self determineMostRecentlyUploadedStoreStatus] == TICDSOperationPhaseStatusInProgress || [self wholeStoreFileDownloadStatus] == TICDSOperationPhaseStatusInProgress || [self appliedSyncChangeSetsFileDownloadStatus] == TICDSOperationPhaseStatusInProgress ) {
-        return;
-    }
-    
-    if( [self determineMostRecentlyUploadedStoreStatus] == TICDSOperationPhaseStatusSuccess && [self wholeStoreFileDownloadStatus] == TICDSOperationPhaseStatusSuccess && [self appliedSyncChangeSetsFileDownloadStatus] == TICDSOperationPhaseStatusSuccess ) {
-        [self setCompletionInProgress:YES];
-        
-        [self operationDidCompleteSuccessfully];
-        return;
-    }
-    
-    if( [self determineMostRecentlyUploadedStoreStatus] == TICDSOperationPhaseStatusFailure || [self wholeStoreFileDownloadStatus] == TICDSOperationPhaseStatusFailure || [self appliedSyncChangeSetsFileDownloadStatus] == TICDSOperationPhaseStatusFailure ) {
-        [self setCompletionInProgress:YES];
-        
-        [self operationDidFailToComplete];
-        return;
-    }
 }
 
 #pragma mark -
@@ -187,9 +146,5 @@
 @synthesize requestedWholeStoreClientIdentifier = _requestedWholeStoreClientIdentifier;
 @synthesize localWholeStoreFileLocation = _localWholeStoreFileLocation;
 @synthesize localAppliedSyncChangeSetsFileLocation = _localAppliedSyncChangeSetsFileLocation;
-@synthesize completionInProgress = _completionInProgress;
-@synthesize determineMostRecentlyUploadedStoreStatus = _determineMostRecentlyUploadedStoreStatus;
-@synthesize wholeStoreFileDownloadStatus = _wholeStoreFileDownloadStatus;
-@synthesize appliedSyncChangeSetsFileDownloadStatus = _appliedSyncChangeSetsFileDownloadStatus;
 
 @end

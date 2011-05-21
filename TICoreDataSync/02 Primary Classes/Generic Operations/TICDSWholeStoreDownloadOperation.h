@@ -26,11 +26,6 @@
     
     NSURL *_localWholeStoreFileLocation;
     NSURL *_localAppliedSyncChangeSetsFileLocation;
-    
-    BOOL _completionInProgress;
-    TICDSOperationPhaseStatus _determineMostRecentlyUploadedStoreStatus;
-    TICDSOperationPhaseStatus _wholeStoreFileDownloadStatus;
-    TICDSOperationPhaseStatus _appliedSyncChangeSetsFileDownloadStatus;
 }
 
 /** @name Methods Overridden by Subclasses */
@@ -83,19 +78,5 @@
 
 /** The location of the applied sync change sets file to upload. */
 @property (retain) NSURL *localAppliedSyncChangeSetsFileLocation;
-
-/** @name Completion */
-
-/** Used to indicate that completion is currently in progress, and that no further checks should be made. */
-@property (nonatomic, assign) BOOL completionInProgress;
-
-/** The phase status of the check for which client uploaded a store most recently. */
-@property (nonatomic, assign) TICDSOperationPhaseStatus determineMostRecentlyUploadedStoreStatus;
-
-/** The phase status of the whole store file upload. */
-@property (nonatomic, assign) TICDSOperationPhaseStatus wholeStoreFileDownloadStatus;
-
-/** The phase status of the applied sync change sets file upload. */
-@property (nonatomic, assign) TICDSOperationPhaseStatus appliedSyncChangeSetsFileDownloadStatus;
 
 @end
