@@ -14,7 +14,7 @@
 - (void)beginRequestWhetherToCreateRemoteDocumentFileStructure;
 - (void)continueAfterRequestWhetherToCreateRemoteDocumentFileStructure;
 - (void)beginCreatingRemoteDocumentDirectoryStructure;
-- (void)beginCreatingDocumentInfoFile;
+- (void)beginCreatingDocumentInfoPlist;
 - (void)beginCheckForClientDirectoryInDocumentSyncChangesDirectory;
 - (void)beginCreatingClientDirectoriesInRemoteDocumentDirectories;
 
@@ -28,8 +28,7 @@
     [self beginCheckForRemoteDocumentDirectory];
 }
 
-#pragma mark -
-#pragma mark Document Hierarchy
+#pragma mark - Checking for Document Directory
 - (void)beginCheckForRemoteDocumentDirectory
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Checking whether the remote document directory exists");
@@ -39,21 +38,77 @@
 
 - (void)discoveredStatusOfRemoteDocumentDirectory:(TICDSRemoteFileStructureExistsResponseType)status
 {
-    if( status == TICDSRemoteFileStructureExistsResponseTypeError ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error checking for document directory");
-        [self operationDidFailToComplete];
-        return;
-    } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesExist ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Document directory exists");
+    switch( status ) {
+        case TICDSRemoteFileStructureExistsResponseTypeError:
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error checking for document directory");
+            [self operationDidFailToComplete];
+            return;
         
-        [self beginCheckForClientDirectoryInDocumentSyncChangesDirectory];
-    } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesNotExist ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Document directory does not exist, so asking delegate whether to create it");
-        
-        [self beginRequestWhetherToCreateRemoteDocumentFileStructure];
+        case TICDSRemoteFileStructureExistsResponseTypeDoesExist:
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Document directory exists");
+            
+            [self beginCheckForClientDirectoryInDocumentSyncChangesDirectory];
+            break;
+            
+        case TICDSRemoteFileStructureExistsResponseTypeDoesNotExist:
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Document directory does not exist, so asking delegate whether to create it");
+            
+            [self beginRequestWhetherToCreateRemoteDocumentFileStructure];
+            break;
     }
 }
 
+#pragma mark Overridden Method
+- (void)checkWhetherRemoteDocumentDirectoryExists
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self discoveredStatusOfRemoteDocumentDirectory:TICDSRemoteFileStructureExistsResponseTypeError];
+}
+
+#pragma mark - Asking Whether to Create Remote Hierarchy
+- (void)beginRequestWhetherToCreateRemoteDocumentFileStructure
+{
+    if( [NSThread isMainThread] ) {
+        [self performSelectorInBackground:@selector(beginRequestWhetherToCreateRemoteDocumentFileStructure) withObject:nil];
+        return;
+    }
+    
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    [self setPaused:YES];
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Pausing registration as remote document file structure doesn't exist");
+    [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationPausedToFindOutWhetherToCreateRemoteDocumentStructure:) waitUntilDone:NO];
+    
+    while( [self isPaused] ) {
+        sleep(0.2);
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Continuing registration after instruction from delegate");
+    
+    [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationResumedFollowingDocumentStructureCreationInstruction:) waitUntilDone:NO];
+    
+    [pool release];
+    [self continueAfterRequestWhetherToCreateRemoteDocumentFileStructure];
+}
+
+- (void)continueAfterRequestWhetherToCreateRemoteDocumentFileStructure
+{
+    if( [self needsMainThread] && ![NSThread isMainThread] ) {
+        [self performSelectorOnMainThread:@selector(continueAfterRequestWhetherToCreateRemoteDocumentFileStructure) withObject:nil waitUntilDone:NO];
+        return;
+    }
+    
+    if( [self shouldCreateDocumentFileStructure] ) {
+        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Creating remote document file structure");
+        
+        [self beginCreatingRemoteDocumentDirectoryStructure];
+    } else {
+        TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Cancelling document registration");
+        [self operationWasCancelled];
+    }
+}
+
+#pragma mark - Creating Document Directory
 - (void)beginCreatingRemoteDocumentDirectoryStructure
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Creating remote document directory structure");
@@ -70,10 +125,18 @@
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Created remote document directory structure");
     
-    [self beginCreatingDocumentInfoFile];
+    [self beginCreatingDocumentInfoPlist];
 }
 
-- (void)beginCreatingDocumentInfoFile
+#pragma mark Overridden Method
+- (void)createRemoteDocumentDirectoryStructure
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self createdRemoteDocumentDirectoryStructureWithSuccess:NO];
+}
+
+#pragma mark - Creating documentInfo.plist
+- (void)beginCreatingDocumentInfoPlist
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Creating remote documentInfo.plist file");
     
@@ -103,68 +166,14 @@
     [self beginCreatingClientDirectoriesInRemoteDocumentDirectories];
 }
 
-#pragma mark Overridden Methods
-- (void)checkWhetherRemoteDocumentDirectoryExists
-{
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self discoveredStatusOfRemoteDocumentDirectory:TICDSRemoteFileStructureExistsResponseTypeError];
-}
-
-- (void)createRemoteDocumentDirectoryStructure
-{
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self createdRemoteDocumentDirectoryStructureWithSuccess:NO];
-}
-
+#pragma mark Overridden Method
 - (void)saveRemoteDocumentInfoPlistFromDictionary:(NSDictionary *)aDictionary
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
     [self savedRemoteDocumentInfoPlistWithSuccess:NO];
 }
 
-#pragma mark Asking Whether to Create Remote Hierarchy
-- (void)beginRequestWhetherToCreateRemoteDocumentFileStructure
-{
-    if( [NSThread isMainThread] ) {
-        [self performSelectorInBackground:@selector(beginRequestWhetherToCreateRemoteDocumentFileStructure) withObject:nil];
-        return;
-    }
-    
-    [self setPaused:YES];
-    
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Pausing registration as remote document file structure doesn't exist");
-    [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationPausedToFindOutWhetherToCreateRemoteDocumentStructure:) waitUntilDone:NO];
-    
-    while( [self isPaused] ) {
-        sleep(0.2);
-    }
-    
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Continuing registration after instruction from delegate");
-    
-    [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationResumedFollowingDocumentStructureCreationInstruction:) waitUntilDone:NO];
-    
-    [self continueAfterRequestWhetherToCreateRemoteDocumentFileStructure];
-}
-
-- (void)continueAfterRequestWhetherToCreateRemoteDocumentFileStructure
-{
-    if( [self needsMainThread] && ![NSThread isMainThread] ) {
-        [self performSelectorOnMainThread:@selector(continueAfterRequestWhetherToCreateRemoteDocumentFileStructure) withObject:nil waitUntilDone:NO];
-        return;
-    }
-    
-    if( [self shouldCreateDocumentFileStructure] ) {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Creating remote document file structure");
-        
-        [self beginCreatingRemoteDocumentDirectoryStructure];
-    } else {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Cancelling document registration");
-        [self operationWasCancelled];
-    }
-}
-
-#pragma mark -
-#pragma mark Client Hierarchy Inside Document Hierarchy
+#pragma mark - Checking for Client Directories in Document Directory
 - (void)beginCheckForClientDirectoryInDocumentSyncChangesDirectory
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Checking for client's directory inside the document's SyncChanges directory");
@@ -174,22 +183,34 @@
 
 - (void)discoveredStatusOfClientDirectoryInRemoteDocumentSyncChangesDirectory:(TICDSRemoteFileStructureExistsResponseType)status
 {
-    if( status == TICDSRemoteFileStructureExistsResponseTypeError ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error checking for status of client's directory");
-        [self operationDidFailToComplete];
-        return;
-    } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesExist ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Client's directory exists, so document registration is complete");
-        
-        [self operationDidCompleteSuccessfully];
-        return;
-    } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesNotExist ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Client's directory does not exist");
-        
-        [self beginCreatingClientDirectoriesInRemoteDocumentDirectories];
+    switch( status ) {
+        case TICDSRemoteFileStructureExistsResponseTypeError:
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error checking for status of client's directory");
+            [self operationDidFailToComplete];
+            return;
+            
+        case TICDSRemoteFileStructureExistsResponseTypeDoesExist:
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Client's directory exists, so document registration is complete");
+            
+            [self operationDidCompleteSuccessfully];
+            return;
+
+        case TICDSRemoteFileStructureExistsResponseTypeDoesNotExist:
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Client's directory does not exist");
+            
+            [self beginCreatingClientDirectoriesInRemoteDocumentDirectories];
+            break;
     }
 }
 
+#pragma mark Overridden Methods
+- (void)checkWhetherClientDirectoryExistsInRemoteDocumentSyncChangesDirectory
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self discoveredStatusOfClientDirectoryInRemoteDocumentSyncChangesDirectory:TICDSRemoteFileStructureExistsResponseTypeError];
+}
+
+#pragma mark - Creating Client Directories
 - (void)beginCreatingClientDirectoriesInRemoteDocumentDirectories
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Creating client's directories inside the document's SyncChanges and SyncCommands directories");
@@ -209,13 +230,7 @@
     [self operationDidCompleteSuccessfully];
 }
 
-#pragma mark Overridden Methods
-- (void)checkWhetherClientDirectoryExistsInRemoteDocumentSyncChangesDirectory
-{
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self discoveredStatusOfClientDirectoryInRemoteDocumentSyncChangesDirectory:TICDSRemoteFileStructureExistsResponseTypeError];
-}
-
+#pragma mark Overridden Method
 - (void)createClientDirectoriesInRemoteDocumentDirectories
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];

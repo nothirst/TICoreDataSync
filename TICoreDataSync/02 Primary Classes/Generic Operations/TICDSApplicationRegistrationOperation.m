@@ -49,19 +49,23 @@
 
 - (void)discoveredStatusOfRemoteGlobalAppDirectory:(TICDSRemoteFileStructureExistsResponseType)status
 {
-    if( status == TICDSRemoteFileStructureExistsResponseTypeError ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error checking for global app directory");
-        [self operationDidFailToComplete];
-        return;
-    } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesExist ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Global App directory exists");
-        [self beginCheckForSaltFile];
-    } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesNotExist ) {
+    switch( status ) {
+        case TICDSRemoteFileStructureExistsResponseTypeError:
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error checking for global app directory");
+            [self operationDidFailToComplete];
+            return;
+
+        case TICDSRemoteFileStructureExistsResponseTypeDoesExist:
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Global App directory exists");
+            [self beginCheckForSaltFile];
+            break;
         
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Remote app directory doesn't exist so blitzing keychain, then asking delegate whether to create it");
-        [self blitzKeychainItems];
-        
-        [self beginRequestWhetherToEnableEncryption];
+        case TICDSRemoteFileStructureExistsResponseTypeDoesNotExist:
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Remote app directory doesn't exist so blitzing keychain, then asking delegate whether to create it");
+            [self blitzKeychainItems];
+            
+            [self beginRequestWhetherToEnableEncryption];
+            break;
     }
 }
 
@@ -310,23 +314,27 @@
 
 - (void)discoveredStatusOfSaltFile:(TICDSRemoteFileStructureExistsResponseType)status
 {
-    if( status == TICDSRemoteFileStructureExistsResponseTypeError ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to check for salt file");
-        [self operationDidFailToComplete];
-        return;
-    } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesExist ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Salt file exists");
-        
-        [self setShouldUseEncryption:YES];
-        
-        [self beginFetchOfSaltFileData];
-        
-    } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesNotExist ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Salt file does not exist");
-        
-        [self setShouldUseEncryption:NO];
-        
-        [self beginCheckForRemoteClientDeviceDirectory];
+    switch( status ) {
+        case TICDSRemoteFileStructureExistsResponseTypeError:
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to check for salt file");
+            [self operationDidFailToComplete];
+            return;
+
+        case TICDSRemoteFileStructureExistsResponseTypeDoesExist:
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Salt file exists");
+            
+            [self setShouldUseEncryption:YES];
+            
+            [self beginFetchOfSaltFileData];
+            break;
+            
+        case TICDSRemoteFileStructureExistsResponseTypeDoesNotExist:
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Salt file does not exist");
+            
+            [self setShouldUseEncryption:NO];
+            
+            [self beginCheckForRemoteClientDeviceDirectory];
+            break;
     }
 }
 
@@ -377,31 +385,36 @@
 
 - (void)discoveredStatusOfRemoteClientDeviceDirectory:(TICDSRemoteFileStructureExistsResponseType)status
 {
-    if( status == TICDSRemoteFileStructureExistsResponseTypeError ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error checking for remote client device directory");
-        [self operationDidFailToComplete];
-        return;
-    } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesExist ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Client Device Directory exists!");
-        [self setShouldCreateClientDirectory:NO];
-        
-        if( [self shouldUseEncryption] ) {
-            [self beginTestForCorrectPassword];
-        } else {
-            [self operationDidCompleteSuccessfully];
-        }
-    } else if( status == TICDSRemoteFileStructureExistsResponseTypeDoesNotExist ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Client Device Directory does not exist");
-        
-        [self setShouldCreateClientDirectory:YES];
-        
-        if( [self shouldUseEncryption] ) {
-            [self blitzKeychainItems];
+    switch( status ) {
+        case TICDSRemoteFileStructureExistsResponseTypeError:
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error checking for remote client device directory");
+            [self operationDidFailToComplete];
+            return;
             
-            [self beginRequestForEncryptionPassword];
-        } else {
-            [self beginCreatingRemoteClientDeviceDirectory];
-        }
+        case TICDSRemoteFileStructureExistsResponseTypeDoesExist:
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Client Device Directory exists!");
+            [self setShouldCreateClientDirectory:NO];
+            
+            if( [self shouldUseEncryption] ) {
+                [self beginTestForCorrectPassword];
+            } else {
+                [self operationDidCompleteSuccessfully];
+            }
+            break;
+            
+        case TICDSRemoteFileStructureExistsResponseTypeDoesNotExist:
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Client Device Directory does not exist");
+            
+            [self setShouldCreateClientDirectory:YES];
+            
+            if( [self shouldUseEncryption] ) {
+                [self blitzKeychainItems];
+                
+                [self beginRequestForEncryptionPassword];
+            } else {
+                [self beginCreatingRemoteClientDeviceDirectory];
+            }
+            break;
     }
 }
 
