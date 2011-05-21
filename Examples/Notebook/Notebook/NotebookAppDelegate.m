@@ -13,6 +13,11 @@
 
 @implementation NotebookAppDelegate
 
++ (void)initialize
+{
+    //[TICDSLog setVerbosity:TICDSLogVerbosityEveryStep];
+}
+
 - (void)awakeFromNib
 {
     TIManagedObjectsToStringsValueTransfomer *transformer = (TIManagedObjectsToStringsValueTransfomer *)[TIManagedObjectsToStringsValueTransfomer valueTransformerForName:@"StringsToTINBTags"];    

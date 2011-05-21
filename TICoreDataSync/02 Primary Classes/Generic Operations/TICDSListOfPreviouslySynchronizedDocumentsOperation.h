@@ -25,18 +25,15 @@
 @private
     NSMutableArray *_availableDocuments;
     
-    BOOL _completionInProgress;
-    TICDSOperationPhaseStatus _arrayOfDocumentIdentifiersStatus;
+    NSArray *_availableDocumentSyncIDs;
     
     NSUInteger _numberOfInfoDictionariesToFetch;
     NSUInteger _numberOfInfoDictionariesFetched;
     NSUInteger _numberOfInfoDictionariesThatFailedToFetch;
-    TICDSOperationPhaseStatus _infoDictionariesStatus;
     
     NSUInteger _numberOfLastSynchronizationDatesToFetch;
     NSUInteger _numberOfLastSynchronizationDatesFetched;
     NSUInteger _numberOfLastSynchronizationDatesThatFailedToFetch;
-    TICDSOperationPhaseStatus _lastSynchronizationDatesStatus;
 }
 
 /** @name Methods Overridden by Subclasses */
@@ -46,12 +43,12 @@
  Call `builtArrayOfDocumentIdentifiers:` when the array is built. */
 - (void)buildArrayOfDocumentIdentifiers;
 
-/** Fetch the `documentInfo` dictionaries for each of the documents with the specified IDs.
+/** Fetch the `documentInfo` dictionary for the document with the specified ID.
  
- @param syncIDs The array of document identifier `NSString`s.
+ @param aSyncID The synchronization identifier for the document.
  
  Call `fetchedInfoDictionary:forDocumentWithSyncID:` for each document as it is fetched. */
-- (void)fetchInfoDictionariesForDocumentsWithSyncIDs:(NSArray *)syncIDs;
+- (void)fetchInfoDictionaryForDocumentWithSyncID:(NSString *)aSyncID;
 
 /** Fetch the last synchronization date for a document with the given synchronization ID.
  
@@ -90,13 +87,10 @@
 /** An array of documents, built as information comes in. */
 @property (retain) NSMutableArray *availableDocuments;
 
+/** An array used internally by the operation to keep track of the available document sync identifiers. */
+@property (nonatomic, retain) NSArray *availableDocumentSyncIDs;
+
 /** @name Completion */
-
-/** Used to indicate that completion is currently in progress, and that no further checks should be made. */
-@property (nonatomic, assign) BOOL completionInProgress;
-
-/** The phase status regarding building the document sync IDs array. */
-@property (nonatomic, assign) TICDSOperationPhaseStatus arrayOfDocumentIdentifiersStatus;
 
 /** The total number of info dictionaries that need to be fetched. */
 @property (nonatomic, assign) NSUInteger numberOfInfoDictionariesToFetch;
@@ -107,9 +101,6 @@
 /** The number of info dictionaries that failed to fetch because of an error. */
 @property (nonatomic, assign) NSUInteger numberOfInfoDictionariesThatFailedToFetch;
 
-/** The phase status of the info dictionary requests. */
-@property (nonatomic, assign) TICDSOperationPhaseStatus infoDictionariesStatus;
-
 /** The total number of last synchronization dates that need to be fetched. */
 @property (nonatomic, assign) NSUInteger numberOfLastSynchronizationDatesToFetch;
 
@@ -118,8 +109,5 @@
 
 /** The number of last synchronization dates failed to fetch because of an error. */
 @property (nonatomic, assign) NSUInteger numberOfLastSynchronizationDatesThatFailedToFetch;
-
-/** The phase status of the last synchronized dates requests. */
-@property (nonatomic, assign) TICDSOperationPhaseStatus lastSynchronizationDatesStatus;
 
 @end

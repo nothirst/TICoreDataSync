@@ -34,11 +34,11 @@
     [self builtArrayOfDocumentIdentifiers:contentsToReturn];
 }
 
-- (void)fetchInfoDictionaryForIdentifier:(NSString *)anIdentifier
+- (void)fetchInfoDictionaryForDocumentWithSyncID:(NSString *)aSyncID
 {
     NSError *anyError = nil;
     NSDictionary *dictionary = nil;
-    NSString *filePath = [self pathToDocumentInfoForDocumentWithIdentifier:anIdentifier];
+    NSString *filePath = [self pathToDocumentInfoForDocumentWithIdentifier:aSyncID];
     
     if( [self shouldUseEncryption] ) {
         NSString *tmpFilePath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:[filePath lastPathComponent]];
@@ -47,7 +47,7 @@
         
         if( !success ) {
             [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            [self fetchedInfoDictionary:nil forDocumentWithSyncID:anIdentifier];
+            [self fetchedInfoDictionary:nil forDocumentWithSyncID:aSyncID];
             return;
         }
         
@@ -60,15 +60,7 @@
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
     }
     
-    [self fetchedInfoDictionary:dictionary forDocumentWithSyncID:anIdentifier];
-}
-
-- (void)fetchInfoDictionariesForDocumentsWithSyncIDs:(NSArray *)syncIDs
-{
-    for( NSString *eachSyncID in syncIDs ) {
-        
-        [self fetchInfoDictionaryForIdentifier:eachSyncID];
-    }
+    [self fetchedInfoDictionary:dictionary forDocumentWithSyncID:aSyncID];
 }
 
 - (void)fetchLastSynchronizationDateForDocumentWithSyncID:(NSString *)aSyncID

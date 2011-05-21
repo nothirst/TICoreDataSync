@@ -210,7 +210,6 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
 
 - (void)documentSyncManagerDidFinishSynchronizing:(TICDSDocumentSyncManager *)aSyncManager
 {
-    [[self documentSyncChangesWindowController] setManagedObjectContext:[[self documentSyncManager] syncChangesMOC]];
     [self decreaseActivity];
 }
 
@@ -487,8 +486,6 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
         return _documentSyncChangesWindowController;
     }
     
-    _documentSyncChangesWindowController = [[TIDocumentSyncChangesWindowController alloc] initWithManagedObjectContext:[[self documentSyncManager] syncChangesMOC]];
-
     [self addWindowController:_documentSyncChangesWindowController];
     
     return _documentSyncChangesWindowController;

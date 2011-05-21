@@ -11,8 +11,8 @@
 @interface TICDSListOfPreviouslySynchronizedDocumentsOperation ()
 
 - (void)beginFetchOfListOfDocumentSyncIDs;
-- (void)beginFetchOfDocumentInfoDictionariesForSyncIDs:(NSArray *)syncIDs;
-- (void)checkForCompletion;
+- (void)beginFetchOfDocumentInfoDictionaries;
+- (void)beginFetchOfLastSynchronizationDates;
 - (void)increaseNumberOfInfoDictionariesToFetch;
 - (void)increaseNumberOfInfoDictionariesFetched;
 - (void)increaseNumberOfInfoDictionariesThatFailedToFetch;
@@ -29,8 +29,7 @@
     [self beginFetchOfListOfDocumentSyncIDs];
 }
 
-#pragma mark -
-#pragma mark List of Document Sync IDs
+#pragma mark - List of Document Sync IDs
 - (void)beginFetchOfListOfDocumentSyncIDs
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Starting to fetch list of document sync identifiers");
@@ -42,44 +41,42 @@
 {
     if( !anArray ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error fetching list of document sync identifiers");
-        [self setArrayOfDocumentIdentifiersStatus:TICDSOperationPhaseStatusFailure];
-        [self setInfoDictionariesStatus:TICDSOperationPhaseStatusFailure];
-        [self setLastSynchronizationDatesStatus:TICDSOperationPhaseStatusFailure];
-    } else {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Fetched list of document sync identifiers successfully");
-        [self setArrayOfDocumentIdentifiersStatus:TICDSOperationPhaseStatusSuccess];
-        [self beginFetchOfDocumentInfoDictionariesForSyncIDs:anArray];
+        [self operationDidFailToComplete];
+        return;
     }
     
-    [self checkForCompletion];
+    if( [anArray count] < 1 ) {
+        TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"No documents were found");
+        [self setAvailableDocuments:[NSArray array]];
+        [self operationDidCompleteSuccessfully];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Fetched list of document sync identifiers successfully");
+    
+    [self setAvailableDocumentSyncIDs:anArray];
+    [self beginFetchOfDocumentInfoDictionaries];
 }
 
-#pragma mark Overridden Methods
+#pragma mark Overridden Method
 - (void)buildArrayOfDocumentIdentifiers
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
     [self builtArrayOfDocumentIdentifiers:nil];
 }
 
-#pragma mark -
-#pragma mark Document Info Dictionaries
-- (void)beginFetchOfDocumentInfoDictionariesForSyncIDs:(NSArray *)syncIDs
+#pragma mark - Document Info Dictionaries
+- (void)beginFetchOfDocumentInfoDictionaries
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Starting to fetch sync ids for each document sync identifier");
     
-    [self setAvailableDocuments:[NSMutableArray arrayWithCapacity:[syncIDs count]]];
+    [self setAvailableDocuments:[NSMutableArray arrayWithCapacity:[[self availableDocumentSyncIDs] count]]];
         
-    if( [syncIDs count] < 1 ) {
-        [self setInfoDictionariesStatus:TICDSOperationPhaseStatusSuccess];
-        [self setLastSynchronizationDatesStatus:TICDSOperationPhaseStatusSuccess];
-        TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"No documents available");
-        [self checkForCompletion];
-        return;
-    }
+    [self setNumberOfInfoDictionariesToFetch:[[self availableDocumentSyncIDs] count]];
     
-    [self setNumberOfInfoDictionariesToFetch:[syncIDs count]];
-    [self setNumberOfLastSynchronizationDatesToFetch:[syncIDs count]];
-    [self fetchInfoDictionariesForDocumentsWithSyncIDs:syncIDs];
+    for( NSString *eachSyncID in [self availableDocumentSyncIDs] ) {
+        [self fetchInfoDictionaryForDocumentWithSyncID:eachSyncID];
+    }
 }
 
 - (void)fetchedInfoDictionary:(NSDictionary *)anInfoDictionary forDocumentWithSyncID:(NSString *)aSyncID
@@ -87,7 +84,6 @@
     if( !anInfoDictionary ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to fetch a document info dictionary");
         [self increaseNumberOfInfoDictionariesThatFailedToFetch];
-        [self increaseNumberOfLastSynchronizationDatesThatFailedToFetch];
     } else {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Fetched a document info dictionary");
         [self increaseNumberOfInfoDictionariesFetched];
@@ -96,32 +92,38 @@
         [dictionary setValue:aSyncID forKey:kTICDSDocumentIdentifier];
         [[self availableDocuments] addObject:dictionary];
         [dictionary release];
-        
-        [self fetchLastSynchronizationDateForDocumentWithSyncID:aSyncID];
     }
     
     if( [self numberOfInfoDictionariesToFetch] == [self numberOfInfoDictionariesFetched] ) {
-        [self setInfoDictionariesStatus:TICDSOperationPhaseStatusSuccess];
+        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Finished fetching info dictionaries");
+        [self beginFetchOfLastSynchronizationDates];
     } else if( [self numberOfInfoDictionariesFetched] + [self numberOfInfoDictionariesThatFailedToFetch] == [self numberOfInfoDictionariesToFetch] ) {
-        [self setInfoDictionariesStatus:TICDSOperationPhaseStatusFailure];
-        [self setLastSynchronizationDatesStatus:TICDSOperationPhaseStatusFailure];
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"An error occurred fetching one or more info dictionaries");
+        [self operationDidFailToComplete];
+        return;
     }
-    
-    [self checkForCompletion];
 }
 
-#pragma mark Overridden Methods
-- (void)fetchInfoDictionariesForDocumentsWithSyncIDs:(NSArray *)syncIDs
+#pragma mark Overridden Method
+- (void)fetchInfoDictionaryForDocumentWithSyncID:(NSString *)aSyncID
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
     
-    for( NSString *eachSyncID in syncIDs ) {
-        [self fetchedInfoDictionary:nil forDocumentWithSyncID:eachSyncID];
+    [self fetchedInfoDictionary:nil forDocumentWithSyncID:aSyncID];
+}
+
+#pragma mark - Last Synchronization Date
+- (void)beginFetchOfLastSynchronizationDates
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Starting to fetch last sync dates for each document sync identifier");
+    
+    [self setNumberOfLastSynchronizationDatesToFetch:[[self availableDocumentSyncIDs] count]];
+    
+    for( NSString *eachSyncID in [self availableDocumentSyncIDs] ) {
+        [self fetchLastSynchronizationDateForDocumentWithSyncID:eachSyncID];
     }
 }
 
-#pragma mark -
-#pragma mark Last Synchronization Date
 - (void)fetchedLastSynchronizationDate:(NSDate *)aDate forDocumentWithSyncID:(NSString *)aSyncID
 {
     if( !aDate ) {
@@ -141,15 +143,17 @@
     }
     
     if( [self numberOfLastSynchronizationDatesToFetch] == [self numberOfLastSynchronizationDatesFetched] ) {
-        [self setLastSynchronizationDatesStatus:TICDSOperationPhaseStatusSuccess];
+        TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Fetched all last synchronization dates, so operation complete");
+        [self operationDidCompleteSuccessfully];
+        return;
     } else if( [self numberOfLastSynchronizationDatesToFetch] == [self numberOfLastSynchronizationDatesFetched] + [self numberOfLastSynchronizationDatesThatFailedToFetch] ) {
-        [self setLastSynchronizationDatesStatus:TICDSOperationPhaseStatusFailure];
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"An error occurred fetching one or more last synchronization dates, but last sync dates aren't essential, so continuing...");
+        [self operationDidCompleteSuccessfully];
+        return;
     }
-    
-    [self checkForCompletion];
 }
 
-#pragma mark Overridden Methods
+#pragma mark Overridden Method
 - (void)fetchLastSynchronizationDateForDocumentWithSyncID:(NSString *)aSyncID
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
@@ -157,33 +161,7 @@
     [self fetchedLastSynchronizationDate:nil forDocumentWithSyncID:aSyncID];
 }
 
-#pragma mark -
-#pragma mark Completion
-- (void)checkForCompletion
-{
-    if( [self completionInProgress] ) {
-        return;
-    }
-    
-    if( [self arrayOfDocumentIdentifiersStatus] == TICDSOperationPhaseStatusInProgress || [self infoDictionariesStatus] == TICDSOperationPhaseStatusInProgress || [self lastSynchronizationDatesStatus] == TICDSOperationPhaseStatusInProgress ) {
-        return;
-    }
-    
-    if( [self arrayOfDocumentIdentifiersStatus] == TICDSOperationPhaseStatusSuccess && [self infoDictionariesStatus] == TICDSOperationPhaseStatusSuccess && [self lastSynchronizationDatesStatus] == TICDSOperationPhaseStatusSuccess ) {
-        [self setCompletionInProgress:YES];
-        
-        [self operationDidCompleteSuccessfully];
-        return;
-    }
-    
-    if( [self arrayOfDocumentIdentifiersStatus] == TICDSOperationPhaseStatusFailure || [self infoDictionariesStatus] == TICDSOperationPhaseStatusFailure || [self lastSynchronizationDatesStatus] == TICDSOperationPhaseStatusFailure ) {
-        [self setCompletionInProgress:YES];
-        
-        [self operationDidFailToComplete];
-        return;
-    }
-}
-
+#pragma mark - Completion
 - (void)increaseNumberOfInfoDictionariesToFetch
 {
     [self setNumberOfInfoDictionariesToFetch:[self numberOfInfoDictionariesToFetch] + 1];
@@ -219,6 +197,7 @@
 - (void)dealloc
 {
     [_availableDocuments release], _availableDocuments = nil;
+    [_availableDocumentSyncIDs release], _availableDocumentSyncIDs = nil;
     
     [super dealloc];
 }
@@ -226,15 +205,12 @@
 #pragma mark -
 #pragma mark Properties
 @synthesize availableDocuments = _availableDocuments;
-@synthesize completionInProgress = _completionInProgress;
-@synthesize arrayOfDocumentIdentifiersStatus = _arrayOfDocumentIdentifiersStatus;
-@synthesize infoDictionariesStatus = _infoDictionariesStatus;
+@synthesize availableDocumentSyncIDs = _availableDocumentSyncIDs;
 @synthesize numberOfInfoDictionariesToFetch = _numberOfInfoDictionariesToFetch;
 @synthesize numberOfInfoDictionariesFetched = _numberOfInfoDictionariesFetched;
 @synthesize numberOfInfoDictionariesThatFailedToFetch = _numberOfInfoDictionariesThatFailedToFetch;
 @synthesize numberOfLastSynchronizationDatesToFetch = _numberOfLastSynchronizationDatesToFetch;
 @synthesize numberOfLastSynchronizationDatesFetched = _numberOfLastSynchronizationDatesFetched;
 @synthesize numberOfLastSynchronizationDatesThatFailedToFetch = _numberOfLastSynchronizationDatesThatFailedToFetch;
-@synthesize lastSynchronizationDatesStatus = _lastSynchronizationDatesStatus;
 
 @end

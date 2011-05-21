@@ -23,11 +23,9 @@
     [[self restClient] loadMetadata:[self documentsDirectoryPath]];
 }
 
-- (void)fetchInfoDictionariesForDocumentsWithSyncIDs:(NSArray *)syncIDs
+- (void)fetchInfoDictionaryForDocumentWithSyncID:(NSString *)aSyncID
 {
-    for( NSString *eachSyncId in syncIDs ) {
-        [[self restClient] loadFile:[self pathToDocumentInfoForDocumentWithIdentifier:eachSyncId] intoPath:[[self tempFileDirectoryPath] stringByAppendingPathComponent:eachSyncId]];
-    }
+    [[self restClient] loadFile:[self pathToDocumentInfoForDocumentWithIdentifier:aSyncID] intoPath:[[self tempFileDirectoryPath] stringByAppendingPathComponent:aSyncID]];
 }
 
 - (void)fetchLastSynchronizationDateForDocumentWithSyncID:(NSString *)aSyncID
