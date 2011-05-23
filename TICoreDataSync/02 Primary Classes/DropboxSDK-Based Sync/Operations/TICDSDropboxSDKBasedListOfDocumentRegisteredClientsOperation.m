@@ -66,6 +66,10 @@
         for( NSString *eachClientIdentifier in [self synchronizedClientIdentifiers] ) {
             DBMetadata *subMetadata = nil;
             for( DBMetadata *eachSubMetadata in [metadata contents] ) {
+                if( [eachSubMetadata isDeleted] ) {
+                    continue;
+                }
+                
                 if( ![[[[eachSubMetadata path] lastPathComponent] stringByDeletingPathExtension] isEqualToString:eachClientIdentifier] ) {
                     continue;
                 }

@@ -42,7 +42,7 @@
     
     if( [path isEqualToString:[self thisDocumentWholeStoreDirectoryPath]] ) {
         for( DBMetadata *eachSubMetadata in [metadata contents] ) {
-            if( ![eachSubMetadata isDirectory] ) {
+            if( ![eachSubMetadata isDirectory] || [eachSubMetadata isDeleted] ) {
                 continue;
             }
             
@@ -55,7 +55,7 @@
         }
         
         for( DBMetadata *eachSubMetadata in [metadata contents] ) {
-            if( ![eachSubMetadata isDirectory] ) {
+            if( ![eachSubMetadata isDirectory] || [eachSubMetadata isDeleted] ) {
                 continue;
             }
             
@@ -69,6 +69,10 @@
         for( DBMetadata *eachSubMetadata in [metadata contents] ) {
             if( [[[eachSubMetadata path] lastPathComponent] isEqualToString:TICDSWholeStoreFilename] ) {
                 _numberOfWholeStoresChecked++;
+                
+                if( [eachSubMetadata isDeleted] ) {
+                    continue;
+                }
                 
                 if( ![self oldestStoreDate] ) {
                     [self setOldestStoreDate:[eachSubMetadata lastModifiedDate]];
@@ -99,7 +103,7 @@
         NSDate *leastRecentSyncDate = nil;
         
         for( DBMetadata *eachSubMetadata in [metadata contents] ) {
-            if( ![[[eachSubMetadata path] pathExtension] isEqualToString:TICDSRecentSyncFileExtension] ) {
+            if( ![[[eachSubMetadata path] pathExtension] isEqualToString:TICDSRecentSyncFileExtension] || [eachSubMetadata isDeleted] ) {
                 continue;
             }
             
@@ -126,7 +130,7 @@
     if( [path isEqualToString:[self thisDocumentSyncChangesThisClientDirectoryPath]] ) {
         
         for( DBMetadata *eachSubMetadata in [metadata contents] ) {
-            if( [[eachSubMetadata lastModifiedDate] compare:[self earliestDateForFilesToKeep]] == NSOrderedDescending ) {
+            if( [eachSubMetadata isDeleted] || [[eachSubMetadata lastModifiedDate] compare:[self earliestDateForFilesToKeep]] == NSOrderedDescending ) {
                 continue;
             }
             
@@ -139,7 +143,7 @@
         }
         
         for( DBMetadata *eachSubMetadata in [metadata contents] ) {
-            if( [[eachSubMetadata lastModifiedDate] compare:[self earliestDateForFilesToKeep]] == NSOrderedDescending ) {
+            if( [eachSubMetadata isDeleted] || [[eachSubMetadata lastModifiedDate] compare:[self earliestDateForFilesToKeep]] == NSOrderedDescending ) {
                 continue;
             }
             

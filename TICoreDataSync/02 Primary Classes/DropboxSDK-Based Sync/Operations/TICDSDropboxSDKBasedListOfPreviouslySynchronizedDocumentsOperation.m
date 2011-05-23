@@ -44,7 +44,7 @@
         NSMutableArray *documentIdentifiers = [NSMutableArray arrayWithCapacity:[[metadata contents] count]];
         
         for( DBMetadata *eachSubMetadata in [metadata contents] ) {
-            if( ![eachSubMetadata isDirectory] ) {
+            if( ![eachSubMetadata isDirectory] || [eachSubMetadata isDeleted] ) {
                 continue;
             }
             
@@ -63,6 +63,10 @@
         
         NSDate *mostRecentSyncDate = nil;
         for( DBMetadata *eachSubMetadata in [metadata contents] ) {
+            if(  [eachSubMetadata isDeleted] ) {
+                continue;
+            }
+            
             if( !mostRecentSyncDate ) {
                 mostRecentSyncDate = [eachSubMetadata lastModifiedDate];
                 continue;
