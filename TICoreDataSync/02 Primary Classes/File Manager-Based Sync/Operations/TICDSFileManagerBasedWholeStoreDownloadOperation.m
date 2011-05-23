@@ -73,10 +73,11 @@
     if( ![self shouldUseEncryption] ) {
         // just copy the file straight across
         success = [[self fileManager] copyItemAtPath:wholeStorePath toPath:[[self localWholeStoreFileLocation] path] error:&anyError];
-    }
-    
-    if( !success ) {
-        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        
+        if( !success ) {
+            [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        }
+        
         [self downloadedWholeStoreFileWithSuccess:success];
         return;
     }
