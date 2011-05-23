@@ -51,6 +51,7 @@
 #import "TICDSDropboxSDKBasedSynchronizationOperation.h"
 #import "TICDSDropboxSDKBasedVacuumOperation.h"
 #import "TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation.h"
+#import "TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation.h"
 #endif
 
 #pragma mark -
