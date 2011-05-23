@@ -23,7 +23,7 @@
     [self fetchedArrayOfClientUUIDStrings:files];
 }
 
-- (void)fetchInfoDictionaryForDeviceWithIdentifier:(NSString *)anIdentifier
+- (void)fetchDeviceInfoDictionaryForClientWithIdentifier:(NSString *)anIdentifier
 {
     NSError *anyError = nil;
     BOOL success = YES;

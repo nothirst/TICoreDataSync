@@ -53,7 +53,7 @@
  This method must call `fetchedDeviceInfoDictionary:forClientWithIdentifier:` when finished.
  
  @param anIdentifier The UUID synchronization identifier of the client. */
-- (void)fetchInfoDictionaryForDeviceWithIdentifier:(NSString *)anIdentifier;
+- (void)fetchDeviceInfoDictionaryForClientWithIdentifier:(NSString *)anIdentifier;
 
 /** Fetch the last modified dates of each client's `RecentSync` file.
  

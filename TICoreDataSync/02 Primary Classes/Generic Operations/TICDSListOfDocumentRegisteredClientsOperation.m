@@ -76,7 +76,7 @@
     [self setTemporaryDeviceInfoDictionaries:[NSMutableDictionary dictionaryWithCapacity:_numberOfDeviceInfoDictionariesToFetch]];
     
     for( NSString *eachSyncID in [self synchronizedClientIdentifiers] ) {
-        [self fetchInfoDictionaryForDeviceWithIdentifier:eachSyncID];
+        [self fetchDeviceInfoDictionaryForClientWithIdentifier:eachSyncID];
     }
 }
 
@@ -105,7 +105,7 @@
 }
 
 #pragma mark Overridden Method
-- (void)fetchInfoDictionaryForDeviceWithIdentifier:(NSString *)anIdentifier
+- (void)fetchDeviceInfoDictionaryForClientWithIdentifier:(NSString *)anIdentifier
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
     [self fetchedDeviceInfoDictionary:nil forClientWithIdentifier:anIdentifier];
