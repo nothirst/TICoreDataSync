@@ -6,6 +6,8 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
+#if TARGET_OS_IPHONE
+
 #import "TICDSListOfPreviouslySynchronizedDocumentsOperation.h"
 #import "DropboxSDK.h"
 
@@ -40,3 +42,5 @@
 - (NSString *)pathToWholeStoreFileForDeviceWithIdentifier:(NSString *)anIdentifier;
 
 @end
+
+#endif

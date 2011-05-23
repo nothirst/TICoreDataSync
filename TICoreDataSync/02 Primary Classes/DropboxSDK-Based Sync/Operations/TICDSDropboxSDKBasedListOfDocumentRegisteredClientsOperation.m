@@ -6,6 +6,8 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
+#if TARGET_OS_IPHONE
+
 #import "TICoreDataSync.h"
 
 
@@ -202,3 +204,5 @@
 @synthesize thisDocumentWholeStoreDirectoryPath = _thisDocumentWholeStoreDirectoryPath;
 
 @end
+
+#endif

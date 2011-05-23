@@ -71,7 +71,7 @@
                                                 (CFTypeRef *)&foundAttributes);
     OSStatus storeResult = noErr;
     if (noErr == searchResult) {
-        NSLog(@"Updating %@", foundAttributes);
+        TICDSLog(TICDSLogVerbosityEveryStep, @"FZACryptor iOS Key Manager updating %@", foundAttributes);
         NSMutableDictionary *updateAttributes = [[self searchAttributes] mutableCopy];
         [updateAttributes removeObjectForKey: (id)kSecReturnAttributes];
         //update an existing item
@@ -83,7 +83,7 @@
         [updateAttributes release];
     }
     else {
-        NSLog(@"creation");
+        TICDSLog(TICDSLogVerbosityEveryStep, @"FZACryptor iOS Key Manager creating key");
         //create a new item
         NSMutableDictionary *storeAttributes = [searchAttributes mutableCopy];
         [storeAttributes setObject: key forKey: (id)kSecValueData];
@@ -99,10 +99,10 @@
             *error = [NSError errorWithDomain: FZAKeyManagerErrorDomain
                                          code: storeResult
                                      userInfo: nil];
-            NSLog(@"store error: %@", *error);
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"FZACryptor iOS Key Manager store error: %@", *error);
         }
     } else {
-        NSLog(@"succeeded");
+        TICDSLog(TICDSLogVerbosityEveryStep, @"FZACryptor iOS Key Manager stored key successfully");
     }
     return storeResult == noErr;
 }
@@ -117,9 +117,9 @@
     [searchAttributes release];
     if (noErr != searchResult) {
         if( searchResult == errSecItemNotFound ) {
-            NSLog(@"Keychain item not found");
+            TICDSLog(TICDSLogVerbosityEveryStep, @"FZACryptor iOS Key Manager didn't find a stored key");
         } else {
-            NSLog(@"Search error: %ld", searchResult);
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"FZACryptor iOS Key Manager search error: %ld", searchResult);
         }
     }
     return [theKey autorelease];
@@ -130,9 +130,9 @@
     OSStatus clearResult = SecItemDelete((CFDictionaryRef)searchAttributes);
     
     if( clearResult == errSecSuccess ) {
-        NSLog(@"Deleted keychain items");
+        TICDSLog(TICDSLogVerbosityEveryStep, @"FZACryptor iOS Key Manager deleted keychain items");
     } else {
-        NSLog(@"Failed to delete keychain items: %ld", clearResult);
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"FZACryptor iOS Key Manager failed to delete keychain items: %ld", clearResult);
     }
 }
 

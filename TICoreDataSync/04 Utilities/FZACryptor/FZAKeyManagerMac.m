@@ -31,7 +31,7 @@ FourCharCode FZACreatorCode = 'FZAL';
 
 void FZAReportKeychainError(OSStatus keychainStatus, NSString *msg) {
     CFStringRef errorMsg = SecCopyErrorMessageString(keychainStatus, NULL);
-    NSLog(@"%@: %@", msg, (id)errorMsg);
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"FZACryptor Mac Key Manager Error %@: %@", msg, (id)errorMsg);
     CFRelease(errorMsg);
 }
 
@@ -98,9 +98,9 @@ void FZAReportKeychainError(OSStatus keychainStatus, NSString *msg) {
     keychainStatus = SecKeychainItemDelete(item);
     
     if( keychainStatus == noErr ) {
-        NSLog(@"Deleted keychain item");
+        TICDSLog(TICDSLogVerbosityEveryStep, @"FZACryptor Mac Key Manager deleted keychain item");
     } else {
-        NSLog(@"Failed to delete keychain item: %d", keychainStatus);
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"FZACryptor Mac Key Manager failed to delete keychain item: %d", keychainStatus);
     }
 }
 
