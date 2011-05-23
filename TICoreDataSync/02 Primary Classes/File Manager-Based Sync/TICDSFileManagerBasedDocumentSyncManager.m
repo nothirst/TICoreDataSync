@@ -174,8 +174,25 @@
     return [operation autorelease];
 }
 
+- (TICDSListOfDocumentRegisteredClientsOperation *)listOfDocumentRegisteredClientsOperation
+{
+    TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation *operation = [[TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation alloc] initWithDelegate:self];
+    
+    [operation setThisDocumentSyncChangesDirectoryPath:[self thisDocumentSyncChangesDirectoryPath]];
+    [operation setClientDevicesDirectoryPath:[self clientDevicesDirectoryPath]];
+    [operation setThisDocumentRecentSyncsDirectoryPath:[self thisDocumentRecentSyncsDirectoryPath]];
+    [operation setThisDocumentWholeStoreDirectoryPath:[self thisDocumentWholeStoreDirectoryPath]];
+    
+    return [operation autorelease];
+}
+
 #pragma mark -
 #pragma mark Paths
+- (NSString *)clientDevicesDirectoryPath
+{
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToClientDevicesDirectory]];
+}
+
 - (NSString *)documentsDirectoryPath
 {
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToDocumentsDirectory]];

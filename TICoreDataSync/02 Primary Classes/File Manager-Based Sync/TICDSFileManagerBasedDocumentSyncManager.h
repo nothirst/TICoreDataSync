@@ -41,6 +41,9 @@
 
 /** @name Paths */
 
+/** The path to the `ClientDevices` directory. */
+@property (nonatomic, readonly) NSString *clientDevicesDirectoryPath;
+
 /** The path to the `Documents` directory. */
 @property (nonatomic, readonly) NSString *documentsDirectoryPath;
 

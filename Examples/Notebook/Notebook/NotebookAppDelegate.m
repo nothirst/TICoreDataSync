@@ -277,7 +277,7 @@ shouldBeginSynchronizingAfterManagedObjectContextDidSave:
 @synthesize documentSyncManager = _documentSyncManager;
 @synthesize downloadStoreAfterRegistering = 
 _downloadStoreAfterRegistering;
-@synthesize activityIndicator;
+@synthesize activityIndicator = _activityIndicator;
 
 #pragma mark -
 #pragma mark Apple Stuff

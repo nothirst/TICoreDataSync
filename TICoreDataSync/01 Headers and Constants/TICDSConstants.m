@@ -49,6 +49,7 @@ NSString * const kTICDSClientDeviceDescription = @"kTICDSClientDeviceDescription
 NSString * const kTICDSClientDeviceUserInfo = @"kTICDSClientDeviceUserInfo";
 NSString * const kTICDSClientDeviceIdentifier = @"kTICDSClientDeviceIdentifier";
 NSString * const kTICDSLastSyncDate = @"kTICDSLastSyncDate";
+NSString * const kTICDSUploadedWholeStoreModificationDate = @"kTICDSUploadedWholeStoreModificationDate";
 NSString * const kTICDSDocumentIdentifier = @"kTICDSDocumentIdentifier";
 NSString * const kTICDSDocumentDescription = @"kTICDSDocumentDescription";
 NSString * const kTICDSDocumentUserInfo = @"kTICDSDocumentUserInfo";

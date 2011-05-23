@@ -23,6 +23,7 @@
 #import "TICDSWholeStoreDownloadOperation.h"
 #import "TICDSSynchronizationOperation.h"
 #import "TICDSVacuumOperation.h"
+#import "TICDSListOfDocumentRegisteredClientsOperation.h"
 
 #pragma mark File Manager-Based
 #import "TICDSFileManagerBasedApplicationSyncManager.h"
@@ -34,6 +35,7 @@
 #import "TICDSFileManagerBasedWholeStoreDownloadOperation.h"
 #import "TICDSFileManagerBasedSynchronizationOperation.h"
 #import "TICDSFileManagerBasedVacuumOperation.h"
+#import "TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation.h"
 
 #pragma mark DropboxSDK-Based
 #if TARGET_OS_IPHONE

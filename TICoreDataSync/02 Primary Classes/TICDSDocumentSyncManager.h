@@ -27,7 +27,7 @@
 @private
     TICDSDocumentSyncManagerState _state;
     
-    BOOL shouldUseEncryption;
+    BOOL _shouldUseEncryption;
     
     id <TICDSDocumentSyncManagerDelegate> _delegate;
     TICDSApplicationSyncManager *_applicationSyncManager;
@@ -49,6 +49,7 @@
     NSOperationQueue *_otherTasksQueue;
 }
 
+#pragma mark - Registration
 /** @name Registration */
 
 /** Register a document ready for synchronization.
@@ -107,6 +108,7 @@
  @param aContext The additional managed object context to add. */
 - (void)addManagedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext;
 
+#pragma mark - Whole Store Upload and Download
 /** @name Whole Store Upload and Download */
 
 /** Start the process manually to upload the entire store file for this document, along with the relevant `AppliedSyncChanges.ticdsync` file.
@@ -123,6 +125,7 @@
  The location of the store file (and the applied sync changes file) will be requested from the delegate immediately after calling this method. */
 - (void)initiateDownloadOfWholeStore;
 
+#pragma mark - Synchronization
 /** @name Synchronization */
 
 /** Start synchronizing the document with the remote location. 
@@ -135,6 +138,7 @@
  @param aType The type of conflict resolution; see `TICDSTypesAndEnums.h` for possible values. */
 - (void)continueSynchronizationByResolvingConflictWithResolutionType:(TICDSSyncConflictResolutionType)aType;
 
+#pragma mark - Vacuuming
 /** @name Vacuuming */
 
 /** Initiate a vacuum operation to clean up files hanging around on the remote that are no longer needed by any registered clients.
@@ -142,6 +146,13 @@
  This will automatically spawn a `TICDSVacuumOperation`, and notify you of progress through the `TICDSDocumentSyncManagerDelegate` methods. */
 - (void)initiateVacuumOfUnneededRemoteFiles;
 
+#pragma mark - Information
+/** @name Information */
+
+/** Fetch a list of devices that are registered to synchronize with this client. */
+- (void)requestInformationForAllRegisteredDevices;
+
+#pragma mark - Overridden Methods
 /** @name Methods Overridden by Subclasses */
 
 /** Returns a document registration operation.
@@ -180,6 +191,14 @@
  @return A correctly-configured subclass of `TICDSVacuumOperation`. */
 - (TICDSVacuumOperation *)vacuumOperation;
 
+/** Returns a "list of registered clients for this document" operation.
+ 
+ Subclasses of `TICDSDocumentSyncManager` use this method to return a correctly-configured operation for their particularly sync method.
+ 
+ @return A correctly-configured subclass of `TICDSListOfDocumentRegisteredClientsOperation`. */
+- (TICDSListOfDocumentRegisteredClientsOperation *)listOfDocumentRegisteredClientsOperation;
+
+#pragma mark - MOC Saving
 /** @name Managed Object Context Saving */
 
 /** Indicate that the synchronized managed object context is about to save.
@@ -207,6 +226,7 @@
  */
 - (void)synchronizedMOCFailedToSave:(TICDSSynchronizedManagedObjectContext *)aMoc withError:(NSError *)anError;
 
+#pragma mark - Properties
 /** @name Properties */
 
 /** Document Sync Manager State.
@@ -275,6 +295,7 @@
 /** The `TICoreDataFactory` object used for SyncChange managed object contexts. */
 @property (nonatomic, retain) TICoreDataFactory *coreDataFactory;
 
+#pragma mark - Operation Queues
 /** @name Operation Queues */
 
 /** The operation queue used for registration operations.
@@ -291,7 +312,11 @@
  The queue is suspended until the document has registered successfully. */
 @property (nonatomic, retain) NSOperationQueue *otherTasksQueue;
 
+#pragma mark - Relative Paths
 /** @name Relative Paths */
+
+/** The path to the `ClientDevices` directory, relative to the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToClientDevicesDirectory;
 
 /** The path to the `Documents` directory, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToDocumentsDirectory;

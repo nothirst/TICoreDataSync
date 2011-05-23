@@ -264,6 +264,12 @@
     
     set = [TICDSSyncChangeSet syncChangeSetWithIdentifier:aChangeSetIdentifier fromClient:aClientIdentifier creationDate:aDate inManagedObjectContext:[self unappliedSyncChangeSetsContext]];
     
+    if( !set ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeObjectCreationError classAndMethod:__PRETTY_FUNCTION__]];
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to add unapplied sync change set to UnappliedSyncChangeSets.ticdsync.");
+        return NO;
+    }
+    
     TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Added sync change set to UnappliedSyncChangeSets.ticdsync");
     
     return YES;

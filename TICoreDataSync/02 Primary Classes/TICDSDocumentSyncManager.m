@@ -31,6 +31,9 @@
 - (void)addSyncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext;
 - (NSString *)keyForContext:(NSManagedObjectContext *)aContext;
 
+- (void)startRegisteredDevicesInformationProcess;
+- (void)bailFromRegisteredDevicesInformationProcessWithError:(NSError *)anError;
+
 @property (nonatomic, retain) NSString *documentIdentifier;
 @property (nonatomic, retain) NSString *documentDescription;
 @property (nonatomic, retain) NSString *clientIdentifier;
@@ -809,6 +812,73 @@
     [self postDecreaseActivityNotification];
 }
 
+#pragma mark -
+#pragma mark REGISTERED CLIENT INFORMATION
+- (void)requestInformationForAllRegisteredDevices
+{
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Manual initiation of registered device information request");
+    
+    [self startRegisteredDevicesInformationProcess];
+}
+
+- (void)bailFromRegisteredDevicesInformationProcessWithError:(NSError *)anError
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from device information request");
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:), anError];
+    [self postDecreaseActivityNotification];
+}
+
+- (void)startRegisteredDevicesInformationProcess
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting process to fetch information on all devices registered to synchronize this document");
+    [self postIncreaseActivityNotification];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidBeginToFetchInformationForAllRegisteredDevices:)];
+    
+    TICDSListOfDocumentRegisteredClientsOperation *operation = [self listOfDocumentRegisteredClientsOperation];
+    
+    if( !operation ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create vacuum operation object");
+        [self bailFromVacuumProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
+        return;
+    }
+    
+    [operation setShouldUseEncryption:[self shouldUseEncryption]];
+    
+    [[self otherTasksQueue] addOperation:operation];
+}
+
+#pragma mark Operation Generation
+- (TICDSListOfDocumentRegisteredClientsOperation *)listOfDocumentRegisteredClientsOperation
+{
+    return [[[TICDSListOfDocumentRegisteredClientsOperation alloc] initWithDelegate:self] autorelease];
+}
+
+#pragma mark Operation Communications
+- (void)registeredClientsOperationCompleted:(TICDSListOfDocumentRegisteredClientsOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Registered Device Information Operation Completed");
+    
+    NSDictionary *information = [anOperation deviceInfoDictionaries];
+    
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFinishFetchingInformationForAllRegisteredDevices:), information];
+    [self postDecreaseActivityNotification];
+}
+
+- (void)registeredClientsOperationWasCancelled:(TICDSListOfDocumentRegisteredClientsOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Registered Device Information Operation was Cancelled");
+    
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:), [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+    [self postDecreaseActivityNotification];
+}
+
+- (void)registeredClientsOperation:(TICDSListOfDocumentRegisteredClientsOperation *)anOperation failedToCompleteWithError:(NSError *)anError
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Registered Device Information Operation Failed to Complete with Error: %@", anError);
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:), anError];
+    [self postDecreaseActivityNotification];
+}
+
 #pragma mark - 
 #pragma mark ADDITIONAL MANAGED OBJECT CONTEXTS
 - (void)addManagedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext
@@ -931,6 +1001,8 @@
         [self vacuumOperationCompleted:(id)anOperation];
     } else if( [anOperation isKindOfClass:[TICDSWholeStoreDownloadOperation class]] ) {
         [self wholeStoreDownloadOperationCompleted:(id)anOperation];
+    } else if( [anOperation isKindOfClass:[TICDSListOfDocumentRegisteredClientsOperation class]] ) {
+        [self registeredClientsOperationCompleted:(id)anOperation];
     }
 }
 
@@ -946,6 +1018,8 @@
         [self vacuumOperationWasCancelled:(id)anOperation];
     } else if( [anOperation isKindOfClass:[TICDSWholeStoreDownloadOperation class]] ) {
         [self wholeStoreDownloadOperationWasCancelled:(id)anOperation];
+    } else if( [anOperation isKindOfClass:[TICDSListOfDocumentRegisteredClientsOperation class]] ) {
+        [self registeredClientsOperationWasCancelled:(id)anOperation];
     }
 }
 
@@ -961,6 +1035,8 @@
         [self vacuumOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     } else if( [anOperation isKindOfClass:[TICDSWholeStoreDownloadOperation class]] ) {
         [self wholeStoreDownloadOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
+    } else if( [anOperation isKindOfClass:[TICDSListOfDocumentRegisteredClientsOperation class]] ) {
+        [self registeredClientsOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     }
 }
 
@@ -1045,6 +1121,10 @@
 
 #pragma mark -
 #pragma mark Paths
+- (NSString *)relativePathToClientDevicesDirectory
+{
+    return TICDSClientDevicesDirectoryName;
+}
 
 - (NSString *)relativePathToDocumentsDirectory
 {
