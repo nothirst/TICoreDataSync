@@ -37,6 +37,7 @@
 @class TICDSFileManagerBasedSynchronizationOperation;
 @class TICDSFileManagerBasedVacuumOperation;
 @class TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation;
+@class TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation;
 
 #pragma mark DropboxSDK-Based
 #if TARGET_OS_IPHONE
@@ -203,6 +204,29 @@
  @param anIdentifier The unique synchronization identifier of the document.
  @param aFileURL The location of the downloaded store file. */
 - (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishDownloadingDocumentWithIdentifier:(NSString *)anIdentifier atURL:(NSURL *)aFileURL;
+
+#pragma mark Registered Client Information
+/** @name Registered Client Information */
+
+/** Informs the delegate that the application sync manager has begun to fetch information on all registered devices from the remote.
+ 
+ At the end of the request process, one of the `applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:` or `applicationSyncManagerDidFinishFetchingInformationForAllRegisteredDevices:` methods will be called.
+ 
+ @param aSyncManager The application sync manager object that sent the message. */
+- (void)applicationSyncManagerDidBeginToFetchInformationForAllRegisteredDevices:(TICDSApplicationSyncManager *)aSyncManager;
+
+/** Informs the delegate that the application sync manager failed to fetch information on clients registered to synchronize with the application. 
+ 
+ @param aSyncManager The application sync manager object that sent the message.
+ @param anError The error that caused the request process to fail. */
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFailToFetchInformationForAllRegisteredDevicesWithError:(NSError *)anError;
+
+/** Informs the delegate that the application sync manager finished fetching information for all registered devices for this application.
+ 
+ @param aSyncManager The application sync manager object that sent the message. 
+ @param information A dictionary containing as keys the unique synchronization identifiers of each client, and as values dictionaries of information about that client. */
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishFetchingInformationForAllRegisteredDevices:(NSDictionary *)information;
+
 @end
 
 #pragma mark Document Sync Manager

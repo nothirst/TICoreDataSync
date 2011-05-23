@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		383EB805138ACACF00FB580A /* TICDSListOfApplicationRegisteredClientsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A280C0138AA57000C81675 /* TICDSListOfApplicationRegisteredClientsOperation.m */; };
 		386D4C701371712600020F72 /* TINBNote.m in Sources */ = {isa = PBXBuildFile; fileRef = 386D4C6F1371712600020F72 /* TINBNote.m */; };
 		386D4C731371712600020F72 /* TINBTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 386D4C721371712600020F72 /* TINBTag.m */; };
 		386D4C7F1371893500020F72 /* TIManagedObjectsToStringsValueTransfomer.m in Sources */ = {isa = PBXBuildFile; fileRef = 386D4C7E1371893500020F72 /* TIManagedObjectsToStringsValueTransfomer.m */; };
@@ -71,8 +72,8 @@
 		389E1C7413856B9E00E9E7C1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389E1C7313856B9E00E9E7C1 /* Security.framework */; };
 		38A28098138A64BC00C81675 /* TICDSListOfDocumentRegisteredClientsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A28097138A64BC00C81675 /* TICDSListOfDocumentRegisteredClientsOperation.m */; };
 		38A2809C138A844C00C81675 /* TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A2809B138A844C00C81675 /* TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation.m */; };
-		38A280C1138AA57000C81675 /* TICDSListOfApplicationRegisteredClientsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A280C0138AA57000C81675 /* TICDSListOfApplicationRegisteredClientsOperation.m */; };
 		38A280C5138AA5A000C81675 /* TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A280C4138AA5A000C81675 /* TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation.m */; };
+		38A280DC138AC2BF00C81675 /* TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A280DB138AC2BF00C81675 /* TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -205,6 +206,8 @@
 		38A280C0138AA57000C81675 /* TICDSListOfApplicationRegisteredClientsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSListOfApplicationRegisteredClientsOperation.m; sourceTree = "<group>"; };
 		38A280C3138AA5A000C81675 /* TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation.h; sourceTree = "<group>"; };
 		38A280C4138AA5A000C81675 /* TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation.m; sourceTree = "<group>"; };
+		38A280DA138AC2BF00C81675 /* TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.h; sourceTree = "<group>"; };
+		38A280DB138AC2BF00C81675 /* TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -403,6 +406,8 @@
 				389E1BF813856B7D00E9E7C1 /* TICDSFileManagerBasedWholeStoreUploadOperation.m */,
 				38A2809A138A844C00C81675 /* TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation.h */,
 				38A2809B138A844C00C81675 /* TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation.m */,
+				38A280DA138AC2BF00C81675 /* TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.h */,
+				38A280DB138AC2BF00C81675 /* TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.m */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -622,8 +627,9 @@
 				389E1C6F13856B7D00E9E7C1 /* TIManagedObjectExtensions.m in Sources */,
 				38A28098138A64BC00C81675 /* TICDSListOfDocumentRegisteredClientsOperation.m in Sources */,
 				38A2809C138A844C00C81675 /* TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation.m in Sources */,
-				38A280C1138AA57000C81675 /* TICDSListOfApplicationRegisteredClientsOperation.m in Sources */,
 				38A280C5138AA5A000C81675 /* TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation.m in Sources */,
+				38A280DC138AC2BF00C81675 /* TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.m in Sources */,
+				383EB805138ACACF00FB580A /* TICDSListOfApplicationRegisteredClientsOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

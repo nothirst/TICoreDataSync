@@ -15,6 +15,8 @@
 - (BOOL)getAvailablePreviouslySynchronizedDocuments:(NSError **)outError;
 - (void)bailFromDocumentDownloadProcessForDocumentWithIdentifier:(NSString *)anIdentifier error:(NSError *)anError;
 - (BOOL)startDocumentDownloadProcessForDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation error:(NSError **)outError;
+- (BOOL)startRegisteredDevicesInformationProcessByIncludingDocuments:(BOOL)includeDocuments error:(NSError **)outError;
+- (void)bailFromRegisteredDevicesInformationProcessWithError:(NSError *)anError;
 
 @property (nonatomic, assign) TICDSApplicationSyncManagerState state;
 @property (nonatomic, retain) NSString *appIdentifier;
@@ -337,6 +339,82 @@
 }
 
 #pragma mark -
+#pragma mark LIST OF CLIENT DEVICES
+- (void)requestListOfSynchronizedClientsIncludingDocuments:(BOOL)includeDocuments
+{
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Beginning request for device information");
+    
+    NSError *anyError = nil;
+    BOOL success = [self startRegisteredDevicesInformationProcessByIncludingDocuments:includeDocuments error:&anyError];
+    
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Registered device information request failed with error: %@", anyError);
+        [self bailFromRegisteredDevicesInformationProcessWithError:anyError];
+    }
+}
+
+- (void)bailFromRegisteredDevicesInformationProcessWithError:(NSError *)anError;
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from device information request");
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:), anError];
+    [self postDecreaseActivityNotification];
+}
+
+- (BOOL)startRegisteredDevicesInformationProcessByIncludingDocuments:(BOOL)includeDocuments error:(NSError **)outError;
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting process to fetch information on all devices registered to synchronize this application");
+    [self postIncreaseActivityNotification];
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidBeginToFetchInformationForAllRegisteredDevices:)];
+    
+    TICDSListOfApplicationRegisteredClientsOperation *operation = [self listOfApplicationRegisteredClientsOperation];
+    
+    if( !operation ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create registered clients operation object");
+        [self bailFromRegisteredDevicesInformationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
+        return NO;
+    }
+    
+    [operation setShouldUseEncryption:[self shouldUseEncryption]];
+    [operation setShouldIncludeRegisteredDocuments:includeDocuments];
+    
+    [[self otherTasksQueue] addOperation:operation];
+    
+    return YES;
+}
+
+#pragma mark Operation Generation
+- (TICDSListOfApplicationRegisteredClientsOperation *)listOfApplicationRegisteredClientsOperation
+{
+    return [[[TICDSListOfApplicationRegisteredClientsOperation alloc] initWithDelegate:self] autorelease];
+}
+
+#pragma mark Operation Communications
+- (void)registeredClientsOperationCompleted:(TICDSListOfApplicationRegisteredClientsOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Registered Device Information Operation Completed");
+    
+    NSDictionary *information = [anOperation deviceInfoDictionaries];
+    
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFinishFetchingInformationForAllRegisteredDevices:), information];
+    [self postDecreaseActivityNotification];
+}
+
+- (void)registeredClientsOperationWasCancelled:(TICDSListOfApplicationRegisteredClientsOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Registered Device Information Operation was Cancelled");
+    
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:), [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+    [self postDecreaseActivityNotification];
+}
+
+- (void)registeredClientsOperation:(TICDSListOfApplicationRegisteredClientsOperation *)anOperation failedToCompleteWithError:(NSError *)anError
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Registered Device Information Operation Failed to Complete with Error: %@", anError);
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:), anError];
+    [self postDecreaseActivityNotification];
+}
+
+#pragma mark -
 #pragma mark Post-Operation Work
 - (void)bailFromDocumentDownloadPostProcessingForOperation:(TICDSWholeStoreDownloadOperation *)anOperation withError:(NSError *)anError
 {
@@ -421,6 +499,8 @@
         [self listOfDocumentsOperationCompleted:(id)anOperation];
     } else if( [anOperation isKindOfClass:[TICDSWholeStoreDownloadOperation class]] ) {
         [self documentDownloadOperationCompleted:(id)anOperation];
+    } else if( [anOperation isKindOfClass:[TICDSListOfApplicationRegisteredClientsOperation class]] ) {
+        [self registeredClientsOperationCompleted:(id)anOperation];
     }
 }
 
@@ -432,6 +512,8 @@
         [self listOfDocumentsOperationWasCancelled:(id)anOperation];
     } else if( [anOperation isKindOfClass:[TICDSWholeStoreDownloadOperation class]] ) {
         [self documentDownloadOperationWasCancelled:(id)anOperation];
+    } else if( [anOperation isKindOfClass:[TICDSListOfApplicationRegisteredClientsOperation class]] ) {
+        [self registeredClientsOperationWasCancelled:(id)anOperation];
     }
 }
 
@@ -443,6 +525,8 @@
         [self listOfDocumentsOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     } else if( [anOperation isKindOfClass:[TICDSWholeStoreDownloadOperation class]] ) {
         [self documentDownloadOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
+    } else if( [anOperation isKindOfClass:[TICDSListOfApplicationRegisteredClientsOperation class]] ) {
+        [self registeredClientsOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     }
 }
 

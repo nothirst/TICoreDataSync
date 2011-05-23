@@ -43,6 +43,15 @@
     return [operation autorelease];
 }
 
+- (TICDSListOfApplicationRegisteredClientsOperation *)listOfApplicationRegisteredClientsOperation
+{
+    TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation *operation = [[TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation alloc] initWithDelegate:self];
+    
+    [operation setClientDevicesDirectoryPath:[self clientDevicesDirectoryPath]];
+    [operation setDocumentsDirectoryPath:[self documentsDirectoryPath]];
+    return [operation autorelease];
+}
+
 #pragma mark -
 #pragma mark Paths
 - (NSString *)applicationDirectoryPath

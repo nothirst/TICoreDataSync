@@ -69,7 +69,7 @@
 
 - (void)fetchModificationDateOfWholeStoreForClientWithIdentifier:(NSString *)anIdentifier
 {
-    NSString *filePath = filePath = [self pathToWholeStoreFileForDeviceWithIdentifier:anIdentifier];
+    NSString *filePath = [self pathToWholeStoreFileForDeviceWithIdentifier:anIdentifier];
     NSError *anyError = nil;
     NSDictionary *attributes = [[self fileManager] attributesOfItemAtPath:filePath error:&anyError];
     

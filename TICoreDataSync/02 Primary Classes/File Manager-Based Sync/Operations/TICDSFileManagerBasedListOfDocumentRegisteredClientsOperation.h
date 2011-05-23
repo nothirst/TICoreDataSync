@@ -6,7 +6,7 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
-#import "TICDSOperation.h"
+#import "TICDSListOfDocumentRegisteredClientsOperation.h"
 
 
 @interface TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation : TICDSListOfDocumentRegisteredClientsOperation {
