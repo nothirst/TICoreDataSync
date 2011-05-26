@@ -75,7 +75,7 @@
         [self setWholeStoreModifiedDates:[NSMutableDictionary dictionaryWithCapacity:[[metadata contents] count]]];
         
         for( DBMetadata *eachSubMetadata in [metadata contents] ) {
-            if( ![eachSubMetadata isDirectory] ) {
+            if( ![eachSubMetadata isDirectory] || [eachSubMetadata isDeleted] ) {
                 continue;
             }
             
@@ -83,7 +83,7 @@
         }
         
         for( DBMetadata *eachSubMetadata in [metadata contents] ) {
-            if( ![eachSubMetadata isDirectory] ) {
+            if( ![eachSubMetadata isDirectory] || [eachSubMetadata isDeleted] ) {
                 continue;
             }
             

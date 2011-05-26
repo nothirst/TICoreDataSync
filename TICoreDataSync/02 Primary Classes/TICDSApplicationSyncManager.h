@@ -16,7 +16,7 @@
  Don't instantiate this class directly, but instead use one of the subclasses:
  
  1. `TICDSFileManagerBasedApplicationSyncManager`
- 2. `TICDSRestClientBasedApplicationSyncManager`
+ 2. `TICDSDropboxSDKBasedApplicationSyncManager`
  
  @warning You must register the application sync manager before you can use it to register any documents.
 */
@@ -39,6 +39,7 @@
     NSFileManager *_fileManager;
 }
 
+#pragma mark - Application-Wide Sync Manager
 /** @name Application-Wide Sync Manager */
 
 /** Returns an application-wide sync manager.
@@ -58,6 +59,7 @@
  @param aSyncManager The new sync manager to set as the application-wide default. */
 + (void)setDefaultApplicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager;
 
+#pragma mark - Registration
 /** @name Registration */
 
 /** Register an application ready for future synchronization.
@@ -87,6 +89,7 @@
  @param aPassword The password to use, or `nil` to specify no encryption on a new application registration. */
 - (void)continueRegisteringWithEncryptionPassword:(NSString *)aPassword;
 
+#pragma mark - Previously Synchronized Documents
 /** @name Accessing Previously Synchronized Documents */
 
 /** Request a list of documents that have previously been synchronized for this application, by any client.
@@ -102,6 +105,17 @@
  @param aLocation The location on disc to which the persistent store file should be downloaded. */
 - (void)requestDownloadOfDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation;
 
+#pragma mark - Client Information
+/** @name Accessing Client Information */
+
+/** Request a list of clients that are registered to synchronize with this application.
+ 
+ This method returns a dictionary containing as keys the client identifiers, and as values the `deviceInfo.plist` information. If you specify `YES` for `includeDocuments`, each dictionary will also include an array containing the identifiers of documents for which the client is registered.
+ 
+ @param includeDocuments A Boolean indicating whether to include a list of documents for which each client is registered. */
+- (void)requestListOfSynchronizedClientsIncludingDocuments:(BOOL)includeDocuments;
+
+#pragma mark - Overridden Methods
 /** @name Methods Overridden by Subclasses */
 
 /** Returns an application registration operation.
@@ -128,6 +142,14 @@
  @return A correctly-configured subclass of `TICDSWholeStoreDownloadOperation`. */
 - (TICDSWholeStoreDownloadOperation *)wholeStoreDownloadOperationForDocumentWithIdentifier:(NSString *)anIdentifier;
 
+/** Returns an operation to fetch a list of registered clients for an application.
+ 
+ Subclasses of `TICDSApplicationSyncManager` use this method to return a correctly-configured operation for their particular sync method.
+ 
+ @return A correctly-configured subclass of `TICDSListOfApplicationRegisteredClientsOperation`. */
+- (TICDSListOfApplicationRegisteredClientsOperation *)listOfApplicationRegisteredClientsOperation;
+
+#pragma mark - Properties
 /** @name Properties */
 
 /** Application Sync Manager State.
@@ -173,6 +195,7 @@
 /** A File Manager for use by the application sync manager. */
 @property (nonatomic, readonly, retain) NSFileManager *fileManager;
 
+#pragma mark - Operation Queues
 /** @name Operation Queues */
 
 /** The operation queue used for registration operations. */
@@ -183,6 +206,7 @@
  The queue is suspended until registration has completed successfully. */
 @property (nonatomic, retain) NSOperationQueue *otherTasksQueue;
 
+#pragma mark - Relative Paths
 /** @name Relative Paths */
 
 /** The path to the `Documents` directory, relative to the root of the remote file structure. */

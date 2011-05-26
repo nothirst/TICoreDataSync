@@ -48,6 +48,7 @@ NSString * const kFZAKeyManagerSecurityFrameworkError = @"kFZAKeyManagerSecurity
 NSString * const kTICDSClientDeviceDescription = @"kTICDSClientDeviceDescription";
 NSString * const kTICDSClientDeviceUserInfo = @"kTICDSClientDeviceUserInfo";
 NSString * const kTICDSClientDeviceIdentifier = @"kTICDSClientDeviceIdentifier";
+NSString * const kTICDSRegisteredDocumentIdentifiers = @"kTICDSRegisteredDocumentIdentifiers";
 NSString * const kTICDSLastSyncDate = @"kTICDSLastSyncDate";
 NSString * const kTICDSUploadedWholeStoreModificationDate = @"kTICDSUploadedWholeStoreModificationDate";
 NSString * const kTICDSDocumentIdentifier = @"kTICDSDocumentIdentifier";

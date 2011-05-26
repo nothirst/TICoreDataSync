@@ -205,6 +205,18 @@ shouldBeginSynchronizingAfterManagedObjectContextDidSave:
     
     [(TICDSFileManagerBasedDocumentSyncManager *)aSyncManager 
      enableAutomaticSynchronizationAfterChangesDetectedFromOtherClients];
+    
+    [self performSelector:@selector(getPreviouslySynchronizedDocuments) withObject:nil afterDelay:2.0];
+}
+
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishFetchingInformationForAllRegisteredDevices:(NSDictionary *)information
+{
+    NSLog(@"App client info: %@", information);
+}
+
+- (void)getPreviouslySynchronizedDocuments
+{
+    [[[self documentSyncManager] applicationSyncManager] requestListOfSynchronizedClientsIncludingDocuments:YES];
 }
 
 #pragma mark -

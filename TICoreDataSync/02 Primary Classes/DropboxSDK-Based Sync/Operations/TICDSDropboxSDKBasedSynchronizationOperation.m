@@ -84,7 +84,7 @@
         for( DBMetadata *eachSubMetadata in [metadata contents] ) {
             identifier = [[eachSubMetadata path] lastPathComponent];
             
-            if( [identifier length] < 5 ) {
+            if( [identifier length] < 5 || [eachSubMetadata isDeleted] ) {
                 continue;
             }
             
@@ -105,7 +105,7 @@
         for( DBMetadata *eachSubMetadata in [metadata contents] ) {
             identifier = [[[eachSubMetadata path] lastPathComponent] stringByDeletingPathExtension];
             
-            if( [identifier length] < 5 ) {
+            if( [identifier length] < 5 || [eachSubMetadata isDeleted] ) {
                 continue;
             }
             

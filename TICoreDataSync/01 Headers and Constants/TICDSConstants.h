@@ -28,6 +28,7 @@ extern NSString * const kFZAKeyManagerSecurityFrameworkError;
 extern NSString * const kTICDSClientDeviceDescription;
 extern NSString * const kTICDSClientDeviceUserInfo;
 extern NSString * const kTICDSClientDeviceIdentifier;
+extern NSString * const kTICDSRegisteredDocumentIdentifiers;
 extern NSString * const kTICDSLastSyncDate;
 extern NSString * const kTICDSUploadedWholeStoreModificationDate;
 extern NSString * const kTICDSDocumentIdentifier;

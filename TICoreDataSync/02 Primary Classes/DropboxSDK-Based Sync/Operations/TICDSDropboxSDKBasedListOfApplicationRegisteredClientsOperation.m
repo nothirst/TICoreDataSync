@@ -1,5 +1,5 @@
 //
-//  TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation.m
+//  TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation.m
 //  iOSNotebook
 //
 //  Created by Tim Isted on 23/05/2011.
@@ -11,7 +11,7 @@
 #import "TICoreDataSync.h"
 
 
-@implementation TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation
+@implementation TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation
 
 - (BOOL)needsMainThread
 {
@@ -20,22 +20,26 @@
 
 - (void)fetchArrayOfClientUUIDStrings
 {
-    [[self restClient] loadMetadata:[self thisDocumentSyncChangesDirectoryPath]];
+    [[self restClient] loadMetadata:[self clientDevicesDirectoryPath]];
 }
 
 - (void)fetchDeviceInfoDictionaryForClientWithIdentifier:(NSString *)anIdentifier
 {
-    [[self restClient] loadFile:[self pathToInfoDictionaryForDeviceWithIdentifier:anIdentifier] intoPath:[[self tempFileDirectoryPath] stringByAppendingPathComponent:anIdentifier]];
+    NSString *path = [[[self clientDevicesDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSDeviceInfoPlistFilenameWithExtension];
+    
+    [[self restClient] loadFile:path intoPath:[[self tempFileDirectoryPath] stringByAppendingPathComponent:anIdentifier]];
 }
 
-- (void)fetchLastSynchronizationDates
+- (void)fetchArrayOfDocumentUUIDStrings
 {
-    [[self restClient] loadMetadata:[self thisDocumentRecentSyncsDirectoryPath]];
+    [[self restClient] loadMetadata:[self documentsDirectoryPath]];
 }
 
-- (void)fetchModificationDateOfWholeStoreForClientWithIdentifier:(NSString *)anIdentifier
+- (void)fetchArrayOfClientsRegisteredForDocumentWithIdentifier:(NSString *)anIdentifier
 {
-    [[self restClient] loadMetadata:[self pathToWholeStoreFileForDeviceWithIdentifier:anIdentifier]];
+    NSString *path = [[[self documentsDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSSyncChangesDirectoryName];
+    
+    [[self restClient] loadMetadata:path];
 }
 
 #pragma mark -
@@ -45,7 +49,7 @@
 {
     NSString *path = [metadata path];
     
-    if( [path isEqualToString:[self thisDocumentSyncChangesDirectoryPath]] ) {
+    if( [path isEqualToString:[self clientDevicesDirectoryPath]] ) {
         NSMutableArray *clientIdentifiers = [NSMutableArray arrayWithCapacity:[[metadata contents] count]];
         
         for( DBMetadata *eachSubMetadata in [metadata contents] ) {
@@ -61,30 +65,34 @@
         return;
     }
     
-    if( [path isEqualToString:[self thisDocumentRecentSyncsDirectoryPath]] ) {
+    if( [path isEqualToString:[self documentsDirectoryPath]] ) {
+        NSMutableArray *documentIdentifiers = [NSMutableArray arrayWithCapacity:[[metadata contents] count]];
         
-        for( NSString *eachClientIdentifier in [self synchronizedClientIdentifiers] ) {
-            DBMetadata *subMetadata = nil;
-            for( DBMetadata *eachSubMetadata in [metadata contents] ) {
-                if( [eachSubMetadata isDeleted] ) {
-                    continue;
-                }
-                
-                if( ![[[[eachSubMetadata path] lastPathComponent] stringByDeletingPathExtension] isEqualToString:eachClientIdentifier] ) {
-                    continue;
-                }
-                
-                subMetadata = eachSubMetadata;
+        for( DBMetadata *eachSubMetadata in [metadata contents] ) {
+            if( ![eachSubMetadata isDirectory] || [eachSubMetadata isDeleted] ) {
+                continue;
             }
             
-            [self fetchedLastSynchronizationDate:[subMetadata lastModifiedDate] forClientWithIdentifier:eachClientIdentifier];
+            [documentIdentifiers addObject:[[eachSubMetadata path] lastPathComponent]];
         }
+        
+        [self fetchedArrayOfDocumentUUIDStrings:documentIdentifiers];
         
         return;
     }
     
-    if( [[path lastPathComponent] isEqualToString:TICDSWholeStoreFilename] ) {
-        [self fetchedModificationDate:[metadata lastModifiedDate] ofWholeStoreForClientWithIdentifier:[[path stringByDeletingLastPathComponent] lastPathComponent]];
+    if( [[path lastPathComponent] isEqualToString:TICDSSyncChangesDirectoryName] ) {
+        NSMutableArray *clientIdentifiers = [NSMutableArray arrayWithCapacity:[[metadata contents] count]];
+        
+        for( DBMetadata *eachSubMetadata in [metadata contents] ) {
+            if( ![eachSubMetadata isDirectory] || [eachSubMetadata isDeleted] ) {
+                continue;
+            }
+            
+            [clientIdentifiers addObject:[[eachSubMetadata path] lastPathComponent]];
+        }
+        
+        [self fetchedArrayOfClients:clientIdentifiers registeredForDocumentWithIdentifier:[[path stringByDeletingLastPathComponent] lastPathComponent]];
         return;
     }
 }
@@ -100,20 +108,18 @@
     
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
-    if( [path isEqualToString:[self thisDocumentSyncChangesDirectoryPath]] ) {
+    if( [path isEqualToString:[self clientDevicesDirectoryPath]] ) {
         [self fetchedArrayOfClientUUIDStrings:nil ];
         return;
     }
     
-    if( [path isEqualToString:[self thisDocumentRecentSyncsDirectoryPath]] ) {
-        for( NSString *eachClientIdentifer in [self synchronizedClientIdentifiers] ) {
-            [self fetchedLastSynchronizationDate:nil forClientWithIdentifier:eachClientIdentifer];
-        }
+    if( [path isEqualToString:[self documentsDirectoryPath]] ) {
+        [self fetchedArrayOfDocumentUUIDStrings:nil];
         return;
     }
     
-    if( [[path lastPathComponent] isEqualToString:TICDSWholeStoreFilename] ) {
-        [self fetchedModificationDate:nil ofWholeStoreForClientWithIdentifier:[[path stringByDeletingLastPathComponent] lastPathComponent]];
+    if( [[path lastPathComponent] isEqualToString:TICDSSyncChangesDirectoryName] ) {
+        [self fetchedArrayOfClients:nil registeredForDocumentWithIdentifier:[[path stringByDeletingLastPathComponent] lastPathComponent]];
         return;
     }
 }
@@ -161,27 +167,13 @@
 }
 
 #pragma mark -
-#pragma mark Paths
-- (NSString *)pathToInfoDictionaryForDeviceWithIdentifier:(NSString *)anIdentifier
-{
-    return [[[self clientDevicesDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSDeviceInfoPlistFilenameWithExtension]; 
-}
-
-- (NSString *)pathToWholeStoreFileForDeviceWithIdentifier:(NSString *)anIdentifier
-{
-    return [[[self thisDocumentWholeStoreDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSWholeStoreFilename];
-}
-
-#pragma mark -
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
     [_dbSession release], _dbSession = nil;
     [_restClient release], _restClient = nil;
-    [_thisDocumentSyncChangesDirectoryPath release], _thisDocumentSyncChangesDirectoryPath = nil;
     [_clientDevicesDirectoryPath release], _clientDevicesDirectoryPath = nil;
-    [_thisDocumentRecentSyncsDirectoryPath release], _thisDocumentRecentSyncsDirectoryPath = nil;
-    [_thisDocumentWholeStoreDirectoryPath release], _thisDocumentWholeStoreDirectoryPath = nil;
+    [_documentsDirectoryPath release], _documentsDirectoryPath = nil;
 
     [super dealloc];
 }
@@ -202,10 +194,8 @@
 #pragma mark Properties
 @synthesize dbSession = _dbSession;
 @synthesize restClient = _restClient;
-@synthesize thisDocumentSyncChangesDirectoryPath = _thisDocumentSyncChangesDirectoryPath;
 @synthesize clientDevicesDirectoryPath = _clientDevicesDirectoryPath;
-@synthesize thisDocumentRecentSyncsDirectoryPath = _thisDocumentRecentSyncsDirectoryPath;
-@synthesize thisDocumentWholeStoreDirectoryPath = _thisDocumentWholeStoreDirectoryPath;
+@synthesize documentsDirectoryPath = _documentsDirectoryPath;
 
 @end
 

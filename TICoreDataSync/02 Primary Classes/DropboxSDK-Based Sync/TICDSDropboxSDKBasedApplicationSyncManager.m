@@ -49,6 +49,17 @@
     return [operation autorelease];
 }
 
+- (TICDSListOfApplicationRegisteredClientsOperation *)listOfApplicationRegisteredClientsOperation
+{
+    TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation *operation = [[TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation alloc] initWithDelegate:self];
+    
+    [operation setDbSession:[self dbSession]];
+    [operation setClientDevicesDirectoryPath:[self clientDevicesDirectoryPath]];
+    [operation setDocumentsDirectoryPath:[self documentsDirectoryPath]];
+    
+    return [operation autorelease];
+}
+
 #pragma mark -
 #pragma mark Paths
 - (NSString *)applicationDirectoryPath
@@ -64,6 +75,11 @@
 - (NSString *)encryptionDirectoryTestDataFilePath
 {
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToEncryptionDirectoryTestDataFilePath]];
+}
+
+- (NSString *)clientDevicesDirectoryPath
+{
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToClientDevicesDirectory]];
 }
 
 - (NSString *)clientDevicesThisClientDeviceDirectoryPath

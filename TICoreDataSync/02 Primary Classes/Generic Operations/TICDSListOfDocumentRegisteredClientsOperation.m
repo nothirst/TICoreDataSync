@@ -39,7 +39,17 @@
         return;
     }
     
-    if( [anArray count] < 1 ) {
+    NSMutableArray *clientIdentifiers = [NSMutableArray arrayWithCapacity:[anArray count]];
+    for( NSString *eachIdentifier in anArray ) {
+        if( [eachIdentifier length] < 5 ) {
+            continue;
+        }
+        
+        [clientIdentifiers addObject:eachIdentifier];
+    }
+    [self setSynchronizedClientIdentifiers:clientIdentifiers];
+    
+    if( [[self synchronizedClientIdentifiers] count] < 1 ) {
         TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"No clients were found");
         
         [self setDeviceInfoDictionaries:[NSDictionary dictionary]];
@@ -48,13 +58,6 @@
     }
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Fetched array of registered client UUIDs");
-    NSMutableArray *clientIdentifiers = [NSMutableArray arrayWithArray:anArray];
-    for( NSString *eachIdentifier in clientIdentifiers ) {
-        if( [eachIdentifier length] < 5 ) {
-            [clientIdentifiers removeObject:eachIdentifier];
-        }
-    }
-    [self setSynchronizedClientIdentifiers:clientIdentifiers];
     
     [self beginFetchingDeviceInfoDictionaries];
 }

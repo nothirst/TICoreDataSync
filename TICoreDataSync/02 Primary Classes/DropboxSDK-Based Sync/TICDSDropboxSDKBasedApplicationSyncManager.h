@@ -37,6 +37,9 @@
 /** The path to the `test.ticdsync` file inside the `Encryption` directory at the root of the application. */
 @property (nonatomic, readonly) NSString *encryptionDirectoryTestDataFilePath;
 
+/** The path to the `ClientDevices` directory at the root of the application. */
+@property (nonatomic, readonly) NSString *clientDevicesDirectoryPath;
+
 /** The path to this client's directory inside the `ClientDevices` directory at the root of the application. */
 @property (nonatomic, readonly) NSString *clientDevicesThisClientDeviceDirectoryPath;
 
