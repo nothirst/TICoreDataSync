@@ -234,8 +234,8 @@
     if( [self numberOfUnappliedSyncChangeSetsToFetch] == [self numberOfUnappliedSyncChangeSetsFetched] ) {
         TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Finished fetching unapplied sync change sets");
         NSError *anyError = nil;
-        BOOL success = [[self unappliedSyncChangeSetsContext] save:&anyError];
-        if( !success ) {
+        BOOL saveSuccess = [[self unappliedSyncChangeSetsContext] save:&anyError];
+        if( !saveSuccess ) {
             TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save UnappliedSyncChanges.ticdsync file: %@", anyError);
         }
         [self beginApplyingUnappliedSyncChangeSets];
@@ -317,7 +317,7 @@
     BOOL shouldContinue = [self applyUnappliedSyncChangeSets:syncChangeSetsToApply];
     
     if( shouldContinue ) {
-        NSError *anyError = nil;
+        anyError = nil;
         
         // Save Background Context (changes made to objects in application's context)
         BOOL success = [[self backgroundApplicationContext] save:&anyError];
