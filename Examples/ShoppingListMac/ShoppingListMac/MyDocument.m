@@ -405,6 +405,8 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     [self registerSyncManagerIfSyncEnabled];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextDidSave:) name:NSManagedObjectContextDidSaveNotification object:nil];
+    
+    /*[[NSNotificationCenter defaultCenter] removeObserver:self name:NSUndoManagerWillCloseUndoGroupNotification object:[[self managedObjectContext] undoManager]];*/
 }
 
 - (void)makeWindowControllers

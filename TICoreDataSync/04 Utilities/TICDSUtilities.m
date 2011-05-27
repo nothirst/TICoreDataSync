@@ -27,6 +27,11 @@
     [dictionary setValue:[NSDictionary dictionary] forKey:TICDSDocumentsDirectoryName];
     [dictionary setValue:[NSDictionary dictionary] forKey:TICDSEncryptionDirectoryName];
     
+    NSMutableDictionary *informationDirectories = [NSMutableDictionary dictionaryWithCapacity:2];
+    [informationDirectories setValue:[NSDictionary dictionary] forKey:TICDSDeletedDocumentsDirectoryName];
+    [informationDirectories setValue:[NSDictionary dictionary] forKey:TICDSDeletedClientsDirectoryName];
+    [dictionary setValue:informationDirectories forKey:TICDSInformationDirectoryName];
+    
     return dictionary;
 }
 
@@ -38,6 +43,7 @@
     [dictionary setValue:[NSDictionary dictionary] forKey:TICDSSyncChangesDirectoryName];
     [dictionary setValue:[NSDictionary dictionary] forKey:TICDSSyncCommandsDirectoryName];
     [dictionary setValue:[NSDictionary dictionary] forKey:TICDSRecentSyncsDirectoryName];
+    [dictionary setValue:[NSDictionary dictionary] forKey:TICDSDeletedClientsDirectoryName];
     
     NSMutableDictionary *tempFilesDictionary = [NSMutableDictionary dictionary];
     [tempFilesDictionary setValue:[NSDictionary dictionary] forKey:TICDSWholeStoreDirectoryName];
