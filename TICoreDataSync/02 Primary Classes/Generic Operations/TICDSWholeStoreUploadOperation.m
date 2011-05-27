@@ -151,6 +151,7 @@
         TICDSLog(TICDSLogVerbosityEveryStep, @"Local applied sync change sets file doesn't exist locally");
         
         [self beginCheckForThisClientWholeStoreDirectory];
+        return;
     }
     
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Uploading the AppliedSyncChanges file to this client's temporary WholeStore directory");
