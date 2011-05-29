@@ -32,6 +32,7 @@
     
     [operation setDbSession:[self dbSession]];
     [operation setThisDocumentDirectoryPath:[self thisDocumentDirectoryPath]];
+    [operation setDeletedDocumentsDirectoryIdentifierPlistFilePath:[self deletedDocumentsDirectoryIdentifierPlistFilePath]];
     [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
     [operation setThisDocumentSyncCommandsThisClientDirectoryPath:[self thisDocumentSyncCommandsThisClientDirectoryPath]];
     
@@ -103,6 +104,11 @@
 - (NSString *)clientDevicesDirectoryPath
 {
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToClientDevicesDirectory]];
+}
+
+- (NSString *)deletedDocumentsDirectoryIdentifierPlistFilePath
+{
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToDeletedDocumentsThisDocumentIdentifierPlistFile]];
 }
 
 - (NSString *)documentsDirectoryPath

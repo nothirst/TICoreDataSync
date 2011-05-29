@@ -22,6 +22,7 @@
     
     NSString *_documentsDirectoryPath;
     NSString *_thisDocumentDirectoryPath;
+    NSString *_deletedDocumentsDirectoryIdentifierPlistFilePath;
     NSString *_thisDocumentSyncChangesThisClientDirectoryPath;
     NSString *_thisDocumentSyncCommandsThisClientDirectoryPath;
     
@@ -51,6 +52,9 @@
 
 /** The path to this document's directory inside the `Documents` directory. */
 @property (retain) NSString *thisDocumentDirectoryPath;
+
+/** The path to this document's `identifier.plist` file inside the `DeletedDocuments` directory. */
+@property (retain) NSString *deletedDocumentsDirectoryIdentifierPlistFilePath;
 
 /** The path to this client's directory inside this document's `SyncChanges` directory. */
 @property (retain) NSString *thisDocumentSyncChangesThisClientDirectoryPath;

@@ -48,6 +48,11 @@
     [[self restClient] loadMetadata:[self thisDocumentDirectoryPath]];
 }
 
+- (void)checkWhetherRemoteDocumentWasDeleted
+{
+    [[self restClient] loadMetadata:[self deletedDocumentsDirectoryIdentifierPlistFilePath]];
+}
+
 - (void)createRemoteDocumentDirectoryStructure
 {
     [self createDirectoryContentsFromDictionary:[TICDSUtilities remoteDocumentDirectoryHierarchy] inDirectory:[self thisDocumentDirectoryPath]];
@@ -106,6 +111,12 @@
     [[self restClient] uploadFile:TICDSDocumentInfoPlistFilenameWithExtension toPath:[self thisDocumentDirectoryPath] fromPath:finalFilePath];
 }
 
+#pragma mark Removing DeletedDocuments file
+- (void)deleteDocumentInfoPlistFromDeletedDocumentsDirectory
+{
+    [[self restClient] deletePath:[self deletedDocumentsDirectoryIdentifierPlistFilePath]];
+}
+
 #pragma mark -
 #pragma mark Client Directories
 - (void)checkWhetherClientDirectoryExistsInRemoteDocumentSyncChangesDirectory
@@ -147,6 +158,11 @@
         [self discoveredStatusOfClientDirectoryInRemoteDocumentSyncChangesDirectory:status];
         return;
     }
+    
+    if( [path isEqualToString:[self deletedDocumentsDirectoryIdentifierPlistFilePath]] ) {
+        [self discoveredDeletionStatusOfRemoteDocument:[metadata isDeleted] ? TICDSRemoteFileStructureDeletionResponseTypeNotDeleted : TICDSRemoteFileStructureDeletionResponseTypeDeleted];
+        return;
+    }
 }
 
 - (void)restClient:(DBRestClient*)client metadataUnchangedAtPath:(NSString*)path
@@ -173,6 +189,11 @@
     
     if( [path isEqualToString:[self thisDocumentSyncChangesThisClientDirectoryPath]] ) {
         [self discoveredStatusOfClientDirectoryInRemoteDocumentSyncChangesDirectory:status];
+        return;
+    }
+    
+    if( [path isEqualToString:[self deletedDocumentsDirectoryIdentifierPlistFilePath]] ) {
+        [self discoveredDeletionStatusOfRemoteDocument:[error code] == 404 ? TICDSRemoteFileStructureDeletionResponseTypeNotDeleted : TICDSRemoteFileStructureDeletionResponseTypeError];
         return;
     }
 }
@@ -245,6 +266,27 @@
     }
 }
 
+#pragma mark Deletion
+- (void)restClient:(DBRestClient*)client deletedPath:(NSString *)path
+{
+    if( [path isEqualToString:[self deletedDocumentsDirectoryIdentifierPlistFilePath]] ) {
+        [self deletedDocumentInfoPlistFromDeletedDocumentsDirectoryWithSuccess:YES];
+        return;
+    }
+}
+
+- (void)restClient:(DBRestClient*)client deletePathFailedWithError:(NSError*)error
+{
+    NSString *path = [[error userInfo] valueForKey:@"path"];
+    
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
+    
+    if( [path isEqualToString:[self deletedDocumentsDirectoryIdentifierPlistFilePath]] ) {
+        [self deletedDocumentInfoPlistFromDeletedDocumentsDirectoryWithSuccess:NO];
+        return;
+    }
+}
+
 #pragma mark -
 #pragma mark Initialization and Deallocation
 - (void)dealloc
@@ -253,6 +295,7 @@
     [_restClient release], _restClient = nil;
     [_documentsDirectoryPath release], _documentsDirectoryPath = nil;
     [_thisDocumentDirectoryPath release], _thisDocumentDirectoryPath = nil;
+    [_deletedDocumentsDirectoryIdentifierPlistFilePath release], _deletedDocumentsDirectoryIdentifierPlistFilePath = nil;
     [_thisDocumentSyncChangesThisClientDirectoryPath release], _thisDocumentSyncChangesThisClientDirectoryPath = nil;
     [_thisDocumentSyncCommandsThisClientDirectoryPath release], _thisDocumentSyncCommandsThisClientDirectoryPath = nil;
     
@@ -277,6 +320,7 @@
 @synthesize restClient = _restClient;
 @synthesize documentsDirectoryPath = _documentsDirectoryPath;
 @synthesize thisDocumentDirectoryPath = _thisDocumentDirectoryPath;
+@synthesize deletedDocumentsDirectoryIdentifierPlistFilePath = _deletedDocumentsDirectoryIdentifierPlistFilePath;
 @synthesize thisDocumentSyncChangesThisClientDirectoryPath = _thisDocumentSyncChangesThisClientDirectoryPath;
 @synthesize thisDocumentSyncCommandsThisClientDirectoryPath = _thisDocumentSyncCommandsThisClientDirectoryPath;
 
