@@ -24,9 +24,9 @@
 #pragma mark - Document Existence
 - (void)beginCheckingForIdentifiedDocumentDirectory
 {
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Checking whether the identified document directory exists");
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Checking whether the identified document directory (%@) exists", [self documentIdentifier]);
     
-    
+    [self checkWhetherIdentifiedDocumentDirectoryExists:[self documentIdentifier]];
 }
 
 - (void)discoveredStatusOfIdentifiedDocumentDirectory:(TICDSRemoteFileStructureExistsResponseType)status
@@ -53,7 +53,7 @@
 }
 
 #pragma mark Overridden Method
-- (void)checkWhetherIdentifiedDocumentDirectoryExists
+- (void)checkWhetherIdentifiedDocumentDirectoryExists:(NSString *)anIdentifier
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
     [self discoveredStatusOfIdentifiedDocumentDirectory:TICDSRemoteFileStructureExistsResponseTypeError];
