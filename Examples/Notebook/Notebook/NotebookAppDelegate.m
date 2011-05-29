@@ -222,7 +222,7 @@ shouldBeginSynchronizingAfterManagedObjectContextDidSave:
 
 - (void)deleteDocument
 {
-    [[[self documentSyncManager] applicationSyncManager] deleteDocumentWithIdentifier:nil];
+    [[[self documentSyncManager] applicationSyncManager] deleteDocumentWithIdentifier:@"Notebook"];
 }
 
 #pragma mark -

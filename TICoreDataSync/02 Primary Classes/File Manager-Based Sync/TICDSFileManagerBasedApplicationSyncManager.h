@@ -31,6 +31,9 @@
 /** The path to the root application directory. */
 @property (nonatomic, readonly) NSString *applicationDirectoryPath;
 
+/** The path to the `DeletedDocuments` directory inside the `Information` directory at the root of the application. */
+@property (nonatomic, readonly) NSString *deletedDocumentsDirectoryPath;
+
 /** The path to the `salt.ticdsync` file inside the `Encryption` directory at the root of the application. */
 @property (nonatomic, readonly) NSString *encryptionDirectorySaltDataFilePath;
 

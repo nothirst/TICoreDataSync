@@ -231,6 +231,12 @@
 /** The path to the `Documents` directory, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToDocumentsDirectory;
 
+/** The path to the `Information` directory, relative to the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToInformationDirectory;
+
+/** The path to the `DeletedDocuments` directory inside the `Information` directory, relative ot the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToInformationDeletedDocumentsDirectory;
+
 /** The path to the `Encryption` directory, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToEncryptionDirectory;
 

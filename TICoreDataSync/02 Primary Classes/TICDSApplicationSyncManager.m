@@ -673,6 +673,16 @@ id gTICDSDefaultApplicationSyncManager = nil;
     return [[self relativePathToEncryptionDirectory] stringByAppendingPathComponent:TICDSEncryptionTestFilenameWithExtension];
 }
 
+- (NSString *)relativePathToInformationDirectory
+{
+    return TICDSInformationDirectoryName;
+}
+
+- (NSString *)relativePathToInformationDeletedDocumentsDirectory
+{
+    return [[self relativePathToInformationDirectory] stringByAppendingPathComponent:TICDSDeletedDocumentsDirectoryName];
+}
+
 - (NSString *)relativePathToDocumentsDirectory
 {
     return TICDSDocumentsDirectoryName;

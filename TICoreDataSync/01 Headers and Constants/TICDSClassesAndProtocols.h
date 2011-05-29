@@ -39,6 +39,7 @@
 @class TICDSFileManagerBasedVacuumOperation;
 @class TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation;
 @class TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation;
+@class TICDSFileManagerBasedDocumentDeletionOperation;
 
 #pragma mark DropboxSDK-Based
 #if TARGET_OS_IPHONE
