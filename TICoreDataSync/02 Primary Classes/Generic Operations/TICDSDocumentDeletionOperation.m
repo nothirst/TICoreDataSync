@@ -11,6 +11,8 @@
 @interface TICDSDocumentDeletionOperation ()
 
 - (void)beginCheckingForIdentifiedDocumentDirectory;
+- (void)beginCopyingDocumentInfoPlistToDeletedDocumentsDirectory;
+- (void)beginAlertToDelegateThatDocumentWillBeDeleted;
 
 @end
 
@@ -26,7 +28,7 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Checking whether the identified document directory (%@) exists", [self documentIdentifier]);
     
-    [self checkWhetherIdentifiedDocumentDirectoryExists:[self documentIdentifier]];
+    [self checkWhetherIdentifiedDocumentDirectoryExists];
 }
 
 - (void)discoveredStatusOfIdentifiedDocumentDirectory:(TICDSRemoteFileStructureExistsResponseType)status
@@ -53,10 +55,44 @@
 }
 
 #pragma mark Overridden Method
-- (void)checkWhetherIdentifiedDocumentDirectoryExists:(NSString *)anIdentifier
+- (void)checkWhetherIdentifiedDocumentDirectoryExists
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
     [self discoveredStatusOfIdentifiedDocumentDirectory:TICDSRemoteFileStructureExistsResponseTypeError];
+}
+
+#pragma mark - Copying documentInfo.plist to DeletedDocuments
+- (void)beginCopyingDocumentInfoPlistToDeletedDocumentsDirectory
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Copying documentInfo.plist file to DeletedDocuments directory");
+    
+    [self copyDocumentInfoPlistToDeletedDocumentsDirectory];
+}
+
+- (void)copiedDocumentInfoPlistToDeletedDocumentsDirectoryWithSuccess:(BOOL)success
+{
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to copy documentInfo.plist file to the DeletedDocuments directory");
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Copied documentInfo.plist to the DeletedDocuments directory");
+    
+    [self beginAlertToDelegateThatDocumentWillBeDeleted];
+}
+
+#pragma mark Overridden Method
+- (void)copyDocumentInfoPlistToDeletedDocumentsDirectory
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self copiedDocumentInfoPlistToDeletedDocumentsDirectoryWithSuccess:NO];
+}
+
+#pragma mark - Alerting the Delegate
+- (void)beginAlertToDelegateThatDocumentWillBeDeleted
+{
+    
 }
 
 #pragma mark -
