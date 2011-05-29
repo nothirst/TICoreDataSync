@@ -11,6 +11,8 @@
 @interface TICDSDocumentDeletionOperation ()
 
 - (void)beginCheckingForIdentifiedDocumentDirectory;
+- (void)beginCheckingForExistingIdentifierPlistInDeletedDocumentsDirectory;
+- (void)beginDeletingIdentifierPlistFromDeletedDocumentsDirectory;
 - (void)beginCopyingDocumentInfoPlistToDeletedDocumentsDirectory;
 - (void)beginAlertToDelegateThatDocumentWillBeDeleted;
 - (void)beginDeletingDocumentDirectory;
@@ -44,7 +46,7 @@
         case TICDSRemoteFileStructureExistsResponseTypeDoesExist:
             TICDSLog(TICDSLogVerbosityEveryStep, @"Document directory exists");
             
-            [self beginCopyingDocumentInfoPlistToDeletedDocumentsDirectory];
+            [self beginCheckingForExistingIdentifierPlistInDeletedDocumentsDirectory];
             return;
             
         case TICDSRemoteFileStructureExistsResponseTypeDoesNotExist:
@@ -61,6 +63,71 @@
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
     [self discoveredStatusOfIdentifiedDocumentDirectory:TICDSRemoteFileStructureExistsResponseTypeError];
+}
+
+#pragma mark - Checking for Existing UUID.plist in DeletedDocuments
+- (void)beginCheckingForExistingIdentifierPlistInDeletedDocumentsDirectory
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Checking whether the %@.plist file already exists inside the DeletedDocuments directory", [self documentIdentifier]);
+    
+    [self checkForExistingIdentifierPlistInDeletedDocumentsDirectory];
+}
+
+- (void)discoveredStatusOfIdentifierPlistInDeletedDocumentsDirectory:(TICDSRemoteFileStructureExistsResponseType)status
+{
+    switch( status ) {
+        case TICDSRemoteFileStructureExistsResponseTypeError:
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error checking whether the plist file already exists");
+            [self operationDidFailToComplete];
+            return;
+            
+        case TICDSRemoteFileStructureExistsResponseTypeDoesExist:
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Plist file exists");
+            
+            [self beginDeletingIdentifierPlistFromDeletedDocumentsDirectory];
+            return;
+            
+        case TICDSRemoteFileStructureExistsResponseTypeDoesNotExist:
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Plist file does not exist");
+            
+            [self beginCopyingDocumentInfoPlistToDeletedDocumentsDirectory];
+            return;
+    }
+}
+
+#pragma mark Overridden Method
+- (void)checkForExistingIdentifierPlistInDeletedDocumentsDirectory
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self discoveredStatusOfIdentifierPlistInDeletedDocumentsDirectory:TICDSRemoteFileStructureExistsResponseTypeError];
+}
+
+#pragma mark - Deleting Existing UUID.plist file
+- (void)beginDeletingIdentifierPlistFromDeletedDocumentsDirectory
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Deleting the %@.plist file  inside the DeletedDocuments directory", [self documentIdentifier]);
+    
+    [self deleteDocumentInfoPlistFromDeletedDocumentsDirectory];
+}
+
+- (void)deletedDocumentInfoPlistFromDeletedDocumentsDirectoryWithSuccess:(BOOL)success
+{
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to delete documentInfo.plist in the DeletedDocuments directory");
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Deleted documentInfo.plist from the DeletedDocuments directory");
+    
+    [self beginCopyingDocumentInfoPlistToDeletedDocumentsDirectory];
+}
+
+#pragma mark Overridden Method
+- (void)deleteDocumentInfoPlistFromDeletedDocumentsDirectory
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self deletedDocumentDirectoryWithSuccess:NO];
 }
 
 #pragma mark - Copying documentInfo.plist to DeletedDocuments
