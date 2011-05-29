@@ -41,6 +41,7 @@
 @interface TICDSDocumentRegistrationOperation : TICDSOperation {
 @private
     BOOL _paused;
+    BOOL _documentWasDeleted;
     BOOL _shouldCreateDocumentFileStructure;
     
     NSString *_documentIdentifier;
@@ -67,6 +68,11 @@
  This method must call `discoveredStatusOfRemoteDocumentDirectory:` to indicate the status. */
 - (void)checkWhetherRemoteDocumentDirectoryExists;
 
+/** Check whether the document was previously deleted (i.e., whether an `identifier.plist` file exists in the `DeletedDocuments` directory.
+ 
+ This method must call `discoveredDeletionStatusOfRemoteDocument:` to indicate the status. */
+- (void)checkWhetherRemoteDocumentWasDeleted;
+
 /** Create remote document directory structure.
  
  This method must call `createdRemoteDocumentDirectoryStructureWithSuccess:` to indicate whether the creation was successful. */
@@ -78,6 +84,11 @@
  
  @param aDictionary The dictionary to save as the `documentInfo.plist`. */
 - (void)saveRemoteDocumentInfoPlistFromDictionary:(NSDictionary *)aDictionary;
+
+/** Delete the `identifier.plist` file for this document from the `DeletedDocuments` directory.
+ 
+ This method must call `deletedDocumentInfoPlistFromDeletedDocumentsDirectoryWithSuccess:` to indicate whether the deletion was successful. */
+- (void)deleteDocumentInfoPlistFromDeletedDocumentsDirectory;
 
 /** Check whether a directory exists for this client inside the document's `SyncChanges` directory.
  
@@ -99,6 +110,13 @@
  @param status The status of the directory: does exist, does not exist, or error (see `TICDSTypesAndEnums.h` for possible values). */
 - (void)discoveredStatusOfRemoteDocumentDirectory:(TICDSRemoteFileStructureExistsResponseType)status;
 
+/** Indicate whether the document was previously deleted.
+ 
+ If an error occurred, call `setError:` first, then specify `TICDSRemoteFileStructureDeletionResponseTypeError` for `status`.
+ 
+ @param status The status of the directory: was not deleted, was deleted, or error (see `TICDSTypesAndEnums.h` for possible values). */
+- (void)discoveredDeletionStatusOfRemoteDocument:(TICDSRemoteFileStructureDeletionResponseType)status;
+
 /** Indicate whether the creation of the remote document directory structure was successful.
  
  If not, call `setError:` first, then specify `NO` for `success`.
@@ -112,6 +130,13 @@
  
  @param success A Boolean indicating whether the `documentInfo.plist` file was saved or not. */
 - (void)savedRemoteDocumentInfoPlistWithSuccess:(BOOL)success;
+
+/** Indicate whether the `identifier.plist` file for this document was removed from the `DeletedDocuments` directory.
+ 
+ If not, call `setError:` first, then specify `NO` for `success`.
+ 
+ @param success A Boolean indicating whether the `identifier.plist` file was deleted or not. */
+- (void)deletedDocumentInfoPlistFromDeletedDocumentsDirectoryWithSuccess:(BOOL)success;
 
 /** Indicate the status of this client's directory inside the remote document `SyncChanges` directory.
  
@@ -132,6 +157,9 @@
 
 /** Used to indicate whether the operation is currently paused awaiting input from the operation delegate, or in turn the document sync manager delegate. */
 @property (assign, getter = isPaused) BOOL paused;
+
+/** Used to indicate whether the reason a document doesn't exist is because it was deleted. */
+@property (assign) BOOL documentWasDeleted;
 
 /** Used by the `TICDSDocumentSyncManager` to indicate whether to create the remote document file structure after finding out it doesn't exist. */
 @property (assign) BOOL shouldCreateDocumentFileStructure;

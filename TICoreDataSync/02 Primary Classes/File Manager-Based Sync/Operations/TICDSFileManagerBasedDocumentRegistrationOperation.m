@@ -52,6 +52,15 @@
     }
 }
 
+- (void)checkWhetherRemoteDocumentWasDeleted
+{
+    if( [[self fileManager] fileExistsAtPath:[self deletedDocumentsThisDocumentIdentifierPlistPath]] ) {
+        [self discoveredDeletionStatusOfRemoteDocument:TICDSRemoteFileStructureDeletionResponseTypeDeleted];
+    } else {
+        [self discoveredDeletionStatusOfRemoteDocument:TICDSRemoteFileStructureDeletionResponseTypeNotDeleted];
+    }
+}
+
 - (void)createRemoteDocumentDirectoryStructure
 {
     NSDictionary *documentStructure = [TICDSUtilities remoteDocumentDirectoryHierarchy];
@@ -103,6 +112,18 @@
     [self savedRemoteDocumentInfoPlistWithSuccess:success];
 }
 
+- (void)deleteDocumentInfoPlistFromDeletedDocumentsDirectory
+{
+    NSError *anyError = nil;
+    BOOL success = [[self fileManager] removeItemAtPath:[self deletedDocumentsThisDocumentIdentifierPlistPath] error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    [self deletedDocumentInfoPlistFromDeletedDocumentsDirectoryWithSuccess:success];
+}
+
 #pragma mark -
 #pragma mark Overridden Client Device Directories
 - (void)checkWhetherClientDirectoryExistsInRemoteDocumentSyncChangesDirectory
@@ -140,6 +161,7 @@
 - (void)dealloc
 {
     [_documentsDirectoryPath release], _documentsDirectoryPath = nil;
+    [_deletedDocumentsThisDocumentIdentifierPlistPath release], _deletedDocumentsThisDocumentIdentifierPlistPath = nil;
     [_thisDocumentDirectoryPath release], _thisDocumentDirectoryPath = nil;
     [_thisDocumentSyncChangesThisClientDirectoryPath release], _thisDocumentSyncChangesThisClientDirectoryPath = nil;
     [_thisDocumentSyncCommandsThisClientDirectoryPath release], _thisDocumentSyncCommandsThisClientDirectoryPath = nil;
@@ -150,6 +172,7 @@
 #pragma mark -
 #pragma mark Properties
 @synthesize documentsDirectoryPath = _documentsDirectoryPath;
+@synthesize deletedDocumentsThisDocumentIdentifierPlistPath = _deletedDocumentsThisDocumentIdentifierPlistPath;
 @synthesize thisDocumentDirectoryPath = _thisDocumentDirectoryPath;
 @synthesize thisDocumentSyncChangesThisClientDirectoryPath = _thisDocumentSyncChangesThisClientDirectoryPath;
 @synthesize thisDocumentSyncCommandsThisClientDirectoryPath = _thisDocumentSyncCommandsThisClientDirectoryPath;

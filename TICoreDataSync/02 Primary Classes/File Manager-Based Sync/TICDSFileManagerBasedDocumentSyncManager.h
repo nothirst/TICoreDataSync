@@ -44,6 +44,9 @@
 /** The path to the `ClientDevices` directory. */
 @property (nonatomic, readonly) NSString *clientDevicesDirectoryPath;
 
+/** The path to this document's `identifier.plist` file inside the `DeletedDocuments` directory. */
+@property (nonatomic, readonly) NSString *deletedDocumentsThisDocumentIdentifierPlistPath;
+
 /** The path to the `Documents` directory. */
 @property (nonatomic, readonly) NSString *documentsDirectoryPath;
 

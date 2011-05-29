@@ -300,6 +300,20 @@
 
 @optional
 
+/** Informs the delegate that the document sync manager paused the document registration process because the remote file structure was deleted for the specified document.
+ 
+ @param aSyncManager The document sync manager object that sent the message. 
+ @param anIdentifier The unique identifier for the document (as supplied at registration).
+ @param aDescription The description of the document (as supplied at registration).
+ @param userInfo The user info dictionary (as supplied at registration).
+ 
+ @warning You *must* call the `continueRegistrationByCreatingRemoteFileStructure:` method to indicate whether registration should continue or not.
+ */
+@required
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo;
+
+@optional
+
 /** Informs the delegate that the document sync manager has resumed the document registration process.
  
  @param aSyncManager The document sync manager object that sent the message. */

@@ -11,10 +11,12 @@
 @interface TICDSDocumentRegistrationOperation () 
 
 - (void)beginCheckForRemoteDocumentDirectory;
+- (void)beginCheckingWhetherDocumentWasDeleted;
 - (void)beginRequestWhetherToCreateRemoteDocumentFileStructure;
 - (void)continueAfterRequestWhetherToCreateRemoteDocumentFileStructure;
 - (void)beginCreatingRemoteDocumentDirectoryStructure;
 - (void)beginCreatingDocumentInfoPlist;
+- (void)beginDeletingDocumentPlistInDeletedDocumentsDirectory;
 - (void)beginCheckForClientDirectoryInDocumentSyncChangesDirectory;
 - (void)beginCreatingClientDirectoriesInRemoteDocumentDirectories;
 
@@ -51,9 +53,9 @@
             break;
             
         case TICDSRemoteFileStructureExistsResponseTypeDoesNotExist:
-            TICDSLog(TICDSLogVerbosityEveryStep, @"Document directory does not exist, so asking delegate whether to create it");
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Document directory does not exist, so checking whether it was deleted");
             
-            [self beginRequestWhetherToCreateRemoteDocumentFileStructure];
+            [self beginCheckingWhetherDocumentWasDeleted];
             break;
     }
 }
@@ -63,6 +65,45 @@
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
     [self discoveredStatusOfRemoteDocumentDirectory:TICDSRemoteFileStructureExistsResponseTypeError];
+}
+
+#pragma mark - Checking Whether Document was Deleted
+- (void)beginCheckingWhetherDocumentWasDeleted
+{
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Checking whether document was deleted");
+    
+    [self checkWhetherRemoteDocumentWasDeleted];
+}
+
+- (void)discoveredDeletionStatusOfRemoteDocument:(TICDSRemoteFileStructureDeletionResponseType)status
+{
+    switch( status ) {
+        case TICDSRemoteFileStructureDeletionResponseTypeError:
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error checking whether document was deleted");
+            [self operationDidFailToComplete];
+            return;
+            
+        case TICDSRemoteFileStructureDeletionResponseTypeNotDeleted:
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Document wasn't deleted");
+            [self setDocumentWasDeleted:NO];
+            
+            [self beginRequestWhetherToCreateRemoteDocumentFileStructure];
+            return;
+            
+        case TICDSRemoteFileStructureDeletionResponseTypeDeleted:
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Document was previously deleted");
+            [self setDocumentWasDeleted:YES];
+            
+            [self beginRequestWhetherToCreateRemoteDocumentFileStructure];
+            return;
+    }
+}
+
+#pragma mark Overridden Method
+- (void)checkWhetherRemoteDocumentWasDeleted
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self discoveredDeletionStatusOfRemoteDocument:TICDSRemoteFileStructureDeletionResponseTypeError];
 }
 
 #pragma mark - Asking Whether to Create Remote Hierarchy
@@ -163,7 +204,11 @@
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Saved documentInfo.plist file successfully");
     
-    [self beginCreatingClientDirectoriesInRemoteDocumentDirectories];
+    if( [self documentWasDeleted] ) {
+        [self beginDeletingDocumentPlistInDeletedDocumentsDirectory];
+    } else {
+        [self beginCreatingClientDirectoriesInRemoteDocumentDirectories];
+    }
 }
 
 #pragma mark Overridden Method
@@ -171,6 +216,33 @@
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
     [self savedRemoteDocumentInfoPlistWithSuccess:NO];
+}
+
+#pragma mark - Removing the identifier.plist File in DeletedDocuments
+- (void)beginDeletingDocumentPlistInDeletedDocumentsDirectory
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Deleting document's identifier.plist file from the DeletedDocuments directory");
+    
+    [self deleteDocumentInfoPlistFromDeletedDocumentsDirectory];
+}
+
+- (void)deletedDocumentInfoPlistFromDeletedDocumentsDirectoryWithSuccess:(BOOL)success
+{
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to delete document's identifier.plist file from DeletedDocuments directory");
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Deleted document's identifier.plist file from DeletedDocuments directory");
+    [self beginCreatingClientDirectoriesInRemoteDocumentDirectories];
+}
+
+#pragma mark Overridden Method
+- (void)deleteDocumentInfoPlistFromDeletedDocumentsDirectory
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self deletedDocumentInfoPlistFromDeletedDocumentsDirectoryWithSuccess:NO];
 }
 
 #pragma mark - Checking for Client Directories in Document Directory
@@ -257,6 +329,7 @@
 #pragma mark -
 #pragma mark Properties
 @synthesize paused = _paused;
+@synthesize documentWasDeleted = _documentWasDeleted;
 @synthesize shouldCreateDocumentFileStructure = _shouldCreateDocumentFileStructure;
 @synthesize documentIdentifier = _documentIdentifier;
 @synthesize documentDescription = _documentDescription;

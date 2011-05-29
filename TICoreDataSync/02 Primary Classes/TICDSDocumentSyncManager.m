@@ -273,7 +273,13 @@
 - (void)registrationOperationPausedToFindOutWhetherToCreateRemoteDocumentStructure:(TICDSDocumentRegistrationOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Registration operation paused to find out whether to create document structure");
-    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
+    
+    if( [anOperation documentWasDeleted] ) {
+        [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
+    } else {
+        [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
+    }
+    
     [self postDecreaseActivityNotification];
 }
 
@@ -1124,6 +1130,21 @@
 - (NSString *)relativePathToClientDevicesDirectory
 {
     return TICDSClientDevicesDirectoryName;
+}
+
+- (NSString *)relativePathToInformationDirectory
+{
+    return TICDSInformationDirectoryName;
+}
+
+- (NSString *)relativePathToInformationDeletedDocumentsDirectory
+{
+    return [[self relativePathToInformationDirectory] stringByAppendingPathComponent:TICDSDeletedDocumentsDirectoryName];
+}
+
+- (NSString *)relativePathToDeletedDocumentsThisDocumentIdentifierPlistFile
+{
+    return [[self relativePathToInformationDeletedDocumentsDirectory] stringByAppendingPathComponent:[[self documentIdentifier] stringByAppendingPathExtension:TICDSDocumentInfoPlistExtension]];
 }
 
 - (NSString *)relativePathToDocumentsDirectory

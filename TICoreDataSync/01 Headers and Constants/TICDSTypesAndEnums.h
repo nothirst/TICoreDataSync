@@ -56,6 +56,13 @@ typedef enum _TICDSRemoteFileStructureExistsResponseType {
     
 } TICDSRemoteFileStructureExistsResponseType;
 
+/** Whether files or directories were deleted. */
+typedef enum _TICDSRemoteFileStructureDeletionResponseType {
+    TICDSRemoteFileStructureDeletionResponseTypeError = 0,
+    TICDSRemoteFileStructureDeletionResponseTypeDeleted = -1, 
+    TICDSRemoteFileStructureDeletionResponseTypeNotDeleted = 1,
+} TICDSRemoteFileStructureDeletionResponseType;
+
 #pragma mark Logging
 /** @name Logging */
 /** Verbosity for Logging debugging output

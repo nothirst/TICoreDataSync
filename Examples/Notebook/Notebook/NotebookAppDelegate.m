@@ -134,6 +134,15 @@ userInfo:(NSDictionary *)userInfo
     [aSyncManager continueRegistrationByCreatingRemoteFileStructure:YES];
 }
 
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo
+{
+    [self setDownloadStoreAfterRegistering:NO];
+    
+    NSLog(@"DELETED");
+    
+    [aSyncManager continueRegistrationByCreatingRemoteFileStructure:YES];
+}
+
 - (BOOL)documentSyncManagerShouldUploadWholeStore\
 AfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager
 {
@@ -207,7 +216,7 @@ shouldBeginSynchronizingAfterManagedObjectContextDidSave:
      enableAutomaticSynchronizationAfterChangesDetectedFromOtherClients];
     
     //[self performSelector:@selector(getPreviouslySynchronizedClients) withObject:nil afterDelay:2.0];
-    [self performSelector:@selector(deleteDocument) withObject:nil afterDelay:2.0];
+    //[self performSelector:@selector(deleteDocument) withObject:nil afterDelay:2.0];
 }
 
 - (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishFetchingInformationForAllRegisteredDevices:(NSDictionary *)information
