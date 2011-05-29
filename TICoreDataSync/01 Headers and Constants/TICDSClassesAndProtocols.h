@@ -54,6 +54,7 @@
 @class TICDSDropboxSDKBasedVacuumOperation;
 @class TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation;
 @class TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation;
+@class TICDSDropboxSDKBasedDocumentDeletionOperation;
 #endif
 
 #pragma mark -
