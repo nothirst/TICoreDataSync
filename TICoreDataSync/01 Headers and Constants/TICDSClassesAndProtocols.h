@@ -229,6 +229,42 @@
  @param information A dictionary containing as keys the unique synchronization identifiers of each client, and as values dictionaries of information about that client. */
 - (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishFetchingInformationForAllRegisteredDevices:(NSDictionary *)information;
 
+#pragma mark Document Deletion
+/** Informs the delegate that the application sync manager has begun the process of deleting a document from the remote.
+ 
+ When the document directory is about to be deleted, the `applicationSyncManager:willDeleteDirectoryForDocumentWithIdentifier:` method will be called. Once the directory has been deleted, the `applicationSyncManager:didDeleteDirectoryForDocumentWithIdentifier:` method will be called.
+ 
+ At the end of the process, one of the `applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:` or `applicationSyncManager:didFinishDeletingDocumentWithIdentifier:` methods will be called.
+ 
+ @param aSyncManager The application sync manager object that sent the message.
+ @param anIdentifier The identifier for the document that will be deleted. */
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didBeginDeletionProcessForDocumentWithIdentifier:(NSString *)anIdentifier;
+
+/** Informs the delegate that the application sync manager failed to delete a document. 
+ 
+ @param aSyncManager The application sync manager object that sent the message.
+ @param anIdentifier The identifier of the document that wasn't deleted.
+ @param anError The error that caused the request process to fail. */
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFailToDeleteDocumentWithIdentifier:(NSString *)anIdentifier error:(NSError *)anError;
+
+/** Informs the delegate that the document's directory is about to be removed from the remote.
+ 
+ @param aSyncManager The application sync manager object that sent the message.
+ @param anIdentifier The identifier of the document that will be deleted. */
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager willDeleteDirectoryForDocumentWithIdentifier:(NSString *)anIdentifier;
+
+/** Informs the delegate that the document's directory has just been removed from the remote.
+ 
+ @param aSyncManager The application sync manager object that sent the message.
+ @param anIdentifier The identifier of the document that was deleted. */
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didDeleteDirectoryForDocumentWithIdentifier:(NSString *)anIdentifier;
+
+/** Informs the delegate that the application sync manager finished fetching information for all registered devices for this application.
+ 
+ @param aSyncManager The application sync manager object that sent the message. 
+ @param anIdentifier The identifier of the document that was deleted. */
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishDeletingDocumentWithIdentifier:(NSString *)anIdentifier;
+
 @end
 
 #pragma mark Document Sync Manager

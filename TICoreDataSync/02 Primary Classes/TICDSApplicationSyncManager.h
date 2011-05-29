@@ -21,7 +21,7 @@
  @warning You must register the application sync manager before you can use it to register any documents.
 */
 
-@interface TICDSApplicationSyncManager : NSObject <TICDSApplicationRegistrationOperationDelegate> {
+@interface TICDSApplicationSyncManager : NSObject <TICDSApplicationRegistrationOperationDelegate, TICDSDocumentDeletionOperationDelegate> {
 @private
     TICDSApplicationSyncManagerState _state;
     
@@ -115,6 +115,16 @@
  @param includeDocuments A Boolean indicating whether to include a list of documents for which each client is registered. */
 - (void)requestListOfSynchronizedClientsIncludingDocuments:(BOOL)includeDocuments;
 
+#pragma mark - Deleting Documents
+/** @name Deleting Documents */
+
+/** Delete the specified document, if it exists, from the remote.
+ 
+ As well as delegate methods indicating the status of the overall deletion process, `applicationSyncManager:willDeleteDirectoryForDocumentWithIdentifier:` and `applicationSyncManager:didDeleteDirectoryForDocumentWithIdentifier:` methods will be called either side of the deletion of the actual document directory.
+ 
+ @param anIdentifier The identifier of the document to be deleted. */
+- (void)deleteDocumentWithIdentifier:(NSString *)anIdentifier;
+
 #pragma mark - Overridden Methods
 /** @name Methods Overridden by Subclasses */
 
@@ -148,6 +158,15 @@
  
  @return A correctly-configured subclass of `TICDSListOfApplicationRegisteredClientsOperation`. */
 - (TICDSListOfApplicationRegisteredClientsOperation *)listOfApplicationRegisteredClientsOperation;
+
+/** Returns an operation to delete a document with a given identifier.
+ 
+ Subclasses of `TICDSApplicationSyncManager` use this method to return a correctly-configured document deletion operation for their particular sync method.
+ 
+ @param anIdentifier The unique synchronization identifier of the document to delete.
+ 
+ @return A correctly-configured subclass of `TICDSDocumentDeletionOperation`. */
+- (TICDSDocumentDeletionOperation *)documentDeletionOperationForDocumentWithIdentifier:(NSString *)anIdentifier;
 
 #pragma mark - Properties
 /** @name Properties */
