@@ -13,6 +13,8 @@
 - (void)beginCheckingForIdentifiedDocumentDirectory;
 - (void)beginCopyingDocumentInfoPlistToDeletedDocumentsDirectory;
 - (void)beginAlertToDelegateThatDocumentWillBeDeleted;
+- (void)beginDeletingDocumentDirectory;
+- (void)beginAlertToDelegateThatDocumentWasDeleted;
 
 @end
 
@@ -94,6 +96,40 @@
 {
     [self ti_alertDelegateOnMainThreadWithSelector:@selector(documentDeletionOperationWillDeleteDocument:) waitUntilDone:YES];
     
+    [self beginDeletingDocumentDirectory];
+}
+
+#pragma mark - Deleting the Document
+- (void)beginDeletingDocumentDirectory
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Deleting the document from the remote");
+    
+    [self deleteDocumentDirectory];
+}
+
+- (void)deletedDocumentDirectoryWithSuccess:(BOOL)success
+{
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to delete document directory");
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Deleted document directory");
+    
+    [self beginAlertToDelegateThatDocumentWasDeleted];
+}
+
+#pragma mark Overridden Method
+- (void)deleteDocumentDirectory
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self deletedDocumentDirectoryWithSuccess:NO];
+}
+
+#pragma mark - Alerting the Delegate After Deletion
+- (void)beginAlertToDelegateThatDocumentWasDeleted
+{
     
 }
 

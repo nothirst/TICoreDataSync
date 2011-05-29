@@ -25,8 +25,13 @@
 
 /** Copy the identified document's `documentInfo.plist` file to the `DeletedDocuments` directory.
  
- This method must call `` when finished. */
+ This method must call `copiedDocumentInfoPlistToDeletedDocumentsDirectoryWithSuccess:` when finished. */
 - (void)copyDocumentInfoPlistToDeletedDocumentsDirectory;
+
+/** Delete the identified document's directory.
+ 
+ This method must call `deletedDocumentDirectoryWithSuccess:` when finished. */
+- (void)deleteDocumentDirectory;
 
 #pragma mark Callbacks
 /** @name Callbacks */
@@ -44,6 +49,13 @@
  
  @param success A Boolean indicating whether the file was copied. */
 - (void)copiedDocumentInfoPlistToDeletedDocumentsDirectoryWithSuccess:(BOOL)success;
+
+/** Indicate whether the document directory was deleted successfully.
+ 
+ If an error occurred, call `setError:` first, then specify `NO` for `success`.
+ 
+ @param success A Boolean indicating whether the directory was deleted. */
+- (void)deletedDocumentDirectoryWithSuccess:(BOOL)success;
 
 #pragma mark Properties
 /** @name Properties */
