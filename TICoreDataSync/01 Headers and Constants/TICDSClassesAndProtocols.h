@@ -601,3 +601,18 @@
 - (void)synchronizationOperationResumedFollowingResolutionOfConflict:(TICDSSynchronizationOperation *)anOperation;
 
 @end
+
+#pragma mark Document Deletion Delegate
+@protocol TICDSDocumentDeletionOperationDelegate <TICDSOperationDelegate>
+
+/** Informs the delegate that the document is about to be deleted from the remote. The delegate should alert its own delegate.
+ 
+ @param anOperation The operation object that sent the message. */
+- (void)documentDeletionOperationWillDeleteDocument:(TICDSDocumentDeletionOperation *)anOperation;
+
+/** Informs the delegate that the document was deleted from the remote. The delegate should alert its own delegate.
+ 
+ @param anOperation The operation object that sent the message. */
+- (void)documentDeletionOperationDidDeleteDocument:(TICDSDocumentDeletionOperation *)anOperation;
+
+@end

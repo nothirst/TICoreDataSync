@@ -89,9 +89,11 @@
     [self copiedDocumentInfoPlistToDeletedDocumentsDirectoryWithSuccess:NO];
 }
 
-#pragma mark - Alerting the Delegate
+#pragma mark - Alerting the Delegate Before Deletion
 - (void)beginAlertToDelegateThatDocumentWillBeDeleted
 {
+    [self ti_alertDelegateOnMainThreadWithSelector:@selector(documentDeletionOperationWillDeleteDocument:) waitUntilDone:YES];
+    
     
 }
 
