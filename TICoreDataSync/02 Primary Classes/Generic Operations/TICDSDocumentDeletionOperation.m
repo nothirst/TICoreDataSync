@@ -44,7 +44,7 @@
         case TICDSRemoteFileStructureExistsResponseTypeDoesExist:
             TICDSLog(TICDSLogVerbosityEveryStep, @"Document directory exists");
             
-            //[self beginCopyingDocumentInfoPlistFileToDeletedDocumentsDirectory];
+            [self beginCopyingDocumentInfoPlistToDeletedDocumentsDirectory];
             return;
             
         case TICDSRemoteFileStructureExistsResponseTypeDoesNotExist:
@@ -130,7 +130,9 @@
 #pragma mark - Alerting the Delegate After Deletion
 - (void)beginAlertToDelegateThatDocumentWasDeleted
 {
+    [self ti_alertDelegateOnMainThreadWithSelector:@selector(documentDeletionOperationDidDeleteDocument:) waitUntilDone:YES];
     
+    [self operationDidCompleteSuccessfully];
 }
 
 #pragma mark -
