@@ -25,6 +25,7 @@
 @class TICDSVacuumOperation;
 @class TICDSListOfDocumentRegisteredClientsOperation;
 @class TICDSListOfApplicationRegisteredClientsOperation;
+@class TICDSDocumentDeletionOperation;
 
 #pragma mark File Manager-Based
 @class TICDSFileManagerBasedApplicationSyncManager;

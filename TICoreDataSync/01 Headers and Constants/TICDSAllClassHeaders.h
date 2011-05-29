@@ -25,6 +25,7 @@
 #import "TICDSVacuumOperation.h"
 #import "TICDSListOfDocumentRegisteredClientsOperation.h"
 #import "TICDSListOfApplicationRegisteredClientsOperation.h"
+#import "TICDSDocumentDeletionOperation.h"
 
 #pragma mark File Manager-Based
 #import "TICDSFileManagerBasedApplicationSyncManager.h"
