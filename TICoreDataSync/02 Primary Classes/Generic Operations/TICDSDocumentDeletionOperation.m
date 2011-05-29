@@ -10,13 +10,53 @@
 
 @interface TICDSDocumentDeletionOperation ()
 
+- (void)beginCheckingForIdentifiedDocumentDirectory;
+
 @end
 
 @implementation TICDSDocumentDeletionOperation
 
 - (void)main
 {
+    [self beginCheckingForIdentifiedDocumentDirectory];
+}
+
+#pragma mark - Document Existence
+- (void)beginCheckingForIdentifiedDocumentDirectory
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Checking whether the identified document directory exists");
     
+    
+}
+
+- (void)discoveredStatusOfIdentifiedDocumentDirectory:(TICDSRemoteFileStructureExistsResponseType)status
+{
+    switch( status ) {
+        case TICDSRemoteFileStructureExistsResponseTypeError:
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error checking whether the identified document directory exists");
+            [self operationDidFailToComplete];
+            return;
+            
+        case TICDSRemoteFileStructureExistsResponseTypeDoesExist:
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Document directory exists");
+            
+            //[self beginCopyingDocumentInfoPlistFileToDeletedDocumentsDirectory];
+            return;
+            
+        case TICDSRemoteFileStructureExistsResponseTypeDoesNotExist:
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Document directory does not exist");
+            
+            [self setDocumentWasFoundAndDeleted:NO];
+            [self operationDidCompleteSuccessfully];
+            return;
+    }
+}
+
+#pragma mark Overridden Method
+- (void)checkWhetherIdentifiedDocumentDirectoryExists
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self discoveredStatusOfIdentifiedDocumentDirectory:TICDSRemoteFileStructureExistsResponseTypeError];
 }
 
 #pragma mark -
@@ -31,5 +71,6 @@
 #pragma mark -
 #pragma mark Properties
 @synthesize documentIdentifier = _documentIdentifier;
+@synthesize documentWasFoundAndDeleted = _documentWasFoundAndDeleted;
 
 @end

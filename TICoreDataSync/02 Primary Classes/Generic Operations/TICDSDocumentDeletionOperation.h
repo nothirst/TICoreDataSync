@@ -12,8 +12,10 @@
 @interface TICDSDocumentDeletionOperation : TICDSOperation {
 @private
     NSString *_documentIdentifier;
+    BOOL _documentWasFoundAndDeleted;
 }
 
 @property (retain) NSString *documentIdentifier;
+@property (assign) BOOL documentWasFoundAndDeleted;
 
 @end
