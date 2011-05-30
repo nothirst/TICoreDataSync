@@ -8,6 +8,17 @@
 
 #import "TICDSOperation.h"
 
+/** The `TICDSDocumentDeletionOperation` class describes a generic operation used by the `TICoreDataSync` framework to delete the remote synchronization data used to synchronize a document.
+ 
+ The operation carries out the following tasks:
+ 
+ 1. Check whether the specified document exists.
+ 2. Copy the `documentInfo.plist` file to an `identifier.plist` file inside the `DeletedDocuments` directory.
+ 3. Delete the document's directory.
+ 
+ Operations are typically created automatically by the relevant sync manager.
+ 
+ @warning You must use one of the subclasses of `TICDSDocumentDeletionOperation`. */
 
 @interface TICDSDocumentDeletionOperation : TICDSOperation {
 @private
