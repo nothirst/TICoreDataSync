@@ -26,13 +26,6 @@
     2. If not, continue by creating client's directories for this document.
  3. Subclass creates a directory for this client in this document's `SyncChanges` and `SyncCommands` directories.
   
- Previous Tasks:
- 
- 1. Check whether the document has been previously registered with the remote (i.e., whether the file structure exists).
- 2. If not, register the document and create the file structure.
- 3. Check whether this client has previously been registered for this document (i.e., whether client-specific file structures exist).
- 4. If not, create the necessary file structure for this client for this document.
- 
  Operations are typically created automatically by the relevant sync manager.
  
  @warning You must use one of the subclasses of `TICDSDocumentRegistrationOperation`.
@@ -121,21 +114,21 @@
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the directory structure was created or not */
+ @param success `YES` if the directory structure was created, otherwise `NO`. */
 - (void)createdRemoteDocumentDirectoryStructureWithSuccess:(BOOL)success;
 
 /** Indicate whether the `documentInfo.plist` file was saved successfully.
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the `documentInfo.plist` file was saved or not. */
+ @param success `YES` if the `documentInfo.plist` file was saved, otherwise `NO`. */
 - (void)savedRemoteDocumentInfoPlistWithSuccess:(BOOL)success;
 
 /** Indicate whether the `identifier.plist` file for this document was removed from the `DeletedDocuments` directory.
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the `identifier.plist` file was deleted or not. */
+ @param success `YES` if the `identifier.plist` file was deleted, otherwise `NO`. */
 - (void)deletedDocumentInfoPlistFromDeletedDocumentsDirectoryWithSuccess:(BOOL)success;
 
 /** Indicate the status of this client's directory inside the remote document `SyncChanges` directory.
@@ -149,7 +142,7 @@
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the directory structure was created or not */
+ @param success `YES` if the directory structure was created, otherwise `NO`. */
 - (void)createdClientDirectoriesInRemoteDocumentDirectoriesWithSuccess:(BOOL)success;
 
 #pragma mark Properties

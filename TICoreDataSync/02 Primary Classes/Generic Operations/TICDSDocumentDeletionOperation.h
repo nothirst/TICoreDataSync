@@ -26,6 +26,16 @@
     BOOL _documentWasFoundAndDeleted;
 }
 
+#pragma mark Designated Initializer
+/** @name Designated Initializer */
+
+/** Initialize a document deletion operation using a delegate that supports the `TICDSDocumentDeletionOperationDelegate` protocol.
+ 
+ @param aDelegate The delegate to use for this operation.
+ 
+ @return An initialized document registration operation. */
+- (id)initWithDelegate:(NSObject<TICDSDocumentDeletionOperationDelegate> *)aDelegate;
+
 #pragma mark Overridden Methods
 /** @name Overridden Methods */
 
@@ -34,7 +44,7 @@
  This method must call `discoveredStatusOfTemporaryWholeStoreDirectory:` to indicate the status. */
 - (void)checkWhetherIdentifiedDocumentDirectoryExists;
 
-/** Check whether the identifier.plist file for the specified document identifier exists.
+/** Check whether the `identifier.plist` file for the specified document identifier exists.
  
  This method must call `discoveredStatusOfIdentifierPlistInDeletedDocumentsDirectory:` to indicate the status. */
 - (void)checkForExistingIdentifierPlistInDeletedDocumentsDirectory;
@@ -75,20 +85,20 @@
  
  If an error occurred, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the file was copied. */- (void)deletedDocumentInfoPlistFromDeletedDocumentsDirectoryWithSuccess:(BOOL)success;
+ @param success `YES` if the file was copied successfully, or `NO` if an error occurred. */- (void)deletedDocumentInfoPlistFromDeletedDocumentsDirectoryWithSuccess:(BOOL)success;
 
 /** Indicate whether the `documentInfo.plist` file was copied successfully to the `DeletedDocuments` directory.
  
  If an error occurred, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the file was copied. */
+ @param success `YES` if the file was copied successfully, or `NO` if an error occurred.  */
 - (void)copiedDocumentInfoPlistToDeletedDocumentsDirectoryWithSuccess:(BOOL)success;
 
 /** Indicate whether the document directory was deleted successfully.
  
  If an error occurred, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the directory was deleted. */
+ @param success `YES` if the directory was deleted successfully, or `NO` if an error occurred.  */
 - (void)deletedDocumentDirectoryWithSuccess:(BOOL)success;
 
 #pragma mark Properties

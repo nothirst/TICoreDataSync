@@ -89,28 +89,28 @@
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the directory was deleted or not. */
+ @param success `YES` if the directory was deleted, otherwise `NO`. */
 - (void)deletedThisClientTemporaryWholeStoreDirectoryWithSuccess:(BOOL)success;
 
 /** Indicate whether the creation of this client's directory inside the `WholeStore` directory inside the document's `TemporaryFiles` directory was successful.
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the directory was created or not. */
+ @param success `YES` if the directory was created, otherwise `NO`. */
 - (void)createdThisClientTemporaryWholeStoreDirectoryWithSuccess:(BOOL)success;
 
 /** Indicate whether the upload of the whole store file was successful.
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the file was uploaded or not. */
+ @param success `YES` if the file was uploaded, otherwise `NO`. */
 - (void)uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:(BOOL)success;
 
 /** Indicate whether the upload of the applied sync change sets file was successful.
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the file was uploaded or not. */
+ @param success `YES` if the file was uploaded, otherwise `NO`. */
 - (void)uploadedAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:(BOOL)success;
 
 /** Indicate the status of this client's directory inside the `WholeStore` directory for this document.
@@ -124,14 +124,14 @@
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the directory was deleted or not. */
+ @param success `YES` if the directory was deleted, otherwise `NO`. */
 - (void)deletedThisClientWholeStoreDirectoryWithSuccess:(BOOL)success;
 
 /** Indicate whether the temporary WholeStore directory was copied to the non-temporary directory location successfully.
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the directory was copied or not. */
+ @param success `YES` if the directory was copied, otherwise `NO`. */
 - (void)copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:(BOOL)success;
 
 #pragma mark - Properties

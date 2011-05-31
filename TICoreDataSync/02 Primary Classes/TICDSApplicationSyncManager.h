@@ -18,7 +18,7 @@
  1. `TICDSFileManagerBasedApplicationSyncManager`
  2. `TICDSDropboxSDKBasedApplicationSyncManager`
  
- @warning You must register the application sync manager before you can use it to register any documents.
+ @warning You must register the application sync manager before you can use it to perform any other tasks, or register any documents.
 */
 
 @interface TICDSApplicationSyncManager : NSObject <TICDSApplicationRegistrationOperationDelegate, TICDSDocumentDeletionOperationDelegate> {
@@ -112,7 +112,7 @@
  
  This method returns a dictionary containing as keys the client identifiers, and as values the `deviceInfo.plist` information. If you specify `YES` for `includeDocuments`, each dictionary will also include an array containing the identifiers of documents for which the client is registered.
  
- @param includeDocuments A Boolean indicating whether to include a list of documents for which each client is registered. */
+ @param includeDocuments `YES` if the request should also include a list of documents that each client is registered to synchronize, otherwise `NO`. */
 - (void)requestListOfSynchronizedClientsIncludingDocuments:(BOOL)includeDocuments;
 
 #pragma mark - Deleting Documents
@@ -218,12 +218,12 @@
 /** @name Operation Queues */
 
 /** The operation queue used for registration operations. */
-@property (nonatomic, retain) NSOperationQueue *registrationQueue;
+@property (nonatomic, readonly, retain) NSOperationQueue *registrationQueue;
 
 /** The operation queue used for non-registration tasks.
  
  The queue is suspended until registration has completed successfully. */
-@property (nonatomic, retain) NSOperationQueue *otherTasksQueue;
+@property (nonatomic, readonly, retain) NSOperationQueue *otherTasksQueue;
 
 #pragma mark - Relative Paths
 /** @name Relative Paths */

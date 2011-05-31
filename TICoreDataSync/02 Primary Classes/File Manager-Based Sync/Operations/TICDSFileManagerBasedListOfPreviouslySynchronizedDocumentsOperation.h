@@ -9,7 +9,7 @@
 #import "TICDSListOfPreviouslySynchronizedDocumentsOperation.h"
 
 /**
- `TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation` is a "list of previously-synchronized documents" operation designed for use with a `TICDSFileManagerBasedDocumentSyncManager`.
+ `TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation` is a "list of previously-synchronized documents" operation designed for use with a `TICDSFileManagerBasedApplicationSyncManager`.
  */
 @interface TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation : TICDSListOfPreviouslySynchronizedDocumentsOperation {
 @private

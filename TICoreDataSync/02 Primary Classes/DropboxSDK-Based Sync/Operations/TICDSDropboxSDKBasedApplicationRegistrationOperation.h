@@ -18,7 +18,7 @@
 @interface TICDSDropboxSDKBasedApplicationRegistrationOperation : TICDSApplicationRegistrationOperation <DBRestClientDelegate> {
 @private
     DBSession *_dbSession;
-    DBRestClient *_appDirectoryRestClient;
+    DBRestClient *_restClient;
     NSString *_applicationDirectoryPath;
     NSString *_encryptionDirectorySaltDataFilePath;
     NSString *_encryptionDirectoryTestDataFilePath;
@@ -34,16 +34,18 @@
 /** The DropboxSDK `DBSession` for use by this operation's `DBRestClient`. */
 @property (retain) DBSession *dbSession;
 
-/** The DropboxSDK `DBRestClient` for use by this operation for methods relating to the global application directory. */
-@property (nonatomic, retain) DBRestClient *appDirectoryRestClient;
+/** The DropboxSDK `DBRestClient` for use by this operation. */
+@property (nonatomic, readonly) DBRestClient *restClient;
 
-/** The application root path. */
+/** @name Paths */
+
+/** The path to the root of the application. */
 @property (retain) NSString *applicationDirectoryPath;
 
-/** The path to the `salt.ticdsync` file inside this application's `Encryption` directory. */
+/** The path to the `salt.ticdsync` file inside the application's `Encryption` directory. */
 @property (retain) NSString *encryptionDirectorySaltDataFilePath;
 
-/** The path to the `test.ticdsync` file inside this application's `Encryption` directory. */
+/** The path to the `test.ticdsync` file inside the application's `Encryption` directory. */
 @property (retain) NSString *encryptionDirectoryTestDataFilePath;
 
 /** The path to this client's directory in the `ClientDevices` directory. */

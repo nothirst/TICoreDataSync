@@ -43,7 +43,7 @@
  @param aSelector The selector to invoke.
  @param ... A variable number of arguments to be passed to the selector (excluding the first argument, assumed to be `self`).
  
- @return YES if invocation was invoked successfully. */
+ @return `YES` if invocation was invoked successfully. */
 - (BOOL)ti_getResult:(void *)result fromDelegateWithSelector:(SEL)aSelector, ...;
 
 /** Get some kind of result from a delegate with a given selector and `va_list`.
@@ -52,7 +52,7 @@
  @param aSelector The selector to invoke.
  @param args A properly-started `va_list` of arguments to be passed to the selector.
  
- @return YES if invocation was invoked successfully. */
+ @return `YES` if invocation was invoked successfully. */
 - (BOOL)ti_getResult:(void *)result fromDelegateWithSelector:(SEL)aSelector withArgList:(va_list)args;
 
 /** Get an object value from a given delegate selector with provided (object) arguments.
@@ -70,7 +70,7 @@
  @param aSelector The selector to invoke.
  @param ... The arguments to be passed to the selector (excluding the first argument, assumed to be `self`). 
  
- @return The Boolean returned by the delegate. */
+ @return The Boolean returned by the delegate, or `YES` if the delegate does not respond to the selector. */
 - (BOOL)ti_optimisticBoolFromDelegateWithSelector:(SEL)aSelector, ...;
 
 /** Get a Boolean value from a given delegate selector with provided (object) arguments. 
@@ -80,7 +80,7 @@
  @param aSelector The selector to invoke.
  @param ... The arguments to be passed to the selector (excluding the first argument, assumed to be `self`). 
  
- @return The Boolean returned by the delegate. */
+ @return The Boolean returned by the delegate, or `NO` if the delegate does not respond to the selector. */
 - (BOOL)ti_boolFromDelegateWithSelector:(SEL)aSelector, ...;
 
 /** Alert a delegate with a given selector and provided (object) arguments.

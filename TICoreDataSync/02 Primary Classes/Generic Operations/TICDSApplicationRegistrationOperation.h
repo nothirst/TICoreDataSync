@@ -81,6 +81,12 @@
 
 #pragma mark Designated Initializer
 /** @name Designated Initializer */
+
+/** Initialize an application registration operation using a delegate that supports the `TICDSApplicationRegistrationOperationDelegate` protocol.
+ 
+ @param aDelegate The delegate to use for this operation.
+ 
+ @return An initialized document registration operation. */
 - (id)initWithDelegate:(NSObject<TICDSApplicationRegistrationOperationDelegate> *)aDelegate;
 
 #pragma mark Methods Overridden by Subclasses
@@ -163,14 +169,14 @@
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the directory structure was created or not */
+ @param success `YES` if the directory structure was created, otherwise `NO`. */
 - (void)createdRemoteGlobalAppDirectoryStructureWithSuccess:(BOOL)success;
 
 /** Indicate whether the `ReadMe.txt` file was copied from the bundle. 
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the `ReadMe.txt` file was copied or not. */
+ @param success `YES` if the `ReadMe.txt` file was copied, otherwise `NO`. */
 - (void)copiedReadMeTxtFileToRootOfGlobalAppDirectoryWithSuccess:(BOOL)success;
 
 /** Indicate the status of the `salt.ticdsync` file.
@@ -191,14 +197,14 @@
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the `salt.ticdsync` file was saved or not. */
+ @param success `YES` if the `salt.ticdsync` file was saved, otherwise `NO`. */
 - (void)savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:(BOOL)success;
 
 /** Indicate whether the test data was saved successfuly.
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the `test.ticdsync` file was saved or not. */
+ @param success `YES` if the `test.ticdsync` file was saved, otherwise `NO`. */
 - (void)savedPasswordTestDataWithSuccess:(BOOL)success;
 
 /** Provide the test data from the `test.ticdsync` file.
@@ -219,14 +225,14 @@
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the client's directory was created or not. */
+ @param success `YES` if the client's directory was created, otherwise `NO`. */
 - (void)createdRemoteClientDeviceDirectoryWithSuccess:(BOOL)success;
 
 /** Indicate whether the `deviceInfo.plist` file was saved successfully.
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the `deviceInfo.plist` file was saved or not. */
+ @param success `YES` if the `deviceInfo.plist` file was saved, otherwise `NO`. */
 - (void)savedRemoteClientDeviceInfoPlistWithSuccess:(BOOL)success;
 
 #pragma mark Properties

@@ -6,7 +6,7 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
-/** `TICDSUtilities` is a utility class providing various class methods for miscellaneous tasks */
+/** `TICDSUtilities` is a utility class providing various class methods for miscellaneous tasks. */
 
 @interface TICDSUtilities : NSObject {
 @private

@@ -12,7 +12,9 @@
 
 /** The `TICDSDropboxSDKBasedDocumentSyncManager` describes a class used to synchronize an iOS document with a remote service that can be accessed via the Dropbox SDK.
  
- The requirements are: 
+ The requirements are the same as for the `TICDSDropboxSDKBasedApplicationSyncManager`. 
+ 
+ Note that if you wish to use a `DBSession` object other than the default session, you will need to specify this on each document sync manager you create before calling any other methods.
  */
 
 @class DBSession;

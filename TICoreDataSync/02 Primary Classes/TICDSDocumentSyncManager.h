@@ -16,12 +16,9 @@
  Don't instantiate this class directly, but instead use one of the subclasses:
  
  1. `TICDSFileManagerBasedDocumentSyncManager`
- 2. `TICDSRestClientBasedDocumentSyncManager`
+ 2. `TICDSDropboxSDKBasedDocumentSyncManager`
  
- @warning You must register the document sync manager before you can use it to synchronize the document, or perform any other tasks.
- 
- @see TICDSFileManagerBasedDocumentSyncManager
- */
+ @warning You must register the document sync manager before you can use it to synchronize the document, or perform any other tasks. */
 
 @interface TICDSDocumentSyncManager : NSObject <TICDSDocumentRegistrationOperationDelegate> {
 @private
@@ -81,7 +78,7 @@
  
  If you specify `NO`, registration will fail with an error.
  
- @param shouldCreateFileStructure A Boolean indicating whether the registration should continue and create the necessary remote file structure. 
+ @param shouldCreateFileStructure `YES` if the registration should continue and create the necessary remote file structure, or `NO` to cancel the registration. 
  */
 - (void)continueRegistrationByCreatingRemoteFileStructure:(BOOL)shouldCreateFileStructure;
 
@@ -300,17 +297,17 @@
 
 /** The operation queue used for registration operations.
  */
-@property (nonatomic, retain) NSOperationQueue *registrationQueue;
+@property (nonatomic, readonly, retain) NSOperationQueue *registrationQueue;
 
 /** The operation queue used for synchronization operations.
  
  The queue supports only 1 operation at a time, and is suspended until the document has registered successfully. */
-@property (nonatomic, retain) NSOperationQueue *synchronizationQueue;
+@property (nonatomic, readonly, retain) NSOperationQueue *synchronizationQueue;
 
 /** The operation queue used for other tasks.
  
  The queue is suspended until the document has registered successfully. */
-@property (nonatomic, retain) NSOperationQueue *otherTasksQueue;
+@property (nonatomic, readonly, retain) NSOperationQueue *otherTasksQueue;
 
 #pragma mark - Relative Paths
 /** @name Relative Paths */

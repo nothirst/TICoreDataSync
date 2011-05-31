@@ -8,6 +8,9 @@
 
 #import "TICDSListOfApplicationRegisteredClientsOperation.h"
 
+/**
+ `TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation` is a "list of clients registered to an application" operation designed for use with a `TICDSFileManagerBasedApplicationSyncManager`.
+ */
 
 @interface TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation : TICDSListOfApplicationRegisteredClientsOperation {
 @private
@@ -15,7 +18,12 @@
     NSString *_documentsDirectoryPath;
 }
 
+/** @name Paths */
+
+/** The path to the `ClientDevices` directory. */
 @property (retain) NSString *clientDevicesDirectoryPath;
+
+/** The path to the `Documents` directory. */
 @property (retain) NSString *documentsDirectoryPath;
 
 @end

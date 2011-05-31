@@ -10,10 +10,12 @@
 
 /** The `TICDSFileManagerBasedDocumentSyncManager` describes a class used to synchronize documents with a remote service that can be accessed via an `NSFileManager`. This includes:
  
- 1. Dropbox (files are typically accessed via `~/Dropbox`)
- 2. iDisk
+ 1. Dropbox on the desktop (files are typically accessed via `~/Dropbox`)
+ 2. iDisk on the desktop
  
  No FileManagerBased-specific settings are required when you create a `TICDSFileManagerBasedDocumentSyncManager`--the `applicationDirectoryPath` is set automatically when you register (based on the properties set on the `TICDSFileManagerBasedApplicationSyncManager`).
+ 
+ One **additional feature** is provided by an `NSFileManager`-based document sync manager---the ability to trigger a synchronization whenever changes are detected in other clients' `SyncChanges` directories. To make use of this functionality, simply call the `enableAutomaticSynchronizationAfterChangesDetectedFromOtherClients` method once the document has been registered.
  */
 @interface TICDSFileManagerBasedDocumentSyncManager : TICDSDocumentSyncManager {
 @private
@@ -30,16 +32,16 @@
 
 /** @name Properties */
 
-/** The path to the root of the application. This will be set automatically when you register and supply a `TICDSFileManagerBasedApplicationSyncManager`. */
-@property (nonatomic, retain) NSString *applicationDirectoryPath;
-
 /** A `TIKQDirectoryWatcher` used to watch for changes in the `SyncChanges` directories for this document. */
-@property (nonatomic, retain) TIKQDirectoryWatcher *directoryWatcher;
+@property (nonatomic, readonly) TIKQDirectoryWatcher *directoryWatcher;
 
 /** A mutable array containing the identifiers of clients currently being watched. */
-@property (nonatomic, retain) NSMutableArray *watchedClientDirectoryIdentifiers;
+@property (nonatomic, readonly) NSMutableArray *watchedClientDirectoryIdentifiers;
 
 /** @name Paths */
+
+/** The path to the root of the application. This will be set automatically when you register and supply a `TICDSFileManagerBasedApplicationSyncManager`. */
+@property (nonatomic, retain) NSString *applicationDirectoryPath;
 
 /** The path to the `ClientDevices` directory. */
 @property (nonatomic, readonly) NSString *clientDevicesDirectoryPath;

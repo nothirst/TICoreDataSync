@@ -32,7 +32,7 @@
 @property (retain) DBSession *dbSession;
 
 /** The DropboxSDK `DBRestClient` for use by this operation for methods relating to the global application directory. */
-@property (nonatomic, retain) DBRestClient *restClient;
+@property (nonatomic, readonly) DBRestClient *restClient;
 
 /** @name Paths */
 

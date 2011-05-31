@@ -158,14 +158,14 @@
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the sync change set file was uploaded or not. */
+ @param success `YES` if the sync change set file was uploaded, otherwise `NO`. */
 - (void)uploadedLocalSyncChangeSetFileSuccessfully:(BOOL)success;
 
 /** Indicate whether the upload of the RecentSync file was successful.
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the RecentSync file was uploaded or not. */
+ @param success `YES` if the RecentSync file was uploaded, otherwise `NO`. */
 - (void)uploadedRecentSyncFileSuccessfully:(BOOL)success;
 
 #pragma mark Helper Methods
@@ -248,7 +248,6 @@
 
 /** The managed object context (tied to the application's persistent store coordinator) in which `SyncChanges` are applied. */
 @property (nonatomic, retain) NSManagedObjectContext *backgroundApplicationContext;
-
 
 #pragma mark Completion
 /** @name Completion */

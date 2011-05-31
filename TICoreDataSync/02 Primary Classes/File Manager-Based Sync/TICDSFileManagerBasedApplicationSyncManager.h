@@ -10,8 +10,8 @@
 
 /** The `TICDSFileManagerBasedApplicationSyncManager` describes a class used to synchronize an application with a remote service that can be accessed via an `NSFileManager`. This includes:
  
- 1. Dropbox (files are typically accessed via `~/Dropbox`)
- 2. iDisk
+ 1. Dropbox on the desktop (files are typically accessed via `~/Dropbox`)
+ 2. iDisk on the desktop
  
  The only requirement is that you set the `NSURL` location of the directory that should contain the application *before* you register the sync manager. For example, if you wish to have sync information stored in `~/Dropbox/com.timisted.MySynchronizedApp/`, specify `~/Dropbox` as the `applicationContainingDirectoryLocation`.
  */

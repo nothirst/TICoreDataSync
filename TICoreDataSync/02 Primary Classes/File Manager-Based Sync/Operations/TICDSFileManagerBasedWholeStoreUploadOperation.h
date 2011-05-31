@@ -21,7 +21,7 @@
 
 /** @name Paths */
 
-/** The path this client's directory within the `WholeStore` directory inside this document's `TemporaryFiles` directory. */
+/** The path to this client's directory within the `WholeStore` directory inside this document's `TemporaryFiles` directory. */
 @property (retain) NSString *thisDocumentTemporaryWholeStoreThisClientDirectoryPath;
 
 /** The path to which the whole store file should be copied. */

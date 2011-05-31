@@ -29,11 +29,18 @@
 /** The DropboxSDK `DBSession` for use by this operation's `DBRestClient`. */
 @property (retain) DBSession *dbSession;
 
-/** The DropboxSDK `DBRestClient` for use by this operation for methods relating to the global application directory. */
-@property (nonatomic, retain) DBRestClient *restClient;
+/** The DropboxSDK `DBRestClient` for use by this operation. */
+@property (nonatomic, readonly) DBRestClient *restClient;
 
+/** @name Paths */
+
+/** The path to the directory that should be deleted. */
 @property (retain) NSString *documentDirectoryPath;
+
+/** The path to the document's `documentInfo.plist` file. */
 @property (retain) NSString *documentInfoPlistFilePath;
+
+/** The path to the document's `identifier.plist` file inside the application's `DeletedDocuments` directory. */
 @property (retain) NSString *deletedDocumentsDirectoryIdentifierPlistFilePath;
 
 @end

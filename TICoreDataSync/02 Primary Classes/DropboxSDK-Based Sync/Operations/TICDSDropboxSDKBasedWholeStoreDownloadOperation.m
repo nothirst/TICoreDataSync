@@ -10,6 +10,12 @@
 
 #import "TICoreDataSync.h"
 
+@interface TICDSDropboxSDKBasedWholeStoreDownloadOperation ()
+
+/** A mutable dictionary to hold the last modified dates of each client identifier's whole store. */
+@property (nonatomic, retain) NSMutableDictionary *wholeStoreModifiedDates;
+
+@end
 
 @implementation TICDSDropboxSDKBasedWholeStoreDownloadOperation
 

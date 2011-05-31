@@ -58,14 +58,14 @@
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the whole store file was downloaded or not. */
+ @param success `YES` if the whole store file was downloaded, otherwise `NO`. */
 - (void)downloadedWholeStoreFileWithSuccess:(BOOL)success;
 
 /** Indicate whether the download of the applied sync change sets file was successful.
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the applied sync change sets file was downloaded or not. */
+ @param success `YES` if the applied sync change sets file was downloaded, otherwise `NO`. */
 - (void)downloadedAppliedSyncChangeSetsFileWithSuccess:(BOOL)success;
 
 /** @name Properties */

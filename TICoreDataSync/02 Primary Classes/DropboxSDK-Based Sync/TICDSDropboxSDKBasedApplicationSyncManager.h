@@ -12,7 +12,10 @@
 
 /** The `TICDSDropboxSDKBasedApplicationSyncManager` describes a class used to synchronize an iOS application with a remote service that can be accessed via the Dropbox SDK.
  
- The requirements are: 
+ The requirements are:
+ 
+ 1. Your application must include the `DropboxSDK` files available from the Dropbox developer website.
+ 2. You must already have configured a `DBSession` object before registering the application. If you set this as the default session, you don't need to do anything else, otherwise you must set the `dbSession` property before registering the application.
  */
 
 @class DBSession;

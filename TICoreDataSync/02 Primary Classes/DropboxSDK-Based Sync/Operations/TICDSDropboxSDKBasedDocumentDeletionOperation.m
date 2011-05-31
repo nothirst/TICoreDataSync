@@ -10,7 +10,6 @@
 
 #import "TICoreDataSync.h"
 
-
 @implementation TICDSDropboxSDKBasedDocumentDeletionOperation
 
 - (BOOL)needsMainThread

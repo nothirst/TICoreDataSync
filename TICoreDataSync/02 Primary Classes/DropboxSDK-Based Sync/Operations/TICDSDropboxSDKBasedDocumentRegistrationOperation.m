@@ -10,7 +10,6 @@
 
 #import "TICDSDropboxSDKBasedDocumentRegistrationOperation.h"
 
-
 @implementation TICDSDropboxSDKBasedDocumentRegistrationOperation
 
 #pragma mark -
