@@ -239,8 +239,8 @@
 		386F07C113715D0800D4F31B = {
 			isa = PBXGroup;
 			children = (
-				389E1BCD13856B7D00E9E7C1 /* TICoreDataSync */,
 				386F07D613715D0800D4F31B /* Notebook */,
+				389E1BCD13856B7D00E9E7C1 /* TICoreDataSync */,
 				386F07CF13715D0800D4F31B /* Frameworks */,
 				386F07CD13715D0800D4F31B /* Products */,
 			);
