@@ -99,6 +99,26 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     [aSyncManager continueRegistrationByCreatingRemoteFileStructure:YES];
 }
 
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo
+{
+    [self decreaseActivity];
+    
+    NSAlert *alert = [NSAlert alertWithMessageText:@"Document was Deleted" defaultButton:@"Yes" alternateButton:@"No" otherButton:nil informativeTextWithFormat:@"This document has previously been deleted by another client.\n\nDo you wish to re-create the synchronization data for this document?"];
+    
+    NSUInteger result = [alert runModal];
+    
+    switch( result ) {
+        case NSAlertDefaultReturn:
+            [aSyncManager continueRegistrationByCreatingRemoteFileStructure:YES];
+            break;
+            
+        default:
+            // In a Shipping App, turn off synchronization for this document, and release the Doc Sync Manager.
+            // This is left out for this demo client so that you can trigger registration each time you open the document.
+            break;
+    }
+}
+
 - (void)documentSyncManagerDidContinueRegistering:(TICDSDocumentSyncManager *)aSyncManager
 {
     [self increaseActivity];

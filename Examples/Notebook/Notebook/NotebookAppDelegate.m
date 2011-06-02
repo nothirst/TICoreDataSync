@@ -170,7 +170,7 @@ didReplaceStoreWithDownloadedStoreAtURL:(NSURL *)aStoreURL
 {
     NSError *anyError = nil;
     id store = [[self persistentStoreCoordinator]
-                addPersistentStoreWithType:NSXMLStoreType 
+                addPersistentStoreWithType:NSSQLiteStoreType 
                 configuration:nil 
                 URL:aStoreURL options:nil error:&anyError];
     

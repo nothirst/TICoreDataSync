@@ -24,11 +24,29 @@
     [[self navigationItem] setRightBarButtonItem:[self editButtonItem]];
     [[self tableView] setAllowsSelectionDuringEditing:YES];
     [self setTitle:@"Tags"];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(persistentStoresDidChange:) name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:[[[self note] managedObjectContext] 
+             persistentStoreCoordinator]];
 }
 
 - (void)viewDidUnload
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:[[[self note] managedObjectContext] 
+             persistentStoreCoordinator]];
+    
     [super viewDidUnload];
+}
+
+#pragma mark -
+#pragma mark Notifications
+- (void)persistentStoresDidChange:(NSNotification *)aNotification
+{
+    NSError *anyError = nil;
+    BOOL success = [[self fetchedResultsController] performFetch:&anyError];
+    if( !success ) {
+        NSLog(@"Error fetching: %@", anyError);
+    }
+    [[self tableView] reloadData];
 }
 
 #pragma mark -
