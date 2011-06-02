@@ -14,6 +14,18 @@
 @implementation NoteViewController
 
 #pragma mark -
+#pragma mark Interface Updates
+- (void)updateTags
+{
+    NSMutableArray *tagNames = [NSMutableArray arrayWithCapacity:[[[self note] tags] count]];
+    for( TINBTag *eachTag in [[self note] tags] ) {
+        [tagNames addObject:[eachTag name]];
+    }
+    NSString *tagsString = [tagNames componentsJoinedByString:@", "];
+    [[self tagsTextField] setText:tagsString];
+}
+
+#pragma mark -
 #pragma mark View Lifecycle
 - (void)viewDidLoad
 {
@@ -21,7 +33,7 @@
     
     [[self navigationItem] setRightBarButtonItem:[self editButtonItem]];
     
-    //set overlay button
+    //set overlay button for tags text field
     UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
     [button addTarget:self action:@selector(editTags:) forControlEvents:UIControlEventTouchUpInside];
     [[self tagsTextField] setRightView:button];
@@ -42,12 +54,7 @@
     [[self editingTextView] setHidden:![self isEditing]];
     [[self titleTextField] setHidden:![self isEditing]];
     
-    NSMutableArray *tagNames = [NSMutableArray arrayWithCapacity:[[[self note] tags] count]];
-    for( TINBTag *eachTag in [[self note] tags] ) {
-        [tagNames addObject:[eachTag name]];
-    }
-    NSString *tagsString = [tagNames componentsJoinedByString:@", "];
-    [[self tagsTextField] setText:tagsString];
+    [self updateTags];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

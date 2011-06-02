@@ -8,10 +8,8 @@
 
 #import "iOSNotebookAppDelegate.h"
 #import "RootViewController.h"
-#import "DropboxSDK.h"
-#import "DropboxSettings.h"
 
-@interface iOSNotebookAppDelegate () <DBSessionDelegate, DBLoginControllerDelegate>
+@interface iOSNotebookAppDelegate ()
 @end
 
 @implementation iOSNotebookAppDelegate
@@ -20,48 +18,9 @@
 #pragma mark Application Lifecycle
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-#ifdef kTICDDropboxSyncKey
-    // Override point for customization after application launch.
-    // Add the navigation controller's view to the window and display.
-    DBSession *session = [[DBSession alloc] initWithConsumerKey:kTICDDropboxSyncKey consumerSecret:kTICDDropboxSyncSecret];
-	[session setDelegate:self];
-    [DBSession setSharedSession:session];
-    [session release];
-    
-    /*if( [session isLinked] ) {
-        // Register Sync Manager
-    } else {
-        DBLoginController *loginController = [[DBLoginController alloc] init];
-        [loginController setDelegate:self];
-        [[self navigationController] pushViewController:loginController animated:NO];
-        [loginController release];
-    }*/
-#endif
-    
     [[self window] setRootViewController:[self navigationController]];
     [[self window] makeKeyAndVisible];
     return YES;
-}
-
-#pragma mark -
-#pragma mark Dropbox Login Controller Delegate
-- (void)loginControllerDidLogin:(DBLoginController *)controller
-{
-    [[self navigationController] popViewControllerAnimated:YES];
-}
-
-- (void)loginControllerDidCancel:(DBLoginController *)controller
-{
-    [[self navigationController] popViewControllerAnimated:YES];
-}
-
-#pragma mark DBSessionDelegate
-- (void)sessionDidReceiveAuthorizationFailure:(DBSession *)session
-{
-    DBLoginController *loginController = [[[DBLoginController alloc] init] autorelease];
-    [loginController setDelegate:self];
-    
-    [[self navigationController] pushViewController:loginController animated:YES];
 }
 
 #pragma mark -
