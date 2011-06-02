@@ -22,6 +22,8 @@
 #pragma mark Initial Sync Registration
 - (void)registerSyncManager
 {
+    [TICDSLog setVerbosity:TICDSLogVerbosityEveryStep];
+    
     TICDSDropboxSDKBasedApplicationSyncManager *manager = [TICDSDropboxSDKBasedApplicationSyncManager defaultApplicationSyncManager];
     
     NSString *clientUuid = [[NSUserDefaults standardUserDefaults] stringForKey:@"iOSNotebookAppSyncClientUUID"];
@@ -119,7 +121,7 @@
 
 - (NSURL *)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager URLForWholeStoreToUploadForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo
 {
-    return [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Notebook.storedata"];
+    return [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Notebook.sqlite"];
 }
 
 - (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo
