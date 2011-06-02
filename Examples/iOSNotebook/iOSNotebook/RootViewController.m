@@ -31,7 +31,7 @@
     self.navigationItem.rightBarButtonItem = addButton;
     [addButton release];
     
-    UIBarButtonItem *syncButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh  target:[[UIApplication sharedApplication] delegate] action:@selector(initiateSynchronization:)];
+    UIBarButtonItem *syncButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh  target:[[UIApplication sharedApplication] delegate] action:@selector(beginSynchronizing:)];
     self.navigationItem.leftBarButtonItem = syncButton;
     [syncButton release];
     
