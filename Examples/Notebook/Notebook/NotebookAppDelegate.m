@@ -64,14 +64,14 @@
 ToUseEncryptionForFirstTimeRegistration:
 (TICDSApplicationSyncManager *)aSyncManager
 {
-    [aSyncManager continueRegisteringWithEncryptionPassword:@"password"];
+    [aSyncManager continueRegisteringWithEncryptionPassword:nil];
 }
 
 - (void)applicationSyncManagerDidPauseRegistrationToRequestPassword\
 ForEncryptedApplicationSyncData:
 (TICDSApplicationSyncManager *)aSyncManager
 {
-    [aSyncManager continueRegisteringWithEncryptionPassword:@"password"];
+    [aSyncManager continueRegisteringWithEncryptionPassword:nil];
 }
 
 - (TICDSDocumentSyncManager *)applicationSyncManager:
