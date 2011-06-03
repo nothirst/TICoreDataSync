@@ -281,12 +281,12 @@
         _numberOfDeletedClientIdentifiersAdded++;
     }
     
-    if( _numberOfDeletedClientIdentifiersAdded + _numberOfDeletedClientIdentifiersThatFailedToBeAdded == _numberOfDeletedClientIdentifiersToAdd ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"One or more client identifiers failed to be added to the the DeletedClients directory for this document.");
-        [self operationDidFailToComplete];
-    } else if( _numberOfDeletedClientIdentifiersAdded == _numberOfDeletedClientIdentifiersToAdd ) {
+    if( _numberOfDeletedClientIdentifiersAdded == _numberOfDeletedClientIdentifiersToAdd ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Finished adding client identifiers to the DeletedClients directory for this document.");
         [self beginDeletingDocumentPlistInDeletedDocumentsDirectory];
+    } else if( _numberOfDeletedClientIdentifiersAdded + _numberOfDeletedClientIdentifiersThatFailedToBeAdded == _numberOfDeletedClientIdentifiersToAdd ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"One or more client identifiers failed to be added to the the DeletedClients directory for this document.");
+        [self operationDidFailToComplete];
     }
 }
 
