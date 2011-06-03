@@ -21,7 +21,9 @@
     DBRestClient *_restClient;
     
     NSString *_documentsDirectoryPath;
+    NSString *_clientDevicesDirectoryPath;
     NSString *_thisDocumentDirectoryPath;
+    NSString *_thisDocumentDeletedClientsDirectoryPath;
     NSString *_deletedDocumentsDirectoryIdentifierPlistFilePath;
     NSString *_thisDocumentSyncChangesThisClientDirectoryPath;
     NSString *_thisDocumentSyncCommandsThisClientDirectoryPath;
@@ -50,8 +52,14 @@
 /** The path to the `Documents` directory. */
 @property (retain) NSString *documentsDirectoryPath;
 
+/** The path to the `DeletedClients` directory. */
+@property (retain) NSString *clientDevicesDirectoryPath;
+
 /** The path to this document's directory inside the `Documents` directory. */
 @property (retain) NSString *thisDocumentDirectoryPath;
+
+/** The path to this document's `DeletedClients` directory. */
+@property (retain) NSString *thisDocumentDeletedClientsDirectoryPath;
 
 /** The path to this document's `identifier.plist` file inside the `DeletedDocuments` directory. */
 @property (retain) NSString *deletedDocumentsDirectoryIdentifierPlistFilePath;

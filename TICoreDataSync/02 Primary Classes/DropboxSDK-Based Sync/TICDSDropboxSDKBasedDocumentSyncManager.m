@@ -31,7 +31,9 @@
     TICDSDropboxSDKBasedDocumentRegistrationOperation *operation = [[TICDSDropboxSDKBasedDocumentRegistrationOperation alloc] initWithDelegate:self];
     
     [operation setDbSession:[self dbSession]];
+    [operation setClientDevicesDirectoryPath:[self clientDevicesDirectoryPath]];
     [operation setThisDocumentDirectoryPath:[self thisDocumentDirectoryPath]];
+    [operation setThisDocumentDeletedClientsDirectoryPath:[self thisDocumentDeletedClientsDirectoryPath]];
     [operation setDeletedDocumentsDirectoryIdentifierPlistFilePath:[self deletedDocumentsDirectoryIdentifierPlistFilePath]];
     [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
     [operation setThisDocumentSyncCommandsThisClientDirectoryPath:[self thisDocumentSyncCommandsThisClientDirectoryPath]];
@@ -119,6 +121,11 @@
 - (NSString *)thisDocumentDirectoryPath
 {
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentDirectory]];
+}
+
+- (NSString *)thisDocumentDeletedClientsDirectoryPath
+{
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentDeletedClientsDirectory]];
 }
 
 - (NSString *)thisDocumentSyncChangesDirectoryPath
