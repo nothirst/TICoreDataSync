@@ -275,6 +275,14 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Registration operation paused to find out whether to create document structure");
     
     if( [anOperation documentWasDeleted] ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Document was deleted, so deleting local helper files for this document");
+        
+        NSError *anyError = nil;
+        if( [[self fileManager] fileExistsAtPath:[[self helperFileDirectoryLocation] path]] && ![[self fileManager] removeItemAtPath:[[self helperFileDirectoryLocation] path] error:&anyError] ) {
+            
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to delete existing local helper files for this document, but not absolutely catastrophic, so continuing. Error: %@", anyError);
+        }
+        
         [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
     } else {
         [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];

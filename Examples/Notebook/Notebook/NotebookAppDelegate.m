@@ -60,15 +60,13 @@
 
 #pragma mark -
 #pragma mark Application Sync Manager Delegate
-- (void)applicationSyncManagerDidPauseRegistrationToAskWhether\
-ToUseEncryptionForFirstTimeRegistration:
+- (void)applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:
 (TICDSApplicationSyncManager *)aSyncManager
 {
     [aSyncManager continueRegisteringWithEncryptionPassword:nil];
 }
 
-- (void)applicationSyncManagerDidPauseRegistrationToRequestPassword\
-ForEncryptedApplicationSyncData:
+- (void)applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:
 (TICDSApplicationSyncManager *)aSyncManager
 {
     [aSyncManager continueRegisteringWithEncryptionPassword:nil];
@@ -124,8 +122,7 @@ URLForWholeStoreToUploadForDocumentWithIdentifier:
 }
 
 - (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager
-didPauseRegistrationAsRemoteFileStructureDoesNotExist\
-ForDocumentWithIdentifier:(NSString *)anIdentifier 
+didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:(NSString *)anIdentifier 
 description:(NSString *)aDescription 
 userInfo:(NSDictionary *)userInfo
 {
@@ -143,8 +140,7 @@ userInfo:(NSDictionary *)userInfo
     [aSyncManager continueRegistrationByCreatingRemoteFileStructure:YES];
 }
 
-- (BOOL)documentSyncManagerShouldUploadWholeStore\
-AfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager
+- (BOOL)documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager
 {
     return ![self shouldDownloadStoreAfterRegistering];
 }
