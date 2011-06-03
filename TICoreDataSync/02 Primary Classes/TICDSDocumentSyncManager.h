@@ -330,6 +330,9 @@
 /** The path to this document's directory inside the `Documents` directory, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentDirectory;
 
+/** The path to this document's `DeletedClients` directory, relative to the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToThisDocumentDeletedClientsDirectory;
+
 /** The path to the `SyncChanges` directory for this document, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentSyncChangesDirectory;
 

@@ -1170,6 +1170,11 @@
     return [[self relativePathToDocumentsDirectory] stringByAppendingPathComponent:[self documentIdentifier]];
 }
 
+- (NSString *)relativePathToThisDocumentDeletedClientsDirectory
+{
+    return [[self relativePathToThisDocumentDirectory] stringByAppendingPathComponent:TICDSDeletedClientsDirectoryName];
+}
+
 - (NSString *)relativePathToThisDocumentSyncChangesDirectory
 {
     return [[self relativePathToThisDocumentDirectory] stringByAppendingPathComponent:TICDSSyncChangesDirectoryName];

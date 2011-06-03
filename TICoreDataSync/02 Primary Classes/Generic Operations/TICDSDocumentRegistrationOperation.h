@@ -41,6 +41,10 @@
     NSString *_documentDescription;
     NSString *_clientDescription;
     NSDictionary *_documentUserInfo;
+    
+    NSUInteger _numberOfDeletedClientIdentifiersToAdd;
+    NSUInteger _numberOfDeletedClientIdentifiersAdded;
+    NSUInteger _numberOfDeletedClientIdentifiersThatFailedToBeAdded;
 }
 
 #pragma mark Designated Initializer
@@ -77,6 +81,20 @@
  
  @param aDictionary The dictionary to save as the `documentInfo.plist`. */
 - (void)saveRemoteDocumentInfoPlistFromDictionary:(NSDictionary *)aDictionary;
+
+/** Fetch a list of all clients registered to synchronize with this **application**.
+ 
+ This list is used to add identifiers to this document's `DeletedClients` directory so that if those clients try to sync, they'll realize the document has previously been deleted.
+ 
+ This method must call `` when finished. */
+- (void)fetchListOfIdentifiersOfAllRegisteredClientsForThisApplication;
+
+/** Copy the specified client's `deviceInfo.plist` file into the `DeletedClients` directory for this document, but name the copied file using the client's identifier (`identifier.plist`).
+ 
+ This method must call `` to indicate whether the file was copied successfully.
+ 
+ @param anIdentifier The identifier of the client. */
+- (void)addDeviceInfoPlistToDocumentDeletedClientsForClientWithIdentifier:(NSString *)anIdentifier;
 
 /** Delete the `identifier.plist` file for this document from the `DeletedDocuments` directory.
  
@@ -123,6 +141,20 @@
  
  @param success `YES` if the `documentInfo.plist` file was saved, otherwise `NO`. */
 - (void)savedRemoteDocumentInfoPlistWithSuccess:(BOOL)success;
+
+/** Pass back the assembled `NSArray` of client identifiers registered to synchronize with the **application**.
+ 
+ If an error occurred, call `setError:` first, then specify `nil` for `anArray`.
+ 
+ @param anArray The array of client identifiers, or `nil` if an error occurred. */
+- (void)fetchedListOfIdentifiersOfAllRegisteredClientsForThisApplication:(NSArray *)anArray;
+
+/** Indicate whether the `deviceInfo.plist` file was copied as `identifier.plist` to the `DeletedClients` directory for this document.
+ 
+ If not, call `setError:` first, then specify `NO` for `success`.
+ 
+ @param success `YES` if the file was copied, otherwise `NO`. */
+- (void)addedDeviceInfoPlistToDocumentDeletedClientsForClientWithIdentifier:(NSString *)anIdentifier withSuccess:(BOOL)success;
 
 /** Indicate whether the `identifier.plist` file for this document was removed from the `DeletedDocuments` directory.
  

@@ -124,6 +124,8 @@
     TICDSFileManagerBasedDocumentRegistrationOperation *operation = [[TICDSFileManagerBasedDocumentRegistrationOperation alloc] initWithDelegate:self];
     
     [operation setDocumentsDirectoryPath:[self documentsDirectoryPath]];
+    [operation setClientDevicesDirectoryPath:[self clientDevicesDirectoryPath]];
+    [operation setThisDocumentDeletedClientsDirectoryPath:[self thisDocumentDeletedClientsDirectoryPath]];
     [operation setDeletedDocumentsThisDocumentIdentifierPlistPath:[self deletedDocumentsThisDocumentIdentifierPlistPath]];
     [operation setThisDocumentDirectoryPath:[self thisDocumentDirectoryPath]];
     [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
@@ -207,6 +209,11 @@
 - (NSString *)thisDocumentDirectoryPath
 {
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentDirectory]];
+}
+
+- (NSString *)thisDocumentDeletedClientsDirectoryPath
+{
+    return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentDeletedClientsDirectory]];
 }
 
 - (NSString *)thisDocumentSyncChangesDirectoryPath

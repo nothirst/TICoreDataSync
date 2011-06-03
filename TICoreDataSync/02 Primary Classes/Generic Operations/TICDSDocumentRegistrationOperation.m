@@ -16,6 +16,8 @@
 - (void)continueAfterRequestWhetherToCreateRemoteDocumentFileStructure;
 - (void)beginCreatingRemoteDocumentDirectoryStructure;
 - (void)beginCreatingDocumentInfoPlist;
+- (void)beginFetchingListOfIdentifiersOfAllRegisteredClientsForThisApplication;
+- (void)beginAddingClientIdentifiersToDocumentDeletedClientsDirectory:(NSArray *)identifiers;
 - (void)beginDeletingDocumentPlistInDeletedDocumentsDirectory;
 - (void)beginCheckForClientDirectoryInDocumentSyncChangesDirectory;
 - (void)beginCreatingClientDirectoriesInRemoteDocumentDirectories;
@@ -205,7 +207,7 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"Saved documentInfo.plist file successfully");
     
     if( [self documentWasDeleted] ) {
-        [self beginDeletingDocumentPlistInDeletedDocumentsDirectory];
+        [self beginFetchingListOfIdentifiersOfAllRegisteredClientsForThisApplication];
     } else {
         [self beginCreatingClientDirectoriesInRemoteDocumentDirectories];
     }
@@ -216,6 +218,83 @@
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
     [self savedRemoteDocumentInfoPlistWithSuccess:NO];
+}
+
+#pragma mark - Fetching All Client Identifiers for the Application
+- (void)beginFetchingListOfIdentifiersOfAllRegisteredClientsForThisApplication
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Fetching a list of identifiers of all clients registered for this application");
+    
+    [self fetchListOfIdentifiersOfAllRegisteredClientsForThisApplication];
+}
+
+- (void)fetchedListOfIdentifiersOfAllRegisteredClientsForThisApplication:(NSArray *)anArray
+{
+    if( !anArray ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to fetch a list of client identifiers for the application");
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Fetched a list of client identifiers");
+    
+    NSMutableArray *identifiers = [NSMutableArray arrayWithCapacity:[anArray count]];
+    for( NSString *eachIdentifier in anArray ) {
+        if( [eachIdentifier isEqualToString:[self clientIdentifier]] ) {
+            continue;
+        }
+        
+        [identifiers addObject:eachIdentifier];
+    }
+    
+    if( [identifiers count] < 1 ) {
+        [self beginDeletingDocumentPlistInDeletedDocumentsDirectory];
+    } else {
+        [self beginAddingClientIdentifiersToDocumentDeletedClientsDirectory:identifiers];
+    }
+}
+
+#pragma mark Overridden Method
+- (void)fetchListOfIdentifiersOfAllRegisteredClientsForThisApplication
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self fetchedListOfIdentifiersOfAllRegisteredClientsForThisApplication:nil];
+}
+
+#pragma mark - Adding Client Identifiers to Document's DeletedClients Directory
+- (void)beginAddingClientIdentifiersToDocumentDeletedClientsDirectory:(NSArray *)identifiers
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Adding other client identifiers to DeletedClients directory for this document");
+    _numberOfDeletedClientIdentifiersToAdd = [identifiers count];
+    
+    for( NSString *eachIdentifier in identifiers ) {
+        [self addDeviceInfoPlistToDocumentDeletedClientsForClientWithIdentifier:eachIdentifier];
+    }
+}
+
+- (void)addedDeviceInfoPlistToDocumentDeletedClientsForClientWithIdentifier:(NSString *)anIdentifier withSuccess:(BOOL)success
+{
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to add %@ client's identifier to the deleted documents directory", anIdentifier);
+        _numberOfDeletedClientIdentifiersThatFailedToBeAdded++;
+    } else {
+        _numberOfDeletedClientIdentifiersAdded++;
+    }
+    
+    if( _numberOfDeletedClientIdentifiersAdded + _numberOfDeletedClientIdentifiersThatFailedToBeAdded == _numberOfDeletedClientIdentifiersToAdd ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"One or more client identifiers failed to be added to the the DeletedClients directory for this document.");
+        [self operationDidFailToComplete];
+    } else if( _numberOfDeletedClientIdentifiersAdded == _numberOfDeletedClientIdentifiersToAdd ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Finished adding client identifiers to the DeletedClients directory for this document.");
+        [self beginDeletingDocumentPlistInDeletedDocumentsDirectory];
+    }
+}
+
+#pragma mark Overridden Method
+- (void)addDeviceInfoPlistToDocumentDeletedClientsForClientWithIdentifier:(NSString *)anIdentifier
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self addedDeviceInfoPlistToDocumentDeletedClientsForClientWithIdentifier:anIdentifier withSuccess:NO];
 }
 
 #pragma mark - Removing the identifier.plist File in DeletedDocuments
