@@ -10,17 +10,17 @@ TICoreDataSync will eventually be offered under the **MIT** license. For the mom
 
 ##Summary
 
-`TICoreDataSync` is a collection of classes to enable synchronization via the Cloud (including Dropbox), or local wifi (coming soon), of Core Data-based applications (including document-based apps) between any number of clients running under Mac OS X or iOS. It's designed to be easy to extend if you need to synchronize via an option that isn't already supported.
+TICoreDataSync is a collection of classes to enable synchronization via the Cloud (including Dropbox), or local wifi (coming soon), of Core Data-based applications (including document-based apps) between any number of clients running under Mac OS X or iOS. It's designed to be easy to extend if you need to synchronize via an option that isn't already supported.
 
 This is **beta** software and is not yet intended for use in a production environment.
 
 ##Requirements
 
-`TICoreDataSync` works under Mac OS X 10.5 or later (it may run under 10.4 with minimal tweaking, but hasn't been tested) and iOS 3.0+. 
+TICoreDataSync works under Mac OS X 10.5 or later (it may run under 10.4 with minimal tweaking, but hasn't been tested) and iOS 3.0+. 
 
 In order for synchronization to work, your model objects must inherit from [`TICDSSynchronizedManagedObject`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObject.html), and have one extra string attribute called `ticdsSyncID`, which is used to track an object across multiple clients. All model object changes that you wish to synchronize must take place inside a [`TICDSSynchronizedManagedObjectContext`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObjectContext.html).
 
-In practice, this means changing any `NSManagedObject` use in your `.xcdatamodel` to [`TICDSSynchronizedManagedObject`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObject.html), changing any custom `NSManagedObject` subclass to inherit from [`TICDSSynchronizedManagedObject`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObject.html), and creating a [`TICDSSynchronizedManagedObjectContext`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObjectContext.html) when you build your Core Data stack. Because `TICoreDataSync` includes its own `.xcdatamodel`s, you won't be able to build your stack by merging all the models in the bundle, you'll need to specify your data model file directly.
+In practice, this means changing any `NSManagedObject` use in your `.xcdatamodel` to [`TICDSSynchronizedManagedObject`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObject.html), changing any custom `NSManagedObject` subclass to inherit from [`TICDSSynchronizedManagedObject`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObject.html), and creating a [`TICDSSynchronizedManagedObjectContext`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObjectContext.html) when you build your Core Data stack. Because TICoreDataSync includes its own `.xcdatamodel`s, you won't be able to build your stack by merging all the models in the bundle, you'll need to specify your data model file directly.
 
 Your application will need to keep track of one instance of [`TICDSApplicationSyncManager`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSApplicationSyncManager.html) for the type of synchronization you wish to use in your application, and you must **register** this sync manager before you can perform any other tasks. If your application is non-document-based, you'll then need a single [`TICDSDocumentSyncManager`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSDocumentSyncManager.html) instance to handle synchronization of your application's data. If you have a document-based app, you'll need one [`TICDSDocumentSyncManager`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSDocumentSyncManager.html) per document. Again, a document sync manager must be registered before it can be used.
 
@@ -32,7 +32,7 @@ Documentation for the framework can be found at:
 This includes a [general overview](http://timisted.github.com/TICoreDataSync/overview.html) of the framework, [Mac](http://timisted.github.com/TICoreDataSync/mac-tutorial.html) and [iOS](http://timisted.github.com/TICoreDataSync/ios-tutorial.html) tutorials, information about [extending the framework](http://timisted.github.com/TICoreDataSync/extending-the-framework.html), plus reference materials including a full [Class Reference](http://timisted.github.com/TICoreDataSync/reference/html/), and a set of [diagrams](http://timisted.github.com/TICoreDataSync/operation-task-diagrams.html) illustrating the tasks performed by each underlying operation class.
 
 ###Xcode Docset
-The framework comes with an Xcode docset containing documentation for all `TICoreDataSync` classes and protocols. Each header file is marked up such that the docset can be generated by [appledoc](http://www.gentlebytes.com/home/appledocapp/).
+The framework comes with an Xcode docset containing documentation for all TICoreDataSync classes and protocols. Each header file is marked up such that the docset can be generated by [appledoc](http://www.gentlebytes.com/home/appledocapp/).
 
 You can build it yourself if you have `appledoc` installed, by executing `appledoc .` in the root of the repository; this will also install the docset.
 
