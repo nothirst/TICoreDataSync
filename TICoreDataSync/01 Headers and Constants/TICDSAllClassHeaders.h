@@ -57,6 +57,7 @@
 #import "TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation.h"
 #import "TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation.h"
 #import "TICDSDropboxSDKBasedDocumentDeletionOperation.h"
+#import "TICDSDropboxSDKBasedDocumentClientDeletionOperation.h"
 #endif
 
 #pragma mark -

@@ -101,6 +101,20 @@
     return [operation autorelease];
 }
 
+- (TICDSDocumentClientDeletionOperation *)documentClientDeletionOperation
+{
+    TICDSDropboxSDKBasedDocumentClientDeletionOperation *operation = [[TICDSDropboxSDKBasedDocumentClientDeletionOperation alloc] initWithDelegate:self];
+    
+    [operation setDbSession:[self dbSession]];
+    [operation setClientDevicesDirectoryPath:[self clientDevicesDirectoryPath]];
+    [operation setThisDocumentDeletedClientsDirectoryPath:[self thisDocumentDeletedClientsDirectoryPath]];
+    [operation setThisDocumentSyncChangesDirectoryPath:[self thisDocumentSyncChangesDirectoryPath]];
+    [operation setThisDocumentSyncCommandsDirectoryPath:[self thisDocumentSyncCommandsDirectoryPath]];
+    [operation setThisDocumentWholeStoreDirectoryPath:[self thisDocumentWholeStoreDirectoryPath]];
+    
+    return [operation autorelease];
+}
+
 #pragma mark -
 #pragma mark Paths
 - (NSString *)clientDevicesDirectoryPath
