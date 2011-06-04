@@ -141,6 +141,7 @@
     if( [self shouldDownloadStoreAfterRegistering] ) {
         [[self documentSyncManager] initiateDownloadOfWholeStore];
     }
+    
 }
 
 - (BOOL)documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager
