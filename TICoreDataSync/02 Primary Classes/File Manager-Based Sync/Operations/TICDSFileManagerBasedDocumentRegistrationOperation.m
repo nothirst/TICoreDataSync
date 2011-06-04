@@ -165,6 +165,15 @@
     }
 }
 
+- (void)checkWhetherClientWasDeletedFromRemoteDocument
+{
+    if( [[self fileManager] fileExistsAtPath:[[[self thisDocumentDeletedClientsDirectoryPath] stringByAppendingPathComponent:[self clientIdentifier]] stringByAppendingPathExtension:TICDSDeviceInfoPlistExtension]] ) {
+        [self discoveredDeletionStatusOfClient:TICDSRemoteFileStructureDeletionResponseTypeDeleted];
+    } else {
+        [self discoveredDeletionStatusOfClient:TICDSRemoteFileStructureDeletionResponseTypeNotDeleted];
+    }
+}
+
 - (void)createClientDirectoriesInRemoteDocumentDirectories
 {
     NSError *anyError = nil;

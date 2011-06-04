@@ -269,24 +269,30 @@
     return YES;
 }
 
+#pragma mark Helper File Directory Deletion and Recreation
+- (void)removeThenRecreateExistingHelperFileDirectory
+{
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Document was deleted, so deleting local helper files for this document");
+    
+    NSError *anyError = nil;
+    if( [[self fileManager] fileExistsAtPath:[[self helperFileDirectoryLocation] path]] && ![[self fileManager] removeItemAtPath:[[self helperFileDirectoryLocation] path] error:&anyError] ) {
+        
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to delete existing local helper files for this document, but not absolutely catastrophic, so continuing. Error: %@", anyError);
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Recreating document helper file directory");
+    if( ![self createHelperFileDirectoryFileStructure:&anyError] ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to recreate helper file directory structure for this document, but probably related to a previous error so continuing. Error: %@", anyError);
+    }
+}
+
 #pragma mark Asking if Should Create Remote Document File Structure
 - (void)registrationOperationPausedToFindOutWhetherToCreateRemoteDocumentStructure:(TICDSDocumentRegistrationOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Registration operation paused to find out whether to create document structure");
     
     if( [anOperation documentWasDeleted] ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Document was deleted, so deleting local helper files for this document");
-        
-        NSError *anyError = nil;
-        if( [[self fileManager] fileExistsAtPath:[[self helperFileDirectoryLocation] path]] && ![[self fileManager] removeItemAtPath:[[self helperFileDirectoryLocation] path] error:&anyError] ) {
-            
-            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to delete existing local helper files for this document, but not absolutely catastrophic, so continuing. Error: %@", anyError);
-        }
-        
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Recreating document helper file directory");
-        if( ![self createHelperFileDirectoryFileStructure:&anyError] ) {
-            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to recreate helper file directory structure for this document, but probably related to a previous error so continuing. Error: %@", anyError);
-        }
+        [self removeThenRecreateExistingHelperFileDirectory];
         
         [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
     } else {
@@ -309,6 +315,16 @@
     // Just start the registration operation again
     [(TICDSDocumentRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setShouldCreateDocumentFileStructure:shouldCreateFileStructure];
     [(TICDSDocumentRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setPaused:NO];
+}
+
+#pragma mark Alerting Delegate that Client Was Deleted From Document
+- (void)registrationOperationDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:(TICDSDocumentRegistrationOperation *)anOperation
+{
+    [self removeThenRecreateExistingHelperFileDirectory];
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Alerting delegate that client was deleted from synchronizing document");
+    
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:)];
 }
 
 #pragma mark Operation Generation

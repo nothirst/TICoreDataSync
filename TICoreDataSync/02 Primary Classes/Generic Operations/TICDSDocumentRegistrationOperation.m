@@ -11,7 +11,7 @@
 @interface TICDSDocumentRegistrationOperation () 
 
 - (void)beginCheckForRemoteDocumentDirectory;
-- (void)beginCheckingWhetherDocumentWasDeleted;
+- (void)beginCheckWhetherDocumentWasDeleted;
 - (void)beginRequestWhetherToCreateRemoteDocumentFileStructure;
 - (void)continueAfterRequestWhetherToCreateRemoteDocumentFileStructure;
 - (void)beginCreatingRemoteDocumentDirectoryStructure;
@@ -20,6 +20,7 @@
 - (void)beginAddingClientIdentifiersToDocumentDeletedClientsDirectory:(NSArray *)identifiers;
 - (void)beginDeletingDocumentPlistInDeletedDocumentsDirectory;
 - (void)beginCheckForClientDirectoryInDocumentSyncChangesDirectory;
+- (void)beginCheckWhetherClientWasDeletedFromRemoteDocument;
 - (void)beginCreatingClientDirectoriesInRemoteDocumentDirectories;
 
 @end
@@ -57,7 +58,7 @@
         case TICDSRemoteFileStructureExistsResponseTypeDoesNotExist:
             TICDSLog(TICDSLogVerbosityEveryStep, @"Document directory does not exist, so checking whether it was deleted");
             
-            [self beginCheckingWhetherDocumentWasDeleted];
+            [self beginCheckWhetherDocumentWasDeleted];
             break;
     }
 }
@@ -70,7 +71,7 @@
 }
 
 #pragma mark - Checking Whether Document was Deleted
-- (void)beginCheckingWhetherDocumentWasDeleted
+- (void)beginCheckWhetherDocumentWasDeleted
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Checking whether document was deleted");
     
@@ -349,16 +350,48 @@
         case TICDSRemoteFileStructureExistsResponseTypeDoesNotExist:
             TICDSLog(TICDSLogVerbosityEveryStep, @"Client's directory does not exist");
             
-            [self beginCreatingClientDirectoriesInRemoteDocumentDirectories];
+            [self beginCheckWhetherClientWasDeletedFromRemoteDocument];
             break;
     }
 }
 
-#pragma mark Overridden Methods
+#pragma mark Overridden Method
 - (void)checkWhetherClientDirectoryExistsInRemoteDocumentSyncChangesDirectory
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
     [self discoveredStatusOfClientDirectoryInRemoteDocumentSyncChangesDirectory:TICDSRemoteFileStructureExistsResponseTypeError];
+}
+
+#pragma mark - Checking Whether Client was Deleted from Document
+- (void)beginCheckWhetherClientWasDeletedFromRemoteDocument
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Checking whether this client has previously been deleted from synchronizing with this document");
+    
+    [self checkWhetherClientWasDeletedFromRemoteDocument];
+}
+
+- (void)discoveredDeletionStatusOfClient:(TICDSRemoteFileStructureDeletionResponseType)status
+{
+    switch( status ) {
+        case TICDSRemoteFileStructureDeletionResponseTypeError:
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error checking whether client was deleted from remote document");
+            [self operationDidFailToComplete];
+            return;
+            
+        case TICDSRemoteFileStructureDeletionResponseTypeDeleted:
+            [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:) waitUntilDone:NO];
+            // fall through to:
+        case TICDSRemoteFileStructureDeletionResponseTypeNotDeleted:
+            [self beginCreatingClientDirectoriesInRemoteDocumentDirectories];
+            return;
+    }
+}
+
+#pragma mark Overridden Method
+- (void)checkWhetherClientWasDeletedFromRemoteDocument
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self discoveredDeletionStatusOfClient:TICDSRemoteFileStructureDeletionResponseTypeError];
 }
 
 #pragma mark - Creating Client Directories

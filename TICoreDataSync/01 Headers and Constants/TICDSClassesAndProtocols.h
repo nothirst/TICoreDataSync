@@ -325,6 +325,13 @@
  @param anError The error that caused the registration process to fail. */
 - (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToRegisterWithError:(NSError *)anError;
 
+/** Informs the delegate that the client had previously been deleted from synchronizing this document.
+ 
+ The client should alert the user, and download the store once registration has finished.
+ 
+ @param aSyncManager The document sync manager object that sent the message. */
+- (void)documentSyncManagerDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:(TICDSDocumentSyncManager *)aSyncManager;
+
 /** Informs the delegate that the document sync manager finished registering the document successfully.
  
  @param aSyncManager The document sync manager object that sent the message. */
@@ -633,6 +640,11 @@
  
  @param anOperation The operation object that sent the message. */
 - (void)registrationOperationResumedFollowingDocumentStructureCreationInstruction:(TICDSDocumentRegistrationOperation *)anOperation;
+
+/** Informs the delegate that the operation determined that the document had previously been deleted from synchronizing this document.
+ 
+ @param anOperation The operation object that sent the message. */
+- (void)registrationOperationDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:(TICDSDocumentRegistrationOperation *)anOperation;
 
 @end
 
