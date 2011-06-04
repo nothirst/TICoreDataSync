@@ -85,7 +85,8 @@
  
  If an error occurred, call `setError:` first, then specify `NO` for `success`.
  
- @param success `YES` if the file was copied successfully, or `NO` if an error occurred. */- (void)deletedDocumentInfoPlistFromDeletedDocumentsDirectoryWithSuccess:(BOOL)success;
+ @param success `YES` if the file was deleted successfully, or `NO` if an error occurred. */
+- (void)deletedDocumentInfoPlistFromDeletedDocumentsDirectoryWithSuccess:(BOOL)success;
 
 /** Indicate whether the `documentInfo.plist` file was copied successfully to the `DeletedDocuments` directory.
  
