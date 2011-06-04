@@ -39,6 +39,12 @@ You can build it yourself if you have `appledoc` installed, by executing `appled
 Either [install the docset](http://timisted.github.com/TICoreDataSync/install-xcode-docset.html), or read the contents online:  
 <http://timisted.github.com/TICoreDataSync/reference/html/>
 
+###Example Apps
+
+The repository includes several Xcode projects demonstrating the framework in Mac and iOS applications. There are two primary applications, the non-document-based Notebook for iOS and Mac, and the document-based ShoppingList for Mac only.
+
+The [Guide to Example Apps](http://timisted.github.com/TICoreDataSync/guide-to-example-apps.html) explains how these work in more detail.
+
 ##How it Works
 
 When your primary managed object context (an instance of [`TICDSSynchronizedManagedObjectContext`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObjectContext.html)) saves, the framework jumps into action, performing the following tasks:
@@ -98,7 +104,7 @@ There are currently ten primary types of operation spawned by the Sync Manager:
 * **Document Registration** ([`TICDSDocumentRegistrationOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSDocumentRegistrationOperation.html))
 * **Whole Store Upload** ([`TICDSWholeStoreUploadOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSWholeStoreUploadOperation.html))
 * **Whole Store Download** ([`TICDSWholeStoreDownloadOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSWholeStoreDownloadOperation.html))
-* **List of Available Documents** ([`TICDSListOfAvailableDocumentsOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSListOfAvailableDocumentsOperation.html))
+* **List of Available Documents** ([`TICDSListOfPreviouslySynchronizedDocumentsOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSListOfPreviouslySynchronizedDocumentsOperation.html))
 * **Synchronization** ([`TICDSSynchronizationOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizationOperation.html))
 * **Vacuum** ([`TICDSVacuumOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSVacuumOperation.html))
 * **Document Deletion** ([`TICDSDocumentDeletionOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSDocumentDeletionOperation.html))
