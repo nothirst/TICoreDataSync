@@ -220,7 +220,7 @@ shouldBeginSynchronizingAfterManagedObjectContextDidSave:
     
     //[self performSelector:@selector(getPreviouslySynchronizedClients) withObject:nil afterDelay:2.0];
     //[self performSelector:@selector(deleteDocument) withObject:nil afterDelay:2.0];
-    [self performSelector:@selector(deleteClient) withObject:nil afterDelay:2.0];
+    //[self performSelector:@selector(deleteClient) withObject:nil afterDelay:2.0];
 }
 
 - (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishFetchingInformationForAllRegisteredDevices:(NSDictionary *)information
