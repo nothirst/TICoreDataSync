@@ -123,6 +123,8 @@
 		3890AB721397ABCB00CC64B5 /* db_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3890AB461397ABCB00CC64B5 /* db_logo.png */; };
 		3890AB731397ABCB00CC64B5 /* db_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3890AB471397ABCB00CC64B5 /* db_logo@2x.png */; };
 		3890AB751397AC0200CC64B5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3890AB741397AC0200CC64B5 /* Security.framework */; };
+		3892FB69139A886F0020C06C /* TICDSFileManagerBasedDocumentClientDeletionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3892FB68139A886F0020C06C /* TICDSFileManagerBasedDocumentClientDeletionOperation.m */; };
+		3892FB6C139A888F0020C06C /* TICDSDocumentClientDeletionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3892FB6B139A888F0020C06C /* TICDSDocumentClientDeletionOperation.m */; };
 		389FD2A51396898C00A8809A /* Notebook.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 389FD2A31396898C00A8809A /* Notebook.xcdatamodeld */; };
 		38B89ACF1396365800CE5981 /* NoteTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B89ACE1396365700CE5981 /* NoteTagsViewController.m */; };
 		38B89ADB13965CE400CE5981 /* TIStringEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B89AD913965CE300CE5981 /* TIStringEditorViewController.m */; };
@@ -353,6 +355,10 @@
 		3890AB471397ABCB00CC64B5 /* db_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "db_logo@2x.png"; sourceTree = "<group>"; };
 		3890AB741397AC0200CC64B5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		3890AB961397BFED00CC64B5 /* DropboxSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropboxSettings.h; sourceTree = "<group>"; };
+		3892FB67139A886F0020C06C /* TICDSFileManagerBasedDocumentClientDeletionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSFileManagerBasedDocumentClientDeletionOperation.h; sourceTree = "<group>"; };
+		3892FB68139A886F0020C06C /* TICDSFileManagerBasedDocumentClientDeletionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSFileManagerBasedDocumentClientDeletionOperation.m; sourceTree = "<group>"; };
+		3892FB6A139A888F0020C06C /* TICDSDocumentClientDeletionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSDocumentClientDeletionOperation.h; sourceTree = "<group>"; };
+		3892FB6B139A888F0020C06C /* TICDSDocumentClientDeletionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSDocumentClientDeletionOperation.m; sourceTree = "<group>"; };
 		389FD2A41396898C00A8809A /* Notebook.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Notebook.xcdatamodel; sourceTree = "<group>"; };
 		38B89ACD1396365700CE5981 /* NoteTagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteTagsViewController.h; sourceTree = "<group>"; };
 		38B89ACE1396365700CE5981 /* NoteTagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteTagsViewController.m; sourceTree = "<group>"; };
@@ -556,6 +562,8 @@
 		3890AA561397ABBB00CC64B5 /* Operations */ = {
 			isa = PBXGroup;
 			children = (
+				3892FB67139A886F0020C06C /* TICDSFileManagerBasedDocumentClientDeletionOperation.h */,
+				3892FB68139A886F0020C06C /* TICDSFileManagerBasedDocumentClientDeletionOperation.m */,
 				3890AA571397ABBB00CC64B5 /* TICDSFileManagerBasedApplicationRegistrationOperation.h */,
 				3890AA581397ABBB00CC64B5 /* TICDSFileManagerBasedApplicationRegistrationOperation.m */,
 				3890AA591397ABBB00CC64B5 /* TICDSFileManagerBasedDocumentDeletionOperation.h */,
@@ -583,6 +591,8 @@
 		3890AA6F1397ABBB00CC64B5 /* Generic Operations */ = {
 			isa = PBXGroup;
 			children = (
+				3892FB6A139A888F0020C06C /* TICDSDocumentClientDeletionOperation.h */,
+				3892FB6B139A888F0020C06C /* TICDSDocumentClientDeletionOperation.m */,
 				3890AA701397ABBB00CC64B5 /* TICDSApplicationRegistrationOperation.h */,
 				3890AA711397ABBB00CC64B5 /* TICDSApplicationRegistrationOperation.m */,
 				3890AA721397ABBB00CC64B5 /* TICDSDocumentDeletionOperation.h */,
@@ -975,6 +985,8 @@
 				3890AB661397ABCB00CC64B5 /* NSURL+MPURLParameterAdditions.m in Sources */,
 				3890AB671397ABCB00CC64B5 /* NSURLResponse+Encoding.m in Sources */,
 				3890AB681397ABCB00CC64B5 /* NSString+Dropbox.m in Sources */,
+				3892FB69139A886F0020C06C /* TICDSFileManagerBasedDocumentClientDeletionOperation.m in Sources */,
+				3892FB6C139A888F0020C06C /* TICDSDocumentClientDeletionOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
