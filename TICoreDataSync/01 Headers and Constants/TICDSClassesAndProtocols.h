@@ -528,7 +528,7 @@
  At the end of the request process, one of the `documentSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:` or `documentSyncManagerDidFinishFetchingInformationForAllRegisteredDevices:` methods will be called.
  
  @param aSyncManager The document sync manager object that sent the message. */
-- (void)documentSyncManagerDidBeginToFetchInformationForAllRegisteredDevices:(TICDSDocumentSyncManager *)aSyncManager;
+- (void)documentSyncManagerDidBeginFetchingInformationForAllRegisteredDevices:(TICDSDocumentSyncManager *)aSyncManager;
 
 /** Informs the delegate that the document sync manager failed to fetch information on clients registered to synchronize with a document. 
  
@@ -541,6 +541,28 @@
  @param aSyncManager The document sync manager object that sent the message. 
  @param information A dictionary containing as keys the unique synchronization identifiers of each client, and as values dictionaries of information about that client. */
 - (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFinishFetchingInformationForAllRegisteredDevices:(NSDictionary *)information;
+
+#pragma mark Deletion of a Client's Synchronization Data from a Document
+/** Informs the delegate that the document sync manager has begun to delete a client's synchronization data from the remote document.
+ 
+ At the end of the process, one of the `documentSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:` or `documentSyncManagerDidFinishFetchingInformationForAllRegisteredDevices:` methods will be called.
+ 
+ @param aSyncManager The document sync manager object that sent the message.
+ @param anIdentifier The identifier of the client that will be deleted. */
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didBeginDeletingSynchronizationDataFromDocumentForClientWithIdentifier:(NSString *)anIdentifier;
+
+/** Informs the delegate that the document sync manager failed to delete a client's synchronization data from the remote document. 
+ 
+ @param aSyncManager The document sync manager object that sent the message.
+ @param anIdentifier The identifier of the client that couldn't be deleted.
+ @param anError The error that caused the process to fail. */
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToDeleteSynchronizationDataFromDocumentForClientWithIdentifier:(NSString *)anIdentifier withError:(NSError *)anError;
+
+/** Informs the delegate that the document sync manager finished deleting synchronization data for a client from the document.
+ 
+ @param aSyncManager The document sync manager object that sent the message. 
+ @param anIdentifier The identifier of the client that was deleted. */
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFinishDeletingSynchronizationDataFromDocumentForClientWithIdentifier:(NSString *)anIdentifier;
 
 #pragma mark Processing
 /** @name Processing after Managed Object Context Save */
