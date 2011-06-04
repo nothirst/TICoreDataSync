@@ -947,6 +947,7 @@
         return;
     }
     
+    [operation setIdentifierOfClientToBeDeleted:anIdentifier];
     [operation setShouldUseEncryption:[self shouldUseEncryption]];
     
     [[self otherTasksQueue] addOperation:operation];

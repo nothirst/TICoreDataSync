@@ -189,6 +189,19 @@
     return [operation autorelease];
 }
 
+- (TICDSDocumentClientDeletionOperation *)documentClientDeletionOperation
+{
+    TICDSFileManagerBasedDocumentClientDeletionOperation *operation = [[TICDSFileManagerBasedDocumentClientDeletionOperation alloc] initWithDelegate:self];
+    
+    [operation setClientDevicesDirectoryPath:[self clientDevicesDirectoryPath]];
+    [operation setThisDocumentDeletedClientsDirectoryPath:[self thisDocumentDeletedClientsDirectoryPath]];
+    [operation setThisDocumentSyncChangesDirectoryPath:[self thisDocumentSyncChangesDirectoryPath]];
+    [operation setThisDocumentSyncCommandsDirectoryPath:[self thisDocumentSyncCommandsDirectoryPath]];
+    [operation setThisDocumentWholeStoreDirectoryPath:[self thisDocumentWholeStoreDirectoryPath]];
+    
+    return [operation autorelease];
+}
+
 #pragma mark -
 #pragma mark Paths
 - (NSString *)clientDevicesDirectoryPath
