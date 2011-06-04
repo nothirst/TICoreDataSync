@@ -20,42 +20,169 @@
 
 - (void)checkWhetherClientDirectoryExistsInDocumentSyncChangesDirectory
 {
-    
+    [[self restClient] loadMetadata:[[self thisDocumentSyncChangesDirectoryPath] stringByAppendingPathComponent:[self identifierOfClientToBeDeleted]]];
 }
 
 - (void)checkWhetherClientIdentifierFileAlreadyExistsInDocumentDeletedClientsDirectory
 {
-    
+    [[self restClient] loadMetadata:[[[self thisDocumentDeletedClientsDirectoryPath] stringByAppendingPathComponent:[self identifierOfClientToBeDeleted]] stringByAppendingPathExtension:TICDSDeviceInfoPlistExtension]];
 }
 
 - (void)deleteClientIdentifierFileFromDeletedClientsDirectory
 {
-    
+    [[self restClient] deletePath:[[[self thisDocumentDeletedClientsDirectoryPath] stringByAppendingPathComponent:[self identifierOfClientToBeDeleted]] stringByAppendingPathExtension:TICDSDeviceInfoPlistExtension]];
 }
 
 - (void)copyClientDeviceInfoPlistToDeletedClientsDirectory
 {
+    NSString *deviceInfoFilePath = [[[self clientDevicesDirectoryPath] stringByAppendingPathComponent:[self identifierOfClientToBeDeleted]] stringByAppendingPathComponent:TICDSDeviceInfoPlistFilenameWithExtension];
     
+    NSString *finalFilePath = [[[self thisDocumentDeletedClientsDirectoryPath] stringByAppendingPathComponent:[self identifierOfClientToBeDeleted]] stringByAppendingPathExtension:TICDSDeviceInfoPlistExtension];
+    
+    [[self restClient] copyFrom:deviceInfoFilePath toPath:finalFilePath];
 }
 
 - (void)deleteClientDirectoryFromDocumentSyncChangesDirectory
 {
-    
+    [[self restClient] deletePath:[[self thisDocumentSyncChangesDirectoryPath] stringByAppendingPathComponent:[self identifierOfClientToBeDeleted]]];
 }
 
 - (void)deleteClientDirectoryFromDocumentSyncCommandsDirectory
 {
-    
+    [[self restClient] deletePath:[[self thisDocumentSyncCommandsDirectoryPath] stringByAppendingPathComponent:[self identifierOfClientToBeDeleted]]];
 }
 
 - (void)checkWhetherClientDirectoryExistsInDocumentWholeStoreDirectory
 {
-    
+    [[self restClient] loadMetadata:[[self thisDocumentWholeStoreDirectoryPath] stringByAppendingPathComponent:[self identifierOfClientToBeDeleted]]];
 }
 
 - (void)deleteClientDirectoryFromDocumentWholeStoreDirectory
 {
+    [[self restClient] deletePath:[[self thisDocumentWholeStoreDirectoryPath] stringByAppendingPathComponent:[self identifierOfClientToBeDeleted]]];
+}
+
+#pragma mark -
+#pragma mark Rest Client Delegate
+#pragma mark Metadata
+- (void)restClient:(DBRestClient*)client loadedMetadata:(DBMetadata*)metadata
+{
+    NSString *path = [metadata path];
+    TICDSRemoteFileStructureExistsResponseType status = [metadata isDeleted] ? TICDSRemoteFileStructureExistsResponseTypeDoesNotExist : TICDSRemoteFileStructureExistsResponseTypeDoesExist;
     
+    if( [path isEqualToString:[[self thisDocumentSyncChangesDirectoryPath] stringByAppendingPathComponent:[self identifierOfClientToBeDeleted]]] ) {
+        [self discoveredStatusOfClientDirectoryInDocumentSyncChangesDirectory:status];
+        return;
+    }
+    
+    if( [[path stringByDeletingLastPathComponent] isEqualToString:[self thisDocumentDeletedClientsDirectoryPath]] ) {
+        [self discoveredStatusOfClientIdentifierFileInDocumentDeletedClientsDirectory:status];
+        return;
+    }
+    
+    if( [[path stringByDeletingLastPathComponent] isEqualToString:[self thisDocumentWholeStoreDirectoryPath]] ) {
+        [self discoveredStatusOfClientDirectoryInDocumentWholeStoreDirectory:status];
+        return;
+    }
+}
+
+- (void)restClient:(DBRestClient*)client metadataUnchangedAtPath:(NSString*)path
+{
+    
+}
+
+- (void)restClient:(DBRestClient*)client loadMetadataFailedWithError:(NSError*)error
+{
+    NSString *path = [[error userInfo] valueForKey:@"path"];
+    
+    NSInteger errorCode = [error code];
+    TICDSRemoteFileStructureExistsResponseType status = TICDSRemoteFileStructureExistsResponseTypeDoesNotExist;
+    
+    if( errorCode != 404 ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
+        status = TICDSRemoteFileStructureExistsResponseTypeError;
+    }
+    
+    if( [path isEqualToString:[[self thisDocumentSyncChangesDirectoryPath] stringByAppendingPathComponent:[self identifierOfClientToBeDeleted]]] ) {
+        [self discoveredStatusOfClientDirectoryInDocumentSyncChangesDirectory:status];
+        return;
+    }
+    
+    if( [[path stringByDeletingLastPathComponent] isEqualToString:[self thisDocumentDeletedClientsDirectoryPath]] ) {
+        [self discoveredStatusOfClientIdentifierFileInDocumentDeletedClientsDirectory:status];
+        return;
+    }
+    
+    if( [[path stringByDeletingLastPathComponent] isEqualToString:[self thisDocumentWholeStoreDirectoryPath]] ) {
+        [self discoveredStatusOfClientDirectoryInDocumentWholeStoreDirectory:status];
+        return;
+    }
+}
+
+#pragma mark Deletion
+- (void)restClient:(DBRestClient*)client deletedPath:(NSString *)path
+{
+    if( [[path stringByDeletingLastPathComponent] isEqualToString:[self thisDocumentDeletedClientsDirectoryPath]] ) {
+        [self deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:YES];
+        return;
+    }
+    
+    if( [[path stringByDeletingLastPathComponent] isEqualToString:[self thisDocumentSyncChangesDirectoryPath]] ) {
+        [self deletedClientDirectoryFromDocumentSyncChangesDirectoryWithSuccess:YES];
+        return;
+    }
+    
+    if( [[path stringByDeletingLastPathComponent] isEqualToString:[self thisDocumentSyncCommandsDirectoryPath]] ) {
+        [self deletedClientDirectoryFromDocumentSyncCommandsDirectoryWithSuccess:YES];
+        return;
+    }
+    
+    if( [[path stringByDeletingLastPathComponent] isEqualToString:[self thisDocumentWholeStoreDirectoryPath]] ) {
+        [self deletedClientDirectoryFromDocumentWholeStoreDirectoryWithSuccess:YES];
+        return;
+    }
+}
+
+- (void)restClient:(DBRestClient*)client deletePathFailedWithError:(NSError*)error
+{
+    NSString *path = [[error userInfo] valueForKey:@"path"];
+    
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
+    
+    if( [[path stringByDeletingLastPathComponent] isEqualToString:[self thisDocumentDeletedClientsDirectoryPath]] ) {
+        [self deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:NO];
+        return;
+    }
+    
+    if( [[path stringByDeletingLastPathComponent] isEqualToString:[self thisDocumentSyncChangesDirectoryPath]] ) {
+        [self deletedClientDirectoryFromDocumentSyncChangesDirectoryWithSuccess:NO];
+        return;
+    }
+    
+    if( [[path stringByDeletingLastPathComponent] isEqualToString:[self thisDocumentSyncCommandsDirectoryPath]] ) {
+        [self deletedClientDirectoryFromDocumentSyncCommandsDirectoryWithSuccess:NO];
+        return;
+    }
+    
+    if( [[path stringByDeletingLastPathComponent] isEqualToString:[self thisDocumentWholeStoreDirectoryPath]] ) {
+        [self deletedClientDirectoryFromDocumentWholeStoreDirectoryWithSuccess:NO];
+        return;
+    }
+}
+
+#pragma mark Copying
+- (void)restClient:(DBRestClient*)client copiedPath:(NSString *)from_path toPath:(NSString *)to_path
+{
+    // should really check the paths, but there's only one copy procedure in this operation...
+    [self copiedClientDeviceInfoPlistToDeletedClientsDirectoryWithSuccess:YES];
+}
+
+- (void)restClient:(DBRestClient*)client copyPathFailedWithError:(NSError*)error
+{
+    // should really check the paths, but there's only one copy procedure in this operation...
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
+    
+    [self copiedClientDeviceInfoPlistToDeletedClientsDirectoryWithSuccess:NO];
 }
 
 #pragma mark -
