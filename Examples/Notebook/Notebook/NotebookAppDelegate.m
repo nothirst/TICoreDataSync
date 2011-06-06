@@ -140,6 +140,13 @@ userInfo:(NSDictionary *)userInfo
     [aSyncManager continueRegistrationByCreatingRemoteFileStructure:YES];
 }
 
+- (void)documentSyncManagerDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:(TICDSDocumentSyncManager *)aSyncManager
+{
+    [self setDownloadStoreAfterRegistering:YES];
+    
+    NSLog(@"DELETED CLIENT");
+}
+
 - (BOOL)documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager
 {
     return ![self shouldDownloadStoreAfterRegistering];

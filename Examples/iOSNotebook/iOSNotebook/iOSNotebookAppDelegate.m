@@ -136,6 +136,11 @@
     [aSyncManager continueRegistrationByCreatingRemoteFileStructure:YES];
 }
 
+- (void)documentSyncManagerDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:(TICDSDocumentSyncManager *)aSyncManager
+{
+    [self setDownloadStoreAfterRegistering:YES];
+}
+
 - (void)documentSyncManagerDidFinishRegistering:(TICDSDocumentSyncManager *)aSyncManager
 {
     if( [self shouldDownloadStoreAfterRegistering] ) {

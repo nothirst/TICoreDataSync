@@ -106,6 +106,11 @@
  This method must call `discoveredStatusOfClientDirectoryInRemoteDocumentSyncChangesDirectory:` to indicate the status. */
 - (void)checkWhetherClientDirectoryExistsInRemoteDocumentSyncChangesDirectory;
 
+/** Check whether this client has previously been deleted from synchronizing with this document.
+ 
+ This method must call `discoveredDeletionStatusOfClient:` to indicate the status. */
+- (void)checkWhetherClientWasDeletedFromRemoteDocument;
+
 /** Create directories for this client inside the `SyncChanges` and `SyncCommands` directories for this client.
  
  This method must call `createdClientDirectoriesInRemoteDocumentDirectoriesWithSuccess:` to indicate whether the creation was successful. */
@@ -169,6 +174,13 @@
  
  @param status The status of the directory: does exist, does not exist, or error (see `TICDSTypesAndEnums.h` for possible values). */
 - (void)discoveredStatusOfClientDirectoryInRemoteDocumentSyncChangesDirectory:(TICDSRemoteFileStructureExistsResponseType)status;
+
+/** Indicate whether the client has been deleted from synchronizing with this document.
+ 
+ If an error occurred, call `setError:` first, then specify `TICDSRemoteFileStructureDeletionResponseTypeError` for `status`.
+ 
+ @param status The deletion status: deleted, not deleted, or error (see `TICDSTypesAndEnums.h` for possible values). */
+- (void)discoveredDeletionStatusOfClient:(TICDSRemoteFileStructureDeletionResponseType)status;
 
 /** Indicate whether the creation of the client directories was successful.
  

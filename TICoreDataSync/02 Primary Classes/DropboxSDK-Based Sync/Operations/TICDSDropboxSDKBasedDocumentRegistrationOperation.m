@@ -138,6 +138,11 @@
     [[self restClient] loadMetadata:[self thisDocumentSyncChangesThisClientDirectoryPath]];
 }
 
+- (void)checkWhetherClientWasDeletedFromRemoteDocument
+{
+    [[self restClient] loadMetadata:[[[self thisDocumentDeletedClientsDirectoryPath] stringByAppendingPathComponent:[self clientIdentifier]] stringByAppendingPathExtension:TICDSDeviceInfoPlistExtension]];
+}
+
 - (void)createClientDirectoriesInRemoteDocumentDirectories
 {
     [[self restClient] createFolder:[self thisDocumentSyncChangesThisClientDirectoryPath]];
@@ -192,6 +197,11 @@
         [self fetchedListOfIdentifiersOfAllRegisteredClientsForThisApplication:identifiers];
         return;
     }
+    
+    if( [[path stringByDeletingLastPathComponent] isEqualToString:[self thisDocumentDeletedClientsDirectoryPath]] ) {
+        [self discoveredDeletionStatusOfClient:TICDSRemoteFileStructureDeletionResponseTypeDeleted];
+        return;
+    }
 }
 
 - (void)restClient:(DBRestClient*)client metadataUnchangedAtPath:(NSString*)path
@@ -228,6 +238,12 @@
     
     if( [path isEqualToString:[self clientDevicesDirectoryPath]] ) {
         [self fetchedListOfIdentifiersOfAllRegisteredClientsForThisApplication:nil];
+        return;
+    }
+    
+    if( [[path stringByDeletingLastPathComponent] isEqualToString:[self thisDocumentDeletedClientsDirectoryPath]] ) {
+        [self discoveredDeletionStatusOfClient:[error code] == 404 ? TICDSRemoteFileStructureDeletionResponseTypeNotDeleted : TICDSRemoteFileStructureDeletionResponseTypeError];
+        return;
     }
 }
 
