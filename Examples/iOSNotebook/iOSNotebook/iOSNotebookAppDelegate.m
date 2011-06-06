@@ -146,6 +146,24 @@
     if( [self shouldDownloadStoreAfterRegistering] ) {
         [[self documentSyncManager] initiateDownloadOfWholeStore];
     }
+    
+    //[self performSelector:@selector(getPreviouslySynchronizedClients) withObject:nil afterDelay:8.0];
+    [self performSelector:@selector(deleteClient) withObject:nil afterDelay:8.0];
+}
+
+- (void)getPreviouslySynchronizedClients
+{
+    [[[self documentSyncManager] applicationSyncManager] requestListOfSynchronizedClientsIncludingDocuments:YES];
+}
+
+- (void)deleteClient
+{
+    [[self documentSyncManager] deleteDocumentSynchronizationDataForClientWithIdentifier:@"B29A21AB-529A-4CBB-A603-332CAD8F2D33-715-000001314CB7EE5B"];
+}
+
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishFetchingInformationForAllRegisteredDevices:(NSDictionary *)information
+{
+    NSLog(@"App client info: %@", information);
 }
 
 - (BOOL)documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager
