@@ -143,6 +143,11 @@
     [[self restClient] loadMetadata:[[[self thisDocumentDeletedClientsDirectoryPath] stringByAppendingPathComponent:[self clientIdentifier]] stringByAppendingPathExtension:TICDSDeviceInfoPlistExtension]];
 }
 
+- (void)deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:(BOOL)success
+{
+    [[self restClient] deletePath:[[[self thisDocumentDeletedClientsDirectoryPath] stringByAppendingPathComponent:[self clientIdentifier]] stringByAppendingPathExtension:TICDSDeviceInfoPlistExtension]];
+}
+
 - (void)createClientDirectoriesInRemoteDocumentDirectories
 {
     [[self restClient] createFolder:[self thisDocumentSyncChangesThisClientDirectoryPath]];
@@ -322,6 +327,11 @@
         [self deletedDocumentInfoPlistFromDeletedDocumentsDirectoryWithSuccess:YES];
         return;
     }
+    
+    if( [[path pathExtension] isEqualToString:TICDSDeviceInfoPlistExtension] ) {
+        [self deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:YES];
+        return;
+    }
 }
 
 - (void)restClient:(DBRestClient*)client deletePathFailedWithError:(NSError*)error
@@ -332,6 +342,11 @@
     
     if( [path isEqualToString:[self deletedDocumentsDirectoryIdentifierPlistFilePath]] ) {
         [self deletedDocumentInfoPlistFromDeletedDocumentsDirectoryWithSuccess:NO];
+        return;
+    }
+    
+    if( [[path pathExtension] isEqualToString:TICDSDeviceInfoPlistFilename] ) {
+        [self deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:NO];
         return;
     }
 }

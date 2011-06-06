@@ -111,6 +111,11 @@
  This method must call `discoveredDeletionStatusOfClient:` to indicate the status. */
 - (void)checkWhetherClientWasDeletedFromRemoteDocument;
 
+/** Delete the client's file from the document's `DeletedClients` directory.
+ 
+ This method must call `blah:` when finished. */
+- (void)deleteClientIdentifierFileFromDeletedClientsDirectory;
+
 /** Create directories for this client inside the `SyncChanges` and `SyncCommands` directories for this client.
  
  This method must call `createdClientDirectoriesInRemoteDocumentDirectoriesWithSuccess:` to indicate whether the creation was successful. */
@@ -181,6 +186,13 @@
  
  @param status The deletion status: deleted, not deleted, or error (see `TICDSTypesAndEnums.h` for possible values). */
 - (void)discoveredDeletionStatusOfClient:(TICDSRemoteFileStructureDeletionResponseType)status;
+
+/** Indicate whether the client's file in the document's `RecentSyncs` directory was deleted successfully.
+ 
+ If not, call `setError:` first, then specify `NO` for `success`.
+ 
+ @param success `YES` if the `identifier.plist` file was deleted, otherwise `NO`. */
+- (void)deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:(BOOL)success;
 
 /** Indicate whether the creation of the client directories was successful.
  

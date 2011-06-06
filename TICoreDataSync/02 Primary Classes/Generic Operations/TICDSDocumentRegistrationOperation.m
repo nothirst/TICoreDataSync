@@ -8,8 +8,6 @@
 
 #import "TICoreDataSync.h"
 
-#warning "Fix removal of DeletedClients file"
-
 @interface TICDSDocumentRegistrationOperation () 
 
 - (void)beginCheckForRemoteDocumentDirectory;
@@ -23,6 +21,7 @@
 - (void)beginDeletingDocumentPlistInDeletedDocumentsDirectory;
 - (void)beginCheckForClientDirectoryInDocumentSyncChangesDirectory;
 - (void)beginCheckWhetherClientWasDeletedFromRemoteDocument;
+- (void)beginDeletingClientIdentifierFileFromDeletedClientsDirectory;
 - (void)beginCreatingClientDirectoriesInRemoteDocumentDirectories;
 
 @end
@@ -382,7 +381,9 @@
             
         case TICDSRemoteFileStructureDeletionResponseTypeDeleted:
             [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:) waitUntilDone:NO];
-            // fall through to:
+            [self beginDeletingClientIdentifierFileFromDeletedClientsDirectory];
+            return;
+            
         case TICDSRemoteFileStructureDeletionResponseTypeNotDeleted:
             [self beginCreatingClientDirectoriesInRemoteDocumentDirectories];
             return;
@@ -394,6 +395,33 @@
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
     [self discoveredDeletionStatusOfClient:TICDSRemoteFileStructureDeletionResponseTypeError];
+}
+
+#pragma mark - Deleting Client's File in Document's RecentSync Directory
+- (void)beginDeletingClientIdentifierFileFromDeletedClientsDirectory
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Deleting client's file from document's DeletedClients directory");
+    
+    [self deleteClientIdentifierFileFromDeletedClientsDirectory];
+}
+
+- (void)deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:(BOOL)success
+{
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to delete client's file from document's DeletedClients directory");
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Deleted client's file from document's DeletedClients directory");
+    [self beginCreatingClientDirectoriesInRemoteDocumentDirectories];
+}
+
+#pragma mark Overridden Method
+- (void)deleteClientIdentifierFileFromDeletedClientsDirectory
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:NO];
 }
 
 #pragma mark - Creating Client Directories

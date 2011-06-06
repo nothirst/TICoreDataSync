@@ -220,7 +220,7 @@ shouldBeginSynchronizingAfterManagedObjectContextDidSave:
     
     //[self performSelector:@selector(getPreviouslySynchronizedClients) withObject:nil afterDelay:2.0];
     //[self performSelector:@selector(deleteDocument) withObject:nil afterDelay:2.0];
-    [self performSelector:@selector(deleteClient) withObject:nil afterDelay:2.0];
+    //[self performSelector:@selector(deleteClient) withObject:nil afterDelay:2.0];
 }
 
 - (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishFetchingInformationForAllRegisteredDevices:(NSDictionary *)information
@@ -240,7 +240,7 @@ shouldBeginSynchronizingAfterManagedObjectContextDidSave:
 
 - (void)deleteClient
 {
-    [[self documentSyncManager] deleteDocumentSynchronizationDataForClientWithIdentifier:@"97F95326-E1B1-4AD0-82C5-261AA3D9E87D-460-000000D7A0C79BC9"];
+    [[self documentSyncManager] deleteDocumentSynchronizationDataForClientWithIdentifier:@"B29A21AB-529A-4CBB-A603-332CAD8F2D33-715-000001314CB7EE5B"];
 }
 
 #pragma mark -

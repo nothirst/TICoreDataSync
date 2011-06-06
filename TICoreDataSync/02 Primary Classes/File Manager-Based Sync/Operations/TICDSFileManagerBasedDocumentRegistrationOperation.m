@@ -174,6 +174,20 @@
     }
 }
 
+- (void)deleteClientIdentifierFileFromDeletedClientsDirectory
+{
+    NSString *filePath = [[[self thisDocumentDeletedClientsDirectoryPath] stringByAppendingPathComponent:[self clientIdentifier]] stringByAppendingPathExtension:TICDSDeviceInfoPlistExtension];
+    
+    NSError *anyError = nil;
+    BOOL success = [[self fileManager] removeItemAtPath:filePath error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    [self deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:success];
+}
+
 - (void)createClientDirectoriesInRemoteDocumentDirectories
 {
     NSError *anyError = nil;
