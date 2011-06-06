@@ -16,6 +16,8 @@
 - (void)beginCopyingClientDeviceInfoPlistToDeletedClientsDirectory;
 - (void)beginDeletingClientDirectoryFromDocumentSyncChangesDirectory;
 - (void)beginDeletingClientDirectoryFromDocumentSyncCommandsDirectory;
+- (void)beginCheckingWhetherClientIdentifierFileExistsInRecentSyncsDirectory;
+- (void)beginDeletingClientIdentifierFileFromRecentSyncsDirectory;
 - (void)beginCheckingWhetherClientDirectoryExistsInDocumentWholeStoreDirectory;
 - (void)beginDeletingClientDirectoryFromDocumentWholeStoreDirectory;
 
@@ -209,6 +211,69 @@
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
     [self deletedClientDirectoryFromDocumentSyncCommandsDirectoryWithSuccess:NO];
+}
+
+#pragma mark - Check Whether File Exists in RecentSyncs Directory
+- (void)beginCheckingWhetherClientIdentifierFileExistsInRecentSyncsDirectory
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Checking whether a file exists for this client in the document's RecentSyncs directory");
+    
+    [self checkWhetherClientIdentifierFileExistsInRecentSyncsDirectory];
+}
+
+- (void)discoveredStatusOfClientIdentifierFileInDocumentRecentSyncsDirectory:(TICDSRemoteFileStructureExistsResponseType)status
+{
+    switch( status ) {
+        case TICDSRemoteFileStructureExistsResponseTypeError:
+            TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Error checking whether client's file exists in document's RecentSyncs directory");
+            [self operationDidFailToComplete];
+            return;
+            
+        case TICDSRemoteFileStructureExistsResponseTypeDoesExist:
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Client's file does exist in RecentSyncs directory");
+            
+#warning "here"
+            break;
+            
+        case TICDSRemoteFileStructureExistsResponseTypeDoesNotExist:
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Client's file does not exist in RecentSyncs directory");
+            [self beginCheckingWhetherClientDirectoryExistsInDocumentWholeStoreDirectory];
+            break;
+    }
+}
+
+#pragma mark Overridden Method
+- (void)checkWhetherClientIdentifierFileExistsInRecentSyncsDirectory
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self discoveredStatusOfClientIdentifierFileInDocumentRecentSyncsDirectory:TICDSRemoteFileStructureExistsResponseTypeError];
+}
+
+#pragma mark - Delete Client's File from RecentSyncs Directory
+- (void)beginDeletingClientIdentifierFileFromRecentSyncsDirectory
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Deleting client's file from document's RecentSyncs directory");
+    
+    [self deleteClientIdentifierFileFromRecentSyncsDirectory];
+}
+
+- (void)deletedClientIdentifierFileFromRecentSyncsDirectoryWithSuccess:(BOOL)success
+{
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error deleting client's file from the document's RecentSyncs directory");
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Deleted cilent's file from the document's RecentSyncs directory");
+    [self beginCheckingWhetherClientDirectoryExistsInDocumentWholeStoreDirectory];
+}
+
+#pragma mark Overridden Method
+- (void)deleteClientIdentifierFileFromRecentSyncsDirectory
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self deletedClientIdentifierFileFromRecentSyncsDirectoryWithSuccess:NO];
 }
 
 #pragma mark - Check Whether Client has a WholeStore Directory for this Document

@@ -59,6 +59,16 @@
  This method must call `deletedClientDirectoryFromDocumentSyncCommandsDirectoryWithSuccess:` when finished. */
 - (void)deleteClientDirectoryFromDocumentSyncCommandsDirectory;
 
+/** Checks whether a file exists for the client in the document's `RecentSyncs` directory. 
+ 
+ This method must call `discoveredStatusOfClientIdentifierFileInDocumentRecentSyncsDirectory:` when finished. */
+- (void)checkWhetherClientIdentifierFileExistsInRecentSyncsDirectory;
+
+/** Delete the client's file from the document's `RecentSyncs` directory.
+ 
+ This method must call `blah:` when finished. */
+- (void)deleteClientIdentifierFileFromRecentSyncsDirectory;
+
 /** Check whether a directory exists for the client in the document's `WholeStore` directory.
  
  This method must call `discoveredStatusOfClientDirectoryInDocumentWholeStoreDirectory:` to indicate the status. */
@@ -113,6 +123,20 @@
  
  @param success `YES` if the directory was deleted successfully, or `NO` if an error occurred. */
 - (void)deletedClientDirectoryFromDocumentSyncCommandsDirectoryWithSuccess:(BOOL)success;
+
+/** Indicate the status of the client's file inside the document's `RecentSyncs` directory.
+ 
+ If an error occurred, call `setError:` first, then specify `TICDSRemoteFileStructureExistsResponseTypeError` for `status`.
+ 
+ @param status The status of the directory: does exist, does not exist, or error (see `TICDSTypesAndEnums.h` for possible values). */
+- (void)discoveredStatusOfClientIdentifierFileInDocumentRecentSyncsDirectory:(TICDSRemoteFileStructureExistsResponseType)status;
+
+/** Indicate whether the client's file was deleted successfully from the document's `RecentSyncs` directory.
+ 
+ If an error occurred, call `setError:` first, then specify `NO` for `success`.
+ 
+ @param success `YES` if the directory was deleted successfully, or `NO` if an error occurred. */
+- (void)deletedClientIdentifierFileFromRecentSyncsDirectoryWithSuccess:(BOOL)success;
 
 /** Indicate the status of the client's directory inside the document's `WholeStore` directory.
  
