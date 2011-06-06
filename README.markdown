@@ -5,6 +5,8 @@ Tim Isted
 <http://www.timisted.net>
 Twitter: @[timisted](http://twitter.com/timisted)
 
+Jump to [List of Recent Changes](#recentchanges)
+
 ##License
 TICoreDataSync will eventually be offered under the **MIT** license. For the moment, it is not licensed for public use.
 
@@ -98,7 +100,7 @@ If the following problems occur during synchronization, you'll be given an array
 At this time, the framework does not offer the ability to fix either of these types of conflict, instead just providing post-sync warnings. This may change in a future version of the framework, but will require some thought. Consider a data model with lots of inter-related objects -- depending on cascade rules, if a conflict is detected where an object has been changed remotely but deleted locally, not only would the object need to be "undeleted" locally, all of its relationships would need to be traversed to undo cascade deletions. Similarly, if an object is changed locally that has already been deleted by other clients, the framework would need to generate insertion sync changes not only for the object itself, but for all its related "cascade" objects, and the related objects of the related objects, and so on.
 
 ###Underlying Operations
-There are currently ten primary types of operation spawned by the Sync Manager:
+There are currently elevent primary types of operation spawned by the Sync Manager:
 
 * **Application Registration** ([`TICDSApplicationRegistrationOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSApplicationRegistrationOperation.html))
 * **Document Registration** ([`TICDSDocumentRegistrationOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSDocumentRegistrationOperation.html))
@@ -110,6 +112,8 @@ There are currently ten primary types of operation spawned by the Sync Manager:
 * **Document Deletion** ([`TICDSDocumentDeletionOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSDocumentDeletionOperation.html))
 * **List of Clients Registered to an Application** ([`TICDSListOfApplicationRegisteredClientsOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSListOfApplicationRegisteredClientsOperation.html))
 * **List of Clients Registered to a Document** ([`TICDSListOfDocumentRegisteredClientsOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSListOfDocumentRegisteredClientsOperation.html))
+* **Delete a Client's Synchronization Data from a Document**
+([`TICDSDocumentClientDeletionOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSDocumentClientDeletionOperation.html)) 
 
 Each of these is a generic class, designed to be overridden to add the upload/download behavior necessary to the type of sync you wish to use. If you use a [`TICDSFileManagerBasedDocumentSyncManager`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSFileManagerBasedDocumentSyncManager.html), for example, it will spawn its own `TICDSFileManagerBasedXXXOperation` objects and configure them correctly.
 
@@ -127,4 +131,10 @@ TICoreDataSync uses quite a few files for synchronization, and stores these at t
 
 At present, TICoreDataSync only supports file-manager-based sync, or iOS DropboxSDK sync. WebDAV and local wifi sync options will be added soon.
 
-There is currently no automated functionality to remove the entire sync data directory from a remote service, nor is it yet possible to remove a client's files from synchronizing a document, or with an entire application. These tasks will be added soon.
+There is currently no automated functionality to remove the entire sync data directory from a remote service, nor is it yet possible to remove a client's files from synchronizing an entire application. These tasks will be added soon.
+
+##Recent Changes {#recentchanges}
+
+* **2011-Jun-06**
+  
+  It's now possible to delete a client's data from synchronizing with a document - see [`TICDSDocumentClientDeletionOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSDocumentClientDeletionOperation.html), and the document sync manager `deleteDocumentSynchronizationDataForClientWithIdentifier:` method.
