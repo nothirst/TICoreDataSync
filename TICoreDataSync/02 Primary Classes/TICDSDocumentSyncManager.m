@@ -34,6 +34,9 @@
 - (void)startRegisteredDevicesInformationProcess;
 - (void)bailFromRegisteredDevicesInformationProcessWithError:(NSError *)anError;
 
+- (void)startClientDeletionProcessForClient:(NSString *)anIdentifier;
+- (void)bailFromClientDeletionProcessForClient:(NSString *)anIdentifier withError:(NSError *)anError;
+
 @property (nonatomic, retain) NSString *documentIdentifier;
 @property (nonatomic, retain) NSString *documentDescription;
 @property (nonatomic, retain) NSString *clientIdentifier;
@@ -867,13 +870,13 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting process to fetch information on all devices registered to synchronize this document");
     [self postIncreaseActivityNotification];
-    [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidBeginToFetchInformationForAllRegisteredDevices:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidBeginFetchingInformationForAllRegisteredDevices:)];
     
     TICDSListOfDocumentRegisteredClientsOperation *operation = [self listOfDocumentRegisteredClientsOperation];
     
     if( !operation ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create vacuum operation object");
-        [self bailFromVacuumProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create registered devices operation object");
+        [self bailFromRegisteredDevicesInformationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
         return;
     }
     
@@ -914,7 +917,79 @@
     [self postDecreaseActivityNotification];
 }
 
-#pragma mark - 
+#pragma mark -
+#pragma mark DELETION OF CLIENT DATA FROM A DOCUMENT
+- (void)deleteDocumentSynchronizationDataForClientWithIdentifier:(NSString *)anIdentifier
+{
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Manual initiation of request to delete document synchronization data for client %@", anIdentifier);
+    
+    [self startClientDeletionProcessForClient:anIdentifier];
+}
+
+- (void)bailFromClientDeletionProcessForClient:(NSString *)anIdentifier withError:(NSError *)anError
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from client device deletion from document synchronization request");
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToDeleteSynchronizationDataFromDocumentForClientWithIdentifier:withError:), anIdentifier, anError];
+    [self postDecreaseActivityNotification];
+}
+
+- (void)startClientDeletionProcessForClient:(NSString *)anIdentifier
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting process to delete synchronization data from the document for client %@", anIdentifier);
+    [self postIncreaseActivityNotification];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didBeginDeletingSynchronizationDataFromDocumentForClientWithIdentifier:), anIdentifier];
+    
+    TICDSDocumentClientDeletionOperation *operation = [self documentClientDeletionOperation];
+    
+    if( !operation ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create document client deletion operation object");
+        [self bailFromClientDeletionProcessForClient:anIdentifier withError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
+        return;
+    }
+    
+    [operation setIdentifierOfClientToBeDeleted:anIdentifier];
+    [operation setShouldUseEncryption:[self shouldUseEncryption]];
+    
+    [[self otherTasksQueue] addOperation:operation];
+}
+
+#pragma mark Operation Generation
+- (TICDSDocumentClientDeletionOperation *)documentClientDeletionOperation
+{
+    return [[[TICDSDocumentClientDeletionOperation alloc] initWithDelegate:self] autorelease];
+}
+
+#pragma mark Operation Communications
+- (void)documentClientDeletionOperationCompleted:(TICDSDocumentClientDeletionOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Document Client Deletion Operation Completed");
+    
+    NSString *clientIdentifier = [anOperation identifierOfClientToBeDeleted];
+    
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFinishDeletingSynchronizationDataFromDocumentForClientWithIdentifier:), clientIdentifier];
+    [self postDecreaseActivityNotification];
+}
+
+- (void)documentClientDeletionOperationWasCancelled:(TICDSDocumentClientDeletionOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Client Deletion Operation was Cancelled");
+    
+    NSString *clientIdentifier = [anOperation identifierOfClientToBeDeleted];
+    
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToDeleteSynchronizationDataFromDocumentForClientWithIdentifier:withError:), clientIdentifier, [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+    [self postDecreaseActivityNotification];
+}
+
+- (void)documentClientDeletionOperation:(TICDSDocumentClientDeletionOperation *)anOperation failedToCompleteWithError:(NSError *)anError
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Client Deletion Operation Failed to Complete with Error: %@", anError);
+    NSString *clientIdentifier = [anOperation identifierOfClientToBeDeleted];
+    
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToDeleteSynchronizationDataFromDocumentForClientWithIdentifier:withError:), clientIdentifier, anError];
+    [self postDecreaseActivityNotification];
+}
+
+#pragma mark -
 #pragma mark ADDITIONAL MANAGED OBJECT CONTEXTS
 - (void)addManagedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext
 {
@@ -1038,6 +1113,8 @@
         [self wholeStoreDownloadOperationCompleted:(id)anOperation];
     } else if( [anOperation isKindOfClass:[TICDSListOfDocumentRegisteredClientsOperation class]] ) {
         [self registeredClientsOperationCompleted:(id)anOperation];
+    } else if( [anOperation isKindOfClass:[TICDSDocumentClientDeletionOperation class]] ) {
+        [self documentClientDeletionOperationCompleted:(id)anOperation];
     }
 }
 
@@ -1055,6 +1132,8 @@
         [self wholeStoreDownloadOperationWasCancelled:(id)anOperation];
     } else if( [anOperation isKindOfClass:[TICDSListOfDocumentRegisteredClientsOperation class]] ) {
         [self registeredClientsOperationWasCancelled:(id)anOperation];
+    } else if( [anOperation isKindOfClass:[TICDSDocumentClientDeletionOperation class]] ) {
+        [self documentClientDeletionOperationWasCancelled:(id)anOperation];
     }
 }
 
@@ -1072,6 +1151,8 @@
         [self wholeStoreDownloadOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     } else if( [anOperation isKindOfClass:[TICDSListOfDocumentRegisteredClientsOperation class]] ) {
         [self registeredClientsOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
+    } else if( [anOperation isKindOfClass:[TICDSDocumentClientDeletionOperation class]] ) {
+        [self documentClientDeletionOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     }
 }
 

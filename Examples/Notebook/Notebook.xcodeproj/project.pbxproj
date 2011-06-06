@@ -19,6 +19,8 @@
 		386F07E413715D0800D4F31B /* NotebookAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 386F07E313715D0800D4F31B /* NotebookAppDelegate.m */; };
 		386F07E713715D0800D4F31B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 386F07E513715D0800D4F31B /* MainMenu.xib */; };
 		386F07EA13715D0800D4F31B /* Notebook.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 386F07E813715D0800D4F31B /* Notebook.xcdatamodeld */; };
+		3892FB53139A673C0020C06C /* TICDSDocumentClientDeletionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3892FB52139A673C0020C06C /* TICDSDocumentClientDeletionOperation.m */; };
+		3892FB5F139A7CB80020C06C /* TICDSFileManagerBasedDocumentClientDeletionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3892FB5E139A7CB80020C06C /* TICDSFileManagerBasedDocumentClientDeletionOperation.m */; };
 		389E1C3E13856B7D00E9E7C1 /* TICDSConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 389E1BD213856B7D00E9E7C1 /* TICDSConstants.m */; };
 		389E1C3F13856B7D00E9E7C1 /* TICDSDropboxSDKBasedApplicationRegistrationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 389E1BD813856B7D00E9E7C1 /* TICDSDropboxSDKBasedApplicationRegistrationOperation.m */; };
 		389E1C4013856B7D00E9E7C1 /* TICDSDropboxSDKBasedDocumentRegistrationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 389E1BDA13856B7D00E9E7C1 /* TICDSDropboxSDKBasedDocumentRegistrationOperation.m */; };
@@ -103,6 +105,10 @@
 		386F07E313715D0800D4F31B /* NotebookAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotebookAppDelegate.m; sourceTree = "<group>"; };
 		386F07E613715D0800D4F31B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		386F07E913715D0800D4F31B /* Notebook.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Notebook.xcdatamodel; sourceTree = "<group>"; };
+		3892FB51139A673C0020C06C /* TICDSDocumentClientDeletionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSDocumentClientDeletionOperation.h; sourceTree = "<group>"; };
+		3892FB52139A673C0020C06C /* TICDSDocumentClientDeletionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSDocumentClientDeletionOperation.m; sourceTree = "<group>"; };
+		3892FB5D139A7CB80020C06C /* TICDSFileManagerBasedDocumentClientDeletionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSFileManagerBasedDocumentClientDeletionOperation.h; sourceTree = "<group>"; };
+		3892FB5E139A7CB80020C06C /* TICDSFileManagerBasedDocumentClientDeletionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSFileManagerBasedDocumentClientDeletionOperation.m; sourceTree = "<group>"; };
 		389E1BCF13856B7D00E9E7C1 /* TICDSAllClassHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSAllClassHeaders.h; sourceTree = "<group>"; };
 		389E1BD013856B7D00E9E7C1 /* TICDSClassesAndProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSClassesAndProtocols.h; sourceTree = "<group>"; };
 		389E1BD113856B7D00E9E7C1 /* TICDSConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TICDSConstants.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -426,6 +432,8 @@
 				38A280DB138AC2BF00C81675 /* TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.m */,
 				38CB78A5139248EC0062BE53 /* TICDSFileManagerBasedDocumentDeletionOperation.h */,
 				38CB78A6139248EC0062BE53 /* TICDSFileManagerBasedDocumentDeletionOperation.m */,
+				3892FB5D139A7CB80020C06C /* TICDSFileManagerBasedDocumentClientDeletionOperation.h */,
+				3892FB5E139A7CB80020C06C /* TICDSFileManagerBasedDocumentClientDeletionOperation.m */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -455,6 +463,8 @@
 				38A280C0138AA57000C81675 /* TICDSListOfApplicationRegisteredClientsOperation.m */,
 				38CB78A1139232BC0062BE53 /* TICDSDocumentDeletionOperation.h */,
 				38CB78A2139232BC0062BE53 /* TICDSDocumentDeletionOperation.m */,
+				3892FB51139A673C0020C06C /* TICDSDocumentClientDeletionOperation.h */,
+				3892FB52139A673C0020C06C /* TICDSDocumentClientDeletionOperation.m */,
 			);
 			path = "Generic Operations";
 			sourceTree = "<group>";
@@ -654,6 +664,8 @@
 				38CB78A3139232BC0062BE53 /* TICDSDocumentDeletionOperation.m in Sources */,
 				38CB78A7139248EC0062BE53 /* TICDSFileManagerBasedDocumentDeletionOperation.m in Sources */,
 				38CB78D4139298870062BE53 /* TICDSDropboxSDKBasedDocumentDeletionOperation.m in Sources */,
+				3892FB53139A673C0020C06C /* TICDSDocumentClientDeletionOperation.m in Sources */,
+				3892FB5F139A7CB80020C06C /* TICDSFileManagerBasedDocumentClientDeletionOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

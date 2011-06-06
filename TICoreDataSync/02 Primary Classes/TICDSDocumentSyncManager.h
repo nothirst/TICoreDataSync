@@ -149,6 +149,15 @@
 /** Fetch a list of devices that are registered to synchronize with this client. */
 - (void)requestInformationForAllRegisteredDevices;
 
+#pragma mark - Deleting Devices from a Document
+/** @name Deleting Clients from a Document */
+
+/** Delete the files used by a client to synchronize with this document.
+ 
+ This will automatically spawn a `TICDSDocumentClientDeletionOperation`, and notify you of progress through the `TICDSDocumentSyncManagerDelegate` methods. 
+ @param anIdentifier The unique synchronization identifier of the client to delete. */
+- (void)deleteDocumentSynchronizationDataForClientWithIdentifier:(NSString *)anIdentifier;
+
 #pragma mark - Overridden Methods
 /** @name Methods Overridden by Subclasses */
 
@@ -194,6 +203,14 @@
  
  @return A correctly-configured subclass of `TICDSListOfDocumentRegisteredClientsOperation`. */
 - (TICDSListOfDocumentRegisteredClientsOperation *)listOfDocumentRegisteredClientsOperation;
+
+
+/** Returns a "deletion of client synchronization data from a document" operation.
+ 
+ Subclasses of `TICDSDocumentSyncManager` use this method to return a correctly-configured operation for their particularly sync method.
+ 
+ @return A correctly-configured subclass of `TICDSDocumentClientDeletionOperation`. */
+- (TICDSDocumentClientDeletionOperation *)documentClientDeletionOperation;
 
 #pragma mark - MOC Saving
 /** @name Managed Object Context Saving */
