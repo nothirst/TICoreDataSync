@@ -203,7 +203,7 @@
     }
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Deleted client's directory from document's SyncCommands directory");
-    [self beginCheckingWhetherClientDirectoryExistsInDocumentWholeStoreDirectory];
+    [self beginCheckingWhetherClientIdentifierFileExistsInRecentSyncsDirectory];
 }
 
 #pragma mark Overridden Method
@@ -231,8 +231,7 @@
             
         case TICDSRemoteFileStructureExistsResponseTypeDoesExist:
             TICDSLog(TICDSLogVerbosityEveryStep, @"Client's file does exist in RecentSyncs directory");
-            
-#warning "here"
+            [self beginDeletingClientIdentifierFileFromRecentSyncsDirectory];
             break;
             
         case TICDSRemoteFileStructureExistsResponseTypeDoesNotExist:

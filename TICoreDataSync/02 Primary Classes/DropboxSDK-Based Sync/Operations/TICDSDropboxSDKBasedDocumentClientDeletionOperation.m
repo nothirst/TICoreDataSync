@@ -10,7 +10,6 @@
 
 #import "TICoreDataSync.h"
 
-
 @implementation TICDSDropboxSDKBasedDocumentClientDeletionOperation
 
 - (BOOL)needsMainThread
@@ -52,6 +51,16 @@
     [[self restClient] deletePath:[[self thisDocumentSyncCommandsDirectoryPath] stringByAppendingPathComponent:[self identifierOfClientToBeDeleted]]];
 }
 
+- (void)checkWhetherClientIdentifierFileExistsInRecentSyncsDirectory
+{
+    [[self restClient] loadMetadata:[[[self thisDocumentRecentSyncsDirectoryPath] stringByAppendingPathComponent:[self identifierOfClientToBeDeleted]] stringByAppendingPathExtension:TICDSRecentSyncFileExtension]];
+}
+
+- (void)deleteClientIdentifierFileFromRecentSyncsDirectory
+{
+    [[self restClient] deletePath:[[[self thisDocumentRecentSyncsDirectoryPath] stringByAppendingPathComponent:[self identifierOfClientToBeDeleted]] stringByAppendingPathExtension:TICDSRecentSyncFileExtension]];
+}
+
 - (void)checkWhetherClientDirectoryExistsInDocumentWholeStoreDirectory
 {
     [[self restClient] loadMetadata:[[self thisDocumentWholeStoreDirectoryPath] stringByAppendingPathComponent:[self identifierOfClientToBeDeleted]]];
@@ -82,6 +91,11 @@
     
     if( [[path stringByDeletingLastPathComponent] isEqualToString:[self thisDocumentWholeStoreDirectoryPath]] ) {
         [self discoveredStatusOfClientDirectoryInDocumentWholeStoreDirectory:status];
+        return;
+    }
+    
+    if( [[path pathExtension] isEqualToString:TICDSRecentSyncFileExtension] ) {
+        [self discoveredStatusOfClientIdentifierFileInDocumentRecentSyncsDirectory:status];
         return;
     }
 }
@@ -117,6 +131,11 @@
         [self discoveredStatusOfClientDirectoryInDocumentWholeStoreDirectory:status];
         return;
     }
+    
+    if( [[path pathExtension] isEqualToString:TICDSRecentSyncFileExtension] ) {
+        [self discoveredStatusOfClientIdentifierFileInDocumentRecentSyncsDirectory:status];
+        return;
+    }
 }
 
 #pragma mark Deletion
@@ -139,6 +158,11 @@
     
     if( [[path stringByDeletingLastPathComponent] isEqualToString:[self thisDocumentWholeStoreDirectoryPath]] ) {
         [self deletedClientDirectoryFromDocumentWholeStoreDirectoryWithSuccess:YES];
+        return;
+    }
+    
+    if( [[path pathExtension] isEqualToString:TICDSRecentSyncFileExtension] ) {
+        [self deletedClientIdentifierFileFromRecentSyncsDirectoryWithSuccess:YES];
         return;
     }
 }
@@ -166,6 +190,11 @@
     
     if( [[path stringByDeletingLastPathComponent] isEqualToString:[self thisDocumentWholeStoreDirectoryPath]] ) {
         [self deletedClientDirectoryFromDocumentWholeStoreDirectoryWithSuccess:NO];
+        return;
+    }
+    
+    if( [[path pathExtension] isEqualToString:TICDSRecentSyncFileExtension] ) {
+        [self deletedClientIdentifierFileFromRecentSyncsDirectoryWithSuccess:NO];
         return;
     }
 }
@@ -196,6 +225,7 @@
     [_thisDocumentDeletedClientsDirectoryPath release], _thisDocumentDeletedClientsDirectoryPath = nil;
     [_thisDocumentSyncChangesDirectoryPath release], _thisDocumentSyncChangesDirectoryPath = nil;
     [_thisDocumentSyncCommandsDirectoryPath release], _thisDocumentSyncCommandsDirectoryPath = nil;
+    [_thisDocumentRecentSyncsDirectoryPath release], _thisDocumentRecentSyncsDirectoryPath = nil;
     [_thisDocumentWholeStoreDirectoryPath release], _thisDocumentWholeStoreDirectoryPath = nil;
     
     [super dealloc];
@@ -221,6 +251,7 @@
 @synthesize thisDocumentDeletedClientsDirectoryPath = _thisDocumentDeletedClientsDirectoryPath;
 @synthesize thisDocumentSyncChangesDirectoryPath = _thisDocumentSyncChangesDirectoryPath;
 @synthesize thisDocumentSyncCommandsDirectoryPath = _thisDocumentSyncCommandsDirectoryPath;
+@synthesize thisDocumentRecentSyncsDirectoryPath = _thisDocumentRecentSyncsDirectoryPath;
 @synthesize thisDocumentWholeStoreDirectoryPath = _thisDocumentWholeStoreDirectoryPath;
 
 @end

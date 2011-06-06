@@ -8,6 +8,8 @@
 
 #import "TICoreDataSync.h"
 
+#warning "Fix removal of DeletedClients file"
+
 @interface TICDSDocumentRegistrationOperation () 
 
 - (void)beginCheckForRemoteDocumentDirectory;

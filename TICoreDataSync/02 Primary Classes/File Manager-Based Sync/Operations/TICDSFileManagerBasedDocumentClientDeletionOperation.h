@@ -17,6 +17,7 @@
     NSString *_thisDocumentDeletedClientsDirectoryPath;
     NSString *_thisDocumentSyncChangesDirectoryPath;
     NSString *_thisDocumentSyncCommandsDirectoryPath;
+    NSString *_thisDocumentRecentSyncsDirectoryPath;
     NSString *_thisDocumentWholeStoreDirectoryPath;
 }
 
@@ -33,6 +34,9 @@
 
 /** The path to the document's `SyncCommands` directory. */
 @property (retain) NSString *thisDocumentSyncCommandsDirectoryPath;
+
+/** The path to the document's `RecentSync` directory. */
+@property (retain) NSString *thisDocumentRecentSyncsDirectoryPath;
 
 /** The path to the document's `WholeStore` directory. */
 @property (retain) NSString *thisDocumentWholeStoreDirectoryPath;

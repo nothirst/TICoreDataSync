@@ -91,6 +91,31 @@
     [self deletedClientDirectoryFromDocumentSyncCommandsDirectoryWithSuccess:success];
 }
 
+- (void)checkWhetherClientIdentifierFileExistsInRecentSyncsDirectory
+{
+    NSString *filePath = [[[self thisDocumentRecentSyncsDirectoryPath] stringByAppendingPathComponent:[self identifierOfClientToBeDeleted]] stringByAppendingPathExtension:TICDSRecentSyncFileExtension];
+    
+    if( [[self fileManager] fileExistsAtPath:filePath] ) {
+        [self discoveredStatusOfClientIdentifierFileInDocumentRecentSyncsDirectory:TICDSRemoteFileStructureExistsResponseTypeDoesExist];
+    } else {
+        [self discoveredStatusOfClientIdentifierFileInDocumentRecentSyncsDirectory:TICDSRemoteFileStructureExistsResponseTypeDoesNotExist];
+    }
+}
+
+- (void)deleteClientIdentifierFileFromRecentSyncsDirectory
+{
+    NSString *filePath = [[[self thisDocumentRecentSyncsDirectoryPath] stringByAppendingPathComponent:[self identifierOfClientToBeDeleted]] stringByAppendingPathExtension:TICDSRecentSyncFileExtension];
+    
+    NSError *anyError = nil;
+    BOOL success = [[self fileManager] removeItemAtPath:filePath error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    [self deletedClientIdentifierFileFromRecentSyncsDirectoryWithSuccess:success];
+}
+
 - (void)checkWhetherClientDirectoryExistsInDocumentWholeStoreDirectory
 {
     NSString *directoryPath = [[self thisDocumentWholeStoreDirectoryPath] stringByAppendingPathComponent:[self identifierOfClientToBeDeleted]];
@@ -124,6 +149,7 @@
     [_thisDocumentDeletedClientsDirectoryPath release], _thisDocumentDeletedClientsDirectoryPath = nil;
     [_thisDocumentSyncChangesDirectoryPath release], _thisDocumentSyncChangesDirectoryPath = nil;
     [_thisDocumentSyncCommandsDirectoryPath release], _thisDocumentSyncCommandsDirectoryPath = nil;
+    [_thisDocumentRecentSyncsDirectoryPath release], _thisDocumentRecentSyncsDirectoryPath = nil;
     [_thisDocumentWholeStoreDirectoryPath release], _thisDocumentWholeStoreDirectoryPath = nil;
 
     [super dealloc];
@@ -135,6 +161,7 @@
 @synthesize thisDocumentDeletedClientsDirectoryPath = _thisDocumentDeletedClientsDirectoryPath;
 @synthesize thisDocumentSyncChangesDirectoryPath = _thisDocumentSyncChangesDirectoryPath;
 @synthesize thisDocumentSyncCommandsDirectoryPath = _thisDocumentSyncCommandsDirectoryPath;
+@synthesize thisDocumentRecentSyncsDirectoryPath = _thisDocumentRecentSyncsDirectoryPath;
 @synthesize thisDocumentWholeStoreDirectoryPath = _thisDocumentWholeStoreDirectoryPath;
 
 @end
