@@ -133,7 +133,7 @@ At present, TICoreDataSync only supports file-manager-based sync, or iOS Dropbox
 
 There is currently no automated functionality to remove the entire sync data directory from a remote service, nor is it yet possible to remove a client's files from synchronizing an entire application. These tasks will be added soon.
 
-##Recent Changes {#recentchanges}
+<h2 id="recentchanges">Recent Changes</h2>
 
 * **2011-Jun-06**
   
