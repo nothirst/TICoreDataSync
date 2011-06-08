@@ -143,7 +143,7 @@
     [[self restClient] loadMetadata:[[[self thisDocumentDeletedClientsDirectoryPath] stringByAppendingPathComponent:[self clientIdentifier]] stringByAppendingPathExtension:TICDSDeviceInfoPlistExtension]];
 }
 
-- (void)deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:(BOOL)success
+- (void)deleteClientIdentifierFileFromDeletedClientsDirectory
 {
     [[self restClient] deletePath:[[[self thisDocumentDeletedClientsDirectoryPath] stringByAppendingPathComponent:[self clientIdentifier]] stringByAppendingPathExtension:TICDSDeviceInfoPlistExtension]];
 }
