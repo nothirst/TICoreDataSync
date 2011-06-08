@@ -53,6 +53,10 @@
         }
     }
     
+    if( !identifier ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeNoPreviouslyUploadedStoreExists classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
     [self determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:identifier];
 }
 
@@ -86,6 +90,11 @@
             }
             
             _numberOfWholeStoresToCheck++;
+        }
+        
+        if( _numberOfWholeStoresToCheck < 1 ) {
+            [self sortOutWhichStoreIsNewest];
+            return;
         }
         
         for( DBMetadata *eachSubMetadata in [metadata contents] ) {
