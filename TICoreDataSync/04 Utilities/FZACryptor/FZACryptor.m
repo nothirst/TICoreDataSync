@@ -99,6 +99,9 @@ const NSInteger FZAFileBlockLength = 4096;
     //set up the crypto
     NSData *syncKey = [keyManager key];
     NSData *topLevelIV = [keyManager randomDataOfLength: kCCBlockSizeAES128];
+    CCHmacContext hmacContext;
+    CCHmacInit(&hmacContext, kCCHmacAlgSHA256, [syncKey bytes], [syncKey length]);
+    CCHmacUpdate(&hmacContext, [topLevelIV bytes], [topLevelIV length]);
     [writeHandle writeData: topLevelIV];
     NSData *fileKeyAndIV = [keyManager randomDataOfLength: kCCKeySizeAES256 + kCCBlockSizeAES128];
     uint8_t cryptedKeyIV[kCCKeySizeAES256 + kCCBlockSizeAES128] = {0};
@@ -128,8 +131,6 @@ const NSInteger FZAFileBlockLength = 4096;
                                           freeWhenDone: NO];
     [writeHandle writeData: outgoingData];
     
-    CCHmacContext hmacContext;
-    CCHmacInit(&hmacContext, kCCHmacAlgSHA256, [syncKey bytes], [syncKey length]);
     CCHmacUpdate(&hmacContext, [outgoingData bytes], [outgoingData length]);
     
     NSData *key = [NSData dataWithBytes: [fileKeyAndIV bytes] length: kCCKeySizeAES256];
@@ -255,7 +256,6 @@ const NSInteger FZAFileBlockLength = 4096;
      * it goes.
      */
     NSData *syncKey = [keyManager key];
-    [readHandle seekToFileOffset: kCCBlockSizeAES128];
     CCHmacContext hmacContext;
     CCHmacInit(&hmacContext, kCCHmacAlgSHA256, [syncKey bytes], [syncKey length]);
     do {
