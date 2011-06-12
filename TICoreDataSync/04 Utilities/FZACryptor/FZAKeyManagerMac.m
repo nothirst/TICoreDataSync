@@ -29,17 +29,18 @@
 
 FourCharCode FZACreatorCode = 'FZAL';
 
+@interface FZAKeyManagerMac ()
+
+- (NSData *)serviceName;
+void FZAReportKeychainError(OSStatus keychainStatus, NSString *msg);
+
+@end
+
 void FZAReportKeychainError(OSStatus keychainStatus, NSString *msg) {
     CFStringRef errorMsg = SecCopyErrorMessageString(keychainStatus, NULL);
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"FZACryptor Mac Key Manager Error %@: %@", msg, (id)errorMsg);
     CFRelease(errorMsg);
 }
-
-@interface FZAKeyManagerMac ()
-
-- (NSData *)serviceName;
-
-@end
 
 @implementation FZAKeyManagerMac
 
