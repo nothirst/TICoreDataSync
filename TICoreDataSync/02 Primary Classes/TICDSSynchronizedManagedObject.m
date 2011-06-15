@@ -236,7 +236,6 @@
 {
     if( ![[self managedObjectContext] isKindOfClass:[TICDSSynchronizedManagedObjectContext class]] ) return nil;
     
-    /*return [[(TICDSSynchronizedManagedObjectContext *)[self managedObjectContext] documentSyncManager] syncChangesMOC];*/
     return [[(TICDSSynchronizedManagedObjectContext *)[self managedObjectContext] documentSyncManager] syncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)[self managedObjectContext]];
 }
 

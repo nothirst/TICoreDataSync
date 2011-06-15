@@ -26,7 +26,7 @@
             // create directory
             _numberOfAppDirectoriesToCreate++;
             
-            [[self appDirectoryRestClient] createFolder:thisPath];
+            [[self restClient] createFolder:thisPath];
             
             [self createDirectoryContentsFromDictionary:object inDirectory:thisPath];            
         }
@@ -43,7 +43,7 @@
 #pragma mark Global App Directory Methods
 - (void)checkWhetherRemoteGlobalAppDirectoryExists
 {
-    [[self appDirectoryRestClient] loadMetadata:[self applicationDirectoryPath]];
+    [[self restClient] loadMetadata:[self applicationDirectoryPath]];
 }
 
 - (void)createRemoteGlobalAppDirectoryStructure
@@ -66,18 +66,18 @@
 
 - (void)copyReadMeTxtFileToRootOfGlobalAppDirectoryFromPath:(NSString *)aPath
 {
-    [[self appDirectoryRestClient] uploadFile:[aPath lastPathComponent] toPath:[self applicationDirectoryPath] fromPath:[aPath stringByDeletingLastPathComponent]];
+    [[self restClient] uploadFile:[aPath lastPathComponent] toPath:[self applicationDirectoryPath] fromPath:[aPath stringByDeletingLastPathComponent]];
 }
 
 #pragma mark Salt
 - (void)checkWhetherSaltFileExists
 {
-    [[self appDirectoryRestClient] loadMetadata:[self encryptionDirectorySaltDataFilePath]];
+    [[self restClient] loadMetadata:[self encryptionDirectorySaltDataFilePath]];
 }
 
 - (void)fetchSaltData
 {
-    [[self appDirectoryRestClient] loadFile:[self encryptionDirectorySaltDataFilePath] intoPath:[[self tempFileDirectoryPath] stringByAppendingPathComponent:TICDSSaltFilenameWithExtension]];
+    [[self restClient] loadFile:[self encryptionDirectorySaltDataFilePath] intoPath:[[self tempFileDirectoryPath] stringByAppendingPathComponent:TICDSSaltFilenameWithExtension]];
 }
 
 - (void)saveSaltDataToRemote:(NSData *)saltData
@@ -93,7 +93,7 @@
         return;
     }
     
-    [[self appDirectoryRestClient] uploadFile:TICDSSaltFilenameWithExtension toPath:[[self encryptionDirectorySaltDataFilePath] stringByDeletingLastPathComponent] fromPath:tempFile];
+    [[self restClient] uploadFile:TICDSSaltFilenameWithExtension toPath:[[self encryptionDirectorySaltDataFilePath] stringByDeletingLastPathComponent] fromPath:tempFile];
 }
 
 #pragma mark Password Test
@@ -121,23 +121,23 @@
         return;
     }
     
-    [[self appDirectoryRestClient] uploadFile:TICDSEncryptionTestFilenameWithExtension toPath:[[self encryptionDirectoryTestDataFilePath] stringByDeletingLastPathComponent] fromPath:finalFilePath];
+    [[self restClient] uploadFile:TICDSEncryptionTestFilenameWithExtension toPath:[[self encryptionDirectoryTestDataFilePath] stringByDeletingLastPathComponent] fromPath:finalFilePath];
 }
 
 - (void)fetchPasswordTestData
 {
-    [[self appDirectoryRestClient] loadFile:[self encryptionDirectoryTestDataFilePath] intoPath:[[self tempFileDirectoryPath] stringByAppendingPathComponent:TICDSEncryptionTestFilenameWithExtension]];
+    [[self restClient] loadFile:[self encryptionDirectoryTestDataFilePath] intoPath:[[self tempFileDirectoryPath] stringByAppendingPathComponent:TICDSEncryptionTestFilenameWithExtension]];
 }
 
 #pragma makr Client Device Directories Methods
 - (void)checkWhetherRemoteClientDeviceDirectoryExists
 {
-    [[self appDirectoryRestClient] loadMetadata:[self clientDevicesThisClientDeviceDirectoryPath]];
+    [[self restClient] loadMetadata:[self clientDevicesThisClientDeviceDirectoryPath]];
 }
 
 - (void)createRemoteClientDeviceDirectory
 {
-    [[self appDirectoryRestClient] createFolder:[self clientDevicesThisClientDeviceDirectoryPath]];
+    [[self restClient] createFolder:[self clientDevicesThisClientDeviceDirectoryPath]];
 }
 
 - (void)saveRemoteClientDeviceInfoPlistFromDictionary:(NSDictionary *)aDictionary
@@ -175,7 +175,7 @@
         }
     }
     
-    [[self appDirectoryRestClient] uploadFile:TICDSDeviceInfoPlistFilenameWithExtension toPath:[self clientDevicesThisClientDeviceDirectoryPath] fromPath:finalFilePath];
+    [[self restClient] uploadFile:TICDSDeviceInfoPlistFilenameWithExtension toPath:[self clientDevicesThisClientDeviceDirectoryPath] fromPath:finalFilePath];
 }
 
 #pragma mark -
@@ -388,7 +388,7 @@
 - (void)dealloc
 {
     [_dbSession release], _dbSession = nil;
-    [_appDirectoryRestClient release], _appDirectoryRestClient = nil;
+    [_restClient release], _restClient = nil;
     [_applicationDirectoryPath release], _applicationDirectoryPath = nil;
     [_encryptionDirectorySaltDataFilePath release], _encryptionDirectorySaltDataFilePath = nil;
     [_encryptionDirectoryTestDataFilePath release], _encryptionDirectoryTestDataFilePath = nil;
@@ -399,20 +399,20 @@
 
 #pragma mark -
 #pragma mark Lazy Accessors
-- (DBRestClient *)appDirectoryRestClient
+- (DBRestClient *)restClient
 {
-    if( _appDirectoryRestClient ) return _appDirectoryRestClient;
+    if( _restClient ) return _restClient;
     
-    _appDirectoryRestClient = [[DBRestClient alloc] initWithSession:[self dbSession]];
-    [_appDirectoryRestClient setDelegate:self];
+    _restClient = [[DBRestClient alloc] initWithSession:[self dbSession]];
+    [_restClient setDelegate:self];
     
-    return _appDirectoryRestClient;
+    return _restClient;
 }
 
 #pragma mark -
 #pragma mark Properties
 @synthesize dbSession = _dbSession;
-@synthesize appDirectoryRestClient = _appDirectoryRestClient;
+@synthesize restClient = _restClient;
 @synthesize applicationDirectoryPath = _applicationDirectoryPath;
 @synthesize encryptionDirectorySaltDataFilePath = _encryptionDirectorySaltDataFilePath;
 @synthesize encryptionDirectoryTestDataFilePath = _encryptionDirectoryTestDataFilePath;

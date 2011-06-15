@@ -67,7 +67,7 @@
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the old sync change set files for this operation were removed or not. */
+ @param success `YES` if the old sync change set files for this operation were removed, otherwise `NO`. */
 - (void)removedOldSyncChangeSetFilesWithSuccess:(BOOL)success;
 
 /** @name Properties */

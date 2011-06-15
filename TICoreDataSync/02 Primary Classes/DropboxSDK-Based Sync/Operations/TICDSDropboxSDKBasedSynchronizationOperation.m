@@ -10,6 +10,15 @@
 
 #import "TICoreDataSync.h"
 
+@interface TICDSDropboxSDKBasedSynchronizationOperation ()
+
+/** A dictionary used by this operation to find out the client responsible for creating a change set. */
+@property (nonatomic, retain) NSMutableDictionary *clientIdentifiersForChangeSetIdentifiers;
+
+/** A dictionary used to keep hold of the modification dates of sync change sets. */
+@property (nonatomic, retain) NSMutableDictionary *changeSetModificationDates;
+
+@end
 
 @implementation TICDSDropboxSDKBasedSynchronizationOperation
 

@@ -8,7 +8,9 @@
 
 #import "TICDSListOfDocumentRegisteredClientsOperation.h"
 
-
+/**
+ `TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation` is a "list of clients registered to a document" operation designed for use with a `TICDSFileManagerBasedDocumentSyncManager`.
+ */
 @interface TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation : TICDSListOfDocumentRegisteredClientsOperation {
 @private
     NSString *_thisDocumentSyncChangesDirectoryPath;
@@ -17,12 +19,33 @@
     NSString *_thisDocumentWholeStoreDirectoryPath;
 }
 
+
+/** @name Paths */
+
+/** The path to this document's `SyncChanges` directory. */
 @property (retain) NSString *thisDocumentSyncChangesDirectoryPath;
+
+/** The path to the `ClientDevices` directory. */
 @property (retain) NSString *clientDevicesDirectoryPath;
+
+/** The path to this document's `RecentSyncs` directory. */
 @property (retain) NSString *thisDocumentRecentSyncsDirectoryPath;
+
+/** The path to this document's `WholeStore` directory. */
 @property (retain) NSString *thisDocumentWholeStoreDirectoryPath;
 
+/** Return the path to the `deviceInfo.plist` file for a specified client, inside the `ClientDevices` directory.
+ 
+ @param anIdentifier The identifier of the client.
+ 
+ @return The path to the `deviceInfo.plist` file. */
 - (NSString *)pathToDeviceInfoPlistForDeviceWithIdentifier:(NSString *)anIdentifier;
+
+/** Return the path to the `wholeStore.ticdsync` file uploaded by a client with a specified identifier. 
+ 
+ @param anIdentifier The identifier of the client.
+ 
+ @return The path to the client's `wholeStore.ticdsync` file. */
 - (NSString *)pathToWholeStoreFileForDeviceWithIdentifier:(NSString *)anIdentifier;
 
 @end

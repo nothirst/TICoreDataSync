@@ -1,0 +1,355 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3821AF32138013CD004860A0 /* NoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3821AF30138013CD004860A0 /* NoteViewController.m */; };
+		3821AF33138013CD004860A0 /* NoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3821AF31138013CD004860A0 /* NoteViewController.xib */; };
+		384E17D9137D647B00629EFD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384E17D8137D647B00629EFD /* UIKit.framework */; };
+		384E17DB137D647B00629EFD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384E17DA137D647B00629EFD /* Foundation.framework */; };
+		384E17DD137D647B00629EFD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384E17DC137D647B00629EFD /* CoreGraphics.framework */; };
+		384E17DF137D647B00629EFD /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384E17DE137D647B00629EFD /* CoreData.framework */; };
+		384E17E5137D647B00629EFD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 384E17E3137D647B00629EFD /* InfoPlist.strings */; };
+		384E17E8137D647B00629EFD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 384E17E7137D647B00629EFD /* main.m */; };
+		384E17EB137D647B00629EFD /* iOSNotebookAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 384E17EA137D647B00629EFD /* iOSNotebookAppDelegate.m */; };
+		384E17F1137D647C00629EFD /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 384E17EF137D647C00629EFD /* MainWindow.xib */; };
+		384E17F4137D647C00629EFD /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 384E17F3137D647C00629EFD /* RootViewController.m */; };
+		384E17F7137D647C00629EFD /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 384E17F5137D647C00629EFD /* RootViewController.xib */; };
+		389FD2A51396898C00A8809A /* Notebook.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 389FD2A31396898C00A8809A /* Notebook.xcdatamodeld */; };
+		38B89ACF1396365800CE5981 /* NoteTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B89ACE1396365700CE5981 /* NoteTagsViewController.m */; };
+		38B89ADB13965CE400CE5981 /* TIStringEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B89AD913965CE300CE5981 /* TIStringEditorViewController.m */; };
+		38B89ADC13965CE400CE5981 /* TIStringEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38B89ADA13965CE400CE5981 /* TIStringEditorViewController.xib */; };
+		38BCD57113966F310002E366 /* TINBNote.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BCD56E13966F310002E366 /* TINBNote.m */; };
+		38BCD57213966F310002E366 /* TINBTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BCD57013966F310002E366 /* TINBTag.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3821AF2F138013CD004860A0 /* NoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteViewController.h; sourceTree = "<group>"; };
+		3821AF30138013CD004860A0 /* NoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteViewController.m; sourceTree = "<group>"; };
+		3821AF31138013CD004860A0 /* NoteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteViewController.xib; sourceTree = "<group>"; };
+		384E17D4137D647B00629EFD /* iOSNotebook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSNotebook.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		384E17D8137D647B00629EFD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		384E17DA137D647B00629EFD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		384E17DC137D647B00629EFD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		384E17DE137D647B00629EFD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		384E17E2137D647B00629EFD /* iOSNotebook-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iOSNotebook-Info.plist"; sourceTree = "<group>"; };
+		384E17E4137D647B00629EFD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		384E17E6137D647B00629EFD /* iOSNotebook-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iOSNotebook-Prefix.pch"; sourceTree = "<group>"; };
+		384E17E7137D647B00629EFD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		384E17E9137D647B00629EFD /* iOSNotebookAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iOSNotebookAppDelegate.h; sourceTree = "<group>"; };
+		384E17EA137D647B00629EFD /* iOSNotebookAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOSNotebookAppDelegate.m; sourceTree = "<group>"; };
+		384E17F0137D647C00629EFD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		384E17F2137D647C00629EFD /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		384E17F3137D647C00629EFD /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		384E17F6137D647C00629EFD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RootViewController.xib; sourceTree = "<group>"; };
+		384E188C137D7A5E00629EFD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		384E188E137D7B7F00629EFD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		389FD2A41396898C00A8809A /* Notebook.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Notebook.xcdatamodel; sourceTree = "<group>"; };
+		38B89ACD1396365700CE5981 /* NoteTagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteTagsViewController.h; sourceTree = "<group>"; };
+		38B89ACE1396365700CE5981 /* NoteTagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteTagsViewController.m; sourceTree = "<group>"; };
+		38B89AD813965CE300CE5981 /* TIStringEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TIStringEditorViewController.h; sourceTree = "<group>"; };
+		38B89AD913965CE300CE5981 /* TIStringEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TIStringEditorViewController.m; sourceTree = "<group>"; };
+		38B89ADA13965CE400CE5981 /* TIStringEditorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TIStringEditorViewController.xib; sourceTree = "<group>"; };
+		38BCD56D13966F310002E366 /* TINBNote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TINBNote.h; sourceTree = "<group>"; };
+		38BCD56E13966F310002E366 /* TINBNote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TINBNote.m; sourceTree = "<group>"; };
+		38BCD56F13966F310002E366 /* TINBTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TINBTag.h; sourceTree = "<group>"; };
+		38BCD57013966F310002E366 /* TINBTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TINBTag.m; sourceTree = "<group>"; };
+		38E6592213969B7900D3156B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		384E17D1137D647B00629EFD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				384E17D9137D647B00629EFD /* UIKit.framework in Frameworks */,
+				384E17DB137D647B00629EFD /* Foundation.framework in Frameworks */,
+				384E17DD137D647B00629EFD /* CoreGraphics.framework in Frameworks */,
+				384E17DF137D647B00629EFD /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		384E17C9137D647B00629EFD = {
+			isa = PBXGroup;
+			children = (
+				389FD2A31396898C00A8809A /* Notebook.xcdatamodeld */,
+				384E17E0137D647B00629EFD /* iOSNotebook */,
+				384E17D7137D647B00629EFD /* Frameworks */,
+				384E17D5137D647B00629EFD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		384E17D5137D647B00629EFD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				384E17D4137D647B00629EFD /* iOSNotebook.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		384E17D7137D647B00629EFD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				38E6592213969B7900D3156B /* Security.framework */,
+				384E188E137D7B7F00629EFD /* SystemConfiguration.framework */,
+				384E188C137D7A5E00629EFD /* Security.framework */,
+				384E17D8137D647B00629EFD /* UIKit.framework */,
+				384E17DA137D647B00629EFD /* Foundation.framework */,
+				384E17DC137D647B00629EFD /* CoreGraphics.framework */,
+				384E17DE137D647B00629EFD /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		384E17E0137D647B00629EFD /* iOSNotebook */ = {
+			isa = PBXGroup;
+			children = (
+				38BCD56D13966F310002E366 /* TINBNote.h */,
+				38BCD56E13966F310002E366 /* TINBNote.m */,
+				38BCD56F13966F310002E366 /* TINBTag.h */,
+				38BCD57013966F310002E366 /* TINBTag.m */,
+				384E17E9137D647B00629EFD /* iOSNotebookAppDelegate.h */,
+				384E17EA137D647B00629EFD /* iOSNotebookAppDelegate.m */,
+				384E17EF137D647C00629EFD /* MainWindow.xib */,
+				384E17F2137D647C00629EFD /* RootViewController.h */,
+				384E17F3137D647C00629EFD /* RootViewController.m */,
+				384E17F5137D647C00629EFD /* RootViewController.xib */,
+				3821AF2F138013CD004860A0 /* NoteViewController.h */,
+				3821AF30138013CD004860A0 /* NoteViewController.m */,
+				3821AF31138013CD004860A0 /* NoteViewController.xib */,
+				38B89ACD1396365700CE5981 /* NoteTagsViewController.h */,
+				38B89ACE1396365700CE5981 /* NoteTagsViewController.m */,
+				38B89AD813965CE300CE5981 /* TIStringEditorViewController.h */,
+				38B89AD913965CE300CE5981 /* TIStringEditorViewController.m */,
+				38B89ADA13965CE400CE5981 /* TIStringEditorViewController.xib */,
+				384E17E1137D647B00629EFD /* Supporting Files */,
+			);
+			path = iOSNotebook;
+			sourceTree = "<group>";
+		};
+		384E17E1137D647B00629EFD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				384E17E2137D647B00629EFD /* iOSNotebook-Info.plist */,
+				384E17E3137D647B00629EFD /* InfoPlist.strings */,
+				384E17E6137D647B00629EFD /* iOSNotebook-Prefix.pch */,
+				384E17E7137D647B00629EFD /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		384E17D3137D647B00629EFD /* iOSNotebook */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 384E17FA137D647C00629EFD /* Build configuration list for PBXNativeTarget "iOSNotebook" */;
+			buildPhases = (
+				384E17D0137D647B00629EFD /* Sources */,
+				384E17D1137D647B00629EFD /* Frameworks */,
+				384E17D2137D647B00629EFD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iOSNotebook;
+			productName = iOSNotebook;
+			productReference = 384E17D4137D647B00629EFD /* iOSNotebook.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		384E17CB137D647B00629EFD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Tim Isted";
+			};
+			buildConfigurationList = 384E17CE137D647B00629EFD /* Build configuration list for PBXProject "iOSNotebook" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 384E17C9137D647B00629EFD;
+			productRefGroup = 384E17D5137D647B00629EFD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				384E17D3137D647B00629EFD /* iOSNotebook */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		384E17D2137D647B00629EFD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				384E17E5137D647B00629EFD /* InfoPlist.strings in Resources */,
+				384E17F1137D647C00629EFD /* MainWindow.xib in Resources */,
+				384E17F7137D647C00629EFD /* RootViewController.xib in Resources */,
+				3821AF33138013CD004860A0 /* NoteViewController.xib in Resources */,
+				38B89ADC13965CE400CE5981 /* TIStringEditorViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		384E17D0137D647B00629EFD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				384E17E8137D647B00629EFD /* main.m in Sources */,
+				384E17EB137D647B00629EFD /* iOSNotebookAppDelegate.m in Sources */,
+				384E17F4137D647C00629EFD /* RootViewController.m in Sources */,
+				3821AF32138013CD004860A0 /* NoteViewController.m in Sources */,
+				38B89ACF1396365800CE5981 /* NoteTagsViewController.m in Sources */,
+				38B89ADB13965CE400CE5981 /* TIStringEditorViewController.m in Sources */,
+				38BCD57113966F310002E366 /* TINBNote.m in Sources */,
+				38BCD57213966F310002E366 /* TINBTag.m in Sources */,
+				389FD2A51396898C00A8809A /* Notebook.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		384E17E3137D647B00629EFD /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				384E17E4137D647B00629EFD /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		384E17EF137D647C00629EFD /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				384E17F0137D647C00629EFD /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		384E17F5137D647C00629EFD /* RootViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				384E17F6137D647C00629EFD /* en */,
+			);
+			name = RootViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		384E17F8137D647C00629EFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1.3;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		384E17F9137D647C00629EFD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		384E17FB137D647C00629EFD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iOSNotebook/iOSNotebook-Prefix.pch";
+				INFOPLIST_FILE = "iOSNotebook/iOSNotebook-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1.3;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		384E17FC137D647C00629EFD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iOSNotebook/iOSNotebook-Prefix.pch";
+				INFOPLIST_FILE = "iOSNotebook/iOSNotebook-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1.3;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		384E17CE137D647B00629EFD /* Build configuration list for PBXProject "iOSNotebook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				384E17F8137D647C00629EFD /* Debug */,
+				384E17F9137D647C00629EFD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		384E17FA137D647C00629EFD /* Build configuration list for PBXNativeTarget "iOSNotebook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				384E17FB137D647C00629EFD /* Debug */,
+				384E17FC137D647C00629EFD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		389FD2A31396898C00A8809A /* Notebook.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				389FD2A41396898C00A8809A /* Notebook.xcdatamodel */,
+			);
+			currentVersion = 389FD2A41396898C00A8809A /* Notebook.xcdatamodel */;
+			name = Notebook.xcdatamodeld;
+			path = iOSNotebook/Notebook.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 384E17CB137D647B00629EFD /* Project object */;
+}

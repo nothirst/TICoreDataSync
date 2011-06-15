@@ -12,7 +12,9 @@
 
 /** The `TICDSDropboxSDKBasedDocumentSyncManager` describes a class used to synchronize an iOS document with a remote service that can be accessed via the Dropbox SDK.
  
- The requirements are: 
+ The requirements are the same as for the `TICDSDropboxSDKBasedApplicationSyncManager`. 
+ 
+ Note that if you wish to use a `DBSession` object other than the default session, you will need to specify this on each document sync manager you create before calling any other methods.
  */
 
 @class DBSession;
@@ -37,11 +39,17 @@
 /** The path to the `ClientDevices` directory. */
 @property (nonatomic, readonly) NSString *clientDevicesDirectoryPath;
 
+/** The path to this document's `identifier.plist` file inside the `DeletedDocuments` directory. */
+@property (nonatomic, readonly) NSString *deletedDocumentsDirectoryIdentifierPlistFilePath;
+
 /** The path to the `Documents` directory. */
 @property (nonatomic, readonly) NSString *documentsDirectoryPath;
 
 /** The path to this document's directory inside the `Documents` directory. */
 @property (nonatomic, readonly) NSString *thisDocumentDirectoryPath;
+
+/** The path to this document's `DeletedClients` directory. */
+@property (nonatomic, readonly) NSString *thisDocumentDeletedClientsDirectoryPath;
 
 /** The path to this document's `SyncChanges` directory. */
 @property (nonatomic, readonly) NSString *thisDocumentSyncChangesDirectoryPath;

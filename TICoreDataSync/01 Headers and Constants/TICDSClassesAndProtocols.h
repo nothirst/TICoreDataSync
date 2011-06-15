@@ -25,6 +25,8 @@
 @class TICDSVacuumOperation;
 @class TICDSListOfDocumentRegisteredClientsOperation;
 @class TICDSListOfApplicationRegisteredClientsOperation;
+@class TICDSDocumentDeletionOperation;
+@class TICDSDocumentClientDeletionOperation;
 
 #pragma mark File Manager-Based
 @class TICDSFileManagerBasedApplicationSyncManager;
@@ -38,6 +40,8 @@
 @class TICDSFileManagerBasedVacuumOperation;
 @class TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation;
 @class TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation;
+@class TICDSFileManagerBasedDocumentDeletionOperation;
+@class TICDSFileManagerBasedDocumentClientDeletionOperation;
 
 #pragma mark DropboxSDK-Based
 #if TARGET_OS_IPHONE
@@ -52,6 +56,8 @@
 @class TICDSDropboxSDKBasedVacuumOperation;
 @class TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation;
 @class TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation;
+@class TICDSDropboxSDKBasedDocumentDeletionOperation;
+@class TICDSDropboxSDKBasedDocumentClientDeletionOperation;
 #endif
 
 #pragma mark -
@@ -106,7 +112,7 @@
  
  @param aSyncManager The application sync manager object that sent the message.
  
- @warning You *must* call the `continueRegisteringWithEncryptionPassword::` method to indicate the password to use, or the registration process will be left permanently suspended. */
+ @warning You *must* call the `continueRegisteringWithEncryptionPassword:` method to indicate the password to use, or the registration process will be left permanently suspended. */
 @required
 - (void)applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:(TICDSApplicationSyncManager *)aSyncManager;
 @optional
@@ -186,9 +192,9 @@
 
 /** Invoked to request the delegate to return a configured (though not yet registered) document sync manager for a downloaded document.
  
- This method will be called once the whole store has been replaced for the document. You should create a suitable document sync manager for the downloaded store, and configure it by calling `configureWithDelegate:appSyncManager:documentIdentifier:`;
+ This method will be called once the whole store has been replaced for the document. You should create a suitable document sync manager for the downloaded store, and *configure* it by calling `configureWithDelegate:appSyncManager:documentIdentifier:`;
  
- Do not register the document sync manager until after the `applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:` method is called.
+ Do not *register* the document sync manager until after the `applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:` method is called.
  
  @param aSyncManager The document sync manager object that sent the message.
  @param anIdentifier The unique synchronization identifier for the document.
@@ -228,6 +234,42 @@
  @param information A dictionary containing as keys the unique synchronization identifiers of each client, and as values dictionaries of information about that client. */
 - (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishFetchingInformationForAllRegisteredDevices:(NSDictionary *)information;
 
+#pragma mark Document Deletion
+/** Informs the delegate that the application sync manager has begun the process of deleting a document from the remote.
+ 
+ When the document directory is about to be deleted, the `applicationSyncManager:willDeleteDirectoryForDocumentWithIdentifier:` method will be called. Once the directory has been deleted, the `applicationSyncManager:didDeleteDirectoryForDocumentWithIdentifier:` method will be called.
+ 
+ At the end of the process, one of the `applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:` or `applicationSyncManager:didFinishDeletingDocumentWithIdentifier:` methods will be called.
+ 
+ @param aSyncManager The application sync manager object that sent the message.
+ @param anIdentifier The identifier for the document that will be deleted. */
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didBeginDeletionProcessForDocumentWithIdentifier:(NSString *)anIdentifier;
+
+/** Informs the delegate that the application sync manager failed to delete a document. 
+ 
+ @param aSyncManager The application sync manager object that sent the message.
+ @param anIdentifier The identifier of the document that wasn't deleted.
+ @param anError The error that caused the request process to fail. */
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFailToDeleteDocumentWithIdentifier:(NSString *)anIdentifier error:(NSError *)anError;
+
+/** Informs the delegate that the document's directory is about to be removed from the remote.
+ 
+ @param aSyncManager The application sync manager object that sent the message.
+ @param anIdentifier The identifier of the document that will be deleted. */
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager willDeleteDirectoryForDocumentWithIdentifier:(NSString *)anIdentifier;
+
+/** Informs the delegate that the document's directory has just been removed from the remote.
+ 
+ @param aSyncManager The application sync manager object that sent the message.
+ @param anIdentifier The identifier of the document that was deleted. */
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didDeleteDirectoryForDocumentWithIdentifier:(NSString *)anIdentifier;
+
+/** Informs the delegate that the application sync manager completed the deletion process for the specified document.
+ 
+ @param aSyncManager The application sync manager object that sent the message. 
+ @param anIdentifier The identifier of the document that was deleted. */
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishDeletingDocumentWithIdentifier:(NSString *)anIdentifier;
+
 @end
 
 #pragma mark Document Sync Manager
@@ -261,6 +303,20 @@
 
 @optional
 
+/** Informs the delegate that the document sync manager paused the document registration process because the remote file structure has previously been deleted for the specified document.
+ 
+ @param aSyncManager The document sync manager object that sent the message. 
+ @param anIdentifier The unique identifier for the document (as supplied at registration).
+ @param aDescription The description of the document (as supplied at registration).
+ @param userInfo The user info dictionary (as supplied at registration).
+ 
+ @warning You *must* call the `continueRegistrationByCreatingRemoteFileStructure:` method to indicate whether registration should continue or not.
+ */
+@required
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo;
+
+@optional
+
 /** Informs the delegate that the document sync manager has resumed the document registration process.
  
  @param aSyncManager The document sync manager object that sent the message. */
@@ -271,6 +327,13 @@
  @param aSyncManager The document sync manager object that sent the message.
  @param anError The error that caused the registration process to fail. */
 - (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToRegisterWithError:(NSError *)anError;
+
+/** Informs the delegate that the client had previously been deleted from synchronizing this document.
+ 
+ The client should alert the user, and download the store once registration has finished.
+ 
+ @param aSyncManager The document sync manager object that sent the message. */
+- (void)documentSyncManagerDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:(TICDSDocumentSyncManager *)aSyncManager;
 
 /** Informs the delegate that the document sync manager finished registering the document successfully.
  
@@ -301,10 +364,10 @@
  
  @param aSyncManager The document sync manager object that sent the message.
  
- @return A Boolean indicating whether to initiate the upload. */
+ @return `YES` if the sync manager should initiate the upload, otherwise `NO`. */
 - (BOOL)documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager;
 
-/** Invoked to ask the delegate for the URL of the document's SQLite store to upload.
+/** Invoked to ask the delegate for the URL of the document's persistent store to upload.
  
  @param aSyncManager The document sync manager object that sent the message.
  @param anIdentifier The unique identifier for the document (as supplied at registration).
@@ -337,9 +400,9 @@
 #pragma mark Whole Store Download
 /** @name Whole Store Download */
 
-/** Invoked to ask the delegate for the URL of the document's store once it's been downloaded.
+/** Invoked to ask the delegate for the URL of the document's store once it has been downloaded.
  
- If this method is not implemented, the sync manager will ask the synchronized managed object context's persistent store coordinator for the location of its `persistentStores` array's `lastObject`.
+ If this method is not implemented, the sync manager will ask the persistent store coordinator of the primary synchronized managed object context (the one specified at registration) for the location of its `persistentStores` array's `lastObject`.
  
  @param aSyncManager The document sync manager object that sent the message.
  
@@ -440,7 +503,7 @@
  
  @param aSyncManager The document sync manager object that sent the message.
  
- @return A Boolean indicating whether to initiate the vacuum. */
+ @return `YES` if the document sync manager should initiate the vacuum, otherwise `NO`. */
 - (BOOL)documentSyncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager;
 
 /** Informs the delegate that the document sync manager has begun to remove unneeded files from the remote.
@@ -467,7 +530,7 @@
  At the end of the request process, one of the `documentSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:` or `documentSyncManagerDidFinishFetchingInformationForAllRegisteredDevices:` methods will be called.
  
  @param aSyncManager The document sync manager object that sent the message. */
-- (void)documentSyncManagerDidBeginToFetchInformationForAllRegisteredDevices:(TICDSDocumentSyncManager *)aSyncManager;
+- (void)documentSyncManagerDidBeginFetchingInformationForAllRegisteredDevices:(TICDSDocumentSyncManager *)aSyncManager;
 
 /** Informs the delegate that the document sync manager failed to fetch information on clients registered to synchronize with a document. 
  
@@ -481,10 +544,32 @@
  @param information A dictionary containing as keys the unique synchronization identifiers of each client, and as values dictionaries of information about that client. */
 - (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFinishFetchingInformationForAllRegisteredDevices:(NSDictionary *)information;
 
-#pragma mark Processing
-/** @name Processing after Managed Object Context save */
+#pragma mark Deletion of a Client's Synchronization Data from a Document
+/** Informs the delegate that the document sync manager has begun to delete a client's synchronization data from the remote document.
+ 
+ At the end of the process, one of the `documentSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:` or `documentSyncManagerDidFinishFetchingInformationForAllRegisteredDevices:` methods will be called.
+ 
+ @param aSyncManager The document sync manager object that sent the message.
+ @param anIdentifier The identifier of the client that will be deleted. */
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didBeginDeletingSynchronizationDataFromDocumentForClientWithIdentifier:(NSString *)anIdentifier;
 
-/** Informs the delegate that the sync manager has begun to process the changes that have occurred since the previous `save:` of the managed object context.
+/** Informs the delegate that the document sync manager failed to delete a client's synchronization data from the remote document. 
+ 
+ @param aSyncManager The document sync manager object that sent the message.
+ @param anIdentifier The identifier of the client that couldn't be deleted.
+ @param anError The error that caused the process to fail. */
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToDeleteSynchronizationDataFromDocumentForClientWithIdentifier:(NSString *)anIdentifier withError:(NSError *)anError;
+
+/** Informs the delegate that the document sync manager finished deleting synchronization data for a client from the document.
+ 
+ @param aSyncManager The document sync manager object that sent the message. 
+ @param anIdentifier The identifier of the client that was deleted. */
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFinishDeletingSynchronizationDataFromDocumentForClientWithIdentifier:(NSString *)anIdentifier;
+
+#pragma mark Processing
+/** @name Processing after Managed Object Context Save */
+
+/** Informs the delegate that the document sync manager has begun to process the changes that have occurred since the previous `save:` of the managed object context.
  
  At the end of the process, one of the `documentSyncManager:didFailToProcessSyncChangesAfterManagedObjectContextDidSave:withError:` or `documentSyncManager:didFinishProcessingSyncChangesAfterManagedObjectContextDidSave:` methods will be called.
  
@@ -505,12 +590,12 @@
  @param aMoc The managed object context. */
 - (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFinishProcessingSyncChangesAfterManagedObjectContextDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc;
 
-/** Invoked to ask the delegate whether the document sync manager should automatically initiate Synchronization after finishing processing changes in a synchronized managed object context.
+/** Invoked to ask the delegate whether the document sync manager should initiate Synchronization automatically after finishing processing changes in a synchronized managed object context.
  
  @param aSyncManager The document sync manager object that sent the message.
  @param aMoc The managed object context that saved.
  
- @return A Boolean indicating whether to initiate the upload. */
+ @return `YES` if the document sync manager should initiate the upload, otherwise `NO`. */
 - (BOOL)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager shouldBeginSynchronizingAfterManagedObjectContextDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc;
 
 @end
@@ -581,6 +666,11 @@
  @param anOperation The operation object that sent the message. */
 - (void)registrationOperationResumedFollowingDocumentStructureCreationInstruction:(TICDSDocumentRegistrationOperation *)anOperation;
 
+/** Informs the delegate that the operation determined that the document had previously been deleted from synchronizing this document.
+ 
+ @param anOperation The operation object that sent the message. */
+- (void)registrationOperationDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:(TICDSDocumentRegistrationOperation *)anOperation;
+
 @end
 
 #pragma mark Synchronization Operation Delegate
@@ -598,5 +688,22 @@
  
  @param anOperation The operation object that sent the message. */
 - (void)synchronizationOperationResumedFollowingResolutionOfConflict:(TICDSSynchronizationOperation *)anOperation;
+
+@end
+
+#pragma mark Document Deletion Delegate
+/** The `TICDSDocumentDeletionOperationDelegate` protocol defines the methods implemented by delegates of `TICDSDocumentDeletionOperation` or one of its subclasses. In the `TICoreDataSync` framework, these delegate methods are implemented by the application sync manager. */
+
+@protocol TICDSDocumentDeletionOperationDelegate <TICDSOperationDelegate>
+
+/** Informs the delegate that the document is about to be deleted from the remote. The delegate should alert its own delegate.
+ 
+ @param anOperation The operation object that sent the message. */
+- (void)documentDeletionOperationWillDeleteDocument:(TICDSDocumentDeletionOperation *)anOperation;
+
+/** Informs the delegate that the document was deleted from the remote. The delegate should alert its own delegate.
+ 
+ @param anOperation The operation object that sent the message. */
+- (void)documentDeletionOperationDidDeleteDocument:(TICDSDocumentDeletionOperation *)anOperation;
 
 @end

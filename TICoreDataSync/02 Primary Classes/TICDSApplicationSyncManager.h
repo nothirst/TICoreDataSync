@@ -18,10 +18,10 @@
  1. `TICDSFileManagerBasedApplicationSyncManager`
  2. `TICDSDropboxSDKBasedApplicationSyncManager`
  
- @warning You must register the application sync manager before you can use it to register any documents.
+ @warning You must register the application sync manager before you can use it to perform any other tasks, or register any documents.
 */
 
-@interface TICDSApplicationSyncManager : NSObject <TICDSApplicationRegistrationOperationDelegate> {
+@interface TICDSApplicationSyncManager : NSObject <TICDSApplicationRegistrationOperationDelegate, TICDSDocumentDeletionOperationDelegate> {
 @private
     TICDSApplicationSyncManagerState _state;
     
@@ -112,8 +112,18 @@
  
  This method returns a dictionary containing as keys the client identifiers, and as values the `deviceInfo.plist` information. If you specify `YES` for `includeDocuments`, each dictionary will also include an array containing the identifiers of documents for which the client is registered.
  
- @param includeDocuments A Boolean indicating whether to include a list of documents for which each client is registered. */
+ @param includeDocuments `YES` if the request should also include a list of documents that each client is registered to synchronize, otherwise `NO`. */
 - (void)requestListOfSynchronizedClientsIncludingDocuments:(BOOL)includeDocuments;
+
+#pragma mark - Deleting Documents
+/** @name Deleting Documents */
+
+/** Delete the specified document, if it exists, from the remote.
+ 
+ As well as delegate methods indicating the status of the overall deletion process, `applicationSyncManager:willDeleteDirectoryForDocumentWithIdentifier:` and `applicationSyncManager:didDeleteDirectoryForDocumentWithIdentifier:` methods will be called either side of the deletion of the actual document directory.
+ 
+ @param anIdentifier The identifier of the document to be deleted. */
+- (void)deleteDocumentWithIdentifier:(NSString *)anIdentifier;
 
 #pragma mark - Overridden Methods
 /** @name Methods Overridden by Subclasses */
@@ -148,6 +158,15 @@
  
  @return A correctly-configured subclass of `TICDSListOfApplicationRegisteredClientsOperation`. */
 - (TICDSListOfApplicationRegisteredClientsOperation *)listOfApplicationRegisteredClientsOperation;
+
+/** Returns an operation to delete a document with a given identifier.
+ 
+ Subclasses of `TICDSApplicationSyncManager` use this method to return a correctly-configured document deletion operation for their particular sync method.
+ 
+ @param anIdentifier The unique synchronization identifier of the document to delete.
+ 
+ @return A correctly-configured subclass of `TICDSDocumentDeletionOperation`. */
+- (TICDSDocumentDeletionOperation *)documentDeletionOperationForDocumentWithIdentifier:(NSString *)anIdentifier;
 
 #pragma mark - Properties
 /** @name Properties */
@@ -199,18 +218,24 @@
 /** @name Operation Queues */
 
 /** The operation queue used for registration operations. */
-@property (nonatomic, retain) NSOperationQueue *registrationQueue;
+@property (nonatomic, readonly, retain) NSOperationQueue *registrationQueue;
 
 /** The operation queue used for non-registration tasks.
  
  The queue is suspended until registration has completed successfully. */
-@property (nonatomic, retain) NSOperationQueue *otherTasksQueue;
+@property (nonatomic, readonly, retain) NSOperationQueue *otherTasksQueue;
 
 #pragma mark - Relative Paths
 /** @name Relative Paths */
 
 /** The path to the `Documents` directory, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToDocumentsDirectory;
+
+/** The path to the `Information` directory, relative to the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToInformationDirectory;
+
+/** The path to the `DeletedDocuments` directory inside the `Information` directory, relative ot the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToInformationDeletedDocumentsDirectory;
 
 /** The path to the `Encryption` directory, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToEncryptionDirectory;

@@ -16,14 +16,11 @@
  Don't instantiate this class directly, but instead use one of the subclasses:
  
  1. `TICDSFileManagerBasedDocumentSyncManager`
- 2. `TICDSRestClientBasedDocumentSyncManager`
+ 2. `TICDSDropboxSDKBasedDocumentSyncManager`
  
- @warning You must register the document sync manager before you can use it to synchronize the document, or perform any other tasks.
- 
- @see TICDSFileManagerBasedDocumentSyncManager
- */
+ @warning You must register the document sync manager before you can use it to synchronize the document, or perform any other tasks. */
 
-@interface TICDSDocumentSyncManager : NSObject <TICDSDocumentRegistrationOperationDelegate> {
+@interface TICDSDocumentSyncManager : NSObject <TICDSDocumentRegistrationOperationDelegate, TICDSSynchronizationOperationDelegate> {
 @private
     TICDSDocumentSyncManagerState _state;
     
@@ -81,7 +78,7 @@
  
  If you specify `NO`, registration will fail with an error.
  
- @param shouldCreateFileStructure A Boolean indicating whether the registration should continue and create the necessary remote file structure. 
+ @param shouldCreateFileStructure `YES` if the registration should continue and create the necessary remote file structure, or `NO` to cancel the registration. 
  */
 - (void)continueRegistrationByCreatingRemoteFileStructure:(BOOL)shouldCreateFileStructure;
 
@@ -152,6 +149,15 @@
 /** Fetch a list of devices that are registered to synchronize with this client. */
 - (void)requestInformationForAllRegisteredDevices;
 
+#pragma mark - Deleting Devices from a Document
+/** @name Deleting Clients from a Document */
+
+/** Delete the files used by a client to synchronize with this document.
+ 
+ This will automatically spawn a `TICDSDocumentClientDeletionOperation`, and notify you of progress through the `TICDSDocumentSyncManagerDelegate` methods. 
+ @param anIdentifier The unique synchronization identifier of the client to delete. */
+- (void)deleteDocumentSynchronizationDataForClientWithIdentifier:(NSString *)anIdentifier;
+
 #pragma mark - Overridden Methods
 /** @name Methods Overridden by Subclasses */
 
@@ -197,6 +203,14 @@
  
  @return A correctly-configured subclass of `TICDSListOfDocumentRegisteredClientsOperation`. */
 - (TICDSListOfDocumentRegisteredClientsOperation *)listOfDocumentRegisteredClientsOperation;
+
+
+/** Returns a "deletion of client synchronization data from a document" operation.
+ 
+ Subclasses of `TICDSDocumentSyncManager` use this method to return a correctly-configured operation for their particularly sync method.
+ 
+ @return A correctly-configured subclass of `TICDSDocumentClientDeletionOperation`. */
+- (TICDSDocumentClientDeletionOperation *)documentClientDeletionOperation;
 
 #pragma mark - MOC Saving
 /** @name Managed Object Context Saving */
@@ -300,17 +314,17 @@
 
 /** The operation queue used for registration operations.
  */
-@property (nonatomic, retain) NSOperationQueue *registrationQueue;
+@property (nonatomic, readonly, retain) NSOperationQueue *registrationQueue;
 
 /** The operation queue used for synchronization operations.
  
  The queue supports only 1 operation at a time, and is suspended until the document has registered successfully. */
-@property (nonatomic, retain) NSOperationQueue *synchronizationQueue;
+@property (nonatomic, readonly, retain) NSOperationQueue *synchronizationQueue;
 
 /** The operation queue used for other tasks.
  
  The queue is suspended until the document has registered successfully. */
-@property (nonatomic, retain) NSOperationQueue *otherTasksQueue;
+@property (nonatomic, readonly, retain) NSOperationQueue *otherTasksQueue;
 
 #pragma mark - Relative Paths
 /** @name Relative Paths */
@@ -318,11 +332,23 @@
 /** The path to the `ClientDevices` directory, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToClientDevicesDirectory;
 
+/** The path to the `Information` directory, relative to the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToInformationDirectory;
+
+/** The path to the `DeletedDocuments` directory inside the `Information` directory, relative to the root of the remote file structure. */
+@property (nonatomic, readonly) NSString * relativePathToInformationDeletedDocumentsDirectory;
+
+/** The path to this document's `identifier.plist` file inside the `DeletedDocuments` directory, relative to the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToDeletedDocumentsThisDocumentIdentifierPlistFile;
+
 /** The path to the `Documents` directory, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToDocumentsDirectory;
 
 /** The path to this document's directory inside the `Documents` directory, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentDirectory;
+
+/** The path to this document's `DeletedClients` directory, relative to the root of the remote file structure. */
+@property (nonatomic, readonly) NSString *relativePathToThisDocumentDeletedClientsDirectory;
 
 /** The path to the `SyncChanges` directory for this document, relative to the root of the remote file structure. */
 @property (nonatomic, readonly) NSString *relativePathToThisDocumentSyncChangesDirectory;

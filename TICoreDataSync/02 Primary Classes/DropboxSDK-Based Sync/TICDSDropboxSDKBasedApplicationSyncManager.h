@@ -12,7 +12,10 @@
 
 /** The `TICDSDropboxSDKBasedApplicationSyncManager` describes a class used to synchronize an iOS application with a remote service that can be accessed via the Dropbox SDK.
  
- The requirements are: 
+ The requirements are:
+ 
+ 1. Your application must include the `DropboxSDK` files available from the Dropbox developer website.
+ 2. You must already have configured a `DBSession` object before registering the application. If you set this as the default session, you don't need to do anything else, otherwise you must set the `dbSession` property before registering the application.
  */
 
 @class DBSession;
@@ -30,6 +33,9 @@
 /** @name Paths */
 /** The path to root application directory (will be `/globalAppIdentifier`). */
 @property (nonatomic, readonly) NSString *applicationDirectoryPath;
+
+/** The path to the `DeletedDocuments` directory inside the `Information` directory at the root of the application. */
+@property (nonatomic, readonly) NSString *deletedDocumentsDirectoryPath;
 
 /** The path to the `salt.ticdsync` file inside the `Encryption` directory at the root of the application. */
 @property (nonatomic, readonly) NSString *encryptionDirectorySaltDataFilePath;

@@ -25,6 +25,8 @@
 #import "TICDSVacuumOperation.h"
 #import "TICDSListOfDocumentRegisteredClientsOperation.h"
 #import "TICDSListOfApplicationRegisteredClientsOperation.h"
+#import "TICDSDocumentDeletionOperation.h"
+#import "TICDSDocumentClientDeletionOperation.h"
 
 #pragma mark File Manager-Based
 #import "TICDSFileManagerBasedApplicationSyncManager.h"
@@ -38,6 +40,8 @@
 #import "TICDSFileManagerBasedVacuumOperation.h"
 #import "TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation.h"
 #import "TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.h"
+#import "TICDSFileManagerBasedDocumentDeletionOperation.h"
+#import "TICDSFileManagerBasedDocumentClientDeletionOperation.h"
 
 #pragma mark DropboxSDK-Based
 #if TARGET_OS_IPHONE
@@ -52,6 +56,8 @@
 #import "TICDSDropboxSDKBasedVacuumOperation.h"
 #import "TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation.h"
 #import "TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation.h"
+#import "TICDSDropboxSDKBasedDocumentDeletionOperation.h"
+#import "TICDSDropboxSDKBasedDocumentClientDeletionOperation.h"
 #endif
 
 #pragma mark -

@@ -20,6 +20,8 @@
  
  The `start` method automatically sets up the operation and notifies its `delegate` that it started. Subclasses should override `main` to do their work.
  
+ If an operation needs to create temporary files on disk during execution, it can call `tempFileDirectoryPath` to get access to a directory created specifically for the operation. This directory (and its contents) will automatically be removed from disk once the operation calls one of the completion methods.
+ 
  @warning Subclasses must call one of the `operationDidCompleteSuccessfully`, `operationDidFailToComplete` or `operationWasCancelled` to update the delegate and set the necessary values such that the operation be removed from the operation queue.
  */
 
@@ -43,9 +45,9 @@
 
 /** @name Designated Initializer */
 
-/** Initialize the operation with a provided delegate.
+/** Initialize the operation with a provided delegate, notified when the operation starts, ends, fails, or is cancelled using methods defined in the `TICDSOperationDelegate` protocol.
  
- @param aDelegate The delegate object for the operation, notified when the operation starts, ends, fails, or is cancelled using methods defined in the `TICDSOperationDelegate` protocol.
+ @param aDelegate The delegate object for the operation.
  
  @return A properly-initialized operation.
  */
@@ -55,7 +57,7 @@
 
 /** Notify the delegate when the operation starts, and set the necessary values for `isExecuting` and `isFinished`.
  
- @warning This method is called automatically by `TICDSOperation` when the opertion starts to execute, so you should not call it in a `TICDSOperation` subclass. */
+ @warning This method is called automatically by `TICDSOperation` when the operation starts to execute, so you should not call it from a `TICDSOperation` subclass. */
 - (void)operationDidStart;
 
 /** Notify the delegate when the operation completes, and set the necessary values for `isExecuting` and `isFinished`. */

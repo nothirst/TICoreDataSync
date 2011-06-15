@@ -52,8 +52,8 @@
 			<object class="NSWindowTemplate" id="275939982">
 				<int key="NSWindowStyleMask">15</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{0, 1177}, {467, 401}}</string>
-				<int key="NSWTFlags">1886912512</int>
+				<string key="NSWindowRect">{{0, 777}, {467, 401}}</string>
+				<int key="NSWTFlags">1881669632</int>
 				<string key="NSWindowTitle">Window</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<string key="NSViewClass">View</string>
@@ -132,7 +132,7 @@
 						</object>
 						<object class="NSButton" id="81911589">
 							<reference key="NSNextResponder" ref="568628114"/>
-							<int key="NSvFlags">268</int>
+							<int key="NSvFlags">289</int>
 							<string key="NSFrame">{{357, 10}, {96, 32}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
@@ -703,7 +703,7 @@
 										</object>
 										<object class="NSButton" id="173047988">
 											<reference key="NSNextResponder" ref="840286419"/>
-											<int key="NSvFlags">268</int>
+											<int key="NSvFlags">292</int>
 											<string key="NSFrame">{{8, 5}, {106, 32}}</string>
 											<reference key="NSSuperview" ref="840286419"/>
 											<reference key="NSWindow"/>
@@ -725,7 +725,7 @@
 										</object>
 										<object class="NSButton" id="864603342">
 											<reference key="NSNextResponder" ref="840286419"/>
-											<int key="NSvFlags">257</int>
+											<int key="NSvFlags">-2147483391</int>
 											<string key="NSFrame">{{102, 127}, {139, 32}}</string>
 											<reference key="NSSuperview" ref="840286419"/>
 											<reference key="NSWindow"/>
@@ -781,7 +781,7 @@
 						</object>
 						<object class="NSButton" id="1072940936">
 							<reference key="NSNextResponder" ref="568628114"/>
-							<int key="NSvFlags">268</int>
+							<int key="NSvFlags">292</int>
 							<string key="NSFrame">{{20, 20}, {16, 16}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
@@ -807,7 +807,7 @@
 						</object>
 						<object class="NSButton" id="592634546">
 							<reference key="NSNextResponder" ref="568628114"/>
-							<int key="NSvFlags">268</int>
+							<int key="NSvFlags">289</int>
 							<string key="NSFrame">{{426, 18}, {21, 21}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
@@ -837,7 +837,7 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="1062929917"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {2560, 1578}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
 				<string key="NSMinSize">{94, 108}</string>
 				<string key="NSMaxSize">{1e+13, 1e+13}</string>
 			</object>
@@ -1879,6 +1879,8 @@
 					<string>100210.IBPluginDependency</string>
 					<string>100211.IBPluginDependency</string>
 					<string>5.IBEditorWindowLastContentRect</string>
+					<string>5.IBNSWindowAutoPositionCentersHorizontal</string>
+					<string>5.IBNSWindowAutoPositionCentersVertical</string>
 					<string>5.IBPluginDependency</string>
 					<string>5.IBWindowTemplateEditedContentRect</string>
 					<string>5.ImportedFromIB2</string>
@@ -1935,6 +1937,8 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{692, 610}, {467, 401}}</string>
+					<boolean value="NO"/>
+					<boolean value="NO"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{692, 610}, {467, 401}}</string>
 					<integer value="1"/>

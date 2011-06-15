@@ -10,6 +10,12 @@
 
 #import "TICoreDataSync.h"
 
+@interface TICDSDropboxSDKBasedWholeStoreDownloadOperation ()
+
+/** A mutable dictionary to hold the last modified dates of each client identifier's whole store. */
+@property (nonatomic, retain) NSMutableDictionary *wholeStoreModifiedDates;
+
+@end
 
 @implementation TICDSDropboxSDKBasedWholeStoreDownloadOperation
 
@@ -47,6 +53,10 @@
         }
     }
     
+    if( !identifier ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeNoPreviouslyUploadedStoreExists classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
     [self determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:identifier];
 }
 
@@ -80,6 +90,11 @@
             }
             
             _numberOfWholeStoresToCheck++;
+        }
+        
+        if( _numberOfWholeStoresToCheck < 1 ) {
+            [self sortOutWhichStoreIsNewest];
+            return;
         }
         
         for( DBMetadata *eachSubMetadata in [metadata contents] ) {

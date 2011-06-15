@@ -41,7 +41,7 @@
 @property (retain) DBSession *dbSession;
 
 /** The DropboxSDK `DBRestClient` for use by this operation for methods relating to the global application directory. */
-@property (nonatomic, retain) DBRestClient *restClient;
+@property (nonatomic, readonly) DBRestClient *restClient;
 
 /** The Last Modified Date of the oldest WholeStore file. */
 @property (nonatomic, retain) NSDate *oldestStoreDate;

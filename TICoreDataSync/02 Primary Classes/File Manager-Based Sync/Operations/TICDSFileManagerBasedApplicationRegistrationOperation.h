@@ -23,7 +23,7 @@
 
 /** @name Properties */
 
-/** The application root path. */
+/** The path to the application root directory. */
 @property (retain) NSString *applicationDirectoryPath;
 
 /** The path to the `salt.ticdsync` file inside this application's `Encryption` directory. */

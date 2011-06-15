@@ -14,7 +14,7 @@
  
  1. Fetch a list of UUID identifiers of all registered clients from the application's `ClientDevices` directory.
  2. Fetch the `deviceInfo.plist` file for each registered client.
- 3. Optionally fetch a list of document UUID identifiers and add a `registeredDocuments` key to each device dictionary.
+ 3. Optionally fetch a list of document UUID identifiers and add a `registeredDocuments` key to each device dictionary, with the value being an array of document identifiers, indicating the documents that the client has registered to synchronize.
  
  Operations are typically created automatically by the relevant sync manager.
  

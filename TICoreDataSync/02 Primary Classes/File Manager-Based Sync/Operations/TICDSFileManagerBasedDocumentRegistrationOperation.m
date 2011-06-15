@@ -52,6 +52,15 @@
     }
 }
 
+- (void)checkWhetherRemoteDocumentWasDeleted
+{
+    if( [[self fileManager] fileExistsAtPath:[self deletedDocumentsThisDocumentIdentifierPlistPath]] ) {
+        [self discoveredDeletionStatusOfRemoteDocument:TICDSRemoteFileStructureDeletionResponseTypeDeleted];
+    } else {
+        [self discoveredDeletionStatusOfRemoteDocument:TICDSRemoteFileStructureDeletionResponseTypeNotDeleted];
+    }
+}
+
 - (void)createRemoteDocumentDirectoryStructure
 {
     NSDictionary *documentStructure = [TICDSUtilities remoteDocumentDirectoryHierarchy];
@@ -103,6 +112,48 @@
     [self savedRemoteDocumentInfoPlistWithSuccess:success];
 }
 
+- (void)fetchListOfIdentifiersOfAllRegisteredClientsForThisApplication
+{
+    NSError *anyError = nil;
+    
+    NSArray *contents = [[self fileManager] contentsOfDirectoryAtPath:[self clientDevicesDirectoryPath] error:&anyError];
+    
+    if( !contents ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    [self fetchedListOfIdentifiersOfAllRegisteredClientsForThisApplication:contents];
+}
+
+- (void)addDeviceInfoPlistToDocumentDeletedClientsForClientWithIdentifier:(NSString *)anIdentifier
+{
+    NSError *anyError = nil;
+    
+    NSString *deviceInfoPlistPath = [[[self clientDevicesDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSDeviceInfoPlistFilenameWithExtension];
+    
+    NSString *finalFilePath = [[[self thisDocumentDeletedClientsDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathExtension:TICDSDeviceInfoPlistExtension];
+    
+    BOOL success = [[self fileManager] copyItemAtPath:deviceInfoPlistPath toPath:finalFilePath error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    [self addedDeviceInfoPlistToDocumentDeletedClientsForClientWithIdentifier:anIdentifier withSuccess:success];
+}
+
+- (void)deleteDocumentInfoPlistFromDeletedDocumentsDirectory
+{
+    NSError *anyError = nil;
+    BOOL success = [[self fileManager] removeItemAtPath:[self deletedDocumentsThisDocumentIdentifierPlistPath] error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    [self deletedDocumentInfoPlistFromDeletedDocumentsDirectoryWithSuccess:success];
+}
+
 #pragma mark -
 #pragma mark Overridden Client Device Directories
 - (void)checkWhetherClientDirectoryExistsInRemoteDocumentSyncChangesDirectory
@@ -112,6 +163,29 @@
     } else {
         [self discoveredStatusOfClientDirectoryInRemoteDocumentSyncChangesDirectory:TICDSRemoteFileStructureExistsResponseTypeDoesNotExist];
     }
+}
+
+- (void)checkWhetherClientWasDeletedFromRemoteDocument
+{
+    if( [[self fileManager] fileExistsAtPath:[[[self thisDocumentDeletedClientsDirectoryPath] stringByAppendingPathComponent:[self clientIdentifier]] stringByAppendingPathExtension:TICDSDeviceInfoPlistExtension]] ) {
+        [self discoveredDeletionStatusOfClient:TICDSRemoteFileStructureDeletionResponseTypeDeleted];
+    } else {
+        [self discoveredDeletionStatusOfClient:TICDSRemoteFileStructureDeletionResponseTypeNotDeleted];
+    }
+}
+
+- (void)deleteClientIdentifierFileFromDeletedClientsDirectory
+{
+    NSString *filePath = [[[self thisDocumentDeletedClientsDirectoryPath] stringByAppendingPathComponent:[self clientIdentifier]] stringByAppendingPathExtension:TICDSDeviceInfoPlistExtension];
+    
+    NSError *anyError = nil;
+    BOOL success = [[self fileManager] removeItemAtPath:filePath error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    [self deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:success];
 }
 
 - (void)createClientDirectoriesInRemoteDocumentDirectories
@@ -140,6 +214,9 @@
 - (void)dealloc
 {
     [_documentsDirectoryPath release], _documentsDirectoryPath = nil;
+    [_clientDevicesDirectoryPath release], _clientDevicesDirectoryPath = nil;
+    [_thisDocumentDeletedClientsDirectoryPath release], _thisDocumentDeletedClientsDirectoryPath = nil;
+    [_deletedDocumentsThisDocumentIdentifierPlistPath release], _deletedDocumentsThisDocumentIdentifierPlistPath = nil;
     [_thisDocumentDirectoryPath release], _thisDocumentDirectoryPath = nil;
     [_thisDocumentSyncChangesThisClientDirectoryPath release], _thisDocumentSyncChangesThisClientDirectoryPath = nil;
     [_thisDocumentSyncCommandsThisClientDirectoryPath release], _thisDocumentSyncCommandsThisClientDirectoryPath = nil;
@@ -150,6 +227,9 @@
 #pragma mark -
 #pragma mark Properties
 @synthesize documentsDirectoryPath = _documentsDirectoryPath;
+@synthesize clientDevicesDirectoryPath = _clientDevicesDirectoryPath;
+@synthesize deletedDocumentsThisDocumentIdentifierPlistPath = _deletedDocumentsThisDocumentIdentifierPlistPath;
+@synthesize thisDocumentDeletedClientsDirectoryPath = _thisDocumentDeletedClientsDirectoryPath;
 @synthesize thisDocumentDirectoryPath = _thisDocumentDirectoryPath;
 @synthesize thisDocumentSyncChangesThisClientDirectoryPath = _thisDocumentSyncChangesThisClientDirectoryPath;
 @synthesize thisDocumentSyncCommandsThisClientDirectoryPath = _thisDocumentSyncCommandsThisClientDirectoryPath;

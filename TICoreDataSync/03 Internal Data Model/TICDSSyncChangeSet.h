@@ -34,7 +34,7 @@
  @param anIdentifier The unique identifier for the sync change.
  @param aMoc The managed object context to check.
  
- @return A Boolean indicating whether the sync change has already been applied. */
+ @return `YES` if the sync change has already been applied, otherwise `NO`. */
 + (BOOL)hasSyncChangeSetWithIdentifer:(NSString *)anIdentifier alreadyBeenAppliedInManagedObjectContext:(NSManagedObjectContext *)aMoc;
 
 /** Return a `TICDSSyncChangeSet` object, if one exists, for a given identifier.

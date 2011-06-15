@@ -38,7 +38,7 @@
  
  If this method returns `NO`, the app should get a password from the user and call `setPassword:salt:`.
  
- @return `YES` if the object is ready to be used for crypto. */
+ @return `YES` if the object is ready to be used for crypto, otherwise `NO`. */
 - (BOOL)isConfigured;
 
 /** Set a new password to be used for protecting the encrypted content. 
@@ -49,9 +49,9 @@
  @param salt Some random data to salt the password. If this is `nil`, the method will
              generate its own salt from a random oracle.
  
- @return The data used for salting the password. If this object needed to create salt material and couldn't, it will return nil. In this case, the key used for encryption has not been set, and the object is not configured.
+ @return The data used for salting the password. If this object needed to create salt material and couldn't, it will return `nil`. In this case, the key used for encryption has not been set, and the object is not configured.
  
- @warning This class uses the keychain for secure storage, so it's possible for a newly-created instance not to need a password if the key material has already been created. Check -isConfigured to see whether this is the case. */
+ @warning This class uses the keychain for secure storage, so it's possible for a newly-created instance not to need a password if the key material has already been created. Check `isConfigured` to see whether this is the case. */
 - (NSData *)setPassword: (NSString *)password salt: (NSData *)salt;
 
 /** Clears any previously-existing keychain password and salt. */

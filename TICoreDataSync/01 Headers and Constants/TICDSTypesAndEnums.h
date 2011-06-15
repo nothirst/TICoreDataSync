@@ -32,6 +32,9 @@ typedef enum _TICDSDocumentSyncManagerState {
     
     TICDSDocumentSyncManagerStateAbleToSync = 1,
     
+    /** Configuration Phase */
+    TICDSDocumentSyncManagerStateConfigured = -50,
+    
     /** Registration Phase */
     TICDSDocumentSyncManagerStateNotYetRegistered = -100,
     TICDSDocumentSyncManagerStateRegistering = -110,
@@ -55,6 +58,13 @@ typedef enum _TICDSRemoteFileStructureExistsResponseType {
     TICDSRemoteFileStructureExistsResponseTypeDoesExist = 1,
     
 } TICDSRemoteFileStructureExistsResponseType;
+
+/** Whether files or directories were deleted. */
+typedef enum _TICDSRemoteFileStructureDeletionResponseType {
+    TICDSRemoteFileStructureDeletionResponseTypeError = 0,
+    TICDSRemoteFileStructureDeletionResponseTypeDeleted = -1, 
+    TICDSRemoteFileStructureDeletionResponseTypeNotDeleted = 1,
+} TICDSRemoteFileStructureDeletionResponseType;
 
 #pragma mark Logging
 /** @name Logging */

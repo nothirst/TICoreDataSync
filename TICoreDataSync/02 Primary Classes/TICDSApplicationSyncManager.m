@@ -17,6 +17,8 @@
 - (BOOL)startDocumentDownloadProcessForDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation error:(NSError **)outError;
 - (BOOL)startRegisteredDevicesInformationProcessByIncludingDocuments:(BOOL)includeDocuments error:(NSError **)outError;
 - (void)bailFromRegisteredDevicesInformationProcessWithError:(NSError *)anError;
+- (BOOL)startDocumentDeletionProcessForDocumentWithIdentifier:(NSString *)anIdentifier error:(NSError **)outError;
+- (void)bailFromDocumentDeletionProcessForDocumentWithIdentifier:(NSString *)anIdentifier error:(NSError *)anError;
 
 @property (nonatomic, assign) TICDSApplicationSyncManagerState state;
 @property (nonatomic, retain) NSString *appIdentifier;
@@ -338,6 +340,80 @@
     return [[[TICDSWholeStoreDownloadOperation alloc] initWithDelegate:self] autorelease];
 }
 
+#pragma mark Post-Operation Work
+- (void)bailFromDocumentDownloadPostProcessingForOperation:(TICDSWholeStoreDownloadOperation *)anOperation withError:(NSError *)anError
+{
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], anError];
+    [self postDecreaseActivityNotification];
+}
+
+#pragma mark Operation Communications
+- (void)documentDownloadOperationCompleted:(TICDSWholeStoreDownloadOperation *)anOperation
+{
+    NSError *anyError = nil;
+    BOOL success = YES;
+    
+    NSURL *finalWholeStoreLocation = [[anOperation userInfo] valueForKey:kTICDSDocumentDownloadFinalWholeStoreLocation];
+    
+    // Remove existing WholeStore, if necessary
+    if( [[self fileManager] fileExistsAtPath:[finalWholeStoreLocation path]] ) {
+        [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atURL:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], finalWholeStoreLocation];
+        
+        success = [[self fileManager] removeItemAtPath:[finalWholeStoreLocation path] error:&anyError];
+        
+        if( !success ) {
+            [self bailFromDocumentDownloadPostProcessingForOperation:anOperation withError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+            return;
+        }
+    }
+    
+    // Move downloaded WholeStore
+    success = [[self fileManager] moveItemAtPath:[[anOperation localWholeStoreFileLocation] path] toPath:[finalWholeStoreLocation path] error:&anyError];
+    if( !success ) {
+        [self bailFromDocumentDownloadPostProcessingForOperation:anOperation withError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        return;
+    }
+    
+    // Get document sync manager from delegate
+    TICDSDocumentSyncManager *documentSyncManager = [self ti_objectFromDelegateWithSelector:@selector(applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], finalWholeStoreLocation];
+    
+    if( !documentSyncManager ) {
+        // TODO: ALERT DELEGATE AND BAIL
+    }
+    
+    NSString *finalAppliedSyncChangeSetsPath = [documentSyncManager localAppliedSyncChangesFilePath];
+    
+    // Remove existing applied sync changes, if necessary
+    if( [[self fileManager] fileExistsAtPath:finalAppliedSyncChangeSetsPath] && ![[self fileManager] removeItemAtPath:finalAppliedSyncChangeSetsPath error:&anyError] ) {
+        [self bailFromDocumentDownloadPostProcessingForOperation:anOperation withError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        return;
+    }
+    
+    // Move new applied sync changes, if necessary
+    if( [[self fileManager] fileExistsAtPath:[[anOperation localAppliedSyncChangeSetsFileLocation] path]] && ![[self fileManager] moveItemAtPath:[[anOperation localAppliedSyncChangeSetsFileLocation] path] toPath:finalAppliedSyncChangeSetsPath error:&anyError] ) {
+        [self bailFromDocumentDownloadPostProcessingForOperation:anOperation withError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Document Download Operation Completed");
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], finalWholeStoreLocation];
+    [self postDecreaseActivityNotification];
+}
+
+- (void)documentDownloadOperationWasCancelled:(TICDSWholeStoreDownloadOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Download Operation was Cancelled");
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+    [self postDecreaseActivityNotification];
+}
+
+- (void)documentDownloadOperation:(TICDSWholeStoreDownloadOperation *)anOperation failedToCompleteWithError:(NSError *)anError
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Download Operation Failed to Complete with Error: %@", anError);
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], anError];
+    [self postDecreaseActivityNotification];
+}
+
 #pragma mark -
 #pragma mark LIST OF CLIENT DEVICES
 - (void)requestListOfSynchronizedClientsIncludingDocuments:(BOOL)includeDocuments
@@ -414,78 +490,97 @@
     [self postDecreaseActivityNotification];
 }
 
-#pragma mark -
-#pragma mark Post-Operation Work
-- (void)bailFromDocumentDownloadPostProcessingForOperation:(TICDSWholeStoreDownloadOperation *)anOperation withError:(NSError *)anError
+#pragma mark - DOCUMENT DELETION
+- (void)deleteDocumentWithIdentifier:(NSString *)anIdentifier
 {
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], anError];
-    [self postDecreaseActivityNotification];
-}
-
-#pragma mark Operation Communications
-- (void)documentDownloadOperationCompleted:(TICDSWholeStoreDownloadOperation *)anOperation
-{
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Initiating deletion process for document %@", anIdentifier);
+    
     NSError *anyError = nil;
-    BOOL success = YES;
+    BOOL success = [self startDocumentDeletionProcessForDocumentWithIdentifier:anIdentifier error:&anyError];
     
-    NSURL *finalWholeStoreLocation = [[anOperation userInfo] valueForKey:kTICDSDocumentDownloadFinalWholeStoreLocation];
-    
-    // Remove existing WholeStore, if necessary
-    if( [[self fileManager] fileExistsAtPath:[finalWholeStoreLocation path]] ) {
-        [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atURL:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], finalWholeStoreLocation];
-        
-        success = [[self fileManager] removeItemAtPath:[finalWholeStoreLocation path] error:&anyError];
-        
-        if( !success ) {
-            [self bailFromDocumentDownloadPostProcessingForOperation:anOperation withError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            return;
-        }
-    }
-    
-    // Move downloaded WholeStore
-    success = [[self fileManager] moveItemAtPath:[[anOperation localWholeStoreFileLocation] path] toPath:[finalWholeStoreLocation path] error:&anyError];
     if( !success ) {
-        [self bailFromDocumentDownloadPostProcessingForOperation:anOperation withError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        return;
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document deletion request failed with error: %@", anyError);
+        [self bailFromDocumentDeletionProcessForDocumentWithIdentifier:anIdentifier error:anyError];
+    }
+}
+
+- (BOOL)startDocumentDeletionProcessForDocumentWithIdentifier:(NSString *)anIdentifier error:(NSError **)outError
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting process to delete document %@", anIdentifier);
+    [self postIncreaseActivityNotification];
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didBeginDeletionProcessForDocumentWithIdentifier:), anIdentifier];
+    
+    TICDSDocumentDeletionOperation *operation = [self documentDeletionOperationForDocumentWithIdentifier:anIdentifier];
+    
+    if( !operation ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create document deletion operation object");
+        [self bailFromDocumentDeletionProcessForDocumentWithIdentifier:anIdentifier error:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
+        return NO;
     }
     
-    // Get document sync manager from delegate
-    TICDSDocumentSyncManager *documentSyncManager = [self ti_objectFromDelegateWithSelector:@selector(applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], finalWholeStoreLocation];
+    [operation setShouldUseEncryption:[self shouldUseEncryption]];
+    [operation setDocumentIdentifier:anIdentifier];
     
-    if( !documentSyncManager ) {
-        // TODO: ALERT DELEGATE AND BAIL
-    }
+    [[self otherTasksQueue] addOperation:operation];
     
-    NSString *finalAppliedSyncChangeSetsPath = [documentSyncManager localAppliedSyncChangesFilePath];
-    
-    // Remove existing applied sync changes, if necessary
-    if( [[self fileManager] fileExistsAtPath:finalAppliedSyncChangeSetsPath] && ![[self fileManager] removeItemAtPath:finalAppliedSyncChangeSetsPath error:&anyError] ) {
-        [self bailFromDocumentDownloadPostProcessingForOperation:anOperation withError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        return;
-    }
-    
-    // Move new applied sync changes, if necessary
-    if( [[self fileManager] fileExistsAtPath:[[anOperation localAppliedSyncChangeSetsFileLocation] path]] && ![[self fileManager] moveItemAtPath:[[anOperation localAppliedSyncChangeSetsFileLocation] path] toPath:finalAppliedSyncChangeSetsPath error:&anyError] ) {
-        [self bailFromDocumentDownloadPostProcessingForOperation:anOperation withError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        return;
-    }
-    
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Document Download Operation Completed");
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], finalWholeStoreLocation];
+    return YES;
+}
+
+- (void)bailFromDocumentDeletionProcessForDocumentWithIdentifier:(NSString *)anIdentifier error:(NSError *)anError
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from document deletion request");
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:), anIdentifier, anError];
     [self postDecreaseActivityNotification];
 }
 
-- (void)documentDownloadOperationWasCancelled:(TICDSWholeStoreDownloadOperation *)anOperation
+#pragma mark Operation Generation
+- (TICDSDocumentDeletionOperation *)documentDeletionOperationForDocumentWithIdentifier:(NSString *)anIdentifier
 {
-    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Download Operation was Cancelled");
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+    return [[[TICDSDocumentDeletionOperation alloc] initWithDelegate:self] autorelease];
+}
+
+#pragma mark Operation Communication
+- (void)documentDeletionOperationWillDeleteDocument:(TICDSDocumentDeletionOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Document Deletion Operation will delete document");
+    
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:willDeleteDirectoryForDocumentWithIdentifier:), [anOperation documentIdentifier]];
+}
+
+- (void)documentDeletionOperationDidDeleteDocument:(TICDSDocumentDeletionOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Document Deletion Operation did delete document");
+    
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didDeleteDirectoryForDocumentWithIdentifier:), [anOperation documentIdentifier]];
+}
+
+- (void)documentDeletionOperationCompleted:(TICDSDocumentDeletionOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Document Deletion Operation Completed");
+    
+    NSString *identifier = [anOperation documentIdentifier];
+    
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFinishDeletingDocumentWithIdentifier:), identifier];
     [self postDecreaseActivityNotification];
 }
 
-- (void)documentDownloadOperation:(TICDSWholeStoreDownloadOperation *)anOperation failedToCompleteWithError:(NSError *)anError
+- (void)documentDeletionOperationWasCancelled:(TICDSDocumentDeletionOperation *)anOperation
 {
-    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Download Operation Failed to Complete with Error: %@", anError);
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], anError];
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Deletion Operation was Cancelled");
+    
+    NSString *identifier = [anOperation documentIdentifier];
+    
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:), identifier, [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+    [self postDecreaseActivityNotification];
+}
+
+- (void)documentDeletionOperation:(TICDSDocumentDeletionOperation *)anOperation failedToCompleteWithError:(NSError *)anError
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Deletion Operation Failed to Complete with Error: %@", anError);
+    
+    NSString *identifier = [anOperation documentIdentifier];
+    
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:), identifier, anError];
     [self postDecreaseActivityNotification];
 }
 
@@ -501,6 +596,8 @@
         [self documentDownloadOperationCompleted:(id)anOperation];
     } else if( [anOperation isKindOfClass:[TICDSListOfApplicationRegisteredClientsOperation class]] ) {
         [self registeredClientsOperationCompleted:(id)anOperation];
+    } else if( [anOperation isKindOfClass:[TICDSDocumentDeletionOperation class]] ) {
+        [self documentDeletionOperationCompleted:(id)anOperation];
     }
 }
 
@@ -514,6 +611,8 @@
         [self documentDownloadOperationWasCancelled:(id)anOperation];
     } else if( [anOperation isKindOfClass:[TICDSListOfApplicationRegisteredClientsOperation class]] ) {
         [self registeredClientsOperationWasCancelled:(id)anOperation];
+    } else if( [anOperation isKindOfClass:[TICDSDocumentDeletionOperation class]] ) {
+        [self documentDeletionOperationWasCancelled:(id)anOperation];
     }
 }
 
@@ -527,6 +626,8 @@
         [self documentDownloadOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     } else if( [anOperation isKindOfClass:[TICDSListOfApplicationRegisteredClientsOperation class]] ) {
         [self registeredClientsOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
+    } else if( [anOperation isKindOfClass:[TICDSDocumentDeletionOperation class]] ) {
+        [self documentDeletionOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     }
 }
 
@@ -570,6 +671,16 @@ id gTICDSDefaultApplicationSyncManager = nil;
 - (NSString *)relativePathToEncryptionDirectoryTestDataFilePath
 {
     return [[self relativePathToEncryptionDirectory] stringByAppendingPathComponent:TICDSEncryptionTestFilenameWithExtension];
+}
+
+- (NSString *)relativePathToInformationDirectory
+{
+    return TICDSInformationDirectoryName;
+}
+
+- (NSString *)relativePathToInformationDeletedDocumentsDirectory
+{
+    return [[self relativePathToInformationDirectory] stringByAppendingPathComponent:TICDSDeletedDocumentsDirectoryName];
 }
 
 - (NSString *)relativePathToDocumentsDirectory

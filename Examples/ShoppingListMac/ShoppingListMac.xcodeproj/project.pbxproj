@@ -14,6 +14,10 @@
 		3824C82C136B1AE000B67E09 /* TICDSVacuumOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3824C82B136B1AE000B67E09 /* TICDSVacuumOperation.m */; };
 		3838C79F1367077B00D64CC6 /* TICDSSynchronizationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3838C79E1367077B00D64CC6 /* TICDSSynchronizationOperation.m */; };
 		383F454F1367186B004FA253 /* TICDSFileManagerBasedSynchronizationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 383F454E1367186B004FA253 /* TICDSFileManagerBasedSynchronizationOperation.m */; };
+		38425073138C119F00D0486B /* TICDSListOfApplicationRegisteredClientsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38425070138C119F00D0486B /* TICDSListOfApplicationRegisteredClientsOperation.m */; };
+		38425074138C119F00D0486B /* TICDSListOfDocumentRegisteredClientsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38425072138C119F00D0486B /* TICDSListOfDocumentRegisteredClientsOperation.m */; };
+		38425079138C11A800D0486B /* TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38425076138C11A800D0486B /* TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.m */; };
+		3842507A138C11A800D0486B /* TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38425078138C11A800D0486B /* TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation.m */; };
 		385878121363406B0015A40F /* DocumentShopsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 385878111363406B0015A40F /* DocumentShopsWindow.xib */; };
 		3863105B13634163003D8EE3 /* TIDocumentShopsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3863105A13634163003D8EE3 /* TIDocumentShopsWindowController.m */; };
 		3863106813636BDD003D8EE3 /* TICDSConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 3863106713636BDD003D8EE3 /* TICDSConstants.m */; };
@@ -29,6 +33,8 @@
 		388A3E93135707CA00824C88 /* MyDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 388A3E92135707CA00824C88 /* MyDocument.m */; };
 		388A3E96135707CA00824C88 /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 388A3E94135707CA00824C88 /* MyDocument.xib */; };
 		388A3E99135707CA00824C88 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 388A3E97135707CA00824C88 /* MainMenu.xib */; };
+		38942FD41397CD6D0067F9A4 /* TICDSDocumentDeletionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38942FD31397CD6D0067F9A4 /* TICDSDocumentDeletionOperation.m */; };
+		38942FD71397CD7B0067F9A4 /* TICDSFileManagerBasedDocumentDeletionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38942FD61397CD7B0067F9A4 /* TICDSFileManagerBasedDocumentDeletionOperation.m */; };
 		389D767E1361A577007F19DC /* TICDSFileManagerBasedApplicationRegistrationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 389D767D1361A577007F19DC /* TICDSFileManagerBasedApplicationRegistrationOperation.m */; };
 		389D76831361AA8A007F19DC /* deviceInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 389D76801361AA8A007F19DC /* deviceInfo.plist */; };
 		389D76841361AA8A007F19DC /* documentInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 389D76811361AA8A007F19DC /* documentInfo.plist */; };
@@ -87,6 +93,14 @@
 		3838C79E1367077B00D64CC6 /* TICDSSynchronizationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSynchronizationOperation.m; sourceTree = "<group>"; };
 		383F454D1367186B004FA253 /* TICDSFileManagerBasedSynchronizationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSFileManagerBasedSynchronizationOperation.h; sourceTree = "<group>"; };
 		383F454E1367186B004FA253 /* TICDSFileManagerBasedSynchronizationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSFileManagerBasedSynchronizationOperation.m; sourceTree = "<group>"; };
+		3842506F138C119F00D0486B /* TICDSListOfApplicationRegisteredClientsOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSListOfApplicationRegisteredClientsOperation.h; sourceTree = "<group>"; };
+		38425070138C119F00D0486B /* TICDSListOfApplicationRegisteredClientsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSListOfApplicationRegisteredClientsOperation.m; sourceTree = "<group>"; };
+		38425071138C119F00D0486B /* TICDSListOfDocumentRegisteredClientsOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSListOfDocumentRegisteredClientsOperation.h; sourceTree = "<group>"; };
+		38425072138C119F00D0486B /* TICDSListOfDocumentRegisteredClientsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSListOfDocumentRegisteredClientsOperation.m; sourceTree = "<group>"; };
+		38425075138C11A800D0486B /* TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.h; sourceTree = "<group>"; };
+		38425076138C11A800D0486B /* TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.m; sourceTree = "<group>"; };
+		38425077138C11A800D0486B /* TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation.h; sourceTree = "<group>"; };
+		38425078138C11A800D0486B /* TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation.m; sourceTree = "<group>"; };
 		385878111363406B0015A40F /* DocumentShopsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DocumentShopsWindow.xib; sourceTree = "<group>"; };
 		3863105913634163003D8EE3 /* TIDocumentShopsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TIDocumentShopsWindowController.h; sourceTree = "<group>"; };
 		3863105A13634163003D8EE3 /* TIDocumentShopsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TIDocumentShopsWindowController.m; sourceTree = "<group>"; };
@@ -115,6 +129,10 @@
 		388A3E92135707CA00824C88 /* MyDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyDocument.m; sourceTree = "<group>"; };
 		388A3E95135707CA00824C88 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		388A3E98135707CA00824C88 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		38942FD21397CD6D0067F9A4 /* TICDSDocumentDeletionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSDocumentDeletionOperation.h; sourceTree = "<group>"; };
+		38942FD31397CD6D0067F9A4 /* TICDSDocumentDeletionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSDocumentDeletionOperation.m; sourceTree = "<group>"; };
+		38942FD51397CD7B0067F9A4 /* TICDSFileManagerBasedDocumentDeletionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSFileManagerBasedDocumentDeletionOperation.h; sourceTree = "<group>"; };
+		38942FD61397CD7B0067F9A4 /* TICDSFileManagerBasedDocumentDeletionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSFileManagerBasedDocumentDeletionOperation.m; sourceTree = "<group>"; };
 		389D767C1361A577007F19DC /* TICDSFileManagerBasedApplicationRegistrationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSFileManagerBasedApplicationRegistrationOperation.h; sourceTree = "<group>"; };
 		389D767D1361A577007F19DC /* TICDSFileManagerBasedApplicationRegistrationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TICDSFileManagerBasedApplicationRegistrationOperation.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		389D76801361AA8A007F19DC /* deviceInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = deviceInfo.plist; sourceTree = "<group>"; };
@@ -220,6 +238,12 @@
 		382390CF136089F40068EB37 /* Generic Operations */ = {
 			isa = PBXGroup;
 			children = (
+				38942FD21397CD6D0067F9A4 /* TICDSDocumentDeletionOperation.h */,
+				38942FD31397CD6D0067F9A4 /* TICDSDocumentDeletionOperation.m */,
+				3842506F138C119F00D0486B /* TICDSListOfApplicationRegisteredClientsOperation.h */,
+				38425070138C119F00D0486B /* TICDSListOfApplicationRegisteredClientsOperation.m */,
+				38425071138C119F00D0486B /* TICDSListOfDocumentRegisteredClientsOperation.h */,
+				38425072138C119F00D0486B /* TICDSListOfDocumentRegisteredClientsOperation.m */,
 				389F86B113608C7900004CA4 /* TICDSOperation.h */,
 				389F86B213608C7900004CA4 /* TICDSOperation.m */,
 				382390D013608A1D0068EB37 /* TICDSApplicationRegistrationOperation.h */,
@@ -259,8 +283,8 @@
 			isa = PBXGroup;
 			children = (
 				38FF6074135708F100D12E6D /* ShoppingList.xcdatamodeld */,
-				38FFACB413604068004758EE /* TICoreDataSync */,
 				388A3E85135707CA00824C88 /* ShoppingListMac */,
+				38FFACB413604068004758EE /* TICoreDataSync */,
 				388A3E7E135707CA00824C88 /* Frameworks */,
 				388A3E7C135707CA00824C88 /* Products */,
 			);
@@ -354,6 +378,12 @@
 		389D76A813632201007F19DC /* Operations */ = {
 			isa = PBXGroup;
 			children = (
+				38942FD51397CD7B0067F9A4 /* TICDSFileManagerBasedDocumentDeletionOperation.h */,
+				38942FD61397CD7B0067F9A4 /* TICDSFileManagerBasedDocumentDeletionOperation.m */,
+				38425075138C11A800D0486B /* TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.h */,
+				38425076138C11A800D0486B /* TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.m */,
+				38425077138C11A800D0486B /* TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation.h */,
+				38425078138C11A800D0486B /* TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation.m */,
 				389D767C1361A577007F19DC /* TICDSFileManagerBasedApplicationRegistrationOperation.h */,
 				389D767D1361A577007F19DC /* TICDSFileManagerBasedApplicationRegistrationOperation.m */,
 				389D76A51363055F007F19DC /* TICDSFileManagerBasedDocumentRegistrationOperation.h */,
@@ -577,6 +607,12 @@
 				3883FE2C1376AD3B004D26B2 /* FZAKeyManager.m in Sources */,
 				3883FE2D1376AD3B004D26B2 /* FZAKeyManageriPhone.m in Sources */,
 				3883FE2E1376AD3B004D26B2 /* FZAKeyManagerMac.m in Sources */,
+				38425073138C119F00D0486B /* TICDSListOfApplicationRegisteredClientsOperation.m in Sources */,
+				38425074138C119F00D0486B /* TICDSListOfDocumentRegisteredClientsOperation.m in Sources */,
+				38425079138C11A800D0486B /* TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.m in Sources */,
+				3842507A138C11A800D0486B /* TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation.m in Sources */,
+				38942FD41397CD6D0067F9A4 /* TICDSDocumentDeletionOperation.m in Sources */,
+				38942FD71397CD7B0067F9A4 /* TICDSFileManagerBasedDocumentDeletionOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

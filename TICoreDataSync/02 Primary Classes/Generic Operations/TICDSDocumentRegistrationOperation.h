@@ -26,13 +26,6 @@
     2. If not, continue by creating client's directories for this document.
  3. Subclass creates a directory for this client in this document's `SyncChanges` and `SyncCommands` directories.
   
- Previous Tasks:
- 
- 1. Check whether the document has been previously registered with the remote (i.e., whether the file structure exists).
- 2. If not, register the document and create the file structure.
- 3. Check whether this client has previously been registered for this document (i.e., whether client-specific file structures exist).
- 4. If not, create the necessary file structure for this client for this document.
- 
  Operations are typically created automatically by the relevant sync manager.
  
  @warning You must use one of the subclasses of `TICDSDocumentRegistrationOperation`.
@@ -41,12 +34,17 @@
 @interface TICDSDocumentRegistrationOperation : TICDSOperation {
 @private
     BOOL _paused;
+    BOOL _documentWasDeleted;
     BOOL _shouldCreateDocumentFileStructure;
     
     NSString *_documentIdentifier;
     NSString *_documentDescription;
     NSString *_clientDescription;
     NSDictionary *_documentUserInfo;
+    
+    NSUInteger _numberOfDeletedClientIdentifiersToAdd;
+    NSUInteger _numberOfDeletedClientIdentifiersAdded;
+    NSUInteger _numberOfDeletedClientIdentifiersThatFailedToBeAdded;
 }
 
 #pragma mark Designated Initializer
@@ -67,6 +65,11 @@
  This method must call `discoveredStatusOfRemoteDocumentDirectory:` to indicate the status. */
 - (void)checkWhetherRemoteDocumentDirectoryExists;
 
+/** Check whether the document was previously deleted (i.e., whether an `identifier.plist` file exists in the `DeletedDocuments` directory.
+ 
+ This method must call `discoveredDeletionStatusOfRemoteDocument:` to indicate the status. */
+- (void)checkWhetherRemoteDocumentWasDeleted;
+
 /** Create remote document directory structure.
  
  This method must call `createdRemoteDocumentDirectoryStructureWithSuccess:` to indicate whether the creation was successful. */
@@ -79,10 +82,39 @@
  @param aDictionary The dictionary to save as the `documentInfo.plist`. */
 - (void)saveRemoteDocumentInfoPlistFromDictionary:(NSDictionary *)aDictionary;
 
+/** Fetch a list of all clients registered to synchronize with this **application**.
+ 
+ This list is used to add identifiers to this document's `DeletedClients` directory so that if those clients try to sync, they'll realize the document has previously been deleted.
+ 
+ This method must call `` when finished. */
+- (void)fetchListOfIdentifiersOfAllRegisteredClientsForThisApplication;
+
+/** Copy the specified client's `deviceInfo.plist` file into the `DeletedClients` directory for this document, but name the copied file using the client's identifier (`identifier.plist`).
+ 
+ This method must call `` to indicate whether the file was copied successfully.
+ 
+ @param anIdentifier The identifier of the client. */
+- (void)addDeviceInfoPlistToDocumentDeletedClientsForClientWithIdentifier:(NSString *)anIdentifier;
+
+/** Delete the `identifier.plist` file for this document from the `DeletedDocuments` directory.
+ 
+ This method must call `deletedDocumentInfoPlistFromDeletedDocumentsDirectoryWithSuccess:` to indicate whether the deletion was successful. */
+- (void)deleteDocumentInfoPlistFromDeletedDocumentsDirectory;
+
 /** Check whether a directory exists for this client inside the document's `SyncChanges` directory.
  
  This method must call `discoveredStatusOfClientDirectoryInRemoteDocumentSyncChangesDirectory:` to indicate the status. */
 - (void)checkWhetherClientDirectoryExistsInRemoteDocumentSyncChangesDirectory;
+
+/** Check whether this client has previously been deleted from synchronizing with this document.
+ 
+ This method must call `discoveredDeletionStatusOfClient:` to indicate the status. */
+- (void)checkWhetherClientWasDeletedFromRemoteDocument;
+
+/** Delete the client's file from the document's `DeletedClients` directory.
+ 
+ This method must call `blah:` when finished. */
+- (void)deleteClientIdentifierFileFromDeletedClientsDirectory;
 
 /** Create directories for this client inside the `SyncChanges` and `SyncCommands` directories for this client.
  
@@ -99,19 +131,47 @@
  @param status The status of the directory: does exist, does not exist, or error (see `TICDSTypesAndEnums.h` for possible values). */
 - (void)discoveredStatusOfRemoteDocumentDirectory:(TICDSRemoteFileStructureExistsResponseType)status;
 
+/** Indicate whether the document was previously deleted.
+ 
+ If an error occurred, call `setError:` first, then specify `TICDSRemoteFileStructureDeletionResponseTypeError` for `status`.
+ 
+ @param status The status of the directory: was not deleted, was deleted, or error (see `TICDSTypesAndEnums.h` for possible values). */
+- (void)discoveredDeletionStatusOfRemoteDocument:(TICDSRemoteFileStructureDeletionResponseType)status;
+
 /** Indicate whether the creation of the remote document directory structure was successful.
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the directory structure was created or not */
+ @param success `YES` if the directory structure was created, otherwise `NO`. */
 - (void)createdRemoteDocumentDirectoryStructureWithSuccess:(BOOL)success;
 
 /** Indicate whether the `documentInfo.plist` file was saved successfully.
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the `documentInfo.plist` file was saved or not. */
+ @param success `YES` if the `documentInfo.plist` file was saved, otherwise `NO`. */
 - (void)savedRemoteDocumentInfoPlistWithSuccess:(BOOL)success;
+
+/** Pass back the assembled `NSArray` of client identifiers registered to synchronize with the **application**.
+ 
+ If an error occurred, call `setError:` first, then specify `nil` for `anArray`.
+ 
+ @param anArray The array of client identifiers, or `nil` if an error occurred. */
+- (void)fetchedListOfIdentifiersOfAllRegisteredClientsForThisApplication:(NSArray *)anArray;
+
+/** Indicate whether the `deviceInfo.plist` file was copied as `identifier.plist` to the `DeletedClients` directory for this document.
+ 
+ If not, call `setError:` first, then specify `NO` for `success`.
+ 
+ @param success `YES` if the file was copied, otherwise `NO`. */
+- (void)addedDeviceInfoPlistToDocumentDeletedClientsForClientWithIdentifier:(NSString *)anIdentifier withSuccess:(BOOL)success;
+
+/** Indicate whether the `identifier.plist` file for this document was removed from the `DeletedDocuments` directory.
+ 
+ If not, call `setError:` first, then specify `NO` for `success`.
+ 
+ @param success `YES` if the `identifier.plist` file was deleted, otherwise `NO`. */
+- (void)deletedDocumentInfoPlistFromDeletedDocumentsDirectoryWithSuccess:(BOOL)success;
 
 /** Indicate the status of this client's directory inside the remote document `SyncChanges` directory.
  
@@ -120,11 +180,25 @@
  @param status The status of the directory: does exist, does not exist, or error (see `TICDSTypesAndEnums.h` for possible values). */
 - (void)discoveredStatusOfClientDirectoryInRemoteDocumentSyncChangesDirectory:(TICDSRemoteFileStructureExistsResponseType)status;
 
+/** Indicate whether the client has been deleted from synchronizing with this document.
+ 
+ If an error occurred, call `setError:` first, then specify `TICDSRemoteFileStructureDeletionResponseTypeError` for `status`.
+ 
+ @param status The deletion status: deleted, not deleted, or error (see `TICDSTypesAndEnums.h` for possible values). */
+- (void)discoveredDeletionStatusOfClient:(TICDSRemoteFileStructureDeletionResponseType)status;
+
+/** Indicate whether the client's file in the document's `RecentSyncs` directory was deleted successfully.
+ 
+ If not, call `setError:` first, then specify `NO` for `success`.
+ 
+ @param success `YES` if the `identifier.plist` file was deleted, otherwise `NO`. */
+- (void)deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:(BOOL)success;
+
 /** Indicate whether the creation of the client directories was successful.
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
- @param success A Boolean indicating whether the directory structure was created or not */
+ @param success `YES` if the directory structure was created, otherwise `NO`. */
 - (void)createdClientDirectoriesInRemoteDocumentDirectoriesWithSuccess:(BOOL)success;
 
 #pragma mark Properties
@@ -132,6 +206,9 @@
 
 /** Used to indicate whether the operation is currently paused awaiting input from the operation delegate, or in turn the document sync manager delegate. */
 @property (assign, getter = isPaused) BOOL paused;
+
+/** Used to indicate whether the reason a document doesn't exist is because it was deleted. */
+@property (assign) BOOL documentWasDeleted;
 
 /** Used by the `TICDSDocumentSyncManager` to indicate whether to create the remote document file structure after finding out it doesn't exist. */
 @property (assign) BOOL shouldCreateDocumentFileStructure;

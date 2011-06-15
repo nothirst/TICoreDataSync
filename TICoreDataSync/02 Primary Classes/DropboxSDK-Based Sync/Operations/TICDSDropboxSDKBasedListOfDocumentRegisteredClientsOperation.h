@@ -30,15 +30,35 @@
 /** The DropboxSDK `DBSession` for use by this operation's `DBRestClient`. */
 @property (retain) DBSession *dbSession;
 
-/** The DropboxSDK `DBRestClient` for use by this operation for methods relating to the global application directory. */
-@property (nonatomic, retain) DBRestClient *restClient;
+/** The DropboxSDK `DBRestClient` for use by this operation. */
+@property (nonatomic, readonly) DBRestClient *restClient;
 
+/** @name Paths */
+
+/** The path to this document's `SyncChanges` directory. */
 @property (nonatomic, retain) NSString *thisDocumentSyncChangesDirectoryPath;
+
+/** The path to the application's `ClientDevices` directory. */
 @property (nonatomic, retain) NSString *clientDevicesDirectoryPath;
+
+/** The path to this document's `RecentSyncs` directory. */
 @property (nonatomic, retain) NSString *thisDocumentRecentSyncsDirectoryPath;
+
+/** The path to this document's `WholeStore` directory. */
 @property (nonatomic, retain) NSString *thisDocumentWholeStoreDirectoryPath;
 
+/** Return the path to the `deviceInfo.plist` file for a given client identifier.
+ 
+ @param anIdentifier The synchronization identifier of the client.
+ 
+ @return The path to the client's `deviceInfo.plist` file. */
 - (NSString *)pathToInfoDictionaryForDeviceWithIdentifier:(NSString *)anIdentifier;
+
+/** Return the path to the `WholeStore.ticdsync` file uploaded for this document by a given client. 
+ 
+ @param anIdentifier The synchronization identifier of the client. 
+ 
+ @return The path to the client's `WholeStore.ticdsync` file. */
 - (NSString *)pathToWholeStoreFileForDeviceWithIdentifier:(NSString *)anIdentifier;
 
 @end

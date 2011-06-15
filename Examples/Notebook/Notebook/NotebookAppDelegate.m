@@ -60,18 +60,16 @@
 
 #pragma mark -
 #pragma mark Application Sync Manager Delegate
-- (void)applicationSyncManagerDidPauseRegistrationToAskWhether\
-ToUseEncryptionForFirstTimeRegistration:
+- (void)applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:
 (TICDSApplicationSyncManager *)aSyncManager
 {
-    [aSyncManager continueRegisteringWithEncryptionPassword:@"password"];
+    [aSyncManager continueRegisteringWithEncryptionPassword:nil];
 }
 
-- (void)applicationSyncManagerDidPauseRegistrationToRequestPassword\
-ForEncryptedApplicationSyncData:
+- (void)applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:
 (TICDSApplicationSyncManager *)aSyncManager
 {
-    [aSyncManager continueRegisteringWithEncryptionPassword:@"password"];
+    [aSyncManager continueRegisteringWithEncryptionPassword:nil];
 }
 
 - (TICDSDocumentSyncManager *)applicationSyncManager:
@@ -124,8 +122,7 @@ URLForWholeStoreToUploadForDocumentWithIdentifier:
 }
 
 - (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager
-didPauseRegistrationAsRemoteFileStructureDoesNotExist\
-ForDocumentWithIdentifier:(NSString *)anIdentifier 
+didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:(NSString *)anIdentifier 
 description:(NSString *)aDescription 
 userInfo:(NSDictionary *)userInfo
 {
@@ -134,8 +131,23 @@ userInfo:(NSDictionary *)userInfo
     [aSyncManager continueRegistrationByCreatingRemoteFileStructure:YES];
 }
 
-- (BOOL)documentSyncManagerShouldUploadWholeStore\
-AfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo
+{
+    [self setDownloadStoreAfterRegistering:NO];
+    
+    NSLog(@"DELETED");
+    
+    [aSyncManager continueRegistrationByCreatingRemoteFileStructure:YES];
+}
+
+- (void)documentSyncManagerDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:(TICDSDocumentSyncManager *)aSyncManager
+{
+    [self setDownloadStoreAfterRegistering:YES];
+    
+    NSLog(@"DELETED CLIENT");
+}
+
+- (BOOL)documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager
 {
     return ![self shouldDownloadStoreAfterRegistering];
 }
@@ -161,7 +173,7 @@ didReplaceStoreWithDownloadedStoreAtURL:(NSURL *)aStoreURL
 {
     NSError *anyError = nil;
     id store = [[self persistentStoreCoordinator]
-                addPersistentStoreWithType:NSXMLStoreType 
+                addPersistentStoreWithType:NSSQLiteStoreType 
                 configuration:nil 
                 URL:aStoreURL options:nil error:&anyError];
     
@@ -206,7 +218,9 @@ shouldBeginSynchronizingAfterManagedObjectContextDidSave:
     [(TICDSFileManagerBasedDocumentSyncManager *)aSyncManager 
      enableAutomaticSynchronizationAfterChangesDetectedFromOtherClients];
     
-    [self performSelector:@selector(getPreviouslySynchronizedDocuments) withObject:nil afterDelay:2.0];
+    //[self performSelector:@selector(getPreviouslySynchronizedClients) withObject:nil afterDelay:2.0];
+    //[self performSelector:@selector(deleteDocument) withObject:nil afterDelay:2.0];
+    //[self performSelector:@selector(deleteClient) withObject:nil afterDelay:2.0];
 }
 
 - (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishFetchingInformationForAllRegisteredDevices:(NSDictionary *)information
@@ -214,9 +228,19 @@ shouldBeginSynchronizingAfterManagedObjectContextDidSave:
     NSLog(@"App client info: %@", information);
 }
 
-- (void)getPreviouslySynchronizedDocuments
+- (void)getPreviouslySynchronizedClients
 {
     [[[self documentSyncManager] applicationSyncManager] requestListOfSynchronizedClientsIncludingDocuments:YES];
+}
+
+- (void)deleteDocument
+{
+    [[[self documentSyncManager] applicationSyncManager] deleteDocumentWithIdentifier:@"Notebook"];
+}
+
+- (void)deleteClient
+{
+    [[self documentSyncManager] deleteDocumentSynchronizationDataForClientWithIdentifier:@"B29A21AB-529A-4CBB-A603-332CAD8F2D33-715-000001314CB7EE5B"];
 }
 
 #pragma mark -
