@@ -20,7 +20,7 @@
  
  @warning You must register the document sync manager before you can use it to synchronize the document, or perform any other tasks. */
 
-@interface TICDSDocumentSyncManager : NSObject <TICDSDocumentRegistrationOperationDelegate> {
+@interface TICDSDocumentSyncManager : NSObject <TICDSDocumentRegistrationOperationDelegate, TICDSSynchronizationOperationDelegate> {
 @private
     TICDSDocumentSyncManagerState _state;
     
