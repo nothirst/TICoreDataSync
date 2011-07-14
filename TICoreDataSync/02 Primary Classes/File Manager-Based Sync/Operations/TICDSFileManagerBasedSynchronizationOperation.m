@@ -106,7 +106,7 @@
     
     // if we're encrypted, we need to copy to temporary file location first, ready for cryptor to decrypt later...
     if( [self shouldUseEncryption] ) {
-        destinationPath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:[aLocation lastPathComponent]];
+        destinationPath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:[destinationPath lastPathComponent]];
     }
     
     BOOL success = [[self fileManager] copyItemAtPath:remoteFileToFetch toPath:destinationPath error:&anyError];
