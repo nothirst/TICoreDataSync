@@ -22,7 +22,7 @@
 #ifdef DEBUG
 #define TICDSLog(verbosity,...) [TICDSLog logWithVerbosity:verbosity information:[NSString stringWithFormat:@"%s : %@", __PRETTY_FUNCTION__, [NSString stringWithFormat:__VA_ARGS__]]]
 #else
-#define TICDSLog(verbosity,...) asm("nop\n\t");
+#define TICDSLog(verbosity,...)
 #endif
 
 
