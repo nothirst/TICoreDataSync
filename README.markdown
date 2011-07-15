@@ -41,6 +41,8 @@ You can build it yourself if you have `appledoc` installed, by executing `appled
 Either [install the docset](http://timisted.github.com/TICoreDataSync/install-xcode-docset.html), or read the contents online:  
 <http://timisted.github.com/TICoreDataSync/reference/html/>
 
+**Note that the information at the top of the operations in the docset is out of date; refer to the [class diagrams](http://timisted.github.com/TICoreDataSync/operation-task-diagrams.html) to find out exactly what happens.**
+
 ###Example Apps
 
 The repository includes several Xcode projects demonstrating the framework in Mac and iOS applications. There are two primary applications, the non-document-based Notebook for iOS and Mac, and the document-based ShoppingList for Mac only.
