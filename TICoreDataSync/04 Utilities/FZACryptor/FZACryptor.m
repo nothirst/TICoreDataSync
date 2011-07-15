@@ -64,7 +64,7 @@ const NSInteger FZAFileBlockLength = 4096;
     NSAssert([self isConfigured], @"can't encrypt without a key");
 
     //set up the files
-    NSFileHandle *readHandle = [NSFileHandle fileHandleForReadingFromURL: plainTextURL error: error];
+	NSFileHandle *readHandle = [NSFileHandle fileHandleForReadingAtPath:[plainTextURL path]];
     if (!readHandle) {
         return NO;
     }
@@ -84,7 +84,7 @@ const NSInteger FZAFileBlockLength = 4096;
     if (!fileCreated) {
         return NO;
     }
-    NSFileHandle *writeHandle = [NSFileHandle fileHandleForWritingToURL: cipherTextURL error: error];
+    NSFileHandle *writeHandle = [NSFileHandle fileHandleForWritingAtPath: [cipherTextURL path]];
     if (!writeHandle) {
         return NO;
     }
@@ -224,7 +224,7 @@ const NSInteger FZAFileBlockLength = 4096;
 
         //set up the files
     NSFileManager *fileManager = [[NSFileManager alloc] init];
-    NSFileHandle *readHandle = [NSFileHandle fileHandleForReadingFromURL: cipherTextURL error: error];
+    NSFileHandle *readHandle = [NSFileHandle fileHandleForReadingAtPath: [cipherTextURL path]];
     if (!readHandle) {
         [fileManager release];
         return NO;
@@ -245,7 +245,7 @@ const NSInteger FZAFileBlockLength = 4096;
     if (!fileCreated) {
         return NO;
     }
-    NSFileHandle *writeHandle = [NSFileHandle fileHandleForWritingToURL: plainTextURL error: error];
+    NSFileHandle *writeHandle = [NSFileHandle fileHandleForWritingAtPath: [plainTextURL path]];
     if (!writeHandle) {
         return NO;
     }
