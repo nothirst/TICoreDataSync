@@ -88,7 +88,7 @@
         return NO;
     }
     
-    [self setState:TICDSApplicationSyncManagerStateConfigured];
+    [self setState:TICDSDocumentSyncManagerStateConfigured];
     
     return YES;
 }

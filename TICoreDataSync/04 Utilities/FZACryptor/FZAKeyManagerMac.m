@@ -27,6 +27,8 @@
 #import "TICoreDataSync.h"
 #import <Security/Security.h>
 
+void FZAReportKeychainError(OSStatus keychainStatus, NSString *msg);
+
 FourCharCode FZACreatorCode = 'FZAL';
 
 void FZAReportKeychainError(OSStatus keychainStatus, NSString *msg) {
