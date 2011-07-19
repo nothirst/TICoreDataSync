@@ -122,8 +122,8 @@
  The location of the store file (and the applied sync changes file) will be requested from the delegate immediately after calling this method. */
 - (void)initiateDownloadOfWholeStore;
 
-#pragma mark - Synchronization
-/** @name Synchronization */
+#pragma mark - Synchronization Process
+/** @name Synchronization Process */
 
 /** Start synchronizing the document with the remote location. 
  
@@ -136,7 +136,7 @@
 - (void)continueSynchronizationByResolvingConflictWithResolutionType:(TICDSSyncConflictResolutionType)aType;
 
 #pragma mark - Vacuuming
-/** @name Vacuuming */
+/** @name Vacuuming Unneeded Files */
 
 /** Initiate a vacuum operation to clean up files hanging around on the remote that are no longer needed by any registered clients.
  
@@ -144,7 +144,7 @@
 - (void)initiateVacuumOfUnneededRemoteFiles;
 
 #pragma mark - Information
-/** @name Information */
+/** @name Information on Registered Clients */
 
 /** Fetch a list of devices that are registered to synchronize with this client. */
 - (void)requestInformationForAllRegisteredDevices;
