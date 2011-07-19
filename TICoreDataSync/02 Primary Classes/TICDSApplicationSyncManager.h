@@ -70,14 +70,13 @@
  
  If this is the first time you have registered a client with this app identifier, registration will automatically create the file structure necessary at the remote end for this and other clients to synchronize. See `[TICDSUtilities remoteGlobalAppDirectoryHierarchy]` for the structure that will be created.
  
- @warning You must call this method before using the application sync manager for any other purpose.
- 
  @param aDelegate The object you wish to be notified regarding application-related sync information; this object must conform to the `TICDSApplicationSyncManagerDelegate` protocol, which includes some required methods.
  @param anAppIdentifier The identification string used to identify the synchronization information across multiple clients. If you wish to be able to synchronize Mac and iOS, this app identifier should be the same on both platforms. This identifier will also be used as the root level of the remote file structure.
  @param aClientIdentifier An identification string for this client. Every client wishing to synchronize must have a string to identify itself (i.e., the application instance on a machine) uniquely. You would typically create a UUID string the first time your app is launched and store this in preferences.
  @param aClientDescription A human-readable string used to identify this client, e.g. the computer name.
- @param someUserInfo A dictionary of information that will be saved throughout all future synchronizations. Because this information is saved in a plist, everything in the dictionary must be archivable using `NSKeyedArchiver`.
- */
+ @param someUserInfo A dictionary of information that will be saved throughout all future synchronizations. Because this information is saved in a plist, everything in the dictionary must be archivable.
+ 
+ @warning You must call this method before using the application sync manager for any other purpose. */
 - (void)registerWithDelegate:(id <TICDSApplicationSyncManagerDelegate>)aDelegate globalAppIdentifier:(NSString *)anAppIdentifier uniqueClientIdentifier:(NSString *)aClientIdentifier description:(NSString *)aClientDescription userInfo:(NSDictionary *)someUserInfo;
 
 /** Continue registering an application for the first time specifying whether to use encryption, or an existing application that requires an encryption password.
@@ -88,6 +87,13 @@
  
  @param aPassword The password to use, or `nil` to specify no encryption on a new application registration. */
 - (void)continueRegisteringWithEncryptionPassword:(NSString *)aPassword;
+
+/** Cancel registration after being asked for an encryption password.
+ 
+ Use this method to cancel registration if the user is unable to provide the correct encryption password.
+ 
+ @warning Using this method at other times will result in undefined behavior. */
+- (void)cancelRegistrationWithoutProvidingEncryptionPassword;
 
 #pragma mark - Previously Synchronized Documents
 /** @name Accessing Previously Synchronized Documents */

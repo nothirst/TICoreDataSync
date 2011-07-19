@@ -25,6 +25,8 @@ xcuserdata
 profile
 *.moved-aside
 
+DropboxSettings.h
+
 # Appledoc docset-installed file
 docset-installed.txt
 
