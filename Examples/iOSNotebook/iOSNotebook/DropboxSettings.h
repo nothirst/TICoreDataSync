@@ -12,8 +12,8 @@
 
  * Both need to be Objective-C strings, using @"" notation. */
 
-#define kTICDDropboxSyncKey @"key"
-#define kTICDDropboxSyncSecret @"secret"
+#define kTICDDropboxSyncKey @"fqv4grvh4a1u885"
+#define kTICDDropboxSyncSecret @"x7yo7k9bnrus87z"
 
 
 #ifndef kTICDDropboxSyncKey

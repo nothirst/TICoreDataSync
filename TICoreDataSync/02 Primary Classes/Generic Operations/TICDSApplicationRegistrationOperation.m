@@ -91,7 +91,8 @@
     [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationPausedToFindOutWhetherToEnableEncryption:) waitUntilDone:NO];
     
     while( [self isPaused] ) {
-        sleep(0.2);
+		[NSThread sleepForTimeInterval:0.2];
+//        sleep(0.2);
     }
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Continuing application registration after instruction from delegate");
@@ -486,7 +487,8 @@
     [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationPausedToRequestEncryptionPassword:) waitUntilDone:NO];
     
     while( [self isPaused] ) {
-        sleep(0.2);
+		[NSThread sleepForTimeInterval:0.2];
+//        sleep(0.2);
     }
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Continuing application registration after determining encryption password");
