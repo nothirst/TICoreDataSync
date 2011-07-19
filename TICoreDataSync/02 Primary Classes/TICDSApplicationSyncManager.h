@@ -59,8 +59,9 @@
  @param aSyncManager The new sync manager to set as the application-wide default. */
 + (void)setDefaultApplicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager;
 
-#pragma mark - Registration
-/** @name Registration */
+
+#pragma mark - Application Registration
+/** @name Application Registration */
 
 /** Register an application ready for future synchronization.
  
@@ -74,9 +75,7 @@
  @param anAppIdentifier The identification string used to identify the synchronization information across multiple clients. If you wish to be able to synchronize Mac and iOS, this app identifier should be the same on both platforms. This identifier will also be used as the root level of the remote file structure.
  @param aClientIdentifier An identification string for this client. Every client wishing to synchronize must have a string to identify itself (i.e., the application instance on a machine) uniquely. You would typically create a UUID string the first time your app is launched and store this in preferences.
  @param aClientDescription A human-readable string used to identify this client, e.g. the computer name.
- @param someUserInfo A dictionary of information that will be saved throughout all future synchronizations. Because this information is saved in a plist, everything in the dictionary must be archivable.
- 
- @warning You must call this method before using the application sync manager for any other purpose. */
+ @param someUserInfo A dictionary of information that will be saved throughout all future synchronizations. Because this information is saved in a plist, everything in the dictionary must be archivable. */
 - (void)registerWithDelegate:(id <TICDSApplicationSyncManagerDelegate>)aDelegate globalAppIdentifier:(NSString *)anAppIdentifier uniqueClientIdentifier:(NSString *)aClientIdentifier description:(NSString *)aClientDescription userInfo:(NSDictionary *)someUserInfo;
 
 /** Continue registering an application for the first time specifying whether to use encryption, or an existing application that requires an encryption password.
@@ -108,7 +107,9 @@
  This method will automatically spawn a `TICDSDocumentDownloadOperation`, and notify you of progress through the `TICDSApplicationSyncManagerDelegate` methods.
  
  @param anIdentifier The unique synchronization identifier string for the requested document. If you're requesting the download of a document represented by a dictionary supplied from a request for the list of previously synchronized documents, use the value for its `kTICDSDocumentIdentifier` key.
- @param aLocation The location on disc to which the persistent store file should be downloaded. */
+ @param aLocation The location on disc to which the persistent store file should be downloaded - including the file name.
+ 
+ @warning The document will first be downloaded to a temporary location. If any file already exists at the location specified by `aLocation`, it will be removed once the dowload completes, before the newly-downloaded temporary file is moved to `aLocation`. */
 - (void)requestDownloadOfDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation;
 
 #pragma mark - Client Information

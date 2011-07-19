@@ -46,8 +46,8 @@
     NSOperationQueue *_otherTasksQueue;
 }
 
-#pragma mark - Registration
-/** @name Registration */
+#pragma mark - Document Registration
+/** @name Document Registration */
 
 /** Register a document ready for synchronization.
  
