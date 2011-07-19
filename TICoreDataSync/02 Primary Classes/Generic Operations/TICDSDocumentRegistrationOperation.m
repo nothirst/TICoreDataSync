@@ -125,7 +125,7 @@
     [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationPausedToFindOutWhetherToCreateRemoteDocumentStructure:) waitUntilDone:NO];
     
     while( [self isPaused] ) {
-        sleep(0.2);
+        [NSThread sleepForTimeInterval:0.2];
     }
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Continuing registration after instruction from delegate");

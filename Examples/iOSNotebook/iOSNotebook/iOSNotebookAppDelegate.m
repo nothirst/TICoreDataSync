@@ -89,6 +89,13 @@
 
 - (TICDSDocumentSyncManager *)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:(NSString *)anIdentifier atURL:(NSURL *)aFileURL
 {
+    /* Return nil because this is a non-document based app and this method will never be called.
+    
+       If you implement multiple documents, you'll need to return a configured (but not yet registered) sync manager.
+       See the documentation for details, specifically:
+       http://timisted.github.com/TICoreDataSync/reference/html/Protocols/TICDSApplicationSyncManagerDelegate.html#//api/name/applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:
+    */
+    
     return nil;
 }
 

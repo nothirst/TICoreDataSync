@@ -660,7 +660,7 @@
     [self ti_alertDelegateOnMainThreadWithSelector:@selector(synchronizationOperation:pausedToDetermineResolutionOfConflict:) waitUntilDone:YES, aConflict];
     
     while( [self isPaused] ) {
-        sleep(0.1);
+        [NSThread sleepForTimeInterval:0.2];
     }
     
     [self ti_alertDelegateOnMainThreadWithSelector:@selector(synchronizationOperationResumedFollowingResolutionOfConflict:) waitUntilDone:YES];
