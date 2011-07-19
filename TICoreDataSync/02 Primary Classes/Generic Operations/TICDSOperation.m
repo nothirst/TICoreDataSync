@@ -33,6 +33,11 @@
 
     [self operationDidStart];
     
+    if( [self isCancelled] ) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     [self main];
 }
 

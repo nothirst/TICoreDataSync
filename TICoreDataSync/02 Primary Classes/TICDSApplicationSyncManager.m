@@ -139,6 +139,14 @@
     [(TICDSApplicationRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setPaused:NO];
 }
 
+#pragma mark Cancel Registration
+- (void)cancelRegistrationWithoutProvidingEncryptionPassword
+{
+    [(TICDSApplicationRegistrationOperation *)[[[self registrationQueue] operations] lastObject] cancel];
+    
+    [(TICDSApplicationRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setPaused:NO];
+}
+
 #pragma mark Operation Generation
 - (TICDSApplicationRegistrationOperation *)applicationRegistrationOperation
 {
@@ -160,6 +168,10 @@
     [self postDecreaseActivityNotification];
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Resuming Operation Queues");
+    for( TICDSOperation *eachOperation in [[self otherTasksQueue] operations] ) {
+        [eachOperation setShouldUseEncryption:[self shouldUseEncryption]];
+    }
+    
     [[self otherTasksQueue] setSuspended:NO];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:TICDSApplicationSyncManagerDidFinishRegisteringNotification object:self];
