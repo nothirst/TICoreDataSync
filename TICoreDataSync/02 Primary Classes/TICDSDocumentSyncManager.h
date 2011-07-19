@@ -135,7 +135,7 @@
  @param aType The type of conflict resolution; see `TICDSTypesAndEnums.h` for possible values. */
 - (void)continueSynchronizationByResolvingConflictWithResolutionType:(TICDSSyncConflictResolutionType)aType;
 
-#pragma mark - Vacuuming
+#pragma mark - Vacuuming Files
 /** @name Vacuuming Unneeded Files */
 
 /** Initiate a vacuum operation to clean up files hanging around on the remote that are no longer needed by any registered clients.
@@ -143,7 +143,7 @@
  This will automatically spawn a `TICDSVacuumOperation`, and notify you of progress through the `TICDSDocumentSyncManagerDelegate` methods. */
 - (void)initiateVacuumOfUnneededRemoteFiles;
 
-#pragma mark - Information
+#pragma mark - Information on Registered Clients
 /** @name Information on Registered Clients */
 
 /** Fetch a list of devices that are registered to synchronize with this client. */
