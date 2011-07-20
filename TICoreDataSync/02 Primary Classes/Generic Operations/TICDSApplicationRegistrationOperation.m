@@ -448,7 +448,7 @@
     }
     
     // an error occurred
-    NSError *underlyingError = [[[self error] userInfo] valueForKey:kTICDSErrorUnderlyingError];
+    NSError *underlyingError = [[[self error] userInfo] valueForKey:NSUnderlyingErrorKey];
     
     // incorrect password
     if( [underlyingError code] == FZACryptorErrorCodeFailedIntegrityCheck && [[underlyingError domain] isEqualToString:FZACryptorErrorDomain] ) {

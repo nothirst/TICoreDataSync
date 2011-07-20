@@ -16,7 +16,6 @@ extern NSString * const TICDSSyncWarningTypeNames[];
 extern NSString * const TICDSSyncConflictTypeNames[];
 
 extern NSString * const kTICDSErrorUserInfo;
-extern NSString * const kTICDSErrorUnderlyingError;
 extern NSString * const kTICDSErrorClassAndMethod;
 extern NSString * const kTICDSErrorDomain;
 extern NSString * const kTICDSStackTrace;

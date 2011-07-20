@@ -67,7 +67,7 @@ NSString *gTICDSErrorStrings[] = {
     }
     
     if( anUnderlyingError ) {
-        [userInfo setValue:anUnderlyingError forKey:kTICDSErrorUnderlyingError];
+        [userInfo setValue:anUnderlyingError forKey:NSUnderlyingErrorKey];
     }
     
     if( aClassAndMethod != NULL ) {
