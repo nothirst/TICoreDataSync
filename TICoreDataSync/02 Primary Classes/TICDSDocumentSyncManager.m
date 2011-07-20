@@ -1089,16 +1089,18 @@
 #pragma mark NOTIFICATIONS
 - (void)appSyncManagerDidRegister:(NSNotification *)aNotification
 {
+    [self setShouldUseEncryption:[[self applicationSyncManager] shouldUseEncryption]];
+    
     for( TICDSOperation *eachOperation in [[self registrationQueue] operations] ) {
-        [eachOperation setShouldUseEncryption:[[self applicationSyncManager] shouldUseEncryption]];
+        [eachOperation setShouldUseEncryption:[self shouldUseEncryption]];
     }
     
     for( TICDSOperation *eachOperation in [[self synchronizationQueue] operations] ) {
-        [eachOperation setShouldUseEncryption:[[self applicationSyncManager] shouldUseEncryption]];
+        [eachOperation setShouldUseEncryption:[self shouldUseEncryption]];
     }
     
     for( TICDSOperation *eachOperation in [[self otherTasksQueue] operations] ) {
-        [eachOperation setShouldUseEncryption:[[self applicationSyncManager] shouldUseEncryption]];
+        [eachOperation setShouldUseEncryption:[self shouldUseEncryption]];
     }
     
     [[self registrationQueue] setSuspended:NO];
