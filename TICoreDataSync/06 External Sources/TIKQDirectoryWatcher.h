@@ -26,6 +26,7 @@ extern NSString * const kTIKQExpandedDirectory;
 @private
     int _kqFileDescriptor;
     CFRunLoopSourceRef _runLoopSourceRef;
+    NSMutableArray *_watchedDirectories;
 }
 
 - (void)notifyActivityOnPath:(NSString *)aPath;
@@ -34,5 +35,6 @@ extern NSString * const kTIKQExpandedDirectory;
 
 @property (nonatomic, readonly) int kqFileDescriptor;
 @property (nonatomic, readonly) CFRunLoopSourceRef runLoopSourceRef;
+@property (nonatomic, retain) NSMutableArray *watchedDirectories;
 
 @end
