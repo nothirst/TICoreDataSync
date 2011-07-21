@@ -60,8 +60,8 @@
 + (void)setDefaultApplicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager;
 
 
-#pragma mark - Application Registration
-/** @name Application Registration */
+#pragma mark - One-Shot Application Registration
+/** @name One-Shot Application Registration */
 
 /** Register an application ready for future synchronization.
  
@@ -77,6 +77,30 @@
  @param aClientDescription A human-readable string used to identify this client, e.g. the computer name.
  @param someUserInfo A dictionary of information that will be saved throughout all future synchronizations. Because this information is saved in a plist, everything in the dictionary must be archivable. */
 - (void)registerWithDelegate:(id <TICDSApplicationSyncManagerDelegate>)aDelegate globalAppIdentifier:(NSString *)anAppIdentifier uniqueClientIdentifier:(NSString *)aClientIdentifier description:(NSString *)aClientDescription userInfo:(NSDictionary *)someUserInfo;
+
+#pragma mark - Delayed Application Registration
+/** @name Delayed Application Registration */
+
+/** Configure an application but don't immediately register it.
+ 
+ Use this method to configure the sync manager in environments where you may not have a permanent internet connection, such as an iOS device, or a desktop WebDAV client, etc.
+ 
+ This will configure everything necessary to track changes made by the user. When you wish to initiate a sync, or perform any other task, you'll need to call the `registerConfiguredApplicationSyncManager` method first to initiate registration.
+ 
+ @param aDelegate The object you wish to be notified regarding application-related sync information; this object must conform to the `TICDSApplicationSyncManagerDelegate` protocol, which includes some required methods.
+ @param anAppIdentifier The identification string used to identify the synchronization information across multiple clients. If you wish to be able to synchronize Mac and iOS, this app identifier should be the same on both platforms. This identifier will also be used as the root level of the remote file structure.
+ @param aClientIdentifier An identification string for this client. Every client wishing to synchronize must have a string to identify itself (i.e., the application instance on a machine) uniquely. You would typically create a UUID string the first time your app is launched and store this in preferences.
+ @param aClientDescription A human-readable string used to identify this client, e.g. the computer name.
+ @param someUserInfo A dictionary of information that will be saved throughout all future synchronizations. Because this information is saved in a plist, everything in the dictionary must be archivable. */
+- (void)configureWithDelegate:(id <TICDSApplicationSyncManagerDelegate>)aDelegate globalAppIdentifier:(NSString *)anAppIdentifier uniqueClientIdentifier:(NSString *)aClientIdentifier description:(NSString *)aClientDescription userInfo:(NSDictionary *)someUserInfo;
+
+/** Register an application that has already been pre-configured.
+ 
+ Use this method to register an application sync manager that you have already configured using the `configureWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:` method. */
+- (void)registerConfiguredApplicationSyncManager;
+
+#pragma mark - Continuing Registration
+/** @name Continuing Registration */
 
 /** Continue registering an application for the first time specifying whether to use encryption, or an existing application that requires an encryption password.
  

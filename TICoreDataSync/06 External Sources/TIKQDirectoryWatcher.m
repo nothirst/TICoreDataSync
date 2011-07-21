@@ -59,8 +59,10 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
         return NO;
     }
     
+    [[self watchedDirectories] addObject:aDirectoryName];
+    
     struct kevent directoryEvent;
-    EV_SET( &directoryEvent, directoryFileDescriptor, EVFILT_VNODE, EV_ADD | EV_CLEAR | EV_ENABLE, NOTE_WRITE, 0, [aDirectoryName copy]);
+    EV_SET( &directoryEvent, directoryFileDescriptor, EVFILT_VNODE, EV_ADD | EV_CLEAR | EV_ENABLE, NOTE_WRITE, 0, aDirectoryName);
     
     if( kevent( [self kqFileDescriptor], &directoryEvent, 1, NULL, 0, NULL ) == -1 ) {
         NSLog(@"Could not kevent watching %@. Error %d (%s)", aDirectoryName, errno, strerror(errno));
@@ -148,11 +150,23 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
     return _kqFileDescriptor;
 }
 
+- (NSMutableArray *)watchedDirectories
+{
+    if( _watchedDirectories ) {
+        return _watchedDirectories;
+    }
+    
+    _watchedDirectories = [[NSMutableArray alloc] init];
+    
+    return _watchedDirectories;
+}
+
 #pragma mark -
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
     [self cancelRunLoopSourceRef];
+    [_watchedDirectories release], _watchedDirectories = nil;
     
     [super dealloc];
 }
@@ -161,5 +175,6 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
 #pragma mark Properties
 @synthesize kqFileDescriptor = _kqFileDescriptor;
 @synthesize runLoopSourceRef = _runLoopSourceRef;
+@synthesize watchedDirectories = _watchedDirectories;
 
 @end
