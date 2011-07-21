@@ -12,14 +12,16 @@
  
  The operation carries out the following tasks:
  
- 1. Check whether a directory exists for this client inside the `WholeStore` directory inside the document's `TemporaryFiles` directory.
- 2. If so, delete it.
- 3. Create a directory for this client inside the `WholeStore` directory inside the document's `TemporaryFiles` directory.
- 3. Upload the whole store file to this temporary directory.
- 4. Upload the applied sync change sets file that goes with this whole store to this temporary directory.
- 5. Check whether a directory exists for this client inside the document's `WholeStore` directory.
- 6. If so, delete it.
- 7. Copy the temporary directory the non-temporary location.
+ 1. Check whether every object in the store to upload has the `ticdsSyncID` attribute set.
+ 2. If not, set any missing `ticdsSyncID` attributes.
+ 3. Check whether a directory exists for this client inside the `WholeStore` directory inside the document's `TemporaryFiles` directory.
+ 4. If so, delete it.
+ 5. Create a directory for this client inside the `WholeStore` directory inside the document's `TemporaryFiles` directory.
+ 6. Upload the whole store file to this temporary directory.
+ 7. Upload the applied sync change sets file that goes with this whole store to this temporary directory.
+ 8. Check whether a directory exists for this client inside the document's `WholeStore` directory.
+ 9. If so, delete it.
+ 10. Copy the temporary directory the non-temporary location.
  
  Operations are typically created automatically by the relevant sync manager.
  
