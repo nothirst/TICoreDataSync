@@ -43,14 +43,9 @@
 }
 
 #pragma mark -
-#pragma mark REGISTRATION
-- (void)registerWithDelegate:(id <TICDSApplicationSyncManagerDelegate>)aDelegate globalAppIdentifier:(NSString *)anAppIdentifier uniqueClientIdentifier:(NSString *)aClientIdentifier description:(NSString *)aClientDescription userInfo:(NSDictionary *)someUserInfo
+#pragma mark CONFIGURATION
+- (void)configureWithDelegate:(id <TICDSApplicationSyncManagerDelegate>)aDelegate globalAppIdentifier:(NSString *)anAppIdentifier uniqueClientIdentifier:(NSString *)aClientIdentifier description:(NSString *)aClientDescription userInfo:(NSDictionary *)someUserInfo
 {
-    [self setState:TICDSApplicationSyncManagerStateRegistering];
-    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to register application sync manager");
-    [self postIncreaseActivityNotification];
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidBeginRegistering:)];
-    
     TICDSLog(TICDSLogVerbosityEveryStep, @"Registration Information:\n   Delegate: %@,\n   Global App ID: %@,\n   Client ID: %@,\n   Description: %@\nUser Info: %@", aDelegate, anAppIdentifier, aClientIdentifier, aClientDescription, someUserInfo);
     
     [self setDelegate:aDelegate];
@@ -59,6 +54,33 @@
     [self setClientDescription:aClientDescription];
     [self setApplicationUserInfo:someUserInfo];
     
+    [self setState:TICDSApplicationSyncManagerStateConfigured];
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Application sync manager configured for future registration");
+}
+
+#pragma mark -
+#pragma mark REGISTRATION
+- (void)registerWithDelegate:(id <TICDSApplicationSyncManagerDelegate>)aDelegate globalAppIdentifier:(NSString *)anAppIdentifier uniqueClientIdentifier:(NSString *)aClientIdentifier description:(NSString *)aClientDescription userInfo:(NSDictionary *)someUserInfo
+{
+    [self configureWithDelegate:aDelegate globalAppIdentifier:anAppIdentifier uniqueClientIdentifier:anAppIdentifier description:aClientIdentifier userInfo:someUserInfo];
+    
+    [self registerPreConfiguredApplicationSyncManager];
+}
+
+- (void)registerPreConfiguredApplicationSyncManager
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to register application sync manager");
+    [self postIncreaseActivityNotification];
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidBeginRegistering:)];
+    
+    if( [self state] != TICDSApplicationSyncManagerStateConfigured ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Unable to register an application sync manager using registerPreConfiguredApplicationSyncManager - it hasn't already configured");
+        [self bailFromRegistrationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeUnableToRegisterUnconfiguredSyncManager classAndMethod:__PRETTY_FUNCTION__]];
+        return;
+    }
+    
+    [self setState:TICDSApplicationSyncManagerStateRegistering];
+    
     NSError *anyError = nil;
     BOOL shouldContinue = [self startRegistrationProcess:&anyError];
     if( !shouldContinue ) {
@@ -66,7 +88,6 @@
         [self bailFromRegistrationProcessWithError:anyError];
         return;
     }
-    
 }
 
 - (void)bailFromRegistrationProcessWithError:(NSError *)anError

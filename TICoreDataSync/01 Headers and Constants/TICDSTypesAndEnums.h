@@ -105,6 +105,7 @@ typedef enum _TICDSErrorCode {
     TICDSErrorCodeTaskWasCancelled,
     TICDSErrorCodeDropboxSDKRestClientError,
     TICDSErrorCodeEncryptionError,
+    TICDSErrorCodeUnableToRegisterUnconfiguredSyncManager,
 } TICDSErrorCode;
 
 typedef enum _FZACryptorErrorCode {
