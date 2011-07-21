@@ -23,12 +23,16 @@
         if( [object isKindOfClass:[NSDictionary class]] ) {
             NSString *thisPath = [aDirectoryPath stringByAppendingPathComponent:eachName];
             
-            // create directory
-            _numberOfAppDirectoriesToCreate++;
-            
-            [[self restClient] createFolder:thisPath];
-            
-            [self createDirectoryContentsFromDictionary:object inDirectory:thisPath];            
+            // only issue a DropboxSDK directory creation request for the lowest-level nested directory
+            // i.e., if this directory is empty
+            if( [object count] < 1 ) {
+                // create directory
+                _numberOfDocumentDirectoriesToCreate++;
+                
+                [[self restClient] createFolder:thisPath];
+            } else {
+                [self createDirectoryContentsFromDictionary:object inDirectory:thisPath];
+            }
         }
     }
 }
