@@ -26,6 +26,7 @@ NSString *gTICDSErrorStrings[] = {
     @"Task was cancelled",
     @"DropboxSDK Rest Client error",
     @"Encryption error",
+    @"Unable to register a sync manager using delayed registration because the sync manager hasn't been configured properly",
 };
 
 #include <execinfo.h>

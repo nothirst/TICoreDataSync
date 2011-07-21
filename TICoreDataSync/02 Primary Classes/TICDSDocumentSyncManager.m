@@ -60,8 +60,52 @@
 }
 
 #pragma mark -
-#pragma mark CONFIGURATION
-- (void)configureWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager documentIdentifier:(NSString *)aDocumentIdentifier
+#pragma mark DELAYED REGISTRATION
+- (void)configureWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo
+{
+    [self preConfigureWithDelegate:aDelegate appSyncManager:anAppSyncManager documentIdentifier:aDocumentIdentifier];
+    
+    [self setPrimaryDocumentMOC:aContext];
+    [aContext setDocumentSyncManager:self];
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Registration Information:\n   Delegate: %@,\n   App Sync Manager: %@,\n   Document ID: %@,\n   Description: %@,\n   User Info: %@", aDelegate, anAppSyncManager, aDocumentIdentifier, aDocumentDescription, someUserInfo);
+    [self setApplicationSyncManager:anAppSyncManager];
+    [self setDocumentDescription:aDocumentDescription];
+    [self setClientIdentifier:[anAppSyncManager clientIdentifier]];
+    [self setDocumentUserInfo:someUserInfo];
+    
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Document sync manager configured for future registration");
+}
+
+- (void)registerConfiguredDocumentSyncManager
+{
+    if( [self state] != TICDSDocumentSyncManagerStateConfigured ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Can't register this document sync manager because it wasn't configured");
+        [self bailFromRegistrationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeUnableToRegisterUnconfiguredSyncManager classAndMethod:__PRETTY_FUNCTION__]];
+        return;
+    }
+    
+    [self postIncreaseActivityNotification];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidBeginRegistering:)];
+    
+    if( [[self applicationSyncManager] state] == TICDSApplicationSyncManagerStateAbleToSync ) {
+        [[self registrationQueue] setSuspended:NO];
+    } else { 
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appSyncManagerDidRegister:) name:TICDSApplicationSyncManagerDidFinishRegisteringNotification object:[self applicationSyncManager]];
+    }
+    
+    NSError *anyError = nil;
+    BOOL shouldContinue = [self startDocumentRegistrationProcess:&anyError];
+    if( !shouldContinue ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error registering: %@", anyError);
+        [self bailFromRegistrationProcessWithError:anyError];
+        return;
+    }
+}
+
+#pragma mark -
+#pragma mark PRECONFIGURATION
+- (void)preConfigureWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager documentIdentifier:(NSString *)aDocumentIdentifier
 {
     [self setDelegate:aDelegate];
     [self setDocumentIdentifier:aDocumentIdentifier];
@@ -192,7 +236,7 @@
 }
 
 #pragma mark -
-#pragma mark REGISTRATION
+#pragma mark ONE-SHOT REGISTRATION
 - (void)registerWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo
 {
     // configure the document, if necessary
