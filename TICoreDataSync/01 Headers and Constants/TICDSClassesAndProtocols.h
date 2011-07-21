@@ -192,7 +192,7 @@
 
 /** Invoked to request the delegate to return a configured (though not yet registered) document sync manager for a downloaded document.
  
- This method will be called once the whole store has been replaced for the document. You should create a suitable document sync manager for the downloaded store, and *configure* it by calling `configureWithDelegate:appSyncManager:documentIdentifier:`;
+ This method will be called once the whole store has been replaced for the document. You should create a suitable document sync manager for the downloaded store, and *configure* it by calling `preConfigureWithDelegate:appSyncManager:documentIdentifier:`;
  
  Do not *register* the document sync manager until after the `applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:` method is called.
  

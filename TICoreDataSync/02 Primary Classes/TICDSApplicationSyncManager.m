@@ -64,10 +64,10 @@
 {
     [self configureWithDelegate:aDelegate globalAppIdentifier:anAppIdentifier uniqueClientIdentifier:anAppIdentifier description:aClientIdentifier userInfo:someUserInfo];
     
-    [self registerPreConfiguredApplicationSyncManager];
+    [self registerConfiguredApplicationSyncManager];
 }
 
-- (void)registerPreConfiguredApplicationSyncManager
+- (void)registerConfiguredApplicationSyncManager
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to register application sync manager");
     [self postIncreaseActivityNotification];

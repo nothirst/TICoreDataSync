@@ -46,8 +46,8 @@
     NSOperationQueue *_otherTasksQueue;
 }
 
-#pragma mark - Document Registration
-/** @name Document Registration */
+#pragma mark - One-Shot Document Registration
+/** @name One-Shot Document Registration */
 
 /** Register a document ready for synchronization.
  
@@ -72,6 +72,34 @@
  */
 - (void)registerWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo;
 
+#pragma mark - Delayed Document Registration
+/** @name Delayed Document Registration */
+
+/** Configure a document but don't immediately register it.
+ 
+ Use this method to configure the sync manager in environments where you may not have a permanent internet connection, such as an iOS device, or a desktop WebDAV client, etc.
+ 
+ This will configure everything necessary to track changes made by the user. When you wish to initiate a sync, or perform any other task, you'll need to call the `registerConfiguredDocumentSyncManager` method first to initiate registration.
+ 
+ @warning You must call this method before using the document sync manager for any other purpose.
+ 
+ @param aDelegate The object you wish to be notified regarding document-related sync information; this object must conform to the `TICDSDocumentSyncManagerDelegate` protocol, which includes some required methods.
+ @param anAppSyncManager The application sync manager responsible for overseeing this document.
+ @param aContext The primary managed object context in your application; this must be an instance of `TICDSSynchronizedManagedObjectContext` and not just a plain `NSManagedObjectContext`.
+ @param aDocumentIdentifier An identification string to identify this document uniquely. You would typically create a UUID string the first time this doc is registered and store this in e.g. the store metadata.
+ @param aDocumentDescription A human-readable string used to identify this document, e.g. the full name of the document.
+ @param someUserInfo A dictionary of information that will be saved throughout all future synchronizations. Because this information is saved in a plist, everything in the dictionary must be archivable using `NSKeyedArchiver`.
+ */
+- (void)configureWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo;
+
+/** Register a document that has already been pre-configured.
+ 
+ Use this method to register a document sync manager that you have already configured using the `configureWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:` method. */
+- (void)registerConfiguredDocumentSyncManager;
+
+#pragma mark - General Registration
+/** @name General Registration */
+
 /** Continue Registration.
  
  If this is the first time you have registered this document, or the remote file structure has been removed for some reason, your delegate will be notified with the `documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:` method. You must continue registration manually by calling this method, specifying whether or not the registration should continue by creating the remote file structure.
@@ -82,7 +110,7 @@
  */
 - (void)continueRegistrationByCreatingRemoteFileStructure:(BOOL)shouldCreateFileStructure;
 
-/** Configure a sync manager for a document that's just been downloaded, but without carrying out full registration.
+/** Pre-configure a sync manager for a document that's just been downloaded, but without carrying out full registration.
  
  Use this method to provide basic configuration of the sync manager for a document that's been downloaded by calling the `TICDSApplicationSyncManager` method `requestDownloadOfDocumentWithIdentifier:toLocation:`, normally in response to the `TICDSApplicationSyncManager` delegate method `applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:`.
  
@@ -96,7 +124,7 @@
  @param anAppSyncManager The application sync manager responsible for overseeing this document.
  @param aDocumentIdentifier An identification string to identify this document uniquely. You would typically create a UUID string the first time this doc is registered and store this in e.g. the store metadata.
  */
-- (void)configureWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager documentIdentifier:(NSString *)aDocumentIdentifier;
+- (void)preConfigureWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager documentIdentifier:(NSString *)aDocumentIdentifier;
 
 /** Add an additional background managed object context to this document sync manager.
  

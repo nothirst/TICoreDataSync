@@ -81,7 +81,7 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
     
     [self setDocumentSyncIdentifier:anIdentifier];
     
-    [[self documentSyncManager] configureWithDelegate:self appSyncManager:[TICDSApplicationSyncManager defaultApplicationSyncManager] documentIdentifier:anIdentifier];
+    [[self documentSyncManager] preConfigureWithDelegate:self appSyncManager:[TICDSApplicationSyncManager defaultApplicationSyncManager] documentIdentifier:anIdentifier];
 }
 
 #pragma mark -
