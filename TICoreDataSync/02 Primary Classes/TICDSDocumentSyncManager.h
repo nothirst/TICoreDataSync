@@ -26,6 +26,8 @@
     
     BOOL _shouldUseEncryption;
     
+    BOOL _mustUploadStoreAfterRegistration;
+    
     id <TICDSDocumentSyncManagerDelegate> _delegate;
     TICDSApplicationSyncManager *_applicationSyncManager;
     NSString *_documentIdentifier;
@@ -77,11 +79,13 @@
 
 /** Configure a document but don't immediately register it.
  
- Use this method to configure the sync manager in environments where you may not have a permanent internet connection, such as an iOS device, or a desktop WebDAV client, etc.
+ Use this method to configure the sync manager in environments where you may not have a permanent internet connection, such as an iOS device, or a desktop WebDAV client, etc. 
  
  This will configure everything necessary to track changes made by the user. When you wish to initiate a sync, or perform any other task, you'll need to call the `registerConfiguredDocumentSyncManager` method first to initiate registration.
  
  @warning You must call this method before using the document sync manager for any other purpose.
+ 
+ Do not use this method of registration the very first time the user configures registration on a document, or the internal checks to update the sync attribute on any pre-existing managed objects will not be made.
  
  @param aDelegate The object you wish to be notified regarding document-related sync information; this object must conform to the `TICDSDocumentSyncManagerDelegate` protocol, which includes some required methods.
  @param anAppSyncManager The application sync manager responsible for overseeing this document.
@@ -283,6 +287,11 @@
  
  This value is set automatically by the application sync manager. */
 @property (nonatomic, assign) BOOL shouldUseEncryption;
+
+/** Used internally to indicate whether the document sync manager must upload the store after registration has completed.
+ 
+ This will be `YES` if this is the first time this document has been registered. */
+@property (nonatomic, assign) BOOL mustUploadStoreAfterRegistration;
 
 /** The Document Sync Manager Delegate. */
 @property (nonatomic, assign) id <TICDSDocumentSyncManagerDelegate> delegate;
