@@ -19,10 +19,6 @@
     NSError *anyError = nil; // only used if no error is supplied
     BOOL success = [super save:outError ? outError : &anyError];
     
-    if( [[self documentSyncManager] state] != TICDSDocumentSyncManagerStateAbleToSync ) {
-        return success;
-    }
-    
     if( success ) {
         [[self documentSyncManager] synchronizedMOCDidSave:self];
     } else {
