@@ -514,6 +514,8 @@
     [operation setShouldUseEncryption:[self shouldUseEncryption]];
     [operation setLocalWholeStoreFileLocation:storeURL];
     
+    [operation configureBackgroundApplicationContextForPersistentStoreCoordinator:[[self primaryDocumentMOC] persistentStoreCoordinator]];
+    
     NSString *appliedSyncChangeSetsFilePath = [[self helperFileDirectoryLocation] path];
     appliedSyncChangeSetsFilePath = [appliedSyncChangeSetsFilePath stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
     

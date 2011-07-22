@@ -31,6 +31,8 @@
 @private
     NSURL *_localWholeStoreFileLocation;
     NSURL *_localAppliedSyncChangeSetsFileLocation;
+    
+    NSManagedObjectContext *_backgroundApplicationContext;
 }
 
 #pragma mark - Overridden Methods
@@ -136,6 +138,12 @@
  @param success `YES` if the directory was copied, otherwise `NO`. */
 - (void)copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:(BOOL)success;
 
+#pragma mark Configuration
+/** Configure a background context (for applying sync changes) using the same persistent store coordinator as the main application context.
+ 
+ @param aPersistentStoreCoordinator The persistent store coordinator to use for the background context. */
+- (void)configureBackgroundApplicationContextForPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)aPersistentStoreCoordinator;
+
 #pragma mark - Properties
 /** @name Properties */
 
@@ -144,5 +152,8 @@
 
 /** The location of the applied sync change sets file to upload. */
 @property (retain) NSURL *localAppliedSyncChangeSetsFileLocation;
+
+/** The managed object context to use when checking for missing ticdsSyncIDs prior to upload. */
+@property (retain) NSManagedObjectContext *backgroundApplicationContext;
 
 @end
