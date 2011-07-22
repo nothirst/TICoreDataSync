@@ -89,13 +89,13 @@
     
     NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
     [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%K == %@", TICDSSyncIDAttributeName, nil]];
+    [fetchRequest setIncludesPropertyValues:NO];
     NSArray *results = nil;
     NSError *anyError = nil;
     
     for( NSEntityDescription *eachEntity in someEntityDescriptions ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Fixing missing ticdsSyncIDs in %@", [eachEntity name]);
         [fetchRequest setEntity:eachEntity];
-        
         results = [[self backgroundApplicationContext] executeFetchRequest:fetchRequest error:&anyError];
         
         if( !results ) {
