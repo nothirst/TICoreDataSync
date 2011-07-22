@@ -27,7 +27,7 @@
             // i.e., if this directory is empty
             if( [object count] < 1 ) {
                 // create directory
-                _numberOfDocumentDirectoriesToCreate++;
+                _numberOfAppDirectoriesToCreate++;
                 
                 [[self restClient] createFolder:thisPath];
             } else {
