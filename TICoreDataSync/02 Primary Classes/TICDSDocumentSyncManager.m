@@ -68,6 +68,17 @@
     [self setPrimaryDocumentMOC:aContext];
     [aContext setDocumentSyncManager:self];
     
+    // setup the syncChangesMOC
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Creating SyncChangesMOC");
+    
+    [self addSyncChangesMocForDocumentMoc:[self primaryDocumentMOC]];
+    if( ![self syncChangesMocForDocumentMoc:[self primaryDocumentMOC]] ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create sync changes MOC");
+        [self bailFromRegistrationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateSyncChangesMOC classAndMethod:__PRETTY_FUNCTION__]];
+        return;
+    }
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Finished creating SyncChangesMOC");
+    
     TICDSLog(TICDSLogVerbosityEveryStep, @"Registration Information:\n   Delegate: %@,\n   App Sync Manager: %@,\n   Document ID: %@,\n   Description: %@,\n   User Info: %@", aDelegate, anAppSyncManager, aDocumentIdentifier, aDocumentDescription, someUserInfo);
     [self setApplicationSyncManager:anAppSyncManager];
     [self setDocumentDescription:aDocumentDescription];
@@ -265,6 +276,17 @@
     [self setPrimaryDocumentMOC:aContext];
     [aContext setDocumentSyncManager:self];
     
+    // setup the syncChangesMOC
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Creating SyncChangesMOC");
+    
+    [self addSyncChangesMocForDocumentMoc:[self primaryDocumentMOC]];
+    if( ![self syncChangesMocForDocumentMoc:[self primaryDocumentMOC]] ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create sync changes MOC");
+        [self bailFromRegistrationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateSyncChangesMOC classAndMethod:__PRETTY_FUNCTION__]];
+        return;
+    }
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Finished creating SyncChangesMOC");
+    
     TICDSLog(TICDSLogVerbosityEveryStep, @"Registration Information:\n   Delegate: %@,\n   App Sync Manager: %@,\n   Document ID: %@,\n   Description: %@,\n   User Info: %@", aDelegate, anAppSyncManager, aDocumentIdentifier, aDocumentDescription, someUserInfo);
     [self setApplicationSyncManager:anAppSyncManager];
     [self setDocumentDescription:aDocumentDescription];
@@ -385,18 +407,6 @@
 {
     // Primary Registration Complete from Operation
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Document Registration Operation Completed");
-    
-    // setup the syncChangesMOC
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Creating SyncChangesMOC");
-    
-    //[self setSyncChangesMOC:[[self coreDataFactory] managedObjectContext]];
-    [self addSyncChangesMocForDocumentMoc:[self primaryDocumentMOC]];
-    if( ![self syncChangesMocForDocumentMoc:[self primaryDocumentMOC]] ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create sync changes MOC");
-        [self bailFromRegistrationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateSyncChangesMOC classAndMethod:__PRETTY_FUNCTION__]];
-        return;
-    }
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Finished creating SyncChangesMOC");
     
     [self setState:TICDSDocumentSyncManagerStateAbleToSync];
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Finished registering document sync manager");
