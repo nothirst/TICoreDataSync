@@ -137,6 +137,12 @@ There is currently no automated functionality to remove the entire sync data dir
 
 ##Recent Changes <a name="recentchanges"></a>
 
+* **2011-Jul-21**
+
+    Both application and document sync managers offer the ability to delay the registration process. In a dodgy network environment, such as an iOS device, you may wish just to configure an app and doc sync manager so that changes are tracked and the user can use the app. Once they ask to sync, check whether you've registered, and if not, register at that time before performing the sync.
+  
+    See the [`TICDSApplicationSyncManager`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSApplicationSyncManager.html) and [`TICDSDocumentSyncManager`](https://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSDocumentSyncManager.html) references for more information.
+
 * **2011-Jun-06**
   
-  It's now possible to delete a client's data from synchronizing with a document - see [`TICDSDocumentClientDeletionOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSDocumentClientDeletionOperation.html), and the document sync manager `deleteDocumentSynchronizationDataForClientWithIdentifier:` method.
+    It's now possible to delete a client's data from synchronizing with a document - see [`TICDSDocumentClientDeletionOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSDocumentClientDeletionOperation.html), and the document sync manager `deleteDocumentSynchronizationDataForClientWithIdentifier:` method.

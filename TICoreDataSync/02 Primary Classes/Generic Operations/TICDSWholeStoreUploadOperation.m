@@ -10,6 +10,8 @@
 
 @interface TICDSWholeStoreUploadOperation ()
 
+- (void)beginCheckForMissingSyncIDAttributes;
+- (void)beginSettingMissingSyncIDAttributesForEntityDescriptions:(NSArray *)someEntityDescriptions;
 - (void)beginCheckForThisClientTemporaryWholeStoreDirectory;
 - (void)beginDeletingThisClientTemporaryWholeStoreDirectory;
 - (void)beginCreatingThisClientTemporaryWholeStoreDirectory;
@@ -25,6 +27,101 @@
 
 - (void)main
 {
+    [self beginCheckForMissingSyncIDAttributes];
+}
+
+#pragma mark - Check for Missing ticdsSyncID attributes
+- (void)beginCheckForMissingSyncIDAttributes
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Checking whether there are any missing ticdsSyncIDs in any managed objects");
+    
+    NSMutableArray *problemEntities = [NSMutableArray array];
+    
+    NSArray *allEntities = [[[[self backgroundApplicationContext] persistentStoreCoordinator] managedObjectModel] entities];
+    
+    NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%K == %@", TICDSSyncIDAttributeName, nil]];
+    NSUInteger objectCount = 0;
+    NSError *anyError = nil;
+    BOOL syncIDAttributeFound = NO;
+    
+    for( NSEntityDescription *eachEntity in allEntities ) {
+        syncIDAttributeFound = NO;
+        
+        for( NSString *eachKey in [eachEntity attributesByName] ) {
+            if( [eachKey isEqualToString:TICDSSyncIDAttributeName] ) {
+                syncIDAttributeFound = YES;
+            }
+        }
+        
+        if( !syncIDAttributeFound ) {
+            continue;
+        }
+        
+        [fetchRequest setEntity:eachEntity];
+        
+        objectCount = [[self backgroundApplicationContext] countForFetchRequest:fetchRequest error:&anyError];
+        
+        if( objectCount == NSNotFound ) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Unable to execute count for fetch request for entity %@: %@", [eachEntity name], anyError);
+            [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataFetchError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+            [self operationDidFailToComplete];
+            return;
+        }
+        
+        if( objectCount > 0 ) {
+            [problemEntities addObject:eachEntity];
+        }
+    }
+    
+    if( [problemEntities count] < 1 ) {
+        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"No missing ticdsSyncIDs need to be fixed");
+        [self beginCheckForThisClientTemporaryWholeStoreDirectory];
+    } else {
+        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Missing ticdsSyncIDs need to be fixed before uploading the store");
+        [self beginSettingMissingSyncIDAttributesForEntityDescriptions:problemEntities];
+    }
+}
+
+- (void)beginSettingMissingSyncIDAttributesForEntityDescriptions:(NSArray *)someEntityDescriptions
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Starting to fix missing ticdsSyncIDs");
+    
+    NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%K == %@", TICDSSyncIDAttributeName, nil]];
+    NSArray *results = nil;
+    NSError *anyError = nil;
+    
+    for( NSEntityDescription *eachEntity in someEntityDescriptions ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Fixing missing ticdsSyncIDs in %@", [eachEntity name]);
+        [fetchRequest setEntity:eachEntity];
+        
+        results = [[self backgroundApplicationContext] executeFetchRequest:fetchRequest error:&anyError];
+        
+        if( !results ) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Unable to execute fetch request for entity %@: %@", [eachEntity name], anyError);
+            [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataFetchError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+            [self operationDidFailToComplete];
+            return;
+        }
+        
+        for( TICDSSynchronizedManagedObject *eachObject in results ) {
+            [eachObject setValue:[TICDSUtilities uuidString] forKey:TICDSSyncIDAttributeName];
+        }
+        
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Fixed missing ticdsSyncIDs in %@", [eachEntity name]);
+    }
+    
+    BOOL success = [[self backgroundApplicationContext] save:&anyError];
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error saving background context during missing ticdsSyncID updates: %@", anyError);
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    // finish
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Finished fixing missing ticdsSyncIDs");
     [self beginCheckForThisClientTemporaryWholeStoreDirectory];
 }
 
@@ -269,11 +366,27 @@
 }
 
 #pragma mark -
+#pragma mark Configuration
+- (void)configureBackgroundApplicationContextForPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)aPersistentStoreCoordinator
+{
+    NSManagedObjectContext *backgroundContext = [[NSManagedObjectContext alloc] init];
+    [backgroundContext setUndoManager:nil];
+    [backgroundContext setPersistentStoreCoordinator:aPersistentStoreCoordinator];
+    
+    [self setBackgroundApplicationContext:backgroundContext];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:[self delegate] selector:@selector(backgroundManagedObjectContextDidSave:) name:NSManagedObjectContextDidSaveNotification object:backgroundContext];
+    
+    [backgroundContext release];
+}
+
+#pragma mark -
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
     [_localWholeStoreFileLocation release], _localWholeStoreFileLocation = nil;
     [_localAppliedSyncChangeSetsFileLocation release], _localAppliedSyncChangeSetsFileLocation = nil;
+    [_backgroundApplicationContext release], _backgroundApplicationContext = nil;
 
     [super dealloc];
 }
@@ -282,5 +395,6 @@
 #pragma mark Properties
 @synthesize localWholeStoreFileLocation = _localWholeStoreFileLocation;
 @synthesize localAppliedSyncChangeSetsFileLocation = _localAppliedSyncChangeSetsFileLocation;
+@synthesize backgroundApplicationContext = _backgroundApplicationContext;
 
 @end

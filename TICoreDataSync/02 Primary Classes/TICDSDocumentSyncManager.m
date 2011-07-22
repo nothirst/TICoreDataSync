@@ -340,11 +340,9 @@
     
     if( [anOperation documentWasDeleted] ) {
         [self removeThenRecreateExistingHelperFileDirectory];
-        
-        [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
-    } else {
-        [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
     }
+    
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
     
     [self postDecreaseActivityNotification];
 }
@@ -362,6 +360,8 @@
     // Just start the registration operation again
     [(TICDSDocumentRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setShouldCreateDocumentFileStructure:shouldCreateFileStructure];
     [(TICDSDocumentRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setPaused:NO];
+    
+    [self setMustUploadStoreAfterRegistration:YES];
 }
 
 #pragma mark Alerting Delegate that Client Was Deleted From Document
@@ -401,23 +401,33 @@
     [self setState:TICDSDocumentSyncManagerStateAbleToSync];
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Finished registering document sync manager");
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification object:self];
+    
     // Registration Complete
     [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidFinishRegistering:)];
     [self postDecreaseActivityNotification];
     
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Resuming Operation Queues");
-    [[self synchronizationQueue] setSuspended:NO];
-    [[self otherTasksQueue] setSuspended:NO];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification object:self];
-    
     // Upload whole store if necessary
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Asking delegate whether to upload whole store after registration");
-    if( [self ti_boolFromDelegateWithSelector:@selector(documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:)] ) {
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Checking whether to upload whole store after registration");
+    if( [self mustUploadStoreAfterRegistration] ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Must upload store because this is the first time this document has been registered");
+        [self startWholeStoreUploadProcess];
+    } else if( [self ti_boolFromDelegateWithSelector:@selector(documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:)] ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate allowed whole store upload after registration");
         [self startWholeStoreUploadProcess];
     } else {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate denied whole store upload after registration");
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Resuming Operation Queues");
+    [[self otherTasksQueue] setSuspended:NO];
+    
+    if( ![self mustUploadStoreAfterRegistration] ) {
+        // Don't resume sync queue until after store was uploaded
+        [[self synchronizationQueue] setSuspended:NO];
+    } else {
+        // Don't offer to clean-up if document was just created on remote
+        return;
     }
     
     // Perform clean-up if necessary
@@ -504,6 +514,8 @@
     [operation setShouldUseEncryption:[self shouldUseEncryption]];
     [operation setLocalWholeStoreFileLocation:storeURL];
     
+    [operation configureBackgroundApplicationContextForPersistentStoreCoordinator:[[self primaryDocumentMOC] persistentStoreCoordinator]];
+    
     NSString *appliedSyncChangeSetsFilePath = [[self helperFileDirectoryLocation] path];
     appliedSyncChangeSetsFilePath = [appliedSyncChangeSetsFilePath stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
     
@@ -525,6 +537,11 @@
     
     [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidFinishUploadingWholeStore:)];
     [self postDecreaseActivityNotification];
+    
+    // Unsuspend the sync queue in the case that this was a required upload for a newly-registered document
+    if( [self mustUploadStoreAfterRegistration] ) {
+        [[self synchronizationQueue] setSuspended:NO];
+    }
 }
 
 - (void)wholeStoreUploadOperationWasCancelled:(TICDSWholeStoreUploadOperation *)anOperation
@@ -1424,6 +1441,7 @@
 #pragma mark Properties
 @synthesize delegate = _delegate;
 @synthesize shouldUseEncryption = _shouldUseEncryption;
+@synthesize mustUploadStoreAfterRegistration = _mustUploadStoreAfterRegistration;
 @synthesize state = _state;
 @synthesize applicationSyncManager = _applicationSyncManager;
 @synthesize documentIdentifier = _documentIdentifier;
