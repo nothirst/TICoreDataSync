@@ -62,7 +62,7 @@
 #pragma mark REGISTRATION
 - (void)registerWithDelegate:(id <TICDSApplicationSyncManagerDelegate>)aDelegate globalAppIdentifier:(NSString *)anAppIdentifier uniqueClientIdentifier:(NSString *)aClientIdentifier description:(NSString *)aClientDescription userInfo:(NSDictionary *)someUserInfo
 {
-    [self configureWithDelegate:aDelegate globalAppIdentifier:anAppIdentifier uniqueClientIdentifier:anAppIdentifier description:aClientIdentifier userInfo:someUserInfo];
+    [self configureWithDelegate:aDelegate globalAppIdentifier:anAppIdentifier uniqueClientIdentifier:aClientIdentifier description:aClientDescription userInfo:someUserInfo];
     
     [self registerConfiguredApplicationSyncManager];
 }
