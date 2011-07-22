@@ -117,6 +117,15 @@
     [super registerWithDelegate:aDelegate appSyncManager:anAppSyncManager managedObjectContext:aContext documentIdentifier:aDocumentIdentifier description:aDocumentDescription userInfo:someUserInfo];
 }
 
+- (void)registerConfiguredDocumentSyncManager
+{
+    if( [[self applicationSyncManager] isKindOfClass:[TICDSFileManagerBasedApplicationSyncManager class]] ) {
+        [self setApplicationDirectoryPath:[(TICDSFileManagerBasedApplicationSyncManager *)[self applicationSyncManager] applicationDirectoryPath]];
+    }
+    
+    [super registerConfiguredDocumentSyncManager];
+}
+
 #pragma mark -
 #pragma mark Operation Classes
 - (TICDSDocumentRegistrationOperation *)documentRegistrationOperation
