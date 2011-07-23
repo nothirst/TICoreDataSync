@@ -429,7 +429,17 @@
         TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate denied whole store upload after registration");
     }
     
+    [self setShouldUseEncryption:[[self applicationSyncManager] shouldUseEncryption]];
+    
     TICDSLog(TICDSLogVerbosityEveryStep, @"Resuming Operation Queues");
+    for( TICDSOperation *eachOperation in [[self otherTasksQueue] operations] ) {
+        [eachOperation setShouldUseEncryption:[self shouldUseEncryption]];
+    }
+    
+    for( TICDSOperation *eachOperation in [[self synchronizationQueue] operations] ) {
+        [eachOperation setShouldUseEncryption:[self shouldUseEncryption]];
+    }
+    
     [[self otherTasksQueue] setSuspended:NO];
     
     if( ![self mustUploadStoreAfterRegistration] ) {
