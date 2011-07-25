@@ -194,13 +194,13 @@
  
  This method will be called once the whole store has been replaced for the document. You should create a suitable document sync manager for the downloaded store, and *configure* it by calling `preConfigureWithDelegate:appSyncManager:documentIdentifier:`;
  
- Do not *register* the document sync manager until after the `applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:` method is called.
- 
  @param aSyncManager The document sync manager object that sent the message.
  @param anIdentifier The unique synchronization identifier for the document.
  @param aFileURL The location on disc of the downloaded document.
  
- @return The pre-configured, unregistered sync manager for the document. */
+ @return The pre-configured, unregistered sync manager for the document. 
+ 
+ @warning Do not *register* the document sync manager until after the `applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:` method is called. When you do register, you must use the full `registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:` method, and not the `registerConfiguredDocumentSyncManager` method. The latter is used for the delayed registration option; a *pre-configured* document sync manager is not the same as a *configured* document sync manager. */
 @required
 - (TICDSDocumentSyncManager *)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:(NSString *)anIdentifier atURL:(NSURL *)aFileURL;
 @optional
