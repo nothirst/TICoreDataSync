@@ -200,7 +200,9 @@
  
  @return The pre-configured, unregistered sync manager for the document. 
  
- @warning Do not *register* the document sync manager until after the `applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:` method is called. When you do register, you must use the full `registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:` method, and not the `registerConfiguredDocumentSyncManager` method. The latter is used for the delayed registration option; a *pre-configured* document sync manager is not the same as a *configured* document sync manager. */
+ @warning Do not *register* the document sync manager until after the `applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:` method is called. 
+ 
+ When you do register, you must use the full `registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:` method, and not the `registerConfiguredDocumentSyncManager` method. The latter is used for the delayed registration option; a *pre-configured* document sync manager is not the same as a *configured* document sync manager. */
 @required
 - (TICDSDocumentSyncManager *)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:(NSString *)anIdentifier atURL:(NSURL *)aFileURL;
 @optional
