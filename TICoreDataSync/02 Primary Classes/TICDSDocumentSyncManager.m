@@ -462,7 +462,7 @@
 
 - (void)documentRegistrationOperationWasCancelled:(TICDSDocumentRegistrationOperation *)anOperation
 {
-    [self setState:TICDSDocumentSyncManagerStateNotYetRegistered];
+    [self setState:TICDSDocumentSyncManagerStateConfigured];
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Registration Operation was Cancelled");
     
     [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToRegisterWithError:), [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
