@@ -200,7 +200,7 @@
 
 - (void)applicationRegistrationOperationWasCancelled:(TICDSApplicationRegistrationOperation *)anOperation
 {
-    [self setState:TICDSApplicationSyncManagerStateNotYetRegistered];
+    [self setState:TICDSApplicationSyncManagerStateConfigured];
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Application Registration Operation was Cancelled");
     
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToRegisterWithError:), [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
