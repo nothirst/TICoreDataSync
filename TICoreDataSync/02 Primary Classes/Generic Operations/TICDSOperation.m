@@ -92,7 +92,12 @@
         [self ti_alertDelegateOnMainThreadWithSelector:@selector(operationFailedToComplete:) waitUntilDone:YES];
     }
     
-    [self performSelector:@selector(endExecution) withObject:nil afterDelay:0];
+    // This is a nasty way to, I think, avoid a problem with the DropboxSDK on iOS - must revisit and sort out soon
+    if( [NSThread isMainThread] ) {
+        [self performSelector:@selector(endExecution) withObject:nil afterDelay:0.1];
+    } else {
+        [self endExecution];
+    }
 }
 
 - (void)operationDidStart
