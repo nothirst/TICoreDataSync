@@ -32,6 +32,7 @@
     NSURL *_localWholeStoreFileLocation;
     NSURL *_localAppliedSyncChangeSetsFileLocation;
     
+    NSPersistentStoreCoordinator *_primaryPersistentStoreCoordinator;
     NSManagedObjectContext *_backgroundApplicationContext;
 }
 
@@ -153,7 +154,10 @@
 /** The location of the applied sync change sets file to upload. */
 @property (retain) NSURL *localAppliedSyncChangeSetsFileLocation;
 
+/** The persistent store coordinator to use when creating the background context. */
+@property (retain) NSPersistentStoreCoordinator *primaryPersistentStoreCoordinator;
+
 /** The managed object context to use when checking for missing ticdsSyncIDs prior to upload. */
-@property (retain) NSManagedObjectContext *backgroundApplicationContext;
+@property (nonatomic, retain) NSManagedObjectContext *backgroundApplicationContext;
 
 @end

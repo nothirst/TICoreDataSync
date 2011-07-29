@@ -943,15 +943,7 @@
 #pragma mark Configuration
 - (void)configureBackgroundApplicationContextForPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)aPersistentStoreCoordinator
 {
-    NSManagedObjectContext *backgroundContext = [[NSManagedObjectContext alloc] init];
-    [backgroundContext setUndoManager:nil];
-    [backgroundContext setPersistentStoreCoordinator:aPersistentStoreCoordinator];
-    
-    [self setBackgroundApplicationContext:backgroundContext];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:[self delegate] selector:@selector(backgroundManagedObjectContextDidSave:) name:NSManagedObjectContextDidSaveNotification object:backgroundContext];
-    
-    [backgroundContext release];
+    [self setPrimaryPersistentStoreCoordinator:aPersistentStoreCoordinator];
 }
 
 #pragma mark -
@@ -982,6 +974,7 @@
     [_unappliedSyncChangesContext release], _unappliedSyncChangesContext = nil;
     [_localSyncChangesToMergeCoreDataFactory release], _localSyncChangesToMergeCoreDataFactory = nil;
     [_localSyncChangesToMergeContext release], _localSyncChangesToMergeContext = nil;
+    [_primaryPersistentStoreCoordinator release], _primaryPersistentStoreCoordinator = nil;
     [_backgroundApplicationContext release], _backgroundApplicationContext = nil;
     
     [super dealloc];
@@ -1088,6 +1081,21 @@
     return _localSyncChangesToMergeCoreDataFactory;
 }
 
+- (NSManagedObjectContext *)backgroundApplicationContext
+{
+    if( _backgroundApplicationContext ) {
+        return _backgroundApplicationContext;
+    }
+    
+    _backgroundApplicationContext = [[NSManagedObjectContext alloc] init];
+    [_backgroundApplicationContext setPersistentStoreCoordinator:[self primaryPersistentStoreCoordinator]];
+    [_backgroundApplicationContext setUndoManager:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:[self delegate] selector:@selector(backgroundManagedObjectContextDidSave:) name:NSManagedObjectContextDidSaveNotification object:_backgroundApplicationContext];
+    
+    return _backgroundApplicationContext;
+}
+
 #pragma mark -
 #pragma mark Properties
 @synthesize paused = _paused;
@@ -1111,6 +1119,7 @@
 @synthesize unappliedSyncChangesContext = _unappliedSyncChangesContext;
 @synthesize localSyncChangesToMergeCoreDataFactory = _localSyncChangesToMergeCoreDataFactory;
 @synthesize localSyncChangesToMergeContext = _localSyncChangesToMergeContext;
+@synthesize primaryPersistentStoreCoordinator = _primaryPersistentStoreCoordinator;
 @synthesize backgroundApplicationContext = _backgroundApplicationContext;
 
 @synthesize numberOfSyncChangeSetIDArraysToFetch = _numberOfSyncChangeSetIDArraysToFetch;

@@ -153,6 +153,12 @@
 #pragma mark Continuing after Gaining an Encryption Password
 - (void)continueRegisteringWithEncryptionPassword:(NSString *)aPassword
 {
+    aPassword = [aPassword stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    if( [aPassword length] < 1 ) {
+        aPassword = nil;
+    }
+    
     // Just start the registration operation again
     [(TICDSApplicationRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setShouldUseEncryption:(aPassword != nil)];
     [(TICDSApplicationRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setPassword:aPassword];
