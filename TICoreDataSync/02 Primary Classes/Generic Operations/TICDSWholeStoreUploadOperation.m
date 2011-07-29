@@ -369,7 +369,7 @@
 #pragma mark Configuration
 - (void)configureBackgroundApplicationContextForPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)aPersistentStoreCoordinator
 {
-    NSManagedObjectContext *backgroundContext = [[NSManagedObjectContext alloc] init];
+    /*NSManagedObjectContext *backgroundContext = [[NSManagedObjectContext alloc] init];
     [backgroundContext setUndoManager:nil];
     [backgroundContext setPersistentStoreCoordinator:aPersistentStoreCoordinator];
     
@@ -377,7 +377,8 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:[self delegate] selector:@selector(backgroundManagedObjectContextDidSave:) name:NSManagedObjectContextDidSaveNotification object:backgroundContext];
     
-    [backgroundContext release];
+    [backgroundContext release];*/
+    [self setPrimaryPersistentStoreCoordinator:aPersistentStoreCoordinator];
 }
 
 #pragma mark -
@@ -386,15 +387,32 @@
 {
     [_localWholeStoreFileLocation release], _localWholeStoreFileLocation = nil;
     [_localAppliedSyncChangeSetsFileLocation release], _localAppliedSyncChangeSetsFileLocation = nil;
+    [_primaryPersistentStoreCoordinator release], _primaryPersistentStoreCoordinator = nil;
     [_backgroundApplicationContext release], _backgroundApplicationContext = nil;
 
     [super dealloc];
+}
+
+- (NSManagedObjectContext *)backgroundApplicationContext
+{
+    if( _backgroundApplicationContext ) {
+        return _backgroundApplicationContext;
+    }
+    
+    _backgroundApplicationContext = [[NSManagedObjectContext alloc] init];
+    [_backgroundApplicationContext setPersistentStoreCoordinator:[self primaryPersistentStoreCoordinator]];
+    [_backgroundApplicationContext setUndoManager:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:[self delegate] selector:@selector(backgroundManagedObjectContextDidSave:) name:NSManagedObjectContextDidSaveNotification object:_backgroundApplicationContext];
+    
+    return _backgroundApplicationContext;
 }
 
 #pragma mark -
 #pragma mark Properties
 @synthesize localWholeStoreFileLocation = _localWholeStoreFileLocation;
 @synthesize localAppliedSyncChangeSetsFileLocation = _localAppliedSyncChangeSetsFileLocation;
+@synthesize primaryPersistentStoreCoordinator = _primaryPersistentStoreCoordinator;
 @synthesize backgroundApplicationContext = _backgroundApplicationContext;
 
 @end

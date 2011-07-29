@@ -66,6 +66,7 @@
     TICoreDataFactory *_localSyncChangesToMergeCoreDataFactory;
     NSManagedObjectContext *_localSyncChangesToMergeContext;
     
+    NSPersistentStoreCoordinator *_primaryPersistentStoreCoordinator;
     NSManagedObjectContext *_backgroundApplicationContext;
     
     NSUInteger _numberOfSyncChangeSetIDArraysToFetch;
@@ -245,6 +246,9 @@
 
 /** The managed object context for the local, unsynchronized set of `SyncChange`s. */
 @property (nonatomic, retain) NSManagedObjectContext *localSyncChangesToMergeContext;
+
+/** The persistent store coordinator for the application - used to create a background application context, when needed. */
+@property (retain) NSPersistentStoreCoordinator *primaryPersistentStoreCoordinator;
 
 /** The managed object context (tied to the application's persistent store coordinator) in which `SyncChanges` are applied. */
 @property (nonatomic, retain) NSManagedObjectContext *backgroundApplicationContext;
