@@ -137,6 +137,12 @@ There is currently no automated functionality to remove the entire sync data dir
 
 ##Recent Changes <a name="recentchanges"></a>
 
+* **2011-Jul-31**
+
+    The document sync manager now keeps check of an *integrity key*. These keys are kept in user defaults for each document synchronized. At registration, the integrity key is checked against the one at the remote; if it doesn't match, the delegate is warned to re-download the store, and any local sync-related files are automatically cleared out by the doc sync manager.
+    
+    Note that any existing remote data will need to be removed.
+
 * **2011-Jul-21**
 
     Both application and document sync managers offer the ability to delay the registration process. In a dodgy network environment, such as an iOS device, you may wish just to configure an app and doc sync manager so that changes are tracked and the user can use the app. Once they ask to sync, check whether you've registered, and if not, register at that time before performing the sync.
