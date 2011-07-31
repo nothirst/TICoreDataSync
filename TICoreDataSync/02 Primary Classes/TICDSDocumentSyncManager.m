@@ -82,6 +82,9 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"Registration Information:\n   Delegate: %@,\n   App Sync Manager: %@,\n   Document ID: %@,\n   Description: %@,\n   User Info: %@", aDelegate, anAppSyncManager, aDocumentIdentifier, aDocumentDescription, someUserInfo);
     [self setApplicationSyncManager:anAppSyncManager];
     [self setDocumentDescription:aDocumentDescription];
+    NSString *userDefaultsIntegrityKey = [TICDSUtilities userDefaultsKeyForIntegrityKeyForDocumentWithIdentifier:aDocumentIdentifier];
+    NSString *integrityKey = [[NSUserDefaults standardUserDefaults] valueForKey:userDefaultsIntegrityKey];
+    [self setIntegrityKey:integrityKey];
     [self setClientIdentifier:[anAppSyncManager clientIdentifier]];
     [self setDocumentUserInfo:someUserInfo];
     
@@ -260,6 +263,9 @@
     [self setDelegate:aDelegate];
     [self setDocumentIdentifier:aDocumentIdentifier];
     [self setShouldUseEncryption:[anAppSyncManager shouldUseEncryption]];
+    NSString *userDefaultsIntegrityKey = [TICDSUtilities userDefaultsKeyForIntegrityKeyForDocumentWithIdentifier:aDocumentIdentifier];
+    NSString *integrityKey = [[NSUserDefaults standardUserDefaults] valueForKey:userDefaultsIntegrityKey];
+    [self setIntegrityKey:integrityKey];
     
     if( [self state] != TICDSApplicationSyncManagerStateConfigured ) {
         shouldContinue = [self startDocumentConfigurationProcess:&anyError];
@@ -328,6 +334,7 @@
     
     [operation setShouldUseEncryption:[self shouldUseEncryption]];
     [operation setDocumentIdentifier:[self documentIdentifier]];
+    [operation setIntegrityKey:[self integrityKey]];
     [operation setClientIdentifier:[self clientIdentifier]];
     [operation setClientDescription:[[self applicationSyncManager] clientDescription]];
     [operation setDocumentDescription:[self documentDescription]];
@@ -413,8 +420,15 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification object:self];
     
+    // Set integrity key for delegate to store
+    [self setIntegrityKey:[anOperation integrityKey]];
+    
+    NSString *userDefaultsIntegrityKey = [TICDSUtilities userDefaultsKeyForIntegrityKeyForDocumentWithIdentifier:[self documentIdentifier]];
+    [[NSUserDefaults standardUserDefaults] setValue:[self integrityKey] forKey:userDefaultsIntegrityKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     // Registration Complete
-    [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidFinishRegistering:)];
+    [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidFinishRegistering:), [self integrityKey]];
     [self postDecreaseActivityNotification];
     
     // Upload whole store if necessary
@@ -1302,7 +1316,8 @@
     [_registrationQueue release], _registrationQueue = nil;
     [_synchronizationQueue release], _synchronizationQueue = nil;
     [_otherTasksQueue release], _otherTasksQueue = nil;
-    
+    [_integrityKey release], _integrityKey = nil;
+
     [super dealloc];
 }
 
@@ -1476,5 +1491,6 @@
 @synthesize registrationQueue = _registrationQueue;
 @synthesize synchronizationQueue = _synchronizationQueue;
 @synthesize otherTasksQueue = _otherTasksQueue;
+@synthesize integrityKey = _integrityKey;
 
 @end

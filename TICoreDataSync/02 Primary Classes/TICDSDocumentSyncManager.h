@@ -46,6 +46,8 @@
     NSOperationQueue *_registrationQueue;
     NSOperationQueue *_synchronizationQueue;
     NSOperationQueue *_otherTasksQueue;
+    
+    NSString *_integrityKey;
 }
 
 #pragma mark - One-Shot Document Registration
@@ -442,5 +444,7 @@
 /** The path to the `UnsynchronizedSyncChanges.syncchg` file, located in the `helperFileDirectoryLocation`. */
 @property (nonatomic, readonly) NSString *unsynchronizedSyncChangesStorePath;
 
+/** The integrity key used to check whether the synchronization data matches what's expected. */
+@property (nonatomic, retain) NSString *integrityKey;
 
 @end

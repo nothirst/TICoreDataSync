@@ -72,6 +72,7 @@ NSString * const TICDSRecentSyncsDirectoryName = @"RecentSyncs";
 NSString * const TICDSTemporaryFilesDirectoryName = @"TemporaryFiles";
 NSString * const TICDSDeletedDocumentsDirectoryName = @"DeletedDocuments";
 NSString * const TICDSDeletedClientsDirectoryName = @"DeletedClients";
+NSString * const TICDSIntegrityKeyDirectoryName = @"IntegrityKey";
 NSString * const TICDSUnappliedSyncChangesDirectoryName = @"UnappliedSyncChanges";
 NSString * const TICDSUnappliedSyncCommandsDirectoryName = @"UnappliedSyncCommands";
 NSString * const TICDSUnsynchronizedSyncChangesStoreName = @"UnsynchronizedSyncChanges.syncchg";
@@ -90,6 +91,8 @@ NSString * const TICDSDocumentInfoPlistFilename = @"documentInfo";
 NSString * const TICDSDocumentInfoPlistExtension = @"plist";
 NSString * const TICDSSaltFilenameWithExtension = @"salt.ticdsync";
 NSString * const TICDSEncryptionTestFilenameWithExtension = @"test.ticdsync";
+NSString * const TICDSUserDefaultsPrefix = @"TICDSync.";
+NSString * const TICDSUserDefaultsIntegrityKeyComponent = @"integrityKey.";
 
 NSString * const TICDSSyncIDAttributeName = @"ticdsSyncID";
 NSString * const TICDSSyncChangeDataModelName = @"TICDSSyncChange";

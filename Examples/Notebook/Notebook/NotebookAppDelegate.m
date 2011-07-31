@@ -63,13 +63,13 @@
 - (void)applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:
 (TICDSApplicationSyncManager *)aSyncManager
 {
-    [aSyncManager continueRegisteringWithEncryptionPassword:nil];
+    [aSyncManager continueRegisteringWithEncryptionPassword:@"password"];
 }
 
 - (void)applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:
 (TICDSApplicationSyncManager *)aSyncManager
 {
-    [aSyncManager continueRegisteringWithEncryptionPassword:nil];
+    [aSyncManager continueRegisteringWithEncryptionPassword:@"password"];
 }
 
 - (TICDSDocumentSyncManager *)applicationSyncManager:
@@ -92,7 +92,7 @@ preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:
     [docSyncManager registerWithDelegate:self 
                           appSyncManager:aSyncManager 
                     managedObjectContext:(TICDSSynchronizedManagedObjectContext *)[self managedObjectContext]
-                      documentIdentifier:@"Notebook" 
+                      documentIdentifier:@"Notebook"
                              description:@"Application's data" 
                                 userInfo:nil];
     
@@ -203,8 +203,7 @@ shouldBeginSynchronizingAfterManagedObjectContextDidSave:
     return YES;
 }
 
-- (void)documentSyncManagerDidFinishRegistering:
-(TICDSDocumentSyncManager *)aSyncManager
+- (void)documentSyncManagerDidFinishRegistering:(TICDSDocumentSyncManager *)aSyncManager
 {
     if( [self shouldDownloadStoreAfterRegistering] ) {
         [[self documentSyncManager] initiateDownloadOfWholeStore];

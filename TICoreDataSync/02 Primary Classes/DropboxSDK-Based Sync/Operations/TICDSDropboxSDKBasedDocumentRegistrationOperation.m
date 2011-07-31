@@ -114,6 +114,40 @@
     [[self restClient] uploadFile:TICDSDocumentInfoPlistFilenameWithExtension toPath:[self thisDocumentDirectoryPath] fromPath:finalFilePath];
 }
 
+#pragma mark Integrity Key
+- (void)fetchRemoteIntegrityKey
+{
+    NSString *directoryPath = [[self thisDocumentDirectoryPath] stringByAppendingPathComponent:TICDSIntegrityKeyDirectoryName];
+    
+    [[self restClient] loadMetadata:directoryPath];
+}
+
+- (void)saveIntegrityKey:(NSString *)aKey
+{
+    NSString *remoteDirectory = [[self thisDocumentDirectoryPath] stringByAppendingPathComponent:TICDSIntegrityKeyDirectoryName];
+    NSString *localFilePath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:aKey];
+    
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObject:[self clientIdentifier] forKey:kTICDSOriginalDeviceIdentifier];
+    
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dictionary];
+    
+    NSError *anyError = nil;
+    if( [[self fileManager] fileExistsAtPath:localFilePath] && ![[self fileManager] removeItemAtPath:localFilePath error:&anyError] ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        return;
+    }
+    
+    BOOL success = [data writeToFile:localFilePath options:0 error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self savedIntegrityKeyWithSuccess:success];
+        return;
+    }
+    
+    [[self restClient] uploadFile:aKey toPath:remoteDirectory fromPath:localFilePath];
+}
+
 #pragma mark Adding Other Clients to Document's DeletedClients Directory
 - (void)fetchListOfIdentifiersOfAllRegisteredClientsForThisApplication
 {
@@ -207,6 +241,21 @@
         return;
     }
     
+    if( [[path lastPathComponent] isEqualToString:TICDSIntegrityKeyDirectoryName] ) {
+        for( DBMetadata *eachSubMetadata in [metadata contents] ) {
+            if( [[[eachSubMetadata path] lastPathComponent] length] < 5 ) {
+                continue;
+            }
+            
+            [self fetchedRemoteIntegrityKey:[[eachSubMetadata path] lastPathComponent]];
+            return;
+        }
+        
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeUnexpectedOrIncompleteFileLocationOrDirectoryStructure classAndMethod:__PRETTY_FUNCTION__]];
+        [self fetchedRemoteIntegrityKey:nil];
+        return;
+    }
+    
     if( [[path stringByDeletingLastPathComponent] isEqualToString:[self thisDocumentDeletedClientsDirectoryPath]] ) {
         [self discoveredDeletionStatusOfClient:TICDSRemoteFileStructureDeletionResponseTypeDeleted];
         return;
@@ -247,6 +296,12 @@
     
     if( [path isEqualToString:[self clientDevicesDirectoryPath]] ) {
         [self fetchedListOfIdentifiersOfAllRegisteredClientsForThisApplication:nil];
+        return;
+    }
+    
+    if( [[path lastPathComponent] isEqualToString:TICDSIntegrityKeyDirectoryName] ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
+        [self fetchedRemoteIntegrityKey:nil];
         return;
     }
     
@@ -310,6 +365,11 @@
         [self savedRemoteDocumentInfoPlistWithSuccess:YES];
         return;
     }
+    
+    if( [[[destPath stringByDeletingLastPathComponent] lastPathComponent] isEqualToString:TICDSIntegrityKeyDirectoryName] ) {
+        [self savedIntegrityKeyWithSuccess:YES];
+        return;
+    }
 }
 
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error
@@ -320,6 +380,11 @@
     
     if( [[path stringByDeletingLastPathComponent] isEqualToString:[self thisDocumentDirectoryPath]] ) {
         [self savedRemoteDocumentInfoPlistWithSuccess:NO];
+        return;
+    }
+    
+    if( [[[path stringByDeletingLastPathComponent] lastPathComponent] isEqualToString:TICDSIntegrityKeyDirectoryName] ) {
+        [self savedIntegrityKeyWithSuccess:NO];
         return;
     }
 }

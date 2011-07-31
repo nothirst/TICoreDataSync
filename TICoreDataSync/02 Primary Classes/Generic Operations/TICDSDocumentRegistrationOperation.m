@@ -16,11 +16,15 @@
 - (void)continueAfterRequestWhetherToCreateRemoteDocumentFileStructure;
 - (void)beginCreatingRemoteDocumentDirectoryStructure;
 - (void)beginCreatingDocumentInfoPlist;
+- (void)beginGeneratingAndSavingIntegrityKey;
 - (void)beginFetchingListOfIdentifiersOfAllRegisteredClientsForThisApplication;
 - (void)beginAddingClientIdentifiersToDocumentDeletedClientsDirectory:(NSArray *)identifiers;
 - (void)beginDeletingDocumentPlistInDeletedDocumentsDirectory;
 - (void)beginCheckForClientDirectoryInDocumentSyncChangesDirectory;
+- (void)beginCheckWhetherRemoteIntegrityKeyMatchesLocalKey;
 - (void)beginCheckWhetherClientWasDeletedFromRemoteDocument;
+- (void)sendMessageToDelegateThatToDeleteLocalFilesAndPullDownStore;
+- (void)warnDelegateToDeleteLocalFilesAndPullDownStoreBecauseOfDeletion:(BOOL)clientWasDeleted;
 - (void)beginDeletingClientIdentifierFileFromDeletedClientsDirectory;
 - (void)beginCreatingClientDirectoriesInRemoteDocumentDirectories;
 
@@ -208,6 +212,37 @@
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Saved documentInfo.plist file successfully");
     
+    [self beginGeneratingAndSavingIntegrityKey];
+}
+
+#pragma mark Overridden Method
+- (void)saveRemoteDocumentInfoPlistFromDictionary:(NSDictionary *)aDictionary
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self savedRemoteDocumentInfoPlistWithSuccess:NO];
+}
+
+#pragma mark - Generating and Saving Integrity Key
+- (void)beginGeneratingAndSavingIntegrityKey
+{
+    NSString *integrityKey = [TICDSUtilities uuidString];
+    
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Saving Integrity Key: %@", integrityKey);
+    
+    [self setIntegrityKey:integrityKey];
+    [self saveIntegrityKey:integrityKey];
+}
+
+- (void)savedIntegrityKeyWithSuccess:(BOOL)success
+{
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save integrity key file");
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Saved integrity key file successfully");
+    
     if( [self documentWasDeleted] ) {
         [self beginFetchingListOfIdentifiersOfAllRegisteredClientsForThisApplication];
     } else {
@@ -216,10 +251,10 @@
 }
 
 #pragma mark Overridden Method
-- (void)saveRemoteDocumentInfoPlistFromDictionary:(NSDictionary *)aDictionary
+- (void)saveIntegrityKey:(NSString *)aKey
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self savedRemoteDocumentInfoPlistWithSuccess:NO];
+    [self savedIntegrityKeyWithSuccess:NO];
 }
 
 #pragma mark - Fetching All Client Identifiers for the Application
@@ -343,13 +378,15 @@
             return;
             
         case TICDSRemoteFileStructureExistsResponseTypeDoesExist:
-            TICDSLog(TICDSLogVerbosityEveryStep, @"Client's directory exists, so document registration is complete");
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Client's directory exists");
             
-            [self operationDidCompleteSuccessfully];
+            [self beginCheckWhetherRemoteIntegrityKeyMatchesLocalKey];
             return;
 
         case TICDSRemoteFileStructureExistsResponseTypeDoesNotExist:
             TICDSLog(TICDSLogVerbosityEveryStep, @"Client's directory does not exist");
+            
+            
             
             [self beginCheckWhetherClientWasDeletedFromRemoteDocument];
             break;
@@ -361,6 +398,47 @@
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
     [self discoveredStatusOfClientDirectoryInRemoteDocumentSyncChangesDirectory:TICDSRemoteFileStructureExistsResponseTypeError];
+}
+
+#pragma mark - Check Whether Integrity Keys Match
+- (void)beginCheckWhetherRemoteIntegrityKeyMatchesLocalKey
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Fetching remote integrity key");
+    
+    [self fetchRemoteIntegrityKey];
+}
+
+- (void)fetchedRemoteIntegrityKey:(NSString *)aKey
+{
+    if( !aKey ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to fetch an integrity key");
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    if( ![self integrityKey] ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Setting local integrity key");
+        [self setIntegrityKey:aKey];
+        [self beginCreatingClientDirectoriesInRemoteDocumentDirectories];
+        return;
+    }
+    
+    if( ![[self integrityKey] isEqualToString:aKey] ) {
+        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Integrity keys do not match");
+        
+        [self warnDelegateToDeleteLocalFilesAndPullDownStoreBecauseOfDeletion:NO];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Integrity keys match, so document registration complete");
+    [self operationDidCompleteSuccessfully];
+}
+
+#pragma mark Overridden Method
+- (void)fetchRemoteIntegrityKey
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self fetchedRemoteIntegrityKey:nil];
 }
 
 #pragma mark - Checking Whether Client was Deleted from Document
@@ -380,12 +458,12 @@
             return;
             
         case TICDSRemoteFileStructureDeletionResponseTypeDeleted:
-            [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:) waitUntilDone:NO];
-            [self beginDeletingClientIdentifierFileFromDeletedClientsDirectory];
+            [self warnDelegateToDeleteLocalFilesAndPullDownStoreBecauseOfDeletion:YES];
             return;
             
         case TICDSRemoteFileStructureDeletionResponseTypeNotDeleted:
-            [self beginCreatingClientDirectoriesInRemoteDocumentDirectories];
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Client wasn't deleted");
+            [self beginCheckWhetherRemoteIntegrityKeyMatchesLocalKey];
             return;
     }
 }
@@ -395,6 +473,26 @@
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
     [self discoveredDeletionStatusOfClient:TICDSRemoteFileStructureDeletionResponseTypeError];
+}
+
+#pragma mark - Warning that Client had been Deleted
+- (void)sendMessageToDelegateThatToDeleteLocalFilesAndPullDownStore
+{
+    [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:) waitUntilDone:YES];
+}
+
+- (void)warnDelegateToDeleteLocalFilesAndPullDownStoreBecauseOfDeletion:(BOOL)clientWasDeleted
+{
+    [self sendMessageToDelegateThatToDeleteLocalFilesAndPullDownStore];
+    
+    if( clientWasDeleted ) {
+        [self beginDeletingClientIdentifierFileFromDeletedClientsDirectory];
+    } else {
+        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Delegate warned that integrity didn't match");
+        
+        [self setIntegrityKey:nil];
+        [self beginCheckWhetherRemoteIntegrityKeyMatchesLocalKey];
+    }
 }
 
 #pragma mark - Deleting Client's File in Document's RecentSync Directory
@@ -414,7 +512,8 @@
     }
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Deleted client's file from document's DeletedClients directory");
-    [self beginCreatingClientDirectoriesInRemoteDocumentDirectories];
+    [self setIntegrityKey:nil];
+    [self beginCheckWhetherRemoteIntegrityKeyMatchesLocalKey];
 }
 
 #pragma mark Overridden Method
@@ -464,6 +563,7 @@
     [_documentDescription release], _documentDescription = nil;
     [_clientDescription release], _clientDescription = nil;
     [_documentUserInfo release], _documentUserInfo = nil;
+    [_integrityKey release], _integrityKey = nil;
 
     [super dealloc];
 }
@@ -477,5 +577,6 @@
 @synthesize documentDescription = _documentDescription;
 @synthesize clientDescription = _clientDescription;
 @synthesize documentUserInfo = _documentUserInfo;
+@synthesize integrityKey = _integrityKey;
 
 @end

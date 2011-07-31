@@ -145,6 +145,7 @@
 
 - (void)documentSyncManagerDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:(TICDSDocumentSyncManager *)aSyncManager
 {
+    NSLog(@"DOC WAS DELETED");
     [self setDownloadStoreAfterRegistering:YES];
 }
 
