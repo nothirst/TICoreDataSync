@@ -52,6 +52,7 @@ extern NSString * const TICDSRecentSyncsDirectoryName;
 extern NSString * const TICDSTemporaryFilesDirectoryName;
 extern NSString * const TICDSDeletedDocumentsDirectoryName;
 extern NSString * const TICDSDeletedClientsDirectoryName;
+extern NSString * const TICDSIntegrityKeyDirectoryName;
 extern NSString * const TICDSUnappliedSyncChangesDirectoryName;
 extern NSString * const TICDSUnappliedSyncCommandsDirectoryName;
 extern NSString * const TICDSUnsynchronizedSyncChangesStoreName;
@@ -70,6 +71,8 @@ extern NSString * const TICDSDocumentInfoPlistFilename;
 extern NSString * const TICDSDocumentInfoPlistExtension;
 extern NSString * const TICDSSaltFilenameWithExtension;
 extern NSString * const TICDSEncryptionTestFilenameWithExtension;
+extern NSString * const TICDSUserDefaultsPrefix;
+extern NSString * const TICDSUserDefaultsIntegrityKeyComponent;
 
 extern NSString * const TICDSSyncIDAttributeName;
 extern NSString * const TICDSSyncChangeDataModelName;

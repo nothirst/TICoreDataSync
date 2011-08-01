@@ -38,4 +38,12 @@
  @return A dictionary configured with the given information. */
 + (NSDictionary *)syncWarningOfType:(TICDSSyncWarningType)aType entityName:(NSString *)entityName relatedObjectEntityName:(NSString *)relatedObjectEntityName attributes:(NSDictionary *)attributes;
 
+/** @name User Defaults Keys */
+
+/** Returns a full path key using the TICDSync prefix for the given key. */
++ (NSString *)userDefaultsKeyForKey:(NSString *)aKey;
+
+/** Returns a full path key using the TICDSync and integrityKey components for the given key. */
++ (NSString *)userDefaultsKeyForIntegrityKeyForDocumentWithIdentifier:(NSString *)anIdentifier;
+
 @end

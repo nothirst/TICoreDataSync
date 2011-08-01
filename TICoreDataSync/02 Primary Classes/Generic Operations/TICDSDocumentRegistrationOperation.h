@@ -45,6 +45,8 @@
     NSUInteger _numberOfDeletedClientIdentifiersToAdd;
     NSUInteger _numberOfDeletedClientIdentifiersAdded;
     NSUInteger _numberOfDeletedClientIdentifiersThatFailedToBeAdded;
+    
+    NSString *_integrityKey;
 }
 
 #pragma mark Designated Initializer
@@ -82,6 +84,13 @@
  @param aDictionary The dictionary to save as the `documentInfo.plist`. */
 - (void)saveRemoteDocumentInfoPlistFromDictionary:(NSDictionary *)aDictionary;
 
+/** Save a file with the integrity key as its name to this document's `IntegrityKey` directory.
+ 
+ This method must call `savedIntegrityKeyWithSuccess:` to indicate whether the save was successful.
+ 
+ @param aKey The integrity key to save. */
+- (void)saveIntegrityKey:(NSString *)aKey;
+
 /** Fetch a list of all clients registered to synchronize with this **application**.
  
  This list is used to add identifiers to this document's `DeletedClients` directory so that if those clients try to sync, they'll realize the document has previously been deleted.
@@ -105,6 +114,11 @@
  
  This method must call `discoveredStatusOfClientDirectoryInRemoteDocumentSyncChangesDirectory:` to indicate the status. */
 - (void)checkWhetherClientDirectoryExistsInRemoteDocumentSyncChangesDirectory;
+
+/** Fetch the integrity key for this document.
+ 
+ This method must call `fetchedRemoteIntegrityKey:` to provide the key. */
+- (void)fetchRemoteIntegrityKey;
 
 /** Check whether this client has previously been deleted from synchronizing with this document.
  
@@ -152,6 +166,13 @@
  @param success `YES` if the `documentInfo.plist` file was saved, otherwise `NO`. */
 - (void)savedRemoteDocumentInfoPlistWithSuccess:(BOOL)success;
 
+/** Indicate whether the integrity key file was saved successfully.
+ 
+ If not, call `setError:` first, then specify `NO` for `success`.
+ 
+ @param success `YES` if the integrity key file was saved, otherwise `NO`. */
+- (void)savedIntegrityKeyWithSuccess:(BOOL)success;
+
 /** Pass back the assembled `NSArray` of client identifiers registered to synchronize with the **application**.
  
  If an error occurred, call `setError:` first, then specify `nil` for `anArray`.
@@ -179,6 +200,13 @@
  
  @param status The status of the directory: does exist, does not exist, or error (see `TICDSTypesAndEnums.h` for possible values). */
 - (void)discoveredStatusOfClientDirectoryInRemoteDocumentSyncChangesDirectory:(TICDSRemoteFileStructureExistsResponseType)status;
+
+/** Pass back the remote integrity key for this document.
+ 
+ If an error occurred, call `setError:` first, then specify `nil` for `aKey`.
+ 
+ @param aKey The remote integrity key, or `nil` if an error occurred. */
+- (void)fetchedRemoteIntegrityKey:(NSString *)aKey;
 
 /** Indicate whether the client has been deleted from synchronizing with this document.
  
@@ -224,5 +252,8 @@
 
 /** The user info. */
 @property (retain) NSDictionary *documentUserInfo;
+
+/** The integrity key provided either by the client to check existing data matches integrity, or set during registration for new documents. */
+@property (retain) NSString *integrityKey;
 
 @end

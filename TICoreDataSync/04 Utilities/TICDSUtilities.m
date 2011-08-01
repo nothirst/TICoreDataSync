@@ -44,6 +44,7 @@
     [dictionary setValue:[NSDictionary dictionary] forKey:TICDSSyncCommandsDirectoryName];
     [dictionary setValue:[NSDictionary dictionary] forKey:TICDSRecentSyncsDirectoryName];
     [dictionary setValue:[NSDictionary dictionary] forKey:TICDSDeletedClientsDirectoryName];
+    [dictionary setValue:[NSDictionary dictionary] forKey:TICDSIntegrityKeyDirectoryName];
     
     NSMutableDictionary *tempFilesDictionary = [NSMutableDictionary dictionary];
     [tempFilesDictionary setValue:[NSDictionary dictionary] forKey:TICDSWholeStoreDirectoryName];
@@ -74,6 +75,18 @@
     }
     
     return dictionary;
+}
+
+#pragma mark -
+#pragma mark User Defaults Keys
++ (NSString *)userDefaultsKeyForKey:(NSString *)aKey
+{
+    return [NSString stringWithFormat:@"%@%@", TICDSUserDefaultsPrefix, aKey];
+}
+
++ (NSString *)userDefaultsKeyForIntegrityKeyForDocumentWithIdentifier:(NSString *)anIdentifier
+{
+    return [self userDefaultsKeyForKey:[NSString stringWithFormat:@"%@%@", TICDSUserDefaultsIntegrityKeyComponent, anIdentifier]];
 }
 
 @end

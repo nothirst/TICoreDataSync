@@ -156,7 +156,7 @@
 		384E188C137D7A5E00629EFD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		384E188E137D7B7F00629EFD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3890AA351397ABBB00CC64B5 /* TICDSAllClassHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSAllClassHeaders.h; sourceTree = "<group>"; };
-		3890AA361397ABBB00CC64B5 /* TICDSClassesAndProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSClassesAndProtocols.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		3890AA361397ABBB00CC64B5 /* TICDSClassesAndProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSClassesAndProtocols.h; sourceTree = "<group>"; };
 		3890AA371397ABBB00CC64B5 /* TICDSConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSConstants.h; sourceTree = "<group>"; };
 		3890AA381397ABBB00CC64B5 /* TICDSConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSConstants.m; sourceTree = "<group>"; };
 		3890AA391397ABBB00CC64B5 /* TICDSTypesAndEnums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSTypesAndEnums.h; sourceTree = "<group>"; };

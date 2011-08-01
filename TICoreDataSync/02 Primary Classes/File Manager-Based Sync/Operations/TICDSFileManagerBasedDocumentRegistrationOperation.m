@@ -112,6 +112,47 @@
     [self savedRemoteDocumentInfoPlistWithSuccess:success];
 }
 
+- (void)saveIntegrityKey:(NSString *)aKey
+{
+    NSString *finalPath = [[[self thisDocumentDirectoryPath] stringByAppendingPathComponent:TICDSIntegrityKeyDirectoryName] stringByAppendingPathComponent:aKey];
+    
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObject:[self clientIdentifier] forKey:kTICDSOriginalDeviceIdentifier];
+    
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dictionary];
+    
+    NSError *anyError = nil;
+    BOOL success = [data writeToFile:finalPath options:0 error:&anyError];
+    
+    if( !success ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    }
+    
+    [self savedIntegrityKeyWithSuccess:success];
+}
+
+- (void)fetchRemoteIntegrityKey
+{
+    NSString *integrityDirectoryPath = [[self thisDocumentDirectoryPath] stringByAppendingPathComponent:TICDSIntegrityKeyDirectoryName];
+    
+    NSError *anyError = nil;
+    NSArray *contents = [[self fileManager] contentsOfDirectoryAtPath:integrityDirectoryPath error:&anyError];
+    
+    if( !contents ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self fetchedRemoteIntegrityKey:nil];
+        return;
+    }
+    
+    for( NSString *eachFile in contents ) {
+        if( [eachFile length] < 5 ) {
+            continue;
+        }
+        
+        [self fetchedRemoteIntegrityKey:eachFile];
+        return;
+    }
+}
+
 - (void)fetchListOfIdentifiersOfAllRegisteredClientsForThisApplication
 {
     NSError *anyError = nil;
