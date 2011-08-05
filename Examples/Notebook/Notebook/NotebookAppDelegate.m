@@ -217,6 +217,7 @@ shouldBeginSynchronizingAfterManagedObjectContextDidSave:
     [(TICDSFileManagerBasedDocumentSyncManager *)aSyncManager 
      enableAutomaticSynchronizationAfterChangesDetectedFromOtherClients];
     
+    [self performSelector:@selector(removeAllSyncData) withObject:nil afterDelay:8.0];
     //[self performSelector:@selector(getPreviouslySynchronizedClients) withObject:nil afterDelay:2.0];
     //[self performSelector:@selector(deleteDocument) withObject:nil afterDelay:2.0];
     //[self performSelector:@selector(deleteClient) withObject:nil afterDelay:2.0];
@@ -225,6 +226,11 @@ shouldBeginSynchronizingAfterManagedObjectContextDidSave:
 - (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishFetchingInformationForAllRegisteredDevices:(NSDictionary *)information
 {
     NSLog(@"App client info: %@", information);
+}
+
+- (void)removeAllSyncData
+{
+    [[[self documentSyncManager] applicationSyncManager] removeAllSyncDataFromRemote];
 }
 
 - (void)getPreviouslySynchronizedClients

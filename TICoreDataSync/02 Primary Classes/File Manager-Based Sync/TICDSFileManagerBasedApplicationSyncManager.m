@@ -63,6 +63,15 @@
     return [operation autorelease];
 }
 
+- (TICDSRemoveAllRemoteSyncDataOperation *)removeAllSyncDataOperation
+{
+    TICDSFileManagerBasedRemoveAllRemoteSyncDataOperation *operation = [[TICDSFileManagerBasedRemoveAllRemoteSyncDataOperation alloc] initWithDelegate:self];
+    
+    [operation setApplicationDirectoryPath:[self applicationDirectoryPath]];
+    
+    return [operation autorelease];
+}
+
 #pragma mark -
 #pragma mark Paths
 - (NSString *)applicationDirectoryPath

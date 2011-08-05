@@ -27,6 +27,7 @@
 @class TICDSListOfApplicationRegisteredClientsOperation;
 @class TICDSDocumentDeletionOperation;
 @class TICDSDocumentClientDeletionOperation;
+@class TICDSRemoveAllRemoteSyncDataOperation;
 
 #pragma mark File Manager-Based
 @class TICDSFileManagerBasedApplicationSyncManager;
@@ -42,6 +43,7 @@
 @class TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation;
 @class TICDSFileManagerBasedDocumentDeletionOperation;
 @class TICDSFileManagerBasedDocumentClientDeletionOperation;
+@class TICDSFileManagerBasedRemoveAllRemoteSyncDataOperation;
 
 #pragma mark DropboxSDK-Based
 #if TARGET_OS_IPHONE
@@ -58,6 +60,7 @@
 @class TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation;
 @class TICDSDropboxSDKBasedDocumentDeletionOperation;
 @class TICDSDropboxSDKBasedDocumentClientDeletionOperation;
+@class TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation;
 #endif
 
 #pragma mark -
@@ -237,6 +240,8 @@
 - (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishFetchingInformationForAllRegisteredDevices:(NSDictionary *)information;
 
 #pragma mark Document Deletion
+/** @name Document Deletion */
+
 /** Informs the delegate that the application sync manager has begun the process of deleting a document from the remote.
  
  When the document directory is about to be deleted, the `applicationSyncManager:willDeleteDirectoryForDocumentWithIdentifier:` method will be called. Once the directory has been deleted, the `applicationSyncManager:didDeleteDirectoryForDocumentWithIdentifier:` method will be called.
@@ -271,6 +276,25 @@
  @param aSyncManager The application sync manager object that sent the message. 
  @param anIdentifier The identifier of the document that was deleted. */
 - (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishDeletingDocumentWithIdentifier:(NSString *)anIdentifier;
+
+#pragma mark Removing all Remote Sync Data
+/** @name Removing all Remote Sync Data */
+
+/** Informs the delegate that the application sync manager will remove the entire remote directory structure.
+ 
+ @param aSyncManager The application sync manager object that sent the message. */
+- (void)applicationSyncManagerWillRemoveAllSyncData:(TICDSApplicationSyncManager *)aSyncManager;
+
+/** Informs the delegate that the application sync manager has successfully removed the entire remote directory structure.
+ 
+ @param aSyncManager The application sync manager object that sent the message. */
+- (void)applicationSyncManagerDidFinishRemovingAllSyncData:(TICDSApplicationSyncManager *)aSyncManager;
+
+/** Informs the delegate that the application sync manager failed to remove the entire remote directory structure.
+ 
+ @param aSyncManager The application sync manager object that sent the message.
+ @param anError The error that caused the deletion process to fail. */
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFailToRemoveAllSyncDataWithError:(NSError *)anError;
 
 @end
 
