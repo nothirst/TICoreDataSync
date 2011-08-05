@@ -19,6 +19,8 @@
 - (void)bailFromRegisteredDevicesInformationProcessWithError:(NSError *)anError;
 - (BOOL)startDocumentDeletionProcessForDocumentWithIdentifier:(NSString *)anIdentifier error:(NSError **)outError;
 - (void)bailFromDocumentDeletionProcessForDocumentWithIdentifier:(NSString *)anIdentifier error:(NSError *)anError;
+- (BOOL)startRemoveAllSyncDataProcess:(NSError **)outError;
+- (void)bailFromRemoveAllSyncDataProcessWithError:(NSError *)anError;
 
 @property (nonatomic, assign) TICDSApplicationSyncManagerState state;
 @property (nonatomic, retain) NSString *appIdentifier;
@@ -624,6 +626,92 @@
 }
 
 #pragma mark -
+#pragma mark REMOVING ALL SYNC DATA
+- (void)removeAllSyncDataFromRemote
+{
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Initiating removal process for all remote sync data");
+    
+    NSError *anyError = nil;
+    BOOL success = [self startRemoveAllSyncDataProcess:&anyError];
+    
+    if( !success ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Request to remove all remote sync data failed with error: %@", anyError);
+        [self bailFromRemoveAllSyncDataProcessWithError:anyError];
+    }
+}
+
+- (BOOL)startRemoveAllSyncDataProcess:(NSError **)outError
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting process to remove all remote sync data");
+    [self postIncreaseActivityNotification];
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerWillRemoveAllSyncData:)];
+    
+    TICDSRemoveAllRemoteSyncDataOperation *operation = [self removeAllSyncDataOperation];
+    
+    if( !operation ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create 'remove all remote sync data' operation object");
+        [self bailFromRemoveAllSyncDataProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
+        return NO;
+    }
+    
+    [operation setShouldUseEncryption:[self shouldUseEncryption]];    
+    [[self otherTasksQueue] addOperation:operation];
+    
+    return YES;
+}
+
+- (void)bailFromRemoveAllSyncDataProcessWithError:(NSError *)anError
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from remove all remote sync data request");
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToRemoveAllSyncDataWithError:), anError];
+    [self postDecreaseActivityNotification];
+}
+
+#pragma mark Operation Generation
+- (TICDSRemoveAllRemoteSyncDataOperation *)removeAllSyncDataOperation
+{
+    return [[[TICDSRemoveAllRemoteSyncDataOperation alloc] initWithDelegate:self] autorelease];
+}
+
+#pragma mark Operation Communication
+- (void)removeAllSyncDataOperationWillRemoveAllSyncData:(TICDSRemoveAllRemoteSyncDataOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Remove all sync data operation will remove all sync data");
+    
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerWillRemoveAllSyncData:)];
+}
+
+- (void)removeAllSyncDataOperationDidRemoveAllSyncData:(TICDSRemoveAllRemoteSyncDataOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Remove all sync data operation did remove all sync data");
+    
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidFinishRemovingAllSyncData:)];
+}
+
+- (void)removeAllSyncDataOperationCompleted:(TICDSRemoveAllRemoteSyncDataOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Remove All Sync Data Operation Completed");
+    
+    [self postDecreaseActivityNotification];
+}
+
+- (void)removeAllSyncDataOperationWasCancelled:(TICDSRemoveAllRemoteSyncDataOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Remove All Sync Data Operation was Cancelled");
+    
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToRemoveAllSyncDataWithError:), [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+    [self postDecreaseActivityNotification];
+}
+
+- (void)removeAllSyncDataOperation:(TICDSRemoveAllRemoteSyncDataOperation *)anOperation failedToCompleteWithError:(NSError *)anError
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Remove All Sync Data Operation Failed to Complete with Error: %@", anError);
+    
+    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToRemoveAllSyncDataWithError:), anError];
+    [self postDecreaseActivityNotification];
+}
+
+#pragma mark -
 #pragma mark OPERATION COMMUNICATIONS
 - (void)operationCompletedSuccessfully:(TICDSOperation *)anOperation
 {
@@ -637,6 +725,8 @@
         [self registeredClientsOperationCompleted:(id)anOperation];
     } else if( [anOperation isKindOfClass:[TICDSDocumentDeletionOperation class]] ) {
         [self documentDeletionOperationCompleted:(id)anOperation];
+    } else if( [anOperation isKindOfClass:[TICDSRemoveAllRemoteSyncDataOperation class]] ) {
+        [self removeAllSyncDataOperationCompleted:(id)anOperation];
     }
 }
 
@@ -652,6 +742,8 @@
         [self registeredClientsOperationWasCancelled:(id)anOperation];
     } else if( [anOperation isKindOfClass:[TICDSDocumentDeletionOperation class]] ) {
         [self documentDeletionOperationWasCancelled:(id)anOperation];
+    } else if( [anOperation isKindOfClass:[TICDSRemoveAllRemoteSyncDataOperation class]] ) {
+        [self removeAllSyncDataOperationWasCancelled:(id)anOperation];
     }
 }
 
@@ -667,6 +759,8 @@
         [self registeredClientsOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     } else if( [anOperation isKindOfClass:[TICDSDocumentDeletionOperation class]] ) {
         [self documentDeletionOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
+    } else if( [anOperation isKindOfClass:[TICDSRemoveAllRemoteSyncDataOperation class]] ) {
+        [self removeAllSyncDataOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     }
 }
 

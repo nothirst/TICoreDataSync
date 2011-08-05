@@ -156,6 +156,14 @@
  @param anIdentifier The identifier of the document to be deleted. */
 - (void)deleteDocumentWithIdentifier:(NSString *)anIdentifier;
 
+#pragma mark - Removing all Sync Data
+/** @name Removing all Sync Data */
+
+/** Remove the entire remote directory structure from the remote.
+ 
+ This will spawn a `TICDSRemoveAllSyncDataOperation` and notify the delegate of progress. */
+- (void)removeAllSyncDataFromRemote;
+
 #pragma mark - Overridden Methods
 /** @name Methods Overridden by Subclasses */
 
@@ -198,6 +206,13 @@
  
  @return A correctly-configured subclass of `TICDSDocumentDeletionOperation`. */
 - (TICDSDocumentDeletionOperation *)documentDeletionOperationForDocumentWithIdentifier:(NSString *)anIdentifier;
+
+/** Returns an operation to remove all remote sync data.
+ 
+ Subclasses of `TICDSApplicationSyncManager` use this method to return a correctly-configured 'remove all sync data' operation for their particular sync method.
+ 
+ @return A correctly-configured subclass of `TICDSRemoveAllSyncDataOperation`. */
+- (TICDSRemoveAllRemoteSyncDataOperation *)removeAllSyncDataOperation;
 
 #pragma mark - Properties
 /** @name Properties */

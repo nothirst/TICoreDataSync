@@ -72,6 +72,16 @@
     return [operation autorelease];
 }
 
+- (TICDSRemoveAllRemoteSyncDataOperation *)removeAllSyncDataOperation
+{
+    TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation *operation = [[TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation alloc] initWithDelegate:self];
+    
+    [operation setDbSession:[self dbSession]];
+    [operation setApplicationDirectoryPath:[self applicationDirectoryPath]];
+    
+    return [operation autorelease];
+}
+
 #pragma mark -
 #pragma mark Paths
 - (NSString *)applicationDirectoryPath
