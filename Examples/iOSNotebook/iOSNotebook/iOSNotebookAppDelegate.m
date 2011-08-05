@@ -155,7 +155,7 @@
         [[self documentSyncManager] initiateDownloadOfWholeStore];
     }
     
-    [self performSelector:@selector(removeAllRemoteSyncData) withObject:nil afterDelay:8.0];
+    //[self performSelector:@selector(removeAllRemoteSyncData) withObject:nil afterDelay:8.0];
     //[self performSelector:@selector(getPreviouslySynchronizedClients) withObject:nil afterDelay:8.0];
     //[self performSelector:@selector(deleteClient) withObject:nil afterDelay:8.0];
 }
