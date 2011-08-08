@@ -612,6 +612,11 @@
             [conflict setRemoteInformation:[NSDictionary dictionaryWithObject:[eachRemoteChange changedAttributes] forKey:kTICDSChangedAttributeValue]];
             TICDSSyncConflictResolutionType resolutionType = [self resolutionTypeForConflict:conflict];
             
+            if( [self isCancelled] ) {
+                [self operationWasCancelled];
+                return nil;
+            }
+            
             if( resolutionType == TICDSSyncConflictResolutionTypeRemoteWins ) {
                 // just delete the local sync change so the remote change wins
                 [[self localSyncChangesToMergeContext] deleteObject:eachLocalChange];
@@ -659,7 +664,7 @@
         
     [self ti_alertDelegateOnMainThreadWithSelector:@selector(synchronizationOperation:pausedToDetermineResolutionOfConflict:) waitUntilDone:YES, aConflict];
     
-    while( [self isPaused] ) {
+    while( [self isPaused] && ![self isCancelled] ) {
         [NSThread sleepForTimeInterval:0.2];
     }
     

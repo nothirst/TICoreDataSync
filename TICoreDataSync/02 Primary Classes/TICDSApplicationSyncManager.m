@@ -646,6 +646,11 @@
     [self postIncreaseActivityNotification];
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerWillRemoveAllSyncData:)];
     
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Cancelling any existing operations");
+    [[self registrationQueue] cancelAllOperations];
+    [[self otherTasksQueue] cancelAllOperations];
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Cancelled existing operations");
+    
     TICDSRemoveAllRemoteSyncDataOperation *operation = [self removeAllSyncDataOperation];
     
     if( !operation ) {

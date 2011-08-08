@@ -90,7 +90,7 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"Pausing registration as this is the first time this application has been registered");
     [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationPausedToFindOutWhetherToEnableEncryption:) waitUntilDone:NO];
     
-    while( [self isPaused] ) {
+    while( [self isPaused] && ![self isCancelled] ) {
         [NSThread sleepForTimeInterval:0.2];
     }
     
@@ -485,7 +485,7 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"Pausing registration because an encryption password is needed");
     [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationPausedToRequestEncryptionPassword:) waitUntilDone:NO];
     
-    while( [self isPaused] ) {
+    while( [self isPaused] && ![self isCancelled] ) {
         [NSThread sleepForTimeInterval:0.2];
     }
     
