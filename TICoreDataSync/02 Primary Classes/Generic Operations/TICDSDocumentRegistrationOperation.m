@@ -128,7 +128,7 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"Pausing registration as remote document file structure doesn't exist");
     [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationPausedToFindOutWhetherToCreateRemoteDocumentStructure:) waitUntilDone:NO];
     
-    while( [self isPaused] ) {
+    while( [self isPaused] && ![self isCancelled] ) {
         [NSThread sleepForTimeInterval:0.2];
     }
     
@@ -144,6 +144,11 @@
 {
     if( [self needsMainThread] && ![NSThread isMainThread] ) {
         [self performSelectorOnMainThread:@selector(continueAfterRequestWhetherToCreateRemoteDocumentFileStructure) withObject:nil waitUntilDone:NO];
+        return;
+    }
+    
+    if( [self isCancelled] ) {
+        [self operationWasCancelled];
         return;
     }
     
