@@ -108,6 +108,7 @@ NSString * const kTICDSSyncWarningRelatedObjectEntityName = @"kTICDSSyncWarningR
 
 NSString * const TICDSApplicationSyncManagerDidFinishRegisteringNotification = @"TICDSApplicationSyncManagerDidFinishRegisteringNotification";
 NSString * const TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification = @"TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification";
+NSString * const TICDSApplicationSyncManagerWillRemoveAllSyncDataNotification = @"TICDSApplicationSyncManagerWillRemoveAllSyncDataNotification";
 NSString * const TICDSApplicationSyncManagerDidIncreaseActivityNotification = @"TICDSApplicationSyncManagerDidIncreaseActivityNotification";
 NSString * const TICDSApplicationSyncManagerDidDecreaseActivityNotification = @"TICDSApplicationSyncManagerDidDecreaseActivityNotification";
 NSString * const TICDSDocumentSyncManagerDidIncreaseActivityNotification = @"TICDSDocumentSyncManagerDidIncreaseActivityNotification";

@@ -99,6 +99,9 @@
         return;
     }
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:[self applicationSyncManager]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationSyncManagerWillRemoveAllRemoteSyncData:) name:TICDSApplicationSyncManagerWillRemoveAllSyncDataNotification object:[self applicationSyncManager]];
+    
     [self postIncreaseActivityNotification];
     [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidBeginRegistering:)];
     
@@ -1204,6 +1207,11 @@
 - (void)backgroundManagedObjectContextDidSave:(NSNotification *)aNotification
 {
     [self ti_alertDelegateOnMainThreadWithSelector:@selector(documentSyncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:) waitUntilDone:YES, aNotification];
+}
+
+- (void)applicationSyncManagerWillRemoveAllRemoteSyncData:(NSNotification *)aNotification
+{
+    
 }
 
 #pragma mark -
