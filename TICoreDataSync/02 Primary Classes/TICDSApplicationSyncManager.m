@@ -633,6 +633,8 @@
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Initiating removal process for all remote sync data");
     
+    [self setState:TICDSApplicationSyncManagerStateNotYetRegistered];
+    
     NSError *anyError = nil;
     BOOL success = [self startRemoveAllSyncDataProcess:&anyError];
     

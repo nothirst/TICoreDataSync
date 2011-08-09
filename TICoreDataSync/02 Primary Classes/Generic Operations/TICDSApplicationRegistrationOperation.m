@@ -532,7 +532,7 @@
     [self createCryptorIfNecessary];
     
     if( [[self cryptor] isConfigured] ) {
-        NSLog(@"Deconfiguring cryptor for new registration");
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Deconfiguring cryptor for new registration");
         [[self cryptor] clearPasswordAndSalt];
     }
 }

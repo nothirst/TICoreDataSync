@@ -8,7 +8,21 @@
 
 #import "TICoreDataSync.h"
 
+@interface TICDSDocumentSyncManager ()
+- (void)applicationSyncManagerWillRemoveAllRemoteSyncData:(NSNotification *)aNotification;
+@end
+
+
 @implementation TICDSFileManagerBasedDocumentSyncManager
+
+#pragma mark -
+#pragma mark Overridden Notification Methods
+- (void)applicationSyncManagerWillRemoveAllRemoteSyncData:(NSNotification *)aNotification
+{
+    [super applicationSyncManagerWillRemoveAllRemoteSyncData:aNotification];
+    
+    [_directoryWatcher release], _directoryWatcher = nil;
+}
 
 #pragma mark -
 #pragma mark Automatic Change Detection
