@@ -688,6 +688,10 @@
 #pragma mark Operation Communication
 - (void)removeAllSyncDataOperationWillRemoveAllSyncData:(TICDSRemoveAllRemoteSyncDataOperation *)anOperation
 {
+    // suspend other tasks queue now that this task has started
+    // this matches default initial AppSyncManager behavior of suspending all queues except registration
+    [[self otherTasksQueue] setSuspended:YES];
+    
     TICDSLog(TICDSLogVerbosityEveryStep, @"Remove all sync data operation will remove all sync data");
     
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerWillRemoveAllSyncData:)];
