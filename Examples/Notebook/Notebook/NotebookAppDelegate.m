@@ -69,7 +69,8 @@
 - (void)applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:
 (TICDSApplicationSyncManager *)aSyncManager
 {
-    [aSyncManager continueRegisteringWithEncryptionPassword:@"password"];
+    [aSyncManager removeAllSyncDataFromRemote];
+    //[aSyncManager continueRegisteringWithEncryptionPassword:@"password"];
 }
 
 - (TICDSDocumentSyncManager *)applicationSyncManager:
@@ -217,10 +218,43 @@ shouldBeginSynchronizingAfterManagedObjectContextDidSave:
     [(TICDSFileManagerBasedDocumentSyncManager *)aSyncManager 
      enableAutomaticSynchronizationAfterChangesDetectedFromOtherClients];
     
-    //[self performSelector:@selector(removeAllSyncData) withObject:nil afterDelay:8.0];
+    [self performSelector:@selector(removeAllSyncData) withObject:nil afterDelay:8.0];
     //[self performSelector:@selector(getPreviouslySynchronizedClients) withObject:nil afterDelay:2.0];
     //[self performSelector:@selector(deleteDocument) withObject:nil afterDelay:2.0];
     //[self performSelector:@selector(deleteClient) withObject:nil afterDelay:2.0];
+}
+
+- (void)applicationSyncManagerDidFinishRemovingAllSyncData:(TICDSApplicationSyncManager *)aSyncManager
+{
+    NSLog(@"Registering again");
+    
+    TICDSFileManagerBasedApplicationSyncManager *manager = 
+    [TICDSFileManagerBasedApplicationSyncManager 
+     defaultApplicationSyncManager];
+    
+    [manager setApplicationContainingDirectoryLocation:
+     [NSURL fileURLWithPath:
+      [@"~/Dropbox" stringByExpandingTildeInPath]]];
+    
+    NSString *clientUuid = [[NSUserDefaults standardUserDefaults] 
+                            stringForKey:@"NotebookAppSyncClientUUID"];
+    if( !clientUuid ) {
+        clientUuid = [TICDSUtilities uuidString];
+        [[NSUserDefaults standardUserDefaults] 
+         setValue:clientUuid 
+         forKey:@"NotebookAppSyncClientUUID"];
+    }
+    
+    CFStringRef name = SCDynamicStoreCopyComputerName(NULL,NULL);
+    NSString *deviceDescription = 
+    [NSString stringWithString:(NSString *)name];
+    CFRelease(name);
+    
+    [manager registerWithDelegate:self
+              globalAppIdentifier:@"com.timisted.notebook" 
+           uniqueClientIdentifier:clientUuid 
+                      description:deviceDescription 
+                         userInfo:nil];
 }
 
 - (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishFetchingInformationForAllRegisteredDevices:(NSDictionary *)information

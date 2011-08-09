@@ -733,3 +733,20 @@
 - (void)documentDeletionOperationDidDeleteDocument:(TICDSDocumentDeletionOperation *)anOperation;
 
 @end
+
+#pragma mark Remove All Sync Data Delegate
+/** The `TICDSRemoveAllRemoteSyncDataOperationDelegate` protocol defines the methods implemented by delegates of `TICDSRemoveAllRemoteSyncDataOperation` or one of its subclasses. In the `TICoreDataSync` framework, these delegate methods are implemented by the application sync manager. */
+
+@protocol TICDSRemoveAllRemoteSyncDataOperationDelegate <TICDSOperationDelegate>
+
+/** Informs the delegate that all remote sync data is about to be deleted from the remote. The delegate should alert its own delegate.
+ 
+ @param anOperation The operation object that sent the message. */
+- (void)removeAllSyncDataOperationWillRemoveAllSyncData:(TICDSRemoveAllRemoteSyncDataOperation *)anOperation;
+
+/** Informs the delegate that all remote sync data has been deleted from the remote. The delegate should alert its own delegate.
+ 
+ @param anOperation The operation object that sent the message. */
+- (void)removeAllSyncDataOperationDidRemoveAllSyncData:(TICDSRemoveAllRemoteSyncDataOperation *)anOperation;
+
+@end

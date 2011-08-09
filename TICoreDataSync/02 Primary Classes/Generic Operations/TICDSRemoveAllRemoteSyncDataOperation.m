@@ -26,6 +26,8 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Removing entire remote sync data directory");
     
+    [self ti_alertDelegateOnMainThreadWithSelector:@selector(removeAllSyncDataOperationWillRemoveAllSyncData:) waitUntilDone:YES];
+    
     [self removeRemoteSyncDataDirectory];
 }
 
@@ -38,6 +40,7 @@
     }
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Removed all sync data");
+    [self ti_alertDelegateOnMainThreadWithSelector:@selector(removeAllSyncDataOperationDidRemoveAllSyncData:) waitUntilDone:YES];
     
     [self operationDidCompleteSuccessfully];
 }
@@ -51,6 +54,11 @@
 
 #pragma mark -
 #pragma mark Initialization and Deallocation
+- (id)initWithDelegate:(NSObject<TICDSRemoveAllRemoteSyncDataOperationDelegate> *)aDelegate
+{
+    return [super initWithDelegate:aDelegate];
+}
+
 - (void)dealloc
 {
     [super dealloc];
