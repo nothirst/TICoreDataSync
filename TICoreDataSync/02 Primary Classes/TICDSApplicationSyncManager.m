@@ -27,6 +27,8 @@
 @property (nonatomic, retain) NSString *clientIdentifier;
 @property (nonatomic, retain) NSString *clientDescription;
 @property (nonatomic, retain) NSDictionary *applicationUserInfo;
+@property (nonatomic, retain) NSOperationQueue *otherTasksQueue;
+@property (nonatomic, retain) NSOperationQueue *registrationQueue;
 
 @end
 
@@ -647,8 +649,8 @@
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerWillRemoveAllSyncData:)];
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Cancelling any existing operations");
-    [[self registrationQueue] cancelAllOperations];
     [[self otherTasksQueue] cancelAllOperations];
+    [[self registrationQueue] cancelAllOperations];
     TICDSLog(TICDSLogVerbosityEveryStep, @"Cancelled existing operations");
     
     TICDSRemoveAllRemoteSyncDataOperation *operation = [self removeAllSyncDataOperation];
@@ -658,6 +660,9 @@
         [self bailFromRemoveAllSyncDataProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
         return NO;
     }
+    
+    [self setOtherTasksQueue:[[[NSOperationQueue alloc] init] autorelease]];
+    [self setRegistrationQueue:[[[NSOperationQueue alloc] init] autorelease]];
     
     [operation setShouldUseEncryption:[self shouldUseEncryption]];    
     [[self otherTasksQueue] addOperation:operation];

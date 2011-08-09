@@ -15,6 +15,16 @@
     
 }
 
+#pragma mark Designated Initializer
+/** @name Designated Initializer */
+
+/** Initialize an operation to remove all sync data using a delegate that supports the `TICDSRemoveAllRemoteSyncDataOperationDelegate` protocol.
+ 
+ @param aDelegate The delegate to use for this operation.
+ 
+ @return An initialized document registration operation. */
+- (id)initWithDelegate:(NSObject<TICDSRemoveAllRemoteSyncDataOperationDelegate> *)aDelegate;
+
 #pragma mark Methods Overridden by Subclasses
 /** @name Methods Overridden by Subclasses */
 
