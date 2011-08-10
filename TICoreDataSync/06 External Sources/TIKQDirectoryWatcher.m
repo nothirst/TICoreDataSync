@@ -119,6 +119,12 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
         
         CFRelease(_runLoopSourceRef), _runLoopSourceRef = NULL;
     }
+    
+    if( _kqFileDescriptor != 0 ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Closing the kqFileDescriptor");
+        close(_kqFileDescriptor);
+        _kqFileDescriptor = 0;
+    }
 }
 
 #pragma mark -
@@ -143,6 +149,7 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
 {
     if( _kqFileDescriptor ) return _kqFileDescriptor;
     
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Creating the kqueue file descriptor");
     _kqFileDescriptor = kqueue();
     
     if( _kqFileDescriptor == -1 ) {
