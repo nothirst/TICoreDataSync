@@ -143,6 +143,7 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
 {
     if( _kqFileDescriptor ) return _kqFileDescriptor;
     
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Creating the kqueue file descriptor");
     _kqFileDescriptor = kqueue();
     
     if( _kqFileDescriptor == -1 ) {
@@ -167,6 +168,9 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
+    close(_kqFileDescriptor);
+    _kqFileDescriptor = 0;
+    
     [self cancelRunLoopSourceRef];
     [_watchedDirectories release], _watchedDirectories = nil;
     
