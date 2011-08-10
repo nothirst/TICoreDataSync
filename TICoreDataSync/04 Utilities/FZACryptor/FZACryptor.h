@@ -48,11 +48,12 @@
  @param password The password to use.
  @param salt Some random data to salt the password. If this is `nil`, the method will
              generate its own salt from a random oracle.
+ @param outError A pointer to an `NSError` that will be set if the data cannot be generated.
  
  @return The data used for salting the password. If this object needed to create salt material and couldn't, it will return `nil`. In this case, the key used for encryption has not been set, and the object is not configured.
  
  @warning This class uses the keychain for secure storage, so it's possible for a newly-created instance not to need a password if the key material has already been created. Check `isConfigured` to see whether this is the case. */
-- (NSData *)setPassword: (NSString *)password salt: (NSData *)salt;
+- (NSData *)setPassword: (NSString *)password salt: (NSData *)salt error: (NSError **)outError;
 
 /** Clears any previously-existing keychain password and salt. */
 - (void)clearPasswordAndSalt;

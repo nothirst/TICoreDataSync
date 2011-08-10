@@ -168,7 +168,22 @@
     if( [self shouldUseEncryption] ) {
         [self createCryptorIfNecessary];
         
-        NSData *saltData = [[self cryptor] setPassword:[self password] salt:nil];
+        NSError *anyError = nil;
+        NSData *saltData = [[self cryptor] setPassword:[self password] salt:nil error:&anyError];
+        
+        if( !saltData ) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Cryptor failed to create salt data");
+            [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+            [self operationDidFailToComplete];
+            return;
+        }
+        
+        if( ![[self cryptor] isConfigured] ) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Cryptor provided salt data when asked but responded that it wasn't configured properly");
+            [self setError:[TICDSError errorWithCode:TICDSErrorCodeFZACryptorCreatedSaltDataButRespondedThatItWasNotCorrectlyConfiguredForEncryption classAndMethod:__PRETTY_FUNCTION__]];
+            [self operationDidFailToComplete];
+            return;
+        }
         
         [self beginSavingSaltData:saltData];
     } else {
@@ -509,7 +524,15 @@
         return;
     }
     
-    [[self cryptor] setPassword:[self password] salt:[self saltData]];
+    NSError *anyError = nil;
+    id successData = [[self cryptor] setPassword:[self password] salt:[self saltData] error:&anyError];
+    
+    if( !successData ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to configure cryptor with provided information");
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self operationDidFailToComplete];
+        return;
+    }
     
     [self beginTestForCorrectPassword];
 }

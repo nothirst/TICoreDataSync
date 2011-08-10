@@ -148,8 +148,14 @@ void FZAReportKeychainError(OSStatus keychainStatus, NSString *msg) {
         if (keychainResult != noErr) {
             FZAReportKeychainError(keychainResult, @"Couldn't update existing keychain item");
             if (error) {
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObject: [NSNumber numberWithInt: keychainResult]
-                                                                     forKey: kFZAKeyManagerSecurityFrameworkError];
+                
+                CFStringRef secErrorDescription = SecCopyErrorMessageString(keychainResult, NULL);
+                
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                          [NSNumber numberWithInt:keychainResult], kFZAKeyManagerSecurityFrameworkError,
+                                          (NSString *)secErrorDescription, NSLocalizedDescriptionKey, nil];
+                CFRelease(secErrorDescription);
+                
                 *error = [NSError errorWithDomain: FZAKeyManagerErrorDomain
                                              code: FZAKeyManagerKeyStorageError
                                          userInfo: userInfo];
@@ -176,8 +182,13 @@ void FZAReportKeychainError(OSStatus keychainStatus, NSString *msg) {
                                                        &createdItem);
         if (keychainResult != noErr) {
             if (error) {
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObject: [NSNumber numberWithInt: keychainResult]
-                                                                     forKey: kFZAKeyManagerSecurityFrameworkError];
+                CFStringRef secErrorDescription = SecCopyErrorMessageString(keychainResult, NULL);
+                
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                          [NSNumber numberWithInt:keychainResult], kFZAKeyManagerSecurityFrameworkError,
+                                          (NSString *)secErrorDescription, NSLocalizedDescriptionKey, nil];
+                CFRelease(secErrorDescription);
+                
                 *error = [NSError errorWithDomain: FZAKeyManagerErrorDomain
                                              code: FZAKeyManagerKeyStorageError
                                          userInfo: userInfo];

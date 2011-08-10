@@ -27,6 +27,7 @@ NSString *gTICDSErrorStrings[] = {
     @"DropboxSDK Rest Client error",
     @"Encryption error",
     @"Unable to register a sync manager using delayed registration because the sync manager hasn't been configured properly",
+    @"FZACryptor returned salt data when asked, but responded that it wasn't correctly configured to encrypt",
 };
 
 #include <execinfo.h>

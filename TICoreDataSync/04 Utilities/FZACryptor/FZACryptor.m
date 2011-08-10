@@ -42,7 +42,7 @@ const NSInteger FZAFileBlockLength = 4096;
     [keyManager clearPasswordAndSalt];
 }
 
-- (NSData *)setPassword: (NSString *)password salt: (NSData *)salt {
+- (NSData *)setPassword: (NSString *)password salt: (NSData *)salt error: (NSError **)outError {
     if (salt == nil) {
         salt = [keyManager randomDataOfLength: FZASaltLength];
         if (salt == nil) {
@@ -51,8 +51,13 @@ const NSInteger FZAFileBlockLength = 4096;
     }
 
     NSError *error = nil;
-    (void)[keyManager storeKeyDerivedFromPassword: password salt: salt error: &error];
-
+    BOOL success = [keyManager storeKeyDerivedFromPassword: password salt: salt error: &error];
+    
+    if( !success && outError ) {
+        *outError = error;
+        return nil;
+    }
+    
     return salt;
 }
 
