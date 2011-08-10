@@ -66,9 +66,8 @@ void FZAReportKeychainError(OSStatus keychainStatus, NSString *msg) {
 }
 
 - (NSData *)serviceName {
-    NSData *bundleID = [[[NSBundle mainBundle] bundleIdentifier]
-                        dataUsingEncoding: NSUTF8StringEncoding];
-    NSData *serviceName = [[NSString stringWithFormat: @"%@-fzasync", bundleID]
+    NSString *bundleID = [[NSBundle mainBundle] bundleIdentifier];
+    NSData *serviceName = [[NSString stringWithFormat: @"%@.encryption", bundleID]
                            dataUsingEncoding: NSUTF8StringEncoding];
     return serviceName;
 }
