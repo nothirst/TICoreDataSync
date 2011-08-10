@@ -106,6 +106,7 @@ typedef enum _TICDSErrorCode {
     TICDSErrorCodeDropboxSDKRestClientError,
     TICDSErrorCodeEncryptionError,
     TICDSErrorCodeUnableToRegisterUnconfiguredSyncManager,
+    TICDSErrorCodeFZACryptorCreatedSaltDataButRespondedThatItWasNotCorrectlyConfiguredForEncryption,
 } TICDSErrorCode;
 
 typedef enum _FZACryptorErrorCode {
