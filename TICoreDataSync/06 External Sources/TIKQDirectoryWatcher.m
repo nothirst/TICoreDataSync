@@ -19,6 +19,7 @@
 // THE SOFTWARE.
 
 #import "TIKQDirectoryWatcher.h"
+#import "TICoreDataSync.h"
 
 #import <fcntl.h>
 #import <errno.h>
@@ -129,7 +130,8 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
     struct kevent event;
     
     if( kevent(watcher->_kqFileDescriptor, NULL, 0, &event, 1, NULL) == -1 ) {
-        NSLog(@"TIKQDirectoryWatcher could not pick up an event. Error %d (%s)", errno, strerror(errno));
+        // TODO: sort this out so the problem causing this message to appear 1000s of times doesn't occur
+        TICDSLog(TICDSLogVerbosityEveryStep, @"TIKQDirectoryWatcher could not pick up an event. Error %d (%s)", errno, strerror(errno));
     } else {
         [watcher notifyActivityOnPath:(NSString *)event.udata];
     }
