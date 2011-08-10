@@ -119,12 +119,6 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
         
         CFRelease(_runLoopSourceRef), _runLoopSourceRef = NULL;
     }
-    
-    if( _kqFileDescriptor != 0 ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Closing the kqFileDescriptor");
-        close(_kqFileDescriptor);
-        _kqFileDescriptor = 0;
-    }
 }
 
 #pragma mark -
@@ -174,6 +168,9 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
+    close(_kqFileDescriptor);
+    _kqFileDescriptor = 0;
+    
     [self cancelRunLoopSourceRef];
     [_watchedDirectories release], _watchedDirectories = nil;
     
