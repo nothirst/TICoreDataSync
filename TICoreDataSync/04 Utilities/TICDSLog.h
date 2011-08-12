@@ -15,16 +15,9 @@
      [TICDSLog setVerbosity:<verbosityLevel>];
  
  The higher the level, the more information you will see in the console. Examine the `TICDSLogVerbosity` entries in `TICDSTypesAndEnums.h` for specific values.
- 
- @warning You must have `DEBUG` defined to see log output, irrespective of verbosity. You typically do this in the `Preprocessor Macros` build settings for the project. If `DEBUG` is not defined, all `TICDSLog()` calls are replaced with a `nop` assembler instruction.
  */
 
-#ifdef DEBUG
 #define TICDSLog(verbosity,...) [TICDSLog logWithVerbosity:verbosity information:[NSString stringWithFormat:@"%s : %@", __PRETTY_FUNCTION__, [NSString stringWithFormat:__VA_ARGS__]]]
-#else
-#define TICDSLog(verbosity,...)
-#endif
-
 
 @interface TICDSLog : NSObject {
 @private

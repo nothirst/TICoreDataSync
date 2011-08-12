@@ -78,7 +78,8 @@ typedef enum _TICDSLogVerbosity {
     TICDSLogVerbosityStartAndEndOfMainOperationPhase = 50,
     TICDSLogVerbosityStartAndEndOfEachOperationPhase = 60,
     TICDSLogVerbosityManagedObjectOutput = 80,
-    TICDSLogVerbosityEveryStep = 100
+    TICDSLogVerbosityEveryStep = 100,
+    TICDSLogVerbosityDirectoryWatcherPickUpEventIssue = 200,
 } TICDSLogVerbosity;
 
 #pragma mark Errors

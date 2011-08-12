@@ -56,7 +56,7 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
     int directoryFileDescriptor = open( [aDirectoryName UTF8String], O_RDONLY );
     
     if( directoryFileDescriptor == - 1) {
-        NSLog(@"Could not open file descriptor for %@. Error %d (%s)", aDirectoryName, errno, strerror(errno));
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Could not open file descriptor for %@. Error %d (%s)", aDirectoryName, errno, strerror(errno));
         return NO;
     }
     
@@ -66,7 +66,7 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
     EV_SET( &directoryEvent, directoryFileDescriptor, EVFILT_VNODE, EV_ADD | EV_CLEAR | EV_ENABLE, NOTE_WRITE, 0, aDirectoryName);
     
     if( kevent( [self kqFileDescriptor], &directoryEvent, 1, NULL, 0, NULL ) == -1 ) {
-        NSLog(@"Could not kevent watching %@. Error %d (%s)", aDirectoryName, errno, strerror(errno));
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Could not kevent watching %@. Error %d (%s)", aDirectoryName, errno, strerror(errno));
         return NO;
     }
     
@@ -82,13 +82,13 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
     CFSocketRef runLoopSocket = CFSocketCreateWithNative(NULL, [self kqFileDescriptor], kCFSocketReadCallBack, TIKQSocketCallback, &socketContext);
     
     if( runLoopSocket == NULL ) {
-        NSLog(@"Failed to create run loop socket using CFSocketCreateWithNative()");
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Failed to create run loop socket using CFSocketCreateWithNative()");
         return NO;
     }
     
     _runLoopSourceRef = CFSocketCreateRunLoopSource(NULL, runLoopSocket, 0);
     if( _runLoopSourceRef == NULL ) {
-        NSLog(@"Could not create a run loop source reference");
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Could not create a run loop source reference");
         CFRelease(runLoopSocket);
         return NO;
     }
@@ -131,7 +131,7 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
     
     if( kevent(watcher->_kqFileDescriptor, NULL, 0, &event, 1, NULL) == -1 ) {
         // TODO: sort this out so the problem causing this message to appear 1000s of times doesn't occur
-        TICDSLog(TICDSLogVerbosityEveryStep, @"TIKQDirectoryWatcher could not pick up an event. Error %d (%s)", errno, strerror(errno));
+        TICDSLog(TICDSLogVerbosityDirectoryWatcherPickUpEventIssue, @"TIKQDirectoryWatcher could not pick up an event. Error %d (%s)", errno, strerror(errno));
     } else {
         [watcher notifyActivityOnPath:(NSString *)event.udata];
     }
@@ -147,7 +147,7 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
     _kqFileDescriptor = kqueue();
     
     if( _kqFileDescriptor == -1 ) {
-        NSLog(@"Could not create kqueue. Error %d (%s)", errno, strerror(errno));
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Could not create kqueue. Error %d (%s)", errno, strerror(errno));
     }
     
     return _kqFileDescriptor;
