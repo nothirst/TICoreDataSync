@@ -300,14 +300,14 @@
     
     if( !syncChangeSetsToApply ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataFetchError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [pool release];
+        [pool drain];
         [self continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully];
         return;
     }
     
     if( [syncChangeSetsToApply count] < 1 ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"No other clients have uploaded any sync change sets, so proceeding to upload local sync commands");
-        [pool release];
+        [pool drain];
         [self continueAfterApplyingUnappliedSyncChangeSetsSuccessfully];
         return;
     }
@@ -324,7 +324,7 @@
         if( !success ) {
             TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save background context: %@", anyError);
             [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            [pool release];
+            [pool drain];
             [self continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully];
             return;
         }
@@ -333,7 +333,7 @@
         if( [self localSyncChangesToMergeContext] && ![[self localSyncChangesToMergeContext] save:&anyError] ) {
             TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save unsynchroinzed sync changes context, after saving background context: %@", anyError);
             [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            [pool release];
+            [pool drain];
             [self continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully];
             return;
         }
@@ -343,7 +343,7 @@
         if( !success ) {
             TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save applied sync change sets context, after saving background context: %@", anyError);
             [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            [pool release];
+            [pool drain];
             [self continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully];
             return;
         }
@@ -353,15 +353,15 @@
         if( !success ) {
             TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save unapplied sync change sets context, after saving applied sync change sets context: %@", anyError);
             [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            [pool release];
+            [pool drain];
             [self continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully];
             return;
         }
         
-        [pool release];
+        [pool drain];
         [self continueAfterApplyingUnappliedSyncChangeSetsSuccessfully];
     } else {
-        [pool release];
+        [pool drain];
         [self continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully];
     }
 }

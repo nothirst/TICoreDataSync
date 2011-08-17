@@ -175,7 +175,7 @@ const NSInteger FZAFileBlockLength = 4096;
                                          userInfo: nil];
             }
             free(bytesToWrite);
-            [inLoopPool release];
+            [inLoopPool drain];
             return NO;
         }
         NSData *outData = [NSData dataWithBytesNoCopy: bytesToWrite
@@ -184,7 +184,7 @@ const NSInteger FZAFileBlockLength = 4096;
         [writeHandle writeData: outData];
         CCHmacUpdate(&hmacContext, [outData bytes], [outData length]);
         
-        [inLoopPool release];
+        [inLoopPool drain];
     } while ([readHandle offsetInFile] < inputFileLength);
 
     size_t finalBlockSize = 0;
@@ -270,7 +270,7 @@ const NSInteger FZAFileBlockLength = 4096;
             FZAFileBlockLength : (size_t)bytesRemaining;
         NSData *readData = [readHandle readDataOfLength: bytesToRead];
         CCHmacUpdate(&hmacContext, [readData bytes], [readData length]);
-        [inLoopPool release];
+        [inLoopPool drain];
     } while ([readHandle offsetInFile] < cipherSize - CC_SHA256_DIGEST_LENGTH);
 
     uint8_t hmac[CC_SHA256_DIGEST_LENGTH];
@@ -370,7 +370,7 @@ const NSInteger FZAFileBlockLength = 4096;
                                                  length: sizeToWrite
                                            freeWhenDone: NO];
         [writeHandle writeData: plainData];
-        [inLoopPool release];
+        [inLoopPool drain];
     } while ([readHandle offsetInFile] < cipherSize - CC_SHA256_DIGEST_LENGTH);
     
     size_t finalBlockSize = 0;
