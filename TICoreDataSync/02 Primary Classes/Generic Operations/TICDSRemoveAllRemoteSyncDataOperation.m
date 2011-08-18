@@ -28,6 +28,9 @@
     
     [self ti_alertDelegateOnMainThreadWithSelector:@selector(removeAllSyncDataOperationWillRemoveAllSyncData:) waitUntilDone:YES];
     
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Clearing cryptor's password and salt");
+    [[self cryptor] clearPasswordAndSalt];
+    
     [self removeRemoteSyncDataDirectory];
 }
 
