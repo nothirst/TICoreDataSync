@@ -98,7 +98,7 @@
     
     [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationResumedFollowingEncryptionInstruction:) waitUntilDone:NO];
     
-    [pool release];
+    [pool drain];
     
     [self continueAfterRequestWhetherToEnableEncryption];
 }
@@ -508,7 +508,7 @@
     
     [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationResumedFollowingPasswordProvision:) waitUntilDone:NO];
     
-    [pool release];
+    [pool drain];
     [self continueAfterRequestForEncryptionPassword];
 }
 

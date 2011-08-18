@@ -136,7 +136,7 @@
     
     [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationResumedFollowingDocumentStructureCreationInstruction:) waitUntilDone:NO];
     
-    [pool release];
+    [pool drain];
     [self continueAfterRequestWhetherToCreateRemoteDocumentFileStructure];
 }
 
