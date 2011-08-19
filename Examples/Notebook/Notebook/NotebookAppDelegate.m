@@ -30,9 +30,14 @@
     [TICDSFileManagerBasedApplicationSyncManager 
      defaultApplicationSyncManager];
     
+    NSURL *dropboxLocation = [TICDSFileManagerBasedApplicationSyncManager localDropboxDirectoryLocation];
+    
+    NSAssert(dropboxLocation, @"Must be able to determine Dropbox location to run this example");
+    
+    NSLog(@"Using Dropbox Path: %@", dropboxLocation);
+    
     [manager setApplicationContainingDirectoryLocation:
-     [NSURL fileURLWithPath:
-      [@"~/Dropbox" stringByExpandingTildeInPath]]];
+     dropboxLocation];
     
     NSString *clientUuid = [[NSUserDefaults standardUserDefaults] 
                             stringForKey:@"NotebookAppSyncClientUUID"];
