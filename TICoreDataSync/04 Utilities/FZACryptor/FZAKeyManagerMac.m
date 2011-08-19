@@ -94,6 +94,7 @@ void FZAReportKeychainError(OSStatus keychainStatus, NSString *msg) {
     
     if( keychainStatus != noErr ) {
         // keychain item not found
+        TICDSLog(TICDSLogVerbosityEveryStep, @"FZACryptor Mac Key Manager couldn't find an existing keychain item to delete");
         return;
     }
     

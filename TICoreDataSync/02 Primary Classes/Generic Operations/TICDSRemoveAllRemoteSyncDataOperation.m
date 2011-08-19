@@ -29,6 +29,11 @@
     [self ti_alertDelegateOnMainThreadWithSelector:@selector(removeAllSyncDataOperationWillRemoveAllSyncData:) waitUntilDone:YES];
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Clearing cryptor's password and salt");
+    if( ![self cryptor] ) {
+        FZACryptor *aCryptor = [[FZACryptor alloc] init];
+        [self setCryptor:aCryptor];
+        [aCryptor release];
+    }
     [[self cryptor] clearPasswordAndSalt];
     
     [self removeRemoteSyncDataDirectory];
