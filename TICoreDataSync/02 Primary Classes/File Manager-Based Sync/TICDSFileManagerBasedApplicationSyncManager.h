@@ -21,6 +21,16 @@
     NSURL *_applicationContainingDirectoryLocation;
 }
 
+#pragma mark Dropbox-Related Methods
+/** @name Dropbox-Related Methods */
+
+/** Returns the location of the user's Dropbox directory, if one exists, by decoding the content in `~/.dropbox/host.db`, as described at https://www.dropbox.com/developers/desktop_apps.
+ 
+ @return The location of the user's Dropbox directory, or `nil` if no path could be found.
+ 
+ @warning This procedure has been marked "will likely be deprecated" by Dropbox. Do not rely on this as the only way to get hold of the user's Dropbox directory, and do not use it without checking with the user that it is the correct location. */
++ (NSURL *)localDropboxDirectoryLocation;
+
 /** @name Properties */
 
 /** The location of the directory that should contain the file structure for this application's synchronization. */

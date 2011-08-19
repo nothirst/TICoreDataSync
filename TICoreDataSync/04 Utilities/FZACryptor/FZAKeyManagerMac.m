@@ -99,6 +99,7 @@ void FZAReportKeychainError(OSStatus keychainStatus, NSString *msg) {
     
     keychainStatus = SecKeychainItemDelete(item);
     
+    CFRelease(item);
     if( keychainStatus == noErr ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"FZACryptor Mac Key Manager deleted keychain item");
     } else {
