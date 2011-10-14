@@ -13,6 +13,7 @@
 #import "TICDSSynchronizedManagedObjectContext.h"
 #import "TICDSSynchronizedManagedObject.h"
 #import "TICDSSyncConflict.h"
+#import "TICDSSynchronizationOperationManagedObjectContext.h"
 
 #pragma mark Operations
 #import "TICDSOperation.h"
@@ -73,6 +74,7 @@
 #import "TICDSUtilities.h"
 #import "TICDSLog.h"
 #import "TICDSError.h"
+#import "TICDSChangeIntegrityStoreManager.h"
 
 #pragma mark Encryption
 #import "FZACryptor.h"

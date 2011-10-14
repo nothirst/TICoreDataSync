@@ -1086,13 +1086,13 @@
     return _localSyncChangesToMergeCoreDataFactory;
 }
 
-- (NSManagedObjectContext *)backgroundApplicationContext
+- (TICDSSynchronizationOperationManagedObjectContext *)backgroundApplicationContext
 {
     if( _backgroundApplicationContext ) {
         return _backgroundApplicationContext;
     }
     
-    _backgroundApplicationContext = [[NSManagedObjectContext alloc] init];
+    _backgroundApplicationContext = [[TICDSSynchronizationOperationManagedObjectContext alloc] init];
     [_backgroundApplicationContext setPersistentStoreCoordinator:[self primaryPersistentStoreCoordinator]];
     [_backgroundApplicationContext setUndoManager:nil];
     
