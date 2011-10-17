@@ -467,6 +467,8 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"There are %u changes in this set", [syncChanges count]);
     
     syncChanges = [self syncChangesAfterCheckingForConflicts:syncChanges];
+	NSSortDescriptor *sequenceSort = [[NSSortDescriptor alloc] initWithKey:@"changeType" ascending:YES];
+    syncChanges = [syncChanges sortedArrayUsingDescriptors:[NSArray arrayWithObject:sequenceSort]];
     
     // Apply each object's changes in turn
     for( TICDSSyncChange *eachChange in syncChanges ) {
@@ -732,6 +734,9 @@
     }
     
     NSManagedObject *relatedObject = [self backgroundApplicationContextObjectForEntityName:[aSyncChange relatedObjectEntityName] syncIdentifier:[aSyncChange changedRelationships]];
+    if (relatedObject == nil) {
+        NSLog(@"%s related object nil! I was looking for %@ with the syncIdentifier: %@", __PRETTY_FUNCTION__, [aSyncChange relatedObjectEntityName], [aSyncChange changedRelationships]);
+    }
         
     [object setValue:relatedObject forKey:[aSyncChange relevantKey]];
     
