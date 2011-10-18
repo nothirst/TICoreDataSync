@@ -734,9 +734,6 @@
     }
     
     NSManagedObject *relatedObject = [self backgroundApplicationContextObjectForEntityName:[aSyncChange relatedObjectEntityName] syncIdentifier:[aSyncChange changedRelationships]];
-    if (relatedObject == nil) {
-        NSLog(@"%s related object nil! I was looking for %@ with the syncIdentifier: %@", __PRETTY_FUNCTION__, [aSyncChange relatedObjectEntityName], [aSyncChange changedRelationships]);
-    }
         
     [object setValue:relatedObject forKey:[aSyncChange relevantKey]];
     
