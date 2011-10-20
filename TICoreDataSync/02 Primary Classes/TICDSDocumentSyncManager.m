@@ -1110,9 +1110,8 @@
     [context setPersistentStoreCoordinator:[[self coreDataFactory] persistentStoreCoordinator]];
     [[self syncChangesMOCs] setValue:context forKey:[self keyForContext:aContext]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncChangesMocDidSave:) name:NSManagedObjectContextDidSaveNotification object:context];
-    [context release];
     
-    return context; // retained by dictionary
+    return [context autorelease];
 }
 
 - (NSManagedObjectContext *)syncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext
