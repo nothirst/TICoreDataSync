@@ -603,6 +603,9 @@
     
     NSString *identifier = [anOperation documentIdentifier];
     
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Removing integrity key from user defaults");
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:[TICDSUtilities userDefaultsKeyForIntegrityKeyForDocumentWithIdentifier:identifier]];
+    
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFinishDeletingDocumentWithIdentifier:), identifier];
     [self postDecreaseActivityNotification];
 }
