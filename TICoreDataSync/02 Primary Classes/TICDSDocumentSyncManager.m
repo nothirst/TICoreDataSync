@@ -28,7 +28,7 @@
 - (void)startWholeStoreDownloadProcess;
 - (void)bailFromDownloadProcessWithError:(NSError *)anError;
 
-- (void)addSyncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext;
+- (NSManagedObjectContext *)addSyncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext;
 - (NSString *)keyForContext:(NSManagedObjectContext *)aContext;
 
 - (void)startRegisteredDevicesInformationProcess;
@@ -1096,12 +1096,12 @@
     [self addSyncChangesMocForDocumentMoc:aContext];
 }
 
-- (void)addSyncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext
+- (NSManagedObjectContext *)addSyncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext
 {
     NSManagedObjectContext *context = [[self syncChangesMOCs] valueForKey:[self keyForContext:aContext]];
     
     if( context ) {
-        return;
+        return context;
     }
     
     [aContext setDocumentSyncManager:self];
@@ -1110,7 +1110,8 @@
     [context setPersistentStoreCoordinator:[[self coreDataFactory] persistentStoreCoordinator]];
     [[self syncChangesMOCs] setValue:context forKey:[self keyForContext:aContext]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncChangesMocDidSave:) name:NSManagedObjectContextDidSaveNotification object:context];
-    [context release];
+    
+    return [context autorelease];
 }
 
 - (NSManagedObjectContext *)syncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext
@@ -1118,7 +1119,9 @@
     NSManagedObjectContext *context = [[self syncChangesMOCs] valueForKey:[self keyForContext:aContext]];
     
     if( !context ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"SyncChanges MOC was requested for a managed object context that hasn't yet been added");
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"SyncChanges MOC was requested for a managed object context that hasn't yet been added, so adding it before proceeding");
+        
+        context = [self addSyncChangesMocForDocumentMoc:aContext];
     }
     
     return context;
