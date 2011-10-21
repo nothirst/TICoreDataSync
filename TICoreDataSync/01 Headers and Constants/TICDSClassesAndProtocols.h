@@ -513,11 +513,13 @@
 
 /** Informs the delegate that the document sync manager failed to synchronize the document.
  
- One possible cause of failure that you should test for is that sync failed because the integrity keys do not match. In this instance, you should alert the user and initiate a download of the whole store.
+ @warning One possible cause of failure that you should test for is that sync failed because the integrity keys do not match. In this instance, you should alert the user and initiate a download of the whole store.
  
  @param aSyncManager The document sync manager object that sent the message.
  @param anError The error that caused synchronization to fail. */
+@required
 - (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToSynchronizeWithError:(NSError *)anError;
+@optional
 
 /** Informs the delegate that the document sync manager finished synchronizing the document.
  
