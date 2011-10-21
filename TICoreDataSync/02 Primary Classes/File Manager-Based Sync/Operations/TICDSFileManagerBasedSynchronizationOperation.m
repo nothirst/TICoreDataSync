@@ -11,6 +11,33 @@
 
 @implementation TICDSFileManagerBasedSynchronizationOperation
 
+- (void)fetchRemoteIntegrityKey
+{
+    NSString *integrityDirectoryPath = [[self thisDocumentDirectoryPath] stringByAppendingPathComponent:TICDSIntegrityKeyDirectoryName];
+    
+    NSError *anyError = nil;
+    NSArray *contents = [[self fileManager] contentsOfDirectoryAtPath:integrityDirectoryPath error:&anyError];
+    
+    if( !contents ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeyDirectoryIsMissing underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        
+        [self fetchedRemoteIntegrityKey:nil];
+        return;
+    }
+    
+    for( NSString *eachFile in contents ) {
+        if( [eachFile length] < 5 ) {
+            continue;
+        }
+        
+        [self fetchedRemoteIntegrityKey:eachFile];
+        return;
+    }
+    
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeyDirectoryIsMissing underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+    [self fetchedRemoteIntegrityKey:nil];
+}
+
 - (void)buildArrayOfClientDeviceIdentifiers
 {
     NSError *anyError = nil;
@@ -162,6 +189,7 @@
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
+    [_thisDocumentDirectoryPath release], _thisDocumentDirectoryPath = nil;
     [_thisDocumentSyncChangesDirectoryPath release], _thisDocumentSyncChangesDirectoryPath = nil;
     [_thisDocumentSyncChangesThisClientDirectoryPath release], _thisDocumentSyncChangesThisClientDirectoryPath = nil;
     [_thisDocumentRecentSyncsThisClientFilePath release], _thisDocumentRecentSyncsThisClientFilePath = nil;
@@ -183,6 +211,7 @@
 
 #pragma mark -
 #pragma mark Properties
+@synthesize thisDocumentDirectoryPath = _thisDocumentDirectoryPath;
 @synthesize thisDocumentSyncChangesDirectoryPath = _thisDocumentSyncChangesDirectoryPath;
 @synthesize thisDocumentSyncChangesThisClientDirectoryPath = _thisDocumentSyncChangesThisClientDirectoryPath;
 @synthesize thisDocumentRecentSyncsThisClientFilePath = _thisDocumentRecentSyncsThisClientFilePath;

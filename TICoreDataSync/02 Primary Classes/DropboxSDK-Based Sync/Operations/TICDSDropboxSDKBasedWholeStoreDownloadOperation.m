@@ -74,6 +74,13 @@
     [[self restClient] loadFile:fileToDownload intoPath:[[self tempFileDirectoryPath] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename]];
 }
 
+- (void)fetchRemoteIntegrityKey
+{
+    NSString *directoryPath = [[self thisDocumentDirectoryPath] stringByAppendingPathComponent:TICDSIntegrityKeyDirectoryName];
+    
+    [[self restClient] loadMetadata:directoryPath];
+}
+
 #pragma mark -
 #pragma mark Rest Client Delegate
 #pragma mark Metadata
@@ -125,6 +132,21 @@
         [self sortOutWhichStoreIsNewest];
         return;
     }
+    
+    if( [[path lastPathComponent] isEqualToString:TICDSIntegrityKeyDirectoryName] ) {
+        for( DBMetadata *eachSubMetadata in [metadata contents] ) {
+            if( [[[eachSubMetadata path] lastPathComponent] length] < 5 ) {
+                continue;
+            }
+            
+            [self fetchedRemoteIntegrityKey:[[eachSubMetadata path] lastPathComponent]];
+            return;
+        }
+        
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeUnexpectedOrIncompleteFileLocationOrDirectoryStructure classAndMethod:__PRETTY_FUNCTION__]];
+        [self fetchedRemoteIntegrityKey:nil];
+        return;
+    }
 }
 
 - (void)restClient:(DBRestClient*)client metadataUnchangedAtPath:(NSString*)path
@@ -152,6 +174,12 @@
         
         // if we get here, we've got all the dates (or NSNulls)
         [self sortOutWhichStoreIsNewest];
+        return;
+    }
+    
+    if( [[path lastPathComponent] isEqualToString:TICDSIntegrityKeyDirectoryName] ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
+        [self fetchedRemoteIntegrityKey:nil];
         return;
     }
 }
@@ -232,6 +260,7 @@
 {
     [_dbSession release], _dbSession = nil;
     [_restClient release], _restClient = nil;
+    [_thisDocumentDirectoryPath release], _thisDocumentDirectoryPath = nil;
     [_thisDocumentWholeStoreDirectoryPath release], _thisDocumentWholeStoreDirectoryPath = nil;
 
     [super dealloc];
@@ -253,6 +282,7 @@
 #pragma mark Properties
 @synthesize dbSession = _dbSession;
 @synthesize restClient = _restClient;
+@synthesize thisDocumentDirectoryPath = _thisDocumentDirectoryPath;
 @synthesize thisDocumentWholeStoreDirectoryPath = _thisDocumentWholeStoreDirectoryPath;
 @synthesize wholeStoreModifiedDates = _wholeStoreModifiedDates;
 

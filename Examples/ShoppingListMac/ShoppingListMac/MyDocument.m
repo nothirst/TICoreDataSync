@@ -226,6 +226,13 @@ NSString * const kTISLDocumentSyncIdentifier = @"kTISLDocumentSyncIdentifier";
 {
     NSLog(@"Sync Error: %@", anError);
     [self decreaseActivity];
+    
+    if( [anError code] != TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeysDoNotMatch ) {
+        return;
+    }
+    
+    NSLog(@"Integrity keys don't match, so downloading whole store");
+    [aSyncManager initiateDownloadOfWholeStore];
 }
 
 - (void)documentSyncManagerDidFinishSynchronizing:(TICDSDocumentSyncManager *)aSyncManager

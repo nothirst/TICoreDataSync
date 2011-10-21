@@ -605,6 +605,7 @@
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Removing integrity key from user defaults");
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:[TICDSUtilities userDefaultsKeyForIntegrityKeyForDocumentWithIdentifier:identifier]];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFinishDeletingDocumentWithIdentifier:), identifier];
     [self postDecreaseActivityNotification];

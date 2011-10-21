@@ -621,6 +621,7 @@
 		388A3E72135707CA00824C88 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = "Tim Isted";
 			};
 			buildConfigurationList = 388A3E75135707CA00824C88 /* Build configuration list for PBXProject "ShoppingListMac" */;

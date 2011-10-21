@@ -28,6 +28,8 @@ NSString *gTICDSErrorStrings[] = {
     @"Encryption error",
     @"Unable to register a sync manager using delayed registration because the sync manager hasn't been configured properly",
     @"FZACryptor returned salt data when asked, but responded that it wasn't correctly configured to encrypt",
+    @"Synchronization failed because integrity keys do not match",
+    @"Synchronization failed because remote integrity key directory is missing; was the entire remote directory removed?",
 };
 
 #include <execinfo.h>

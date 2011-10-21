@@ -151,6 +151,8 @@
         [self fetchedRemoteIntegrityKey:eachFile];
         return;
     }
+    
+    [self fetchedRemoteIntegrityKey:nil];
 }
 
 - (void)fetchListOfIdentifiersOfAllRegisteredClientsForThisApplication

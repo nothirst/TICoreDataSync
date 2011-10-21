@@ -26,6 +26,8 @@
     
     NSURL *_localWholeStoreFileLocation;
     NSURL *_localAppliedSyncChangeSetsFileLocation;
+    
+    NSString *_integrityKey;
 }
 
 /** @name Methods Overridden by Subclasses */
@@ -44,6 +46,11 @@
  
  This method must call `downloadedAppliedSyncChangeSetsFileWithSuccess:` when finished. */
 - (void)downloadAppliedSyncChangeSetsFile;
+
+/** Fetch the integrity key for this document.
+ 
+ This method must call `fetchedRemoteIntegrityKey:` to provide the key. */
+- (void)fetchRemoteIntegrityKey;
 
 /** @name Callbacks */
 
@@ -68,15 +75,25 @@
  @param success `YES` if the applied sync change sets file was downloaded, otherwise `NO`. */
 - (void)downloadedAppliedSyncChangeSetsFileWithSuccess:(BOOL)success;
 
+/** Pass back the remote integrity key for this document.
+ 
+ If an error occurred, call `setError:` first, then specify `nil` for `aKey`.
+ 
+ @param aKey The remote integrity key, or `nil` if an error occurred. */
+- (void)fetchedRemoteIntegrityKey:(NSString *)aKey;
+
 /** @name Properties */
 
 /** The client identifier for the WholeStore to download. If this is not specified before the operation executes, the operation will determine which client uploaded a store most recently. */
 @property (retain) NSString *requestedWholeStoreClientIdentifier;
 
-/** The location of the whole store file to upload. */
+/** The destination for the whole store file. */
 @property (retain) NSURL *localWholeStoreFileLocation;
 
-/** The location of the applied sync change sets file to upload. */
+/** The destination for the applied sync change sets file. */
 @property (retain) NSURL *localAppliedSyncChangeSetsFileLocation;
+
+/** The integrity key of the newly-downloaded store. */
+@property (retain) NSString *integrityKey;
 
 @end

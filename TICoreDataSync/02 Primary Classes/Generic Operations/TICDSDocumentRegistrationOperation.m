@@ -384,6 +384,7 @@
             
         case TICDSRemoteFileStructureExistsResponseTypeDoesExist:
             TICDSLog(TICDSLogVerbosityEveryStep, @"Client's directory exists");
+            [self setClientHasPreviouslySynchronizedThisDocument:YES];
             
             [self beginCheckWhetherRemoteIntegrityKeyMatchesLocalKey];
             return;
@@ -424,7 +425,12 @@
     if( ![self integrityKey] ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Setting local integrity key");
         [self setIntegrityKey:aKey];
-        [self beginCreatingClientDirectoriesInRemoteDocumentDirectories];
+        
+        if( [self clientHasPreviouslySynchronizedThisDocument] ) {
+            [self operationDidCompleteSuccessfully];
+        } else {
+            [self beginCreatingClientDirectoriesInRemoteDocumentDirectories];
+        }
         return;
     }
     
@@ -578,6 +584,7 @@
 @synthesize paused = _paused;
 @synthesize documentWasDeleted = _documentWasDeleted;
 @synthesize shouldCreateDocumentFileStructure = _shouldCreateDocumentFileStructure;
+@synthesize clientHasPreviouslySynchronizedThisDocument = _clientHasPreviouslySynchronizedThisDocument;
 @synthesize documentIdentifier = _documentIdentifier;
 @synthesize documentDescription = _documentDescription;
 @synthesize clientDescription = _clientDescription;
