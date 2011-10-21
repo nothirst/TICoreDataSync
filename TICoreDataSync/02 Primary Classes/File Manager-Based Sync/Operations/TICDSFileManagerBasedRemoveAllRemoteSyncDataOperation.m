@@ -14,6 +14,13 @@
 - (void)removeRemoteSyncDataDirectory
 {
     NSError *anyError = nil;
+    
+    if( ![[self fileManager] fileExistsAtPath:[self applicationDirectoryPath]] ) {
+        // directory doesn't exist to delete, so deletion is 'complete'
+        [self removedRemoteSyncDataDirectoryWithSuccess:YES];
+        return;
+    }
+    
     BOOL success = [[self fileManager] removeItemAtPath:[self applicationDirectoryPath] error:&anyError];
     
     if( !success ) {

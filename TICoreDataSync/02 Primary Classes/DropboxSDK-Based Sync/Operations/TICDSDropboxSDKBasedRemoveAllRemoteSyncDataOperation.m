@@ -34,6 +34,12 @@
 
 - (void)restClient:(DBRestClient*)client deletePathFailedWithError:(NSError*)error
 {
+    if( [error code] == 404 ) {
+        // path didn't exist to delete, so deletion is 'complete'
+        [self removedRemoteSyncDataDirectoryWithSuccess:YES];
+        return;
+    }
+    
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
     // Should really check the path, but this is the only deletion in this operation
