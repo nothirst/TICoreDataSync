@@ -76,6 +76,8 @@
     NSUInteger _numberOfUnappliedSyncChangeSetsToFetch;
     NSUInteger _numberOfUnappliedSyncChangeSetsFetched;
     NSUInteger _numberOfUnappliedSyncChangeSetsThatFailedToFetch;
+    
+    NSString *_integrityKey;
 }
 
 #pragma mark Designated Initializer
@@ -90,6 +92,11 @@
 
 #pragma mark Overridden Methods
 /** @name Methods Overridden by Subclasses */
+
+/** Fetch the integrity key for this document.
+ 
+ This method must call `fetchedRemoteIntegrityKey:` to provide the key. */
+- (void)fetchRemoteIntegrityKey;
 
 /** Build an array of `NSString` identifiers for all clients that have synchronized with this document. 
  
@@ -127,6 +134,13 @@
 
 #pragma mark Callbacks
 /** @name Callbacks */
+
+/** Pass back the remote integrity key for this document.
+ 
+ If an error occurred, call `setError:` first, then specify `nil` for `aKey`.
+ 
+ @param aKey The remote integrity key, or `nil` if an error occurred. */
+- (void)fetchedRemoteIntegrityKey:(NSString *)aKey;
 
 /** Pass back the assembled `NSArray` of `NSString` `ClientDevice` identifiers.
  
@@ -203,6 +217,9 @@
 
 /** The warnings generated during this synchronization. */
 @property (retain) NSMutableArray *synchronizationWarnings;
+
+/** The integrity key provided either by the client to check existing data matches integrity, or set during registration for new documents. */
+@property (retain) NSString *integrityKey;
 
 /** @name File Locations */
 

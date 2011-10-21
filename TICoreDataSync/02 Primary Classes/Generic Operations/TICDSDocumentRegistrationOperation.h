@@ -36,6 +36,7 @@
     BOOL _paused;
     BOOL _documentWasDeleted;
     BOOL _shouldCreateDocumentFileStructure;
+    BOOL _clientHasPreviouslySynchronizedThisDocument;
     
     NSString *_documentIdentifier;
     NSString *_documentDescription;
@@ -240,6 +241,9 @@
 
 /** Used by the `TICDSDocumentSyncManager` to indicate whether to create the remote document file structure after finding out it doesn't exist. */
 @property (assign) BOOL shouldCreateDocumentFileStructure;
+
+/** Used to keep track of whether the document has previously been synchronized by this client. */
+@property (assign) BOOL clientHasPreviouslySynchronizedThisDocument;
 
 /** The document identifier. */
 @property (retain) NSString *documentIdentifier;

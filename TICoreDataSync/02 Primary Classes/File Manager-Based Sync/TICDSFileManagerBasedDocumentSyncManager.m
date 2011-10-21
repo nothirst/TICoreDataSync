@@ -173,6 +173,7 @@
 {
     TICDSFileManagerBasedWholeStoreDownloadOperation *operation = [[TICDSFileManagerBasedWholeStoreDownloadOperation alloc] initWithDelegate:self];
     
+    [operation setThisDocumentDirectoryPath:[self thisDocumentDirectoryPath]];
     [operation setThisDocumentWholeStoreDirectoryPath:[self thisDocumentWholeStoreDirectoryPath]];
     
     return [operation autorelease];
@@ -182,6 +183,7 @@
 {
     TICDSFileManagerBasedSynchronizationOperation *operation = [[TICDSFileManagerBasedSynchronizationOperation alloc] initWithDelegate:self];
     
+    [operation setThisDocumentDirectoryPath:[self thisDocumentDirectoryPath]];
     [operation setThisDocumentSyncChangesDirectoryPath:[self thisDocumentSyncChangesDirectoryPath]];
     [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
     [operation setThisDocumentRecentSyncsThisClientFilePath:[self thisDocumentRecentSyncsThisClientFilePath]];

@@ -269,6 +269,15 @@ shouldBeginSynchronizingAfterManagedObjectContextDidSave:
     NSLog(@"App client info: %@", information);
 }
 
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToSynchronizeWithError:(NSError *)anError
+{
+    if( [anError code] != TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeysDoNotMatch ) {
+        return;
+    }
+    
+    [aSyncManager initiateDownloadOfWholeStore];
+}
+
 - (IBAction)removeAllSyncData:(id)sender
 {
     [[[self documentSyncManager] applicationSyncManager] removeAllSyncDataFromRemote];

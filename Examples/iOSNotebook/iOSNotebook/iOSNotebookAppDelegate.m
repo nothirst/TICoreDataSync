@@ -211,6 +211,15 @@
     [[self managedObjectContext] mergeChangesFromContextDidSaveNotification:aNotification];
 }
 
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToSynchronizeWithError:(NSError *)anError
+{
+    if( [anError code] != TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeysDoNotMatch ) {
+        return;
+    }
+    
+    [aSyncManager initiateDownloadOfWholeStore];
+}
+
 #pragma mark -
 #pragma mark Application Lifecycle
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions

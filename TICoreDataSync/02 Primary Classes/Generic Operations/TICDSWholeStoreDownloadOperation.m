@@ -13,6 +13,7 @@
 - (void)beginCheckForMostRecentClientWholeStore;
 - (void)beginDownloadOfWholeStoreFile;
 - (void)beginDownloadOfAppliedSyncChangeSetsFile;
+- (void)beginDownloadOfIntegrityKey;
 
 @end
 
@@ -120,7 +121,7 @@
     }
     
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Successfully downloaded applied sync change sets file");
-    [self operationDidCompleteSuccessfully];
+    [self beginDownloadOfIntegrityKey];
 }
 
 #pragma mark Overridden Method
@@ -130,6 +131,29 @@
     [self downloadedAppliedSyncChangeSetsFileWithSuccess:NO];
 }
 
+#pragma mark - Integrity Key
+- (void)beginDownloadOfIntegrityKey
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Fetching remote integrity key for this store");
+    
+    [self fetchRemoteIntegrityKey];
+}
+
+- (void)fetchedRemoteIntegrityKey:(NSString *)aKey
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Fetched remote integrity key");
+    [self setIntegrityKey:aKey];
+    
+    [self operationDidCompleteSuccessfully];
+}
+
+#pragma mark Overridden Method
+- (void)fetchRemoteIntegrityKey
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self fetchedRemoteIntegrityKey:nil];
+}
+
 #pragma mark -
 #pragma mark Initialization and Deallocation
 - (void)dealloc
@@ -137,7 +161,8 @@
     [_requestedWholeStoreClientIdentifier release], _requestedWholeStoreClientIdentifier = nil;
     [_localWholeStoreFileLocation release], _localWholeStoreFileLocation = nil;
     [_localAppliedSyncChangeSetsFileLocation release], _localAppliedSyncChangeSetsFileLocation = nil;
-    
+    [_integrityKey release], _integrityKey = nil;
+
     [super dealloc];
 }
 
@@ -146,5 +171,6 @@
 @synthesize requestedWholeStoreClientIdentifier = _requestedWholeStoreClientIdentifier;
 @synthesize localWholeStoreFileLocation = _localWholeStoreFileLocation;
 @synthesize localAppliedSyncChangeSetsFileLocation = _localAppliedSyncChangeSetsFileLocation;
+@synthesize integrityKey = _integrityKey;
 
 @end

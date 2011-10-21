@@ -55,6 +55,7 @@
     TICDSDropboxSDKBasedWholeStoreDownloadOperation *operation = [[TICDSDropboxSDKBasedWholeStoreDownloadOperation alloc] initWithDelegate:self];
     
     [operation setDbSession:[self dbSession]];
+    [operation setThisDocumentDirectoryPath:[self thisDocumentDirectoryPath]];
     [operation setThisDocumentWholeStoreDirectoryPath:[self thisDocumentWholeStoreDirectoryPath]];
     
     return [operation autorelease];
@@ -78,6 +79,7 @@
     TICDSDropboxSDKBasedSynchronizationOperation *operation = [[TICDSDropboxSDKBasedSynchronizationOperation alloc] initWithDelegate:self];
     
     [operation setDbSession:[self dbSession]];
+    [operation setThisDocumentDirectoryPath:[self thisDocumentDirectoryPath]];
     [operation setThisDocumentSyncChangesDirectoryPath:[self thisDocumentSyncChangesDirectoryPath]];
     [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
     [operation setThisDocumentRecentSyncsThisClientFilePath:[self thisDocumentRecentSyncsThisClientFilePath]];
