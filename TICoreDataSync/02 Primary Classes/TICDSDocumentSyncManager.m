@@ -28,7 +28,7 @@
 - (void)startWholeStoreDownloadProcess;
 - (void)bailFromDownloadProcessWithError:(NSError *)anError;
 
-- (void)addSyncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext;
+- (NSManagedObjectContext *)addSyncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext;
 - (NSString *)keyForContext:(NSManagedObjectContext *)aContext;
 
 - (void)startRegisteredDevicesInformationProcess;
@@ -349,17 +349,23 @@
 }
 
 #pragma mark Helper File Directory Deletion and Recreation
-- (void)removeThenRecreateExistingHelperFileDirectory
+- (void)removeExistingHelperFileDirectory
 {
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Document was deleted, so deleting local helper files for this document");
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Removing existing helper file directory");
     
     NSError *anyError = nil;
     if( [[self fileManager] fileExistsAtPath:[[self helperFileDirectoryLocation] path]] && ![[self fileManager] removeItemAtPath:[[self helperFileDirectoryLocation] path] error:&anyError] ) {
         
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to delete existing local helper files for this document, but not absolutely catastrophic, so continuing. Error: %@", anyError);
     }
+}
+
+- (void)removeThenRecreateExistingHelperFileDirectory
+{
+    [self removeExistingHelperFileDirectory];
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Recreating document helper file directory");
+    NSError *anyError = nil;
     if( ![self createHelperFileDirectoryFileStructure:&anyError] ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to recreate helper file directory structure for this document, but probably related to a previous error so continuing. Error: %@", anyError);
     }
@@ -371,6 +377,7 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Registration operation paused to find out whether to create document structure");
     
     if( [anOperation documentWasDeleted] ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Document was deleted, so deleting local helper files for this document");
         [self removeThenRecreateExistingHelperFileDirectory];
         [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
     } else {
@@ -400,6 +407,7 @@
 #pragma mark Alerting Delegate that Client Was Deleted From Document
 - (void)registrationOperationDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:(TICDSDocumentRegistrationOperation *)anOperation
 {
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Document was deleted, so deleting local helper files for this document");
     [self removeThenRecreateExistingHelperFileDirectory];
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Alerting delegate that client was deleted from synchronizing document");
@@ -707,6 +715,12 @@
     
     [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didReplaceStoreWithDownloadedStoreAtURL:), finalWholeStoreLocation];
     
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Updating local integrity key to match newly-downloaded store");
+    [self setIntegrityKey:[anOperation integrityKey]];
+    NSString *userDefaultsIntegrityKey = [TICDSUtilities userDefaultsKeyForIntegrityKeyForDocumentWithIdentifier:[self documentIdentifier]];
+    [[NSUserDefaults standardUserDefaults] setValue:[self integrityKey] forKey:userDefaultsIntegrityKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Whole Store Download complete");
     [self ti_alertDelegateWithSelector:@selector(documentSyncManagerDidFinishDownloadingWholeStore:)];
     [self postDecreaseActivityNotification];
@@ -760,6 +774,7 @@
     
     [operation setShouldUseEncryption:[self shouldUseEncryption]];
     [operation setClientIdentifier:[self clientIdentifier]];
+    [operation setIntegrityKey:[self integrityKey]];
     // Set location of sync changes to merge file
     NSURL *syncChangesToMergeLocation = nil;
     if( [[self fileManager] fileExistsAtPath:[self syncChangesBeingSynchronizedStorePath]] ) {
@@ -880,6 +895,12 @@
 - (void)synchronizationOperation:(TICDSSynchronizationOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Synchronization Operation Failed to Complete with Error: %@", anError);
+    
+    if( [anError code] == TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeysDoNotMatch ) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Removing helper file directory because integrity keys do not match");
+        [self removeThenRecreateExistingHelperFileDirectory];
+    }
+    
     [self ti_alertDelegateWithSelector:@selector(documentSyncManager:didFailToSynchronizeWithError:), anError];
     [self postDecreaseActivityNotification];
 }
@@ -1096,12 +1117,12 @@
     [self addSyncChangesMocForDocumentMoc:aContext];
 }
 
-- (void)addSyncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext
+- (NSManagedObjectContext *)addSyncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext
 {
     NSManagedObjectContext *context = [[self syncChangesMOCs] valueForKey:[self keyForContext:aContext]];
     
     if( context ) {
-        return;
+        return context;
     }
     
     [aContext setDocumentSyncManager:self];
@@ -1110,7 +1131,8 @@
     [context setPersistentStoreCoordinator:[[self coreDataFactory] persistentStoreCoordinator]];
     [[self syncChangesMOCs] setValue:context forKey:[self keyForContext:aContext]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncChangesMocDidSave:) name:NSManagedObjectContextDidSaveNotification object:context];
-    [context release];
+    
+    return [context autorelease];
 }
 
 - (NSManagedObjectContext *)syncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext
@@ -1118,7 +1140,9 @@
     NSManagedObjectContext *context = [[self syncChangesMOCs] valueForKey:[self keyForContext:aContext]];
     
     if( !context ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"SyncChanges MOC was requested for a managed object context that hasn't yet been added");
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"SyncChanges MOC was requested for a managed object context that hasn't yet been added, so adding it before proceeding");
+        
+        context = [self addSyncChangesMocForDocumentMoc:aContext];
     }
     
     return context;

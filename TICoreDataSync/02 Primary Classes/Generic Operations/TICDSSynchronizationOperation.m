@@ -10,6 +10,8 @@
 
 @interface TICDSSynchronizationOperation () <TICoreDataFactoryDelegate>
 
+- (void)beginCheckWhetherRemoteIntegrityKeyMatchesLocalKey;
+
 - (void)beginFetchOfListOfClientDeviceIdentifiers;
 - (void)beginFetchOfListOfSyncCommandSetIdentifiers;
 
@@ -56,7 +58,48 @@
 
 - (void)main
 {
+    [self beginCheckWhetherRemoteIntegrityKeyMatchesLocalKey];
+}
+
+#pragma mark - INTEGRITY KEY
+- (void)beginCheckWhetherRemoteIntegrityKeyMatchesLocalKey
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Fetching remote integrity key");
+    
+    [self fetchRemoteIntegrityKey];
+}
+
+- (void)fetchedRemoteIntegrityKey:(NSString *)aKey
+{
+    if( !aKey && [self error] ) {
+        
+    }
+    
+    if( !aKey ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to fetch an integrity key: %@", [[self error] localizedDescription]);
+        
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    if( [self integrityKey] && ![[self integrityKey] isEqualToString:aKey] ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"The keys do not match: got %@, expecting %@", aKey, [self integrityKey]);
+        
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeysDoNotMatch classAndMethod:__PRETTY_FUNCTION__]];
+        
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Integrity keys match, so continuing synchronization");
     [self beginFetchOfListOfClientDeviceIdentifiers];
+}
+
+#pragma mark Overridden Method
+- (void)fetchRemoteIntegrityKey
+{
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
+    [self fetchedRemoteIntegrityKey:nil];
 }
 
 #pragma mark - LIST OF DEVICE IDENTIFIERS
@@ -1133,5 +1176,7 @@
 @synthesize numberOfUnappliedSyncChangeSetsToFetch = _numberOfUnappliedSyncChangeSetsToFetch;
 @synthesize numberOfUnappliedSyncChangeSetsFetched = _numberOfUnappliedSyncChangeSetsFetched;
 @synthesize numberOfUnappliedSyncChangeSetsThatFailedToFetch = _numberOfUnappliedSyncChangeSetsThatFailedToFetch;
+
+@synthesize integrityKey = _integrityKey;
 
 @end

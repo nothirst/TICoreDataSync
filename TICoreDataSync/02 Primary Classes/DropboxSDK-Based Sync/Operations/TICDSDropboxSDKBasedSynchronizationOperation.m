@@ -29,6 +29,14 @@
     return YES;
 }
 
+#pragma mark Integrity Key
+- (void)fetchRemoteIntegrityKey
+{
+    NSString *directoryPath = [[self thisDocumentDirectoryPath] stringByAppendingPathComponent:TICDSIntegrityKeyDirectoryName];
+    
+    [[self restClient] loadMetadata:directoryPath];
+}
+
 #pragma mark Sync Change Sets
 - (void)buildArrayOfClientDeviceIdentifiers
 {
@@ -124,6 +132,21 @@
         
         [self builtArrayOfClientSyncChangeSetIdentifiers:syncChangeSetIdentifiers forClientIdentifier:[path lastPathComponent]];
     }
+    
+    if( [[path lastPathComponent] isEqualToString:TICDSIntegrityKeyDirectoryName] ) {
+        for( DBMetadata *eachSubMetadata in [metadata contents] ) {
+            if( [[[eachSubMetadata path] lastPathComponent] length] < 5 ) {
+                continue;
+            }
+            
+            [self fetchedRemoteIntegrityKey:[[eachSubMetadata path] lastPathComponent]];
+            return;
+        }
+        
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeyDirectoryIsMissing classAndMethod:__PRETTY_FUNCTION__]];
+        [self fetchedRemoteIntegrityKey:nil];
+        return;
+    }
 }
 
 - (void)restClient:(DBRestClient*)client metadataUnchangedAtPath:(NSString*)path
@@ -144,6 +167,16 @@
     
     if( [[path stringByDeletingLastPathComponent] isEqualToString:[self thisDocumentSyncChangesDirectoryPath]] ) {
         [self builtArrayOfClientSyncChangeSetIdentifiers:nil forClientIdentifier:[path lastPathComponent]];
+        return;
+    }
+    
+    if( [[path lastPathComponent] isEqualToString:TICDSIntegrityKeyDirectoryName] ) {
+        if( [error code] == 404 ) {
+            [self setError:[TICDSError errorWithCode:TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeyDirectoryIsMissing underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
+        } else {
+            [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
+        }
+        [self fetchedRemoteIntegrityKey:nil];
         return;
     }
 }
@@ -248,6 +281,7 @@
     [_restClient release], _restClient = nil;
     [_clientIdentifiersForChangeSetIdentifiers release], _clientIdentifiersForChangeSetIdentifiers = nil;
     [_changeSetModificationDates release], _changeSetModificationDates = nil;
+    [_thisDocumentDirectoryPath release], _thisDocumentDirectoryPath = nil;
     [_thisDocumentSyncChangesDirectoryPath release], _thisDocumentSyncChangesDirectoryPath = nil;
     [_thisDocumentSyncChangesThisClientDirectoryPath release], _thisDocumentSyncChangesThisClientDirectoryPath = nil;
     [_thisDocumentRecentSyncsThisClientFilePath release], _thisDocumentRecentSyncsThisClientFilePath = nil;
@@ -273,6 +307,7 @@
 @synthesize restClient = _restClient;
 @synthesize clientIdentifiersForChangeSetIdentifiers = _clientIdentifiersForChangeSetIdentifiers;
 @synthesize changeSetModificationDates = _changeSetModificationDates;
+@synthesize thisDocumentDirectoryPath = _thisDocumentDirectoryPath;
 @synthesize thisDocumentSyncChangesDirectoryPath = _thisDocumentSyncChangesDirectoryPath;
 @synthesize thisDocumentSyncChangesThisClientDirectoryPath = _thisDocumentSyncChangesThisClientDirectoryPath;
 @synthesize thisDocumentRecentSyncsThisClientFilePath = _thisDocumentRecentSyncsThisClientFilePath;

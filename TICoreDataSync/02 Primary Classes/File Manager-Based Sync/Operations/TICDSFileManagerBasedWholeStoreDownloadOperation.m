@@ -118,6 +118,31 @@
     [self downloadedAppliedSyncChangeSetsFileWithSuccess:success];
 }
 
+- (void)fetchRemoteIntegrityKey
+{
+    NSString *integrityDirectoryPath = [[self thisDocumentDirectoryPath] stringByAppendingPathComponent:TICDSIntegrityKeyDirectoryName];
+    
+    NSError *anyError = nil;
+    NSArray *contents = [[self fileManager] contentsOfDirectoryAtPath:integrityDirectoryPath error:&anyError];
+    
+    if( !contents ) {
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self fetchedRemoteIntegrityKey:nil];
+        return;
+    }
+    
+    for( NSString *eachFile in contents ) {
+        if( [eachFile length] < 5 ) {
+            continue;
+        }
+        
+        [self fetchedRemoteIntegrityKey:eachFile];
+        return;
+    }
+    
+    [self fetchedRemoteIntegrityKey:nil];
+}
+
 #pragma mark -
 #pragma mark Paths
 - (NSString *)pathToWholeStoreFileForClientWithIdentifier:(NSString *)anIdentifier
@@ -134,6 +159,7 @@
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
+    [_thisDocumentDirectoryPath release], _thisDocumentDirectoryPath = nil;
     [_thisDocumentWholeStoreDirectoryPath release], _thisDocumentWholeStoreDirectoryPath = nil;
     
     [super dealloc];
@@ -141,6 +167,7 @@
 
 #pragma mark -
 #pragma mark Properties
+@synthesize thisDocumentDirectoryPath = _thisDocumentDirectoryPath;
 @synthesize thisDocumentWholeStoreDirectoryPath = _thisDocumentWholeStoreDirectoryPath;
 
 @end

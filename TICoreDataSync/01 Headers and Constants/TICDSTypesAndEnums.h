@@ -108,6 +108,8 @@ typedef enum _TICDSErrorCode {
     TICDSErrorCodeEncryptionError,
     TICDSErrorCodeUnableToRegisterUnconfiguredSyncManager,
     TICDSErrorCodeFZACryptorCreatedSaltDataButRespondedThatItWasNotCorrectlyConfiguredForEncryption,
+    TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeysDoNotMatch,
+    TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeyDirectoryIsMissing,
 } TICDSErrorCode;
 
 typedef enum _FZACryptorErrorCode {

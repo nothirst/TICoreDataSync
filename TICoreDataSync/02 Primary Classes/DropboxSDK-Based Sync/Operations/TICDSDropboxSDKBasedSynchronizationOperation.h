@@ -23,6 +23,7 @@
     NSMutableDictionary *_clientIdentifiersForChangeSetIdentifiers;
     NSMutableDictionary *_changeSetModificationDates;
     
+    NSString *_thisDocumentDirectoryPath;
     NSString *_thisDocumentSyncChangesDirectoryPath;
     NSString *_thisDocumentSyncChangesThisClientDirectoryPath;
     NSString *_thisDocumentRecentSyncsThisClientFilePath;
@@ -37,6 +38,9 @@
 @property (nonatomic, readonly) DBRestClient *restClient;
 
 /** @name Paths */
+
+/** The path to this document's directory. */
+@property (retain) NSString *thisDocumentDirectoryPath;
 
 /** The path to this document's `SyncChanges` directory. */
 @property (retain) NSString *thisDocumentSyncChangesDirectoryPath;
