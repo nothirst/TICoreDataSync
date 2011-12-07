@@ -36,6 +36,11 @@
 
 - (void)createSyncChangeForDeletion
 {
+    if ([TICDSChangeIntegrityStoreManager containsDeletionRecordForObjectID:[self objectID]]) {
+        [TICDSChangeIntegrityStoreManager removeObjectIDFromDeletionIntegrityStore:[self objectID]];
+        return;
+    }
+
     // nothing is stored in changedAttributes or changedRelationships at this time
     // if a conflict is encountered, the deletion will have to take precedent, resurrection is not possible
     [self createSyncChangeForChangeType:TICDSSyncChangeTypeObjectDeleted];

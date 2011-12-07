@@ -22,7 +22,7 @@
 #pragma mark Initial Sync Registration
 - (void)registerSyncManager
 {
-    [TICDSLog setVerbosity:TICDSLogVerbosityEveryStep];
+//    [TICDSLog setVerbosity:TICDSLogVerbosityEveryStep];
     
     TICDSDropboxSDKBasedApplicationSyncManager *manager = [TICDSDropboxSDKBasedApplicationSyncManager defaultApplicationSyncManager];
     

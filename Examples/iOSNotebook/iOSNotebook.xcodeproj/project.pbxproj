@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1382B2691448B8F800950A6F /* TICDSChangeIntegrityStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1382B2681448B8F800950A6F /* TICDSChangeIntegrityStoreManager.m */; };
+		1382B26D1448B90800950A6F /* TICDSSynchronizationOperationManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 1382B26C1448B90800950A6F /* TICDSSynchronizationOperationManagedObjectContext.m */; };
 		3821AF32138013CD004860A0 /* NoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3821AF30138013CD004860A0 /* NoteViewController.m */; };
 		3821AF33138013CD004860A0 /* NoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3821AF31138013CD004860A0 /* NoteViewController.xib */; };
 		384E17D9137D647B00629EFD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384E17D8137D647B00629EFD /* UIKit.framework */; };
@@ -138,6 +140,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1382B2671448B8F800950A6F /* TICDSChangeIntegrityStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSChangeIntegrityStoreManager.h; sourceTree = "<group>"; };
+		1382B2681448B8F800950A6F /* TICDSChangeIntegrityStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSChangeIntegrityStoreManager.m; sourceTree = "<group>"; };
+		1382B26B1448B90800950A6F /* TICDSSynchronizationOperationManagedObjectContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSynchronizationOperationManagedObjectContext.h; sourceTree = "<group>"; };
+		1382B26C1448B90800950A6F /* TICDSSynchronizationOperationManagedObjectContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSynchronizationOperationManagedObjectContext.m; sourceTree = "<group>"; };
 		3821AF2F138013CD004860A0 /* NoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteViewController.h; sourceTree = "<group>"; };
 		3821AF30138013CD004860A0 /* NoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteViewController.m; sourceTree = "<group>"; };
 		3821AF31138013CD004860A0 /* NoteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteViewController.xib; sourceTree = "<group>"; };
@@ -503,6 +509,8 @@
 		3890AA3A1397ABBB00CC64B5 /* 02 Primary Classes */ = {
 			isa = PBXGroup;
 			children = (
+				1382B26B1448B90800950A6F /* TICDSSynchronizationOperationManagedObjectContext.h */,
+				1382B26C1448B90800950A6F /* TICDSSynchronizationOperationManagedObjectContext.m */,
 				3890AA3B1397ABBB00CC64B5 /* DropboxSDK-Based Sync */,
 				3890AA551397ABBB00CC64B5 /* File Manager-Based Sync */,
 				3890AA6F1397ABBB00CC64B5 /* Generic Operations */,
@@ -655,6 +663,8 @@
 		3890AA981397ABBB00CC64B5 /* 04 Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				1382B2671448B8F800950A6F /* TICDSChangeIntegrityStoreManager.h */,
+				1382B2681448B8F800950A6F /* TICDSChangeIntegrityStoreManager.m */,
 				3890AA991397ABBB00CC64B5 /* FZACryptor */,
 				3890AAA21397ABBB00CC64B5 /* TICDSError.h */,
 				3890AAA31397ABBB00CC64B5 /* TICDSError.m */,
@@ -1012,6 +1022,8 @@
 				38AE077313EC58C9002F90A6 /* TICDSRemoveAllRemoteSyncDataOperation.m in Sources */,
 				38AE078813EC603F002F90A6 /* TICDSFileManagerBasedRemoveAllRemoteSyncDataOperation.m in Sources */,
 				38AE078B13EC606B002F90A6 /* TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation.m in Sources */,
+				1382B2691448B8F800950A6F /* TICDSChangeIntegrityStoreManager.m in Sources */,
+				1382B26D1448B90800950A6F /* TICDSSynchronizationOperationManagedObjectContext.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

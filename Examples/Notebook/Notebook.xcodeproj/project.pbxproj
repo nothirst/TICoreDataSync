@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1382B2701448B93200950A6F /* TICDSSynchronizationOperationManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 1382B26F1448B93200950A6F /* TICDSSynchronizationOperationManagedObjectContext.m */; };
+		1382B2741448B94000950A6F /* TICDSChangeIntegrityStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1382B2731448B94000950A6F /* TICDSChangeIntegrityStoreManager.m */; };
 		383EB805138ACACF00FB580A /* TICDSListOfApplicationRegisteredClientsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A280C0138AA57000C81675 /* TICDSListOfApplicationRegisteredClientsOperation.m */; };
 		383EB828138AD40B00FB580A /* TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 383EB827138AD40B00FB580A /* TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation.m */; };
 		386D4C701371712600020F72 /* TINBNote.m in Sources */ = {isa = PBXBuildFile; fileRef = 386D4C6F1371712600020F72 /* TINBNote.m */; };
@@ -85,6 +87,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1382B26E1448B93200950A6F /* TICDSSynchronizationOperationManagedObjectContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSynchronizationOperationManagedObjectContext.h; sourceTree = "<group>"; };
+		1382B26F1448B93200950A6F /* TICDSSynchronizationOperationManagedObjectContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSynchronizationOperationManagedObjectContext.m; sourceTree = "<group>"; };
+		1382B2721448B94000950A6F /* TICDSChangeIntegrityStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSChangeIntegrityStoreManager.h; sourceTree = "<group>"; };
+		1382B2731448B94000950A6F /* TICDSChangeIntegrityStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSChangeIntegrityStoreManager.m; sourceTree = "<group>"; };
 		383EB826138AD40B00FB580A /* TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation.h; sourceTree = "<group>"; };
 		383EB827138AD40B00FB580A /* TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation.m; sourceTree = "<group>"; };
 		386D4C6E1371712600020F72 /* TINBNote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TINBNote.h; sourceTree = "<group>"; };
@@ -347,6 +353,8 @@
 		389E1BD413856B7D00E9E7C1 /* 02 Primary Classes */ = {
 			isa = PBXGroup;
 			children = (
+				1382B26E1448B93200950A6F /* TICDSSynchronizationOperationManagedObjectContext.h */,
+				1382B26F1448B93200950A6F /* TICDSSynchronizationOperationManagedObjectContext.m */,
 				389E1BD513856B7D00E9E7C1 /* DropboxSDK-Based Sync */,
 				389E1BE913856B7D00E9E7C1 /* File Manager-Based Sync */,
 				389E1BFD13856B7D00E9E7C1 /* Generic Operations */,
@@ -495,6 +503,8 @@
 		389E1C2013856B7D00E9E7C1 /* 04 Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				1382B2721448B94000950A6F /* TICDSChangeIntegrityStoreManager.h */,
+				1382B2731448B94000950A6F /* TICDSChangeIntegrityStoreManager.m */,
 				389E1C2113856B7D00E9E7C1 /* FZACryptor */,
 				389E1C2A13856B7D00E9E7C1 /* TICDSError.h */,
 				389E1C2B13856B7D00E9E7C1 /* TICDSError.m */,
@@ -679,6 +689,8 @@
 				3892FB5F139A7CB80020C06C /* TICDSFileManagerBasedDocumentClientDeletionOperation.m in Sources */,
 				38AE077C13EC5CE1002F90A6 /* TICDSRemoveAllRemoteSyncDataOperation.m in Sources */,
 				38AE077F13EC5E8C002F90A6 /* TICDSFileManagerBasedRemoveAllRemoteSyncDataOperation.m in Sources */,
+				1382B2701448B93200950A6F /* TICDSSynchronizationOperationManagedObjectContext.m in Sources */,
+				1382B2741448B94000950A6F /* TICDSChangeIntegrityStoreManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

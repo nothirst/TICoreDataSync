@@ -15,7 +15,7 @@
 
 + (void)initialize
 {
-    [TICDSLog setVerbosity:TICDSLogVerbosityEveryStep];
+//    [TICDSLog setVerbosity:TICDSLogVerbosityEveryStep];
 }
 
 - (void)awakeFromNib
@@ -195,6 +195,8 @@ didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:
 {
     [[self managedObjectContext] 
      mergeChangesFromContextDidSaveNotification:aNotification];
+    
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, [self.managedObjectContext deletedObjects]);
 }
 
 - (BOOL)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager

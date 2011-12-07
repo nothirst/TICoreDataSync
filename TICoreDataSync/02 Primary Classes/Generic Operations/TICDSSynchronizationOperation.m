@@ -510,6 +510,8 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"There are %u changes in this set", [syncChanges count]);
     
     syncChanges = [self syncChangesAfterCheckingForConflicts:syncChanges];
+	NSSortDescriptor *sequenceSort = [[NSSortDescriptor alloc] initWithKey:@"changeType" ascending:YES];
+    syncChanges = [syncChanges sortedArrayUsingDescriptors:[NSArray arrayWithObject:sequenceSort]];
     
     // Apply each object's changes in turn
     for( TICDSSyncChange *eachChange in syncChanges ) {
@@ -1129,13 +1131,13 @@
     return _localSyncChangesToMergeCoreDataFactory;
 }
 
-- (NSManagedObjectContext *)backgroundApplicationContext
+- (TICDSSynchronizationOperationManagedObjectContext *)backgroundApplicationContext
 {
     if( _backgroundApplicationContext ) {
         return _backgroundApplicationContext;
     }
     
-    _backgroundApplicationContext = [[NSManagedObjectContext alloc] init];
+    _backgroundApplicationContext = [[TICDSSynchronizationOperationManagedObjectContext alloc] init];
     [_backgroundApplicationContext setPersistentStoreCoordinator:[self primaryPersistentStoreCoordinator]];
     [_backgroundApplicationContext setUndoManager:nil];
     

@@ -67,7 +67,7 @@
     NSManagedObjectContext *_localSyncChangesToMergeContext;
     
     NSPersistentStoreCoordinator *_primaryPersistentStoreCoordinator;
-    NSManagedObjectContext *_backgroundApplicationContext;
+    TICDSSynchronizationOperationManagedObjectContext *_backgroundApplicationContext;
     
     NSUInteger _numberOfSyncChangeSetIDArraysToFetch;
     NSUInteger _numberOfSyncChangeSetIDArraysFetched;
@@ -268,7 +268,7 @@
 @property (retain) NSPersistentStoreCoordinator *primaryPersistentStoreCoordinator;
 
 /** The managed object context (tied to the application's persistent store coordinator) in which `SyncChanges` are applied. */
-@property (nonatomic, retain) NSManagedObjectContext *backgroundApplicationContext;
+@property (nonatomic, retain) TICDSSynchronizationOperationManagedObjectContext *backgroundApplicationContext;
 
 #pragma mark Completion
 /** @name Completion */
