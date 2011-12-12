@@ -512,6 +512,7 @@
     syncChanges = [self syncChangesAfterCheckingForConflicts:syncChanges];
 	NSSortDescriptor *sequenceSort = [[NSSortDescriptor alloc] initWithKey:@"changeType" ascending:YES];
     syncChanges = [syncChanges sortedArrayUsingDescriptors:[NSArray arrayWithObject:sequenceSort]];
+    [sequenceSort release], sequenceSort = nil;
     
     // Apply each object's changes in turn
     for( TICDSSyncChange *eachChange in syncChanges ) {
