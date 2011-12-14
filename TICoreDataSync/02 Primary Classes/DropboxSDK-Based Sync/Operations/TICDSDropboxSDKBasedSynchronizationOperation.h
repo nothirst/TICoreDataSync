@@ -9,7 +9,7 @@
 #if TARGET_OS_IPHONE
 
 #import "TICDSSynchronizationOperation.h"
-#import "DropboxSDK.h"
+#import <DropboxSDK/DropboxSDK.h>
 
 /**
  `TICDSDropboxSDKBasedSynchronizationOperation` is a synchronization operation designed for use with a `TICDSDropboxSDKBasedDocumentSyncManager`.

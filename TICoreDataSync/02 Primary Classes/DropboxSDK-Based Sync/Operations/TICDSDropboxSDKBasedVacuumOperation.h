@@ -10,7 +10,7 @@
 
 #import "TICDSVacuumOperation.h"
 
-#import "DropboxSDK.h"
+#import <DropboxSDK/DropboxSDK.h>
 
 /**
  `TICDSDropboxSDKBasedVacuumOperation` is a vacuum operation designed for use with a `TICDSDropboxSDKBasedDocumentSyncManager`.

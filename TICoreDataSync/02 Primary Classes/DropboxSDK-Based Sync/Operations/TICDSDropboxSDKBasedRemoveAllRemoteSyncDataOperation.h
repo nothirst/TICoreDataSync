@@ -9,7 +9,7 @@
 #if TARGET_OS_IPHONE
 
 #import "TICDSRemoveAllRemoteSyncDataOperation.h"
-#import "DropboxSDK.h"
+#import <DropboxSDK/DropboxSDK.h>
 
 /**
  `TICDSDropboxSDKBasedApplicationRegistrationOperation` is an application registration operation designed for use with a `TICDSDropboxSDKBasedApplicationSyncManager`.

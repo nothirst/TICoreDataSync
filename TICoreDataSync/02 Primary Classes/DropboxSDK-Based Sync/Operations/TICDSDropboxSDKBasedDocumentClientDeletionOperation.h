@@ -9,7 +9,7 @@
 #if TARGET_OS_IPHONE
 
 #import "TICDSDocumentClientDeletionOperation.h"
-#import "DropboxSDK.h"
+#import <DropboxSDK/DropboxSDK.h>
 /**
  `TICDSDropboxSDKBasedDocumentClientDeletionOperation` is a "deletion of client's sync data from a document" operation designed for use with a `TICDSDropboxSDKBasedDocumentSyncManager`.
  */

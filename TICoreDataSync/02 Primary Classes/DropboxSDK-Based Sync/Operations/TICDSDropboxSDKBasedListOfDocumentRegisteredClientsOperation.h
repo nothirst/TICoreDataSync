@@ -9,7 +9,7 @@
 #if TARGET_OS_IPHONE
 
 #import "TICDSListOfPreviouslySynchronizedDocumentsOperation.h"
-#import "DropboxSDK.h"
+#import <DropboxSDK/DropboxSDK.h>
 
 /**
  `TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation` is a "List of Registered Clients for a Document" operation designed for use with a `TICDSDropboxSDKBasedDocumentSyncManager`.

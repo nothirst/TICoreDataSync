@@ -10,7 +10,7 @@
 
 #import "TICoreDataSync.h"
 
-#import "DropboxSDK.h"
+#import <DropboxSDK/DropboxSDK.h>
 
 @implementation TICDSDropboxSDKBasedApplicationSyncManager
 
