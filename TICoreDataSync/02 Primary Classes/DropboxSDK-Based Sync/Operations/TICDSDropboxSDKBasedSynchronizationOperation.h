@@ -27,6 +27,8 @@
     NSString *_thisDocumentSyncChangesDirectoryPath;
     NSString *_thisDocumentSyncChangesThisClientDirectoryPath;
     NSString *_thisDocumentRecentSyncsThisClientFilePath;
+    
+    NSMutableDictionary *_failedDownloadRetryDictionary;
 }
 
 /** @name Properties */
