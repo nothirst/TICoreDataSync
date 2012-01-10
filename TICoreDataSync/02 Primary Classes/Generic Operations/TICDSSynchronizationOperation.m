@@ -742,10 +742,29 @@
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Applying Insertion sync change");
     
-    NSManagedObject *object = [NSEntityDescription insertNewObjectForEntityForName:[aSyncChange objectEntityName] inManagedObjectContext:[self backgroundApplicationContext]];
-    [object setValuesForKeysWithDictionary:[aSyncChange changedAttributes]];
+    NSString *entityName = [aSyncChange objectEntityName];
+    NSString *ticdsSyncID = aSyncChange.objectSyncID;
+    NSManagedObject *object = nil;
     
-    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Inserted object: %@", object);
+    // Check to see if the object already exists before inserting it.
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    [fetchRequest setEntity:[NSEntityDescription entityForName:entityName inManagedObjectContext:[self backgroundApplicationContext]]];
+    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%K == %@", TICDSSyncIDAttributeName, ticdsSyncID]];
+    
+    NSError *anyError = nil;
+    NSArray *results = [[self backgroundApplicationContext] executeFetchRequest:fetchRequest error:&anyError];
+    if ([results count] == 0) {
+        object = [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:[self backgroundApplicationContext]];
+        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Inserted object: %@", object);
+    } else {
+        object = [results lastObject];
+        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Attempted to insert an object that already existed, updating existing object instead.: %@", object);
+    }
+    
+    [object setValuesForKeysWithDictionary:[aSyncChange changedAttributes]];
+
+    [fetchRequest release];
+    
 }
 
 - (void)applyAttributeChangeSyncChange:(TICDSSyncChange *)aSyncChange
