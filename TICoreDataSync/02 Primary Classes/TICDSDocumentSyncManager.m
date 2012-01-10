@@ -796,7 +796,7 @@
 
 - (void)moveUnsynchronizedSyncChangesToMergeLocation
 {
-    // check whether there's an existing set of sync changes to merg left over from a previous error
+    // check whether there's an existing set of sync changes to merge left over from a previous error
     if( [[self fileManager] fileExistsAtPath:[self syncChangesBeingSynchronizedStorePath]] ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"A SyncChangesBeingSynchronized.syncchg file already exists from a previous failed sync, so using it for this synchronization process. The most recent local sync changes won't be synchronized.");
         return;
