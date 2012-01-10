@@ -9,7 +9,7 @@
 #if TARGET_OS_IPHONE
 
 #import "TICDSListOfPreviouslySynchronizedDocumentsOperation.h"
-#import "DropboxSDK.h"
+#import <DropboxSDK/DropboxSDK.h>
 
 /**
  `TICDSDropboxSDKBasedListOfPreviouslySynchronizedDocumentsOperation` is a "List of Previously Synchronized Documents" operation designed for use with a `TICDSDropboxSDKBasedDocumentSyncManager`.

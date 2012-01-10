@@ -18,6 +18,9 @@
 /** A dictionary used to keep hold of the modification dates of sync change sets. */
 @property (nonatomic, retain) NSMutableDictionary *changeSetModificationDates;
 
+/** When we fail to download a changeset file we re-request it and put its path in this set so that we can keep track of the fact that we've re-requested it. */
+@property (nonatomic, copy) NSMutableDictionary *failedDownloadRetryDictionary;
+
 @end
 
 @implementation TICDSDropboxSDKBasedSynchronizationOperation
@@ -79,13 +82,15 @@
         finalFilePath = tempFilePath;
     }
     
-    [[self restClient] uploadFile:[finalFilePath lastPathComponent] toPath:[self thisDocumentSyncChangesThisClientDirectoryPath] fromPath:finalFilePath];
+    [[self restClient] uploadFile:[finalFilePath lastPathComponent] toPath:[self thisDocumentSyncChangesThisClientDirectoryPath] withParentRev:nil fromPath:finalFilePath];
+//    [[self restClient] uploadFile:[finalFilePath lastPathComponent] toPath:[self thisDocumentSyncChangesThisClientDirectoryPath] fromPath:finalFilePath];
 }
 
 #pragma mark Uploading Recent Sync File
 - (void)uploadRecentSyncFileAtLocation:(NSURL *)aLocation
 {
-    [[self restClient] uploadFile:[[aLocation path] lastPathComponent] toPath:[[self thisDocumentRecentSyncsThisClientFilePath] stringByDeletingLastPathComponent] fromPath:[aLocation path]];
+    [[self restClient] uploadFile:[[aLocation path] lastPathComponent] toPath:[[self thisDocumentRecentSyncsThisClientFilePath] stringByDeletingLastPathComponent] withParentRev:nil fromPath:[aLocation path]];
+//    [[self restClient] uploadFile:[[aLocation path] lastPathComponent] toPath:[[self thisDocumentRecentSyncsThisClientFilePath] stringByDeletingLastPathComponent] fromPath:[aLocation path]];
 }
 
 #pragma mark -
@@ -218,6 +223,22 @@
 - (void)restClient:(DBRestClient *)client loadFileFailedWithError:(NSError *)error
 {
     NSString *path = [[error userInfo] valueForKey:@"path"];
+    NSString *downloadDestination = [[error userInfo] valueForKey:@"destinationPath"];
+    
+    if (path != nil && downloadDestination != nil && [[self.failedDownloadRetryDictionary objectForKey:path] integerValue] < 5) {
+        NSInteger retryCount = [[self.failedDownloadRetryDictionary objectForKey:path] integerValue];
+        retryCount++;
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to download %@. Going for try number %d", path, retryCount);
+        [self.failedDownloadRetryDictionary setObject:[NSNumber numberWithInteger:retryCount] forKey:path];
+        [[self restClient] loadFile:path intoPath:downloadDestination];
+        return;
+    }
+    
+    if (path != nil) {
+        [self.failedDownloadRetryDictionary setNilValueForKey:path];
+    }
+    
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Download of %@ has failed after 5 attempts, we're falling through to the error condition.", path);
     
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
@@ -301,6 +322,15 @@
     return _restClient;
 }
 
+- (NSMutableDictionary *)failedDownloadRetryDictionary
+{
+    if (_failedDownloadRetryDictionary == nil) {
+        _failedDownloadRetryDictionary = [[NSMutableDictionary alloc] init];
+    }
+    
+    return _failedDownloadRetryDictionary;
+}
+
 #pragma mark -
 #pragma mark Properties
 @synthesize dbSession = _dbSession;
@@ -311,6 +341,7 @@
 @synthesize thisDocumentSyncChangesDirectoryPath = _thisDocumentSyncChangesDirectoryPath;
 @synthesize thisDocumentSyncChangesThisClientDirectoryPath = _thisDocumentSyncChangesThisClientDirectoryPath;
 @synthesize thisDocumentRecentSyncsThisClientFilePath = _thisDocumentRecentSyncsThisClientFilePath;
+@synthesize failedDownloadRetryDictionary = _failedDownloadRetryDictionary;
 
 @end
 

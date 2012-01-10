@@ -9,7 +9,7 @@
 #if TARGET_OS_IPHONE
 
 #import "TICoreDataSync.h"
-#import "DropboxSDK.h"
+#import <DropboxSDK/DropboxSDK.h>
 
 /**
  `TICDSDropboxSDKBasedDocumentRegistrationOperation` is a document registration operation designed for use with a `TICDSDropboxSDKBasedApplicationSyncManager`.

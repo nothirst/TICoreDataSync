@@ -9,7 +9,7 @@
 #if TARGET_OS_IPHONE
 
 #import "TICDSWholeStoreDownloadOperation.h"
-#import "DropboxSDK.h"
+#import <DropboxSDK/DropboxSDK.h>
 
 /**
  `TICDSDropboxSDKBasedWholeStoreDownloadOperation` is a "whole store download" operation designed for use with a `TICDSDropboxSDKBasedDocumentSyncManager`.
