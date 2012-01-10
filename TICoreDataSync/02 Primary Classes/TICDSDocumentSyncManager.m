@@ -1155,6 +1155,10 @@
 
 - (void)syncChangesMocDidSave:(NSNotification *)aNotification
 {
+    if ([aNotification object] != [self primaryDocumentMOC]) {
+        return;
+    }
+    
     if( ![NSThread isMainThread] ) {
         [self performSelectorOnMainThread:@selector(syncChangesMocDidSave:) withObject:aNotification waitUntilDone:NO];
         return;
