@@ -30,6 +30,8 @@
     
     TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeObjectInserted];
     
+    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", syncChange.objectSyncID, [self class]);
+    
     [syncChange setChangedAttributes:[self dictionaryOfAllAttributes]];
     [self createSyncChangesForAllRelationships];
 }
@@ -51,6 +53,7 @@
     // separate sync changes are created for each property change, whether it be relationship or attribute
     NSDictionary *changedValues = [self changedValues];
     
+    
     for( NSString *eachPropertyName in changedValues ) {
         id eachValue = [changedValues valueForKey:eachPropertyName];
         
@@ -59,6 +62,7 @@
             [self createSyncChangeIfApplicableForRelationship:relationship];
         } else {
             TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeAttributeChanged];
+            TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", syncChange.objectSyncID, [self class]);
             [syncChange setRelevantKey:eachPropertyName];
             [syncChange setChangedAttributes:eachValue];
         }
@@ -71,6 +75,8 @@
 {
     TICDSSyncChange *syncChange = [TICDSSyncChange syncChangeOfType:aType inManagedObjectContext:[self syncChangesMOC]];
     
+    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", syncChange.objectSyncID, [self class]);
+
     [syncChange setObjectSyncID:[self valueForKey:TICDSSyncIDAttributeName]];
     [syncChange setObjectEntityName:[[self entity] name]];
     [syncChange setLocalTimeStamp:[NSDate date]];
@@ -129,6 +135,8 @@
 {
     TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeToOneRelationshipChanged];
     
+    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", syncChange.objectSyncID, [self class]);
+
     [syncChange setRelatedObjectEntityName:[[aRelationship destinationEntity] name]];
     [syncChange setRelevantKey:[aRelationship name]];
     
@@ -170,6 +178,8 @@
         
         eachChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeToManyRelationshipChangedByAddingObject];
         
+        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", eachChange.objectSyncID, [self class]);
+
         [eachChange setRelatedObjectEntityName:[[aRelationship destinationEntity] name]];
         [eachChange setRelevantKey:[aRelationship name]];
         [eachChange setChangedRelationships:[eachObject valueForKey:TICDSSyncIDAttributeName]];
@@ -182,6 +192,8 @@
         
         eachChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeToManyRelationshipChangedByRemovingObject];
         
+        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", eachChange.objectSyncID, [self class]);
+
         [eachChange setRelatedObjectEntityName:[[aRelationship destinationEntity] name]];
         [eachChange setRelevantKey:[aRelationship name]];
         [eachChange setChangedRelationships:[eachObject valueForKey:TICDSSyncIDAttributeName]];
@@ -210,6 +222,15 @@
     
     // if not in a synchronized MOC, or we don't have a doc sync manager, exit now
     if( ![[self managedObjectContext] isKindOfClass:[TICDSSynchronizedManagedObjectContext class]] || ![(TICDSSynchronizedManagedObjectContext *)[self managedObjectContext] documentSyncManager] ) {
+        
+        if(![[self managedObjectContext] isKindOfClass:[TICDSSynchronizedManagedObjectContext class]]) {
+            TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Skipping sync change creation for %@ because our managedObjectContext is not a TICDSSynchronizedManagedObjectContext.", [self class]);
+        }
+        
+        if([[self managedObjectContext] isKindOfClass:[TICDSSynchronizedManagedObjectContext class]] && ![(TICDSSynchronizedManagedObjectContext *)[self managedObjectContext] documentSyncManager]) {
+            TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Skipping sync change creation for %@ because our managedObjectContext has no documentSyncManager.", [self class]);
+        }
+        
         return;
     }
     
