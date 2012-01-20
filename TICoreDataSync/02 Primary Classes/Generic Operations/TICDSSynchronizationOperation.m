@@ -761,6 +761,8 @@
         TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Attempted to insert an object that already existed, updating existing object instead.: %@", object);
     }
     
+    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", ticdsSyncID, entityName);
+
     [object setValuesForKeysWithDictionary:[aSyncChange changedAttributes]];
 
     [fetchRequest release];
@@ -774,11 +776,13 @@
     NSManagedObject *object = [self backgroundApplicationContextObjectForEntityName:[aSyncChange objectEntityName] syncIdentifier:[aSyncChange objectSyncID]];
     
     if( !object ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object not found locally for attribute change"); 
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object not found locally for attribute change [%@] %@", aSyncChange.objectSyncID, [aSyncChange objectEntityName]);
         [[self synchronizationWarnings] addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteAttributeSyncChange entityName:[aSyncChange objectEntityName] relatedObjectEntityName:nil attributes:[aSyncChange changedAttributes]]];
         return;
     }
     
+    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", aSyncChange.objectSyncID, [aSyncChange objectEntityName]);
+
     [object setValue:[aSyncChange changedAttributes] forKey:[aSyncChange relevantKey]];
     
     TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed attribute on object: %@", object);
@@ -791,13 +795,14 @@
     NSManagedObject *object = [self backgroundApplicationContextObjectForEntityName:[aSyncChange objectEntityName] syncIdentifier:[aSyncChange objectSyncID]];
     
     if( !object ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object not found locally for attribute change"); 
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object not found locally for attribute change [%@] %@", aSyncChange.objectSyncID, [aSyncChange objectEntityName]);
         [[self synchronizationWarnings] addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteRelationshipSyncChange entityName:[aSyncChange objectEntityName] relatedObjectEntityName:[aSyncChange relatedObjectEntityName] attributes:[aSyncChange changedAttributes]]];
         return;
     }
     
     NSManagedObject *relatedObject = [self backgroundApplicationContextObjectForEntityName:[aSyncChange relatedObjectEntityName] syncIdentifier:[aSyncChange changedRelationships]];
         
+    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", aSyncChange.objectSyncID, [aSyncChange objectEntityName]);
     [object setValue:relatedObject forKey:[aSyncChange relevantKey]];
     
     TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed to-one relationship on object: %@", object);
@@ -808,7 +813,7 @@
     NSManagedObject *object = [self backgroundApplicationContextObjectForEntityName:[aSyncChange objectEntityName] syncIdentifier:[aSyncChange objectSyncID]];
     
     if( !object ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object not found locally for attribute change"); 
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object not found locally for attribute change [%@] %@", aSyncChange.objectSyncID, [aSyncChange objectEntityName]);
         [[self synchronizationWarnings] addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteRelationshipSyncChange entityName:[aSyncChange objectEntityName] relatedObjectEntityName:[aSyncChange relatedObjectEntityName] attributes:[aSyncChange changedAttributes]]];
         return;
     }
@@ -830,6 +835,7 @@
     
     [object performSelector:NSSelectorFromString(selectorName) withObject:relatedObject];
     
+    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", aSyncChange.objectSyncID, [aSyncChange objectEntityName]);
     TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed to-many relationships on object: %@", object);
 }
 
@@ -840,14 +846,14 @@
     NSManagedObject *object = [self backgroundApplicationContextObjectForEntityName:[aSyncChange objectEntityName] syncIdentifier:[aSyncChange objectSyncID]];
     
     if( !object ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object not found locally for deletion sync change");
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object not found locally for deletion sync change [%@] %@", aSyncChange.objectSyncID, [aSyncChange objectEntityName]);
         [[self synchronizationWarnings] addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteDeletionSyncChange entityName:[aSyncChange objectEntityName] relatedObjectEntityName:nil attributes:nil]];
         return;
     }
     
+    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", aSyncChange.objectSyncID, [aSyncChange objectEntityName]);
+
     [[self backgroundApplicationContext] deleteObject:object];
-    
-    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Deleted object with ID: %@", [aSyncChange objectSyncID]);
 }
 
 #pragma mark - UPLOAD OF LOCAL SYNC COMMANDS
