@@ -111,8 +111,8 @@
         return;
     }
     
-    [[self restClient] uploadFile:TICDSDocumentInfoPlistFilenameWithExtension toPath:[self thisDocumentDirectoryPath] withParentRev:nil fromPath:finalFilePath];
-//    [[self restClient] uploadFile:TICDSDocumentInfoPlistFilenameWithExtension toPath:[self thisDocumentDirectoryPath] fromPath:finalFilePath];
+//    [[self restClient] uploadFile:TICDSDocumentInfoPlistFilenameWithExtension toPath:[self thisDocumentDirectoryPath] withParentRev:nil fromPath:finalFilePath];
+    [[self restClient] uploadFile:TICDSDocumentInfoPlistFilenameWithExtension toPath:[self thisDocumentDirectoryPath] fromPath:finalFilePath];
 }
 
 #pragma mark Integrity Key
@@ -146,8 +146,8 @@
         return;
     }
     
-    [[self restClient] uploadFile:aKey toPath:remoteDirectory withParentRev:nil fromPath:localFilePath];
-//    [[self restClient] uploadFile:aKey toPath:remoteDirectory fromPath:localFilePath];
+//    [[self restClient] uploadFile:aKey toPath:remoteDirectory withParentRev:nil fromPath:localFilePath];
+    [[self restClient] uploadFile:aKey toPath:remoteDirectory fromPath:localFilePath];
 }
 
 #pragma mark Adding Other Clients to Document's DeletedClients Directory

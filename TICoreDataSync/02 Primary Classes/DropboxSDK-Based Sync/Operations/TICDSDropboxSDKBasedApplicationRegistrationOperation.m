@@ -70,8 +70,8 @@
 
 - (void)copyReadMeTxtFileToRootOfGlobalAppDirectoryFromPath:(NSString *)aPath
 {
-    [[self restClient] uploadFile:[aPath lastPathComponent] toPath:[self applicationDirectoryPath] withParentRev:nil fromPath:[aPath stringByDeletingLastPathComponent]];
-//    [[self restClient] uploadFile:[aPath lastPathComponent] toPath:[self applicationDirectoryPath] fromPath:[aPath stringByDeletingLastPathComponent]];
+//    [[self restClient] uploadFile:[aPath lastPathComponent] toPath:[self applicationDirectoryPath] withParentRev:nil fromPath:[aPath stringByDeletingLastPathComponent]];
+    [[self restClient] uploadFile:[aPath lastPathComponent] toPath:[self applicationDirectoryPath] fromPath:[aPath stringByDeletingLastPathComponent]];
 }
 
 #pragma mark Salt
@@ -98,8 +98,8 @@
         return;
     }
     
-    [[self restClient] uploadFile:TICDSSaltFilenameWithExtension toPath:[[self encryptionDirectorySaltDataFilePath] stringByDeletingLastPathComponent] withParentRev:nil fromPath:tempFile];
-//    [[self restClient] uploadFile:TICDSSaltFilenameWithExtension toPath:[[self encryptionDirectorySaltDataFilePath] stringByDeletingLastPathComponent] fromPath:tempFile];
+//    [[self restClient] uploadFile:TICDSSaltFilenameWithExtension toPath:[[self encryptionDirectorySaltDataFilePath] stringByDeletingLastPathComponent] withParentRev:nil fromPath:tempFile];
+    [[self restClient] uploadFile:TICDSSaltFilenameWithExtension toPath:[[self encryptionDirectorySaltDataFilePath] stringByDeletingLastPathComponent] fromPath:tempFile];
 }
 
 #pragma mark Password Test
@@ -127,8 +127,8 @@
         return;
     }
     
-    [[self restClient] uploadFile:TICDSEncryptionTestFilenameWithExtension toPath:[[self encryptionDirectoryTestDataFilePath] stringByDeletingLastPathComponent] withParentRev:nil fromPath:finalFilePath];
-//    [[self restClient] uploadFile:TICDSEncryptionTestFilenameWithExtension toPath:[[self encryptionDirectoryTestDataFilePath] stringByDeletingLastPathComponent] fromPath:finalFilePath];
+//    [[self restClient] uploadFile:TICDSEncryptionTestFilenameWithExtension toPath:[[self encryptionDirectoryTestDataFilePath] stringByDeletingLastPathComponent] withParentRev:nil fromPath:finalFilePath];
+    [[self restClient] uploadFile:TICDSEncryptionTestFilenameWithExtension toPath:[[self encryptionDirectoryTestDataFilePath] stringByDeletingLastPathComponent] fromPath:finalFilePath];
 }
 
 - (void)fetchPasswordTestData
@@ -182,8 +182,8 @@
         }
     }
     
-    [[self restClient] uploadFile:TICDSDeviceInfoPlistFilenameWithExtension toPath:[self clientDevicesThisClientDeviceDirectoryPath] withParentRev:nil fromPath:finalFilePath];
-//    [[self restClient] uploadFile:TICDSDeviceInfoPlistFilenameWithExtension toPath:[self clientDevicesThisClientDeviceDirectoryPath] fromPath:finalFilePath];
+//    [[self restClient] uploadFile:TICDSDeviceInfoPlistFilenameWithExtension toPath:[self clientDevicesThisClientDeviceDirectoryPath] withParentRev:nil fromPath:finalFilePath];
+    [[self restClient] uploadFile:TICDSDeviceInfoPlistFilenameWithExtension toPath:[self clientDevicesThisClientDeviceDirectoryPath] fromPath:finalFilePath];
 }
 
 #pragma mark -

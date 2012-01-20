@@ -82,15 +82,15 @@
         finalFilePath = tempFilePath;
     }
     
-    [[self restClient] uploadFile:[finalFilePath lastPathComponent] toPath:[self thisDocumentSyncChangesThisClientDirectoryPath] withParentRev:nil fromPath:finalFilePath];
-//    [[self restClient] uploadFile:[finalFilePath lastPathComponent] toPath:[self thisDocumentSyncChangesThisClientDirectoryPath] fromPath:finalFilePath];
+//    [[self restClient] uploadFile:[finalFilePath lastPathComponent] toPath:[self thisDocumentSyncChangesThisClientDirectoryPath] withParentRev:nil fromPath:finalFilePath];
+    [[self restClient] uploadFile:[finalFilePath lastPathComponent] toPath:[self thisDocumentSyncChangesThisClientDirectoryPath] fromPath:finalFilePath];
 }
 
 #pragma mark Uploading Recent Sync File
 - (void)uploadRecentSyncFileAtLocation:(NSURL *)aLocation
 {
-    [[self restClient] uploadFile:[[aLocation path] lastPathComponent] toPath:[[self thisDocumentRecentSyncsThisClientFilePath] stringByDeletingLastPathComponent] withParentRev:nil fromPath:[aLocation path]];
-//    [[self restClient] uploadFile:[[aLocation path] lastPathComponent] toPath:[[self thisDocumentRecentSyncsThisClientFilePath] stringByDeletingLastPathComponent] fromPath:[aLocation path]];
+//    [[self restClient] uploadFile:[[aLocation path] lastPathComponent] toPath:[[self thisDocumentRecentSyncsThisClientFilePath] stringByDeletingLastPathComponent] withParentRev:nil fromPath:[aLocation path]];
+    [[self restClient] uploadFile:[[aLocation path] lastPathComponent] toPath:[[self thisDocumentRecentSyncsThisClientFilePath] stringByDeletingLastPathComponent] fromPath:[aLocation path]];
 }
 
 #pragma mark -

@@ -54,14 +54,14 @@
         filePath = tempPath;
     }
     
-    [[self restClient] uploadFile:TICDSWholeStoreFilename toPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] withParentRev:nil fromPath:filePath];
-//    [[self restClient] uploadFile:TICDSWholeStoreFilename toPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] fromPath:filePath];
+//    [[self restClient] uploadFile:TICDSWholeStoreFilename toPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] withParentRev:nil fromPath:filePath];
+    [[self restClient] uploadFile:TICDSWholeStoreFilename toPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] fromPath:filePath];
 }
 
 - (void)uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectory
 {
-    [[self restClient] uploadFile:TICDSAppliedSyncChangeSetsFilename toPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] withParentRev:nil fromPath:[[self localAppliedSyncChangeSetsFileLocation] path]];
-//    [[self restClient] uploadFile:TICDSAppliedSyncChangeSetsFilename toPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] fromPath:[[self localAppliedSyncChangeSetsFileLocation] path]];
+//    [[self restClient] uploadFile:TICDSAppliedSyncChangeSetsFilename toPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] withParentRev:nil fromPath:[[self localAppliedSyncChangeSetsFileLocation] path]];
+    [[self restClient] uploadFile:TICDSAppliedSyncChangeSetsFilename toPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] fromPath:[[self localAppliedSyncChangeSetsFileLocation] path]];
 }
 
 - (void)checkWhetherThisClientWholeStoreDirectoryExists
