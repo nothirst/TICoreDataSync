@@ -291,17 +291,16 @@
 
 - (void)restClient:(DBRestClient*)client loadRevisionsFailedWithError:(NSError *)error
 {
+    // A failure in this case could be caused by the file not existing, so we attempt to upload the file with no parent revision. That, of course, has its own failure checks.
     NSString *path = [[error userInfo] valueForKey:@"path"];
     
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
-    
     if( [[path lastPathComponent] isEqualToString:[self.localSyncChangeSetFilePath lastPathComponent]] ) {
-        [self uploadedLocalSyncChangeSetFileSuccessfully:NO];
+        [self uploadLocalSyncChangeSetFileWithParentRevision:nil];
         return;
     }
     
     if( [[path lastPathComponent] isEqualToString:[self.recentSyncFilePath lastPathComponent]] ) {
-        [self uploadedRecentSyncFileSuccessfully:NO];
+        [self uploadRecentSyncFileWithParentRevision:nil];
         return;
     }
 }
