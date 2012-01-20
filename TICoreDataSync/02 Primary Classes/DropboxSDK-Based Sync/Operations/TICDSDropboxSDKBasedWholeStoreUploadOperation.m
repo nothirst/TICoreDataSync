@@ -10,6 +10,13 @@
 
 #import "TICoreDataSync.h"
 
+@interface TICDSDropboxSDKBasedWholeStoreUploadOperation ()
+
+- (void)uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithParentRevision:(NSString *)parentRevision;
+- (void)uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithParentRevision:(NSString *)parentRevision;
+
+@end
+
 
 @implementation TICDSDropboxSDKBasedWholeStoreUploadOperation
 
@@ -54,14 +61,39 @@
         filePath = tempPath;
     }
     
-//    [[self restClient] uploadFile:TICDSWholeStoreFilename toPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] withParentRev:nil fromPath:filePath];
-    [[self restClient] uploadFile:TICDSWholeStoreFilename toPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] fromPath:filePath];
+    [self.restClient loadRevisionsForFile:[[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] stringByAppendingPathComponent:TICDSWholeStoreFilename] limit:1];
+}
+
+- (void)uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithParentRevision:(NSString *)parentRevision
+{
+    NSError *anyError = nil;
+    BOOL success = YES;
+    NSString *filePath = [[self localWholeStoreFileLocation] path];
+    
+    if( [self shouldUseEncryption] ) {
+        NSString *tempPath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:[filePath lastPathComponent]];
+        
+        success = [[self cryptor] encryptFileAtLocation:[NSURL fileURLWithPath:filePath] writingToLocation:[NSURL fileURLWithPath:tempPath] error:&anyError];
+        if( !success ) {
+            [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+            [self uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:NO];
+            return;
+        }
+        
+        filePath = tempPath;
+    }
+    
+    [[self restClient] uploadFile:TICDSWholeStoreFilename toPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] withParentRev:parentRevision fromPath:filePath];
 }
 
 - (void)uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectory
 {
-//    [[self restClient] uploadFile:TICDSAppliedSyncChangeSetsFilename toPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] withParentRev:nil fromPath:[[self localAppliedSyncChangeSetsFileLocation] path]];
-    [[self restClient] uploadFile:TICDSAppliedSyncChangeSetsFilename toPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] fromPath:[[self localAppliedSyncChangeSetsFileLocation] path]];
+    [self.restClient loadRevisionsForFile:[[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename] limit:1];
+}
+
+- (void)uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithParentRevision:(NSString *)parentRevision
+{
+    [[self restClient] uploadFile:TICDSAppliedSyncChangeSetsFilename toPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] withParentRev:parentRevision fromPath:[[self localAppliedSyncChangeSetsFileLocation] path]];
 }
 
 - (void)checkWhetherThisClientWholeStoreDirectoryExists
@@ -174,6 +206,42 @@
     
     if( [path isEqualToString:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath]] ) {
         [self createdThisClientTemporaryWholeStoreDirectoryWithSuccess:NO];
+        return;
+    }
+}
+
+#pragma mark Revisions
+- (void)restClient:(DBRestClient*)client loadedRevisions:(NSArray *)revisions forFile:(NSString *)path
+{
+    NSString *parentRevision = nil;
+    if ([revisions count] > 0) {
+        parentRevision = [revisions objectAtIndex:0];
+    }
+    
+    if( [[path lastPathComponent] isEqualToString:TICDSWholeStoreFilename] ) {
+        [self uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithParentRevision:parentRevision];
+        return;
+    }
+
+    if( [[path lastPathComponent] isEqualToString:TICDSAppliedSyncChangeSetsFilename] ) {
+        [self uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithParentRevision:parentRevision];
+        return;
+    }
+}
+
+- (void)restClient:(DBRestClient*)client loadRevisionsFailedWithError:(NSError *)error
+{
+    NSString *path = [[error userInfo] valueForKey:@"path"];
+    
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
+    
+    if( [[path lastPathComponent] isEqualToString:TICDSWholeStoreFilename] ) {
+        [self uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:NO];
+        return;
+    }
+    
+    if( [[path lastPathComponent] isEqualToString:TICDSAppliedSyncChangeSetsFilename] ) {
+        [self uploadedAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:NO];
         return;
     }
 }

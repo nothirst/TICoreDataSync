@@ -111,8 +111,8 @@
         return;
     }
     
-//    [[self restClient] uploadFile:TICDSDocumentInfoPlistFilenameWithExtension toPath:[self thisDocumentDirectoryPath] withParentRev:nil fromPath:finalFilePath];
-    [[self restClient] uploadFile:TICDSDocumentInfoPlistFilenameWithExtension toPath:[self thisDocumentDirectoryPath] fromPath:finalFilePath];
+    // The document info plist will not exist in this point in the workflow. There is no point in doing the dance to figure out if there is a parent revision because there won't be one.
+    [[self restClient] uploadFile:TICDSDocumentInfoPlistFilenameWithExtension toPath:[self thisDocumentDirectoryPath] withParentRev:nil fromPath:finalFilePath];
 }
 
 #pragma mark Integrity Key
@@ -145,9 +145,9 @@
         [self savedIntegrityKeyWithSuccess:success];
         return;
     }
-    
-//    [[self restClient] uploadFile:aKey toPath:remoteDirectory withParentRev:nil fromPath:localFilePath];
-    [[self restClient] uploadFile:aKey toPath:remoteDirectory fromPath:localFilePath];
+  
+    // The integrity will not exist in this point in the workflow. There is no point in doing the dance to figure out if there is a parent revision because there won't be one.
+    [[self restClient] uploadFile:aKey toPath:remoteDirectory withParentRev:nil fromPath:localFilePath];
 }
 
 #pragma mark Adding Other Clients to Document's DeletedClients Directory

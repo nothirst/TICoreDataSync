@@ -21,6 +21,15 @@
 /** When we fail to download a changeset file we re-request it and put its path in this set so that we can keep track of the fact that we've re-requested it. */
 @property (nonatomic, copy) NSMutableDictionary *failedDownloadRetryDictionary;
 
+/** When uploading the local sync changes we need to first ask the Dropbox for any parent revisions. We store off the file path of the file we intend to upload while we get its revisions. */
+@property (nonatomic, copy) NSString *localSyncChangeSetFilePath;
+
+/** When uploading recent sync files we need to first ask the Dropbox for any parent revisions. We store off the file path of the file we intend to upload while we get its revisions. */
+@property (nonatomic, copy) NSString *recentSyncFilePath;
+
+- (void)uploadLocalSyncChangeSetFileWithParentRevision:(NSString *)parentRevision;
+- (void)uploadRecentSyncFileWithParentRevision:(NSString *)parentRevision;
+
 @end
 
 @implementation TICDSDropboxSDKBasedSynchronizationOperation
@@ -82,15 +91,25 @@
         finalFilePath = tempFilePath;
     }
     
-//    [[self restClient] uploadFile:[finalFilePath lastPathComponent] toPath:[self thisDocumentSyncChangesThisClientDirectoryPath] withParentRev:nil fromPath:finalFilePath];
-    [[self restClient] uploadFile:[finalFilePath lastPathComponent] toPath:[self thisDocumentSyncChangesThisClientDirectoryPath] fromPath:finalFilePath];
+    self.localSyncChangeSetFilePath = finalFilePath;
+    [self.restClient loadRevisionsForFile:[[self thisDocumentSyncChangesThisClientDirectoryPath] stringByAppendingPathComponent:[finalFilePath lastPathComponent]] limit:1];
+}
+
+- (void)uploadLocalSyncChangeSetFileWithParentRevision:(NSString *)parentRevision
+{
+    [[self restClient] uploadFile:[self.localSyncChangeSetFilePath lastPathComponent] toPath:[self thisDocumentSyncChangesThisClientDirectoryPath] withParentRev:parentRevision fromPath:self.localSyncChangeSetFilePath];
 }
 
 #pragma mark Uploading Recent Sync File
 - (void)uploadRecentSyncFileAtLocation:(NSURL *)aLocation
 {
-//    [[self restClient] uploadFile:[[aLocation path] lastPathComponent] toPath:[[self thisDocumentRecentSyncsThisClientFilePath] stringByDeletingLastPathComponent] withParentRev:nil fromPath:[aLocation path]];
-    [[self restClient] uploadFile:[[aLocation path] lastPathComponent] toPath:[[self thisDocumentRecentSyncsThisClientFilePath] stringByDeletingLastPathComponent] fromPath:[aLocation path]];
+    self.recentSyncFilePath = [aLocation path];
+    [self.restClient loadRevisionsForFile:[[[self thisDocumentRecentSyncsThisClientFilePath] stringByDeletingLastPathComponent] stringByAppendingPathComponent:[[aLocation path] lastPathComponent]] limit:1];
+}
+
+- (void)uploadRecentSyncFileWithParentRevision:(NSString *)parentRevision
+{
+    [[self restClient] uploadFile:[self.recentSyncFilePath lastPathComponent] toPath:[[self thisDocumentRecentSyncsThisClientFilePath] stringByDeletingLastPathComponent] withParentRev:parentRevision fromPath:self.recentSyncFilePath];
 }
 
 #pragma mark -
@@ -251,6 +270,42 @@
     }
 }
 
+#pragma mark Revisions
+- (void)restClient:(DBRestClient*)client loadedRevisions:(NSArray *)revisions forFile:(NSString *)path
+{
+    NSString *parentRevision = nil;
+    if ([revisions count] > 0) {
+        parentRevision = [revisions objectAtIndex:0];
+    }
+    
+    if( [[path lastPathComponent] isEqualToString:[self.localSyncChangeSetFilePath lastPathComponent]] ) {
+        [self uploadLocalSyncChangeSetFileWithParentRevision:parentRevision];
+        return;
+    }
+    
+    if( [[path lastPathComponent] isEqualToString:[self.recentSyncFilePath lastPathComponent]] ) {
+        [self uploadRecentSyncFileWithParentRevision:parentRevision];
+        return;
+    }
+}
+
+- (void)restClient:(DBRestClient*)client loadRevisionsFailedWithError:(NSError *)error
+{
+    NSString *path = [[error userInfo] valueForKey:@"path"];
+    
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
+    
+    if( [[path lastPathComponent] isEqualToString:[self.localSyncChangeSetFilePath lastPathComponent]] ) {
+        [self uploadedLocalSyncChangeSetFileSuccessfully:NO];
+        return;
+    }
+    
+    if( [[path lastPathComponent] isEqualToString:[self.recentSyncFilePath lastPathComponent]] ) {
+        [self uploadedRecentSyncFileSuccessfully:NO];
+        return;
+    }
+}
+
 #pragma mark Uploads
 - (void)restClient:(DBRestClient*)client uploadedFile:(NSString*)destPath from:(NSString*)srcPath
 {
@@ -342,6 +397,8 @@
 @synthesize thisDocumentSyncChangesThisClientDirectoryPath = _thisDocumentSyncChangesThisClientDirectoryPath;
 @synthesize thisDocumentRecentSyncsThisClientFilePath = _thisDocumentRecentSyncsThisClientFilePath;
 @synthesize failedDownloadRetryDictionary = _failedDownloadRetryDictionary;
+@synthesize localSyncChangeSetFilePath = _localSyncChangeSetFilePath;
+@synthesize recentSyncFilePath = _recentSyncFilePath;
 
 @end
 
