@@ -73,11 +73,11 @@ typedef enum _TICDSRemoteFileStructureDeletionResponseType {
 typedef enum _TICDSLogVerbosity {
     TICDSLogVerbosityNoLogging = 0,
     TICDSLogVerbosityErrorsOnly = 1,
+    TICDSLogVerbosityManagedObjectOutput = 9,
     TICDSLogVerbosityStartAndEndOfMainPhase = 10,
     TICDSLogVerbosityStartAndEndOfEachPhase = 20,
     TICDSLogVerbosityStartAndEndOfMainOperationPhase = 50,
     TICDSLogVerbosityStartAndEndOfEachOperationPhase = 60,
-    TICDSLogVerbosityManagedObjectOutput = 80,
     TICDSLogVerbosityEveryStep = 100,
     TICDSLogVerbosityDirectoryWatcherPickUpEventIssue = 200,
 } TICDSLogVerbosity;
