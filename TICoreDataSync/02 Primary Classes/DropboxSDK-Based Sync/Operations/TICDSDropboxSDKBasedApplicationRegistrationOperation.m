@@ -70,7 +70,7 @@
 
 - (void)copyReadMeTxtFileToRootOfGlobalAppDirectoryFromPath:(NSString *)aPath
 {
-    [[self restClient] uploadFile:[aPath lastPathComponent] toPath:[self applicationDirectoryPath] withParentRev:nil fromPath:[aPath stringByDeletingLastPathComponent]];
+    [[self restClient] uploadFile:[aPath lastPathComponent] toPath:[self applicationDirectoryPath] withParentRev:nil fromPath:aPath];
 }
 
 #pragma mark Salt

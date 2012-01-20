@@ -275,7 +275,7 @@
 {
     NSString *parentRevision = nil;
     if ([revisions count] > 0) {
-        parentRevision = [revisions objectAtIndex:0];
+        parentRevision = [[revisions objectAtIndex:0] rev];
     }
     
     if( [[path lastPathComponent] isEqualToString:[self.localSyncChangeSetFilePath lastPathComponent]] ) {
