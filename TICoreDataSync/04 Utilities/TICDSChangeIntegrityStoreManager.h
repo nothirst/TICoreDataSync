@@ -13,7 +13,7 @@
     NSMutableDictionary *_changeDictionary;
 }
 
-+ (TICDSChangeIntegrityStoreManager *)sharedChangeIntegrityStoreManager NS_RETURNS_NOT_RETAINED;
++ (TICDSChangeIntegrityStoreManager *)sharedChangeIntegrityStoreManager;
 
 + (BOOL)containsDeletionRecordForObjectID:(NSManagedObjectID *)objectID;
 
