@@ -44,23 +44,6 @@
 
 - (void)uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectory
 {
-    NSError *anyError = nil;
-    BOOL success = YES;
-    NSString *filePath = [[self localWholeStoreFileLocation] path];
-    
-    if( [self shouldUseEncryption] ) {
-        NSString *tempPath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:[filePath lastPathComponent]];
-        
-        success = [[self cryptor] encryptFileAtLocation:[NSURL fileURLWithPath:filePath] writingToLocation:[NSURL fileURLWithPath:tempPath] error:&anyError];
-        if( !success ) {
-            [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            [self uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:NO];
-            return;
-        }
-        
-        filePath = tempPath;
-    }
-    
     [self.restClient loadRevisionsForFile:[[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] stringByAppendingPathComponent:TICDSWholeStoreFilename] limit:1];
 }
 
