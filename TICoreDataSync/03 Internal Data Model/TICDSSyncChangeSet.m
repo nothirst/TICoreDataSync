@@ -34,6 +34,21 @@
 #pragma mark Initialization and Deallocation
 + (id)syncChangeSetWithIdentifier:(NSString *)anIdentifier fromClient:(NSString *)aClientIdentifier creationDate:(NSDate *)aDate inManagedObjectContext:(NSManagedObjectContext *)aMoc
 {
+    if (aDate != nil) { // Ensure that the date we're using doesn't already exist in the DB.
+        NSError *existingSyncChangeSetsFetchError = nil;
+        NSArray *existingSyncChangeSets = [TICDSSyncChangeSet ti_objectsMatchingPredicate:[NSPredicate predicateWithFormat:@"creationDate == %@", aDate] inManagedObjectContext:aMoc error:&existingSyncChangeSetsFetchError];
+        while (existingSyncChangeSetsFetchError == nil && [existingSyncChangeSets count] > 0) {
+            // Since we need to support Leopard we fall back to the deprecated addTimeInterval: method if dateByAddingTimeInterval: isn't available
+            if ([aDate respondsToSelector:@selector(dateByAddingTimeInterval:)]) {
+                aDate = [aDate performSelector:@selector(dateByAddingTimeInterval:) withObject:[NSNumber numberWithDouble:1]];
+            } else if ([aDate respondsToSelector:@selector(addTimeInterval:)]) {
+                aDate = [aDate performSelector:@selector(addTimeInterval:) withObject:[NSNumber numberWithDouble:1]];
+            }
+            
+            existingSyncChangeSets = [TICDSSyncChangeSet ti_objectsMatchingPredicate:[NSPredicate predicateWithFormat:@"creationDate == %@", aDate] inManagedObjectContext:aMoc error:&existingSyncChangeSetsFetchError];
+        }
+    }
+
     TICDSSyncChangeSet *changeSet = [self ti_objectInManagedObjectContext:aMoc];
     
     [changeSet setCreationDate:aDate];
