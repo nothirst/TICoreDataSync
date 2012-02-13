@@ -783,7 +783,9 @@
     
     TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", aSyncChange.objectSyncID, [aSyncChange objectEntityName]);
 
-    [object setValue:[aSyncChange changedAttributes] forKey:[aSyncChange relevantKey]];
+    [object willChangeValueForKey:[aSyncChange relevantKey]];
+    [object setPrimitiveValue:[aSyncChange changedAttributes] forKey:[aSyncChange relevantKey]];
+    [object didChangeValueForKey:[aSyncChange relevantKey]];
     
     TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed attribute on object: %@", object);
 }
@@ -803,8 +805,10 @@
     NSManagedObject *relatedObject = [self backgroundApplicationContextObjectForEntityName:[aSyncChange relatedObjectEntityName] syncIdentifier:[aSyncChange changedRelationships]];
         
     TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", aSyncChange.objectSyncID, [aSyncChange objectEntityName]);
-    [object setValue:relatedObject forKey:[aSyncChange relevantKey]];
-    
+    [object willChangeValueForKey:[aSyncChange relevantKey]];
+    [object setPrimitiveValue:relatedObject forKey:[aSyncChange relevantKey]];
+    [object didChangeValueForKey:[aSyncChange relevantKey]];
+
     TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed to-one relationship on object: %@", object);
 }
 
