@@ -23,6 +23,12 @@
 
 #pragma mark -
 #pragma mark Primary Sync Change Creation
+
++ (NSSet *)keysForWhichSyncChangesWillNotBeCreated
+{
+    return nil;
+}
+
 - (void)createSyncChangeForInsertion
 {
     // changedAttributes = a dictionary containing the values of _all_ the object's attributes at time it was saved
@@ -53,7 +59,14 @@
     // separate sync changes are created for each property change, whether it be relationship or attribute
     NSDictionary *changedValues = [self changedValues];
     
+    NSSet *propertyNamesToBeIgnored = [[self class] keysForWhichSyncChangesWillNotBeCreated];
     for( NSString *eachPropertyName in changedValues ) {
+        if (propertyNamesToBeIgnored != nil && [propertyNamesToBeIgnored containsObject:eachPropertyName]) {
+            NSLog(@"Not creating a change for %@.%@", [self class], eachPropertyName);
+            TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Not creating a change for %@.%@", [self class], eachPropertyName);
+            continue;
+        }
+        
         id eachValue = [changedValues valueForKey:eachPropertyName];
         
         NSRelationshipDescription *relationship = [[[self entity] relationshipsByName] valueForKey:eachPropertyName];
