@@ -62,7 +62,6 @@
     NSSet *propertyNamesToBeIgnored = [[self class] keysForWhichSyncChangesWillNotBeCreated];
     for( NSString *eachPropertyName in changedValues ) {
         if (propertyNamesToBeIgnored != nil && [propertyNamesToBeIgnored containsObject:eachPropertyName]) {
-            NSLog(@"Not creating a change for %@.%@", [self class], eachPropertyName);
             TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Not creating a change for %@.%@", [self class], eachPropertyName);
             continue;
         }
