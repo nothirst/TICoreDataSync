@@ -514,6 +514,7 @@
     syncChanges = [syncChanges sortedArrayUsingDescriptors:[NSArray arrayWithObject:sequenceSort]];
     [sequenceSort release], sequenceSort = nil;
     
+    NSInteger changeCount = 1;
     // Apply each object's changes in turn
     for( TICDSSyncChange *eachChange in syncChanges ) {
         switch( [[eachChange changeType] unsignedIntegerValue] ) {
@@ -539,6 +540,8 @@
                 [self applyObjectDeletedSyncChange:eachChange];
                 break;
         }
+        
+        [self ti_alertDelegateOnMainThreadWithSelector:@selector(synchronizationOperation:processedChangeNumber:outOfTotalChangeCount:fromClientNamed:) waitUntilDone:NO, [NSNumber numberWithInteger:changeCount++], [NSNumber numberWithInteger:[syncChanges count]], @""];
     }
     
     [[self backgroundApplicationContext] processPendingChanges];

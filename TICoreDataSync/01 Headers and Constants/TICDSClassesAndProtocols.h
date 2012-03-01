@@ -483,6 +483,15 @@
  @param aSyncManager The document sync manager object that sent the message. */
 - (void)documentSyncManagerDidBeginSynchronizing:(TICDSDocumentSyncManager *)aSyncManager;
 
+/** Informs the delegate that the operation has processed a sync change from a client.
+ 
+ @param aSyncManager The document sync manager object that sent the message. 
+ @param changeNumber The number of the change that was processed so it can be presented to the user like 2 of 10.
+ @param totalChangeCount The total number of changes that will be processed.
+ @param humanReadableClientName The name of the client whose changes we are processing, like Michael's MacBook Pro. */
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager processedChangeNumber:(NSNumber *)changeNumber outOfTotalChangeCount:(NSNumber *)totalChangeCount fromClientNamed:(NSString *)humanReadableClientName;
+
+
 /** Informs the delegate that the document sync manager paused the sychronization process because a conflict was detected.
  
  @param aSyncManager The document sync manager object that sent the message. 
@@ -709,6 +718,14 @@
 
 @protocol TICDSSynchronizationOperationDelegate <TICDSOperationDelegate>
 
+/** Informs the delegate that the operation has processed a sync change from a client. The delegate should pass this info on to its own delegate.
+ 
+ @param anOperation The operation object that sent the message.
+ @param changeNumber The number of the change that was processed so it can be presented to the user like 2 of 10.
+ @param totalChangeCount The total number of changes that will be processed.
+ @param humanReadableClientName The name of the client whose changes we are processing, like Michael's MacBook Pro. */
+- (void)synchronizationOperation:(TICDSSynchronizationOperation *)anOperation processedChangeNumber:(NSNumber *)changeNumber outOfTotalChangeCount:(NSNumber *)totalChangeCount fromClientNamed:(NSString *)humanReadableClientName;
+
 /** Informs the delegate that the operation has been paused because of a conflict. The delegate should query its own delegate to ask how to resolve the conflict.
  
  @param anOperation The operation object that sent the message.
@@ -719,6 +736,7 @@
  
  @param anOperation The operation object that sent the message. */
 - (void)synchronizationOperationResumedFollowingResolutionOfConflict:(TICDSSynchronizationOperation *)anOperation;
+
 
 @end
 
