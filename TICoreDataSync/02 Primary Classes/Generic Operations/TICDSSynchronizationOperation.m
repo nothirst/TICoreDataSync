@@ -10,6 +10,8 @@
 
 @interface TICDSSynchronizationOperation () <TICoreDataFactoryDelegate>
 
+@property (nonatomic, retain) NSString *changeSetProgressString;
+
 - (void)beginCheckWhetherRemoteIntegrityKeyMatchesLocalKey;
 
 - (void)beginFetchOfListOfClientDeviceIdentifiers;
@@ -413,7 +415,9 @@
 {
     BOOL shouldContinue = YES;
     
+    NSInteger changeSetCount = 1;
     for( TICDSSyncChangeSet *eachChangeSet in syncChangeSets ) {
+        self.changeSetProgressString = [NSString stringWithFormat:@"Change set %ld of %ld", changeSetCount++, [syncChangeSets count]];
         shouldContinue = [self beginApplyingSyncChangesInChangeSet:eachChangeSet];
         if( !shouldContinue ) {
             break;
@@ -541,7 +545,7 @@
                 break;
         }
         
-        [self ti_alertDelegateOnMainThreadWithSelector:@selector(synchronizationOperation:processedChangeNumber:outOfTotalChangeCount:fromClientNamed:) waitUntilDone:NO, [NSNumber numberWithInteger:changeCount++], [NSNumber numberWithInteger:[syncChanges count]], @""];
+        [self ti_alertDelegateOnMainThreadWithSelector:@selector(synchronizationOperation:processedChangeNumber:outOfTotalChangeCount:fromClientNamed:) waitUntilDone:NO, [NSNumber numberWithInteger:changeCount++], [NSNumber numberWithInteger:[syncChanges count]], self.changeSetProgressString];
     }
     
     [[self backgroundApplicationContext] processPendingChanges];
@@ -1213,5 +1217,6 @@
 @synthesize numberOfUnappliedSyncChangeSetsThatFailedToFetch = _numberOfUnappliedSyncChangeSetsThatFailedToFetch;
 
 @synthesize integrityKey = _integrityKey;
+@synthesize changeSetProgressString = _changeSetProgressString;
 
 @end
