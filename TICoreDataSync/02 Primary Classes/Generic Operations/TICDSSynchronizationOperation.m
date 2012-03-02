@@ -768,9 +768,16 @@
         TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Attempted to insert an object that already existed, updating existing object instead.: %@", object);
     }
     
-    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", ticdsSyncID, entityName);
+    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", aSyncChange, entityName);
 
-    [object setValuesForKeysWithDictionary:[aSyncChange changedAttributes]];
+    NSArray *changedAttributeKeys = [[aSyncChange changedAttributes] allKeys];
+    for (id key in changedAttributeKeys) {
+        [object willChangeValueForKey:key];
+        [object setPrimitiveValue:[[aSyncChange changedAttributes] valueForKey:key] forKey:key];
+        [object didChangeValueForKey:key];
+    }
+    
+    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Updated object: %@", object);
 
     [fetchRequest release];
     
