@@ -34,27 +34,31 @@
 #pragma mark Initialization and Deallocation
 + (id)syncChangeSetWithIdentifier:(NSString *)anIdentifier fromClient:(NSString *)aClientIdentifier creationDate:(NSDate *)aDate inManagedObjectContext:(NSManagedObjectContext *)aMoc
 {
-    if (aDate != nil) { // Ensure that the date we're using doesn't already exist in the DB.
+    NSDate *creationDate = [aDate copy];
+    if (creationDate != nil) { // Ensure that the date we're using doesn't already exist in the DB.
         NSError *existingSyncChangeSetsFetchError = nil;
-        NSArray *existingSyncChangeSets = [TICDSSyncChangeSet ti_objectsMatchingPredicate:[NSPredicate predicateWithFormat:@"creationDate == %@", aDate] inManagedObjectContext:aMoc error:&existingSyncChangeSetsFetchError];
+        NSArray *existingSyncChangeSets = [TICDSSyncChangeSet ti_objectsMatchingPredicate:[NSPredicate predicateWithFormat:@"creationDate == %@", creationDate] inManagedObjectContext:aMoc error:&existingSyncChangeSetsFetchError];
+        
         while (existingSyncChangeSetsFetchError == nil && [existingSyncChangeSets count] > 0) {
             // Since we need to support Leopard we fall back to the deprecated addTimeInterval: method if dateByAddingTimeInterval: isn't available
-            if ([aDate respondsToSelector:@selector(dateByAddingTimeInterval:)]) {
-                aDate = [aDate performSelector:@selector(dateByAddingTimeInterval:) withObject:[NSNumber numberWithDouble:1]];
-            } else if ([aDate respondsToSelector:@selector(addTimeInterval:)]) {
-                aDate = [aDate performSelector:@selector(addTimeInterval:) withObject:[NSNumber numberWithDouble:1]];
+            if ([creationDate respondsToSelector:@selector(dateByAddingTimeInterval:)]) {
+                creationDate = [creationDate dateByAddingTimeInterval:1];
+            } else if ([creationDate respondsToSelector:@selector(addTimeInterval:)]) {
+                creationDate = [creationDate addTimeInterval:1];
             }
             
-            existingSyncChangeSets = [TICDSSyncChangeSet ti_objectsMatchingPredicate:[NSPredicate predicateWithFormat:@"creationDate == %@", aDate] inManagedObjectContext:aMoc error:&existingSyncChangeSetsFetchError];
+            existingSyncChangeSets = [TICDSSyncChangeSet ti_objectsMatchingPredicate:[NSPredicate predicateWithFormat:@"creationDate == %@", creationDate] inManagedObjectContext:aMoc error:&existingSyncChangeSetsFetchError];
         }
     }
 
     TICDSSyncChangeSet *changeSet = [self ti_objectInManagedObjectContext:aMoc];
     
-    [changeSet setCreationDate:aDate];
+    [changeSet setCreationDate:creationDate];
     [changeSet setSyncChangeSetIdentifier:anIdentifier];
     [changeSet setFileName:[anIdentifier stringByAppendingPathExtension:TICDSSyncChangeSetFileExtension]];
     [changeSet setClientIdentifier:aClientIdentifier];
+    
+    [creationDate release], creationDate = nil;
     
     return changeSet;
 }
