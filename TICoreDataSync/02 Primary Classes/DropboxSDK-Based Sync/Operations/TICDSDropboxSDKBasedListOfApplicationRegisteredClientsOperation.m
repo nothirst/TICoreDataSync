@@ -170,6 +170,8 @@
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
+    [_restClient setDelegate:nil];
+
     [_dbSession release], _dbSession = nil;
     [_restClient release], _restClient = nil;
     [_clientDevicesDirectoryPath release], _clientDevicesDirectoryPath = nil;
