@@ -40,7 +40,8 @@
         NSArray *existingSyncChangeSets = [TICDSSyncChangeSet ti_objectsMatchingPredicate:[NSPredicate predicateWithFormat:@"creationDate == %@", creationDate] inManagedObjectContext:aMoc error:&existingSyncChangeSetsFetchError];
         
         while (existingSyncChangeSetsFetchError == nil && [existingSyncChangeSets count] > 0) {
-            // Since we need to support Leopard we fall back to the deprecated addTimeInterval: method if dateByAddingTimeInterval: isn't available
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered a change set with a duplicate creation date time stamp, advancing to the next time stamp: %@", aDate);
+
             NSDateComponents *components = [[NSDateComponents alloc] init];
             [components setSecond:1];
             creationDate = [[NSCalendar currentCalendar] dateByAddingComponents:components toDate:creationDate options:0];
