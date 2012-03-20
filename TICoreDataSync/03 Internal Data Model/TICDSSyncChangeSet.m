@@ -41,11 +41,10 @@
         
         while (existingSyncChangeSetsFetchError == nil && [existingSyncChangeSets count] > 0) {
             // Since we need to support Leopard we fall back to the deprecated addTimeInterval: method if dateByAddingTimeInterval: isn't available
-            if ([creationDate respondsToSelector:@selector(dateByAddingTimeInterval:)]) {
-                creationDate = [creationDate dateByAddingTimeInterval:1];
-            } else if ([creationDate respondsToSelector:@selector(addTimeInterval:)]) {
-                creationDate = [creationDate addTimeInterval:1];
-            }
+            NSDateComponents *components = [[NSDateComponents alloc] init];
+            [components setSecond:1];
+            creationDate = [[NSCalendar currentCalendar] dateByAddingComponents:components toDate:creationDate options:0];
+            [components release], components = nil;
             
             existingSyncChangeSets = [TICDSSyncChangeSet ti_objectsMatchingPredicate:[NSPredicate predicateWithFormat:@"creationDate == %@", creationDate] inManagedObjectContext:aMoc error:&existingSyncChangeSetsFetchError];
         }
