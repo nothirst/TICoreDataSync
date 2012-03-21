@@ -57,9 +57,7 @@
     [changeSet setSyncChangeSetIdentifier:anIdentifier];
     [changeSet setFileName:[anIdentifier stringByAppendingPathExtension:TICDSSyncChangeSetFileExtension]];
     [changeSet setClientIdentifier:aClientIdentifier];
-    
-    [creationDate release], creationDate = nil;
-    
+        
     return changeSet;
 }
 
