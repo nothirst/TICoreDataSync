@@ -341,7 +341,9 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"Checking how many sync change sets need to be applied");
     
     NSError *anyError = nil;
-    NSArray *syncChangeSetsToApply = [TICDSSyncChangeSet ti_allObjectsInManagedObjectContext:[self unappliedSyncChangeSetsContext] sortedByKey:@"creationDate" ascending:YES error:&anyError];
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES], [NSSortDescriptor sortDescriptorWithKey:@"syncChangeSetIdentifier" ascending:YES], nil];
+    
+    NSArray *syncChangeSetsToApply = [TICDSSyncChangeSet ti_allObjectsInManagedObjectContext:[self unappliedSyncChangeSetsContext] sortedWithDescriptors:sortDescriptors error:&anyError];
     
     if( !syncChangeSetsToApply ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataFetchError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
