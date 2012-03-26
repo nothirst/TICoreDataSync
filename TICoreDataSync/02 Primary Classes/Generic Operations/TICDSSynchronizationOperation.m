@@ -11,6 +11,7 @@
 @interface TICDSSynchronizationOperation () <TICoreDataFactoryDelegate>
 
 @property (nonatomic, retain) NSString *changeSetProgressString;
+@property (nonatomic, readonly) NSNumberFormatter *uuidPrefixFormatter;
 
 - (void)beginCheckWhetherRemoteIntegrityKeyMatchesLocalKey;
 
@@ -57,6 +58,8 @@
 @end
 
 @implementation TICDSSynchronizationOperation
+
+NSInteger _uuidPrefix = 0;
 
 - (void)main
 {
@@ -896,7 +899,8 @@
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Renaming sync changes file ready for upload");
     
-    NSString *identifier = [TICDSUtilities uuidString];
+    NSString *identifier = [NSString stringWithFormat:@"%@-%@", [self.uuidPrefixFormatter stringFromNumber:[NSNumber numberWithInteger:_uuidPrefix]], [TICDSUtilities uuidString]];
+    _uuidPrefix++;
     
     NSString *filePath = [[self localSyncChangesToMergeLocation] path];
     filePath = [filePath stringByDeletingLastPathComponent];
@@ -1108,6 +1112,7 @@
         return _appliedSyncChangeSetsCoreDataFactory;
     }
     
+    NSLog(@"%s appliedSyncChangeSets path:%@", __PRETTY_FUNCTION__, [[self appliedSyncChangeSetsFileLocation] path]);
     TICDSLog(TICDSLogVerbosityEveryStep, @"Creating Core Data Factory (TICoreDataFactory)");
     _appliedSyncChangeSetsCoreDataFactory = [[TICoreDataFactory alloc] initWithMomdName:TICDSSyncChangeSetDataModelName];
     [_appliedSyncChangeSetsCoreDataFactory setPersistentStoreType:TICDSSyncChangeSetsCoreDataPersistentStoreType];
@@ -1135,6 +1140,7 @@
         return _unappliedSyncChangeSetsCoreDataFactory;
     }
     
+    NSLog(@"%s appliedSyncChangeSets path:%@", __PRETTY_FUNCTION__, [[self unappliedSyncChangeSetsFileLocation] path]);
     TICDSLog(TICDSLogVerbosityEveryStep, @"Creating Core Data Factory (TICoreDataFactory)");
     _unappliedSyncChangeSetsCoreDataFactory = [[TICoreDataFactory alloc] initWithMomdName:TICDSSyncChangeSetDataModelName];
     [_unappliedSyncChangeSetsCoreDataFactory setPersistentStoreType:TICDSSyncChangeSetsCoreDataPersistentStoreType];
@@ -1190,6 +1196,16 @@
     return _backgroundApplicationContext;
 }
 
+- (NSNumberFormatter *)uuidPrefixFormatter
+{
+    if (_uuidPrefixFormatter == nil) {
+        _uuidPrefixFormatter = [[NSNumberFormatter alloc] init];
+        [_uuidPrefixFormatter setFormat:@"000#"];
+    }
+    
+    return _uuidPrefixFormatter;
+}
+
 #pragma mark -
 #pragma mark Properties
 @synthesize paused = _paused;
@@ -1225,5 +1241,6 @@
 
 @synthesize integrityKey = _integrityKey;
 @synthesize changeSetProgressString = _changeSetProgressString;
+@synthesize uuidPrefixFormatter = _uuidPrefixFormatter;
 
 @end
