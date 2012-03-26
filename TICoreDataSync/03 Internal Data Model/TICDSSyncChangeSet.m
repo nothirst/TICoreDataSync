@@ -34,6 +34,7 @@
 #pragma mark Initialization and Deallocation
 + (id)syncChangeSetWithIdentifier:(NSString *)anIdentifier fromClient:(NSString *)aClientIdentifier creationDate:(NSDate *)aDate inManagedObjectContext:(NSManagedObjectContext *)aMoc
 {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, aDate);
     NSDate *creationDate = [aDate copy];
     if (creationDate != nil) { // Ensure that the date we're using doesn't already exist in the DB.
         NSError *existingSyncChangeSetsFetchError = nil;
@@ -41,13 +42,16 @@
         
         while (existingSyncChangeSetsFetchError == nil && [existingSyncChangeSets count] > 0) {
             TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered a change set with a duplicate creation date time stamp, advancing to the next time stamp: %@", aDate);
+            NSLog(@"%s %f", __PRETTY_FUNCTION__, [aDate timeIntervalSinceReferenceDate]);
+            NSLog(@"%s %f", __PRETTY_FUNCTION__, [[[existingSyncChangeSets objectAtIndex:0] creationDate] timeIntervalSinceReferenceDate]);
 
-            NSDateComponents *components = [[NSDateComponents alloc] init];
-            [components setSecond:1];
-            creationDate = [[NSCalendar currentCalendar] dateByAddingComponents:components toDate:creationDate options:0];
-            [components release], components = nil;
+//            NSDateComponents *components = [[NSDateComponents alloc] init];
+//            [components setSecond:1];
+//            creationDate = [[NSCalendar currentCalendar] dateByAddingComponents:components toDate:creationDate options:0];
+//            [components release], components = nil;
             
-            existingSyncChangeSets = [TICDSSyncChangeSet ti_objectsMatchingPredicate:[NSPredicate predicateWithFormat:@"creationDate == %@", creationDate] inManagedObjectContext:aMoc error:&existingSyncChangeSetsFetchError];
+//            existingSyncChangeSets = [TICDSSyncChangeSet ti_objectsMatchingPredicate:[NSPredicate predicateWithFormat:@"creationDate == %@", creationDate] inManagedObjectContext:aMoc error:&existingSyncChangeSetsFetchError];
+            existingSyncChangeSets = nil;
         }
     }
 
