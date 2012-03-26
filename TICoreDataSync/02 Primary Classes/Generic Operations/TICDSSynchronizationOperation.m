@@ -59,8 +59,6 @@
 
 @implementation TICDSSynchronizationOperation
 
-NSInteger _uuidPrefix = 0;
-
 - (void)main
 {
     [self beginCheckWhetherRemoteIntegrityKeyMatchesLocalKey];
@@ -891,6 +889,9 @@ NSInteger _uuidPrefix = 0;
 }
 
 #pragma mark - UPLOAD OF LOCAL SYNC CHANGES
+
+NSInteger _uuidPrefix = 0;
+
 - (void)beginUploadOfLocalSyncChanges
 {
     if( ![[self fileManager] fileExistsAtPath:[[self localSyncChangesToMergeLocation] path]] ) {
@@ -1114,7 +1115,6 @@ NSInteger _uuidPrefix = 0;
         return _appliedSyncChangeSetsCoreDataFactory;
     }
     
-    NSLog(@"%s appliedSyncChangeSets path:%@", __PRETTY_FUNCTION__, [[self appliedSyncChangeSetsFileLocation] path]);
     TICDSLog(TICDSLogVerbosityEveryStep, @"Creating Core Data Factory (TICoreDataFactory)");
     _appliedSyncChangeSetsCoreDataFactory = [[TICoreDataFactory alloc] initWithMomdName:TICDSSyncChangeSetDataModelName];
     [_appliedSyncChangeSetsCoreDataFactory setPersistentStoreType:TICDSSyncChangeSetsCoreDataPersistentStoreType];
@@ -1142,7 +1142,6 @@ NSInteger _uuidPrefix = 0;
         return _unappliedSyncChangeSetsCoreDataFactory;
     }
     
-    NSLog(@"%s appliedSyncChangeSets path:%@", __PRETTY_FUNCTION__, [[self unappliedSyncChangeSetsFileLocation] path]);
     TICDSLog(TICDSLogVerbosityEveryStep, @"Creating Core Data Factory (TICoreDataFactory)");
     _unappliedSyncChangeSetsCoreDataFactory = [[TICoreDataFactory alloc] initWithMomdName:TICDSSyncChangeSetDataModelName];
     [_unappliedSyncChangeSetsCoreDataFactory setPersistentStoreType:TICDSSyncChangeSetsCoreDataPersistentStoreType];
@@ -1202,7 +1201,7 @@ NSInteger _uuidPrefix = 0;
 {
     if (_uuidPrefixFormatter == nil) {
         _uuidPrefixFormatter = [[NSNumberFormatter alloc] init];
-        [_uuidPrefixFormatter setFormat:@"000#"];
+        [_uuidPrefixFormatter setPositiveFormat:@"0000"];
     }
     
     return _uuidPrefixFormatter;
