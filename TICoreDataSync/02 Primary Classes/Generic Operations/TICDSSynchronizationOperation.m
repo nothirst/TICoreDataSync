@@ -890,8 +890,6 @@
 
 #pragma mark - UPLOAD OF LOCAL SYNC CHANGES
 
-NSInteger _uuidPrefix = 0;
-
 - (void)beginUploadOfLocalSyncChanges
 {
     if( ![[self fileManager] fileExistsAtPath:[[self localSyncChangesToMergeLocation] path]] ) {
@@ -902,8 +900,8 @@ NSInteger _uuidPrefix = 0;
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Renaming sync changes file ready for upload");
     
-    NSString *identifier = [NSString stringWithFormat:@"%@-%@", [self.uuidPrefixFormatter stringFromNumber:[NSNumber numberWithInteger:_uuidPrefix]], [TICDSUtilities uuidString]];
-    _uuidPrefix++;
+    NSString *identifier = [NSString stringWithFormat:@"%@-%@", [self.uuidPrefixFormatter stringFromNumber:[NSNumber numberWithDouble:CFAbsoluteTimeGetCurrent()]], [TICDSUtilities uuidString]];
+    NSLog(@"%@", identifier);
     
     NSString *filePath = [[self localSyncChangesToMergeLocation] path];
     filePath = [filePath stringByDeletingLastPathComponent];
@@ -1201,7 +1199,7 @@ NSInteger _uuidPrefix = 0;
 {
     if (_uuidPrefixFormatter == nil) {
         _uuidPrefixFormatter = [[NSNumberFormatter alloc] init];
-        [_uuidPrefixFormatter setPositiveFormat:@"0000"];
+        [_uuidPrefixFormatter setPositiveFormat:@"0000000000.000000"];
     }
     
     return _uuidPrefixFormatter;
