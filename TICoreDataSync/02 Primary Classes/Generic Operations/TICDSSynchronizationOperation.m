@@ -901,7 +901,6 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"Renaming sync changes file ready for upload");
     
     NSString *identifier = [NSString stringWithFormat:@"%@-%@", [self.uuidPrefixFormatter stringFromNumber:[NSNumber numberWithDouble:CFAbsoluteTimeGetCurrent()]], [TICDSUtilities uuidString]];
-    NSLog(@"%@", identifier);
     
     NSString *filePath = [[self localSyncChangesToMergeLocation] path];
     filePath = [filePath stringByDeletingLastPathComponent];
