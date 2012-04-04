@@ -342,7 +342,7 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"Checking how many sync change sets need to be applied");
     
     NSError *anyError = nil;
-    NSArray *sortDescriptors = [NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES], [NSSortDescriptor sortDescriptorWithKey:@"syncChangeSetIdentifier" ascending:YES], nil];
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:[[[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:YES] autorelease], [[[NSSortDescriptor alloc] initWithKey:@"syncChangeSetIdentifier" ascending:YES] autorelease], nil];
     
     NSArray *syncChangeSetsToApply = [TICDSSyncChangeSet ti_allObjectsInManagedObjectContext:[self unappliedSyncChangeSetsContext] sortedWithDescriptors:sortDescriptors error:&anyError];
     

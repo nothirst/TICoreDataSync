@@ -78,6 +78,8 @@
     NSUInteger _numberOfUnappliedSyncChangeSetsThatFailedToFetch;
     
     NSString *_integrityKey;
+	NSString *_changeSetProgressString;
+	NSNumberFormatter *_uuidPrefixFormatter;
 }
 
 #pragma mark Designated Initializer

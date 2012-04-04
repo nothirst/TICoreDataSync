@@ -98,7 +98,7 @@
 /** @name Properties */
 
 /** An array used to keep track of the client identifiers while the operation is executing. */
-@property (nonatomic, retain) NSArray *synchronizedClientIdentifiers;
+@property (nonatomic, retain) NSMutableArray *synchronizedClientIdentifiers;
 
 /** A mutable dictionary used to keep track of the `deviceInfo.plist` dictionaries for each client while the operation is executing. */
 @property (nonatomic, retain) NSMutableDictionary *temporaryDeviceInfoDictionaries;
@@ -107,7 +107,7 @@
 @property (retain) NSDictionary *deviceInfoDictionaries;
 
 /** An array used to keep track of the document identifiers while the operation is executing. */
-@property (nonatomic, retain) NSArray *synchronizedDocumentIdentifiers;
+@property (nonatomic, retain) NSMutableArray *synchronizedDocumentIdentifiers;
 
 /** A Boolean indicating whether the operation should check which documents are synchronized by each client. */
 @property (assign) BOOL shouldIncludeRegisteredDocuments;
