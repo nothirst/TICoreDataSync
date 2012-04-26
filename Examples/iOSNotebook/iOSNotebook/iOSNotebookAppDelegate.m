@@ -10,9 +10,10 @@
 #import "RootViewController.h"
 #import "TICoreDataSync.h"
 #import "DropboxSettings.h"
-#import "DropboxSDK.h"
 
-@interface iOSNotebookAppDelegate () <DBSessionDelegate, DBLoginControllerDelegate, TICDSApplicationSyncManagerDelegate, TICDSDocumentSyncManagerDelegate>
+#import <DropboxSDK/DropboxSDK.h>
+
+@interface iOSNotebookAppDelegate () <DBSessionDelegate, TICDSApplicationSyncManagerDelegate, TICDSDocumentSyncManagerDelegate>
 - (void)registerSyncManager;
 @end
 
@@ -224,19 +225,15 @@
 #pragma mark Application Lifecycle
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    DBSession *session = 
-    [[DBSession alloc] initWithConsumerKey:kTICDDropboxSyncKey consumerSecret:kTICDDropboxSyncSecret];
-    [session setDelegate:self];
-    [DBSession setSharedSession:session];
-    [session release];
-    
+	DBSession *session = [[DBSession alloc] initWithAppKey:kTICDDropboxSyncKey appSecret:kTICDDropboxSyncSecret root:kDBRootDropbox];
+	[session setDelegate:self];
+	[DBSession setSharedSession:session];
+	[session release];
+
     if( [session isLinked] ) {
         [self registerSyncManager];
     } else {
-        DBLoginController *loginController = [[DBLoginController alloc] init];
-        [loginController setDelegate:self];
-        [[self navigationController] pushViewController:loginController animated:NO];
-        [loginController release];
+        [[DBSession sharedSession] link];
     }
     
     [[self window] setRootViewController:[self navigationController]];
@@ -244,27 +241,28 @@
     return YES;
 }
 
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    if ([[DBSession sharedSession] handleOpenURL:url] == YES) {
+        if ([[DBSession sharedSession] isLinked]) {
+            NSLog(@"%s App linked successfully!", __PRETTY_FUNCTION__);
+            [self registerSyncManager];
+        } else {
+            NSLog(@"%s App was not linked successfully.", __PRETTY_FUNCTION__);
+        }
+    } else {
+        NSLog(@"%s DBSession couldn't handle opening the URL %@", __PRETTY_FUNCTION__, url);
+    }
+
+    return YES;
+}
+
 #pragma mark -
-#pragma mark DBSession Delegate
-- (void)sessionDidReceiveAuthorizationFailure:(DBSession *)session
-{
-    DBLoginController *loginController = [[DBLoginController alloc] init];
-    [loginController setDelegate:self];
-    
-    [[self navigationController] pushViewController:loginController animated:YES];
-    [loginController release];
-}
+#pragma mark DBSessionDelegate methods
 
-- (void)loginControllerDidLogin:(DBLoginController *)controller
+- (void)sessionDidReceiveAuthorizationFailure:(DBSession *)session userId:(NSString *)userId;
 {
-    [[self navigationController] popViewControllerAnimated:YES];
-    
-    [self registerSyncManager];
-}
-
-- (void)loginControllerDidCancel:(DBLoginController *)controller
-{
-    [[self navigationController] popViewControllerAnimated:YES];
+    NSLog(@"%s Could not create DBSession for user %@", __PRETTY_FUNCTION__, userId);
 }
 
 #pragma mark -
