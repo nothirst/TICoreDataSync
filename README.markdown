@@ -1,20 +1,16 @@
 #TICoreDataSync
 *Automatic synchronization for Core Data Apps, between any combination of Mac OS X and iOS: Mac to iPhone to iPad to iPod touch and back again*  
 
-Tim Isted  
-<http://www.timisted.net>
-Twitter: @[timisted](http://twitter.com/timisted)
+Original design and implementation by Tim Isted (@[timisted](http://twitter.com/timisted)) and Michael Fey (@[MrRooni](http://twitter.com/MrRooni))
 
 Jump to [List of Recent Changes](#recentchanges)
 
 ##License
-TICoreDataSync will eventually be offered under the **MIT** license. For the moment, it is not licensed for public use.
+TICoreDataSync is licensed under the **MIT** license.
 
 ##Summary
 
 TICoreDataSync is a collection of classes to enable synchronization via the Cloud (including Dropbox), or local wifi (coming soon), of Core Data-based applications (including document-based apps) between any number of clients running under Mac OS X or iOS. It's designed to be easy to extend if you need to synchronize via an option that isn't already supported.
-
-This is **beta** software and is not yet intended for use in a production environment.
 
 ##Requirements
 
@@ -136,6 +132,10 @@ At present, TICoreDataSync only supports file-manager-based sync, or iOS Dropbox
 There is currently no automated functionality to remove the entire sync data directory from a remote service, nor is it yet possible to remove a client's files from synchronizing an entire application. These tasks will be added soon.
 
 ##Recent Changes <a name="recentchanges"></a>
+
+* **2012-Apr-26**
+
+    Mostly due to MrRooni's recalcitrance to keeping the documentation in line with the current state of development, the docs may lag behind the implementation in certain cases. If you find this to be the case please file issues against it, or better yet correct it yourself.
 
 * **2011-Jul-31**
 
