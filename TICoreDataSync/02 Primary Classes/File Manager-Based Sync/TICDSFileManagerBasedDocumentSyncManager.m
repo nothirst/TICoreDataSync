@@ -65,7 +65,7 @@
         
         success = [_directoryWatcher watchDirectory:eachPath error:&anyError];
         if( !success ) {
-            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to watch %@ client's SyncChanges directory");
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to watch %@ client's SyncChanges directory", eachIdentifier);
             return;
         }
     }
