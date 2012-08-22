@@ -106,12 +106,12 @@ static TICDSChangeIntegrityStoreManager *sharedChangeIntegrityStoreManager = nil
 
 + (TICDSChangeIntegrityStoreManager *)sharedChangeIntegrityStoreManager
 {
-	@synchronized(self)
-	{
-		if (sharedChangeIntegrityStoreManager == nil) {
-			[[self alloc] init];
-		}
-	}
+	static dispatch_once_t                   onceToken = 0;
+	static TICDSChangeIntegrityStoreManager *sharedChangeIntegrityStoreManager = nil;
+
+	dispatch_once(&onceToken, ^{
+		sharedChangeIntegrityStoreManager = [[self alloc] init];
+	});
 
 	return sharedChangeIntegrityStoreManager;
 }
