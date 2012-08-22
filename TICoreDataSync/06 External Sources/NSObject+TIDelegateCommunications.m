@@ -45,7 +45,7 @@
     [invocation setArgument:&self atIndex:2];
         
     id eachArgument = nil;
-    for( int argumentIndex = 3; argumentIndex < [methodSignature numberOfArguments]; argumentIndex++ ) {
+    for( unsigned int argumentIndex = 3; argumentIndex < [methodSignature numberOfArguments]; argumentIndex++ ) {
         eachArgument = va_arg(args, id);
         
         [invocation setArgument:&eachArgument atIndex:argumentIndex];
