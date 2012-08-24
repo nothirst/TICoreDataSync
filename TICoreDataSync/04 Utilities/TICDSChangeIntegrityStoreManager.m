@@ -10,8 +10,8 @@
 
 @interface TICDSChangeIntegrityStoreManager ()
 
-@property (nonatomic, copy) NSMutableSet *deletionSet;
-@property (nonatomic, copy) NSMutableDictionary *changeDictionary;
+@property (nonatomic, retain) NSMutableSet *deletionSet;
+@property (nonatomic, retain) NSMutableDictionary *changeDictionary;
 
 @end
 
