@@ -19,7 +19,7 @@
 @property (nonatomic, retain) NSMutableDictionary *changeSetModificationDates;
 
 /** When we fail to download a changeset file we re-request it and put its path in this set so that we can keep track of the fact that we've re-requested it. */
-@property (nonatomic, copy) NSMutableDictionary *failedDownloadRetryDictionary;
+@property (nonatomic, retain) NSMutableDictionary *failedDownloadRetryDictionary;
 
 /** When uploading the local sync changes we need to first ask the Dropbox for any parent revisions. We store off the file path of the file we intend to upload while we get its revisions. */
 @property (nonatomic, copy) NSString *localSyncChangeSetFilePath;

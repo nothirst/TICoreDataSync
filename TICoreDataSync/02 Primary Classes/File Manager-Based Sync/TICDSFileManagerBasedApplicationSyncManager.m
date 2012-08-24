@@ -8,6 +8,10 @@
 
 #import "TICoreDataSync.h"
 
+#ifdef __MAC_OS_X_VERSION_MIN_REQUIRED
+#import <pwd.h>
+#endif
+
 @implementation TICDSFileManagerBasedApplicationSyncManager
 
 #pragma mark -
@@ -79,7 +83,13 @@
 
 + (NSURL *)localDropboxDirectoryLocation
 {
-    NSString *dropboxHostDbPath = @"~/.dropbox/host.db";
+    char *homeDirectory = nil;
+    
+#ifdef __MAC_OS_X_VERSION_MIN_REQUIRED
+    homeDirectory = getpwuid(getuid())->pw_dir;
+#endif
+    NSString *actualHomeDirectory = [NSString stringWithCString:homeDirectory encoding:NSUTF8StringEncoding];
+    NSString *dropboxHostDbPath = [actualHomeDirectory stringByAppendingFormat:@"/.dropbox/host.db"];
     
     dropboxHostDbPath = [dropboxHostDbPath stringByExpandingTildeInPath];
     

@@ -420,7 +420,7 @@
     
     NSInteger changeSetCount = 1;
     for( TICDSSyncChangeSet *eachChangeSet in syncChangeSets ) {
-        self.changeSetProgressString = [NSString stringWithFormat:@"Change set %ld of %ld", changeSetCount++, [syncChangeSets count]];
+        self.changeSetProgressString = [NSString stringWithFormat:@"Change set %ld of %lu", (long)changeSetCount++, (unsigned long)[syncChangeSets count]];
         shouldContinue = [self beginApplyingSyncChangesInChangeSet:eachChangeSet];
         if( !shouldContinue ) {
             break;
@@ -514,7 +514,7 @@
     NSError *anyError = nil;
     NSArray *syncChanges = [TICDSSyncChange ti_allObjectsInManagedObjectContext:syncChangesContext sortedWithDescriptors:[self syncChangeSortDescriptors] error:&anyError];
     
-    TICDSLog(TICDSLogVerbosityEveryStep, @"There are %u changes in this set", [syncChanges count]);
+    TICDSLog(TICDSLogVerbosityEveryStep, @"There are %lu changes in this set", (unsigned long)[syncChanges count]);
     
     syncChanges = [self syncChangesAfterCheckingForConflicts:syncChanges];
 	NSSortDescriptor *sequenceSort = [[NSSortDescriptor alloc] initWithKey:@"changeType" ascending:YES];

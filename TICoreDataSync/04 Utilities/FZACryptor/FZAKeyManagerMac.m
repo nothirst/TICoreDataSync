@@ -130,7 +130,7 @@ void FZAReportKeychainError(OSStatus keychainStatus, NSString *msg) {
         return nil;
     }
     NSData *key = [NSData dataWithBytes: keyBytes length: keyLength];
-    SecKeychainItemFreeContent(NULL, keyBytes);
+    SecKeychainItemFreeAttributesAndData(NULL, keyBytes);
     return key;
 }
 
