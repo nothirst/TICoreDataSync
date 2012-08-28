@@ -133,7 +133,7 @@
     [[self restClient] loadFile:[self encryptionDirectoryTestDataFilePath] intoPath:[[self tempFileDirectoryPath] stringByAppendingPathComponent:TICDSEncryptionTestFilenameWithExtension]];
 }
 
-#pragma makr Client Device Directories Methods
+#pragma mark Client Device Directories Methods
 - (void)checkWhetherRemoteClientDeviceDirectoryExists
 {
     [[self restClient] loadMetadata:[self clientDevicesThisClientDeviceDirectoryPath]];
