@@ -79,13 +79,13 @@
  @param ... The arguments to be passed to the selector (excluding the first argument, assumed to be `self`). 
  
  @return The Boolean returned by the delegate, or `NO` if the delegate does not respond to the selector. */
-- (BOOL)ti_boolFromDelegateWithSelector:(SEL)aSelector, ...;
+//- (BOOL)ti_boolFromDelegateWithSelector:(SEL)aSelector, ...;
 
 /** Alert a delegate with a given selector and provided (object) arguments.
  
  @param aSelector The selector to invoke.
  @param ... The arguments to be passed to the selector (excluding the first argument, assumed to be `self`). */
-- (void)ti_alertDelegateWithSelector:(SEL)aSelector, ...;
+//- (void)ti_alertDelegateWithSelector:(SEL)aSelector, ...;
 
 /** Alert a delegate on the main thread with a given selector and provided (object) arguments.
  

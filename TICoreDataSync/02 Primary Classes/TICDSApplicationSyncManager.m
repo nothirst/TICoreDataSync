@@ -38,11 +38,13 @@
 #pragma mark ACTIVITY
 - (void)postIncreaseActivityNotification
 {
+    NSLog(@"%s Is on main thread:%hhd", __PRETTY_FUNCTION__, [NSThread isMainThread]);
     [[NSNotificationCenter defaultCenter] postNotificationName:TICDSApplicationSyncManagerDidIncreaseActivityNotification object:self];
 }
 
 - (void)postDecreaseActivityNotification
 {
+    NSLog(@"%s Is on main thread:%hhd", __PRETTY_FUNCTION__, [NSThread isMainThread]);
     [[NSNotificationCenter defaultCenter] postNotificationName:TICDSApplicationSyncManagerDidDecreaseActivityNotification object:self];
 }
 
@@ -75,7 +77,11 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to register application sync manager");
     [self postIncreaseActivityNotification];
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidBeginRegistering:)];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerDidBeginRegistering:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManagerDidBeginRegistering:self];
+        });
+    }
     
     if( [self state] != TICDSApplicationSyncManagerStateConfigured ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Unable to register an application sync manager using registerPreConfiguredApplicationSyncManager - it hasn't already configured");
@@ -97,8 +103,13 @@
 - (void)bailFromRegistrationProcessWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from application registration process");
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToRegisterWithError:), anError];
-    [self postDecreaseActivityNotification];
+
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToRegisterWithError:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didFailToRegisterWithError:anError];
+        });
+    }
+[self postDecreaseActivityNotification];
 }
 
 - (BOOL)startRegistrationProcess:(NSError **)outError
@@ -128,22 +139,34 @@
 - (void)registrationOperationPausedToFindOutWhetherToEnableEncryption:(TICDSApplicationRegistrationOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"First-time Application Registration paused to find out whether to use encryption for this application");
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:)];
-    [self postDecreaseActivityNotification];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:self];
+        });
+    }
+[self postDecreaseActivityNotification];
 }
 
 - (void)registrationOperationResumedFollowingEncryptionInstruction:(TICDSApplicationRegistrationOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"First-time Application Registration resumed after finding out whether to use encryption");
     [self postIncreaseActivityNotification];
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidContinueRegistering:)];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerDidContinueRegistering:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManagerDidContinueRegistering:self];
+        });
+    }
 }
 
 #pragma mark Asking for the Encryption Password on Subsequent Registrations
 - (void)registrationOperationPausedToRequestEncryptionPassword:(TICDSApplicationRegistrationOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Encrypted application registration paused to ask for a password");
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:)];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:self];
+        });
+    }
     [self postDecreaseActivityNotification];
 }
 
@@ -151,7 +174,11 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Encrypted application registration resumed after being given a password");
     [self postIncreaseActivityNotification];
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidContinueRegistering:)];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerDidContinueRegistering:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManagerDidContinueRegistering:self];
+        });
+    }
 }
 
 #pragma mark Continuing after Gaining an Encryption Password
@@ -195,7 +222,11 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Finished registering application sync manager");
     
     // Registration Complete
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidFinishRegistering:)];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerDidFinishRegistering:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManagerDidFinishRegistering:self];
+        });
+    }
     [self postDecreaseActivityNotification];
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Resuming Operation Queues");
@@ -213,7 +244,11 @@
     [self setState:TICDSApplicationSyncManagerStateConfigured];
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Application Registration Operation was Cancelled");
     
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToRegisterWithError:), [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToRegisterWithError:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didFailToRegisterWithError:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+        });
+    }
     [self postDecreaseActivityNotification];
 }
 
@@ -221,7 +256,11 @@
 {
     [self setState:TICDSApplicationSyncManagerStateNotYetRegistered];
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Application Registration Operation Failed to Complete with Error: %@", anError);
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToRegisterWithError:), anError];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToRegisterWithError:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didFailToRegisterWithError:anError];
+        });
+    }
     [self postDecreaseActivityNotification];
 }
 
@@ -230,7 +269,11 @@
 - (void)requestListOfPreviouslySynchronizedDocuments
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to check for remote documents that have been previously synchronized");
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidBeginCheckingForPreviouslySynchronizedDocuments:)];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerDidBeginCheckingForPreviouslySynchronizedDocuments:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManagerDidBeginCheckingForPreviouslySynchronizedDocuments:self];
+        });
+    }
     [self postIncreaseActivityNotification];
     
     NSError *anyError = nil;
@@ -238,7 +281,11 @@
     
     if( !success ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Request for list of previously-synchronized documents failed with error: %@", anyError);
-        [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:), anyError];
+        if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:)]) {
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                [(id)self.delegate applicationSyncManager:self didFailToCheckForPreviouslySynchronizedDocumentsWithError:anyError];
+            });
+        }
         [self postDecreaseActivityNotification];
     }
 }
@@ -265,7 +312,11 @@
 - (void)gotNoPreviouslySynchronizedDocuments
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Didn't get any available documents");
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:)];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:self];
+        });
+    }
     [self postDecreaseActivityNotification];
 }
 
@@ -277,7 +328,11 @@
     }
     
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Found previously-synchronized remote documents: %@", anArray);
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFinishCheckingAndFoundPreviouslySynchronizedDocuments:), anArray];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFinishCheckingAndFoundPreviouslySynchronizedDocuments:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didFinishCheckingAndFoundPreviouslySynchronizedDocuments:anArray];
+        });
+    }
     [self postDecreaseActivityNotification];
 }
 
@@ -303,7 +358,11 @@
 - (void)listOfDocumentsOperation:(TICDSListOfPreviouslySynchronizedDocumentsOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"List of Previously-Synchronized Documents Operation Failed to Complete with Error: %@", anError);
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:), anError];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didFailToCheckForPreviouslySynchronizedDocumentsWithError:anError];
+        });
+    }
     [self postDecreaseActivityNotification];
 }
 
@@ -314,7 +373,11 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to download a previously synchronized document %@ to %@", anIdentifier, aLocation);
     
     [self postIncreaseActivityNotification];
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didBeginDownloadingDocumentWithIdentifier:), anIdentifier];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didBeginDownloadingDocumentWithIdentifier:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didBeginDownloadingDocumentWithIdentifier:anIdentifier];
+        });
+    }
     
     NSError *anyError = nil;
     BOOL success = [self startDocumentDownloadProcessForDocumentWithIdentifier:anIdentifier toLocation:aLocation error:&anyError];
@@ -328,7 +391,11 @@
 - (void)bailFromDocumentDownloadProcessForDocumentWithIdentifier:(NSString *)anIdentifier error:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from document download process");
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:), anIdentifier, anError];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didFailToDownloadDocumentWithIdentifier:anIdentifier error:anError];
+        });
+    }
     [self postDecreaseActivityNotification];
 }
 
@@ -386,7 +453,11 @@
 #pragma mark Post-Operation Work
 - (void)bailFromDocumentDownloadPostProcessingForOperation:(TICDSWholeStoreDownloadOperation *)anOperation withError:(NSError *)anError
 {
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], anError];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didFailToDownloadDocumentWithIdentifier:[[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier] error:anError];
+        });
+    }
     [self postDecreaseActivityNotification];
 }
 
@@ -400,8 +471,11 @@
     
     // Remove existing WholeStore, if necessary
     if( [[self fileManager] fileExistsAtPath:[finalWholeStoreLocation path]] ) {
-        [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atURL:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], finalWholeStoreLocation];
-        
+        if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atURL:)]) {
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                [(id)self.delegate applicationSyncManager:self willReplaceWholeStoreFileForDocumentWithIdentifier:[[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier] atURL:finalWholeStoreLocation];
+            });
+        }
         success = [[self fileManager] removeItemAtPath:[finalWholeStoreLocation path] error:&anyError];
         
         if( !success ) {
@@ -439,21 +513,34 @@
     }
     
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Document Download Operation Completed");
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], finalWholeStoreLocation];
-    [self postDecreaseActivityNotification];
+
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didFinishDownloadingDocumentWithIdentifier:[[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier] atURL:finalWholeStoreLocation];
+        });
+    }
+[self postDecreaseActivityNotification];
 }
 
 - (void)documentDownloadOperationWasCancelled:(TICDSWholeStoreDownloadOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Download Operation was Cancelled");
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didFailToDownloadDocumentWithIdentifier:[[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier] error:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+        });
+    }
     [self postDecreaseActivityNotification];
 }
 
 - (void)documentDownloadOperation:(TICDSWholeStoreDownloadOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Download Operation Failed to Complete with Error: %@", anError);
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], anError];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didFailToDownloadDocumentWithIdentifier:[[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier] error:anError];
+        });
+    }
     [self postDecreaseActivityNotification];
 }
 
@@ -475,7 +562,11 @@
 - (void)bailFromRegisteredDevicesInformationProcessWithError:(NSError *)anError;
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from device information request");
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:), anError];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didFailToFetchInformationForAllRegisteredDevicesWithError:anError];
+        });
+    }
     [self postDecreaseActivityNotification];
 }
 
@@ -483,8 +574,12 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting process to fetch information on all devices registered to synchronize this application");
     [self postIncreaseActivityNotification];
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidBeginToFetchInformationForAllRegisteredDevices:)];
-    
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerDidBeginToFetchInformationForAllRegisteredDevices:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManagerDidBeginToFetchInformationForAllRegisteredDevices:self];
+        });
+    }
+
     TICDSListOfApplicationRegisteredClientsOperation *operation = [self listOfApplicationRegisteredClientsOperation];
     
     if( !operation ) {
@@ -514,7 +609,11 @@
     
     NSDictionary *information = [anOperation deviceInfoDictionaries];
     
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFinishFetchingInformationForAllRegisteredDevices:), information];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFinishFetchingInformationForAllRegisteredDevices:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didFinishFetchingInformationForAllRegisteredDevices:information];
+        });
+    }
     [self postDecreaseActivityNotification];
 }
 
@@ -522,14 +621,22 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Registered Device Information Operation was Cancelled");
     
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:), [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didFailToFetchInformationForAllRegisteredDevicesWithError:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+        });
+    }
     [self postDecreaseActivityNotification];
 }
 
 - (void)registeredClientsOperation:(TICDSListOfApplicationRegisteredClientsOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Registered Device Information Operation Failed to Complete with Error: %@", anError);
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:), anError];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didFailToFetchInformationForAllRegisteredDevicesWithError:anError];
+        });
+    }
     [self postDecreaseActivityNotification];
 }
 
@@ -551,8 +658,12 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting process to delete document %@", anIdentifier);
     [self postIncreaseActivityNotification];
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didBeginDeletionProcessForDocumentWithIdentifier:), anIdentifier];
-    
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didBeginDeletionProcessForDocumentWithIdentifier:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didBeginDeletionProcessForDocumentWithIdentifier:anIdentifier];
+        });
+    }
+
     TICDSDocumentDeletionOperation *operation = [self documentDeletionOperationForDocumentWithIdentifier:anIdentifier];
     
     if( !operation ) {
@@ -572,7 +683,11 @@
 - (void)bailFromDocumentDeletionProcessForDocumentWithIdentifier:(NSString *)anIdentifier error:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from document deletion request");
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:), anIdentifier, anError];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didFailToDeleteDocumentWithIdentifier:anIdentifier error:anError];
+        });
+    }
     [self postDecreaseActivityNotification];
 }
 
@@ -587,14 +702,23 @@
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Document Deletion Operation will delete document");
     
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:willDeleteDirectoryForDocumentWithIdentifier:), [anOperation documentIdentifier]];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:willDeleteDirectoryForDocumentWithIdentifier:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self willDeleteDirectoryForDocumentWithIdentifier:[anOperation documentIdentifier]];
+        });
+    }
 }
 
 - (void)documentDeletionOperationDidDeleteDocument:(TICDSDocumentDeletionOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Document Deletion Operation did delete document");
     
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didDeleteDirectoryForDocumentWithIdentifier:), [anOperation documentIdentifier]];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didDeleteDirectoryForDocumentWithIdentifier:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didDeleteDirectoryForDocumentWithIdentifier:[anOperation documentIdentifier]];
+        });
+    }
+
 }
 
 - (void)documentDeletionOperationCompleted:(TICDSDocumentDeletionOperation *)anOperation
@@ -607,7 +731,11 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:[TICDSUtilities userDefaultsKeyForIntegrityKeyForDocumentWithIdentifier:identifier]];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFinishDeletingDocumentWithIdentifier:), identifier];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFinishDeletingDocumentWithIdentifier:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didFinishDeletingDocumentWithIdentifier:identifier];
+        });
+    }
     [self postDecreaseActivityNotification];
 }
 
@@ -617,7 +745,11 @@
     
     NSString *identifier = [anOperation documentIdentifier];
     
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:), identifier, [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didFailToDeleteDocumentWithIdentifier:identifier error:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+        });
+    }
     [self postDecreaseActivityNotification];
 }
 
@@ -627,7 +759,11 @@
     
     NSString *identifier = [anOperation documentIdentifier];
     
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:), identifier, anError];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didFailToDeleteDocumentWithIdentifier:identifier error:anError];
+        });
+    }
     [self postDecreaseActivityNotification];
 }
 
@@ -652,7 +788,11 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting process to remove all remote sync data");
     [self postIncreaseActivityNotification];
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerWillRemoveAllSyncData:)];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerWillRemoveAllSyncData:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManagerWillRemoveAllSyncData:self];
+        });
+    }
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Cancelling any existing operations");
     [[self otherTasksQueue] cancelAllOperations];
@@ -679,7 +819,11 @@
 - (void)bailFromRemoveAllSyncDataProcessWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from remove all remote sync data request");
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToRemoveAllSyncDataWithError:), anError];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToRemoveAllSyncDataWithError:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didFailToRemoveAllSyncDataWithError:anError];
+        });
+    }
     [self postDecreaseActivityNotification];
 }
 
@@ -698,14 +842,22 @@
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Remove all sync data operation will remove all sync data");
     
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerWillRemoveAllSyncData:)];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerWillRemoveAllSyncData:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManagerWillRemoveAllSyncData:self];
+        });
+    }
 }
 
 - (void)removeAllSyncDataOperationDidRemoveAllSyncData:(TICDSRemoveAllRemoteSyncDataOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Remove all sync data operation did remove all sync data");
     
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManagerDidFinishRemovingAllSyncData:)];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerDidFinishRemovingAllSyncData:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManagerDidFinishRemovingAllSyncData:self];
+        });
+    }
 }
 
 - (void)removeAllSyncDataOperationCompleted:(TICDSRemoveAllRemoteSyncDataOperation *)anOperation
@@ -719,7 +871,11 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Remove All Sync Data Operation was Cancelled");
     
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToRemoveAllSyncDataWithError:), [TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToRemoveAllSyncDataWithError:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didFailToRemoveAllSyncDataWithError:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+        });
+    }
     [self postDecreaseActivityNotification];
 }
 
@@ -727,7 +883,11 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Remove All Sync Data Operation Failed to Complete with Error: %@", anError);
     
-    [self ti_alertDelegateWithSelector:@selector(applicationSyncManager:didFailToRemoveAllSyncDataWithError:), anError];
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToRemoveAllSyncDataWithError:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate applicationSyncManager:self didFailToRemoveAllSyncDataWithError:anError];
+        });
+    }
     [self postDecreaseActivityNotification];
 }
 
