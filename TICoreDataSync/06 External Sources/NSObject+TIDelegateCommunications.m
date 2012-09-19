@@ -22,6 +22,19 @@
 
 @implementation NSObject (TIDelegateCommunications)
 
+- (BOOL)ti_delegateRespondsToSelector:(SEL)aSelector
+{
+    if (aSelector == nil) {
+        return NO;
+    }
+    
+    if ([self respondsToSelector:@selector(delegate)] == NO) {
+        return NO;
+    }
+    
+    return [[(id)self delegate] respondsToSelector:aSelector];
+}
+
 #pragma mark Invocation Generation
 - (IMP)ti_implementationForDelegateSelector:(SEL)aSelector withArgList:(va_list)args
 {

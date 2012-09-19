@@ -88,7 +88,11 @@
         [self setPaused:YES];
         
         TICDSLog(TICDSLogVerbosityEveryStep, @"Pausing registration as this is the first time this application has been registered");
-        [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationPausedToFindOutWhetherToEnableEncryption:) waitUntilDone:NO];
+        if ([self ti_delegateRespondsToSelector:@selector(registrationOperationPausedToFindOutWhetherToEnableEncryption:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [(id)self.delegate registrationOperationPausedToFindOutWhetherToEnableEncryption:self];
+            });
+        }
         
         while( [self isPaused] && ![self isCancelled] ) {
             [NSThread sleepForTimeInterval:0.2];
@@ -96,8 +100,11 @@
         
         TICDSLog(TICDSLogVerbosityEveryStep, @"Continuing application registration after instruction from delegate");
         
-        [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationResumedFollowingEncryptionInstruction:) waitUntilDone:NO];
-    
+        if ([self ti_delegateRespondsToSelector:@selector(registrationOperationResumedFollowingEncryptionInstruction:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [(id)self.delegate registrationOperationResumedFollowingEncryptionInstruction:self];
+            });
+        }
     }
     
     [self continueAfterRequestWhetherToEnableEncryption];
@@ -498,7 +505,11 @@
         [self setPaused:YES];
         
         TICDSLog(TICDSLogVerbosityEveryStep, @"Pausing registration because an encryption password is needed");
-        [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationPausedToRequestEncryptionPassword:) waitUntilDone:NO];
+        if ([self ti_delegateRespondsToSelector:@selector(registrationOperationPausedToRequestEncryptionPassword:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [(id)self.delegate registrationOperationPausedToRequestEncryptionPassword:self];
+            });
+        }
         
         while( [self isPaused] && ![self isCancelled] ) {
             [NSThread sleepForTimeInterval:0.2];
@@ -506,8 +517,11 @@
         
         TICDSLog(TICDSLogVerbosityEveryStep, @"Continuing application registration after determining encryption password");
         
-        [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationResumedFollowingPasswordProvision:) waitUntilDone:NO];
-    
+        if ([self ti_delegateRespondsToSelector:@selector(registrationOperationResumedFollowingPasswordProvision:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [(id)self.delegate registrationOperationResumedFollowingPasswordProvision:self];
+            });
+        }
     }
     [self continueAfterRequestForEncryptionPassword];
 }

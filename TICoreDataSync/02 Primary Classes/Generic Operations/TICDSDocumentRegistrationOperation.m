@@ -126,7 +126,11 @@
         [self setPaused:YES];
         
         TICDSLog(TICDSLogVerbosityEveryStep, @"Pausing registration as remote document file structure doesn't exist");
-        [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationPausedToFindOutWhetherToCreateRemoteDocumentStructure:) waitUntilDone:NO];
+        if ([self ti_delegateRespondsToSelector:@selector(registrationOperationPausedToFindOutWhetherToCreateRemoteDocumentStructure:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [(id)self.delegate registrationOperationPausedToFindOutWhetherToCreateRemoteDocumentStructure:self];
+            });
+        }
         
         while( [self isPaused] && ![self isCancelled] ) {
             [NSThread sleepForTimeInterval:0.2];
@@ -134,8 +138,12 @@
         
         TICDSLog(TICDSLogVerbosityEveryStep, @"Continuing registration after instruction from delegate");
         
-        [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationResumedFollowingDocumentStructureCreationInstruction:) waitUntilDone:NO];
-    
+        if ([self ti_delegateRespondsToSelector:@selector(registrationOperationResumedFollowingDocumentStructureCreationInstruction:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [(id)self.delegate registrationOperationResumedFollowingDocumentStructureCreationInstruction:self];
+            });
+        }
+
     }
     [self continueAfterRequestWhetherToCreateRemoteDocumentFileStructure];
 }
@@ -489,7 +497,11 @@
 #pragma mark - Warning that Client had been Deleted
 - (void)sendMessageToDelegateThatToDeleteLocalFilesAndPullDownStore
 {
-    [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:) waitUntilDone:YES];
+    if ([self ti_delegateRespondsToSelector:@selector(registrationOperationDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate registrationOperationDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:self];
+        });
+    }
 }
 
 - (void)warnDelegateToDeleteLocalFilesAndPullDownStoreBecauseOfDeletion:(BOOL)clientWasDeleted

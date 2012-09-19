@@ -540,7 +540,12 @@
                 break;
         }
         
-        [self ti_alertDelegateOnMainThreadWithSelector:@selector(synchronizationOperation:processedChangeNumber:outOfTotalChangeCount:fromClientNamed:) waitUntilDone:NO, [NSNumber numberWithInteger:changeCount++], [NSNumber numberWithInteger:[syncChanges count]], self.changeSetProgressString];
+        changeCount++;
+        if ([self ti_delegateRespondsToSelector:@selector(synchronizationOperation:processedChangeNumber:outOfTotalChangeCount:fromClientNamed:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [(id)self.delegate synchronizationOperation:self processedChangeNumber:[NSNumber numberWithInteger:changeCount] outOfTotalChangeCount:[NSNumber numberWithInteger:[syncChanges count]] fromClientNamed:self.changeSetProgressString];
+            });
+        }
     }
     
     [[self backgroundApplicationContext] processPendingChanges];
@@ -708,15 +713,23 @@
 - (TICDSSyncConflictResolutionType)resolutionTypeForConflict:(TICDSSyncConflict *)aConflict
 {
     [self setPaused:YES];
-        
-    [self ti_alertDelegateOnMainThreadWithSelector:@selector(synchronizationOperation:pausedToDetermineResolutionOfConflict:) waitUntilDone:YES, aConflict];
     
+    if ([self ti_delegateRespondsToSelector:@selector(synchronizationOperation:pausedToDetermineResolutionOfConflict:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate synchronizationOperation:self pausedToDetermineResolutionOfConflict:aConflict];
+        });
+    }
+
     while( [self isPaused] && ![self isCancelled] ) {
         [NSThread sleepForTimeInterval:0.2];
     }
     
-    [self ti_alertDelegateOnMainThreadWithSelector:@selector(synchronizationOperationResumedFollowingResolutionOfConflict:) waitUntilDone:YES];
-    
+    if ([self ti_delegateRespondsToSelector:@selector(synchronizationOperationResumedFollowingResolutionOfConflict:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate synchronizationOperationResumedFollowingResolutionOfConflict:self];
+        });
+    }
+
     return [self mostRecentConflictResolutionType];
 }
 

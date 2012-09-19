@@ -82,13 +82,25 @@
     
     if( success ) {
         TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"TICDSOperation completed successfully");
-        [self ti_alertDelegateOnMainThreadWithSelector:@selector(operationCompletedSuccessfully:) waitUntilDone:YES];
+        if ([self ti_delegateRespondsToSelector:@selector(operationCompletedSuccessfully:)]) {
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                [(id)self.delegate operationCompletedSuccessfully:self];
+            });
+        }
     } else if( wasCancelled ) {
         TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"TICDSOperation was cancelled");
-        [self ti_alertDelegateOnMainThreadWithSelector:@selector(operationWasCancelled:) waitUntilDone:YES];
+        if ([self ti_delegateRespondsToSelector:@selector(operationWasCancelled:)]) {
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                [(id)self.delegate operationWasCancelled:self];
+            });
+        }
     } else {
         TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"TICDSOperation failed to complete");
-        [self ti_alertDelegateOnMainThreadWithSelector:@selector(operationFailedToComplete:) waitUntilDone:YES];
+        if ([self ti_delegateRespondsToSelector:@selector(operationFailedToComplete:)]) {
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                [(id)self.delegate operationFailedToComplete:self];
+            });
+        }
     }
     
     // This is a nasty way to, I think, avoid a problem with the DropboxSDK on iOS - must revisit and sort out soon

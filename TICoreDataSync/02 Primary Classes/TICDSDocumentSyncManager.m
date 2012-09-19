@@ -1240,7 +1240,11 @@
 
 - (void)backgroundManagedObjectContextDidSave:(NSNotification *)aNotification
 {
-    [self ti_alertDelegateOnMainThreadWithSelector:@selector(documentSyncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:) waitUntilDone:YES, aNotification];
+    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate documentSyncManager:self didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:aNotification];
+        });
+    }
 }
 
 - (void)applicationSyncManagerWillRemoveAllRemoteSyncData:(NSNotification *)aNotification

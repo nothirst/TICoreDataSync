@@ -161,7 +161,11 @@
 #pragma mark - Alerting the Delegate Before Deletion
 - (void)beginAlertToDelegateThatDocumentWillBeDeleted
 {
-    [self ti_alertDelegateOnMainThreadWithSelector:@selector(documentDeletionOperationWillDeleteDocument:) waitUntilDone:YES];
+    if ([self ti_delegateRespondsToSelector:@selector(documentDeletionOperationWillDeleteDocument:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate documentDeletionOperationWillDeleteDocument:self];
+        });
+    }
     
     [self beginDeletingDocumentDirectory];
 }
@@ -197,8 +201,12 @@
 #pragma mark - Alerting the Delegate After Deletion
 - (void)beginAlertToDelegateThatDocumentWasDeleted
 {
-    [self ti_alertDelegateOnMainThreadWithSelector:@selector(documentDeletionOperationDidDeleteDocument:) waitUntilDone:YES];
-    
+    if ([self ti_delegateRespondsToSelector:@selector(documentDeletionOperationDidDeleteDocument:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate documentDeletionOperationDidDeleteDocument:self];
+        });
+    }
+
     [self operationDidCompleteSuccessfully];
 }
 

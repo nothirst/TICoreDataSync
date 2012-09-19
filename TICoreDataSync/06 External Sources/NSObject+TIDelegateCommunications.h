@@ -26,6 +26,13 @@
 
 @interface NSObject (TIDelegateCommunications)
 
+/** Returns a Boolean value that indicates whether the receiver's delegate implements or inherits a method that can respond to a specified message.
+ 
+ @param aSelector A selector that identifies a message.
+ 
+ @return YES if the receiver implements or inherits a method that can respond to aSelector, otherwise NO. */
+- (BOOL)ti_delegateRespondsToSelector:(SEL)aSelector;
+
 /** @name Invocations */
 
 /** Get some kind of result from a delegate with a given selector and arguments. 
@@ -85,6 +92,6 @@
  @param aSelector The selector to invoke.
  @param waitUntilDone A Boolean indicating whether this method should wait until the delegate has been alerted.
  @param ... The arguments to be passed to the selector (excluding the first argument, assumed to be `self`). */
-- (void)ti_alertDelegateOnMainThreadWithSelector:(SEL)aSelector waitUntilDone:(BOOL)shouldWait, ...;
+//- (void)ti_alertDelegateOnMainThreadWithSelector:(SEL)aSelector waitUntilDone:(BOOL)shouldWait, ...;
 
 @end

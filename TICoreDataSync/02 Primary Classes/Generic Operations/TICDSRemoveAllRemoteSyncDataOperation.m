@@ -26,8 +26,11 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Removing entire remote sync data directory");
     
-    [self ti_alertDelegateOnMainThreadWithSelector:@selector(removeAllSyncDataOperationWillRemoveAllSyncData:) waitUntilDone:YES];
-    
+    if ([self ti_delegateRespondsToSelector:@selector(removeAllSyncDataOperationWillRemoveAllSyncData:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate removeAllSyncDataOperationWillRemoveAllSyncData:self];
+        });
+    }
     TICDSLog(TICDSLogVerbosityEveryStep, @"Clearing cryptor's password and salt");
     if( ![self cryptor] ) {
         FZACryptor *aCryptor = [[FZACryptor alloc] init];
@@ -47,7 +50,11 @@
     }
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Removed all sync data");
-    [self ti_alertDelegateOnMainThreadWithSelector:@selector(removeAllSyncDataOperationDidRemoveAllSyncData:) waitUntilDone:YES];
+    if ([self ti_delegateRespondsToSelector:@selector(removeAllSyncDataOperationDidRemoveAllSyncData:)]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [(id)self.delegate removeAllSyncDataOperationDidRemoveAllSyncData:self];
+        });
+    }
     
     [self operationDidCompleteSuccessfully];
 }
