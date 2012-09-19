@@ -10,7 +10,7 @@
 
 @interface TICDSSynchronizationOperation () <TICoreDataFactoryDelegate>
 
-@property (nonatomic, retain) NSString *changeSetProgressString;
+@property (nonatomic, strong) NSString *changeSetProgressString;
 @property (nonatomic, readonly) NSNumberFormatter *uuidPrefixFormatter;
 
 - (void)beginCheckWhetherRemoteIntegrityKeyMatchesLocalKey;
@@ -341,7 +341,7 @@
         TICDSLog(TICDSLogVerbosityEveryStep, @"Checking how many sync change sets need to be applied");
 
         NSError *anyError = nil;
-        NSArray *sortDescriptors = [NSArray arrayWithObjects:[[[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:YES] autorelease], [[[NSSortDescriptor alloc] initWithKey:@"syncChangeSetIdentifier" ascending:YES] autorelease], nil];
+        NSArray *sortDescriptors = [NSArray arrayWithObjects:[[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:YES], [[NSSortDescriptor alloc] initWithKey:@"syncChangeSetIdentifier" ascending:YES], nil];
 
         NSArray *syncChangeSetsToApply = [TICDSSyncChangeSet ti_allObjectsInManagedObjectContext:[self unappliedSyncChangeSetsContext] sortedWithDescriptors:sortDescriptors error:&anyError];
 
@@ -511,7 +511,7 @@
     syncChanges = [self syncChangesAfterCheckingForConflicts:syncChanges];
 	NSSortDescriptor *sequenceSort = [[NSSortDescriptor alloc] initWithKey:@"changeType" ascending:YES];
     syncChanges = [syncChanges sortedArrayUsingDescriptors:[NSArray arrayWithObject:sequenceSort]];
-    [sequenceSort release], sequenceSort = nil;
+    sequenceSort = nil;
     
     NSInteger changeCount = 1;
     // Apply each object's changes in turn
@@ -562,7 +562,6 @@
     
     [self setUnappliedSyncChangesContext:[factory managedObjectContext]];
     
-    [factory release];
     
     return [self unappliedSyncChangesContext];
 }
@@ -734,7 +733,6 @@
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error fetching affected object: %@", anyError);
     }
     
-    [fetchRequest release];
     
     return [results lastObject];
 }
@@ -774,7 +772,6 @@
     
     TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Updated object: %@", object);
 
-    [fetchRequest release];
     
 }
 
@@ -1045,29 +1042,28 @@
 
 - (void)dealloc
 {
-    [_otherSynchronizedClientDeviceIdentifiers release], _otherSynchronizedClientDeviceIdentifiers = nil;
-    [_otherSynchronizedClientDeviceSyncChangeSetIdentifiers release], _otherSynchronizedClientDeviceSyncChangeSetIdentifiers = nil;
-    [_syncChangeSortDescriptors release], _syncChangeSortDescriptors = nil;
-    [_synchronizationWarnings release], _synchronizationWarnings = nil;
+    _otherSynchronizedClientDeviceIdentifiers = nil;
+    _otherSynchronizedClientDeviceSyncChangeSetIdentifiers = nil;
+    _syncChangeSortDescriptors = nil;
+    _synchronizationWarnings = nil;
 
-    [_localSyncChangesToMergeLocation release], _localSyncChangesToMergeLocation = nil;
-    [_appliedSyncChangeSetsFileLocation release], _appliedSyncChangeSetsFileLocation = nil;
-    [_unappliedSyncChangesDirectoryLocation release], _unappliedSyncChangesDirectoryLocation = nil;
-    [_unappliedSyncChangeSetsFileLocation release], _unappliedSyncChangeSetsFileLocation = nil;
-    [_localRecentSyncFileLocation release], _localRecentSyncFileLocation = nil;
+    _localSyncChangesToMergeLocation = nil;
+    _appliedSyncChangeSetsFileLocation = nil;
+    _unappliedSyncChangesDirectoryLocation = nil;
+    _unappliedSyncChangeSetsFileLocation = nil;
+    _localRecentSyncFileLocation = nil;
     
-    [_appliedSyncChangeSetsCoreDataFactory release], _appliedSyncChangeSetsCoreDataFactory = nil;
-    [_appliedSyncChangeSetsContext release], _appliedSyncChangeSetsContext = nil;
-    [_unappliedSyncChangeSetsCoreDataFactory release], _unappliedSyncChangeSetsCoreDataFactory = nil;
-    [_unappliedSyncChangeSetsContext release], _unappliedSyncChangeSetsContext = nil;
-    [_unappliedSyncChangesCoreDataFactory release], _unappliedSyncChangesCoreDataFactory = nil;
-    [_unappliedSyncChangesContext release], _unappliedSyncChangesContext = nil;
-    [_localSyncChangesToMergeCoreDataFactory release], _localSyncChangesToMergeCoreDataFactory = nil;
-    [_localSyncChangesToMergeContext release], _localSyncChangesToMergeContext = nil;
-    [_primaryPersistentStoreCoordinator release], _primaryPersistentStoreCoordinator = nil;
-    [_backgroundApplicationContext release], _backgroundApplicationContext = nil;
+    _appliedSyncChangeSetsCoreDataFactory = nil;
+    _appliedSyncChangeSetsContext = nil;
+    _unappliedSyncChangeSetsCoreDataFactory = nil;
+    _unappliedSyncChangeSetsContext = nil;
+    _unappliedSyncChangesCoreDataFactory = nil;
+    _unappliedSyncChangesContext = nil;
+    _localSyncChangesToMergeCoreDataFactory = nil;
+    _localSyncChangesToMergeContext = nil;
+    _primaryPersistentStoreCoordinator = nil;
+    _backgroundApplicationContext = nil;
     
-    [super dealloc];
 }
 
 #pragma mark -
@@ -1079,8 +1075,8 @@
     }
     
     _syncChangeSortDescriptors = [[NSArray alloc] initWithObjects:
-                                  [[[NSSortDescriptor alloc] initWithKey:@"changeType" ascending:YES] autorelease],
-                                  [[[NSSortDescriptor alloc] initWithKey:@"localTimeStamp" ascending:YES] autorelease],
+                                  [[NSSortDescriptor alloc] initWithKey:@"changeType" ascending:YES],
+                                  [[NSSortDescriptor alloc] initWithKey:@"localTimeStamp" ascending:YES],
                                   nil];
     
     return _syncChangeSortDescriptors;
@@ -1092,7 +1088,7 @@
         return _appliedSyncChangeSetsContext;
     }
     
-    _appliedSyncChangeSetsContext = [[[self appliedSyncChangeSetsCoreDataFactory] managedObjectContext] retain];
+    _appliedSyncChangeSetsContext = [[self appliedSyncChangeSetsCoreDataFactory] managedObjectContext];
     [_appliedSyncChangeSetsContext setUndoManager:nil];
     
     return _appliedSyncChangeSetsContext;
@@ -1119,7 +1115,7 @@
         return _unappliedSyncChangeSetsContext;
     }
     
-    _unappliedSyncChangeSetsContext = [[[self unappliedSyncChangeSetsCoreDataFactory] managedObjectContext] retain];
+    _unappliedSyncChangeSetsContext = [[self unappliedSyncChangeSetsCoreDataFactory] managedObjectContext];
     [_unappliedSyncChangeSetsContext setUndoManager:nil];
     
     return _unappliedSyncChangeSetsContext;
@@ -1146,7 +1142,7 @@
         return _localSyncChangesToMergeContext;
     }
     
-    _localSyncChangesToMergeContext = [[[self localSyncChangesToMergeCoreDataFactory] managedObjectContext] retain];
+    _localSyncChangesToMergeContext = [[self localSyncChangesToMergeCoreDataFactory] managedObjectContext];
     [_localSyncChangesToMergeContext setUndoManager:nil];
     
     return _localSyncChangesToMergeContext;

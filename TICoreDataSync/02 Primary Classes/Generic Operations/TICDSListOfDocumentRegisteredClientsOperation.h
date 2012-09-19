@@ -103,12 +103,12 @@
 /** @name Properties */
 
 /** An array used to keep track of the client identifiers while the operation is executing. */
-@property (nonatomic, retain) NSArray *synchronizedClientIdentifiers;
+@property (nonatomic, strong) NSArray *synchronizedClientIdentifiers;
 
 /** A mutable dictionary used to keep track of the `deviceInfo.plist` dictionaries for each client while the operation is executing. */
-@property (nonatomic, retain) NSMutableDictionary *temporaryDeviceInfoDictionaries;
+@property (nonatomic, strong) NSMutableDictionary *temporaryDeviceInfoDictionaries;
 
 /** The final dictionary of `deviceInfo.plist` dictionaries for each client once the operation has finished. */
-@property (retain) NSDictionary *deviceInfoDictionaries;
+@property (strong) NSDictionary *deviceInfoDictionaries;
 
 @end

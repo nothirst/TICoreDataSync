@@ -80,7 +80,6 @@ const NSInteger FZAFileBlockLength = 4096;
                                   attributes: nil];
     NSDictionary *inputFileAttributes = [mgr attributesOfItemAtPath: [plainTextURL path]
                                                               error: error];
-    [mgr release];
     if (inputFileAttributes == nil) {
         return NO;
     }
@@ -231,13 +230,11 @@ const NSInteger FZAFileBlockLength = 4096;
     NSFileManager *fileManager = [[NSFileManager alloc] init];
     NSFileHandle *readHandle = [NSFileHandle fileHandleForReadingAtPath:[cipherTextURL path]];
     if (!readHandle) {
-        [fileManager release];
         return NO;
     }
     NSDictionary *cipherFileAttributes = [fileManager attributesOfItemAtPath:[cipherTextURL path]
                                                                        error:error];
     if (cipherFileAttributes == nil) {
-        [fileManager release];
         return NO;
     }
     unsigned long long cipherSize = [cipherFileAttributes fileSize];
@@ -246,7 +243,6 @@ const NSInteger FZAFileBlockLength = 4096;
     BOOL fileCreated = [fileManager createFileAtPath:[plainTextURL path]
                                             contents:nil
                                           attributes:nil];
-    [fileManager release];
     if (!fileCreated) {
         return NO;
     }
@@ -264,13 +260,13 @@ const NSInteger FZAFileBlockLength = 4096;
     CCHmacContext hmacContext;
     CCHmacInit(&hmacContext, kCCHmacAlgSHA256, [syncKey bytes], [syncKey length]);
     do {
-        NSAutoreleasePool *inLoopPool = [[NSAutoreleasePool alloc] init];
-        unsigned long long bytesRemaining = cipherSize - CC_SHA256_DIGEST_LENGTH - [readHandle offsetInFile];
-        size_t bytesToRead = (bytesRemaining > FZAFileBlockLength) ?
-        FZAFileBlockLength : (size_t)bytesRemaining;
-        NSData *readData = [readHandle readDataOfLength:bytesToRead];
-        CCHmacUpdate(&hmacContext, [readData bytes], [readData length]);
-        [inLoopPool drain];
+        @autoreleasepool {
+            unsigned long long bytesRemaining = cipherSize - CC_SHA256_DIGEST_LENGTH - [readHandle offsetInFile];
+            size_t bytesToRead = (bytesRemaining > FZAFileBlockLength) ?
+            FZAFileBlockLength : (size_t)bytesRemaining;
+            NSData *readData = [readHandle readDataOfLength:bytesToRead];
+            CCHmacUpdate(&hmacContext, [readData bytes], [readData length]);
+        }
     } while ([readHandle offsetInFile] < cipherSize - CC_SHA256_DIGEST_LENGTH);
     
     uint8_t hmac[CC_SHA256_DIGEST_LENGTH];
@@ -347,32 +343,32 @@ const NSInteger FZAFileBlockLength = 4096;
     }
     
     do {
-        NSAutoreleasePool *inLoopPool = [[NSAutoreleasePool alloc] init];
-        unsigned long long bytesRemaining = cipherSize - CC_SHA256_DIGEST_LENGTH - [readHandle offsetInFile];
-        size_t bytesToRead = (bytesRemaining > FZAFileBlockLength) ?
-        FZAFileBlockLength : (size_t)bytesRemaining;
-        size_t sizeToWrite = 0;
-        NSData *readData = [readHandle readDataOfLength:bytesToRead];
-        cryptResult = CCCryptorUpdate(cryptor,
-                                      [readData bytes],
-                                      [readData length],
-                                      bytesToWrite,
-                                      FZAFileBlockLength,
-                                      &sizeToWrite);
-        if (cryptResult != kCCSuccess) {
-            if (error) {
-                *error = [NSError errorWithDomain:FZACryptorErrorDomain
-                                             code:cryptResult
-                                         userInfo:nil];
+        @autoreleasepool {
+            unsigned long long bytesRemaining = cipherSize - CC_SHA256_DIGEST_LENGTH - [readHandle offsetInFile];
+            size_t bytesToRead = (bytesRemaining > FZAFileBlockLength) ?
+            FZAFileBlockLength : (size_t)bytesRemaining;
+            size_t sizeToWrite = 0;
+            NSData *readData = [readHandle readDataOfLength:bytesToRead];
+            cryptResult = CCCryptorUpdate(cryptor,
+                                          [readData bytes],
+                                          [readData length],
+                                          bytesToWrite,
+                                          FZAFileBlockLength,
+                                          &sizeToWrite);
+            if (cryptResult != kCCSuccess) {
+                if (error) {
+                    *error = [NSError errorWithDomain:FZACryptorErrorDomain
+                                                 code:cryptResult
+                                             userInfo:nil];
+                }
+                free(bytesToWrite);
+                return NO;
             }
-            free(bytesToWrite);
-            return NO;
+            NSData *plainData = [NSData dataWithBytesNoCopy:bytesToWrite
+                                                     length:sizeToWrite
+                                               freeWhenDone:NO];
+            [writeHandle writeData:plainData];
         }
-        NSData *plainData = [NSData dataWithBytesNoCopy:bytesToWrite
-                                                 length:sizeToWrite
-                                           freeWhenDone:NO];
-        [writeHandle writeData:plainData];
-        [inLoopPool drain];
     } while ([readHandle offsetInFile] < cipherSize - CC_SHA256_DIGEST_LENGTH);
     
     size_t finalBlockSize = 0;
@@ -410,10 +406,5 @@ const NSInteger FZAFileBlockLength = 4096;
     return self;
 }
 
-- (void)dealloc
-{
-    [keyManager release];
-    [super dealloc];
-}
 
 @end

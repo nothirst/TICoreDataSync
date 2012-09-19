@@ -28,7 +28,6 @@
     if( [self shouldUseEncryption] ) {
         FZACryptor *aCryptor = [[FZACryptor alloc] init];
         [self setCryptor:aCryptor];
-        [aCryptor release];
     }
 
     [self operationDidStart];
@@ -152,14 +151,13 @@
 
 - (void)dealloc
 {
-    [_cryptor release], _cryptor = nil;
-    [_userInfo release], _userInfo = nil;
-    [_error release], _error = nil;
-    [_clientIdentifier release], _clientIdentifier = nil;
-    [_fileManager release], _fileManager = nil;
-    [_tempFileDirectoryPath release], _tempFileDirectoryPath = nil;
+    _cryptor = nil;
+    _userInfo = nil;
+    _error = nil;
+    _clientIdentifier = nil;
+    _fileManager = nil;
+    _tempFileDirectoryPath = nil;
 
-    [super dealloc];
 }
 
 #pragma mark -
@@ -180,7 +178,7 @@
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
     }
     
-    _tempFileDirectoryPath = [aDirectoryPath retain];
+    _tempFileDirectoryPath = aDirectoryPath;
     
     return _tempFileDirectoryPath;
 }

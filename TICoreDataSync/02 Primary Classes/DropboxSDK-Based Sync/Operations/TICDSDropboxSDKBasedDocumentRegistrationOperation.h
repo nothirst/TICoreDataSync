@@ -42,7 +42,7 @@
 /** @name Properties */
 
 /** The DropboxSDK `DBSession` for use by this operation's `DBRestClient`. */
-@property (retain) DBSession *dbSession;
+@property (strong) DBSession *dbSession;
 
 /** The DropboxSDK `DBRestClient` for use by this operation. */
 @property (nonatomic, readonly) DBRestClient *restClient;
@@ -50,25 +50,25 @@
 /** @name Paths */
 
 /** The path to the `Documents` directory. */
-@property (retain) NSString *documentsDirectoryPath;
+@property (strong) NSString *documentsDirectoryPath;
 
 /** The path to the `DeletedClients` directory. */
-@property (retain) NSString *clientDevicesDirectoryPath;
+@property (strong) NSString *clientDevicesDirectoryPath;
 
 /** The path to this document's directory inside the `Documents` directory. */
-@property (retain) NSString *thisDocumentDirectoryPath;
+@property (strong) NSString *thisDocumentDirectoryPath;
 
 /** The path to this document's `DeletedClients` directory. */
-@property (retain) NSString *thisDocumentDeletedClientsDirectoryPath;
+@property (strong) NSString *thisDocumentDeletedClientsDirectoryPath;
 
 /** The path to this document's `identifier.plist` file inside the `DeletedDocuments` directory. */
-@property (retain) NSString *deletedDocumentsDirectoryIdentifierPlistFilePath;
+@property (strong) NSString *deletedDocumentsDirectoryIdentifierPlistFilePath;
 
 /** The path to this client's directory inside this document's `SyncChanges` directory. */
-@property (retain) NSString *thisDocumentSyncChangesThisClientDirectoryPath;
+@property (strong) NSString *thisDocumentSyncChangesThisClientDirectoryPath;
 
 /** The path to this client's directory inside this document's `SyncCommands` directory. */
-@property (retain) NSString *thisDocumentSyncCommandsThisClientDirectoryPath;
+@property (strong) NSString *thisDocumentSyncCommandsThisClientDirectoryPath;
 
 @end
 

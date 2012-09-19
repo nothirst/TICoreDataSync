@@ -445,17 +445,16 @@
 {
     [_restClient setDelegate:nil];
 
-    [_dbSession release], _dbSession = nil;
-    [_restClient release], _restClient = nil;
-    [_documentsDirectoryPath release], _documentsDirectoryPath = nil;
-    [_clientDevicesDirectoryPath release], _clientDevicesDirectoryPath = nil;
-    [_thisDocumentDirectoryPath release], _thisDocumentDirectoryPath = nil;
-    [_thisDocumentDeletedClientsDirectoryPath release], _thisDocumentDeletedClientsDirectoryPath = nil;
-    [_deletedDocumentsDirectoryIdentifierPlistFilePath release], _deletedDocumentsDirectoryIdentifierPlistFilePath = nil;
-    [_thisDocumentSyncChangesThisClientDirectoryPath release], _thisDocumentSyncChangesThisClientDirectoryPath = nil;
-    [_thisDocumentSyncCommandsThisClientDirectoryPath release], _thisDocumentSyncCommandsThisClientDirectoryPath = nil;
+    _dbSession = nil;
+    _restClient = nil;
+    _documentsDirectoryPath = nil;
+    _clientDevicesDirectoryPath = nil;
+    _thisDocumentDirectoryPath = nil;
+    _thisDocumentDeletedClientsDirectoryPath = nil;
+    _deletedDocumentsDirectoryIdentifierPlistFilePath = nil;
+    _thisDocumentSyncChangesThisClientDirectoryPath = nil;
+    _thisDocumentSyncCommandsThisClientDirectoryPath = nil;
     
-    [super dealloc];
 }
 
 #pragma mark -

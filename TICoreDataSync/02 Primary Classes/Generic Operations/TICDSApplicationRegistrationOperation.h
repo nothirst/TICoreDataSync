@@ -239,22 +239,22 @@
 /** @name Properties */
 
 /** The application identifier. */
-@property (nonatomic, retain) NSString *appIdentifier;
+@property (nonatomic, strong) NSString *appIdentifier;
 
 /** The client description. */
-@property (nonatomic, retain) NSString *clientDescription;
+@property (nonatomic, strong) NSString *clientDescription;
 
 /** The user info. */
-@property (nonatomic, retain) NSDictionary *applicationUserInfo;
+@property (nonatomic, strong) NSDictionary *applicationUserInfo;
 
 /** Used to indicate whether the operation is currently paused awaiting input from the operation delegate, or in turn the application sync manager delegate. */
 @property (assign, getter = isPaused) BOOL paused;
 
 /** The password to use for encryption at initial global app registration, if `shouldUseEncryption` is `YES`. */
-@property (retain) NSString *password;
+@property (strong) NSString *password;
 
 /** The cached salt data, set only after fetching from the remote. */
-@property (nonatomic, retain) NSData *saltData;
+@property (nonatomic, strong) NSData *saltData;
 
 /** Used mid-operation to indicate whether the client directory needs to be created after configuring encryption. */
 @property (nonatomic, assign) BOOL shouldCreateClientDirectory;

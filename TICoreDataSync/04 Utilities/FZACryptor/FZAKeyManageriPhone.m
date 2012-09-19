@@ -74,25 +74,23 @@
         NSDictionary *foundAttributes = (__bridge NSDictionary *)localResult;
         TICDSLog(TICDSLogVerbosityEveryStep, @"FZACryptor iOS Key Manager updating %@", foundAttributes);
         NSMutableDictionary *updateAttributes = [[self searchAttributes] mutableCopy];
-        [updateAttributes removeObjectForKey: (id)kSecReturnAttributes];
+        [updateAttributes removeObjectForKey: (__bridge id)kSecReturnAttributes];
         //update an existing item
         NSDictionary *storeAttributes = [NSDictionary 
                                                 dictionaryWithObject: key 
-                                                forKey: (id)kSecValueData];
+                                                forKey: (__bridge id)kSecValueData];
         storeResult = SecItemUpdate((__bridge CFDictionaryRef)updateAttributes,
                                     (__bridge CFDictionaryRef)storeAttributes);
-        [updateAttributes release];
     }
     else {
         TICDSLog(TICDSLogVerbosityEveryStep, @"FZACryptor iOS Key Manager creating key");
         //create a new item
         NSMutableDictionary *storeAttributes = [searchAttributes mutableCopy];
-        [storeAttributes setObject: key forKey: (id)kSecValueData];
-        [storeAttributes setObject: @"fza-sync" forKey: (id)kSecAttrLabel];
+        [storeAttributes setObject: key forKey: (__bridge id)kSecValueData];
+        [storeAttributes setObject: @"fza-sync" forKey: (__bridge id)kSecAttrLabel];
         //[storeAttributes setObject: (id)kCFBooleanTrue forKey: (id)kSecReturnPersistentRef];
-        [storeAttributes removeObjectForKey: (id)kSecReturnAttributes];
+        [storeAttributes removeObjectForKey: (__bridge id)kSecReturnAttributes];
         storeResult = SecItemAdd((__bridge CFDictionaryRef)storeAttributes, NULL);
-        [storeAttributes release];
     }
     if (noErr != storeResult) {
         if (error) {
@@ -109,12 +107,11 @@
 
 - (NSData *)key {
     NSMutableDictionary *searchAttributes = [[self searchAttributes] mutableCopy];
-    [searchAttributes removeObjectForKey: (id)kSecReturnAttributes];
-    [searchAttributes setObject: (id)kCFBooleanTrue forKey: (id)kSecReturnData];
+    [searchAttributes removeObjectForKey: (__bridge id)kSecReturnAttributes];
+    [searchAttributes setObject: (id)kCFBooleanTrue forKey: (__bridge id)kSecReturnData];
     CFTypeRef secItem = NULL;
     OSStatus searchResult = SecItemCopyMatching((__bridge CFDictionaryRef)searchAttributes,
                                                 &secItem);
-    [searchAttributes release];
     if (noErr != searchResult) {
         if( searchResult == errSecItemNotFound ) {
             TICDSLog(TICDSLogVerbosityEveryStep, @"FZACryptor iOS Key Manager didn't find a stored key");

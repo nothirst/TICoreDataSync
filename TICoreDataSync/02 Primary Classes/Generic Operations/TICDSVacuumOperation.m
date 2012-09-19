@@ -114,9 +114,8 @@
 #pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
-    [_earliestDateForFilesToKeep release], _earliestDateForFilesToKeep = nil;
+    _earliestDateForFilesToKeep = nil;
     
-    [super dealloc];
 }
 
 #pragma mark - Properties

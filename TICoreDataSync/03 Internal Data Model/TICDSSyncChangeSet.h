@@ -45,10 +45,10 @@
  @return The sync change set object, if it already exists, otherwise `nil`. */
 + (TICDSSyncChangeSet *)changeSetWithIdentifier:(NSString *)anIdentifier inManagedObjectContext:(NSManagedObjectContext *)aMoc;
 
-@property (nonatomic, retain) NSDate * creationDate;
-@property (nonatomic, retain) NSString * fileName;
-@property (nonatomic, retain) NSString * syncChangeSetIdentifier;
-@property (nonatomic, retain) NSDate * localDateOfApplication;
-@property (nonatomic, retain) NSString * clientIdentifier;
+@property (nonatomic, strong) NSDate * creationDate;
+@property (nonatomic, strong) NSString * fileName;
+@property (nonatomic, strong) NSString * syncChangeSetIdentifier;
+@property (nonatomic, strong) NSDate * localDateOfApplication;
+@property (nonatomic, strong) NSString * clientIdentifier;
 
 @end

@@ -21,7 +21,7 @@
 {
     [super applicationSyncManagerWillRemoveAllRemoteSyncData:aNotification];
     
-    [_directoryWatcher release], _directoryWatcher = nil;
+    _directoryWatcher = nil;
 }
 
 #pragma mark -
@@ -43,7 +43,7 @@
     }
     
     if( _watchedClientDirectoryIdentifiers ) {
-        [_watchedClientDirectoryIdentifiers release], _watchedClientDirectoryIdentifiers = nil;
+        _watchedClientDirectoryIdentifiers = nil;
     }
     
     NSArray *clientIdentfiers = [[self fileManager] contentsOfDirectoryAtPath:[self thisDocumentSyncChangesDirectoryPath] error:&anyError];
@@ -154,7 +154,7 @@
     [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
     [operation setThisDocumentSyncCommandsThisClientDirectoryPath:[self thisDocumentSyncCommandsThisClientDirectoryPath]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 - (TICDSWholeStoreUploadOperation *)wholeStoreUploadOperation
@@ -166,7 +166,7 @@
     [operation setThisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath:[self thisDocumentTemporaryAppliedSyncChangeSetsFilePath]];
     [operation setThisDocumentWholeStoreThisClientDirectoryPath:[self thisDocumentWholeStoreThisClientDirectoryPath]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 - (TICDSWholeStoreDownloadOperation *)wholeStoreDownloadOperation
@@ -176,7 +176,7 @@
     [operation setThisDocumentDirectoryPath:[self thisDocumentDirectoryPath]];
     [operation setThisDocumentWholeStoreDirectoryPath:[self thisDocumentWholeStoreDirectoryPath]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 - (TICDSSynchronizationOperation *)synchronizationOperation
@@ -188,7 +188,7 @@
     [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
     [operation setThisDocumentRecentSyncsThisClientFilePath:[self thisDocumentRecentSyncsThisClientFilePath]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 - (TICDSVacuumOperation *)vacuumOperation
@@ -199,7 +199,7 @@
     [operation setThisDocumentRecentSyncsDirectoryPath:[self thisDocumentRecentSyncsDirectoryPath]];
     [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 - (TICDSListOfDocumentRegisteredClientsOperation *)listOfDocumentRegisteredClientsOperation
@@ -211,7 +211,7 @@
     [operation setThisDocumentRecentSyncsDirectoryPath:[self thisDocumentRecentSyncsDirectoryPath]];
     [operation setThisDocumentWholeStoreDirectoryPath:[self thisDocumentWholeStoreDirectoryPath]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 - (TICDSDocumentClientDeletionOperation *)documentClientDeletionOperation
@@ -225,7 +225,7 @@
     [operation setThisDocumentRecentSyncsDirectoryPath:[self thisDocumentRecentSyncsDirectoryPath]];
     [operation setThisDocumentWholeStoreDirectoryPath:[self thisDocumentWholeStoreDirectoryPath]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 #pragma mark -
@@ -324,11 +324,10 @@
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
-    [_applicationDirectoryPath release], _applicationDirectoryPath = nil;
-    [_directoryWatcher release], _directoryWatcher = nil;
-    [_watchedClientDirectoryIdentifiers release], _watchedClientDirectoryIdentifiers = nil;
+    _applicationDirectoryPath = nil;
+    _directoryWatcher = nil;
+    _watchedClientDirectoryIdentifiers = nil;
 
-    [super dealloc];
 }
 
 #pragma mark -

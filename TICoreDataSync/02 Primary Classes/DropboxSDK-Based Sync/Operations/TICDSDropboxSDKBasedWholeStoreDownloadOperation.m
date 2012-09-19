@@ -13,7 +13,7 @@
 @interface TICDSDropboxSDKBasedWholeStoreDownloadOperation ()
 
 /** A mutable dictionary to hold the last modified dates of each client identifier's whole store. */
-@property (nonatomic, retain) NSMutableDictionary *wholeStoreModifiedDates;
+@property (nonatomic, strong) NSMutableDictionary *wholeStoreModifiedDates;
 
 @end
 
@@ -260,12 +260,11 @@
 {
     [_restClient setDelegate:nil];
 
-    [_dbSession release], _dbSession = nil;
-    [_restClient release], _restClient = nil;
-    [_thisDocumentDirectoryPath release], _thisDocumentDirectoryPath = nil;
-    [_thisDocumentWholeStoreDirectoryPath release], _thisDocumentWholeStoreDirectoryPath = nil;
+    _dbSession = nil;
+    _restClient = nil;
+    _thisDocumentDirectoryPath = nil;
+    _thisDocumentWholeStoreDirectoryPath = nil;
 
-    [super dealloc];
 }
 
 #pragma mark -

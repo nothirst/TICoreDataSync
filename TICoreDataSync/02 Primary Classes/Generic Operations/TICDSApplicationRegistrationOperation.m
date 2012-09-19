@@ -84,21 +84,21 @@
         return;
     }
     
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    [self setPaused:YES];
+    @autoreleasepool {
+        [self setPaused:YES];
+        
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Pausing registration as this is the first time this application has been registered");
+        [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationPausedToFindOutWhetherToEnableEncryption:) waitUntilDone:NO];
+        
+        while( [self isPaused] && ![self isCancelled] ) {
+            [NSThread sleepForTimeInterval:0.2];
+        }
+        
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Continuing application registration after instruction from delegate");
+        
+        [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationResumedFollowingEncryptionInstruction:) waitUntilDone:NO];
     
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Pausing registration as this is the first time this application has been registered");
-    [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationPausedToFindOutWhetherToEnableEncryption:) waitUntilDone:NO];
-    
-    while( [self isPaused] && ![self isCancelled] ) {
-        [NSThread sleepForTimeInterval:0.2];
     }
-    
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Continuing application registration after instruction from delegate");
-    
-    [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationResumedFollowingEncryptionInstruction:) waitUntilDone:NO];
-    
-    [pool drain];
     
     [self continueAfterRequestWhetherToEnableEncryption];
 }
@@ -494,21 +494,21 @@
         return;
     }
     
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    [self setPaused:YES];
+    @autoreleasepool {
+        [self setPaused:YES];
+        
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Pausing registration because an encryption password is needed");
+        [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationPausedToRequestEncryptionPassword:) waitUntilDone:NO];
+        
+        while( [self isPaused] && ![self isCancelled] ) {
+            [NSThread sleepForTimeInterval:0.2];
+        }
+        
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Continuing application registration after determining encryption password");
+        
+        [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationResumedFollowingPasswordProvision:) waitUntilDone:NO];
     
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Pausing registration because an encryption password is needed");
-    [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationPausedToRequestEncryptionPassword:) waitUntilDone:NO];
-    
-    while( [self isPaused] && ![self isCancelled] ) {
-        [NSThread sleepForTimeInterval:0.2];
     }
-    
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Continuing application registration after determining encryption password");
-    
-    [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationResumedFollowingPasswordProvision:) waitUntilDone:NO];
-    
-    [pool drain];
     [self continueAfterRequestForEncryptionPassword];
 }
 
@@ -547,7 +547,6 @@
     
     FZACryptor *cryptor = [[FZACryptor alloc] init];
     [self setCryptor:cryptor];
-    [cryptor release];
 }
 
 - (void)blitzKeychainItems
@@ -569,13 +568,12 @@
 
 - (void)dealloc
 {
-    [_appIdentifier release], _appIdentifier = nil;
-    [_clientDescription release], _clientDescription = nil;
-    [_applicationUserInfo release], _applicationUserInfo = nil;
-    [_password release], _password = nil;
-    [_saltData release], _saltData = nil;
+    _appIdentifier = nil;
+    _clientDescription = nil;
+    _applicationUserInfo = nil;
+    _password = nil;
+    _saltData = nil;
 
-    [super dealloc];
 }
 
 #pragma mark -

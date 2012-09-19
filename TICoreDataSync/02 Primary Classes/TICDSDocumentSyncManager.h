@@ -28,7 +28,7 @@
     
     BOOL _mustUploadStoreAfterRegistration;
     
-    id <TICDSDocumentSyncManagerDelegate> _delegate;
+    id <TICDSDocumentSyncManagerDelegate> __weak _delegate;
     TICDSApplicationSyncManager *_applicationSyncManager;
     NSString *_documentIdentifier;
     NSString *_documentDescription;
@@ -296,37 +296,37 @@
 @property (nonatomic, assign) BOOL mustUploadStoreAfterRegistration;
 
 /** The Document Sync Manager Delegate. */
-@property (nonatomic, assign) id <TICDSDocumentSyncManagerDelegate> delegate;
+@property (nonatomic, weak) id <TICDSDocumentSyncManagerDelegate> delegate;
 
 /** The Application Sync Manager responsible for this document. */
-@property (nonatomic, retain) TICDSApplicationSyncManager *applicationSyncManager;
+@property (nonatomic, strong) TICDSApplicationSyncManager *applicationSyncManager;
 
 /** The Document Identifier used for registration.
  
  Set the identifier when registering with `registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:`.
  */
-@property (nonatomic, readonly, retain) NSString *documentIdentifier;
+@property (nonatomic, readonly, strong) NSString *documentIdentifier;
 
 /** The Document Description used for registration.
  
  Set the identifier when registering with `registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:`.
  */
-@property (nonatomic, readonly, retain) NSString *documentDescription;
+@property (nonatomic, readonly, strong) NSString *documentDescription;
 
 /** The Client Identifier used for registration.
  
  Set the identifier when registering with `registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:`.
  */
-@property (nonatomic, readonly, retain) NSString *clientIdentifier;
+@property (nonatomic, readonly, strong) NSString *clientIdentifier;
 
 /** The User Info used for registration.
  
  Set the user info when registering with `registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:`.
  */
-@property (nonatomic, readonly, retain) NSDictionary *documentUserInfo;
+@property (nonatomic, readonly, strong) NSDictionary *documentUserInfo;
 
 /** An `NSFileManager` suitable for use in document registration tasks. */
-@property (nonatomic, readonly, retain) NSFileManager *fileManager;
+@property (nonatomic, readonly, strong) NSFileManager *fileManager;
 
 /** The location of a directory used by the `TICoreDataSync` framework to store local helper files for this document.
  
@@ -334,117 +334,117 @@
  
  By default, the framework will use the location `~/Library/Application Support/ApplicationName/Documents/documentIdentifier`.
  */
-@property (readonly, retain) NSURL *helperFileDirectoryLocation;
+@property (readonly, strong) NSURL *helperFileDirectoryLocation;
 
 /** A dictionary containing the SyncChanges managed object contexts to use for each document managed object context. */
-@property (retain) NSMutableDictionary *syncChangesMOCs;
+@property (strong) NSMutableDictionary *syncChangesMOCs;
 
 /** Returns a SyncChanges managed object context for a given document managed object context. */
 - (NSManagedObjectContext *)syncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext;
 
 /** The document managed object context that was supplied at registration, and therefore treated as the primary context. */
-@property (nonatomic, retain) TICDSSynchronizedManagedObjectContext *primaryDocumentMOC;
+@property (nonatomic, strong) TICDSSynchronizedManagedObjectContext *primaryDocumentMOC;
 
 /** The `TICoreDataFactory` object used for SyncChange managed object contexts. */
-@property (nonatomic, retain) TICoreDataFactory *coreDataFactory;
+@property (nonatomic, strong) TICoreDataFactory *coreDataFactory;
 
 #pragma mark - Operation Queues
 /** @name Operation Queues */
 
 /** The operation queue used for registration operations.
  */
-@property (nonatomic, readonly, retain) NSOperationQueue *registrationQueue;
+@property (nonatomic, readonly, strong) NSOperationQueue *registrationQueue;
 
 /** The operation queue used for synchronization operations.
  
  The queue supports only 1 operation at a time, and is suspended until the document has registered successfully. */
-@property (nonatomic, readonly, retain) NSOperationQueue *synchronizationQueue;
+@property (nonatomic, readonly, strong) NSOperationQueue *synchronizationQueue;
 
 /** The operation queue used for other tasks.
  
  The queue is suspended until the document has registered successfully. */
-@property (nonatomic, readonly, retain) NSOperationQueue *otherTasksQueue;
+@property (nonatomic, readonly, strong) NSOperationQueue *otherTasksQueue;
 
 #pragma mark - Relative Paths
 /** @name Relative Paths */
 
 /** The path to the `ClientDevices` directory, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToClientDevicesDirectory;
+@property (weak, nonatomic, readonly) NSString *relativePathToClientDevicesDirectory;
 
 /** The path to the `Information` directory, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToInformationDirectory;
+@property (weak, nonatomic, readonly) NSString *relativePathToInformationDirectory;
 
 /** The path to the `DeletedDocuments` directory inside the `Information` directory, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString * relativePathToInformationDeletedDocumentsDirectory;
+@property (weak, nonatomic, readonly) NSString * relativePathToInformationDeletedDocumentsDirectory;
 
 /** The path to this document's `identifier.plist` file inside the `DeletedDocuments` directory, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToDeletedDocumentsThisDocumentIdentifierPlistFile;
+@property (weak, nonatomic, readonly) NSString *relativePathToDeletedDocumentsThisDocumentIdentifierPlistFile;
 
 /** The path to the `Documents` directory, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToDocumentsDirectory;
+@property (weak, nonatomic, readonly) NSString *relativePathToDocumentsDirectory;
 
 /** The path to this document's directory inside the `Documents` directory, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToThisDocumentDirectory;
+@property (weak, nonatomic, readonly) NSString *relativePathToThisDocumentDirectory;
 
 /** The path to this document's `DeletedClients` directory, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToThisDocumentDeletedClientsDirectory;
+@property (weak, nonatomic, readonly) NSString *relativePathToThisDocumentDeletedClientsDirectory;
 
 /** The path to the `SyncChanges` directory for this document, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToThisDocumentSyncChangesDirectory;
+@property (weak, nonatomic, readonly) NSString *relativePathToThisDocumentSyncChangesDirectory;
 
 /** The path to this client's directory inside the `SyncChanges` directory for this document, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToThisDocumentSyncChangesThisClientDirectory;
+@property (weak, nonatomic, readonly) NSString *relativePathToThisDocumentSyncChangesThisClientDirectory;
 
 /** The path to the `SyncCommands` directory for this document, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToThisDocumentSyncCommandsDirectory;
+@property (weak, nonatomic, readonly) NSString *relativePathToThisDocumentSyncCommandsDirectory;
 
 /** The path to this client's directory inside the `SyncCommands` directory for this document, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToThisDocumentSyncCommandsThisClientDirectory;
+@property (weak, nonatomic, readonly) NSString *relativePathToThisDocumentSyncCommandsThisClientDirectory;
 
 /** The path to the `WholeStore` directory for this document, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreDirectory;
+@property (weak, nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreDirectory;
 
 /** The path to this client's directory inside the `WholeStore` directory for this document, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreThisClientDirectory;
+@property (weak, nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreThisClientDirectory;
 
 /** The path to the `TemporaryFiles` directory for this document, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToThisDocumentTemporaryFilesDirectory;
+@property (weak, nonatomic, readonly) NSString *relativePathToThisDocumentTemporaryFilesDirectory;
 
 /** The path to the `WholeStore` directory inside the `TemporaryFiles` directory for this document, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToThisDocumentTemporaryWholeStoreDirectory;
+@property (weak, nonatomic, readonly) NSString *relativePathToThisDocumentTemporaryWholeStoreDirectory;
 
 /** The path to this client's directory inside the `WholeStore` directory inside the `TemporaryFiles` directory for this document, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToThisDocumentTemporaryWholeStoreThisClientDirectory;
+@property (weak, nonatomic, readonly) NSString *relativePathToThisDocumentTemporaryWholeStoreThisClientDirectory;
 
 /** The path to this client's `WholeStore.ticdsync` file inside it's directory inside the `WholeStore` directory inside the `TemporaryFiles` directory for this document, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToThisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFile;
+@property (weak, nonatomic, readonly) NSString *relativePathToThisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFile;
 
 /** The path to this client's `AppliedSyncChangeSets.ticdsync` file inside it's directory inside the `WholeStore` directory inside the `TemporaryFiles` directory for this document, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToThisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFile;
+@property (weak, nonatomic, readonly) NSString *relativePathToThisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFile;
 
 /** The path to this client's `WholeStore.ticdsync` file inside it's directory inside the `WholeStore` directory for this document, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreThisClientDirectoryWholeStoreFile;
+@property (weak, nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreThisClientDirectoryWholeStoreFile;
 
 /** The path to this client's `AppliedSyncChangeSets.ticdsync` file inside it's directory inside the `WholeStore` directory for this document, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFile;
+@property (weak, nonatomic, readonly) NSString *relativePathToThisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFile;
 
 /** The path to this document's `RecentSyncs` directory, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToThisDocumentRecentSyncsDirectory;
+@property (weak, nonatomic, readonly) NSString *relativePathToThisDocumentRecentSyncsDirectory;
 
 /** The path this client's RecentSync file inside this document's `RecentSyncs` directory, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToThisDocumentRecentSyncsDirectoryThisClientFile;
+@property (weak, nonatomic, readonly) NSString *relativePathToThisDocumentRecentSyncsDirectoryThisClientFile;
 
 
 /** The path to the `AppliedSyncChanges.ticdsync` file, located in the `helperFileDirectoryLocation`. */
-@property (nonatomic, readonly) NSString *localAppliedSyncChangesFilePath;
+@property (weak, nonatomic, readonly) NSString *localAppliedSyncChangesFilePath;
 
 /** The path to the `SyncChangesBeingSynchronized.syncchg` file, located in the `helperFileDirectoryLocation`. */
-@property (nonatomic, readonly) NSString *syncChangesBeingSynchronizedStorePath;
+@property (weak, nonatomic, readonly) NSString *syncChangesBeingSynchronizedStorePath;
 
 /** The path to the `UnsynchronizedSyncChanges.syncchg` file, located in the `helperFileDirectoryLocation`. */
-@property (nonatomic, readonly) NSString *unsynchronizedSyncChangesStorePath;
+@property (weak, nonatomic, readonly) NSString *unsynchronizedSyncChangesStorePath;
 
 /** The integrity key used to check whether the synchronization data matches what's expected. */
-@property (nonatomic, retain) NSString *integrityKey;
+@property (nonatomic, strong) NSString *integrityKey;
 
 @end

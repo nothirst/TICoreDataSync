@@ -122,12 +122,11 @@
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
-    [_thisDocumentTemporaryWholeStoreThisClientDirectoryPath release], _thisDocumentTemporaryWholeStoreThisClientDirectoryPath = nil;
-    [_thisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFilePath release], _thisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFilePath = nil;
-    [_thisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath release], _thisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath = nil;
-    [_thisDocumentWholeStoreThisClientDirectoryPath release], _thisDocumentWholeStoreThisClientDirectoryPath = nil;
+    _thisDocumentTemporaryWholeStoreThisClientDirectoryPath = nil;
+    _thisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFilePath = nil;
+    _thisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath = nil;
+    _thisDocumentWholeStoreThisClientDirectoryPath = nil;
 
-    [super dealloc];
 }
 
 #pragma mark -

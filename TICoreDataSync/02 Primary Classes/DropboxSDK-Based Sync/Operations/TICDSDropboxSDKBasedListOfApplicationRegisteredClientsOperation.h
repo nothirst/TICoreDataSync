@@ -26,7 +26,7 @@
 /** @name Properties */
 
 /** The DropboxSDK `DBSession` for use by this operation's `DBRestClient`. */
-@property (retain) DBSession *dbSession;
+@property (strong) DBSession *dbSession;
 
 /** The DropboxSDK `DBRestClient` for use by this operation. */
 @property (nonatomic, readonly) DBRestClient *restClient;
@@ -34,10 +34,10 @@
 /** @name Paths */
 
 /** The path to the application's `ClientDevices` directory. */
-@property (nonatomic, retain) NSString *clientDevicesDirectoryPath;
+@property (nonatomic, strong) NSString *clientDevicesDirectoryPath;
 
 /** The path to the application's `Documents` directory. */
-@property (nonatomic, retain) NSString *documentsDirectoryPath;
+@property (nonatomic, strong) NSString *documentsDirectoryPath;
 
 @end
 

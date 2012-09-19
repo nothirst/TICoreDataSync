@@ -85,10 +85,10 @@
 /** @name Properties */
 
 /** An array of documents, built as information comes in. */
-@property (retain) NSMutableArray *availableDocuments;
+@property (strong) NSMutableArray *availableDocuments;
 
 /** An array used internally by the operation to keep track of the available document sync identifiers. */
-@property (nonatomic, retain) NSArray *availableDocumentSyncIDs;
+@property (nonatomic, strong) NSArray *availableDocumentSyncIDs;
 
 /** @name Completion */
 

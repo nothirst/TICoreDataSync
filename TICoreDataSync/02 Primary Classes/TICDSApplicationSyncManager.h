@@ -27,7 +27,7 @@
     
     BOOL _shouldUseEncryption;
     
-    id <TICDSApplicationSyncManagerDelegate> _delegate;
+    id <TICDSApplicationSyncManagerDelegate> __weak _delegate;
     NSString *_appIdentifier;
     NSString *_clientIdentifier;
     NSString *_clientDescription;
@@ -231,72 +231,72 @@
 @property (nonatomic, assign) BOOL shouldUseEncryption;
 
 /** The Application Sync Manager Delegate. */
-@property (nonatomic, assign) id <TICDSApplicationSyncManagerDelegate> delegate;
+@property (nonatomic, weak) id <TICDSApplicationSyncManagerDelegate> delegate;
 
 /** The App Identifier used for registration.
  
  Set the identifier when registering with `registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:`.
  */
-@property (nonatomic, readonly, retain) NSString *appIdentifier;
+@property (nonatomic, readonly, strong) NSString *appIdentifier;
 
 /** The Client Identifier used for registration.
  
  Set the identifier when registering with `registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:`.
  */
-@property (nonatomic, readonly, retain) NSString *clientIdentifier;
+@property (nonatomic, readonly, strong) NSString *clientIdentifier;
 
 /** The Client Description used for registration.
  
  Set the description when registering with `registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:`.
  */
-@property (nonatomic, readonly, retain) NSString *clientDescription;
+@property (nonatomic, readonly, strong) NSString *clientDescription;
 
 /** The User Info used for registration.
  
  Set the user info when registering with `registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:`.
  */
-@property (nonatomic, readonly, retain) NSDictionary *applicationUserInfo;
+@property (nonatomic, readonly, strong) NSDictionary *applicationUserInfo;
 
 /** A File Manager for use by the application sync manager. */
-@property (nonatomic, readonly, retain) NSFileManager *fileManager;
+@property (nonatomic, readonly, strong) NSFileManager *fileManager;
 
 #pragma mark - Operation Queues
 /** @name Operation Queues */
 
 /** The operation queue used for registration operations. */
-@property (nonatomic, readonly, retain) NSOperationQueue *registrationQueue;
+@property (nonatomic, readonly, strong) NSOperationQueue *registrationQueue;
 
 /** The operation queue used for non-registration tasks.
  
  The queue is suspended until registration has completed successfully. */
-@property (nonatomic, readonly, retain) NSOperationQueue *otherTasksQueue;
+@property (nonatomic, readonly, strong) NSOperationQueue *otherTasksQueue;
 
 #pragma mark - Relative Paths
 /** @name Relative Paths */
 
 /** The path to the `Documents` directory, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToDocumentsDirectory;
+@property (weak, nonatomic, readonly) NSString *relativePathToDocumentsDirectory;
 
 /** The path to the `Information` directory, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToInformationDirectory;
+@property (weak, nonatomic, readonly) NSString *relativePathToInformationDirectory;
 
 /** The path to the `DeletedDocuments` directory inside the `Information` directory, relative ot the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToInformationDeletedDocumentsDirectory;
+@property (weak, nonatomic, readonly) NSString *relativePathToInformationDeletedDocumentsDirectory;
 
 /** The path to the `Encryption` directory, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToEncryptionDirectory;
+@property (weak, nonatomic, readonly) NSString *relativePathToEncryptionDirectory;
 
 /** The path to the `salt.ticdsync` file inside the `Encryption` directory, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToEncryptionDirectorySaltDataFilePath;
+@property (weak, nonatomic, readonly) NSString *relativePathToEncryptionDirectorySaltDataFilePath;
 
 /** The path to the `test.ticdsync` file inside the `Encryption` directory, relative to the rot of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToEncryptionDirectoryTestDataFilePath;
+@property (weak, nonatomic, readonly) NSString *relativePathToEncryptionDirectoryTestDataFilePath;
 
 /** The path to the `ClientDevices` directory, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToClientDevicesDirectory;
+@property (weak, nonatomic, readonly) NSString *relativePathToClientDevicesDirectory;
 
 /** The path to this client's directory inside the `ClientDevices` directory, relative to the root of the remote file structure. */
-@property (nonatomic, readonly) NSString *relativePathToClientDevicesThisClientDeviceDirectory;
+@property (weak, nonatomic, readonly) NSString *relativePathToClientDevicesThisClientDeviceDirectory;
 
 /** The path to a document's directory within the `Documents` directory, relative to the root of the remote file structure.
  

@@ -34,9 +34,8 @@
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
-    [_applicationDirectoryPath release], _applicationDirectoryPath = nil;
+    _applicationDirectoryPath = nil;
     
-    [super dealloc];
 }
 
 #pragma mark -

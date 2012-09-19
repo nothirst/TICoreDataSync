@@ -393,14 +393,13 @@
 {
     [_restClient setDelegate:nil];
 
-    [_dbSession release], _dbSession = nil;
-    [_restClient release], _restClient = nil;
-    [_applicationDirectoryPath release], _applicationDirectoryPath = nil;
-    [_encryptionDirectorySaltDataFilePath release], _encryptionDirectorySaltDataFilePath = nil;
-    [_encryptionDirectoryTestDataFilePath release], _encryptionDirectoryTestDataFilePath = nil;
-    [_clientDevicesThisClientDeviceDirectoryPath release], _clientDevicesThisClientDeviceDirectoryPath = nil;
+    _dbSession = nil;
+    _restClient = nil;
+    _applicationDirectoryPath = nil;
+    _encryptionDirectorySaltDataFilePath = nil;
+    _encryptionDirectoryTestDataFilePath = nil;
+    _clientDevicesThisClientDeviceDirectoryPath = nil;
 
-    [super dealloc];
 }
 
 #pragma mark -

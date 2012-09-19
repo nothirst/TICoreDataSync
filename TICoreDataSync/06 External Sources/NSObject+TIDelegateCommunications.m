@@ -64,7 +64,7 @@
         return NO;
     }
 
-    result = method([(id) self delegate], aSelector, args);
+    result = (__bridge void *)(method([(id) self delegate], aSelector, args));
 
     return YES;
 }

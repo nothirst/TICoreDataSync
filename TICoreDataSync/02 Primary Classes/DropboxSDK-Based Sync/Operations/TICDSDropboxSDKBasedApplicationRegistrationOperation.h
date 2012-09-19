@@ -32,7 +32,7 @@
 /** @name Properties */
 
 /** The DropboxSDK `DBSession` for use by this operation's `DBRestClient`. */
-@property (retain) DBSession *dbSession;
+@property (strong) DBSession *dbSession;
 
 /** The DropboxSDK `DBRestClient` for use by this operation. */
 @property (nonatomic, readonly) DBRestClient *restClient;
@@ -40,16 +40,16 @@
 /** @name Paths */
 
 /** The path to the root of the application. */
-@property (retain) NSString *applicationDirectoryPath;
+@property (strong) NSString *applicationDirectoryPath;
 
 /** The path to the `salt.ticdsync` file inside the application's `Encryption` directory. */
-@property (retain) NSString *encryptionDirectorySaltDataFilePath;
+@property (strong) NSString *encryptionDirectorySaltDataFilePath;
 
 /** The path to the `test.ticdsync` file inside the application's `Encryption` directory. */
-@property (retain) NSString *encryptionDirectoryTestDataFilePath;
+@property (strong) NSString *encryptionDirectoryTestDataFilePath;
 
 /** The path to this client's directory in the `ClientDevices` directory. */
-@property (retain) NSString *clientDevicesThisClientDeviceDirectoryPath;
+@property (strong) NSString *clientDevicesThisClientDeviceDirectoryPath;
 
 @end
 

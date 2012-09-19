@@ -26,7 +26,7 @@
 /** @name Properties */
 
 /** The DropboxSDK `DBSession` for use by this operation's `DBRestClient`. */
-@property (retain) DBSession *dbSession;
+@property (strong) DBSession *dbSession;
 
 /** The DropboxSDK `DBRestClient` for use by this operation. */
 @property (nonatomic, readonly) DBRestClient *restClient;
@@ -34,7 +34,7 @@
 /** @name Paths */
 
 /** The path to the `Documents` directory. */
-@property (retain) NSString *documentsDirectoryPath;
+@property (strong) NSString *documentsDirectoryPath;
 
 /** Returns the path to the `documentInfo.plist` file for a document with the specified identifier.
  

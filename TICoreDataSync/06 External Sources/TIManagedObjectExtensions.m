@@ -71,7 +71,7 @@
 + (NSFetchRequest *)ti_fetchRequestWithPredicate:(NSPredicate *)aPredicate inManagedObjectContext:(NSManagedObjectContext *)aContext sortedByKey:(NSString *)aKey ascending:(BOOL)yesOrNo
 {
     NSSortDescriptor *sortDescriptor = nil;
-    if( aKey ) sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:aKey ascending:yesOrNo] autorelease];
+    if( aKey ) sortDescriptor = [[NSSortDescriptor alloc] initWithKey:aKey ascending:yesOrNo];
     
     return [self ti_fetchRequestWithPredicate:aPredicate inManagedObjectContext:aContext sortedWithDescriptor:sortDescriptor];
 }
@@ -92,7 +92,7 @@
     if( aPredicate ) [requestToReturn setPredicate:aPredicate];
     if( someDescriptors ) [requestToReturn setSortDescriptors:someDescriptors];
     
-    return [requestToReturn autorelease];
+    return requestToReturn;
 }
 
 + (NSFetchRequest *)ti_fetchRequestInManagedObjectContext:(NSManagedObjectContext *)aContext withPredicateWithFormat:(NSString *)aFormat, ...
@@ -182,7 +182,7 @@
 + (NSArray *)ti_objectsMatchingPredicate:(NSPredicate *)aPredicate inManagedObjectContext:(NSManagedObjectContext *)aContext sortedByKey:(NSString *)aKey ascending:(BOOL)yesOrNo error:(NSError **)outError
 {
     NSSortDescriptor *sortDescriptor = nil;
-    if( aKey ) sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:aKey ascending:yesOrNo] autorelease];
+    if( aKey ) sortDescriptor = [[NSSortDescriptor alloc] initWithKey:aKey ascending:yesOrNo];
     
     return [self ti_objectsMatchingPredicate:aPredicate inManagedObjectContext:aContext sortedWithDescriptor:sortDescriptor error:outError];
 }

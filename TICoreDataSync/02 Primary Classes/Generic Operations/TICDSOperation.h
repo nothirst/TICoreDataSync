@@ -30,7 +30,7 @@
     BOOL _shouldUseEncryption;
     FZACryptor *_cryptor;
     
-    NSObject <TICDSOperationDelegate> *_delegate;
+    NSObject <TICDSOperationDelegate> *__weak _delegate;
     NSDictionary *_userInfo;
     
     BOOL _isExecuting;
@@ -75,13 +75,13 @@
 @property (assign) BOOL shouldUseEncryption;
 
 /** The `FZACryptor` object used to encrypt and decrypt files used by this operation, if `shouldUseEncryption` is `YES`. */
-@property (nonatomic, retain) FZACryptor *cryptor;
+@property (nonatomic, strong) FZACryptor *cryptor;
 
 /** The operation delegate. */
-@property (nonatomic, assign) NSObject <TICDSOperationDelegate> *delegate;
+@property (nonatomic, weak) NSObject <TICDSOperationDelegate> *delegate;
 
 /** A user info dictionary for sync managers to keep task-specific information. */
-@property (retain) NSDictionary *userInfo;
+@property (strong) NSDictionary *userInfo;
 
 /** By default returns `NO`, but override if your operation needs its code to execute on the main thread, such as for an `NSURLConnection`. */
 @property (readonly) BOOL needsMainThread;
@@ -93,15 +93,15 @@
 @property (readonly) BOOL isFinished;
 
 /** The most recent error; set this before calling `operationDidFailToComplete`. */
-@property (retain) NSError *error;
+@property (strong) NSError *error;
 
 /** An `NSFileManager` object suitable for use by this operation. */
-@property (nonatomic, readonly, retain) NSFileManager *fileManager;
+@property (nonatomic, readonly, strong) NSFileManager *fileManager;
 
 /** The path to a directory inside `NSTemporaryDirectory()` guaranteed to be unique to this operation, created when path first requested and removed when operation finishes. */
-@property (nonatomic, retain) NSString *tempFileDirectoryPath;
+@property (nonatomic, strong) NSString *tempFileDirectoryPath;
 
 /** The identifier of the client application (not set automatically, but may be used whenever necessary by subclasses). */
-@property (retain) NSString *clientIdentifier;
+@property (strong) NSString *clientIdentifier;
 
 @end

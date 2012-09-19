@@ -56,7 +56,7 @@
     NSManagedObjectContext *secondaryContext = [[NSManagedObjectContext alloc] init];
     [secondaryContext setPersistentStoreCoordinator:[self persistentStoreCoordinator]];
     
-    return [secondaryContext autorelease];
+    return secondaryContext;
 }
 
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator
@@ -96,7 +96,7 @@
     if( modelURL ) {
         _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     } else {
-        _managedObjectModel = [[NSManagedObjectModel mergedModelFromBundles:nil] retain];
+        _managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
     }
     
     return _managedObjectModel;
@@ -123,7 +123,7 @@
 #else
     NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 #endif
-    _persistentStoreDataPath = [[directory stringByAppendingPathComponent:[self persistentStoreDataFileName]] retain];
+    _persistentStoreDataPath = [directory stringByAppendingPathComponent:[self persistentStoreDataFileName]];
     
     return _persistentStoreDataPath;
 }
@@ -139,7 +139,7 @@
     else if( [[self persistentStoreType] isEqualToString:NSXMLStoreType] )
         fileName = [fileName stringByAppendingPathExtension:@"xml"];
 #endif
-    _persistentStoreDataFileName = [fileName retain];
+    _persistentStoreDataFileName = fileName;
     
     return _persistentStoreDataFileName;
 }
@@ -157,7 +157,7 @@
 {
     if( _persistentStoreOptions ) return _persistentStoreOptions;
     
-    _persistentStoreOptions = [[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:NSMigratePersistentStoresAutomaticallyOption] retain];
+    _persistentStoreOptions = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:NSMigratePersistentStoresAutomaticallyOption];
     return _persistentStoreOptions;
 }
 
@@ -180,31 +180,14 @@
 
 + (id)coreDataFactory
 {
-    return [[[self alloc] init] autorelease];
+    return [[self alloc] init];
 }
 
 + (id)coreDataFactoryWithMomdName:(NSString *)aMomdName
 {
-    return [[[self alloc] initWithMomdName:aMomdName] autorelease];
+    return [[self alloc] initWithMomdName:aMomdName];
 }
 
-- (void)dealloc
-{
-    [_managedObjectContext release];
-    [_persistentStoreCoordinator release];
-    
-    [_momdName release];
-    [_managedObjectModel release];
-    
-    [_persistentStoreDataFileName release];
-    [_persistentStoreDataPath release];
-    
-    [_persistentStoreOptions release];
-    
-    [_mostRecentError release];
-    
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Properties

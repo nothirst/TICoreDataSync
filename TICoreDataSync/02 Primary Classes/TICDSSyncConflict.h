@@ -30,21 +30,21 @@
 @property (assign) TICDSSyncConflictType conflictType;
 
 /** A description of this type of conflict. */
-@property (readonly) NSString *conflictDescription;
+@property (weak, readonly) NSString *conflictDescription;
 
 /** The name of the entity for which conflicting changes were made to an object. */
-@property (retain) NSString *entityName;
+@property (strong) NSString *entityName;
 
 /** The name of the key for which a conflict exists. */
-@property (retain) NSString *relevantKey;
+@property (strong) NSString *relevantKey;
 
 /** The sync id (`ticdsSyncID` attribute) of the object for which the conflict was found. */
-@property (retain) NSString *objectSyncID;
+@property (strong) NSString *objectSyncID;
 
 /** Information about the conflicting information on the local change. */
-@property (retain) NSDictionary *localInformation;
+@property (strong) NSDictionary *localInformation;
 
 /** Information about the conflicting information on the remote change. */
-@property (retain) NSDictionary *remoteInformation;
+@property (strong) NSDictionary *remoteInformation;
 
 @end

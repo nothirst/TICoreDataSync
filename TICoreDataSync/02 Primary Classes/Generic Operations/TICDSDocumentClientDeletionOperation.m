@@ -343,9 +343,8 @@
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
-    [_identifierOfClientToBeDeleted release], _identifierOfClientToBeDeleted = nil;
+    _identifierOfClientToBeDeleted = nil;
 
-    [super dealloc];
 }
 
 #pragma mark -

@@ -189,12 +189,11 @@
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
-    [_thisDocumentDirectoryPath release], _thisDocumentDirectoryPath = nil;
-    [_thisDocumentSyncChangesDirectoryPath release], _thisDocumentSyncChangesDirectoryPath = nil;
-    [_thisDocumentSyncChangesThisClientDirectoryPath release], _thisDocumentSyncChangesThisClientDirectoryPath = nil;
-    [_thisDocumentRecentSyncsThisClientFilePath release], _thisDocumentRecentSyncsThisClientFilePath = nil;
+    _thisDocumentDirectoryPath = nil;
+    _thisDocumentSyncChangesDirectoryPath = nil;
+    _thisDocumentSyncChangesThisClientDirectoryPath = nil;
+    _thisDocumentRecentSyncsThisClientFilePath = nil;
 
-    [super dealloc];
 }
 
 #pragma mark -

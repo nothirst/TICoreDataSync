@@ -30,7 +30,7 @@
 /** @name Properties */
 
 /** The DropboxSDK `DBSession` for use by this operation's `DBRestClient`. */
-@property (retain) DBSession *dbSession;
+@property (strong) DBSession *dbSession;
 
 /** The DropboxSDK `DBRestClient` for use by this operation. */
 @property (nonatomic, readonly) DBRestClient *restClient;
@@ -48,10 +48,10 @@
 - (NSString *)pathToAppliedSyncChangesFileForClientWithIdentifier:(NSString *)anIdentifier;
 
 /** The path to this document's directory. */
-@property (retain) NSString *thisDocumentDirectoryPath;
+@property (strong) NSString *thisDocumentDirectoryPath;
 
 /** The path to this document's `WholeStore` directory. */
-@property (retain) NSString *thisDocumentWholeStoreDirectoryPath;
+@property (strong) NSString *thisDocumentWholeStoreDirectoryPath;
 
 @end
 

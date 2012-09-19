@@ -73,6 +73,6 @@
 /** @name Properties */
 
 /** The earliest modification date after which files must be kept. */
-@property (nonatomic, retain ) NSDate *earliestDateForFilesToKeep;
+@property (nonatomic, strong ) NSDate *earliestDateForFilesToKeep;
 
 @end

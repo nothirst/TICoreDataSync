@@ -82,10 +82,9 @@
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
-    [_clientDevicesDirectoryPath release], _clientDevicesDirectoryPath = nil;
-    [_documentsDirectoryPath release], _documentsDirectoryPath = nil;
+    _clientDevicesDirectoryPath = nil;
+    _documentsDirectoryPath = nil;
 
-    [super dealloc];
 }
 
 #pragma mark -

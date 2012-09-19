@@ -28,7 +28,7 @@
 /** @name Properties */
 
 /** The DropboxSDK `DBSession` for use by this operation's `DBRestClient`. */
-@property (retain) DBSession *dbSession;
+@property (strong) DBSession *dbSession;
 
 /** The DropboxSDK `DBRestClient` for use by this operation. */
 @property (nonatomic, readonly) DBRestClient *restClient;
@@ -36,16 +36,16 @@
 /** @name Paths */
 
 /** The path to this document's `SyncChanges` directory. */
-@property (nonatomic, retain) NSString *thisDocumentSyncChangesDirectoryPath;
+@property (nonatomic, strong) NSString *thisDocumentSyncChangesDirectoryPath;
 
 /** The path to the application's `ClientDevices` directory. */
-@property (nonatomic, retain) NSString *clientDevicesDirectoryPath;
+@property (nonatomic, strong) NSString *clientDevicesDirectoryPath;
 
 /** The path to this document's `RecentSyncs` directory. */
-@property (nonatomic, retain) NSString *thisDocumentRecentSyncsDirectoryPath;
+@property (nonatomic, strong) NSString *thisDocumentRecentSyncsDirectoryPath;
 
 /** The path to this document's `WholeStore` directory. */
-@property (nonatomic, retain) NSString *thisDocumentWholeStoreDirectoryPath;
+@property (nonatomic, strong) NSString *thisDocumentWholeStoreDirectoryPath;
 
 /** Return the path to the `deviceInfo.plist` file for a given client identifier.
  

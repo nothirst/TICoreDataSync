@@ -24,7 +24,7 @@
 
 
 @interface TICoreDataFactory : NSObject {
-    NSObject <TICoreDataFactoryDelegate> *_delegate;
+    NSObject <TICoreDataFactoryDelegate> *__weak _delegate;
     
     NSManagedObjectContext *_managedObjectContext;
     NSPersistentStoreCoordinator *_persistentStoreCoordinator;
@@ -35,7 +35,7 @@
     NSString *_persistentStoreDataFileName;
     NSString *_persistentStoreDataPath;
     
-    NSString *_persistentStoreType;
+    NSString *__weak _persistentStoreType;
     NSDictionary *_persistentStoreOptions;
     
     NSError *_mostRecentError;
@@ -49,21 +49,21 @@
 
 - (NSManagedObjectContext *)secondaryManagedObjectContext;
 
-@property (nonatomic, assign) NSObject <TICoreDataFactoryDelegate> *delegate;
+@property (nonatomic, weak) NSObject <TICoreDataFactoryDelegate> *delegate;
 
-@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, retain) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-@property (nonatomic, retain) NSString *momdName;
-@property (nonatomic, retain) NSManagedObjectModel *managedObjectModel;
+@property (nonatomic, strong) NSString *momdName;
+@property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
 
-@property (nonatomic, retain) NSString *persistentStoreDataFileName;
-@property (nonatomic, retain) NSString *persistentStoreDataPath;
+@property (nonatomic, strong) NSString *persistentStoreDataFileName;
+@property (nonatomic, strong) NSString *persistentStoreDataPath;
 
-@property (nonatomic, assign) NSString *persistentStoreType;
-@property (nonatomic, retain) NSDictionary *persistentStoreOptions;
+@property (nonatomic, weak) NSString *persistentStoreType;
+@property (nonatomic, strong) NSDictionary *persistentStoreOptions;
 
-@property (nonatomic, retain) NSError *mostRecentError;
+@property (nonatomic, strong) NSError *mostRecentError;
 
 @end
 

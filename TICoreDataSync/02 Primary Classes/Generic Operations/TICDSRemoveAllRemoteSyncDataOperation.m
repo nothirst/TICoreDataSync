@@ -32,7 +32,6 @@
     if( ![self cryptor] ) {
         FZACryptor *aCryptor = [[FZACryptor alloc] init];
         [self setCryptor:aCryptor];
-        [aCryptor release];
     }
     [[self cryptor] clearPasswordAndSalt];
     
@@ -67,9 +66,5 @@
     return [super initWithDelegate:aDelegate];
 }
 
-- (void)dealloc
-{
-    [super dealloc];
-}
 
 @end

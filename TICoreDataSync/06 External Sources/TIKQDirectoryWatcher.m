@@ -77,7 +77,7 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
 {
     [self cancelRunLoopSourceRef];
     
-    CFSocketContext socketContext = { 0, self, NULL, NULL, NULL };
+    CFSocketContext socketContext = { 0, (__bridge void *)(self), NULL, NULL, NULL };
     
     CFSocketRef runLoopSocket = CFSocketCreateWithNative(NULL, [self kqFileDescriptor], kCFSocketReadCallBack, TIKQSocketCallback, &socketContext);
     
@@ -172,9 +172,8 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
     _kqFileDescriptor = 0;
     
     [self cancelRunLoopSourceRef];
-    [_watchedDirectories release], _watchedDirectories = nil;
+    _watchedDirectories = nil;
     
-    [super dealloc];
 }
 
 #pragma mark -

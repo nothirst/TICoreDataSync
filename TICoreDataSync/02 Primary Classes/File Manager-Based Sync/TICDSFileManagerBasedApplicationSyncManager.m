@@ -78,7 +78,7 @@
         if( isFinished ) { break; }
     }
     
-    return [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+    return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
 
 + (NSURL *)localDropboxDirectoryLocation
@@ -93,7 +93,7 @@
     
     dropboxHostDbPath = [dropboxHostDbPath stringByExpandingTildeInPath];
     
-    NSFileManager *fileManager = [[[NSFileManager alloc] init] autorelease];
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
     
     if( ![fileManager fileExistsAtPath:dropboxHostDbPath] ) {
         return nil;
@@ -114,8 +114,6 @@
     NSString *dropboxLocation = nil;
     [scanner scanUpToCharactersFromSet:[NSCharacterSet newlineCharacterSet] intoString:&dropboxLocation];
     
-    [scanner release];
-    [hostDbContents release];
     
     dropboxLocation = [self stringByDecodingBase64EncodedString:dropboxLocation];
     
@@ -139,7 +137,7 @@
     [operation setClientDevicesDirectoryPath:[self clientDevicesDirectoryPath]];
     [operation setClientDevicesThisClientDeviceDirectoryPath:[self clientDevicesThisClientDeviceDirectoryPath]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 - (TICDSListOfPreviouslySynchronizedDocumentsOperation *)listOfPreviouslySynchronizedDocumentsOperation
@@ -148,7 +146,7 @@
     
     [operation setDocumentsDirectoryPath:[self documentsDirectoryPath]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 - (TICDSWholeStoreDownloadOperation *)wholeStoreDownloadOperationForDocumentWithIdentifier:(NSString *)anIdentifier
@@ -158,7 +156,7 @@
     [operation setThisDocumentDirectoryPath:[[self documentsDirectoryPath] stringByAppendingPathComponent:anIdentifier]];
     [operation setThisDocumentWholeStoreDirectoryPath:[self pathToWholeStoreDirectoryForDocumentWithIdentifier:anIdentifier]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 - (TICDSListOfApplicationRegisteredClientsOperation *)listOfApplicationRegisteredClientsOperation
@@ -167,7 +165,7 @@
     
     [operation setClientDevicesDirectoryPath:[self clientDevicesDirectoryPath]];
     [operation setDocumentsDirectoryPath:[self documentsDirectoryPath]];
-    return [operation autorelease];
+    return operation;
 }
 
 - (TICDSDocumentDeletionOperation *)documentDeletionOperationForDocumentWithIdentifier:(NSString *)anIdentifier
@@ -178,7 +176,7 @@
     [operation setDeletedDocumentsDirectoryIdentifierPlistFilePath:[[self deletedDocumentsDirectoryPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", anIdentifier, TICDSDocumentInfoPlistExtension]]];
     [operation setDocumentInfoPlistFilePath:[[[self documentsDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSDocumentInfoPlistFilenameWithExtension]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 - (TICDSRemoveAllRemoteSyncDataOperation *)removeAllSyncDataOperation
@@ -187,7 +185,7 @@
     
     [operation setApplicationDirectoryPath:[self applicationDirectoryPath]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 #pragma mark -
@@ -236,9 +234,8 @@
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
-    [_applicationContainingDirectoryLocation release], _applicationContainingDirectoryLocation = nil;
+    _applicationContainingDirectoryLocation = nil;
 
-    [super dealloc];
 }
 
 #pragma mark -

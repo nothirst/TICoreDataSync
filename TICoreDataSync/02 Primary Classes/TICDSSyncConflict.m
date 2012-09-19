@@ -29,18 +29,17 @@
     [conflict setRelevantKey:aKey];
     [conflict setObjectSyncID:anObjectSyncID];
     
-    return [conflict autorelease];
+    return conflict;
 }
 
 - (void)dealloc
 {
-    [_entityName release], _entityName = nil;
-    [_relevantKey release], _relevantKey = nil;
-    [_objectSyncID release], _objectSyncID = nil;
-    [_localInformation release], _localInformation = nil;
-    [_remoteInformation release], _remoteInformation = nil;
+    _entityName = nil;
+    _relevantKey = nil;
+    _objectSyncID = nil;
+    _localInformation = nil;
+    _remoteInformation = nil;
 
-    [super dealloc];
 }
 
 - (NSString *)conflictDescription

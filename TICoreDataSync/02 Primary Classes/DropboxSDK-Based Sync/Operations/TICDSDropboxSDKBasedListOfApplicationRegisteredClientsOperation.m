@@ -172,12 +172,11 @@
 {
     [_restClient setDelegate:nil];
 
-    [_dbSession release], _dbSession = nil;
-    [_restClient release], _restClient = nil;
-    [_clientDevicesDirectoryPath release], _clientDevicesDirectoryPath = nil;
-    [_documentsDirectoryPath release], _documentsDirectoryPath = nil;
+    _dbSession = nil;
+    _restClient = nil;
+    _clientDevicesDirectoryPath = nil;
+    _documentsDirectoryPath = nil;
 
-    [super dealloc];
 }
 
 #pragma mark -

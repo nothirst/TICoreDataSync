@@ -149,15 +149,15 @@
 /** @name Properties */
 
 /** The location of the whole store file to upload. */
-@property (retain) NSURL *localWholeStoreFileLocation;
+@property (strong) NSURL *localWholeStoreFileLocation;
 
 /** The location of the applied sync change sets file to upload. */
-@property (retain) NSURL *localAppliedSyncChangeSetsFileLocation;
+@property (strong) NSURL *localAppliedSyncChangeSetsFileLocation;
 
 /** The persistent store coordinator to use when creating the background context. */
-@property (retain) NSPersistentStoreCoordinator *primaryPersistentStoreCoordinator;
+@property (strong) NSPersistentStoreCoordinator *primaryPersistentStoreCoordinator;
 
 /** The managed object context to use when checking for missing ticdsSyncIDs prior to upload. */
-@property (nonatomic, retain) NSManagedObjectContext *backgroundApplicationContext;
+@property (nonatomic, strong) NSManagedObjectContext *backgroundApplicationContext;
 
 @end

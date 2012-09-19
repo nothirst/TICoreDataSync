@@ -238,14 +238,13 @@
 {
     [_restClient setDelegate:nil];
 
-    [_dbSession release], _dbSession = nil;
-    [_restClient release], _restClient = nil;
-    [_oldestStoreDate release], _oldestStoreDate = nil;
-    [_thisDocumentWholeStoreDirectoryPath release], _thisDocumentWholeStoreDirectoryPath = nil;
-    [_thisDocumentSyncChangesThisClientDirectoryPath release], _thisDocumentSyncChangesThisClientDirectoryPath = nil;
-    [_thisDocumentRecentSyncsDirectoryPath release], _thisDocumentRecentSyncsDirectoryPath = nil;
+    _dbSession = nil;
+    _restClient = nil;
+    _oldestStoreDate = nil;
+    _thisDocumentWholeStoreDirectoryPath = nil;
+    _thisDocumentSyncChangesThisClientDirectoryPath = nil;
+    _thisDocumentRecentSyncsDirectoryPath = nil;
 
-    [super dealloc];
 }
 
 #pragma mark -

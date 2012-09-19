@@ -122,21 +122,21 @@
         return;
     }
     
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    [self setPaused:YES];
+    @autoreleasepool {
+        [self setPaused:YES];
+        
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Pausing registration as remote document file structure doesn't exist");
+        [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationPausedToFindOutWhetherToCreateRemoteDocumentStructure:) waitUntilDone:NO];
+        
+        while( [self isPaused] && ![self isCancelled] ) {
+            [NSThread sleepForTimeInterval:0.2];
+        }
+        
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Continuing registration after instruction from delegate");
+        
+        [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationResumedFollowingDocumentStructureCreationInstruction:) waitUntilDone:NO];
     
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Pausing registration as remote document file structure doesn't exist");
-    [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationPausedToFindOutWhetherToCreateRemoteDocumentStructure:) waitUntilDone:NO];
-    
-    while( [self isPaused] && ![self isCancelled] ) {
-        [NSThread sleepForTimeInterval:0.2];
     }
-    
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Continuing registration after instruction from delegate");
-    
-    [self ti_alertDelegateOnMainThreadWithSelector:@selector(registrationOperationResumedFollowingDocumentStructureCreationInstruction:) waitUntilDone:NO];
-    
-    [pool drain];
     [self continueAfterRequestWhetherToCreateRemoteDocumentFileStructure];
 }
 
@@ -570,13 +570,12 @@
 
 - (void)dealloc
 {
-    [_documentIdentifier release], _documentIdentifier = nil;
-    [_documentDescription release], _documentDescription = nil;
-    [_clientDescription release], _clientDescription = nil;
-    [_documentUserInfo release], _documentUserInfo = nil;
-    [_integrityKey release], _integrityKey = nil;
+    _documentIdentifier = nil;
+    _documentDescription = nil;
+    _clientDescription = nil;
+    _documentUserInfo = nil;
+    _integrityKey = nil;
 
-    [super dealloc];
 }
 
 #pragma mark -

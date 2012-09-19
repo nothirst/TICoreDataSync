@@ -52,11 +52,10 @@
 {
     [_restClient setDelegate:nil];
 
-    [_dbSession release], _dbSession = nil;
-    [_restClient release], _restClient = nil;
-    [_applicationDirectoryPath release], _applicationDirectoryPath = nil;
+    _dbSession = nil;
+    _restClient = nil;
+    _applicationDirectoryPath = nil;
     
-    [super dealloc];
 }
 
 #pragma mark -

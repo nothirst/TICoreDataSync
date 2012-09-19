@@ -12,7 +12,7 @@
 
 @interface TICDSSyncChange : NSManagedObject {
 @private
-    NSManagedObject *_relevantManagedObject;
+    NSManagedObject *__weak _relevantManagedObject;
 }
 
 /** @name Class Factory Method */
@@ -31,32 +31,32 @@
 /** The type of the change.
  
  See `TICDSTypesAndEnums.h` for the list of possible change types. */
-@property (nonatomic, retain) NSNumber * changeType;
+@property (nonatomic, strong) NSNumber * changeType;
 
 /** The name of the entity for this sync change. */
-@property (nonatomic, retain) NSString * objectEntityName;
+@property (nonatomic, strong) NSString * objectEntityName;
 
 /** The sync ID (`ticdsSyncID` attribute) of the managed object to which this sync change refers. */
-@property (nonatomic, retain) NSString * objectSyncID;
+@property (nonatomic, strong) NSString * objectSyncID;
 
 /** The relevant key that was changed if this is sync change represents an attribute change. */
-@property (nonatomic, retain) NSString * relevantKey;
+@property (nonatomic, strong) NSString * relevantKey;
 
 /** The changed values of the attributes (used for attribute change, and insertion). */
-@property (nonatomic, retain) id changedAttributes;
+@property (nonatomic, strong) id changedAttributes;
 
 /** The changed relationships for a relationship sync change. */
-@property (nonatomic, retain) id changedRelationships;
+@property (nonatomic, strong) id changedRelationships;
 
 /** The name of the related entity. */
-@property (nonatomic, retain) NSString * relatedObjectEntityName;
+@property (nonatomic, strong) NSString * relatedObjectEntityName;
 
 /** The local timestamp of this change; note this is used only to sort sync changes when they are being applied. The last modification date of the entire sync change set determines the order in which change sets are applied. */
-@property (nonatomic, retain) NSDate * localTimeStamp;
+@property (nonatomic, strong) NSDate * localTimeStamp;
 
 /** @name Non-Persisted Properties. */
 
 /** The managed object instance to which this sync change refers. */
-@property (nonatomic, assign) NSManagedObject *relevantManagedObject;
+@property (nonatomic, weak) NSManagedObject *relevantManagedObject;
 
 @end

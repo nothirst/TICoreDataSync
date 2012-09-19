@@ -47,7 +47,7 @@
     [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
     [operation setThisDocumentSyncCommandsThisClientDirectoryPath:[self thisDocumentSyncCommandsThisClientDirectoryPath]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 - (TICDSWholeStoreDownloadOperation *)wholeStoreDownloadOperation
@@ -58,7 +58,7 @@
     [operation setThisDocumentDirectoryPath:[self thisDocumentDirectoryPath]];
     [operation setThisDocumentWholeStoreDirectoryPath:[self thisDocumentWholeStoreDirectoryPath]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 - (TICDSWholeStoreUploadOperation *)wholeStoreUploadOperation
@@ -71,7 +71,7 @@
     [operation setThisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath:[self thisDocumentTemporaryAppliedSyncChangeSetsFilePath]];
     [operation setThisDocumentWholeStoreThisClientDirectoryPath:[self thisDocumentWholeStoreThisClientDirectoryPath]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 - (TICDSSynchronizationOperation *)synchronizationOperation
@@ -84,7 +84,7 @@
     [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
     [operation setThisDocumentRecentSyncsThisClientFilePath:[self thisDocumentRecentSyncsThisClientFilePath]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 - (TICDSVacuumOperation *)vacuumOperation
@@ -96,7 +96,7 @@
     [operation setThisDocumentRecentSyncsDirectoryPath:[self thisDocumentRecentSyncsDirectoryPath]];
     [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 - (TICDSListOfDocumentRegisteredClientsOperation *)listOfDocumentRegisteredClientsOperation
@@ -109,7 +109,7 @@
     [operation setThisDocumentRecentSyncsDirectoryPath:[self thisDocumentRecentSyncsDirectoryPath]];
     [operation setThisDocumentWholeStoreDirectoryPath:[self thisDocumentWholeStoreDirectoryPath]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 - (TICDSDocumentClientDeletionOperation *)documentClientDeletionOperation
@@ -124,7 +124,7 @@
     [operation setThisDocumentRecentSyncsDirectoryPath:[self thisDocumentRecentSyncsDirectoryPath]];
     [operation setThisDocumentWholeStoreDirectoryPath:[self thisDocumentWholeStoreDirectoryPath]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 #pragma mark -
@@ -223,10 +223,9 @@
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
-    [_dbSession release], _dbSession = nil;
-    [_applicationDirectoryPath release], _applicationDirectoryPath = nil;
+    _dbSession = nil;
+    _applicationDirectoryPath = nil;
 
-    [super dealloc];
 }
 
 #pragma mark -
@@ -237,7 +236,7 @@
         return _dbSession;
     }
     
-    _dbSession = [[DBSession sharedSession] retain];
+    _dbSession = [DBSession sharedSession];
     
     return _dbSession;
 }

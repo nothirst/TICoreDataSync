@@ -35,6 +35,6 @@ extern NSString * const kTIKQExpandedDirectory;
 
 @property (nonatomic, readonly) int kqFileDescriptor;
 @property (nonatomic, readonly) CFRunLoopSourceRef runLoopSourceRef;
-@property (nonatomic, retain) NSMutableArray *watchedDirectories;
+@property (nonatomic, strong) NSMutableArray *watchedDirectories;
 
 @end

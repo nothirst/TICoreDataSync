@@ -35,7 +35,6 @@
     [saltedPW appendData: salt];
     uint8_t hashBuffer[CC_SHA256_DIGEST_LENGTH] = {0};
     CC_SHA256([saltedPW bytes], (CC_LONG)[saltedPW length], hashBuffer);
-    [saltedPW release];
     for (int i = 0; i < 7499; i++) {
         CC_SHA256(hashBuffer, CC_SHA256_DIGEST_LENGTH, hashBuffer);
     }
@@ -94,8 +93,5 @@
     return self;
 }
 
-- (void)dealloc {
-    [super dealloc];
-}
 
 @end

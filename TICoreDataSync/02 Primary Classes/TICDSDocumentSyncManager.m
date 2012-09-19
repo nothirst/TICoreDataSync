@@ -37,11 +37,11 @@
 - (void)startClientDeletionProcessForClient:(NSString *)anIdentifier;
 - (void)bailFromClientDeletionProcessForClient:(NSString *)anIdentifier withError:(NSError *)anError;
 
-@property (nonatomic, retain) NSString *documentIdentifier;
-@property (nonatomic, retain) NSString *documentDescription;
-@property (nonatomic, retain) NSString *clientIdentifier;
-@property (nonatomic, retain) NSDictionary *documentUserInfo;
-@property (retain) NSURL *helperFileDirectoryLocation;
+@property (nonatomic, strong) NSString *documentIdentifier;
+@property (nonatomic, strong) NSString *documentDescription;
+@property (nonatomic, strong) NSString *clientIdentifier;
+@property (nonatomic, strong) NSDictionary *documentUserInfo;
+@property (strong) NSURL *helperFileDirectoryLocation;
 
 @end
 
@@ -418,7 +418,7 @@
 #pragma mark Operation Generation
 - (TICDSDocumentRegistrationOperation *)documentRegistrationOperation
 {
-    return [[[TICDSDocumentRegistrationOperation alloc] initWithDelegate:self] autorelease];
+    return [[TICDSDocumentRegistrationOperation alloc] initWithDelegate:self];
 }
 
 #pragma mark Operation Communications
@@ -573,7 +573,7 @@
 #pragma mark Operation Generation
 - (TICDSWholeStoreUploadOperation *)wholeStoreUploadOperation
 {
-    return [[[TICDSWholeStoreUploadOperation alloc] initWithDelegate:self] autorelease];
+    return [[TICDSWholeStoreUploadOperation alloc] initWithDelegate:self];
 }
 
 #pragma mark Operation Communications
@@ -669,7 +669,7 @@
 #pragma mark Operation Generation
 - (TICDSWholeStoreDownloadOperation *)wholeStoreDownloadOperation
 {
-    return [[[TICDSWholeStoreDownloadOperation alloc] initWithDelegate:self] autorelease];
+    return [[TICDSWholeStoreDownloadOperation alloc] initWithDelegate:self];
 }
 
 #pragma mark Operation Communications
@@ -872,7 +872,7 @@
 #pragma mark Operation Generation
 - (TICDSSynchronizationOperation *)synchronizationOperation
 {
-    return [[[TICDSSynchronizationOperation alloc] initWithDelegate:self] autorelease]; 
+    return [[TICDSSynchronizationOperation alloc] initWithDelegate:self]; 
 }
 
 #pragma mark Operation Communications
@@ -948,7 +948,7 @@
 #pragma mark Operation Generation
 - (TICDSVacuumOperation *)vacuumOperation
 {
-    return [[[TICDSVacuumOperation alloc] initWithDelegate:self] autorelease];
+    return [[TICDSVacuumOperation alloc] initWithDelegate:self];
 }
 
 #pragma mark Operation Communications
@@ -1013,7 +1013,7 @@
 #pragma mark Operation Generation
 - (TICDSListOfDocumentRegisteredClientsOperation *)listOfDocumentRegisteredClientsOperation
 {
-    return [[[TICDSListOfDocumentRegisteredClientsOperation alloc] initWithDelegate:self] autorelease];
+    return [[TICDSListOfDocumentRegisteredClientsOperation alloc] initWithDelegate:self];
 }
 
 #pragma mark Operation Communications
@@ -1081,7 +1081,7 @@
 #pragma mark Operation Generation
 - (TICDSDocumentClientDeletionOperation *)documentClientDeletionOperation
 {
-    return [[[TICDSDocumentClientDeletionOperation alloc] initWithDelegate:self] autorelease];
+    return [[TICDSDocumentClientDeletionOperation alloc] initWithDelegate:self];
 }
 
 #pragma mark Operation Communications
@@ -1137,7 +1137,7 @@
     [[self syncChangesMOCs] setValue:context forKey:[self keyForContext:aContext]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncChangesMocDidSave:) name:NSManagedObjectContextDidSaveNotification object:context];
     
-    return [context autorelease];
+    return context;
 }
 
 - (NSManagedObjectContext *)syncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext
@@ -1346,21 +1346,20 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    [_applicationSyncManager release], _applicationSyncManager = nil;
-    [_documentIdentifier release], _documentIdentifier = nil;
-    [_clientIdentifier release], _clientIdentifier = nil;
-    [_documentUserInfo release], _documentUserInfo = nil;
-    [_fileManager release], _fileManager = nil;
-    [_helperFileDirectoryLocation release], _helperFileDirectoryLocation = nil;
-    [_primaryDocumentMOC release], _primaryDocumentMOC = nil;
-    [_syncChangesMOCs release], _syncChangesMOCs = nil;
-    [_coreDataFactory release], _coreDataFactory = nil;
-    [_registrationQueue release], _registrationQueue = nil;
-    [_synchronizationQueue release], _synchronizationQueue = nil;
-    [_otherTasksQueue release], _otherTasksQueue = nil;
-    [_integrityKey release], _integrityKey = nil;
+    _applicationSyncManager = nil;
+    _documentIdentifier = nil;
+    _clientIdentifier = nil;
+    _documentUserInfo = nil;
+    _fileManager = nil;
+    _helperFileDirectoryLocation = nil;
+    _primaryDocumentMOC = nil;
+    _syncChangesMOCs = nil;
+    _coreDataFactory = nil;
+    _registrationQueue = nil;
+    _synchronizationQueue = nil;
+    _otherTasksQueue = nil;
+    _integrityKey = nil;
 
-    [super dealloc];
 }
 
 #pragma mark -

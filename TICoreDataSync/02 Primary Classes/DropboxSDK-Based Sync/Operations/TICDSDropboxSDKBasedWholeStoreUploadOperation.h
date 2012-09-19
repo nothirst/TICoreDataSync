@@ -29,7 +29,7 @@
 /** @name Properties */
 
 /** The DropboxSDK `DBSession` for use by this operation's `DBRestClient`. */
-@property (retain) DBSession *dbSession;
+@property (strong) DBSession *dbSession;
 
 /** The DropboxSDK `DBRestClient` for use by this operation for methods relating to the global application directory. */
 @property (nonatomic, readonly) DBRestClient *restClient;
@@ -37,16 +37,16 @@
 /** @name Paths */
 
 /** The path to this client's directory within the temporary directory in this document's `WholeStore` directory. */
-@property (retain) NSString *thisDocumentTemporaryWholeStoreThisClientDirectoryPath;
+@property (strong) NSString *thisDocumentTemporaryWholeStoreThisClientDirectoryPath;
 
 /** The path to which the whole store file should be copied. */
-@property (retain) NSString *thisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFilePath;
+@property (strong) NSString *thisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFilePath;
 
 /** The path to which the applied sync change sets file should be copied. */
-@property (retain) NSString *thisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath;
+@property (strong) NSString *thisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath;
 
 /** The path to this client's directory within this document's `WholeStore` directory. */
-@property (retain) NSString *thisDocumentWholeStoreThisClientDirectoryPath;
+@property (strong) NSString *thisDocumentWholeStoreThisClientDirectoryPath;
 
 @end
 

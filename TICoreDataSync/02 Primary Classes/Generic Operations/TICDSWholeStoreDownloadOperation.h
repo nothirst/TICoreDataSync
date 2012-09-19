@@ -85,15 +85,15 @@
 /** @name Properties */
 
 /** The client identifier for the WholeStore to download. If this is not specified before the operation executes, the operation will determine which client uploaded a store most recently. */
-@property (retain) NSString *requestedWholeStoreClientIdentifier;
+@property (strong) NSString *requestedWholeStoreClientIdentifier;
 
 /** The destination for the whole store file. */
-@property (retain) NSURL *localWholeStoreFileLocation;
+@property (strong) NSURL *localWholeStoreFileLocation;
 
 /** The destination for the applied sync change sets file. */
-@property (retain) NSURL *localAppliedSyncChangeSetsFileLocation;
+@property (strong) NSURL *localAppliedSyncChangeSetsFileLocation;
 
 /** The integrity key of the newly-downloaded store. */
-@property (retain) NSString *integrityKey;
+@property (strong) NSString *integrityKey;
 
 @end

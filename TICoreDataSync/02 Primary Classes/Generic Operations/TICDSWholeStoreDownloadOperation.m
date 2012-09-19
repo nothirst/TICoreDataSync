@@ -158,12 +158,11 @@
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
-    [_requestedWholeStoreClientIdentifier release], _requestedWholeStoreClientIdentifier = nil;
-    [_localWholeStoreFileLocation release], _localWholeStoreFileLocation = nil;
-    [_localAppliedSyncChangeSetsFileLocation release], _localAppliedSyncChangeSetsFileLocation = nil;
-    [_integrityKey release], _integrityKey = nil;
+    _requestedWholeStoreClientIdentifier = nil;
+    _localWholeStoreFileLocation = nil;
+    _localAppliedSyncChangeSetsFileLocation = nil;
+    _integrityKey = nil;
 
-    [super dealloc];
 }
 
 #pragma mark -

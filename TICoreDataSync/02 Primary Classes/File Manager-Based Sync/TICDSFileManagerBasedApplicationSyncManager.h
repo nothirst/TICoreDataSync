@@ -34,30 +34,30 @@
 /** @name Properties */
 
 /** The location of the directory that should contain the file structure for this application's synchronization. */
-@property (nonatomic, retain) NSURL *applicationContainingDirectoryLocation;
+@property (nonatomic, strong) NSURL *applicationContainingDirectoryLocation;
 
 /** @name Paths */
 
 /** The path to the root application directory. */
-@property (nonatomic, readonly) NSString *applicationDirectoryPath;
+@property (weak, nonatomic, readonly) NSString *applicationDirectoryPath;
 
 /** The path to the `DeletedDocuments` directory inside the `Information` directory at the root of the application. */
-@property (nonatomic, readonly) NSString *deletedDocumentsDirectoryPath;
+@property (weak, nonatomic, readonly) NSString *deletedDocumentsDirectoryPath;
 
 /** The path to the `salt.ticdsync` file inside the `Encryption` directory at the root of the application. */
-@property (nonatomic, readonly) NSString *encryptionDirectorySaltDataFilePath;
+@property (weak, nonatomic, readonly) NSString *encryptionDirectorySaltDataFilePath;
 
 /** The path to the `test.ticdsync` file inside the `Encryption` directory at the root of the application. */
-@property (nonatomic, readonly) NSString *encryptionDirectoryTestDataFilePath;
+@property (weak, nonatomic, readonly) NSString *encryptionDirectoryTestDataFilePath;
 
 /** The path to the `Documents` directory at the root of the application. */
-@property (nonatomic, readonly) NSString *documentsDirectoryPath;
+@property (weak, nonatomic, readonly) NSString *documentsDirectoryPath;
 
 /** The path to the `ClientDevices` directory at the root of the application. */
-@property (nonatomic, readonly) NSString *clientDevicesDirectoryPath;
+@property (weak, nonatomic, readonly) NSString *clientDevicesDirectoryPath;
 
 /** The path to this client's directory inside the `ClientDevices` directory at the root of the application. */
-@property (nonatomic, readonly) NSString *clientDevicesThisClientDeviceDirectoryPath;
+@property (weak, nonatomic, readonly) NSString *clientDevicesThisClientDeviceDirectoryPath;
 
 /** The path to the `WholeStore` directory for a document with a given identifier.
  

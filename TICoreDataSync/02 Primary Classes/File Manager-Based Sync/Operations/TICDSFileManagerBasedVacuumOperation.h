@@ -28,12 +28,12 @@
 - (NSString *)pathToWholeStoreFileForClientWithIdentifier:(NSString *)anIdentifier;
 
 /** The path to this document's `WholeStore` directory. */
-@property (retain) NSString *thisDocumentWholeStoreDirectoryPath;
+@property (strong) NSString *thisDocumentWholeStoreDirectoryPath;
 
 /** The path to this document's `RecentSyncs` directory. */
-@property (retain) NSString *thisDocumentRecentSyncsDirectoryPath;
+@property (strong) NSString *thisDocumentRecentSyncsDirectoryPath;
 
 /** The path to this client's directory inside the `RecentSyncs` directory for this document. */
-@property (retain) NSString *thisDocumentSyncChangesThisClientDirectoryPath;
+@property (strong) NSString *thisDocumentSyncChangesThisClientDirectoryPath;
 
 @end

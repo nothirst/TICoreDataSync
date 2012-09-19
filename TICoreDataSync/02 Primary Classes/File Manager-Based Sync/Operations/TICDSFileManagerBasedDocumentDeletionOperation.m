@@ -70,11 +70,10 @@
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
-    [_documentDirectoryPath release], _documentDirectoryPath = nil;
-    [_documentInfoPlistFilePath release], _documentInfoPlistFilePath = nil;
-    [_deletedDocumentsDirectoryIdentifierPlistFilePath release], _deletedDocumentsDirectoryIdentifierPlistFilePath = nil;
+    _documentDirectoryPath = nil;
+    _documentInfoPlistFilePath = nil;
+    _deletedDocumentsDirectoryIdentifierPlistFilePath = nil;
     
-    [super dealloc];
 }
 #pragma mark -
 #pragma mark Properties

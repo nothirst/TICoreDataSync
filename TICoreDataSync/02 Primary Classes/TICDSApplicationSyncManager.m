@@ -23,12 +23,12 @@
 - (void)bailFromRemoveAllSyncDataProcessWithError:(NSError *)anError;
 
 @property (nonatomic, assign) TICDSApplicationSyncManagerState state;
-@property (nonatomic, retain) NSString *appIdentifier;
-@property (nonatomic, retain) NSString *clientIdentifier;
-@property (nonatomic, retain) NSString *clientDescription;
-@property (nonatomic, retain) NSDictionary *applicationUserInfo;
-@property (nonatomic, retain) NSOperationQueue *otherTasksQueue;
-@property (nonatomic, retain) NSOperationQueue *registrationQueue;
+@property (nonatomic, strong) NSString *appIdentifier;
+@property (nonatomic, strong) NSString *clientIdentifier;
+@property (nonatomic, strong) NSString *clientDescription;
+@property (nonatomic, strong) NSDictionary *applicationUserInfo;
+@property (nonatomic, strong) NSOperationQueue *otherTasksQueue;
+@property (nonatomic, strong) NSOperationQueue *registrationQueue;
 
 @end
 
@@ -181,7 +181,7 @@
 #pragma mark Operation Generation
 - (TICDSApplicationRegistrationOperation *)applicationRegistrationOperation
 {
-    return [[[TICDSApplicationRegistrationOperation alloc] initWithDelegate:self] autorelease];
+    return [[TICDSApplicationRegistrationOperation alloc] initWithDelegate:self];
 }
 
 #pragma mark Operation Communications
@@ -284,7 +284,7 @@
 #pragma mark Operation Generation
 - (TICDSListOfPreviouslySynchronizedDocumentsOperation *)listOfPreviouslySynchronizedDocumentsOperation
 {
-    return [[[TICDSListOfPreviouslySynchronizedDocumentsOperation alloc] initWithDelegate:self] autorelease];
+    return [[TICDSListOfPreviouslySynchronizedDocumentsOperation alloc] initWithDelegate:self];
 }
 
 #pragma mark Operation Communications
@@ -380,7 +380,7 @@
 #pragma mark Overridden Methods
 - (TICDSWholeStoreDownloadOperation *)wholeStoreDownloadOperationForDocumentWithIdentifier:(NSString *)anIdentifier
 {
-    return [[[TICDSWholeStoreDownloadOperation alloc] initWithDelegate:self] autorelease];
+    return [[TICDSWholeStoreDownloadOperation alloc] initWithDelegate:self];
 }
 
 #pragma mark Post-Operation Work
@@ -504,7 +504,7 @@
 #pragma mark Operation Generation
 - (TICDSListOfApplicationRegisteredClientsOperation *)listOfApplicationRegisteredClientsOperation
 {
-    return [[[TICDSListOfApplicationRegisteredClientsOperation alloc] initWithDelegate:self] autorelease];
+    return [[TICDSListOfApplicationRegisteredClientsOperation alloc] initWithDelegate:self];
 }
 
 #pragma mark Operation Communications
@@ -579,7 +579,7 @@
 #pragma mark Operation Generation
 - (TICDSDocumentDeletionOperation *)documentDeletionOperationForDocumentWithIdentifier:(NSString *)anIdentifier
 {
-    return [[[TICDSDocumentDeletionOperation alloc] initWithDelegate:self] autorelease];
+    return [[TICDSDocumentDeletionOperation alloc] initWithDelegate:self];
 }
 
 #pragma mark Operation Communication
@@ -667,8 +667,8 @@
         return NO;
     }
     
-    [self setOtherTasksQueue:[[[NSOperationQueue alloc] init] autorelease]];
-    [self setRegistrationQueue:[[[NSOperationQueue alloc] init] autorelease]];
+    [self setOtherTasksQueue:[[NSOperationQueue alloc] init]];
+    [self setRegistrationQueue:[[NSOperationQueue alloc] init]];
     
     [operation setShouldUseEncryption:[self shouldUseEncryption]];    
     [[self otherTasksQueue] addOperation:operation];
@@ -686,7 +686,7 @@
 #pragma mark Operation Generation
 - (TICDSRemoveAllRemoteSyncDataOperation *)removeAllSyncDataOperation
 {
-    return [[[TICDSRemoveAllRemoteSyncDataOperation alloc] initWithDelegate:self] autorelease];
+    return [[TICDSRemoveAllRemoteSyncDataOperation alloc] initWithDelegate:self];
 }
 
 #pragma mark Operation Communication
@@ -881,15 +881,14 @@ id __strong gTICDSDefaultApplicationSyncManager = nil;
 
 - (void)dealloc
 {
-    [_appIdentifier release], _appIdentifier = nil;
-    [_clientIdentifier release], _clientIdentifier = nil;
-    [_clientDescription release], _clientDescription = nil;
-    [_applicationUserInfo release], _applicationUserInfo = nil;
-    [_registrationQueue release], _registrationQueue = nil;
-    [_otherTasksQueue release], _otherTasksQueue = nil;
-    [_fileManager release], _fileManager = nil;
+    _appIdentifier = nil;
+    _clientIdentifier = nil;
+    _clientDescription = nil;
+    _applicationUserInfo = nil;
+    _registrationQueue = nil;
+    _otherTasksQueue = nil;
+    _fileManager = nil;
 
-    [super dealloc];
 }
 
 #pragma mark -

@@ -22,12 +22,12 @@
 /** @name Paths */
 
 /** The path to this document's directory. */
-@property (retain) NSString *documentDirectoryPath;
+@property (strong) NSString *documentDirectoryPath;
 
 /** The path to this document's `documentInfo.plist` file. */
-@property (retain) NSString *documentInfoPlistFilePath;
+@property (strong) NSString *documentInfoPlistFilePath;
 
 /** The path to the `identifier.plist` file for this document inside the application's `DeletedDocuments` directory. */
-@property (retain) NSString *deletedDocumentsDirectoryIdentifierPlistFilePath;
+@property (strong) NSString *deletedDocumentsDirectoryIdentifierPlistFilePath;
 
 @end

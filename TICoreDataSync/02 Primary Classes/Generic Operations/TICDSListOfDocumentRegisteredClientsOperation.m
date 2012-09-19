@@ -94,7 +94,6 @@
         
         NSMutableDictionary *dictionary = [aDictionary mutableCopy];
         [[self temporaryDeviceInfoDictionaries] setValue:dictionary forKey:anIdentifier];
-        [dictionary release];
     }
     
     if( _numberOfDeviceInfoDictionariesFetched == _numberOfDeviceInfoDictionariesToFetch ) {
@@ -198,11 +197,10 @@
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
-    [_synchronizedClientIdentifiers release], _synchronizedClientIdentifiers = nil;
-    [_temporaryDeviceInfoDictionaries release], _temporaryDeviceInfoDictionaries = nil;
-    [_deviceInfoDictionaries release], _deviceInfoDictionaries = nil;
+    _synchronizedClientIdentifiers = nil;
+    _temporaryDeviceInfoDictionaries = nil;
+    _deviceInfoDictionaries = nil;
 
-    [super dealloc];
 }
 
 #pragma mark -

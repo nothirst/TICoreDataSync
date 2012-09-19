@@ -222,13 +222,12 @@
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
-    [_applicationDirectoryPath release], _applicationDirectoryPath = nil;
-    [_encryptionDirectorySaltDataFilePath release], _encryptionDirectorySaltDataFilePath = nil;
-    [_encryptionDirectoryTestDataFilePath release], _encryptionDirectoryTestDataFilePath = nil;
-    [_clientDevicesDirectoryPath release], _clientDevicesDirectoryPath = nil;
-    [_clientDevicesThisClientDeviceDirectoryPath release], _clientDevicesThisClientDeviceDirectoryPath = nil;
+    _applicationDirectoryPath = nil;
+    _encryptionDirectorySaltDataFilePath = nil;
+    _encryptionDirectoryTestDataFilePath = nil;
+    _clientDevicesDirectoryPath = nil;
+    _clientDevicesThisClientDeviceDirectoryPath = nil;
     
-    [super dealloc];
 }
 
 #pragma mark -

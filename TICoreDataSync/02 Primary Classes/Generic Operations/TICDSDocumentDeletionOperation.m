@@ -211,9 +211,8 @@
 
 - (void)dealloc
 {
-    [_documentIdentifier release], _documentIdentifier = nil;
+    _documentIdentifier = nil;
     
-    [super dealloc];
 }
 
 #pragma mark -

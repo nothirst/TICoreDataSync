@@ -18,12 +18,12 @@
 
 @interface TICDSSynchronizedManagedObjectContext : NSManagedObjectContext {
 @private
-    TICDSDocumentSyncManager *_documentSyncManager;
+    TICDSDocumentSyncManager *__weak _documentSyncManager;
 }
 
 /** The document sync manager responsible for this managed object context's underlying persistent store/document.
  
  This property will automatically be set when registering a document sync manager with this context. */
-@property (nonatomic, assign) TICDSDocumentSyncManager *documentSyncManager;
+@property (nonatomic, weak) TICDSDocumentSyncManager *documentSyncManager;
 
 @end

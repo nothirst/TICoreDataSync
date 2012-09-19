@@ -26,7 +26,7 @@
     [operation setEncryptionDirectoryTestDataFilePath:[self encryptionDirectoryTestDataFilePath]];
     [operation setClientDevicesThisClientDeviceDirectoryPath:[self clientDevicesThisClientDeviceDirectoryPath]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 - (TICDSListOfPreviouslySynchronizedDocumentsOperation *)listOfPreviouslySynchronizedDocumentsOperation
@@ -36,7 +36,7 @@
     [operation setDbSession:[self dbSession]];
     [operation setDocumentsDirectoryPath:[self documentsDirectoryPath]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 - (TICDSWholeStoreDownloadOperation *)wholeStoreDownloadOperationForDocumentWithIdentifier:(NSString *)anIdentifier
@@ -47,7 +47,7 @@
     [operation setThisDocumentDirectoryPath:[[self documentsDirectoryPath] stringByAppendingPathComponent:anIdentifier]];
     [operation setThisDocumentWholeStoreDirectoryPath:[self pathToWholeStoreDirectoryForDocumentWithIdentifier:anIdentifier]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 - (TICDSListOfApplicationRegisteredClientsOperation *)listOfApplicationRegisteredClientsOperation
@@ -58,7 +58,7 @@
     [operation setClientDevicesDirectoryPath:[self clientDevicesDirectoryPath]];
     [operation setDocumentsDirectoryPath:[self documentsDirectoryPath]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 - (TICDSDocumentDeletionOperation *)documentDeletionOperationForDocumentWithIdentifier:(NSString *)anIdentifier
@@ -70,7 +70,7 @@
     [operation setDocumentDirectoryPath:[[self documentsDirectoryPath] stringByAppendingPathComponent:anIdentifier]];
     [operation setDocumentInfoPlistFilePath:[[[self documentsDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSDocumentInfoPlistFilenameWithExtension]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 - (TICDSRemoveAllRemoteSyncDataOperation *)removeAllSyncDataOperation
@@ -80,7 +80,7 @@
     [operation setDbSession:[self dbSession]];
     [operation setApplicationDirectoryPath:[self applicationDirectoryPath]];
     
-    return [operation autorelease];
+    return operation;
 }
 
 #pragma mark -
@@ -129,9 +129,8 @@
 #pragma mark Initialization and Deallocation
 - (void)dealloc
 {
-    [_dbSession release], _dbSession = nil;
+    _dbSession = nil;
 
-    [super dealloc];
 }
 
 #pragma mark -
@@ -142,7 +141,7 @@
         return _dbSession;
     }
     
-    _dbSession = [[DBSession sharedSession] retain];
+    _dbSession = [DBSession sharedSession];
     
     return _dbSession;
 }

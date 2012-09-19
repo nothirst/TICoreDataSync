@@ -30,7 +30,7 @@
 /** @name Properties */
 
 /** The DropboxSDK `DBSession` for use by this operation's `DBRestClient`. */
-@property (retain) DBSession *dbSession;
+@property (strong) DBSession *dbSession;
 
 /** The DropboxSDK `DBRestClient` for use by this operation for methods relating to the global application directory. */
 @property (nonatomic, readonly) DBRestClient *restClient;
@@ -38,22 +38,22 @@
 /** @name Paths */
 
 /** The path to the `ClientDevices` directory. */
-@property (retain) NSString *clientDevicesDirectoryPath;
+@property (strong) NSString *clientDevicesDirectoryPath;
 
 /** The path to the document's `DeletedClients` directory. */
-@property (retain) NSString *thisDocumentDeletedClientsDirectoryPath;
+@property (strong) NSString *thisDocumentDeletedClientsDirectoryPath;
 
 /** The path to the document's `SyncChanges` directory. */
-@property (retain) NSString *thisDocumentSyncChangesDirectoryPath;
+@property (strong) NSString *thisDocumentSyncChangesDirectoryPath;
 
 /** The path to the document's `SyncCommands` directory. */
-@property (retain) NSString *thisDocumentSyncCommandsDirectoryPath;
+@property (strong) NSString *thisDocumentSyncCommandsDirectoryPath;
 
 /** The path to the document's `RecentSyncs` directory. */
-@property (retain) NSString *thisDocumentRecentSyncsDirectoryPath;
+@property (strong) NSString *thisDocumentRecentSyncsDirectoryPath;
 
 /** The path to the document's `WholeStore` directory. */
-@property (retain) NSString *thisDocumentWholeStoreDirectoryPath;
+@property (strong) NSString *thisDocumentWholeStoreDirectoryPath;
 
 @end
 

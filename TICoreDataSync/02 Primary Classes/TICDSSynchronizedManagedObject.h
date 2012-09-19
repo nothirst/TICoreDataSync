@@ -25,6 +25,6 @@
 // If there are keys that you wish to exclude from synchronization they can be detailed in this set.
 + (NSSet *)keysForWhichSyncChangesWillNotBeCreated;
 
-@property (nonatomic, readonly) NSManagedObjectContext *syncChangesMOC;
+@property (weak, nonatomic, readonly) NSManagedObjectContext *syncChangesMOC;
 
 @end

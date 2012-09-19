@@ -38,13 +38,13 @@
 /** @name Properties */
 
 /** The DropboxSDK `DBSession` for use by this operation's `DBRestClient`. */
-@property (retain) DBSession *dbSession;
+@property (strong) DBSession *dbSession;
 
 /** The DropboxSDK `DBRestClient` for use by this operation for methods relating to the global application directory. */
 @property (nonatomic, readonly) DBRestClient *restClient;
 
 /** The Last Modified Date of the oldest WholeStore file. */
-@property (nonatomic, retain) NSDate *oldestStoreDate;
+@property (nonatomic, strong) NSDate *oldestStoreDate;
 
 /** @name Paths */
 
@@ -54,13 +54,13 @@
 - (NSString *)pathToWholeStoreFileForClientWithIdentifier:(NSString *)anIdentifier;
 
 /** The path to this document's `WholeStore` directory. */
-@property (retain) NSString *thisDocumentWholeStoreDirectoryPath;
+@property (strong) NSString *thisDocumentWholeStoreDirectoryPath;
 
 /** The path to this document's `RecentSyncs` directory. */
-@property (retain) NSString *thisDocumentRecentSyncsDirectoryPath;
+@property (strong) NSString *thisDocumentRecentSyncsDirectoryPath;
 
 /** The path to this client's directory inside the `RecentSyncs` directory for this document. */
-@property (retain) NSString *thisDocumentSyncChangesThisClientDirectoryPath;
+@property (strong) NSString *thisDocumentSyncChangesThisClientDirectoryPath;
 
 @end
 

@@ -13,13 +13,13 @@
 @interface TICDSDropboxSDKBasedSynchronizationOperation ()
 
 /** A dictionary used by this operation to find out the client responsible for creating a change set. */
-@property (nonatomic, retain) NSMutableDictionary *clientIdentifiersForChangeSetIdentifiers;
+@property (nonatomic, strong) NSMutableDictionary *clientIdentifiersForChangeSetIdentifiers;
 
 /** A dictionary used to keep hold of the modification dates of sync change sets. */
-@property (nonatomic, retain) NSMutableDictionary *changeSetModificationDates;
+@property (nonatomic, strong) NSMutableDictionary *changeSetModificationDates;
 
 /** When we fail to download a changeset file we re-request it and put its path in this set so that we can keep track of the fact that we've re-requested it. */
-@property (nonatomic, retain) NSMutableDictionary *failedDownloadRetryDictionary;
+@property (nonatomic, strong) NSMutableDictionary *failedDownloadRetryDictionary;
 
 /** When uploading the local sync changes we need to first ask the Dropbox for any parent revisions. We store off the file path of the file we intend to upload while we get its revisions. */
 @property (nonatomic, copy) NSString *localSyncChangeSetFilePath;
@@ -379,16 +379,15 @@
 {
     [_restClient setDelegate:nil];
 
-    [_dbSession release], _dbSession = nil;
-    [_restClient release], _restClient = nil;
-    [_clientIdentifiersForChangeSetIdentifiers release], _clientIdentifiersForChangeSetIdentifiers = nil;
-    [_changeSetModificationDates release], _changeSetModificationDates = nil;
-    [_thisDocumentDirectoryPath release], _thisDocumentDirectoryPath = nil;
-    [_thisDocumentSyncChangesDirectoryPath release], _thisDocumentSyncChangesDirectoryPath = nil;
-    [_thisDocumentSyncChangesThisClientDirectoryPath release], _thisDocumentSyncChangesThisClientDirectoryPath = nil;
-    [_thisDocumentRecentSyncsThisClientFilePath release], _thisDocumentRecentSyncsThisClientFilePath = nil;
+    _dbSession = nil;
+    _restClient = nil;
+    _clientIdentifiersForChangeSetIdentifiers = nil;
+    _changeSetModificationDates = nil;
+    _thisDocumentDirectoryPath = nil;
+    _thisDocumentSyncChangesDirectoryPath = nil;
+    _thisDocumentSyncChangesThisClientDirectoryPath = nil;
+    _thisDocumentRecentSyncsThisClientFilePath = nil;
 
-    [super dealloc];
 }
 
 #pragma mark -
