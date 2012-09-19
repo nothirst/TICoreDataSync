@@ -28,15 +28,6 @@
 
 /** @name Invocations */
 
-/** Return an invocation confgured to target the delegate.
- 
- @param aSelector The selector for which you wish to create an invocation object.
- @param args A properly-started `va_list` of arguments to be passed to the selector.
- 
- @return A properly-configured `NSInvocation` object.
- */
-- (NSInvocation *)ti_invocationForDelegateSelector:(SEL)aSelector withArgList:(va_list)args;
-
 /** Get some kind of result from a delegate with a given selector and arguments. 
  
  @param result A pointer to a buffer for the result. Note that this buffer won't be changed if the invocation is not invoked.

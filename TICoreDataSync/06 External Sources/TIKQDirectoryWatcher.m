@@ -63,7 +63,7 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
     [[self watchedDirectories] addObject:aDirectoryName];
     
     struct kevent directoryEvent;
-    EV_SET( &directoryEvent, directoryFileDescriptor, EVFILT_VNODE, EV_ADD | EV_CLEAR | EV_ENABLE, NOTE_WRITE, 0, aDirectoryName);
+    EV_SET( &directoryEvent, directoryFileDescriptor, EVFILT_VNODE, EV_ADD | EV_CLEAR | EV_ENABLE, NOTE_WRITE, 0, (__bridge void *)aDirectoryName);
     
     if( kevent( [self kqFileDescriptor], &directoryEvent, 1, NULL, 0, NULL ) == -1 ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Could not kevent watching %@. Error %d (%s)", aDirectoryName, errno, strerror(errno));
@@ -125,7 +125,7 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
 #pragma mark Socket Callback
 void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDataRef address, const void *data, void *info )
 {
-    TIKQDirectoryWatcher *watcher = (TIKQDirectoryWatcher *)info;
+    TIKQDirectoryWatcher *watcher = (__bridge TIKQDirectoryWatcher *)info;
     
     struct kevent event;
     
@@ -133,7 +133,7 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
         // TODO: sort this out so the problem causing this message to appear 1000s of times doesn't occur
         TICDSLog(TICDSLogVerbosityDirectoryWatcherPickUpEventIssue, @"TIKQDirectoryWatcher could not pick up an event. Error %d (%s)", errno, strerror(errno));
     } else {
-        [watcher notifyActivityOnPath:(NSString *)event.udata];
+        [watcher notifyActivityOnPath:(__bridge NSString *)event.udata];
     }
 }
 

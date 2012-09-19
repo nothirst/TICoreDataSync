@@ -786,7 +786,7 @@
 
 #pragma mark -
 #pragma mark Default Sync Manager
-id gTICDSDefaultApplicationSyncManager = nil;
+id __strong gTICDSDefaultApplicationSyncManager = nil;
 
 + (id)defaultApplicationSyncManager
 {
@@ -805,8 +805,7 @@ id gTICDSDefaultApplicationSyncManager = nil;
         return;
     }
     
-    [gTICDSDefaultApplicationSyncManager release];
-    gTICDSDefaultApplicationSyncManager = [aSyncManager retain];
+    gTICDSDefaultApplicationSyncManager = aSyncManager;
 }
 
 #pragma mark -

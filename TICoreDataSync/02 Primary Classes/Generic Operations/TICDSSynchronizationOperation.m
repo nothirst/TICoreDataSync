@@ -332,85 +332,77 @@
 #pragma mark APPLICATION OF UNAPPLIED SYNC CHANGE SETS
 - (void)beginApplyingUnappliedSyncChangeSets
 {
-    if( [NSThread isMainThread] ) {
+    if ( [NSThread isMainThread] ) {
         [self performSelectorInBackground:@selector(beginApplyingUnappliedSyncChangeSets) withObject:nil];
         return;
     }
-    
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Checking how many sync change sets need to be applied");
-    
-    NSError *anyError = nil;
-    NSArray *sortDescriptors = [NSArray arrayWithObjects:[[[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:YES] autorelease], [[[NSSortDescriptor alloc] initWithKey:@"syncChangeSetIdentifier" ascending:YES] autorelease], nil];
-    
-    NSArray *syncChangeSetsToApply = [TICDSSyncChangeSet ti_allObjectsInManagedObjectContext:[self unappliedSyncChangeSetsContext] sortedWithDescriptors:sortDescriptors error:&anyError];
-    
-    if( !syncChangeSetsToApply ) {
-        [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataFetchError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [pool drain];
-        [self continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully];
-        return;
-    }
-    
-    if( [syncChangeSetsToApply count] < 1 ) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"No other clients have uploaded any sync change sets, so proceeding to upload local sync commands");
-        [pool drain];
-        [self continueAfterApplyingUnappliedSyncChangeSetsSuccessfully];
-        return;
-    }
-    
-    [self setSynchronizationWarnings:[NSMutableArray arrayWithCapacity:20]];
-    
-    BOOL shouldContinue = [self applyUnappliedSyncChangeSets:syncChangeSetsToApply];
-    
-    if( shouldContinue ) {
-        anyError = nil;
-        
-        // Save Background Context (changes made to objects in application's context)
-        BOOL success = [[self backgroundApplicationContext] save:&anyError];
-        if( !success ) {
-            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save background context: %@", anyError);
-            [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            [pool drain];
+
+    @autoreleasepool {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Checking how many sync change sets need to be applied");
+
+        NSError *anyError = nil;
+        NSArray *sortDescriptors = [NSArray arrayWithObjects:[[[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:YES] autorelease], [[[NSSortDescriptor alloc] initWithKey:@"syncChangeSetIdentifier" ascending:YES] autorelease], nil];
+
+        NSArray *syncChangeSetsToApply = [TICDSSyncChangeSet ti_allObjectsInManagedObjectContext:[self unappliedSyncChangeSetsContext] sortedWithDescriptors:sortDescriptors error:&anyError];
+
+        if ( !syncChangeSetsToApply ) {
+            [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataFetchError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
             [self continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully];
             return;
         }
-        
-        // Save UnsynchronizedSyncChanges context (UnsynchronizedSyncChanges.syncchg file)
-        if( [self localSyncChangesToMergeContext] && ![[self localSyncChangesToMergeContext] save:&anyError] ) {
-            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save unsynchroinzed sync changes context, after saving background context: %@", anyError);
-            [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            [pool drain];
-            [self continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully];
+
+        if ( [syncChangeSetsToApply count] < 1 ) {
+            TICDSLog(TICDSLogVerbosityEveryStep, @"No other clients have uploaded any sync change sets, so proceeding to upload local sync commands");
+            [self continueAfterApplyingUnappliedSyncChangeSetsSuccessfully];
             return;
         }
-        
-        // Save Applied Sync Change Sets context (AppliedSyncChangeSets.ticdsync file)
-        success = [[self appliedSyncChangeSetsContext] save:&anyError];
-        if( !success ) {
-            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save applied sync change sets context, after saving background context: %@", anyError);
-            [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            [pool drain];
+
+        [self setSynchronizationWarnings:[NSMutableArray arrayWithCapacity:20]];
+
+        BOOL shouldContinue = [self applyUnappliedSyncChangeSets:syncChangeSetsToApply];
+
+        if ( shouldContinue ) {
+            anyError = nil;
+
+            // Save Background Context (changes made to objects in application's context)
+            BOOL success = [[self backgroundApplicationContext] save:&anyError];
+            if ( !success ) {
+                TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save background context: %@", anyError);
+                [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+                [self continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully];
+                return;
+            }
+
+            // Save UnsynchronizedSyncChanges context (UnsynchronizedSyncChanges.syncchg file)
+            if ( [self localSyncChangesToMergeContext] && ![[self localSyncChangesToMergeContext] save:&anyError] ) {
+                TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save unsynchroinzed sync changes context, after saving background context: %@", anyError);
+                [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+                [self continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully];
+                return;
+            }
+
+            // Save Applied Sync Change Sets context (AppliedSyncChangeSets.ticdsync file)
+            success = [[self appliedSyncChangeSetsContext] save:&anyError];
+            if ( !success ) {
+                TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save applied sync change sets context, after saving background context: %@", anyError);
+                [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+                [self continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully];
+                return;
+            }
+
+            // Save Unapplied Sync Change Sets context (UnappliedSYncChangeSets.ticdsync file)
+            success = [[self unappliedSyncChangeSetsContext] save:&anyError];
+            if ( !success ) {
+                TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save unapplied sync change sets context, after saving applied sync change sets context: %@", anyError);
+                [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+                [self continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully];
+                return;
+            }
+
+            [self continueAfterApplyingUnappliedSyncChangeSetsSuccessfully];
+        } else {
             [self continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully];
-            return;
         }
-        
-        // Save Unapplied Sync Change Sets context (UnappliedSYncChangeSets.ticdsync file)
-        success = [[self unappliedSyncChangeSetsContext] save:&anyError];
-        if( !success ) {
-            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save unapplied sync change sets context, after saving applied sync change sets context: %@", anyError);
-            [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            [pool drain];
-            [self continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully];
-            return;
-        }
-        
-        [pool drain];
-        [self continueAfterApplyingUnappliedSyncChangeSetsSuccessfully];
-    } else {
-        [pool drain];
-        [self continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully];
     }
 }
 

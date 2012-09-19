@@ -159,7 +159,7 @@ const NSInteger FZAFileBlockLength = 4096;
     
     //do it!
     do {
-        NSAutoreleasePool *inLoopPool = [[NSAutoreleasePool alloc] init];
+        @autoreleasepool {
         NSData *dataRead = [readHandle readDataOfLength: FZAFileBlockLength];
         size_t bytesOut = 0;
         status = CCCryptorUpdate(cryptor,
@@ -175,7 +175,6 @@ const NSInteger FZAFileBlockLength = 4096;
                                          userInfo: nil];
             }
             free(bytesToWrite);
-            [inLoopPool drain];
             return NO;
         }
         NSData *outData = [NSData dataWithBytesNoCopy: bytesToWrite
@@ -184,7 +183,7 @@ const NSInteger FZAFileBlockLength = 4096;
         [writeHandle writeData: outData];
         CCHmacUpdate(&hmacContext, [outData bytes], [outData length]);
         
-        [inLoopPool drain];
+        }
     } while ([readHandle offsetInFile] < inputFileLength);
 
     size_t finalBlockSize = 0;

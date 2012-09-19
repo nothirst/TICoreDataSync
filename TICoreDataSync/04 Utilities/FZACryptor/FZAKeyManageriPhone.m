@@ -66,11 +66,12 @@
 - (BOOL)storeKeyDerivedFromPassword: (NSString *)password salt: (NSData *)salt error: (NSError **)error {
     NSData *key = [self keyFromPassword: password salt: salt];
     NSDictionary *searchAttributes = [self searchAttributes];
-    NSDictionary *foundAttributes = nil;
-    OSStatus searchResult = SecItemCopyMatching((CFDictionaryRef)searchAttributes,
-                                                (CFTypeRef *)&foundAttributes);
+    CFDictionaryRef localResult;
+    OSStatus searchResult = SecItemCopyMatching((__bridge CFDictionaryRef)searchAttributes,
+                                                (CFTypeRef *)&localResult);
     OSStatus storeResult = noErr;
     if (noErr == searchResult) {
+        NSDictionary *foundAttributes = (__bridge NSDictionary *)localResult;
         TICDSLog(TICDSLogVerbosityEveryStep, @"FZACryptor iOS Key Manager updating %@", foundAttributes);
         NSMutableDictionary *updateAttributes = [[self searchAttributes] mutableCopy];
         [updateAttributes removeObjectForKey: (id)kSecReturnAttributes];
@@ -78,8 +79,8 @@
         NSDictionary *storeAttributes = [NSDictionary 
                                                 dictionaryWithObject: key 
                                                 forKey: (id)kSecValueData];
-        storeResult = SecItemUpdate((CFDictionaryRef)updateAttributes,
-                                    (CFDictionaryRef)storeAttributes);
+        storeResult = SecItemUpdate((__bridge CFDictionaryRef)updateAttributes,
+                                    (__bridge CFDictionaryRef)storeAttributes);
         [updateAttributes release];
     }
     else {
@@ -90,10 +91,9 @@
         [storeAttributes setObject: @"fza-sync" forKey: (id)kSecAttrLabel];
         //[storeAttributes setObject: (id)kCFBooleanTrue forKey: (id)kSecReturnPersistentRef];
         [storeAttributes removeObjectForKey: (id)kSecReturnAttributes];
-        storeResult = SecItemAdd((CFDictionaryRef)storeAttributes, NULL);
+        storeResult = SecItemAdd((__bridge CFDictionaryRef)storeAttributes, NULL);
         [storeAttributes release];
     }
-    [foundAttributes release];
     if (noErr != storeResult) {
         if (error) {
             *error = [NSError errorWithDomain: FZAKeyManagerErrorDomain
@@ -111,9 +111,9 @@
     NSMutableDictionary *searchAttributes = [[self searchAttributes] mutableCopy];
     [searchAttributes removeObjectForKey: (id)kSecReturnAttributes];
     [searchAttributes setObject: (id)kCFBooleanTrue forKey: (id)kSecReturnData];
-    NSData *theKey = nil;
-    OSStatus searchResult = SecItemCopyMatching((CFDictionaryRef)searchAttributes,
-                                                (CFTypeRef *)&theKey);
+    CFTypeRef secItem = NULL;
+    OSStatus searchResult = SecItemCopyMatching((__bridge CFDictionaryRef)searchAttributes,
+                                                &secItem);
     [searchAttributes release];
     if (noErr != searchResult) {
         if( searchResult == errSecItemNotFound ) {
@@ -121,13 +121,17 @@
         } else {
             TICDSLog(TICDSLogVerbosityErrorsOnly, @"FZACryptor iOS Key Manager search error: %ld", searchResult);
         }
+
+        return nil;
     }
-    return [theKey autorelease];
+
+    NSData *theKey = (__bridge NSData *)secItem;
+    return theKey;
 }
 
 - (void)clearPasswordAndSalt {
     NSDictionary *searchAttributes = [self searchAttributes];
-    OSStatus clearResult = SecItemDelete((CFDictionaryRef)searchAttributes);
+    OSStatus clearResult = SecItemDelete((__bridge CFDictionaryRef)searchAttributes);
     
     if( clearResult == errSecSuccess ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"FZACryptor iOS Key Manager deleted keychain items");

@@ -106,12 +106,10 @@ static TICDSChangeIntegrityStoreManager *sharedChangeIntegrityStoreManager = nil
 
 + (TICDSChangeIntegrityStoreManager *)sharedChangeIntegrityStoreManager
 {
-	@synchronized(self)
-	{
-		if (sharedChangeIntegrityStoreManager == nil) {
-			[[self alloc] init];
-		}
-	}
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedChangeIntegrityStoreManager = [[self alloc] init];
+    });
 
 	return sharedChangeIntegrityStoreManager;
 }
@@ -130,24 +128,6 @@ static TICDSChangeIntegrityStoreManager *sharedChangeIntegrityStoreManager = nil
 }
 
 - (id)copyWithZone:(NSZone *)zone
-{
-	return self;
-}
-
-- (id)retain
-{
-	return self;
-}
-
-- (NSUInteger)retainCount
-{
-	return NSUIntegerMax;
-}
-
-- (oneway void)release
-{}
-
-- (id)autorelease
 {
 	return self;
 }

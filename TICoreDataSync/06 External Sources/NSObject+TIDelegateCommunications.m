@@ -20,55 +20,52 @@
 
 #import "NSObject+TIDelegateCommunications.h"
 
-
 @implementation NSObject (TIDelegateCommunications)
 
 #pragma mark Invocation Generation
-- (NSInvocation *)ti_invocationForDelegateSelector:(SEL)aSelector withArgList:(va_list)args
+- (IMP)ti_implementationForDelegateSelector:(SEL)aSelector withArgList:(va_list)args
 {
-    if( !aSelector ) {
+    if (aSelector == nil) {
         return nil;
     }
-    
-    if( ![self respondsToSelector:@selector(delegate)] ) {
+
+    if ([self respondsToSelector:@selector(delegate)] == NO) {
         return nil;
     }
-    
-    if( ![[(id)self delegate] respondsToSelector:aSelector] ) {
+
+    if ([[(id) self delegate] respondsToSelector:aSelector] == NO) {
         return nil;
     }
+
+    return [[(id)self delegate] methodForSelector:aSelector];
+//    NSMethodSignature *methodSignature = [[[(id) self delegate] class] instanceMethodSignatureForSelector:aSelector];
+//    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSignature];
+//    [invocation setSelector:aSelector];
+//    [invocation setTarget:[(id) self delegate]];
+//    [invocation setArgument:&self atIndex:2];
+//
+//    id eachArgument = nil;
+//    for (int argumentIndex = 3; argumentIndex < [methodSignature numberOfArguments]; argumentIndex++) {
+//        eachArgument = va_arg(args, id);
+//
+//        [invocation setArgument:&eachArgument atIndex:argumentIndex];
+//    }
+//
+//    return invocation;
     
-    NSMethodSignature *methodSignature = [[[(id)self delegate] class] instanceMethodSignatureForSelector:aSelector];
-    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSignature];
-    [invocation setSelector:aSelector];
-    [invocation setTarget:[(id)self delegate]];
-    [invocation setArgument:&self atIndex:2];
-        
-    id eachArgument = nil;
-    for( int argumentIndex = 3; argumentIndex < [methodSignature numberOfArguments]; argumentIndex++ ) {
-        eachArgument = va_arg(args, id);
-        
-        [invocation setArgument:&eachArgument atIndex:argumentIndex];
-    }
-    
-    return invocation;
 }
 
 #pragma mark -
 #pragma mark Requesting Values
 - (BOOL)ti_getResult:(void *)result fromDelegateWithSelector:(SEL)aSelector withArgList:(va_list)args
 {
-    NSInvocation *invocation = [self ti_invocationForDelegateSelector:aSelector withArgList:args];
-    if( !invocation ) {
+    IMP method = [self ti_implementationForDelegateSelector:aSelector withArgList:args];
+    if ( !method ) {
         return NO;
     }
-    
-    [invocation invoke];
-    
-    if( result ) {
-        [invocation getReturnValue:result];
-    }
-    
+
+    result = method([(id) self delegate], aSelector, args);
+
     return YES;
 }
 
@@ -142,9 +139,17 @@
     va_list args;
     va_start(args, shouldWait);
     
-    NSInvocation *invocation = [self ti_invocationForDelegateSelector:aSelector withArgList:args];
+    IMP method = [self ti_implementationForDelegateSelector:aSelector withArgList:args];
     
-    [invocation performSelectorOnMainThread:@selector(invoke) withObject:nil waitUntilDone:shouldWait];
+    if (shouldWait) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            method([(id)self delegate], aSelector, args);
+        });
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            method([(id)self delegate], aSelector, args);
+        });
+    }
     
     va_end(args);
 }
