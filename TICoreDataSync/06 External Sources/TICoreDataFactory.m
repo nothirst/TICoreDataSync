@@ -61,18 +61,51 @@
 
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator
 {
-    if( _persistentStoreCoordinator ) return _persistentStoreCoordinator;
-    
+    if ( _persistentStoreCoordinator ) {
+        return _persistentStoreCoordinator;
+    }
+
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    
+
     NSURL *urlForStore = [NSURL fileURLWithPath:[self persistentStoreDataPath]];
-    
+
     [self setMostRecentError:nil];
     NSError *error = nil;
-    NSPersistentStore *store = [_persistentStoreCoordinator addPersistentStoreWithType:[self persistentStoreType] 
-                                                                         configuration:nil URL:urlForStore 
+    NSPersistentStore *store = [_persistentStoreCoordinator addPersistentStoreWithType:[self persistentStoreType]
+                                                                         configuration:nil URL:urlForStore
                                                                                options:[self persistentStoreOptions] error:&error];
-    if( !store ) [self _notifyDelegateAndSetError:error];
+    if ( !store ) {
+#warning We need to check the error number here. If the error number is 259 we have a corrupted store file (WHAT?!) and need to delete it and recreate it before moving forward.
+        if (error.code == 259) {
+            NSLog(@"%s There is something wrong with the file at %@", __PRETTY_FUNCTION__, [urlForStore path]);
+            if ([[NSFileManager defaultManager] fileExistsAtPath:[urlForStore path]]) {
+                NSLog(@"%s The file exists, going to scrub it and try again.", __PRETTY_FUNCTION__);
+                NSError *deletionError = nil;
+                [[NSFileManager defaultManager] removeItemAtURL:urlForStore error:&deletionError];
+                if (deletionError != nil) {
+                    NSLog(@"%s could not delete the file at %@, here's the error: %@", __PRETTY_FUNCTION__, [urlForStore path], deletionError);
+                    return nil;
+                }
+                
+                
+                NSError *retryError = nil;
+                NSPersistentStore *store = [_persistentStoreCoordinator addPersistentStoreWithType:[self persistentStoreType]
+                                                                                     configuration:nil URL:urlForStore
+                                                                                           options:[self persistentStoreOptions] error:&retryError];
+                
+                if (store == nil) {
+                    NSLog(@"%s Still hitting a problem setting up the store. %@", __PRETTY_FUNCTION__, retryError);
+                    return nil;
+                }
+                
+                return _persistentStoreCoordinator;
+            }
+        }
+
+        NSLog(@"%s The error code was actually: %ld", __PRETTY_FUNCTION__, (long)error.code);
+        [self _notifyDelegateAndSetError:error];
+        return nil;
+    }
 
     return _persistentStoreCoordinator;
 }

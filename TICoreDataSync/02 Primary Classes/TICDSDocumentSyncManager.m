@@ -1133,7 +1133,18 @@
     [aContext setDocumentSyncManager:self];
     
     context = [[NSManagedObjectContext alloc] init];
-    [context setPersistentStoreCoordinator:[[self coreDataFactory] persistentStoreCoordinator]];
+    NSPersistentStoreCoordinator *persistentStoreCoordinator = [[self coreDataFactory] persistentStoreCoordinator];
+    if (persistentStoreCoordinator == nil) {
+        NSLog(@"%s We got a nil NSPersistentStoreCoordinator back from the Core Data Factory, trying to reset the factory.", __PRETTY_FUNCTION__);
+        self.coreDataFactory = nil;
+        persistentStoreCoordinator = [[self coreDataFactory] persistentStoreCoordinator];
+        if (persistentStoreCoordinator == nil) {
+            NSLog(@"%s Resetting the Core Data Factory didn't help, bailing from this method.", __PRETTY_FUNCTION__);
+            return nil;
+        }
+    }
+
+    [context setPersistentStoreCoordinator:persistentStoreCoordinator];
     [[self syncChangesMOCs] setValue:context forKey:[self keyForContext:aContext]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncChangesMocDidSave:) name:NSManagedObjectContextDidSaveNotification object:context];
     
@@ -1142,14 +1153,18 @@
 
 - (NSManagedObjectContext *)syncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext
 {
+#warning The MOC we return from this method _must_ have some persistent stores
     NSManagedObjectContext *context = [[self syncChangesMOCs] valueForKey:[self keyForContext:aContext]];
-    
-    if( !context ) {
+
+    if ( !context ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"SyncChanges MOC was requested for a managed object context that hasn't yet been added, so adding it before proceeding");
-        
+
         context = [self addSyncChangesMocForDocumentMoc:aContext];
+        if (context == nil) {
+            NSLog(@"%s There was a problem getting the sync changes MOC for the document MOC.", __PRETTY_FUNCTION__);
+        }
     }
-    
+
     return context;
 }
 
@@ -1188,6 +1203,7 @@
     
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Sync Manager will save Sync Changes context");
     
+#warning This is where our crasher is starting from. We need to sanity check the returned MOC's persistent stores
     BOOL success = [[self syncChangesMocForDocumentMoc:aMoc] save:&anyError];
     
     if( !success ) {

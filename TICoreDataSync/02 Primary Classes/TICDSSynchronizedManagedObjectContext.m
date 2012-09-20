@@ -16,6 +16,13 @@
 {
     [[self documentSyncManager] synchronizedMOCWillSave:self];
     
+    for (NSPersistentStore *persistentStore in [self.persistentStoreCoordinator persistentStores]) {
+        NSLog(@"%s Persistent store exists at %@ ? %hhd", __PRETTY_FUNCTION__, persistentStore.URL, [[NSFileManager defaultManager] fileExistsAtPath:[persistentStore.URL path]]);
+        if ([[NSFileManager defaultManager] fileExistsAtPath:[persistentStore.URL path]] == NO) {
+            return NO;
+        }
+    }
+    
     NSError *anyError = nil; // only used if no error is supplied
     BOOL success = [super save:outError ? outError : &anyError];
     
