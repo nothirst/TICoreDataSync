@@ -270,7 +270,13 @@ const NSInteger FZAFileBlockLength = 4096;
         size_t bytesToRead = (bytesRemaining > FZAFileBlockLength) ?
         FZAFileBlockLength : (size_t)bytesRemaining;
         NSData *readData = [readHandle readDataOfLength:bytesToRead];
-        CCHmacUpdate(&hmacContext, [readData bytes], [readData length]);
+
+        void *myCopy = (void *)malloc([readData length]);
+        memcpy(myCopy, [readData bytes], [readData length]);
+//        [readData getBytes:myCopy length:[readData length]];
+        CCHmacUpdate(&hmacContext, myCopy, [readData length]);
+        free(myCopy);
+        
         [inLoopPool drain];
     } while ([readHandle offsetInFile] < cipherSize - CC_SHA256_DIGEST_LENGTH);
     
