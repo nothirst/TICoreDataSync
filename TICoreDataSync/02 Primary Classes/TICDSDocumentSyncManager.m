@@ -484,7 +484,7 @@
     if( [self mustUploadStoreAfterRegistration] ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Must upload store because this is the first time this document has been registered");
         [self startWholeStoreUploadProcess];
-    } else if( [self ti_boolFromDelegateWithSelector:@selector(documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:)] ) {
+    } else if( [self ti_delegateRespondsToSelector:@selector(documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:)] && [(id)self.delegate documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:self] ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate allowed whole store upload after registration");
         [self startWholeStoreUploadProcess];
     } else {
@@ -514,7 +514,7 @@
     
     // Perform clean-up if necessary
     TICDSLog(TICDSLogVerbosityEveryStep, @"Asking delegate whether to vacuum unneeded files after registration");
-    if( [self ti_boolFromDelegateWithSelector:@selector(documentSyncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:)] ) {
+    if( [self ti_delegateRespondsToSelector:@selector(documentSyncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:)] && [(id)self.delegate documentSyncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:self] ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate allowed vacuum after registration");
         [self startVacuumProcess];
     } else {
@@ -1402,7 +1402,7 @@
     }
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Asking delegate if we should sync after saving");
-    BOOL shouldSync = [self ti_boolFromDelegateWithSelector:@selector(documentSyncManager:shouldBeginSynchronizingAfterManagedObjectContextDidSave:), aMoc];
+    BOOL shouldSync = [self ti_delegateRespondsToSelector:@selector(documentSyncManager:shouldBeginSynchronizingAfterManagedObjectContextDidSave:)] && [(id)self.delegate documentSyncManager:self shouldBeginSynchronizingAfterManagedObjectContextDidSave:aMoc];
     if( !shouldSync ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate denied synchronization after saving");
         return;
