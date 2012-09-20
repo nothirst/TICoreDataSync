@@ -271,10 +271,13 @@ const NSInteger FZAFileBlockLength = 4096;
         FZAFileBlockLength : (size_t)bytesRemaining;
         NSData *readData = [readHandle readDataOfLength:bytesToRead];
 
+        NSLog(@"%s Allocating space for the data copy", __PRETTY_FUNCTION__);
         void *myCopy = (void *)malloc([readData length]);
+        NSLog(@"%s Creating my own copy of the read data", __PRETTY_FUNCTION__);
         memcpy(myCopy, [readData bytes], [readData length]);
-//        [readData getBytes:myCopy length:[readData length]];
+        NSLog(@"%s Performing the CCHmacUpdate", __PRETTY_FUNCTION__);
         CCHmacUpdate(&hmacContext, myCopy, [readData length]);
+        NSLog(@"%s Freeing the copied memory", __PRETTY_FUNCTION__);
         free(myCopy);
         
         [inLoopPool drain];
