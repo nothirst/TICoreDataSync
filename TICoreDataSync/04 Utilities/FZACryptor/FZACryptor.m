@@ -2,7 +2,7 @@
 // FZACryptor.m
 //
 // Created by Graham J Lee on 05/05/2011.
-// Copyright 2011 Fuzzy Aliens Ltd. 
+// Copyright 2011 Fuzzy Aliens Ltd.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -49,7 +49,7 @@ const NSInteger FZAFileBlockLength = 4096;
             return nil;
         }
     }
-
+    
     NSError *error = nil;
     BOOL success = [keyManager storeKeyDerivedFromPassword: password salt: salt error: &error];
     
@@ -67,7 +67,7 @@ const NSInteger FZAFileBlockLength = 4096;
     NSParameterAssert([plainTextURL isFileURL]);
     NSParameterAssert([cipherTextURL isFileURL]);
     NSAssert([self isConfigured], @"can't encrypt without a key");
-
+    
     //set up the files
 	NSFileHandle *readHandle = [NSFileHandle fileHandleForReadingAtPath:[plainTextURL path]];
     if (!readHandle) {
@@ -80,6 +80,7 @@ const NSInteger FZAFileBlockLength = 4096;
                                   attributes: nil];
     NSDictionary *inputFileAttributes = [mgr attributesOfItemAtPath: [plainTextURL path]
                                                               error: error];
+    SAFE_ARC_RELEASE(mgr);
     if (inputFileAttributes == nil) {
         return NO;
     }
@@ -118,8 +119,8 @@ const NSInteger FZAFileBlockLength = 4096;
                                      [topLevelIV bytes],
                                      [fileKeyAndIV bytes],
                                      [fileKeyAndIV length],
-                                     cryptedKeyIV, 
-                                     kCCKeySizeAES256 + kCCBlockSizeAES128, 
+                                     cryptedKeyIV,
+                                     kCCKeySizeAES256 + kCCBlockSizeAES128,
                                      &cryptedLength);
     if (status != kCCSuccess) {
         if (error) {
@@ -158,7 +159,7 @@ const NSInteger FZAFileBlockLength = 4096;
     
     //do it!
     do {
-        @autoreleasepool {
+        SAFE_ARC_AUTORELEASE_POOL_START2();
         NSData *dataRead = [readHandle readDataOfLength: FZAFileBlockLength];
         size_t bytesOut = 0;
         status = CCCryptorUpdate(cryptor,
@@ -174,6 +175,7 @@ const NSInteger FZAFileBlockLength = 4096;
                                          userInfo: nil];
             }
             free(bytesToWrite);
+            SAFE_ARC_AUTORELEASE_POOL_END2();
             return NO;
         }
         NSData *outData = [NSData dataWithBytesNoCopy: bytesToWrite
@@ -182,9 +184,9 @@ const NSInteger FZAFileBlockLength = 4096;
         [writeHandle writeData: outData];
         CCHmacUpdate(&hmacContext, [outData bytes], [outData length]);
         
-        }
+        SAFE_ARC_AUTORELEASE_POOL_END2();
     } while ([readHandle offsetInFile] < inputFileLength);
-
+    
     size_t finalBlockSize = 0;
     status = CCCryptorFinal(cryptor,
                             bytesToWrite,
@@ -214,7 +216,7 @@ const NSInteger FZAFileBlockLength = 4096;
                                       freeWhenDone: NO];
     [writeHandle writeData: hmacData];
     
-
+    
     free(bytesToWrite);
     [writeHandle closeFile];
     
@@ -230,11 +232,13 @@ const NSInteger FZAFileBlockLength = 4096;
     NSFileManager *fileManager = [[NSFileManager alloc] init];
     NSFileHandle *readHandle = [NSFileHandle fileHandleForReadingAtPath:[cipherTextURL path]];
     if (!readHandle) {
+        SAFE_ARC_RELEASE(fileManager);
         return NO;
     }
     NSDictionary *cipherFileAttributes = [fileManager attributesOfItemAtPath:[cipherTextURL path]
                                                                        error:error];
     if (cipherFileAttributes == nil) {
+        SAFE_ARC_RELEASE(fileManager);
         return NO;
     }
     unsigned long long cipherSize = [cipherFileAttributes fileSize];
@@ -243,6 +247,7 @@ const NSInteger FZAFileBlockLength = 4096;
     BOOL fileCreated = [fileManager createFileAtPath:[plainTextURL path]
                                             contents:nil
                                           attributes:nil];
+    SAFE_ARC_RELEASE(fileManager);
     if (!fileCreated) {
         return NO;
     }
@@ -405,6 +410,15 @@ const NSInteger FZAFileBlockLength = 4096;
     
     return self;
 }
+
+#if !__has_feature(objc_arc)
+
+- (void)dealloc
+{
+    [keyManager release];
+    [super dealloc];
+}
+#endif
 
 
 @end

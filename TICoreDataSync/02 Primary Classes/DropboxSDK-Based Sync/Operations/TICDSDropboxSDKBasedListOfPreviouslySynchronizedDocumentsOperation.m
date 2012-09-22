@@ -166,6 +166,10 @@
 
 #pragma mark -
 #pragma mark Initialization and Deallocation
+
+
+#if !__has_feature(objc_arc)
+
 - (void)dealloc
 {
     [_restClient setDelegate:nil];
@@ -175,6 +179,7 @@
     _documentsDirectoryPath = nil;
 
 }
+#endif
 
 #pragma mark -
 #pragma mark Lazy Accessors

@@ -8,6 +8,7 @@
 
 #import "TICDSTypesAndEnums.h"
 #import "TICDSClassesAndProtocols.h"
+#import "ARCMacros.h"
 
 /**
  The `TICDSOperation` class provides the abstract behavior typical of any operation used by the `TICoreDataSync` framework.

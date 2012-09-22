@@ -94,6 +94,7 @@
         
         NSMutableDictionary *dictionary = [aDictionary mutableCopy];
         [[self temporaryDeviceInfoDictionaries] setValue:dictionary forKey:anIdentifier];
+        SAFE_ARC_RELEASE(dictionary);
     }
     
     if( _numberOfDeviceInfoDictionariesFetched == _numberOfDeviceInfoDictionariesToFetch ) {
@@ -195,13 +196,18 @@
 
 #pragma mark -
 #pragma mark Initialization and Deallocation
+
+#if !__has_feature(objc_arc)
+
 - (void)dealloc
 {
-    _synchronizedClientIdentifiers = nil;
-    _temporaryDeviceInfoDictionaries = nil;
-    _deviceInfoDictionaries = nil;
+    [_synchronizedClientIdentifiers release], _synchronizedClientIdentifiers = nil;
+    [_temporaryDeviceInfoDictionaries release], _temporaryDeviceInfoDictionaries = nil;
+    [_deviceInfoDictionaries release], _deviceInfoDictionaries = nil;
 
+    [super dealloc];
 }
+#endif
 
 #pragma mark -
 #pragma mark Properties

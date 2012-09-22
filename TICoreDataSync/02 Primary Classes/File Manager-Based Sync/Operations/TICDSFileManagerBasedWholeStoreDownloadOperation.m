@@ -157,12 +157,16 @@
 
 #pragma mark -
 #pragma mark Initialization and Deallocation
+
+#if !__has_feature(objc_arc)
+
 - (void)dealloc
 {
     _thisDocumentDirectoryPath = nil;
     _thisDocumentWholeStoreDirectoryPath = nil;
     
 }
+#endif
 
 #pragma mark -
 #pragma mark Properties

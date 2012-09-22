@@ -7,6 +7,7 @@
 //
 
 #import "TICoreDataSync.h"
+#import "ARCMacros.h"
 
 @interface TICDSDocumentSyncManager ()
 - (void)applicationSyncManagerWillRemoveAllRemoteSyncData:(NSNotification *)aNotification;
@@ -21,6 +22,7 @@
 {
     [super applicationSyncManagerWillRemoveAllRemoteSyncData:aNotification];
     
+    SAFE_ARC_RELEASE(_directoryWatcher);
     _directoryWatcher = nil;
 }
 
@@ -43,6 +45,7 @@
     }
     
     if( _watchedClientDirectoryIdentifiers ) {
+        SAFE_ARC_RELEASE(_watchedClientDirectoryIdentifiers);
         _watchedClientDirectoryIdentifiers = nil;
     }
     
@@ -154,7 +157,7 @@
     [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
     [operation setThisDocumentSyncCommandsThisClientDirectoryPath:[self thisDocumentSyncCommandsThisClientDirectoryPath]];
     
-    return operation;
+    return SAFE_ARC_AUTORELEASE(operation);
 }
 
 - (TICDSWholeStoreUploadOperation *)wholeStoreUploadOperation
@@ -166,7 +169,7 @@
     [operation setThisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath:[self thisDocumentTemporaryAppliedSyncChangeSetsFilePath]];
     [operation setThisDocumentWholeStoreThisClientDirectoryPath:[self thisDocumentWholeStoreThisClientDirectoryPath]];
     
-    return operation;
+    return SAFE_ARC_AUTORELEASE(operation);
 }
 
 - (TICDSWholeStoreDownloadOperation *)wholeStoreDownloadOperation
@@ -176,7 +179,7 @@
     [operation setThisDocumentDirectoryPath:[self thisDocumentDirectoryPath]];
     [operation setThisDocumentWholeStoreDirectoryPath:[self thisDocumentWholeStoreDirectoryPath]];
     
-    return operation;
+    return SAFE_ARC_AUTORELEASE(operation);
 }
 
 - (TICDSSynchronizationOperation *)synchronizationOperation
@@ -188,7 +191,7 @@
     [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
     [operation setThisDocumentRecentSyncsThisClientFilePath:[self thisDocumentRecentSyncsThisClientFilePath]];
     
-    return operation;
+    return SAFE_ARC_AUTORELEASE(operation);
 }
 
 - (TICDSVacuumOperation *)vacuumOperation
@@ -199,7 +202,7 @@
     [operation setThisDocumentRecentSyncsDirectoryPath:[self thisDocumentRecentSyncsDirectoryPath]];
     [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
     
-    return operation;
+    return SAFE_ARC_AUTORELEASE(operation);
 }
 
 - (TICDSListOfDocumentRegisteredClientsOperation *)listOfDocumentRegisteredClientsOperation
@@ -211,7 +214,7 @@
     [operation setThisDocumentRecentSyncsDirectoryPath:[self thisDocumentRecentSyncsDirectoryPath]];
     [operation setThisDocumentWholeStoreDirectoryPath:[self thisDocumentWholeStoreDirectoryPath]];
     
-    return operation;
+    return SAFE_ARC_AUTORELEASE(operation);
 }
 
 - (TICDSDocumentClientDeletionOperation *)documentClientDeletionOperation
@@ -225,7 +228,7 @@
     [operation setThisDocumentRecentSyncsDirectoryPath:[self thisDocumentRecentSyncsDirectoryPath]];
     [operation setThisDocumentWholeStoreDirectoryPath:[self thisDocumentWholeStoreDirectoryPath]];
     
-    return operation;
+    return SAFE_ARC_AUTORELEASE(operation);
 }
 
 #pragma mark -
@@ -322,6 +325,9 @@
 
 #pragma mark -
 #pragma mark Initialization and Deallocation
+
+#if !__has_feature(objc_arc)
+
 - (void)dealloc
 {
     _applicationDirectoryPath = nil;
@@ -329,6 +335,7 @@
     _watchedClientDirectoryIdentifiers = nil;
 
 }
+#endif
 
 #pragma mark -
 #pragma mark Properties

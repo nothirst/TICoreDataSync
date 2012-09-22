@@ -35,6 +35,7 @@
     [saltedPW appendData: salt];
     uint8_t hashBuffer[CC_SHA256_DIGEST_LENGTH] = {0};
     CC_SHA256([saltedPW bytes], (CC_LONG)[saltedPW length], hashBuffer);
+    SAFE_ARC_RELEASE(saltedPW);
     for (int i = 0; i < 7499; i++) {
         CC_SHA256(hashBuffer, CC_SHA256_DIGEST_LENGTH, hashBuffer);
     }
@@ -93,5 +94,11 @@
     return self;
 }
 
+#if !__has_feature(objc_arc)
 
+- (void)dealloc {
+    [super dealloc];
+}
+
+#endif
 @end

@@ -580,15 +580,20 @@
     return [super initWithDelegate:aDelegate];
 }
 
+#if !__has_feature(objc_arc)
+
 - (void)dealloc
 {
-    _documentIdentifier = nil;
-    _documentDescription = nil;
-    _clientDescription = nil;
-    _documentUserInfo = nil;
-    _integrityKey = nil;
+    [_documentIdentifier release], _documentIdentifier = nil;
+    [_documentDescription release], _documentDescription = nil;
+    [_clientDescription release], _clientDescription = nil;
+    [_documentUserInfo release], _documentUserInfo = nil;
+    [_integrityKey release], _integrityKey = nil;
 
+    [super dealloc];
 }
+#endif
+
 
 #pragma mark -
 #pragma mark Properties

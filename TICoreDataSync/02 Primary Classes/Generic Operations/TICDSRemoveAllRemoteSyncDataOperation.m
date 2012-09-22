@@ -35,6 +35,7 @@
     if( ![self cryptor] ) {
         FZACryptor *aCryptor = [[FZACryptor alloc] init];
         [self setCryptor:aCryptor];
+		SAFE_ARC_RELEASE(aCryptor);
     }
     [[self cryptor] clearPasswordAndSalt];
     
@@ -73,5 +74,13 @@
     return [super initWithDelegate:aDelegate];
 }
 
+#if !__has_feature(objc_arc)
+
+- (void)dealloc
+{
+    [super dealloc];
+}
+
+#endif
 
 @end

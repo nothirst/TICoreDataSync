@@ -29,18 +29,22 @@
     [conflict setRelevantKey:aKey];
     [conflict setObjectSyncID:anObjectSyncID];
     
-    return conflict;
+    return SAFE_ARC_AUTORELEASE(conflict);
 }
+
+#if !__has_feature(objc_arc)
 
 - (void)dealloc
 {
-    _entityName = nil;
-    _relevantKey = nil;
-    _objectSyncID = nil;
-    _localInformation = nil;
-    _remoteInformation = nil;
+    [_entityName release], _entityName = nil;
+    [_relevantKey release], _relevantKey = nil;
+    [_objectSyncID release], _objectSyncID = nil;
+    [_localInformation release], _localInformation = nil;
+    [_remoteInformation release], _remoteInformation = nil;
 
+    [super dealloc];
 }
+#endif
 
 - (NSString *)conflictDescription
 {

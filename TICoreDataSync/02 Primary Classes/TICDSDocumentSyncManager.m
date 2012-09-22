@@ -450,7 +450,7 @@
 #pragma mark Operation Generation
 - (TICDSDocumentRegistrationOperation *)documentRegistrationOperation
 {
-    return [[TICDSDocumentRegistrationOperation alloc] initWithDelegate:self];
+    return SAFE_ARC_AUTORELEASE([[TICDSDocumentRegistrationOperation alloc] initWithDelegate:self]);
 }
 
 #pragma mark Operation Communications
@@ -625,7 +625,7 @@
 #pragma mark Operation Generation
 - (TICDSWholeStoreUploadOperation *)wholeStoreUploadOperation
 {
-    return [[TICDSWholeStoreUploadOperation alloc] initWithDelegate:self];
+    return SAFE_ARC_AUTORELEASE([[TICDSWholeStoreUploadOperation alloc] initWithDelegate:self]);
 }
 
 #pragma mark Operation Communications
@@ -741,7 +741,7 @@
 #pragma mark Operation Generation
 - (TICDSWholeStoreDownloadOperation *)wholeStoreDownloadOperation
 {
-    return [[TICDSWholeStoreDownloadOperation alloc] initWithDelegate:self];
+    return SAFE_ARC_AUTORELEASE([[TICDSWholeStoreDownloadOperation alloc] initWithDelegate:self]);
 }
 
 #pragma mark Operation Communications
@@ -984,7 +984,7 @@
 #pragma mark Operation Generation
 - (TICDSSynchronizationOperation *)synchronizationOperation
 {
-    return [[TICDSSynchronizationOperation alloc] initWithDelegate:self]; 
+    return SAFE_ARC_AUTORELEASE([[TICDSSynchronizationOperation alloc] initWithDelegate:self]);
 }
 
 #pragma mark Operation Communications
@@ -1084,7 +1084,7 @@
 #pragma mark Operation Generation
 - (TICDSVacuumOperation *)vacuumOperation
 {
-    return [[TICDSVacuumOperation alloc] initWithDelegate:self];
+    return SAFE_ARC_AUTORELEASE([[TICDSVacuumOperation alloc] initWithDelegate:self]);
 }
 
 #pragma mark Operation Communications
@@ -1169,7 +1169,7 @@
 #pragma mark Operation Generation
 - (TICDSListOfDocumentRegisteredClientsOperation *)listOfDocumentRegisteredClientsOperation
 {
-    return [[TICDSListOfDocumentRegisteredClientsOperation alloc] initWithDelegate:self];
+    return SAFE_ARC_AUTORELEASE([[TICDSListOfDocumentRegisteredClientsOperation alloc] initWithDelegate:self]);
 }
 
 #pragma mark Operation Communications
@@ -1257,7 +1257,7 @@
 #pragma mark Operation Generation
 - (TICDSDocumentClientDeletionOperation *)documentClientDeletionOperation
 {
-    return [[TICDSDocumentClientDeletionOperation alloc] initWithDelegate:self];
+    return SAFE_ARC_AUTORELEASE([[TICDSDocumentClientDeletionOperation alloc] initWithDelegate:self]);
 }
 
 #pragma mark Operation Communications
@@ -1325,7 +1325,7 @@
     [[self syncChangesMOCs] setValue:context forKey:[self keyForContext:aContext]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncChangesMocDidSave:) name:NSManagedObjectContextDidSaveNotification object:context];
     
-    return context;
+    return SAFE_ARC_AUTORELEASE(context);
 }
 
 - (NSManagedObjectContext *)syncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext
@@ -1546,25 +1546,29 @@
     return self;
 }
 
+#if !__has_feature(objc_arc)
+
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    _applicationSyncManager = nil;
-    _documentIdentifier = nil;
-    _clientIdentifier = nil;
-    _documentUserInfo = nil;
-    _fileManager = nil;
-    _helperFileDirectoryLocation = nil;
-    _primaryDocumentMOC = nil;
-    _syncChangesMOCs = nil;
-    _coreDataFactory = nil;
-    _registrationQueue = nil;
-    _synchronizationQueue = nil;
-    _otherTasksQueue = nil;
-    _integrityKey = nil;
+    [_applicationSyncManager release], _applicationSyncManager = nil;
+    [_documentIdentifier release], _documentIdentifier = nil;
+    [_clientIdentifier release], _clientIdentifier = nil;
+    [_documentUserInfo release], _documentUserInfo = nil;
+    [_fileManager release], _fileManager = nil;
+    [_helperFileDirectoryLocation release], _helperFileDirectoryLocation = nil;
+    [_primaryDocumentMOC release], _primaryDocumentMOC = nil;
+    [_syncChangesMOCs release], _syncChangesMOCs = nil;
+    [_coreDataFactory release], _coreDataFactory = nil;
+    [_registrationQueue release], _registrationQueue = nil;
+    [_synchronizationQueue release], _synchronizationQueue = nil;
+    [_otherTasksQueue release], _otherTasksQueue = nil;
+    [_integrityKey release], _integrityKey = nil;
 
+    [super dealloc];
 }
+#endif
 
 #pragma mark -
 #pragma mark Lazy Accessors

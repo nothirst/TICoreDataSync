@@ -217,11 +217,15 @@
     return [super initWithDelegate:aDelegate];
 }
 
+#if !__has_feature(objc_arc)
+
 - (void)dealloc
 {
     _documentIdentifier = nil;
     
 }
+
+#endif
 
 #pragma mark -
 #pragma mark Properties

@@ -91,6 +91,7 @@
         NSMutableDictionary *dictionary = [anInfoDictionary mutableCopy];
         [dictionary setValue:aSyncID forKey:kTICDSDocumentIdentifier];
         [[self availableDocuments] addObject:dictionary];
+        SAFE_ARC_RELEASE(dictionary);
     }
     
     if( [self numberOfInfoDictionariesToFetch] == [self numberOfInfoDictionariesFetched] ) {
@@ -193,12 +194,17 @@
 
 #pragma mark -
 #pragma mark Initialization and Deallocation
+
+#if !__has_feature(objc_arc)
+
 - (void)dealloc
 {
-    _availableDocuments = nil;
-    _availableDocumentSyncIDs = nil;
+    [_availableDocuments release], _availableDocuments = nil;
+    [_availableDocumentSyncIDs release], _availableDocumentSyncIDs = nil;
     
+    [super dealloc];
 }
+#endif
 
 #pragma mark -
 #pragma mark Properties

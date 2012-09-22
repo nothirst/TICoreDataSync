@@ -28,6 +28,7 @@
     if( [self shouldUseEncryption] ) {
         FZACryptor *aCryptor = [[FZACryptor alloc] init];
         [self setCryptor:aCryptor];
+        SAFE_ARC_RELEASE(aCryptor);
     }
 
     [self operationDidStart];
@@ -161,16 +162,22 @@
     return self;
 }
 
+
+#if !__has_feature(objc_arc)
+
 - (void)dealloc
 {
-    _cryptor = nil;
-    _userInfo = nil;
-    _error = nil;
-    _clientIdentifier = nil;
-    _fileManager = nil;
-    _tempFileDirectoryPath = nil;
+    [_cryptor release], _cryptor = nil;
+    [_userInfo release], _userInfo = nil;
+    [_error release], _error = nil;
+    [_clientIdentifier release], _clientIdentifier = nil;
+    [_fileManager release], _fileManager = nil;
+    [_tempFileDirectoryPath release], _tempFileDirectoryPath = nil;
 
+    [super dealloc];
 }
+#endif
+
 
 #pragma mark -
 #pragma mark Lazy Accessors
@@ -190,7 +197,7 @@
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
     }
     
-    _tempFileDirectoryPath = aDirectoryPath;
+    _tempFileDirectoryPath = SAFE_ARC_RETAIN(aDirectoryPath);
     
     return _tempFileDirectoryPath;
 }
