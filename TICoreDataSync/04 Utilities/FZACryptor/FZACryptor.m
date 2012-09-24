@@ -267,15 +267,29 @@ const NSInteger FZAFileBlockLength = 4096;
     do {
         NSAutoreleasePool *inLoopPool = [[NSAutoreleasePool alloc] init];
         unsigned long long bytesRemaining = cipherSize - CC_SHA256_DIGEST_LENGTH - [readHandle offsetInFile];
-        size_t bytesToRead = (bytesRemaining > FZAFileBlockLength) ?
-        FZAFileBlockLength : (size_t)bytesRemaining;
+        size_t bytesToRead;
+        if (bytesRemaining > FZAFileBlockLength) {
+            NSLog(@"%s bytes remaining is greater than FZAFileBlockLength", __PRETTY_FUNCTION__);
+            bytesToRead = FZAFileBlockLength;
+        } else {
+            NSLog(@"%s bytes remaining is less than or equal to FZAFileBlockLength", __PRETTY_FUNCTION__);
+            bytesToRead = (size_t)bytesRemaining;
+        }
+
+        if (bytesToRead <= 0) {
+            NSLog(@"%s No more bytes to read, breaking out.", __PRETTY_FUNCTION__);
+            break;
+        }
+        
+        NSLog(@"%s %ld", __PRETTY_FUNCTION__, bytesToRead);
         NSData *readData = [readHandle readDataOfLength:bytesToRead];
 
+        NSLog(@"%s %@", __PRETTY_FUNCTION__, readData);
         NSLog(@"%s Allocating space for the data copy", __PRETTY_FUNCTION__);
         void *myCopy = (void *)malloc([readData length]);
         NSLog(@"%s Creating my own copy of the read data", __PRETTY_FUNCTION__);
 //        memcpy(myCopy, [readData bytes], [readData length]);
-        [readData getBytes:myCopy length:[readData length]];
+        [readData getBytes:myCopy length:bytesToRead];
         NSLog(@"%s Performing the CCHmacUpdate", __PRETTY_FUNCTION__);
         CCHmacUpdate(&hmacContext, myCopy, [readData length]);
         NSLog(@"%s Freeing the copied memory", __PRETTY_FUNCTION__);
