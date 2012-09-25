@@ -492,7 +492,10 @@
     }
     
     // Get document sync manager from delegate
-    TICDSDocumentSyncManager *documentSyncManager = [self ti_objectFromDelegateWithSelector:@selector(applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:), [[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier], finalWholeStoreLocation];
+    TICDSDocumentSyncManager *documentSyncManager = nil;
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:)]) {
+        documentSyncManager = [(id)self.delegate applicationSyncManager:self preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:[[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier] atURL:finalWholeStoreLocation];
+    }
     
     if( !documentSyncManager ) {
         // TODO: ALERT DELEGATE AND BAIL

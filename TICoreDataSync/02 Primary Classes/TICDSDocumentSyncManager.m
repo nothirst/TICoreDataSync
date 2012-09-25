@@ -207,7 +207,10 @@
 - (BOOL)checkForHelperFileDirectoryOrCreateIfNecessary:(NSError **)outError
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Asking delegate for location of helper file directory");
-    NSURL *finalURL = [self ti_objectFromDelegateWithSelector:@selector(documentSyncManager:helperFileDirectoryURLForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
+    NSURL *finalURL = nil;
+    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:helperFileDirectoryURLForDocumentWithIdentifier:description:userInfo:)]) {
+        finalURL = [(id)self.delegate documentSyncManager:self helperFileDirectoryURLForDocumentWithIdentifier:[self documentIdentifier] description:[self documentDescription] userInfo:[self documentUserInfo]];
+    }
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Checking that delegate-provided helper file directory exists");
     
@@ -593,7 +596,10 @@
     }
     
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Asking delegate for URL of whole store to upload");
-    NSURL *storeURL = [self ti_objectFromDelegateWithSelector:@selector(documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:), [self documentIdentifier], [self documentDescription], [self documentUserInfo]];
+    NSURL *storeURL = nil;
+    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:)]) {
+        storeURL = [(id)self.delegate documentSyncManager:self URLForWholeStoreToUploadForDocumentWithIdentifier:[self documentIdentifier] description:[self documentDescription] userInfo:[self documentUserInfo]];
+    }
     
     if( !storeURL || ![[self fileManager] fileExistsAtPath:[storeURL path]] ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Store does not exist at provided path");
@@ -750,7 +756,10 @@
     NSError *anyError = nil;
     BOOL success = YES;
     
-    NSURL *finalWholeStoreLocation = [self ti_objectFromDelegateWithSelector:@selector(documentSyncManagerURLForDownloadedStore:)];
+    NSURL *finalWholeStoreLocation = nil;
+    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerURLForDownloadedStore:)]) {
+        finalWholeStoreLocation = [(id)self.delegate documentSyncManagerURLForDownloadedStore:self];
+    }
     
     if( !finalWholeStoreLocation ) {
         NSPersistentStoreCoordinator *psc = [[self primaryDocumentMOC] persistentStoreCoordinator];

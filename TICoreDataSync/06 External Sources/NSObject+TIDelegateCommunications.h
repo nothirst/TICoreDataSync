@@ -59,7 +59,7 @@
  @param ... The arguments to be passed to the selector (excluding the first argument, assumed to be `self`). 
  
  @return The object returned by the delegate. */
-- (id)ti_objectFromDelegateWithSelector:(SEL)aSelector, ...;
+//- (id)ti_objectFromDelegateWithSelector:(SEL)aSelector, ...;
 
 /** Get a Boolean value from a given delegate selector with provided (object) arguments. 
  
@@ -69,7 +69,7 @@
  @param ... The arguments to be passed to the selector (excluding the first argument, assumed to be `self`). 
  
  @return The Boolean returned by the delegate, or `YES` if the delegate does not respond to the selector. */
-- (BOOL)ti_optimisticBoolFromDelegateWithSelector:(SEL)aSelector, ...;
+//- (BOOL)ti_optimisticBoolFromDelegateWithSelector:(SEL)aSelector, ...;
 
 /** Get a Boolean value from a given delegate selector with provided (object) arguments. 
  
