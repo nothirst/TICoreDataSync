@@ -81,6 +81,7 @@
                                                 forKey: (__bridge id)kSecValueData];
         storeResult = SecItemUpdate((__bridge CFDictionaryRef)updateAttributes,
                                     (__bridge CFDictionaryRef)storeAttributes);
+        SAFE_ARC_RELEASE(updateAttributes);
     }
     else {
         TICDSLog(TICDSLogVerbosityEveryStep, @"FZACryptor iOS Key Manager creating key");
@@ -91,7 +92,9 @@
         //[storeAttributes setObject: (id)kCFBooleanTrue forKey: (id)kSecReturnPersistentRef];
         [storeAttributes removeObjectForKey: (__bridge id)kSecReturnAttributes];
         storeResult = SecItemAdd((__bridge CFDictionaryRef)storeAttributes, NULL);
+        SAFE_ARC_RELEASE(storeAttributes);
     }
+    SAFE_ARC_RELEASE(foundAttributes);
     if (noErr != storeResult) {
         if (error) {
             *error = [NSError errorWithDomain: FZAKeyManagerErrorDomain
@@ -112,6 +115,7 @@
     CFTypeRef secItem = NULL;
     OSStatus searchResult = SecItemCopyMatching((__bridge CFDictionaryRef)searchAttributes,
                                                 &secItem);
+	SAFE_ARC_RELEASE(searchAttributes);
     if (noErr != searchResult) {
         if( searchResult == errSecItemNotFound ) {
             TICDSLog(TICDSLogVerbosityEveryStep, @"FZACryptor iOS Key Manager didn't find a stored key");
@@ -123,7 +127,7 @@
     }
 
     NSData *theKey = (__bridge NSData *)secItem;
-    return theKey;
+    return SAFE_ARC_AUTORELEASE(theKey);
 }
 
 - (void)clearPasswordAndSalt {

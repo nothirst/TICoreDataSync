@@ -10,3 +10,4 @@
 #import "TICDSAllClassHeaders.h"
 #import "TICDSTypesAndEnums.h"
 #import "TICDSConstants.h"
+#import "ARCMacros.h"

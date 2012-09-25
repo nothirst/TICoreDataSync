@@ -132,6 +132,27 @@ static TICDSChangeIntegrityStoreManager *sharedChangeIntegrityStoreManager = nil
 	return self;
 }
 
+#if !__has_feature(objc_arc)
+
+- (id)retain
+{
+	return self;
+}
+
+- (NSUInteger)retainCount
+{
+	return NSUIntegerMax;
+}
+
+- (oneway void)release
+{}
+
+- (id)autorelease
+{
+	return self;
+}
+#endif
+
 #pragma mark -
 
 @end

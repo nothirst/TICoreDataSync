@@ -208,7 +208,7 @@
 #pragma mark Operation Generation
 - (TICDSApplicationRegistrationOperation *)applicationRegistrationOperation
 {
-    return [[TICDSApplicationRegistrationOperation alloc] initWithDelegate:self];
+    return SAFE_ARC_AUTORELEASE([[TICDSApplicationRegistrationOperation alloc] initWithDelegate:self]);
 }
 
 #pragma mark Operation Communications
@@ -339,7 +339,7 @@
 #pragma mark Operation Generation
 - (TICDSListOfPreviouslySynchronizedDocumentsOperation *)listOfPreviouslySynchronizedDocumentsOperation
 {
-    return [[TICDSListOfPreviouslySynchronizedDocumentsOperation alloc] initWithDelegate:self];
+    return SAFE_ARC_AUTORELEASE([[TICDSListOfPreviouslySynchronizedDocumentsOperation alloc] initWithDelegate:self]);
 }
 
 #pragma mark Operation Communications
@@ -447,7 +447,7 @@
 #pragma mark Overridden Methods
 - (TICDSWholeStoreDownloadOperation *)wholeStoreDownloadOperationForDocumentWithIdentifier:(NSString *)anIdentifier
 {
-    return [[TICDSWholeStoreDownloadOperation alloc] initWithDelegate:self];
+    return SAFE_ARC_AUTORELEASE([[TICDSWholeStoreDownloadOperation alloc] initWithDelegate:self]);
 }
 
 #pragma mark Post-Operation Work
@@ -602,7 +602,7 @@
 #pragma mark Operation Generation
 - (TICDSListOfApplicationRegisteredClientsOperation *)listOfApplicationRegisteredClientsOperation
 {
-    return [[TICDSListOfApplicationRegisteredClientsOperation alloc] initWithDelegate:self];
+    return SAFE_ARC_AUTORELEASE([[TICDSListOfApplicationRegisteredClientsOperation alloc] initWithDelegate:self]);
 }
 
 #pragma mark Operation Communications
@@ -697,7 +697,7 @@
 #pragma mark Operation Generation
 - (TICDSDocumentDeletionOperation *)documentDeletionOperationForDocumentWithIdentifier:(NSString *)anIdentifier
 {
-    return [[TICDSDocumentDeletionOperation alloc] initWithDelegate:self];
+    return SAFE_ARC_AUTORELEASE([[TICDSDocumentDeletionOperation alloc] initWithDelegate:self] );
 }
 
 #pragma mark Operation Communication
@@ -810,8 +810,8 @@
         return NO;
     }
     
-    [self setOtherTasksQueue:[[NSOperationQueue alloc] init]];
-    [self setRegistrationQueue:[[NSOperationQueue alloc] init]];
+    [self setOtherTasksQueue:SAFE_ARC_AUTORELEASE([[NSOperationQueue alloc] init])];
+    [self setRegistrationQueue:SAFE_ARC_AUTORELEASE([[NSOperationQueue alloc] init])];
     
     [operation setShouldUseEncryption:[self shouldUseEncryption]];    
     [[self otherTasksQueue] addOperation:operation];
@@ -833,7 +833,7 @@
 #pragma mark Operation Generation
 - (TICDSRemoveAllRemoteSyncDataOperation *)removeAllSyncDataOperation
 {
-    return [[TICDSRemoveAllRemoteSyncDataOperation alloc] initWithDelegate:self];
+    return SAFE_ARC_AUTORELEASE([[TICDSRemoveAllRemoteSyncDataOperation alloc] initWithDelegate:self]);
 }
 
 #pragma mark Operation Communication
@@ -968,7 +968,8 @@ id __strong gTICDSDefaultApplicationSyncManager = nil;
         return;
     }
     
-    gTICDSDefaultApplicationSyncManager = aSyncManager;
+    SAFE_ARC_RELEASE(gTICDSDefaultApplicationSyncManager);
+    gTICDSDefaultApplicationSyncManager = SAFE_ARC_RETAIN(aSyncManager);
 }
 
 #pragma mark -
@@ -1042,17 +1043,21 @@ id __strong gTICDSDefaultApplicationSyncManager = nil;
     return self;
 }
 
+#if !__has_feature(objc_arc)
+
 - (void)dealloc
 {
-    _appIdentifier = nil;
-    _clientIdentifier = nil;
-    _clientDescription = nil;
-    _applicationUserInfo = nil;
-    _registrationQueue = nil;
-    _otherTasksQueue = nil;
-    _fileManager = nil;
+    [_appIdentifier release], _appIdentifier = nil;
+    [_clientIdentifier release], _clientIdentifier = nil;
+    [_clientDescription release], _clientDescription = nil;
+    [_applicationUserInfo release], _applicationUserInfo = nil;
+    [_registrationQueue release], _registrationQueue = nil;
+    [_otherTasksQueue release], _otherTasksQueue = nil;
+    [_fileManager release], _fileManager = nil;
 
+    [super dealloc];
 }
+#endif
 
 #pragma mark -
 #pragma mark Lazy Accessors

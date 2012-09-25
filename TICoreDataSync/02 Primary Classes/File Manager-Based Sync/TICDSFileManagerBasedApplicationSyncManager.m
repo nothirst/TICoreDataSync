@@ -12,6 +12,8 @@
 #import <pwd.h>
 #endif
 
+#import "ARCMacros.h"
+
 @implementation TICDSFileManagerBasedApplicationSyncManager
 
 #pragma mark -
@@ -78,7 +80,7 @@
         if( isFinished ) { break; }
     }
     
-    return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    return SAFE_ARC_AUTORELEASE([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
 }
 
 + (NSURL *)localDropboxDirectoryLocation
@@ -93,7 +95,7 @@
     
     dropboxHostDbPath = [dropboxHostDbPath stringByExpandingTildeInPath];
     
-    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    NSFileManager *fileManager = SAFE_ARC_AUTORELEASE([[NSFileManager alloc] init]);
     
     if( ![fileManager fileExistsAtPath:dropboxHostDbPath] ) {
         return nil;
@@ -114,6 +116,8 @@
     NSString *dropboxLocation = nil;
     [scanner scanUpToCharactersFromSet:[NSCharacterSet newlineCharacterSet] intoString:&dropboxLocation];
     
+    SAFE_ARC_RELEASE(scanner);
+    SAFE_ARC_RELEASE(hostDbContents);
     
     dropboxLocation = [self stringByDecodingBase64EncodedString:dropboxLocation];
     
@@ -137,7 +141,7 @@
     [operation setClientDevicesDirectoryPath:[self clientDevicesDirectoryPath]];
     [operation setClientDevicesThisClientDeviceDirectoryPath:[self clientDevicesThisClientDeviceDirectoryPath]];
     
-    return operation;
+    return SAFE_ARC_AUTORELEASE(operation);
 }
 
 - (TICDSListOfPreviouslySynchronizedDocumentsOperation *)listOfPreviouslySynchronizedDocumentsOperation
@@ -146,7 +150,7 @@
     
     [operation setDocumentsDirectoryPath:[self documentsDirectoryPath]];
     
-    return operation;
+    return SAFE_ARC_AUTORELEASE(operation);
 }
 
 - (TICDSWholeStoreDownloadOperation *)wholeStoreDownloadOperationForDocumentWithIdentifier:(NSString *)anIdentifier
@@ -156,7 +160,7 @@
     [operation setThisDocumentDirectoryPath:[[self documentsDirectoryPath] stringByAppendingPathComponent:anIdentifier]];
     [operation setThisDocumentWholeStoreDirectoryPath:[self pathToWholeStoreDirectoryForDocumentWithIdentifier:anIdentifier]];
     
-    return operation;
+    return SAFE_ARC_AUTORELEASE(operation);
 }
 
 - (TICDSListOfApplicationRegisteredClientsOperation *)listOfApplicationRegisteredClientsOperation
@@ -165,7 +169,7 @@
     
     [operation setClientDevicesDirectoryPath:[self clientDevicesDirectoryPath]];
     [operation setDocumentsDirectoryPath:[self documentsDirectoryPath]];
-    return operation;
+    return SAFE_ARC_AUTORELEASE(operation);
 }
 
 - (TICDSDocumentDeletionOperation *)documentDeletionOperationForDocumentWithIdentifier:(NSString *)anIdentifier
@@ -176,7 +180,7 @@
     [operation setDeletedDocumentsDirectoryIdentifierPlistFilePath:[[self deletedDocumentsDirectoryPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", anIdentifier, TICDSDocumentInfoPlistExtension]]];
     [operation setDocumentInfoPlistFilePath:[[[self documentsDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSDocumentInfoPlistFilenameWithExtension]];
     
-    return operation;
+    return SAFE_ARC_AUTORELEASE(operation);
 }
 
 - (TICDSRemoveAllRemoteSyncDataOperation *)removeAllSyncDataOperation
@@ -185,7 +189,7 @@
     
     [operation setApplicationDirectoryPath:[self applicationDirectoryPath]];
     
-    return operation;
+    return SAFE_ARC_AUTORELEASE(operation);
 }
 
 #pragma mark -
@@ -232,11 +236,16 @@
 
 #pragma mark -
 #pragma mark Initialization and Deallocation
+
+#if !__has_feature(objc_arc)
+
 - (void)dealloc
 {
-    _applicationContainingDirectoryLocation = nil;
+    [_applicationContainingDirectoryLocation release], _applicationContainingDirectoryLocation = nil;
 
 }
+#endif
+
 
 #pragma mark -
 #pragma mark Properties

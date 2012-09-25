@@ -80,12 +80,17 @@
 
 #pragma mark -
 #pragma mark Initialization and Deallocation
-- (void)dealloc
+
+
+#if !__has_feature(objc_arc)
+
+ - (void)dealloc
 {
     _clientDevicesDirectoryPath = nil;
     _documentsDirectoryPath = nil;
 
 }
+#endif
 
 #pragma mark -
 #pragma mark Properties

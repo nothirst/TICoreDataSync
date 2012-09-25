@@ -26,7 +26,7 @@
     [operation setEncryptionDirectoryTestDataFilePath:[self encryptionDirectoryTestDataFilePath]];
     [operation setClientDevicesThisClientDeviceDirectoryPath:[self clientDevicesThisClientDeviceDirectoryPath]];
     
-    return operation;
+    return SAFE_ARC_AUTORELEASE(operation);
 }
 
 - (TICDSListOfPreviouslySynchronizedDocumentsOperation *)listOfPreviouslySynchronizedDocumentsOperation
@@ -36,7 +36,7 @@
     [operation setDbSession:[self dbSession]];
     [operation setDocumentsDirectoryPath:[self documentsDirectoryPath]];
     
-    return operation;
+    return SAFE_ARC_AUTORELEASE(operation);
 }
 
 - (TICDSWholeStoreDownloadOperation *)wholeStoreDownloadOperationForDocumentWithIdentifier:(NSString *)anIdentifier
@@ -47,7 +47,7 @@
     [operation setThisDocumentDirectoryPath:[[self documentsDirectoryPath] stringByAppendingPathComponent:anIdentifier]];
     [operation setThisDocumentWholeStoreDirectoryPath:[self pathToWholeStoreDirectoryForDocumentWithIdentifier:anIdentifier]];
     
-    return operation;
+    return SAFE_ARC_AUTORELEASE(operation);
 }
 
 - (TICDSListOfApplicationRegisteredClientsOperation *)listOfApplicationRegisteredClientsOperation
@@ -58,7 +58,7 @@
     [operation setClientDevicesDirectoryPath:[self clientDevicesDirectoryPath]];
     [operation setDocumentsDirectoryPath:[self documentsDirectoryPath]];
     
-    return operation;
+    return SAFE_ARC_AUTORELEASE(operation);
 }
 
 - (TICDSDocumentDeletionOperation *)documentDeletionOperationForDocumentWithIdentifier:(NSString *)anIdentifier
@@ -70,7 +70,7 @@
     [operation setDocumentDirectoryPath:[[self documentsDirectoryPath] stringByAppendingPathComponent:anIdentifier]];
     [operation setDocumentInfoPlistFilePath:[[[self documentsDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSDocumentInfoPlistFilenameWithExtension]];
     
-    return operation;
+    return SAFE_ARC_AUTORELEASE(operation);
 }
 
 - (TICDSRemoveAllRemoteSyncDataOperation *)removeAllSyncDataOperation
@@ -80,7 +80,7 @@
     [operation setDbSession:[self dbSession]];
     [operation setApplicationDirectoryPath:[self applicationDirectoryPath]];
     
-    return operation;
+    return SAFE_ARC_AUTORELEASE(operation);
 }
 
 #pragma mark -
@@ -127,11 +127,16 @@
 
 #pragma mark -
 #pragma mark Initialization and Deallocation
-- (void)dealloc
+
+
+#if !__has_feature(objc_arc)
+
+ - (void)dealloc
 {
     _dbSession = nil;
 
 }
+#endif
 
 #pragma mark -
 #pragma mark Lazy Accessors
@@ -141,7 +146,7 @@
         return _dbSession;
     }
     
-    _dbSession = [DBSession sharedSession];
+    _dbSession = SAFE_ARC_RETAIN([DBSession sharedSession]);
     
     return _dbSession;
 }

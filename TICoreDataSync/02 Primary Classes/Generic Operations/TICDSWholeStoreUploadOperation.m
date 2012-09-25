@@ -39,7 +39,7 @@
     
     NSArray *allEntities = [[[[self backgroundApplicationContext] persistentStoreCoordinator] managedObjectModel] entities];
     
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSFetchRequest *fetchRequest = SAFE_ARC_AUTORELEASE([[NSFetchRequest alloc] init]);
     [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%K == %@", TICDSSyncIDAttributeName, nil]];
     NSUInteger objectCount = 0;
     NSError *anyError = nil;
@@ -87,7 +87,7 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Starting to fix missing ticdsSyncIDs");
     
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSFetchRequest *fetchRequest = SAFE_ARC_AUTORELEASE([[NSFetchRequest alloc] init]);
     [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%K == %@", TICDSSyncIDAttributeName, nil]];
     [fetchRequest setIncludesPropertyValues:NO];
     NSArray *results = nil;
@@ -383,14 +383,18 @@
 
 #pragma mark -
 #pragma mark Initialization and Deallocation
+
+#if !__has_feature(objc_arc)
 - (void)dealloc
 {
-    _localWholeStoreFileLocation = nil;
-    _localAppliedSyncChangeSetsFileLocation = nil;
-    _primaryPersistentStoreCoordinator = nil;
-    _backgroundApplicationContext = nil;
+    [_localWholeStoreFileLocation release], _localWholeStoreFileLocation = nil;
+    [_localAppliedSyncChangeSetsFileLocation release], _localAppliedSyncChangeSetsFileLocation = nil;
+    [_primaryPersistentStoreCoordinator release], _primaryPersistentStoreCoordinator = nil;
+    [_backgroundApplicationContext release], _backgroundApplicationContext = nil;
 
+    [super dealloc];
 }
+#endif
 
 - (NSManagedObjectContext *)backgroundApplicationContext
 {

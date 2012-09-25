@@ -112,11 +112,14 @@
 }
 
 #pragma mark - Initialization and Deallocation
+
+#if !__has_feature(objc_arc)
 - (void)dealloc
 {
     _earliestDateForFilesToKeep = nil;
     
 }
+#endif
 
 #pragma mark - Properties
 @synthesize earliestDateForFilesToKeep = _earliestDateForFilesToKeep;

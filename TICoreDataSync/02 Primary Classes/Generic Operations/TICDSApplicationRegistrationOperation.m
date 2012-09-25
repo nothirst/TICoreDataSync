@@ -561,6 +561,7 @@
     
     FZACryptor *cryptor = [[FZACryptor alloc] init];
     [self setCryptor:cryptor];
+    SAFE_ARC_RELEASE(cryptor);
 }
 
 - (void)blitzKeychainItems
@@ -580,15 +581,19 @@
     return [super initWithDelegate:aDelegate];
 }
 
+#if !__has_feature(objc_arc)
+
 - (void)dealloc
 {
-    _appIdentifier = nil;
-    _clientDescription = nil;
-    _applicationUserInfo = nil;
-    _password = nil;
-    _saltData = nil;
+    [_appIdentifier release], _appIdentifier = nil;
+    [_clientDescription release], _clientDescription = nil;
+    [_applicationUserInfo release], _applicationUserInfo = nil;
+    [_password release], _password = nil;
+    [_saltData release], _saltData = nil;
 
+    [super dealloc];
 }
+#endif
 
 #pragma mark -
 #pragma mark Properties

@@ -19,6 +19,7 @@
 // THE SOFTWARE.
 
 #import "TICoreDataFactory.h"
+#import "ARCMacros.h"
 
 @interface TICoreDataFactory ()
 
@@ -56,7 +57,7 @@
     NSManagedObjectContext *secondaryContext = [[NSManagedObjectContext alloc] init];
     [secondaryContext setPersistentStoreCoordinator:[self persistentStoreCoordinator]];
     
-    return secondaryContext;
+    return SAFE_ARC_AUTORELEASE(secondaryContext);
 }
 
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator
@@ -129,7 +130,7 @@
     if( modelURL ) {
         _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     } else {
-        _managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
+        _managedObjectModel = SAFE_ARC_RETAIN([NSManagedObjectModel mergedModelFromBundles:nil]);
     }
     
     return _managedObjectModel;
@@ -156,7 +157,7 @@
 #else
     NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 #endif
-    _persistentStoreDataPath = [directory stringByAppendingPathComponent:[self persistentStoreDataFileName]];
+    _persistentStoreDataPath = SAFE_ARC_RETAIN([directory stringByAppendingPathComponent:[self persistentStoreDataFileName]]);
     
     return _persistentStoreDataPath;
 }
@@ -172,7 +173,7 @@
     else if( [[self persistentStoreType] isEqualToString:NSXMLStoreType] )
         fileName = [fileName stringByAppendingPathExtension:@"xml"];
 #endif
-    _persistentStoreDataFileName = fileName;
+    _persistentStoreDataFileName = SAFE_ARC_RETAIN(fileName);
     
     return _persistentStoreDataFileName;
 }
@@ -190,7 +191,7 @@
 {
     if( _persistentStoreOptions ) return _persistentStoreOptions;
     
-    _persistentStoreOptions = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:NSMigratePersistentStoresAutomaticallyOption];
+    _persistentStoreOptions = SAFE_ARC_RETAIN([NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:NSMigratePersistentStoresAutomaticallyOption]);
     return _persistentStoreOptions;
 }
 
@@ -213,13 +214,34 @@
 
 + (id)coreDataFactory
 {
-    return [[self alloc] init];
+    return SAFE_ARC_AUTORELEASE([[self alloc] init]);
 }
 
 + (id)coreDataFactoryWithMomdName:(NSString *)aMomdName
 {
-    return [[self alloc] initWithMomdName:aMomdName];
+    return SAFE_ARC_AUTORELEASE([[self alloc] initWithMomdName:aMomdName]);
 }
+
+#if !__has_feature(objc_arc)
+
+- (void)dealloc
+{
+    [_managedObjectContext release];
+    [_persistentStoreCoordinator release];
+    
+    [_momdName release];
+    [_managedObjectModel release];
+    
+    [_persistentStoreDataFileName release];
+    [_persistentStoreDataPath release];
+    
+    [_persistentStoreOptions release];
+    
+    [_mostRecentError release];
+    
+    [super dealloc];
+}
+#endif
 
 
 #pragma mark -

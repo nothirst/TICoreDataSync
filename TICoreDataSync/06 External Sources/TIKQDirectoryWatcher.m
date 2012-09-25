@@ -166,6 +166,9 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
 
 #pragma mark -
 #pragma mark Initialization and Deallocation
+
+#if !__has_feature(objc_arc)
+
 - (void)dealloc
 {
     close(_kqFileDescriptor);
@@ -174,7 +177,9 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
     [self cancelRunLoopSourceRef];
     _watchedDirectories = nil;
     
+    [super dealloc];
 }
+#endif
 
 #pragma mark -
 #pragma mark Properties

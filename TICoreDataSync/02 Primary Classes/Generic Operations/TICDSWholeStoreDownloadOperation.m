@@ -156,7 +156,11 @@
 
 #pragma mark -
 #pragma mark Initialization and Deallocation
-- (void)dealloc
+
+
+#if !__has_feature(objc_arc)
+
+ - (void)dealloc
 {
     _requestedWholeStoreClientIdentifier = nil;
     _localWholeStoreFileLocation = nil;
@@ -164,6 +168,8 @@
     _integrityKey = nil;
 
 }
+#endif
+
 
 #pragma mark -
 #pragma mark Properties
