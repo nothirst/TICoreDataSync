@@ -78,9 +78,9 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to register application sync manager");
     [self postIncreaseActivityNotification];
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerDidBeginRegistering:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManagerDidBeginRegistering:self];
-        });
+        }];
     }
     
     if( [self state] != TICDSApplicationSyncManagerStateConfigured ) {
@@ -105,9 +105,9 @@
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from application registration process");
 
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToRegisterWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didFailToRegisterWithError:anError];
-        });
+        }];
     }
 [self postDecreaseActivityNotification];
 }
@@ -140,9 +140,9 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"First-time Application Registration paused to find out whether to use encryption for this application");
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:self];
-        });
+        }];
     }
 [self postDecreaseActivityNotification];
 }
@@ -152,9 +152,9 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"First-time Application Registration resumed after finding out whether to use encryption");
     [self postIncreaseActivityNotification];
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerDidContinueRegistering:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManagerDidContinueRegistering:self];
-        });
+        }];
     }
 }
 
@@ -163,9 +163,9 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Encrypted application registration paused to ask for a password");
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:self];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -175,9 +175,9 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Encrypted application registration resumed after being given a password");
     [self postIncreaseActivityNotification];
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerDidContinueRegistering:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManagerDidContinueRegistering:self];
-        });
+        }];
     }
 }
 
@@ -223,9 +223,9 @@
     
     // Registration Complete
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerDidFinishRegistering:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManagerDidFinishRegistering:self];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
     
@@ -245,9 +245,9 @@
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Application Registration Operation was Cancelled");
     
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToRegisterWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didFailToRegisterWithError:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -257,9 +257,9 @@
     [self setState:TICDSApplicationSyncManagerStateNotYetRegistered];
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Application Registration Operation Failed to Complete with Error: %@", anError);
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToRegisterWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didFailToRegisterWithError:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -270,9 +270,9 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to check for remote documents that have been previously synchronized");
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerDidBeginCheckingForPreviouslySynchronizedDocuments:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManagerDidBeginCheckingForPreviouslySynchronizedDocuments:self];
-        });
+        }];
     }
     [self postIncreaseActivityNotification];
     
@@ -282,9 +282,9 @@
     if( !success ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Request for list of previously-synchronized documents failed with error: %@", anyError);
         if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:)]) {
-            dispatch_sync(dispatch_get_main_queue(), ^{
+            [self runOnMainQueueWithoutDeadlocking:^{
                 [(id)self.delegate applicationSyncManager:self didFailToCheckForPreviouslySynchronizedDocumentsWithError:anyError];
-            });
+            }];
         }
         [self postDecreaseActivityNotification];
     }
@@ -313,9 +313,9 @@
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Didn't get any available documents");
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:self];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -329,9 +329,9 @@
     
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Found previously-synchronized remote documents: %@", anArray);
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFinishCheckingAndFoundPreviouslySynchronizedDocuments:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didFinishCheckingAndFoundPreviouslySynchronizedDocuments:anArray];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -359,9 +359,9 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"List of Previously-Synchronized Documents Operation Failed to Complete with Error: %@", anError);
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didFailToCheckForPreviouslySynchronizedDocumentsWithError:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -374,9 +374,9 @@
     
     [self postIncreaseActivityNotification];
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didBeginDownloadingDocumentWithIdentifier:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didBeginDownloadingDocumentWithIdentifier:anIdentifier];
-        });
+        }];
     }
     
     NSError *anyError = nil;
@@ -392,9 +392,9 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from document download process");
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didFailToDownloadDocumentWithIdentifier:anIdentifier error:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -454,9 +454,9 @@
 - (void)bailFromDocumentDownloadPostProcessingForOperation:(TICDSWholeStoreDownloadOperation *)anOperation withError:(NSError *)anError
 {
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didFailToDownloadDocumentWithIdentifier:[[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier] error:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -472,9 +472,9 @@
     // Remove existing WholeStore, if necessary
     if( [[self fileManager] fileExistsAtPath:[finalWholeStoreLocation path]] ) {
         if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atURL:)]) {
-            dispatch_sync(dispatch_get_main_queue(), ^{
+            [self runOnMainQueueWithoutDeadlocking:^{
                 [(id)self.delegate applicationSyncManager:self willReplaceWholeStoreFileForDocumentWithIdentifier:[[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier] atURL:finalWholeStoreLocation];
-            });
+            }];
         }
         success = [[self fileManager] removeItemAtPath:[finalWholeStoreLocation path] error:&anyError];
         
@@ -518,9 +518,9 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Document Download Operation Completed");
 
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didFinishDownloadingDocumentWithIdentifier:[[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier] atURL:finalWholeStoreLocation];
-        });
+        }];
     }
 [self postDecreaseActivityNotification];
 }
@@ -529,9 +529,9 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Download Operation was Cancelled");
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didFailToDownloadDocumentWithIdentifier:[[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier] error:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -540,9 +540,9 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Download Operation Failed to Complete with Error: %@", anError);
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didFailToDownloadDocumentWithIdentifier:[[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier] error:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -566,9 +566,9 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from device information request");
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didFailToFetchInformationForAllRegisteredDevicesWithError:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -578,9 +578,9 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting process to fetch information on all devices registered to synchronize this application");
     [self postIncreaseActivityNotification];
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerDidBeginToFetchInformationForAllRegisteredDevices:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManagerDidBeginToFetchInformationForAllRegisteredDevices:self];
-        });
+        }];
     }
 
     TICDSListOfApplicationRegisteredClientsOperation *operation = [self listOfApplicationRegisteredClientsOperation];
@@ -613,9 +613,9 @@
     NSDictionary *information = [anOperation deviceInfoDictionaries];
     
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFinishFetchingInformationForAllRegisteredDevices:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didFinishFetchingInformationForAllRegisteredDevices:information];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -625,9 +625,9 @@
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Registered Device Information Operation was Cancelled");
     
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didFailToFetchInformationForAllRegisteredDevicesWithError:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -636,9 +636,9 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Registered Device Information Operation Failed to Complete with Error: %@", anError);
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didFailToFetchInformationForAllRegisteredDevicesWithError:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -662,9 +662,9 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting process to delete document %@", anIdentifier);
     [self postIncreaseActivityNotification];
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didBeginDeletionProcessForDocumentWithIdentifier:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didBeginDeletionProcessForDocumentWithIdentifier:anIdentifier];
-        });
+        }];
     }
 
     TICDSDocumentDeletionOperation *operation = [self documentDeletionOperationForDocumentWithIdentifier:anIdentifier];
@@ -687,9 +687,9 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from document deletion request");
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didFailToDeleteDocumentWithIdentifier:anIdentifier error:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -706,9 +706,9 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"Document Deletion Operation will delete document");
     
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:willDeleteDirectoryForDocumentWithIdentifier:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self willDeleteDirectoryForDocumentWithIdentifier:[anOperation documentIdentifier]];
-        });
+        }];
     }
 }
 
@@ -717,9 +717,9 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"Document Deletion Operation did delete document");
     
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didDeleteDirectoryForDocumentWithIdentifier:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didDeleteDirectoryForDocumentWithIdentifier:[anOperation documentIdentifier]];
-        });
+        }];
     }
 
 }
@@ -735,9 +735,9 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFinishDeletingDocumentWithIdentifier:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didFinishDeletingDocumentWithIdentifier:identifier];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -749,9 +749,9 @@
     NSString *identifier = [anOperation documentIdentifier];
     
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didFailToDeleteDocumentWithIdentifier:identifier error:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -763,9 +763,9 @@
     NSString *identifier = [anOperation documentIdentifier];
     
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didFailToDeleteDocumentWithIdentifier:identifier error:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -792,9 +792,9 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting process to remove all remote sync data");
     [self postIncreaseActivityNotification];
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerWillRemoveAllSyncData:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManagerWillRemoveAllSyncData:self];
-        });
+        }];
     }
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Cancelling any existing operations");
@@ -823,9 +823,9 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from remove all remote sync data request");
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToRemoveAllSyncDataWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didFailToRemoveAllSyncDataWithError:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -846,9 +846,9 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"Remove all sync data operation will remove all sync data");
     
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerWillRemoveAllSyncData:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManagerWillRemoveAllSyncData:self];
-        });
+        }];
     }
 }
 
@@ -857,9 +857,9 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"Remove all sync data operation did remove all sync data");
     
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerDidFinishRemovingAllSyncData:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManagerDidFinishRemovingAllSyncData:self];
-        });
+        }];
     }
 }
 
@@ -875,9 +875,9 @@
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Remove All Sync Data Operation was Cancelled");
     
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToRemoveAllSyncDataWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didFailToRemoveAllSyncDataWithError:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -887,9 +887,9 @@
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Remove All Sync Data Operation Failed to Complete with Error: %@", anError);
     
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToRemoveAllSyncDataWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didFailToRemoveAllSyncDataWithError:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }

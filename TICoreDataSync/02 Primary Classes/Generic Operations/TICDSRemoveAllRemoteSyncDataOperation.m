@@ -27,9 +27,9 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Removing entire remote sync data directory");
     
     if ([self ti_delegateRespondsToSelector:@selector(removeAllSyncDataOperationWillRemoveAllSyncData:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate removeAllSyncDataOperationWillRemoveAllSyncData:self];
-        });
+        }];
     }
     TICDSLog(TICDSLogVerbosityEveryStep, @"Clearing cryptor's password and salt");
     if( ![self cryptor] ) {
@@ -51,9 +51,9 @@
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Removed all sync data");
     if ([self ti_delegateRespondsToSelector:@selector(removeAllSyncDataOperationDidRemoveAllSyncData:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate removeAllSyncDataOperationDidRemoveAllSyncData:self];
-        });
+        }];
     }
     
     [self operationDidCompleteSuccessfully];

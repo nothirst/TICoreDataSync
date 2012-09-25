@@ -35,4 +35,17 @@
     return [[(id)self delegate] respondsToSelector:aSelector];
 }
 
+- (void)runOnMainQueueWithoutDeadlocking:(void (^)())block
+{
+    if (block == nil) {
+        return;
+    }
+    
+    if ([NSThread isMainThread]) {
+        block();
+    } else {
+        dispatch_sync(dispatch_get_main_queue(), block);
+    }
+}
+
 @end

@@ -104,9 +104,9 @@
     
     [self postIncreaseActivityNotification];
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidBeginRegistering:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManagerDidBeginRegistering:self];
-        });
+        }];
     }
     
     if( [[self applicationSyncManager] state] == TICDSApplicationSyncManagerStateAbleToSync ) {
@@ -139,9 +139,9 @@
     
     if( !success ) {
         if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToRegisterWithError:)]) {
-            dispatch_sync(dispatch_get_main_queue(), ^{
+            [self runOnMainQueueWithoutDeadlocking:^{
                 [(id)self.delegate documentSyncManager:self didFailToRegisterWithError:anyError];
-            });
+            }];
         }
     }
     
@@ -273,9 +273,9 @@
     
     [self postIncreaseActivityNotification];
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidBeginRegistering:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManagerDidBeginRegistering:self];
-        });
+        }];
     }
     
     [self setDelegate:aDelegate];
@@ -335,9 +335,9 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from registration process");
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToRegisterWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToRegisterWithError:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -399,15 +399,15 @@
         TICDSLog(TICDSLogVerbosityEveryStep, @"Document was deleted, so deleting local helper files for this document");
         [self removeThenRecreateExistingHelperFileDirectory];
         if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:description:userInfo:)]) {
-            dispatch_sync(dispatch_get_main_queue(), ^{
+            [self runOnMainQueueWithoutDeadlocking:^{
                 [(id)self.delegate documentSyncManager:self didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:[self documentIdentifier] description:[self documentDescription] userInfo:[self documentUserInfo]];
-            });
+            }];
         }
     } else {
         if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:)]) {
-            dispatch_sync(dispatch_get_main_queue(), ^{
+            [self runOnMainQueueWithoutDeadlocking:^{
                 [(id)self.delegate documentSyncManager:self didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:[self documentIdentifier] description:[self documentDescription] userInfo:[self documentUserInfo]];
-            });
+            }];
         }
     }
     
@@ -418,9 +418,9 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Registration operation resumed after finding out whether to create document structure");
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidContinueRegistering:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManagerDidContinueRegistering:self];
-        });
+        }];
     }
     [self postIncreaseActivityNotification];
 }
@@ -444,9 +444,9 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"Alerting delegate that client was deleted from synchronizing document");
     
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManagerDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:self];
-        });
+        }];
     }
 }
 
@@ -476,9 +476,9 @@
     
     // Registration Complete
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidFinishRegistering:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManagerDidFinishRegistering:self];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
     
@@ -531,9 +531,9 @@
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Registration Operation was Cancelled");
     
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToRegisterWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToRegisterWithError:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -543,9 +543,9 @@
     [self setState:TICDSDocumentSyncManagerStateNotYetRegistered];
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Registration Operation Failed to Complete with Error: %@", anError);
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToRegisterWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToRegisterWithError:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -563,9 +563,9 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from whole store upload process");
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToUploadWholeStoreWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToUploadWholeStoreWithError:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -575,9 +575,9 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting whole store upload process");
     [self postIncreaseActivityNotification];
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidBeginUploadingWholeStore:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManagerDidBeginUploadingWholeStore:self];
-        });
+        }];
     }
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Checking to see if there are unsynchronized SyncChanges");
@@ -640,9 +640,9 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Whole Store Upload Operation Completed");
     
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidFinishUploadingWholeStore:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManagerDidFinishUploadingWholeStore:self];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
     
@@ -657,9 +657,9 @@
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Whole Store Upload Operation was Cancelled");
     
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToUploadWholeStoreWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToUploadWholeStoreWithError:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -668,9 +668,9 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Whole Store Upload Operation Failed to Complete with Error: %@", anError);
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToUploadWholeStoreWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToUploadWholeStoreWithError:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -687,9 +687,9 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from whole store download process");
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToDownloadWholeStoreWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToDownloadWholeStoreWithError:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -705,9 +705,9 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to download whole store");
     [self postIncreaseActivityNotification];
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidBeginDownloadingWholeStore:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManagerDidBeginDownloadingWholeStore:self];
-        });
+        }];
     }
     
     // Set download to go to a temporary location
@@ -768,9 +768,9 @@
     }
     
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:willReplaceStoreWithDownloadedStoreAtURL:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self willReplaceStoreWithDownloadedStoreAtURL:finalWholeStoreLocation];
-        });
+        }];
     }
     
     // Remove old WholeStore
@@ -799,9 +799,9 @@
     }
     
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didReplaceStoreWithDownloadedStoreAtURL:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didReplaceStoreWithDownloadedStoreAtURL:finalWholeStoreLocation];
-        });
+        }];
     }
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Updating local integrity key to match newly-downloaded store");
@@ -812,9 +812,9 @@
     
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Whole Store Download complete");
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidFinishDownloadingWholeStore:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManagerDidFinishDownloadingWholeStore:self];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -823,9 +823,9 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Whole Store Download operation was cancelled");
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToDownloadWholeStoreWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToDownloadWholeStoreWithError:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -834,9 +834,9 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Whole Store Download operation failed to complete with error: %@", anError);
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToDownloadWholeStoreWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToDownloadWholeStoreWithError:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -854,9 +854,9 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from synchronization process");
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToSynchronizeWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToSynchronizeWithError:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -866,9 +866,9 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting synchronization process");
     [self postIncreaseActivityNotification];
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidBeginSynchronizing:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManagerDidBeginSynchronizing:self];
-        });
+        }];
     }
     
     [self moveUnsynchronizedSyncChangesToMergeLocation];
@@ -954,9 +954,9 @@
 - (void)synchronizationOperation:(TICDSSynchronizationOperation *)anOperation processedChangeNumber:(NSNumber *)changeNumber outOfTotalChangeCount:(NSNumber *)totalChangeCount fromClientNamed:(NSString *)humanReadableClientName
 {
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:processedChangeNumber:outOfTotalChangeCount:fromClientNamed:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self processedChangeNumber:changeNumber outOfTotalChangeCount:totalChangeCount fromClientNamed:humanReadableClientName];
-        });
+        }];
     }
 }
 
@@ -964,9 +964,9 @@
 - (void)synchronizationOperation:(TICDSSynchronizationOperation *)anOperation pausedToDetermineResolutionOfConflict:(id)aConflict
 {
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didPauseSynchronizationAwaitingResolutionOfSyncConflict:aConflict];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -974,9 +974,9 @@
 - (void)synchronizationOperationResumedFollowingResolutionOfConflict:(TICDSSynchronizationOperation *)anOperation
 {
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidContinueSynchronizing:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManagerDidContinueSynchronizing:self];
-        });
+        }];
     }
     [self postIncreaseActivityNotification];
 }
@@ -1004,16 +1004,16 @@
     if( [[anOperation synchronizationWarnings] count] > 0 ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Synchronization encountered warnings: \n%@", [anOperation synchronizationWarnings]);
         if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didEncounterWarningsWhileSynchronizing:)]) {
-            dispatch_sync(dispatch_get_main_queue(), ^{
+            [self runOnMainQueueWithoutDeadlocking:^{
                 [(id)self.delegate documentSyncManager:self didEncounterWarningsWhileSynchronizing:[anOperation synchronizationWarnings]];
-            });
+            }];
         }
     }
     
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidFinishSynchronizing:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManagerDidFinishSynchronizing:self];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -1023,9 +1023,9 @@
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Synchronization Operation was Cancelled");
     
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToSynchronizeWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToSynchronizeWithError:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -1040,9 +1040,9 @@
     }
     
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToSynchronizeWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToSynchronizeWithError:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -1060,9 +1060,9 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from vacuum process");
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToVacuumUnneededRemoteFilesWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToVacuumUnneededRemoteFilesWithError:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -1072,9 +1072,9 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting vacuum process to remove unneeded files from the remote");
     [self postIncreaseActivityNotification];
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidBeginVacuumingUnneededRemoteFiles:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManagerDidBeginVacuumingUnneededRemoteFiles:self];
-        });
+        }];
     }
     
     TICDSVacuumOperation *operation = [self vacuumOperation];
@@ -1102,9 +1102,9 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Vacuum Operation Completed");
     
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidFinishVacuumingUnneededRemoteFiles:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManagerDidFinishVacuumingUnneededRemoteFiles:self];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -1114,9 +1114,9 @@
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Vacuum Operation was Cancelled");
     
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToVacuumUnneededRemoteFilesWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToVacuumUnneededRemoteFilesWithError:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -1125,9 +1125,9 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Vacuum Operation Failed to Complete with Error: %@", anError);
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToVacuumUnneededRemoteFilesWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToVacuumUnneededRemoteFilesWithError:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -1145,9 +1145,9 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from device information request");
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToFetchInformationForAllRegisteredDevicesWithError:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -1157,9 +1157,9 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting process to fetch information on all devices registered to synchronize this document");
     [self postIncreaseActivityNotification];
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidBeginFetchingInformationForAllRegisteredDevices:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManagerDidBeginFetchingInformationForAllRegisteredDevices:self];
-        });
+        }];
     }
     
     TICDSListOfDocumentRegisteredClientsOperation *operation = [self listOfDocumentRegisteredClientsOperation];
@@ -1189,9 +1189,9 @@
     NSDictionary *information = [anOperation deviceInfoDictionaries];
     
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFinishFetchingInformationForAllRegisteredDevices:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFinishFetchingInformationForAllRegisteredDevices:information];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -1201,9 +1201,9 @@
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Registered Device Information Operation was Cancelled");
     
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToFetchInformationForAllRegisteredDevicesWithError:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -1212,9 +1212,9 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Registered Device Information Operation Failed to Complete with Error: %@", anError);
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToFetchInformationForAllRegisteredDevicesWithError:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -1232,9 +1232,9 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from client device deletion from document synchronization request");
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToDeleteSynchronizationDataFromDocumentForClientWithIdentifier:withError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToDeleteSynchronizationDataFromDocumentForClientWithIdentifier:anIdentifier withError:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -1244,9 +1244,9 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting process to delete synchronization data from the document for client %@", anIdentifier);
     [self postIncreaseActivityNotification];
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didBeginDeletingSynchronizationDataFromDocumentForClientWithIdentifier:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didBeginDeletingSynchronizationDataFromDocumentForClientWithIdentifier:anIdentifier];
-        });
+        }];
     }
     
     TICDSDocumentClientDeletionOperation *operation = [self documentClientDeletionOperation];
@@ -1277,9 +1277,9 @@
     NSString *clientIdentifier = [anOperation identifierOfClientToBeDeleted];
     
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFinishDeletingSynchronizationDataFromDocumentForClientWithIdentifier:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFinishDeletingSynchronizationDataFromDocumentForClientWithIdentifier:clientIdentifier];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -1291,9 +1291,9 @@
     NSString *clientIdentifier = [anOperation identifierOfClientToBeDeleted];
     
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToDeleteSynchronizationDataFromDocumentForClientWithIdentifier:withError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToDeleteSynchronizationDataFromDocumentForClientWithIdentifier:clientIdentifier withError:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -1304,9 +1304,9 @@
     NSString *clientIdentifier = [anOperation identifierOfClientToBeDeleted];
     
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToDeleteSynchronizationDataFromDocumentForClientWithIdentifier:withError:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToDeleteSynchronizationDataFromDocumentForClientWithIdentifier:clientIdentifier withError:anError];
-        });
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -1380,9 +1380,9 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"MOC saved, so beginning post-save processing");
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didBeginProcessingSyncChangesAfterManagedObjectContextDidSave:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didBeginProcessingSyncChangesAfterManagedObjectContextDidSave:aMoc];
-        });
+        }];
     }
     
     NSError *anyError = nil;
@@ -1395,9 +1395,9 @@
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Sync Manager failed to save Sync Changes context with error: %@", anyError);
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Sync Manager cannot continue processing any further, so bailing");
         if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToProcessSyncChangesAfterManagedObjectContextDidSave:withError:)]) {
-            dispatch_sync(dispatch_get_main_queue(), ^{
+            [self runOnMainQueueWithoutDeadlocking:^{
                 [(id)self.delegate documentSyncManager:self didFailToProcessSyncChangesAfterManagedObjectContextDidSave:aMoc withError:[TICDSError errorWithCode:TICDSErrorCodeFailedToSaveSyncChangesMOC underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            });
+            }];
         }
         
         return;
@@ -1405,9 +1405,9 @@
     
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Sync Manager saved Sync Changes context successfully");
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFinishProcessingSyncChangesAfterManagedObjectContextDidSave:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFinishProcessingSyncChangesAfterManagedObjectContextDidSave:aMoc];
-        });
+        }];
     }
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Asking delegate if we should sync after saving");
@@ -1450,9 +1450,9 @@
 - (void)backgroundManagedObjectContextDidSave:(NSNotification *)aNotification
 {
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:aNotification];
-        });
+        }];
     }
 }
 

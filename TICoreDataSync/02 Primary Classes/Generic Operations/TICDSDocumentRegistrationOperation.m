@@ -498,9 +498,9 @@
 - (void)sendMessageToDelegateThatToDeleteLocalFilesAndPullDownStore
 {
     if ([self ti_delegateRespondsToSelector:@selector(registrationOperationDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate registrationOperationDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:self];
-        });
+        }];
     }
 }
 

@@ -715,9 +715,9 @@
     [self setPaused:YES];
     
     if ([self ti_delegateRespondsToSelector:@selector(synchronizationOperation:pausedToDetermineResolutionOfConflict:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate synchronizationOperation:self pausedToDetermineResolutionOfConflict:aConflict];
-        });
+        }];
     }
 
     while( [self isPaused] && ![self isCancelled] ) {
@@ -725,9 +725,9 @@
     }
     
     if ([self ti_delegateRespondsToSelector:@selector(synchronizationOperationResumedFollowingResolutionOfConflict:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate synchronizationOperationResumedFollowingResolutionOfConflict:self];
-        });
+        }];
     }
 
     return [self mostRecentConflictResolutionType];

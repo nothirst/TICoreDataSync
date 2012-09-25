@@ -83,23 +83,23 @@
     if( success ) {
         TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"TICDSOperation completed successfully");
         if ([self ti_delegateRespondsToSelector:@selector(operationCompletedSuccessfully:)]) {
-            dispatch_sync(dispatch_get_main_queue(), ^{
+            [self runOnMainQueueWithoutDeadlocking:^{
                 [(id)self.delegate operationCompletedSuccessfully:self];
-            });
+            }];
         }
     } else if( wasCancelled ) {
         TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"TICDSOperation was cancelled");
         if ([self ti_delegateRespondsToSelector:@selector(operationWasCancelled:)]) {
-            dispatch_sync(dispatch_get_main_queue(), ^{
+            [self runOnMainQueueWithoutDeadlocking:^{
                 [(id)self.delegate operationWasCancelled:self];
-            });
+            }];
         }
     } else {
         TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"TICDSOperation failed to complete");
         if ([self ti_delegateRespondsToSelector:@selector(operationFailedToComplete:)]) {
-            dispatch_sync(dispatch_get_main_queue(), ^{
+            [self runOnMainQueueWithoutDeadlocking:^{
                 [(id)self.delegate operationFailedToComplete:self];
-            });
+            }];
         }
     }
     

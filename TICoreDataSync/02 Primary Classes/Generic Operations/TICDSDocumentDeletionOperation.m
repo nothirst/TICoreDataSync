@@ -162,9 +162,9 @@
 - (void)beginAlertToDelegateThatDocumentWillBeDeleted
 {
     if ([self ti_delegateRespondsToSelector:@selector(documentDeletionOperationWillDeleteDocument:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentDeletionOperationWillDeleteDocument:self];
-        });
+        }];
     }
     
     [self beginDeletingDocumentDirectory];
@@ -202,9 +202,9 @@
 - (void)beginAlertToDelegateThatDocumentWasDeleted
 {
     if ([self ti_delegateRespondsToSelector:@selector(documentDeletionOperationDidDeleteDocument:)]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentDeletionOperationDidDeleteDocument:self];
-        });
+        }];
     }
 
     [self operationDidCompleteSuccessfully];

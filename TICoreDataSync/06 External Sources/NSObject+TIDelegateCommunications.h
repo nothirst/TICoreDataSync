@@ -31,4 +31,6 @@
  @return YES if the receiver implements or inherits a method that can respond to aSelector, otherwise NO. */
 - (BOOL)ti_delegateRespondsToSelector:(SEL)aSelector;
 
+- (void)runOnMainQueueWithoutDeadlocking:(void (^)())block;
+
 @end
