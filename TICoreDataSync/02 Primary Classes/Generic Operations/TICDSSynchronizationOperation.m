@@ -141,7 +141,7 @@
     [self beginFetchOfListOfSyncCommandSetIdentifiers];
 }
 
-#pragma Overridden Method
+#pragma mark Overridden Method
 - (void)buildArrayOfClientDeviceIdentifiers
 {
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
