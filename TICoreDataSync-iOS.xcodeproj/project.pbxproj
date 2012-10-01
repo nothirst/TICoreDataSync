@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		13023C41161363D50071C497 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13023C40161363D50071C497 /* Foundation.framework */; };
-		13023C57161366660071C497 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13023C56161366660071C497 /* DropboxSDK.framework */; };
 		13023C59161366790071C497 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13023C58161366790071C497 /* Security.framework */; };
 		13023C5B1613669A0071C497 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13023C5A1613669A0071C497 /* CoreData.framework */; };
 		13023C5D161366A30071C497 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13023C5C161366A30071C497 /* QuartzCore.framework */; };
@@ -76,7 +75,7 @@
 		13023D32161366E10071C497 /* TICoreDataFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 13023CED161366E10071C497 /* TICoreDataFactory.m */; };
 		13023D33161366E10071C497 /* TIKQDirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 13023CEF161366E10071C497 /* TIKQDirectoryWatcher.m */; };
 		13023D34161366E10071C497 /* TIManagedObjectExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 13023CF1161366E10071C497 /* TIManagedObjectExtensions.m */; };
-		13023D35161366E10071C497 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13023CF3161366E10071C497 /* DropboxSDK.framework */; };
+		134475B01619F837008DF483 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13023CF3161366E10071C497 /* DropboxSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -240,12 +239,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				134475B01619F837008DF483 /* DropboxSDK.framework in Frameworks */,
 				13023C5D161366A30071C497 /* QuartzCore.framework in Frameworks */,
 				13023C5B1613669A0071C497 /* CoreData.framework in Frameworks */,
 				13023C59161366790071C497 /* Security.framework in Frameworks */,
 				13023C41161363D50071C497 /* Foundation.framework in Frameworks */,
-				13023C57161366660071C497 /* DropboxSDK.framework in Frameworks */,
-				13023D35161366E10071C497 /* DropboxSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -716,6 +714,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TICoreDataSync/00 Precompiled Headers/TICoreDataSync-iOS-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -736,6 +735,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TICoreDataSync/00 Precompiled Headers/TICoreDataSync-iOS-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

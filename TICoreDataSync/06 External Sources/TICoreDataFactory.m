@@ -75,7 +75,6 @@
                                                                          configuration:nil URL:urlForStore
                                                                                options:[self persistentStoreOptions] error:&error];
     if ( !store ) {
-#warning We need to check the error number here. If the error number is 259 we have a corrupted store file (WHAT?!) and need to delete it and recreate it before moving forward.
         if (error.code == 259) {
             NSLog(@"%s There is something wrong with the file at %@", __PRETTY_FUNCTION__, [urlForStore path]);
             if ([[NSFileManager defaultManager] fileExistsAtPath:[urlForStore path]]) {

@@ -1350,7 +1350,6 @@
 
 - (NSManagedObjectContext *)syncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext
 {
-#warning The MOC we return from this method _must_ have some persistent stores
     NSManagedObjectContext *context = [[self syncChangesMOCs] valueForKey:[self keyForContext:aContext]];
 
     if ( !context ) {
@@ -1404,7 +1403,6 @@
     
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Sync Manager will save Sync Changes context");
     
-#warning This is where our crasher is starting from. We need to sanity check the returned MOC's persistent stores
     BOOL success = [[self syncChangesMocForDocumentMoc:aMoc] save:&anyError];
     
     if( !success ) {
