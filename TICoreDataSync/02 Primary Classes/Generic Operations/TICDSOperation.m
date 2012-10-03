@@ -11,8 +11,7 @@
 
 @implementation TICDSOperation
 
-#pragma mark -
-#pragma mark Primary Operation
+#pragma mark - Primary Operation
 - (void)start
 {
     if( [self needsMainThread] && ![NSThread isMainThread])
@@ -47,8 +46,7 @@
     [self operationDidFailToComplete];
 }
 
-#pragma mark -
-#pragma mark Operation Settings
+#pragma mark - Operation Settings
 - (BOOL)isConcurrent
 {
     return YES;
@@ -59,8 +57,7 @@
     return NO;
 }
 
-#pragma mark -
-#pragma mark Completion
+#pragma mark - Completion
 - (void)endExecution
 {
     [self willChangeValueForKey:@"isExecuting"];
@@ -135,8 +132,7 @@
     [self ticdPrivate_operationDidCompleteSuccessfully:NO cancelled:YES];
 }
 
-#pragma mark -
-#pragma mark Lazy Accessors
+#pragma mark - Lazy Accessors
 - (NSFileManager *)fileManager
 {
     if( _fileManager ) return _fileManager;
@@ -146,8 +142,7 @@
     return _fileManager;
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (id)initWithDelegate:(NSObject <TICDSOperationDelegate> *)aDelegate
 {
     self = [super init];
@@ -172,8 +167,7 @@
 
 }
 
-#pragma mark -
-#pragma mark Lazy Accessors
+#pragma mark - Lazy Accessors
 - (NSString *)tempFileDirectoryPath
 {
     if( _tempFileDirectoryPath ) {
@@ -195,8 +189,7 @@
     return _tempFileDirectoryPath;
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize shouldUseEncryption = _shouldUseEncryption;
 @synthesize cryptor = _cryptor;
 @synthesize delegate = _delegate;

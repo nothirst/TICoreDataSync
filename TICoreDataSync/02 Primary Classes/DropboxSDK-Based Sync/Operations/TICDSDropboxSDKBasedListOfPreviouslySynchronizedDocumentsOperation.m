@@ -33,8 +33,7 @@
     [[self restClient] loadMetadata:[self pathToDocumentRecentSyncsDirectoryForIdentifier:aSyncID]];
 }
 
-#pragma mark -
-#pragma mark Rest Client Delegate
+#pragma mark - Rest Client Delegate
 #pragma mark Metadata
 - (void)restClient:(DBRestClient*)client loadedMetadata:(DBMetadata*)metadata
 {
@@ -152,8 +151,7 @@
     [self fetchedInfoDictionary:nil forDocumentWithSyncID:[path lastPathComponent]];
 }
 
-#pragma mark -
-#pragma mark Paths
+#pragma mark - Paths
 - (NSString *)pathToDocumentInfoForDocumentWithIdentifier:(NSString *)anIdentifier
 {
     return [[[self documentsDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSDocumentInfoPlistFilenameWithExtension];
@@ -164,8 +162,7 @@
     return [[[self documentsDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSRecentSyncsDirectoryName];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     [_restClient setDelegate:nil];
@@ -176,8 +173,7 @@
 
 }
 
-#pragma mark -
-#pragma mark Lazy Accessors
+#pragma mark - Lazy Accessors
 - (DBRestClient *)restClient
 {
     if( _restClient ) return _restClient;
@@ -188,8 +184,7 @@
     return _restClient;
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize dbSession = _dbSession;
 @synthesize restClient = _restClient;
 @synthesize documentsDirectoryPath = _documentsDirectoryPath;

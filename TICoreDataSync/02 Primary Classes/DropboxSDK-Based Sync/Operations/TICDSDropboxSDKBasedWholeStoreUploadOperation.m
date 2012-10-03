@@ -20,8 +20,7 @@
 
 @implementation TICDSDropboxSDKBasedWholeStoreUploadOperation
 
-#pragma mark -
-#pragma mark Overridden Methods
+#pragma mark - Overridden Methods
 - (BOOL)needsMainThread
 {
     return YES;
@@ -94,8 +93,7 @@
     [[self restClient] copyFrom:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] toPath:[self thisDocumentWholeStoreThisClientDirectoryPath]];
 }
 
-#pragma mark -
-#pragma mark Rest Client Delegate
+#pragma mark - Rest Client Delegate
 #pragma mark Metadata
 - (void)restClient:(DBRestClient*)client loadedMetadata:(DBMetadata*)metadata
 {
@@ -274,8 +272,7 @@
     [self copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:NO];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     [_restClient setDelegate:nil];
@@ -290,8 +287,7 @@
 
 }
 
-#pragma mark -
-#pragma mark Lazy Accessors
+#pragma mark - Lazy Accessors
 - (DBRestClient *)restClient
 {
     if( _restClient ) return _restClient;
@@ -302,8 +298,7 @@
     return _restClient;
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize dbSession = _dbSession;
 @synthesize restClient = _restClient;
 @synthesize thisDocumentTemporaryWholeStoreThisClientDirectoryPath = _thisDocumentTemporaryWholeStoreThisClientDirectoryPath;

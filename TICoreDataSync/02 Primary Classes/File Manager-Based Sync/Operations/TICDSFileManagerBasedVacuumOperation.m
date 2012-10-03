@@ -139,15 +139,13 @@
     [self removedOldSyncChangeSetFilesWithSuccess:success];
 }
 
-#pragma mark -
-#pragma mark Paths
+#pragma mark - Paths
 - (NSString *)pathToWholeStoreFileForClientWithIdentifier:(NSString *)anIdentifier
 {
     return [[[self thisDocumentWholeStoreDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSWholeStoreFilename];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     _thisDocumentWholeStoreDirectoryPath = nil;
@@ -156,8 +154,7 @@
 
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize thisDocumentWholeStoreDirectoryPath = _thisDocumentWholeStoreDirectoryPath;
 @synthesize thisDocumentRecentSyncsDirectoryPath = _thisDocumentRecentSyncsDirectoryPath;
 @synthesize thisDocumentSyncChangesThisClientDirectoryPath = _thisDocumentSyncChangesThisClientDirectoryPath;

@@ -185,8 +185,7 @@
     [self uploadedRecentSyncFileSuccessfully:success];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     _thisDocumentDirectoryPath = nil;
@@ -196,8 +195,7 @@
 
 }
 
-#pragma mark -
-#pragma mark Paths
+#pragma mark - Paths
 - (NSString *)pathToSyncChangesDirectoryForClientWithIdentifier:(NSString *)anIdentifier
 {
     return [[self thisDocumentSyncChangesDirectoryPath] stringByAppendingPathComponent:anIdentifier];
@@ -208,8 +206,7 @@
     return [[[self pathToSyncChangesDirectoryForClientWithIdentifier:aClientIdentifier] stringByAppendingPathComponent:aChangeSetIdentifier] stringByAppendingPathExtension:TICDSSyncChangeSetFileExtension];
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize thisDocumentDirectoryPath = _thisDocumentDirectoryPath;
 @synthesize thisDocumentSyncChangesDirectoryPath = _thisDocumentSyncChangesDirectoryPath;
 @synthesize thisDocumentSyncChangesThisClientDirectoryPath = _thisDocumentSyncChangesThisClientDirectoryPath;

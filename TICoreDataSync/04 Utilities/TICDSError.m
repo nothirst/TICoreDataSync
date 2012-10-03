@@ -37,16 +37,14 @@ NSString *gTICDSErrorStrings[] = {
 @implementation TICDSError
 
 #ifdef __MAC_OS_X_VERSION_MAX_ALLOWED
-#pragma mark -
-#pragma mark Inspection
+#pragma mark - Inspection
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"%@\nUser Info:%@", [super description], [self userInfo]];
 }
 #endif
 
-#pragma mark -
-#pragma mark Error Generation
+#pragma mark - Error Generation
 + (NSError *)errorWithCode:(TICDSErrorCode)aCode userInfo:(id)someInfo
 {
     return [self errorWithCode:aCode underlyingError:nil userInfo:someInfo classAndMethod:NULL];
@@ -98,8 +96,7 @@ NSString *gTICDSErrorStrings[] = {
     return [self errorWithDomain:kTICDSErrorDomain code:aCode userInfo:userInfo];    
 }
 
-#pragma mark -
-#pragma mark Stack Trace
+#pragma mark - Stack Trace
 static BOOL gTICDSIncludeStackTraceInErrors = NO;
 
 + (void)setIncludeStackTraceInErrors:(BOOL)aValue

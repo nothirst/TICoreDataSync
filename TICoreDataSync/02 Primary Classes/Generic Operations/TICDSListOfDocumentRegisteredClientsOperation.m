@@ -193,8 +193,7 @@
     [self fetchedModificationDate:nil ofWholeStoreForClientWithIdentifier:anIdentifier];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     _synchronizedClientIdentifiers = nil;
@@ -203,8 +202,7 @@
 
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize synchronizedClientIdentifiers = _synchronizedClientIdentifiers;
 @synthesize temporaryDeviceInfoDictionaries = _temporaryDeviceInfoDictionaries;
 @synthesize deviceInfoDictionaries = _deviceInfoDictionaries;

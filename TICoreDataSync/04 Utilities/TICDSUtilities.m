@@ -10,15 +10,13 @@
 
 @implementation TICDSUtilities
 
-#pragma mark -
-#pragma mark UUIDs
+#pragma mark - UUIDs
 + (NSString *)uuidString
 {
     return [[NSProcessInfo processInfo] globallyUniqueString];
 }
 
-#pragma mark -
-#pragma mark File Structure
+#pragma mark - File Structure
 + (NSDictionary *)remoteGlobalAppDirectoryHierarchy
 {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
@@ -53,8 +51,7 @@
     return dictionary;
 }
 
-#pragma mark -
-#pragma mark Sync Warnings
+#pragma mark - Sync Warnings
 + (NSDictionary *)syncWarningOfType:(TICDSSyncWarningType)aType entityName:(NSString *)entityName relatedObjectEntityName:(NSString *)relatedObjectEntityName attributes:(NSDictionary *)attributes
 {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
@@ -77,8 +74,7 @@
     return dictionary;
 }
 
-#pragma mark -
-#pragma mark User Defaults Keys
+#pragma mark - User Defaults Keys
 + (NSString *)userDefaultsKeyForKey:(NSString *)aKey
 {
     return [NSString stringWithFormat:@"%@%@", TICDSUserDefaultsPrefix, aKey];

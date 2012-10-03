@@ -12,8 +12,7 @@
 
 @implementation TICDSDropboxSDKBasedDocumentRegistrationOperation
 
-#pragma mark -
-#pragma mark Helper Methods
+#pragma mark - Helper Methods
 - (void)createDirectoryContentsFromDictionary:(NSDictionary *)aDictionary inDirectory:(NSString *)aDirectoryPath
 {
     for( NSString *eachName in [aDictionary allKeys] ) {
@@ -37,15 +36,13 @@
     }
 }
 
-#pragma mark -
-#pragma mark Overridden Document Methods
+#pragma mark - Overridden Document Methods
 - (BOOL)needsMainThread
 {
     return YES;
 }
 
-#pragma mark -
-#pragma mark Document Directory
+#pragma mark - Document Directory
 - (void)checkWhetherRemoteDocumentDirectoryExists
 {
     [[self restClient] loadMetadata:[self thisDocumentDirectoryPath]];
@@ -171,8 +168,7 @@
     [[self restClient] deletePath:[self deletedDocumentsDirectoryIdentifierPlistFilePath]];
 }
 
-#pragma mark -
-#pragma mark Client Directories
+#pragma mark - Client Directories
 - (void)checkWhetherClientDirectoryExistsInRemoteDocumentSyncChangesDirectory
 {
     [[self restClient] loadMetadata:[self thisDocumentSyncChangesThisClientDirectoryPath]];
@@ -205,8 +201,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Rest Client Delegate
+#pragma mark - Rest Client Delegate
 #pragma mark Metadata
 - (void)restClient:(DBRestClient*)client loadedMetadata:(DBMetadata*)metadata
 {
@@ -439,8 +434,7 @@
     [self addedDeviceInfoPlistToDocumentDeletedClientsForClientWithIdentifier:[[path lastPathComponent] stringByDeletingPathExtension] withSuccess:NO];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     [_restClient setDelegate:nil];
@@ -457,8 +451,7 @@
     
 }
 
-#pragma mark -
-#pragma mark Lazy Accessors
+#pragma mark - Lazy Accessors
 - (DBRestClient *)restClient
 {
     if( _restClient ) return _restClient;
@@ -469,8 +462,7 @@
     return _restClient;
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize dbSession = _dbSession;
 @synthesize restClient = _restClient;
 @synthesize documentsDirectoryPath = _documentsDirectoryPath;

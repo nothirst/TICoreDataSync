@@ -141,8 +141,7 @@
     [self deletedClientDirectoryFromDocumentWholeStoreDirectoryWithSuccess:success];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     _clientDevicesDirectoryPath = nil;
@@ -154,8 +153,7 @@
 
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize clientDevicesDirectoryPath = _clientDevicesDirectoryPath;
 @synthesize thisDocumentDeletedClientsDirectoryPath = _thisDocumentDeletedClientsDirectoryPath;
 @synthesize thisDocumentSyncChangesDirectoryPath = _thisDocumentSyncChangesDirectoryPath;

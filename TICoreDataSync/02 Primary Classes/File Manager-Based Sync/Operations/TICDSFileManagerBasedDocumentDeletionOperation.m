@@ -66,8 +66,7 @@
     [self deletedDocumentDirectoryWithSuccess:success];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     _documentDirectoryPath = nil;
@@ -75,8 +74,7 @@
     _deletedDocumentsDirectoryIdentifierPlistFilePath = nil;
     
 }
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize documentDirectoryPath = _documentDirectoryPath;
 @synthesize documentInfoPlistFilePath = _documentInfoPlistFilePath;
 @synthesize deletedDocumentsDirectoryIdentifierPlistFilePath = _deletedDocumentsDirectoryIdentifierPlistFilePath;

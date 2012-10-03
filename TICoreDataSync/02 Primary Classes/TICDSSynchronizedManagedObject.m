@@ -21,8 +21,7 @@
 
 @implementation TICDSSynchronizedManagedObject
 
-#pragma mark -
-#pragma mark Primary Sync Change Creation
+#pragma mark - Primary Sync Change Creation
 
 + (NSSet *)keysForWhichSyncChangesWillNotBeCreated
 {
@@ -80,8 +79,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Sync Change Helper Methods
+#pragma mark - Sync Change Helper Methods
 - (TICDSSyncChange *)createSyncChangeForChangeType:(TICDSSyncChangeType)aType
 {
     TICDSSyncChange *syncChange = [TICDSSyncChange syncChangeOfType:aType inManagedObjectContext:[self syncChangesMOC]];
@@ -211,8 +209,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Dictionaries
+#pragma mark - Dictionaries
 - (NSDictionary *)dictionaryOfAllAttributes
 {
     NSDictionary *objectAttributeNames = [[self entity] attributesByName];
@@ -225,8 +222,7 @@
     return attributeValues;
 }
 
-#pragma mark -
-#pragma mark Save Notification
+#pragma mark - Save Notification
 - (void)willSave
 {
     [super willSave];
@@ -258,8 +254,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Managed Object Lifecycle
+#pragma mark - Managed Object Lifecycle
 - (void)awakeFromInsert
 {
     [super awakeFromInsert];
@@ -267,8 +262,7 @@
     [self setValue:[TICDSUtilities uuidString] forKey:TICDSSyncIDAttributeName];
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 - (NSManagedObjectContext *)syncChangesMOC
 {
     if( ![[self managedObjectContext] isKindOfClass:[TICDSSynchronizedManagedObjectContext class]] ) return nil;

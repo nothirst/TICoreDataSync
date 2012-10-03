@@ -33,8 +33,7 @@
     [[self restClient] loadMetadata:[self thisDocumentSyncChangesThisClientDirectoryPath]];
 }
 
-#pragma mark -
-#pragma mark Rest Client Delegate
+#pragma mark - Rest Client Delegate
 #pragma mark Metadata
 - (void)restClient:(DBRestClient*)client loadedMetadata:(DBMetadata*)metadata
 {
@@ -225,15 +224,13 @@
     }
 }
 
-#pragma mark -
-#pragma mark Paths
+#pragma mark - Paths
 - (NSString *)pathToWholeStoreFileForClientWithIdentifier:(NSString *)anIdentifier
 {
     return [[[self thisDocumentWholeStoreDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSWholeStoreFilename];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     [_restClient setDelegate:nil];
@@ -247,8 +244,7 @@
 
 }
 
-#pragma mark -
-#pragma mark Lazy Accessors
+#pragma mark - Lazy Accessors
 - (DBRestClient *)restClient
 {
     if( _restClient ) return _restClient;
@@ -259,8 +255,7 @@
     return _restClient;
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize dbSession = _dbSession;
 @synthesize restClient = _restClient;
 @synthesize oldestStoreDate = _oldestStoreDate;

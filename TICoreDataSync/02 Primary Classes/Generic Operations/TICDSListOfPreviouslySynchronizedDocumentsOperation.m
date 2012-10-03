@@ -191,8 +191,7 @@
     [self setNumberOfLastSynchronizationDatesThatFailedToFetch:[self numberOfLastSynchronizationDatesThatFailedToFetch] + 1];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     _availableDocuments = nil;
@@ -200,8 +199,7 @@
     
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize availableDocuments = _availableDocuments;
 @synthesize availableDocumentSyncIDs = _availableDocumentSyncIDs;
 @synthesize numberOfInfoDictionariesToFetch = _numberOfInfoDictionariesToFetch;

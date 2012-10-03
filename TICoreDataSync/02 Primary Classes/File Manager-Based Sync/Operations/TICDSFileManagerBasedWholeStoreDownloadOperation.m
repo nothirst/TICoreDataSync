@@ -143,8 +143,7 @@
     [self fetchedRemoteIntegrityKey:nil];
 }
 
-#pragma mark -
-#pragma mark Paths
+#pragma mark - Paths
 - (NSString *)pathToWholeStoreFileForClientWithIdentifier:(NSString *)anIdentifier
 {
     return [[[self thisDocumentWholeStoreDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSWholeStoreFilename];
@@ -155,8 +154,7 @@
     return [[[self thisDocumentWholeStoreDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     _thisDocumentDirectoryPath = nil;
@@ -164,8 +162,7 @@
     
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize thisDocumentDirectoryPath = _thisDocumentDirectoryPath;
 @synthesize thisDocumentWholeStoreDirectoryPath = _thisDocumentWholeStoreDirectoryPath;
 

@@ -14,8 +14,7 @@
 
 @implementation TICDSDropboxSDKBasedApplicationSyncManager
 
-#pragma mark -
-#pragma mark Overridden Methods
+#pragma mark - Overridden Methods
 - (TICDSApplicationRegistrationOperation *)applicationRegistrationOperation
 {
     TICDSDropboxSDKBasedApplicationRegistrationOperation *operation = [[TICDSDropboxSDKBasedApplicationRegistrationOperation alloc] initWithDelegate:self];
@@ -83,8 +82,7 @@
     return operation;
 }
 
-#pragma mark -
-#pragma mark Paths
+#pragma mark - Paths
 - (NSString *)applicationDirectoryPath
 {
     return [NSString stringWithFormat:@"/%@", [self appIdentifier]];
@@ -125,16 +123,14 @@
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToWholeStoreDirectoryForDocumentWithIdentifier:anIdentifier]];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     _dbSession = nil;
 
 }
 
-#pragma mark -
-#pragma mark Lazy Accessors
+#pragma mark - Lazy Accessors
 - (DBSession *)dbSession
 {
     if( _dbSession ) {
@@ -146,8 +142,7 @@
     return _dbSession;
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize dbSession = _dbSession;
 
 @end

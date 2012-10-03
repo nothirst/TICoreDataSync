@@ -10,8 +10,7 @@
 
 @implementation TICDSSyncChange
 
-#pragma mark -
-#pragma mark Helper Methods
+#pragma mark - Helper Methods
 + (id)syncChangeOfType:(TICDSSyncChangeType)aType inManagedObjectContext:(NSManagedObjectContext *)aMoc
 {
     TICDSSyncChange *syncChange = [self ti_objectInManagedObjectContext:aMoc];
@@ -22,8 +21,7 @@
     return syncChange;
 }
 
-#pragma mark -
-#pragma mark Inspection
+#pragma mark - Inspection
 - (NSString *)shortDescription
 {
     return [NSString stringWithFormat:@"%@ %@", TICDSSyncChangeTypeNames[ [[self changeType] unsignedIntValue] ], [self objectEntityName]];
@@ -34,8 +32,7 @@
     return [NSString stringWithFormat:@"\n%@\nCHANGED ATTRIBUTES\n%@\nCHANGED RELATIONSHIPS\n%@", [super description], [self changedAttributes], [self changedRelationships]];
 }
 
-#pragma mark -
-#pragma mark TIManagedObjectExtensions
+#pragma mark - TIManagedObjectExtensions
 + (NSString *)ti_entityName
 {
     return NSStringFromClass([self class]);

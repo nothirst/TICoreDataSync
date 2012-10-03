@@ -573,8 +573,7 @@
     [self createdClientDirectoriesInRemoteDocumentDirectoriesWithSuccess:NO];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (id)initWithDelegate:(NSObject<TICDSDocumentRegistrationOperationDelegate> *)aDelegate
 {
     return [super initWithDelegate:aDelegate];
@@ -590,8 +589,7 @@
 
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize paused = _paused;
 @synthesize documentWasDeleted = _documentWasDeleted;
 @synthesize shouldCreateDocumentFileStructure = _shouldCreateDocumentFileStructure;

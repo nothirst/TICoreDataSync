@@ -11,15 +11,13 @@
 
 @implementation TICDSSyncConflict
 
-#pragma mark -
-#pragma mark Inspection
+#pragma mark - Inspection
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"%@: %@ - entity %@ - key %@ - syncID %@", [super description], [self conflictDescription], [self entityName], [self relevantKey], [self objectSyncID]];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 + (TICDSSyncConflict *)syncConflictOfType:(TICDSSyncConflictType)aType forEntityName:(NSString *)anEntityName key:(NSString *)aKey objectSyncID:(NSString *)anObjectSyncID
 {
     TICDSSyncConflict *conflict = [[self alloc] init];
@@ -47,8 +45,7 @@
     return TICDSSyncConflictTypeNames[ [self conflictType] ];
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize conflictType = _conflictType;
 @synthesize entityName = _entityName;
 @synthesize relevantKey = _relevantKey;

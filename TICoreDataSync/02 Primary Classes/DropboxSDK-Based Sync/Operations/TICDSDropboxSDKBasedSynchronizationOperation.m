@@ -34,8 +34,7 @@
 
 @implementation TICDSDropboxSDKBasedSynchronizationOperation
 
-#pragma mark -
-#pragma mark Overridden Methods
+#pragma mark - Overridden Methods
 - (BOOL)needsMainThread
 {
     return YES;
@@ -112,8 +111,7 @@
     [[self restClient] uploadFile:[self.recentSyncFilePath lastPathComponent] toPath:[[self thisDocumentRecentSyncsThisClientFilePath] stringByDeletingLastPathComponent] withParentRev:parentRevision fromPath:self.recentSyncFilePath];
 }
 
-#pragma mark -
-#pragma mark Rest Client Delegate
+#pragma mark - Rest Client Delegate
 #pragma mark Metadata
 - (void)restClient:(DBRestClient*)client loadedMetadata:(DBMetadata*)metadata
 {
@@ -361,8 +359,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Paths
+#pragma mark - Paths
 - (NSString *)pathToSyncChangesDirectoryForClientWithIdentifier:(NSString *)anIdentifier
 {
     return [[self thisDocumentSyncChangesDirectoryPath] stringByAppendingPathComponent:anIdentifier];
@@ -373,8 +370,7 @@
     return [[[self pathToSyncChangesDirectoryForClientWithIdentifier:aClientIdentifier] stringByAppendingPathComponent:aChangeSetIdentifier] stringByAppendingPathExtension:TICDSSyncChangeSetFileExtension];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     [_restClient setDelegate:nil];
@@ -390,8 +386,7 @@
 
 }
 
-#pragma mark -
-#pragma mark Lazy Accessors
+#pragma mark - Lazy Accessors
 - (DBRestClient *)restClient
 {
     if( _restClient ) return _restClient;
@@ -411,8 +406,7 @@
     return _failedDownloadRetryDictionary;
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize dbSession = _dbSession;
 @synthesize restClient = _restClient;
 @synthesize clientIdentifiersForChangeSetIdentifiers = _clientIdentifiersForChangeSetIdentifiers;

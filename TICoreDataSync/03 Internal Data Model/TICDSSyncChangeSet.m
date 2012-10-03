@@ -11,8 +11,7 @@
 
 @implementation TICDSSyncChangeSet
 
-#pragma mark -
-#pragma mark Helper Methods
+#pragma mark - Helper Methods
 + (BOOL)hasSyncChangeSetWithIdentifer:(NSString *)anIdentifier alreadyBeenAppliedInManagedObjectContext:(NSManagedObjectContext *)aMoc
 {
     return [self changeSetWithIdentifier:anIdentifier inManagedObjectContext:aMoc] != nil;
@@ -30,8 +29,7 @@
     return matchingChangeSet;
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 + (id)syncChangeSetWithIdentifier:(NSString *)anIdentifier fromClient:(NSString *)aClientIdentifier creationDate:(NSDate *)aDate inManagedObjectContext:(NSManagedObjectContext *)aMoc
 {
     TICDSSyncChangeSet *changeSet = [self ti_objectInManagedObjectContext:aMoc];
@@ -42,15 +40,13 @@
     return changeSet;
 }
 
-#pragma mark -
-#pragma mark TIManagedObjectExtensions
+#pragma mark - TIManagedObjectExtensions
 + (NSString *)ti_entityName
 {
     return @"TICDSyncChangeSet";
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @dynamic creationDate;
 @dynamic fileName;
 @dynamic syncChangeSetIdentifier;

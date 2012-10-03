@@ -32,25 +32,21 @@
 
 @end
 
-#pragma mark -
-#pragma mark Notification Constants
+#pragma mark - Notification Constants
 NSString * const kTIKQDirectoryWatcherObservedDirectoryActivityNotification = @"kTIKQDirectoryWatcherObservedDirectoryActivityNotification";
 NSString * const kTIKQDirectory = @"kTIKQDirectory";
 NSString * const kTIKQExpandedDirectory = @"kTIKQExpandedDirectory";
 
-#pragma mark -
-#pragma mark Function Declarations
+#pragma mark - Function Declarations
 void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDataRef address, const void *data, void *info );
 
 
 
 
-#pragma mark -
-#pragma mark Primary Implementation
+#pragma mark - Primary Implementation
 @implementation TIKQDirectoryWatcher
 
-#pragma mark -
-#pragma mark Primary Methods
+#pragma mark - Primary Methods
 - (BOOL)watchDirectory:(NSString *)aDirectoryName error:(NSError **)outError
 {
     int directoryFileDescriptor = open( [aDirectoryName UTF8String], O_RDONLY );
@@ -110,8 +106,7 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
       [aPath stringByExpandingTildeInPath], kTIKQExpandedDirectory, nil]];
 }
 
-#pragma mark -
-#pragma mark Removing the Run Loop
+#pragma mark - Removing the Run Loop
 - (void)cancelRunLoopSourceRef
 {
     if( _runLoopSourceRef ) {
@@ -121,8 +116,7 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
     }
 }
 
-#pragma mark -
-#pragma mark Socket Callback
+#pragma mark - Socket Callback
 void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDataRef address, const void *data, void *info )
 {
     TIKQDirectoryWatcher *watcher = (__bridge TIKQDirectoryWatcher *)info;
@@ -137,8 +131,7 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
     }
 }
 
-#pragma mark -
-#pragma mark Lazy Generators
+#pragma mark - Lazy Generators
 - (int)kqFileDescriptor
 {
     if( _kqFileDescriptor ) return _kqFileDescriptor;
@@ -164,8 +157,7 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
     return _watchedDirectories;
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     close(_kqFileDescriptor);
@@ -176,8 +168,7 @@ void TIKQSocketCallback( CFSocketRef socketRef, CFSocketCallBackType type, CFDat
     
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize kqFileDescriptor = _kqFileDescriptor;
 @synthesize runLoopSourceRef = _runLoopSourceRef;
 @synthesize watchedDirectories = _watchedDirectories;

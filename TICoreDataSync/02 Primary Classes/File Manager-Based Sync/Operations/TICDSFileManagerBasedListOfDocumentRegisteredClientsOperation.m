@@ -80,8 +80,7 @@
     [self fetchedModificationDate:[attributes valueForKey:NSFileModificationDate]ofWholeStoreForClientWithIdentifier:anIdentifier];
 }
 
-#pragma mark -
-#pragma mark Relative Paths
+#pragma mark - Relative Paths
 - (NSString *)pathToDeviceInfoPlistForDeviceWithIdentifier:(NSString *)anIdentifier
 {
     return [[[self clientDevicesDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSDeviceInfoPlistFilenameWithExtension];
@@ -92,8 +91,7 @@
     return [[[self thisDocumentWholeStoreDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSWholeStoreFilename];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     _thisDocumentSyncChangesDirectoryPath = nil;
@@ -103,8 +101,7 @@
 
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize thisDocumentSyncChangesDirectoryPath = _thisDocumentSyncChangesDirectoryPath;
 @synthesize clientDevicesDirectoryPath = _clientDevicesDirectoryPath;
 @synthesize thisDocumentRecentSyncsDirectoryPath = _thisDocumentRecentSyncsDirectoryPath;

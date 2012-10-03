@@ -30,16 +30,14 @@
     [self removedRemoteSyncDataDirectoryWithSuccess:success];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     _applicationDirectoryPath = nil;
     
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize applicationDirectoryPath = _applicationDirectoryPath;
 
 @end

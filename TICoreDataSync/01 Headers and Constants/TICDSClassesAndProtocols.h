@@ -6,8 +6,7 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
-#pragma mark -
-#pragma mark PRIMARY CLASSES
+#pragma mark - PRIMARY CLASSES
 @class TICDSApplicationSyncManager;
 @class TICDSDocumentSyncManager;
 @class TICDSSynchronizedManagedObjectContext;
@@ -64,13 +63,11 @@
 @class TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation;
 #endif
 
-#pragma mark -
-#pragma mark INTERNAL DATA MODEL
+#pragma mark - INTERNAL DATA MODEL
 @class TICDSSyncChange;
 @class TICDSSyncChangeSet;
 
-#pragma mark -
-#pragma mark UTILITIES - ENCRYPTION
+#pragma mark - UTILITIES - ENCRYPTION
 @class FZACryptor;
 @class FZAKeyManager;
 #if (TARGET_OS_IPHONE)
@@ -79,13 +76,11 @@
 @class FZAKeyManageriPhone;
 #endif
 
-#pragma mark -
-#pragma mark EXTERNAL CLASSES
+#pragma mark - EXTERNAL CLASSES
 @class TICoreDataFactory;
 @class TIKQDirectoryWatcher;
 
-#pragma mark -
-#pragma mark DELEGATE PROTOCOLS
+#pragma mark - DELEGATE PROTOCOLS
 #pragma mark Application Sync Manager
 /** The `TICDSApplicationSyncManagerDelegate` protocol defines the methods implemented by delegates of a `TICDSApplicationSyncManager` object. */
 
@@ -640,8 +635,7 @@
 
 @end
 
-#pragma mark -
-#pragma mark OPERATION DELEGATE PROTOCOLS
+#pragma mark - OPERATION DELEGATE PROTOCOLS
 #pragma mark Generic Operation Delegate
 /** The `TICDSOperationDelegate` protocol defines the methods implemented by delegates of any generic `TICDSOperation`. In the `TICoreDataSync` framework, these delegate methods are implemented by the application and document sync managers. */
 

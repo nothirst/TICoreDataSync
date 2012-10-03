@@ -47,8 +47,7 @@
 
 @implementation TICDSDocumentSyncManager
 
-#pragma mark -
-#pragma mark ACTIVITY
+#pragma mark - ACTIVITY
 - (void)postIncreaseActivityNotification
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:TICDSDocumentSyncManagerDidIncreaseActivityNotification object:self];
@@ -59,8 +58,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:TICDSDocumentSyncManagerDidDecreaseActivityNotification object:self];
 }
 
-#pragma mark -
-#pragma mark DELAYED REGISTRATION
+#pragma mark - DELAYED REGISTRATION
 - (void)configureWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo
 {
     [self preConfigureWithDelegate:aDelegate appSyncManager:anAppSyncManager documentIdentifier:aDocumentIdentifier];
@@ -124,8 +122,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark PRECONFIGURATION
+#pragma mark - PRECONFIGURATION
 - (void)preConfigureWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager documentIdentifier:(NSString *)aDocumentIdentifier
 {
     [self setDelegate:aDelegate];
@@ -263,8 +260,7 @@
     return YES;
 }
 
-#pragma mark -
-#pragma mark ONE-SHOT REGISTRATION
+#pragma mark - ONE-SHOT REGISTRATION
 - (void)registerWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo
 {
     // configure the document, if necessary
@@ -550,8 +546,7 @@
     [self postDecreaseActivityNotification];
 }
 
-#pragma mark -
-#pragma mark WHOLE STORE UPLOAD
+#pragma mark - WHOLE STORE UPLOAD
 - (void)initiateUploadOfWholeStore
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Manual initiation of whole store upload");
@@ -675,8 +670,7 @@
     [self postDecreaseActivityNotification];
 }
 
-#pragma mark -
-#pragma mark WHOLE STORE DOWNLOAD
+#pragma mark - WHOLE STORE DOWNLOAD
 - (void)initiateDownloadOfWholeStore
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Manual initiation of whole store download");
@@ -841,8 +835,7 @@
     [self postDecreaseActivityNotification];
 }
 
-#pragma mark -
-#pragma mark SYNCHRONIZATION
+#pragma mark - SYNCHRONIZATION
 - (void)initiateSynchronization
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Manual initiation of synchronization");
@@ -1047,8 +1040,7 @@
     [self postDecreaseActivityNotification];
 }
 
-#pragma mark -
-#pragma mark VACUUMING
+#pragma mark - VACUUMING
 - (void)initiateVacuumOfUnneededRemoteFiles
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Manual initiation of vacuum process");
@@ -1132,8 +1124,7 @@
     [self postDecreaseActivityNotification];
 }
 
-#pragma mark -
-#pragma mark REGISTERED CLIENT INFORMATION
+#pragma mark - REGISTERED CLIENT INFORMATION
 - (void)requestInformationForAllRegisteredDevices
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Manual initiation of registered device information request");
@@ -1219,8 +1210,7 @@
     [self postDecreaseActivityNotification];
 }
 
-#pragma mark -
-#pragma mark DELETION OF CLIENT DATA FROM A DOCUMENT
+#pragma mark - DELETION OF CLIENT DATA FROM A DOCUMENT
 - (void)deleteDocumentSynchronizationDataForClientWithIdentifier:(NSString *)anIdentifier
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Manual initiation of request to delete document synchronization data for client %@", anIdentifier);
@@ -1311,8 +1301,7 @@
     [self postDecreaseActivityNotification];
 }
 
-#pragma mark -
-#pragma mark ADDITIONAL MANAGED OBJECT CONTEXTS
+#pragma mark - ADDITIONAL MANAGED OBJECT CONTEXTS
 - (void)addManagedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Adding SyncChanges MOC for document context: %@", aContext);
@@ -1383,8 +1372,7 @@
     [[self syncChangesMocForDocumentMoc:[self primaryDocumentMOC]] mergeChangesFromContextDidSaveNotification:aNotification];
 }
 
-#pragma mark -
-#pragma mark MANAGED OBJECT CONTEXT DID SAVE BEHAVIOR
+#pragma mark - MANAGED OBJECT CONTEXT DID SAVE BEHAVIOR
 - (void)synchronizedMOCWillSave:(TICDSSynchronizedManagedObjectContext *)aMoc
 {
     // Do anything here that's needed before the application context is saved
@@ -1440,8 +1428,7 @@
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Synchronized context failed to save with error: %@", anError);
 }
 
-#pragma mark -
-#pragma mark NOTIFICATIONS
+#pragma mark - NOTIFICATIONS
 - (void)appSyncManagerDidRegister:(NSNotification *)aNotification
 {
     [self setShouldUseEncryption:[[self applicationSyncManager] shouldUseEncryption]];
@@ -1475,8 +1462,7 @@
     
 }
 
-#pragma mark -
-#pragma mark OPERATION COMMUNICATIONS
+#pragma mark - OPERATION COMMUNICATIONS
 - (void)operationCompletedSuccessfully:(TICDSOperation *)anOperation
 {
     if( [anOperation isKindOfClass:[TICDSDocumentRegistrationOperation class]] ) {
@@ -1534,15 +1520,13 @@
     }
 }
 
-#pragma mark -
-#pragma mark TICoreDataFactory Delegate
+#pragma mark - TICoreDataFactory Delegate
 - (void)coreDataFactory:(TICoreDataFactory *)aFactory encounteredError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"TICoreDataFactory error: %@", anError);
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (id)init
 {
     self = [super init];
@@ -1589,8 +1573,7 @@
 
 }
 
-#pragma mark -
-#pragma mark Lazy Accessors
+#pragma mark - Lazy Accessors
 - (NSFileManager *)fileManager
 {
     if( _fileManager ) return _fileManager;
@@ -1613,8 +1596,7 @@
     return _coreDataFactory;
 }
 
-#pragma mark -
-#pragma mark Paths
+#pragma mark - Paths
 - (NSString *)relativePathToClientDevicesDirectory
 {
     return TICDSClientDevicesDirectoryName;
@@ -1740,8 +1722,7 @@
     return [[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSUnsynchronizedSyncChangesStoreName];
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize delegate = _delegate;
 @synthesize shouldUseEncryption = _shouldUseEncryption;
 @synthesize mustUploadStoreAfterRegistration = _mustUploadStoreAfterRegistration;

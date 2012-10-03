@@ -29,8 +29,7 @@
 
 @implementation TICoreDataFactory
 
-#pragma mark -
-#pragma mark Errors
+#pragma mark - Errors
 - (void)_notifyDelegateAndSetError:(NSError *)anError
 {
     [self setMostRecentError:anError];
@@ -39,8 +38,7 @@
         [[self delegate] coreDataFactory:self encounteredError:anError];
 }
 
-#pragma mark -
-#pragma mark Lazy Accessors
+#pragma mark - Lazy Accessors
 - (NSManagedObjectContext *)managedObjectContext
 {
     if( _managedObjectContext ) return _managedObjectContext;
@@ -193,8 +191,7 @@
     return _persistentStoreOptions;
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (id)init
 {
     return [self initWithMomdName:nil];
@@ -221,8 +218,7 @@
 }
 
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize delegate = _delegate;
 
 @synthesize managedObjectContext = _managedObjectContext;

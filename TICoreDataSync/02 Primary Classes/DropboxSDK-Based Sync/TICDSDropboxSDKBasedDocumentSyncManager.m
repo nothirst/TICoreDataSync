@@ -13,8 +13,7 @@
 
 @implementation TICDSDropboxSDKBasedDocumentSyncManager
 
-#pragma mark -
-#pragma mark Registration
+#pragma mark - Registration
 - (void)registerWithDelegate:(id<TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo
 {
     if( [anAppSyncManager isKindOfClass:[TICDSDropboxSDKBasedApplicationSyncManager class]] ) {
@@ -33,8 +32,7 @@
     [super registerConfiguredDocumentSyncManager];
 }
 
-#pragma mark -
-#pragma mark Operation Classes
+#pragma mark - Operation Classes
 - (TICDSDocumentRegistrationOperation *)documentRegistrationOperation
 {
     TICDSDropboxSDKBasedDocumentRegistrationOperation *operation = [[TICDSDropboxSDKBasedDocumentRegistrationOperation alloc] initWithDelegate:self];
@@ -127,8 +125,7 @@
     return operation;
 }
 
-#pragma mark -
-#pragma mark Paths
+#pragma mark - Paths
 - (NSString *)clientDevicesDirectoryPath
 {
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToClientDevicesDirectory]];
@@ -219,8 +216,7 @@
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentRecentSyncsDirectoryThisClientFile]];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     _dbSession = nil;
@@ -228,8 +224,7 @@
 
 }
 
-#pragma mark -
-#pragma mark Lazy Accessors
+#pragma mark - Lazy Accessors
 - (DBSession *)dbSession
 {
     if( _dbSession ) {
@@ -241,8 +236,7 @@
     return _dbSession;
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize dbSession = _dbSession;
 @synthesize applicationDirectoryPath = _applicationDirectoryPath;
 

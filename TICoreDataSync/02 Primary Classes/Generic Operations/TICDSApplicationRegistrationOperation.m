@@ -551,8 +551,7 @@
     [self beginTestForCorrectPassword];
 }
 
-#pragma mark -
-#pragma mark Keychain
+#pragma mark - Keychain
 - (void)createCryptorIfNecessary
 {
     if( [self cryptor] ) {
@@ -573,8 +572,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (id)initWithDelegate:(NSObject<TICDSApplicationRegistrationOperationDelegate> *)aDelegate
 {
     return [super initWithDelegate:aDelegate];
@@ -590,8 +588,7 @@
 
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize appIdentifier = _appIdentifier;
 @synthesize clientDescription = _clientDescription;
 @synthesize applicationUserInfo = _applicationUserInfo;

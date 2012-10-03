@@ -328,8 +328,7 @@
     [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:nil withSuccess:NO];
 }
 
-#pragma mark -
-#pragma mark APPLICATION OF UNAPPLIED SYNC CHANGE SETS
+#pragma mark - APPLICATION OF UNAPPLIED SYNC CHANGE SETS
 - (void)beginApplyingUnappliedSyncChangeSets
 {
     if ( [NSThread isMainThread] ) {
@@ -495,8 +494,7 @@
     [self operationDidFailToComplete];
 }
 
-#pragma mark -
-#pragma mark APPLYING EACH CHANGE SET
+#pragma mark - APPLYING EACH CHANGE SET
 - (BOOL)beginApplyingSyncChangesInChangeSet:(TICDSSyncChangeSet *)aChangeSet
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Applying change set %@", [aChangeSet syncChangeSetIdentifier]);
@@ -967,8 +965,7 @@
     [self uploadedLocalSyncChangeSetFileSuccessfully:NO];
 }
 
-#pragma mark -
-#pragma mark RECENT SYNC FILE
+#pragma mark - RECENT SYNC FILE
 - (void)beginUploadOfRecentSyncFile
 {
     NSString *recentSyncFilePath = [[self localRecentSyncFileLocation] path];
@@ -1032,22 +1029,19 @@
     [self setNumberOfUnappliedSyncChangeSetsThatFailedToFetch:[self numberOfUnappliedSyncChangeSetsThatFailedToFetch] + 1];
 }
 
-#pragma mark -
-#pragma mark TICoreDataFactory Delegate
+#pragma mark - TICoreDataFactory Delegate
 - (void)coreDataFactory:(TICoreDataFactory *)aFactory encounteredError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Applied Sync Change Sets Factory Error: %@", anError);
 }
 
-#pragma mark -
-#pragma mark Configuration
+#pragma mark - Configuration
 - (void)configureBackgroundApplicationContextForPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)aPersistentStoreCoordinator
 {
     [self setPrimaryPersistentStoreCoordinator:aPersistentStoreCoordinator];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (id)initWithDelegate:(NSObject<TICDSSynchronizationOperationDelegate> *)aDelegate
 {
     return [super initWithDelegate:aDelegate];
@@ -1079,8 +1073,7 @@
     
 }
 
-#pragma mark -
-#pragma mark Lazy Accessors
+#pragma mark - Lazy Accessors
 - (NSArray *)syncChangeSortDescriptors
 {
     if( _syncChangeSortDescriptors ) {
@@ -1205,8 +1198,7 @@
     return _uuidPrefixFormatter;
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize paused = _paused;
 @synthesize mostRecentConflictResolutionType = _mostRecentConflictResolutionType;
 @synthesize otherSynchronizedClientDeviceIdentifiers = _otherSynchronizedClientDeviceIdentifiers;

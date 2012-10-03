@@ -12,8 +12,7 @@ NSInteger gTICDSLogVerbosity = 0;
 
 @implementation TICDSLog
 
-#pragma mark -
-#pragma mark Verbosity
+#pragma mark - Verbosity
 + (NSInteger)verbosity
 {
     return gTICDSLogVerbosity;
@@ -24,8 +23,7 @@ NSInteger gTICDSLogVerbosity = 0;
     gTICDSLogVerbosity = verbosity;
 }
 
-#pragma mark -
-#pragma mark Logging
+#pragma mark - Logging
 + (void)logWithVerbosity:(NSInteger)someVerbosity formatString:(NSString *)formatString args:(va_list)args
 {
     if( someVerbosity > [self verbosity] ) {

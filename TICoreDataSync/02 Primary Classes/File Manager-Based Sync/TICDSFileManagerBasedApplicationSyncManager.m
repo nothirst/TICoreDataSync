@@ -14,8 +14,7 @@
 
 @implementation TICDSFileManagerBasedApplicationSyncManager
 
-#pragma mark -
-#pragma mark Dropbox-Related Methods
+#pragma mark - Dropbox-Related Methods
 + (NSString *)stringByDecodingBase64EncodedString:(NSString *)encodedString {
     if( !encodedString ) {
         return nil;
@@ -124,8 +123,7 @@
     return [NSURL fileURLWithPath:dropboxLocation];
 }
 
-#pragma mark -
-#pragma mark Overridden Methods
+#pragma mark - Overridden Methods
 
 - (TICDSApplicationRegistrationOperation *)applicationRegistrationOperation
 {
@@ -188,8 +186,7 @@
     return operation;
 }
 
-#pragma mark -
-#pragma mark Paths
+#pragma mark - Paths
 - (NSString *)applicationDirectoryPath
 {
     return [[[self applicationContainingDirectoryLocation] path] stringByAppendingPathComponent:[self appIdentifier]];
@@ -230,16 +227,14 @@
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToWholeStoreDirectoryForDocumentWithIdentifier:anIdentifier]];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     _applicationContainingDirectoryLocation = nil;
 
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize applicationContainingDirectoryLocation = _applicationContainingDirectoryLocation;
 
 @end

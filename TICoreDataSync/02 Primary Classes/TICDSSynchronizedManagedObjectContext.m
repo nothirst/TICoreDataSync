@@ -10,8 +10,7 @@
 
 @implementation TICDSSynchronizedManagedObjectContext
 
-#pragma mark -
-#pragma mark Saving
+#pragma mark - Saving
 - (BOOL)save:(NSError **)outError
 {
     [[self documentSyncManager] synchronizedMOCWillSave:self];
@@ -35,8 +34,7 @@
     return success;
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize documentSyncManager = _documentSyncManager;
 
 @end

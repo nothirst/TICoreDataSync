@@ -154,8 +154,7 @@
     [self fetchedRemoteIntegrityKey:nil];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     _requestedWholeStoreClientIdentifier = nil;
@@ -165,8 +164,7 @@
 
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize requestedWholeStoreClientIdentifier = _requestedWholeStoreClientIdentifier;
 @synthesize localWholeStoreFileLocation = _localWholeStoreFileLocation;
 @synthesize localAppliedSyncChangeSetsFileLocation = _localAppliedSyncChangeSetsFileLocation;

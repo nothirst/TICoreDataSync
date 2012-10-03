@@ -66,8 +66,7 @@
     [self removedRemoteSyncDataDirectoryWithSuccess:NO];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (id)initWithDelegate:(NSObject<TICDSRemoveAllRemoteSyncDataOperationDelegate> *)aDelegate
 {
     return [super initWithDelegate:aDelegate];

@@ -12,8 +12,7 @@
 
 @implementation TICDSDropboxSDKBasedApplicationRegistrationOperation
 
-#pragma mark -
-#pragma mark Helper Methods
+#pragma mark - Helper Methods
 - (void)createDirectoryContentsFromDictionary:(NSDictionary *)aDictionary inDirectory:(NSString *)aDirectoryPath
 {
     for( NSString *eachName in [aDictionary allKeys] ) {
@@ -37,8 +36,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Overridden Methods
+#pragma mark - Overridden Methods
 - (BOOL)needsMainThread
 {
     return YES;
@@ -182,8 +180,7 @@
     [[self restClient] uploadFile:TICDSDeviceInfoPlistFilenameWithExtension toPath:[self clientDevicesThisClientDeviceDirectoryPath] withParentRev:nil fromPath:finalFilePath];
 }
 
-#pragma mark -
-#pragma mark Rest Client Delegate
+#pragma mark - Rest Client Delegate
 #pragma mark Metadata
 - (void)restClient:(DBRestClient*)client loadedMetadata:(DBMetadata*)metadata
 {
@@ -387,8 +384,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     [_restClient setDelegate:nil];
@@ -402,8 +398,7 @@
 
 }
 
-#pragma mark -
-#pragma mark Lazy Accessors
+#pragma mark - Lazy Accessors
 - (DBRestClient *)restClient
 {
     if( _restClient ) return _restClient;
@@ -414,8 +409,7 @@
     return _restClient;
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize dbSession = _dbSession;
 @synthesize restClient = _restClient;
 @synthesize applicationDirectoryPath = _applicationDirectoryPath;

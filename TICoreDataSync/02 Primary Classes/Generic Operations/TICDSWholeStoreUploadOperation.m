@@ -365,8 +365,7 @@
     [self copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:NO];
 }
 
-#pragma mark -
-#pragma mark Configuration
+#pragma mark - Configuration
 - (void)configureBackgroundApplicationContextForPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)aPersistentStoreCoordinator
 {
     /*NSManagedObjectContext *backgroundContext = [[NSManagedObjectContext alloc] init];
@@ -381,8 +380,7 @@
     [self setPrimaryPersistentStoreCoordinator:aPersistentStoreCoordinator];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     _localWholeStoreFileLocation = nil;
@@ -407,8 +405,7 @@
     return _backgroundApplicationContext;
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize localWholeStoreFileLocation = _localWholeStoreFileLocation;
 @synthesize localAppliedSyncChangeSetsFileLocation = _localAppliedSyncChangeSetsFileLocation;
 @synthesize primaryPersistentStoreCoordinator = _primaryPersistentStoreCoordinator;

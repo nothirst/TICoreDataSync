@@ -15,8 +15,7 @@
 
 @implementation TICDSFileManagerBasedDocumentSyncManager
 
-#pragma mark -
-#pragma mark Overridden Notification Methods
+#pragma mark - Overridden Notification Methods
 - (void)applicationSyncManagerWillRemoveAllRemoteSyncData:(NSNotification *)aNotification
 {
     [super applicationSyncManagerWillRemoveAllRemoteSyncData:aNotification];
@@ -24,8 +23,7 @@
     _directoryWatcher = nil;
 }
 
-#pragma mark -
-#pragma mark Automatic Change Detection
+#pragma mark - Automatic Change Detection
 - (void)enableAutomaticSynchronizationAfterChangesDetectedFromOtherClients
 {
     if( _directoryWatcher ) {
@@ -120,8 +118,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Registration
+#pragma mark - Registration
 - (void)registerWithDelegate:(id<TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo
 {
     if( [anAppSyncManager isKindOfClass:[TICDSFileManagerBasedApplicationSyncManager class]] ) {
@@ -140,8 +137,7 @@
     [super registerConfiguredDocumentSyncManager];
 }
 
-#pragma mark -
-#pragma mark Operation Classes
+#pragma mark - Operation Classes
 - (TICDSDocumentRegistrationOperation *)documentRegistrationOperation
 {
     TICDSFileManagerBasedDocumentRegistrationOperation *operation = [[TICDSFileManagerBasedDocumentRegistrationOperation alloc] initWithDelegate:self];
@@ -228,8 +224,7 @@
     return operation;
 }
 
-#pragma mark -
-#pragma mark Paths
+#pragma mark - Paths
 - (NSString *)clientDevicesDirectoryPath
 {
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToClientDevicesDirectory]];
@@ -320,8 +315,7 @@
     return [[self applicationDirectoryPath] stringByAppendingPathComponent:[self relativePathToThisDocumentRecentSyncsDirectoryThisClientFile]];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     _applicationDirectoryPath = nil;
@@ -330,8 +324,7 @@
 
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize applicationDirectoryPath = _applicationDirectoryPath;
 @synthesize directoryWatcher = _directoryWatcher;
 @synthesize watchedClientDirectoryIdentifiers = _watchedClientDirectoryIdentifiers;

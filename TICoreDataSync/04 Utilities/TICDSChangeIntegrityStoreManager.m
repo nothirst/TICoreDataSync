@@ -23,8 +23,7 @@ static NSLock *changeStoreLock = nil;
 @synthesize deletionSet = _deletionSet;
 @synthesize changeDictionary = _changeDictionary;
 
-#pragma mark -
-#pragma mark Public methods
+#pragma mark - Public methods
 
 + (BOOL)containsDeletionRecordForObjectID:(NSManagedObjectID *)objectID
 {
@@ -72,8 +71,7 @@ static NSLock *changeStoreLock = nil;
 //    }
 }
 
-#pragma mark -
-#pragma mark Overridden getters/setters
+#pragma mark - Overridden getters/setters
 
 - (NSMutableSet *)deletionSet
 {
@@ -93,8 +91,7 @@ static NSLock *changeStoreLock = nil;
     return _changeDictionary;
 }
 
-#pragma mark -
-#pragma mark Singleton methods
+#pragma mark - Singleton methods
 
 static TICDSChangeIntegrityStoreManager *sharedChangeIntegrityStoreManager = nil;
 

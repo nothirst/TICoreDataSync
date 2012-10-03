@@ -339,16 +339,14 @@
     [self deletedClientDirectoryFromDocumentWholeStoreDirectoryWithSuccess:NO];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     _identifierOfClientToBeDeleted = nil;
 
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize identifierOfClientToBeDeleted = _identifierOfClientToBeDeleted;
 @synthesize clientWasFoundAndDeleted = _clientWasFoundAndDeleted;
 

@@ -34,8 +34,7 @@
 
 @implementation TICDSApplicationSyncManager
 
-#pragma mark -
-#pragma mark ACTIVITY
+#pragma mark - ACTIVITY
 - (void)postIncreaseActivityNotification
 {
     NSLog(@"%s Is on main thread:%hhd", __PRETTY_FUNCTION__, [NSThread isMainThread]);
@@ -48,8 +47,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:TICDSApplicationSyncManagerDidDecreaseActivityNotification object:self];
 }
 
-#pragma mark -
-#pragma mark CONFIGURATION
+#pragma mark - CONFIGURATION
 - (void)configureWithDelegate:(id <TICDSApplicationSyncManagerDelegate>)aDelegate globalAppIdentifier:(NSString *)anAppIdentifier uniqueClientIdentifier:(NSString *)aClientIdentifier description:(NSString *)aClientDescription userInfo:(NSDictionary *)someUserInfo
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Registration Information:\n   Delegate: %@,\n   Global App ID: %@,\n   Client ID: %@,\n   Description: %@\nUser Info: %@", aDelegate, anAppIdentifier, aClientIdentifier, aClientDescription, someUserInfo);
@@ -64,8 +62,7 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Application sync manager configured for future registration");
 }
 
-#pragma mark -
-#pragma mark REGISTRATION
+#pragma mark - REGISTRATION
 - (void)registerWithDelegate:(id <TICDSApplicationSyncManagerDelegate>)aDelegate globalAppIdentifier:(NSString *)anAppIdentifier uniqueClientIdentifier:(NSString *)aClientIdentifier description:(NSString *)aClientDescription userInfo:(NSDictionary *)someUserInfo
 {
     [self configureWithDelegate:aDelegate globalAppIdentifier:anAppIdentifier uniqueClientIdentifier:aClientIdentifier description:aClientDescription userInfo:someUserInfo];
@@ -264,8 +261,7 @@
     [self postDecreaseActivityNotification];
 }
 
-#pragma mark -
-#pragma mark LIST OF PREVIOUSLY SYNCHRONIZED DOCUMENTS
+#pragma mark - LIST OF PREVIOUSLY SYNCHRONIZED DOCUMENTS
 - (void)requestListOfPreviouslySynchronizedDocuments
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to check for remote documents that have been previously synchronized");
@@ -366,8 +362,7 @@
     [self postDecreaseActivityNotification];
 }
 
-#pragma mark -
-#pragma mark DOCUMENT DOWNLOAD
+#pragma mark - DOCUMENT DOWNLOAD
 - (void)requestDownloadOfDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to download a previously synchronized document %@ to %@", anIdentifier, aLocation);
@@ -547,8 +542,7 @@
     [self postDecreaseActivityNotification];
 }
 
-#pragma mark -
-#pragma mark LIST OF CLIENT DEVICES
+#pragma mark - LIST OF CLIENT DEVICES
 - (void)requestListOfSynchronizedClientsIncludingDocuments:(BOOL)includeDocuments
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Beginning request for device information");
@@ -770,8 +764,7 @@
     [self postDecreaseActivityNotification];
 }
 
-#pragma mark -
-#pragma mark REMOVING ALL SYNC DATA
+#pragma mark - REMOVING ALL SYNC DATA
 - (void)removeAllSyncDataFromRemote
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Initiating removal process for all remote sync data");
@@ -894,8 +887,7 @@
     [self postDecreaseActivityNotification];
 }
 
-#pragma mark -
-#pragma mark OPERATION COMMUNICATIONS
+#pragma mark - OPERATION COMMUNICATIONS
 - (void)operationCompletedSuccessfully:(TICDSOperation *)anOperation
 {
     if( [anOperation isKindOfClass:[TICDSApplicationRegistrationOperation class]] ) {
@@ -947,8 +939,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark Default Sync Manager
+#pragma mark - Default Sync Manager
 id __strong gTICDSDefaultApplicationSyncManager = nil;
 
 + (id)defaultApplicationSyncManager
@@ -971,8 +962,7 @@ id __strong gTICDSDefaultApplicationSyncManager = nil;
     gTICDSDefaultApplicationSyncManager = aSyncManager;
 }
 
-#pragma mark -
-#pragma mark Paths
+#pragma mark - Paths
 - (NSString *)relativePathToEncryptionDirectory
 {
     return TICDSEncryptionDirectoryName;
@@ -1023,8 +1013,7 @@ id __strong gTICDSDefaultApplicationSyncManager = nil;
     return [[self relativePathToDocumentDirectoryForDocumentWithIdentifier:anIdentifier] stringByAppendingPathComponent:TICDSWholeStoreDirectoryName];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (id)init
 {
     self = [super init];
@@ -1054,8 +1043,7 @@ id __strong gTICDSDefaultApplicationSyncManager = nil;
 
 }
 
-#pragma mark -
-#pragma mark Lazy Accessors
+#pragma mark - Lazy Accessors
 - (NSFileManager *)fileManager
 {
     if( _fileManager ) return _fileManager;
@@ -1065,8 +1053,7 @@ id __strong gTICDSDefaultApplicationSyncManager = nil;
     return _fileManager;
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize state = _state;
 @synthesize shouldUseEncryption = _shouldUseEncryption;
 @synthesize delegate = _delegate;

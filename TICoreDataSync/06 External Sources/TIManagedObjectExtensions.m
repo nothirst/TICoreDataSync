@@ -49,15 +49,13 @@
     return thisDescription;
 }
 
-#pragma mark -
-#pragma mark Creating Objects
+#pragma mark - Creating Objects
 + (id)ti_objectInManagedObjectContext:(NSManagedObjectContext *)aContext
 {
     return [NSEntityDescription insertNewObjectForEntityForName:[self ti_entityNameInManagedObjectContext:aContext] inManagedObjectContext:aContext];
 }
 
-#pragma mark -
-#pragma mark Fetch Requests
+#pragma mark - Fetch Requests
 + (NSFetchRequest *)ti_fetchRequestInManagedObjectContext:(NSManagedObjectContext *)aContext
 {
     return [self ti_fetchRequestWithPredicate:nil inManagedObjectContext:aContext];
@@ -104,8 +102,7 @@
     
     return [self ti_fetchRequestWithPredicate:predicate inManagedObjectContext:aContext];
 }
-#pragma mark -
-#pragma mark Counting Objects
+#pragma mark - Counting Objects
 + (NSUInteger)ti_numberOfObjectsInManagedObjectContext:(NSManagedObjectContext *)aContext error:(NSError **)outError
 {
     return [self ti_numberOfObjectsMatchingPredicate:nil inManagedObjectContext:aContext error:outError];
@@ -133,8 +130,7 @@
     return [self ti_numberOfObjectsMatchingPredicate:thePredicate inManagedObjectContext:aContext error:outError];
 }
 
-#pragma mark -
-#pragma mark Fetching Objects
+#pragma mark - Fetching Objects
 #pragma mark - All Objects
 + (NSArray *)ti_allObjectsInManagedObjectContext:(NSManagedObjectContext *)aContext sortedByKey:(NSString *)aKey ascending:(BOOL)yesOrNo error:(NSError **)outError
 {

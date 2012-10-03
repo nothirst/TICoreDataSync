@@ -6,8 +6,7 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
-#pragma mark -
-#pragma mark Primary Classes
+#pragma mark - Primary Classes
 #import "TICDSApplicationSyncManager.h"
 #import "TICDSDocumentSyncManager.h"
 #import "TICDSSynchronizedManagedObjectContext.h"
@@ -64,13 +63,11 @@
 #import "TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation.h"
 #endif
 
-#pragma mark -
-#pragma mark Internal Data Model
+#pragma mark - Internal Data Model
 #import "TICDSSyncChange.h"
 #import "TICDSSyncChangeSet.h"
 
-#pragma mark -
-#pragma mark Utilities
+#pragma mark - Utilities
 #import "TICDSUtilities.h"
 #import "TICDSLog.h"
 #import "TICDSError.h"
@@ -85,8 +82,7 @@
 #import "FZAKeyManagerMac.h"
 #endif
 
-#pragma mark -
-#pragma mark External Sources
+#pragma mark - External Sources
 #import "NSObject+TIDelegateCommunications.h"
 #import "TICoreDataFactory.h"
 #import "TIManagedObjectExtensions.h"

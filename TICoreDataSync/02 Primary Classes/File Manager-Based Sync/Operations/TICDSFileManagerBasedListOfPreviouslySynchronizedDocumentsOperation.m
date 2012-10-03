@@ -76,8 +76,7 @@
     [self fetchedLastSynchronizationDate:[dictionary valueForKey:NSFileModificationDate] forDocumentWithSyncID:aSyncID];
 }
 
-#pragma mark -
-#pragma mark Paths
+#pragma mark - Paths
 - (NSString *)pathToDocumentInfoForDocumentWithIdentifier:(NSString *)anIdentifier
 {
     return [[[self documentsDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSDocumentInfoPlistFilenameWithExtension];
@@ -88,16 +87,14 @@
     return [[[self documentsDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSRecentSyncsDirectoryName];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     _documentsDirectoryPath = nil;
 
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize documentsDirectoryPath = _documentsDirectoryPath;
 
 @end

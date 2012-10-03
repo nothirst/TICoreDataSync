@@ -10,8 +10,7 @@
 
 @implementation TICDSFileManagerBasedApplicationRegistrationOperation
 
-#pragma mark -
-#pragma mark Helper Methods
+#pragma mark - Helper Methods
 - (BOOL)createDirectoryContentsFromDictionary:(NSDictionary *)aDictionary inDirectory:(NSString *)aDirectoryPath
 {
     NSError *anyError = nil;
@@ -41,8 +40,7 @@
     return YES;
 }
 
-#pragma mark -
-#pragma mark Overridden Global App Directory Methods
+#pragma mark - Overridden Global App Directory Methods
 - (void)checkWhetherRemoteGlobalAppDirectoryExists
 {
     if( [[self fileManager] fileExistsAtPath:[self applicationDirectoryPath]] ) {
@@ -157,8 +155,7 @@
     [self fetchedPasswordTestData:fetchedData];
 }
 
-#pragma mark -
-#pragma mark Overridden Client Device Directory Methods
+#pragma mark - Overridden Client Device Directory Methods
 - (void)checkWhetherRemoteClientDeviceDirectoryExists
 {
     if( [[self fileManager] fileExistsAtPath:[self clientDevicesThisClientDeviceDirectoryPath]] ) {
@@ -218,8 +215,7 @@
     [self savedRemoteClientDeviceInfoPlistWithSuccess:success];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     _applicationDirectoryPath = nil;
@@ -230,8 +226,7 @@
     
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize applicationDirectoryPath = _applicationDirectoryPath;
 @synthesize encryptionDirectorySaltDataFilePath = _encryptionDirectorySaltDataFilePath;
 @synthesize encryptionDirectoryTestDataFilePath = _encryptionDirectoryTestDataFilePath;

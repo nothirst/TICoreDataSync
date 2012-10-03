@@ -10,8 +10,7 @@
 
 @implementation TICDSFileManagerBasedDocumentRegistrationOperation
 
-#pragma mark -
-#pragma mark Helper Methods
+#pragma mark - Helper Methods
 - (BOOL)createDirectoryContentsFromDictionary:(NSDictionary *)aDictionary inDirectory:(NSString *)aPath
 {
     NSError *anyError = nil;
@@ -41,8 +40,7 @@
     return YES;
 }
 
-#pragma mark -
-#pragma mark Overridden Document Methods
+#pragma mark - Overridden Document Methods
 - (void)checkWhetherRemoteDocumentDirectoryExists
 {
     if( [[self fileManager] fileExistsAtPath:[self thisDocumentDirectoryPath]] ) {
@@ -197,8 +195,7 @@
     [self deletedDocumentInfoPlistFromDeletedDocumentsDirectoryWithSuccess:success];
 }
 
-#pragma mark -
-#pragma mark Overridden Client Device Directories
+#pragma mark - Overridden Client Device Directories
 - (void)checkWhetherClientDirectoryExistsInRemoteDocumentSyncChangesDirectory
 {
     if( [[self fileManager] fileExistsAtPath:[self thisDocumentSyncChangesThisClientDirectoryPath]] ) {
@@ -252,8 +249,7 @@
     [self createdClientDirectoriesInRemoteDocumentDirectoriesWithSuccess:success];
 }
 
-#pragma mark -
-#pragma mark Initialization and Deallocation
+#pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
     _documentsDirectoryPath = nil;
@@ -266,8 +262,7 @@
 
 }
 
-#pragma mark -
-#pragma mark Properties
+#pragma mark - Properties
 @synthesize documentsDirectoryPath = _documentsDirectoryPath;
 @synthesize clientDevicesDirectoryPath = _clientDevicesDirectoryPath;
 @synthesize deletedDocumentsThisDocumentIdentifierPlistPath = _deletedDocumentsThisDocumentIdentifierPlistPath;
