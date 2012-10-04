@@ -703,10 +703,6 @@
 		13023C4C161363D50071C497 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					armv6,
-					armv7,
-				);
 				DSTROOT = /tmp/TICoreDataSync_iOS.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -724,10 +720,6 @@
 		13023C4D161363D50071C497 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					armv6,
-					armv7,
-				);
 				DSTROOT = /tmp/TICoreDataSync_iOS.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
