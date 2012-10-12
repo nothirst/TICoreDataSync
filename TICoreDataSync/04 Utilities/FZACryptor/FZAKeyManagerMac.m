@@ -40,7 +40,7 @@ void FZAReportKeychainError(OSStatus keychainStatus, NSString *msg);
 
 void FZAReportKeychainError(OSStatus keychainStatus, NSString *msg) {
     CFStringRef errorMsg = SecCopyErrorMessageString(keychainStatus, NULL);
-    TICDSLog(TICDSLogVerbosityErrorsOnly, @"FZACryptor Mac Key Manager Error %@: %@", msg, (id)errorMsg);
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"FZACryptor Mac Key Manager Error %@: %@", msg, (__bridge NSString *)errorMsg);
     CFRelease(errorMsg);
 }
 
@@ -154,7 +154,7 @@ void FZAReportKeychainError(OSStatus keychainStatus, NSString *msg) {
                 
                 NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                                           [NSNumber numberWithInt:keychainResult], kFZAKeyManagerSecurityFrameworkError,
-                                          (NSString *)secErrorDescription, NSLocalizedDescriptionKey, nil];
+                                          (__bridge NSString *)secErrorDescription, NSLocalizedDescriptionKey, nil];
                 CFRelease(secErrorDescription);
                 
                 *error = [NSError errorWithDomain: FZAKeyManagerErrorDomain
@@ -187,7 +187,7 @@ void FZAReportKeychainError(OSStatus keychainStatus, NSString *msg) {
                 
                 NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                                           [NSNumber numberWithInt:keychainResult], kFZAKeyManagerSecurityFrameworkError,
-                                          (NSString *)secErrorDescription, NSLocalizedDescriptionKey, nil];
+                                          (__bridge NSString *)secErrorDescription, NSLocalizedDescriptionKey, nil];
                 CFRelease(secErrorDescription);
                 
                 *error = [NSError errorWithDomain: FZAKeyManagerErrorDomain
@@ -210,10 +210,6 @@ void FZAReportKeychainError(OSStatus keychainStatus, NSString *msg) {
     }
     
     return self;
-}
-
-- (void)dealloc {
-    [super dealloc];
 }
 
 @end

@@ -149,7 +149,6 @@
             [self _notifyDelegateAndSetError:error];
 		}
     }
-    [fileManager release], fileManager = nil;
 #else
     NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 #endif
