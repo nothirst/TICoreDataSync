@@ -850,6 +850,7 @@
 		13B393491626183700D7C7C0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/TICoreDataSync/07 External Frameworks\"",
@@ -863,6 +864,7 @@
 		13B3934A1626183700D7C7C0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/TICoreDataSync/07 External Frameworks\"",
