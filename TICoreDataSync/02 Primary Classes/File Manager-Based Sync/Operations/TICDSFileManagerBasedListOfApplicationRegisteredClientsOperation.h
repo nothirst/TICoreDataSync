@@ -21,9 +21,9 @@
 /** @name Paths */
 
 /** The path to the `ClientDevices` directory. */
-@property (strong) NSString *clientDevicesDirectoryPath;
+@property (copy) NSString *clientDevicesDirectoryPath;
 
 /** The path to the `Documents` directory. */
-@property (strong) NSString *documentsDirectoryPath;
+@property (copy) NSString *documentsDirectoryPath;
 
 @end

@@ -42,16 +42,16 @@
 /** @name Paths */
 
 /** The path to this document's directory. */
-@property (strong) NSString *thisDocumentDirectoryPath;
+@property (copy) NSString *thisDocumentDirectoryPath;
 
 /** The path to this document's `SyncChanges` directory. */
-@property (strong) NSString *thisDocumentSyncChangesDirectoryPath;
+@property (copy) NSString *thisDocumentSyncChangesDirectoryPath;
 
 /** The path this client's directory inside this document's `SyncChanges` directory. */
-@property (strong) NSString *thisDocumentSyncChangesThisClientDirectoryPath;
+@property (copy) NSString *thisDocumentSyncChangesThisClientDirectoryPath;
 
 /** The path this client's RecentSync file inside this document's `RecentSyncs` directory. */
-@property (strong) NSString *thisDocumentRecentSyncsThisClientFilePath;
+@property (copy) NSString *thisDocumentRecentSyncsThisClientFilePath;
 
 /** The path to a given client's `SyncChanges` directory.
  

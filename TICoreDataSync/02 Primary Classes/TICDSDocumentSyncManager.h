@@ -305,19 +305,19 @@
  
  Set the identifier when registering with `registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:`.
  */
-@property (nonatomic, readonly, strong) NSString *documentIdentifier;
+@property (nonatomic, readonly, copy) NSString *documentIdentifier;
 
 /** The Document Description used for registration.
  
  Set the identifier when registering with `registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:`.
  */
-@property (nonatomic, readonly, strong) NSString *documentDescription;
+@property (nonatomic, readonly, copy) NSString *documentDescription;
 
 /** The Client Identifier used for registration.
  
  Set the identifier when registering with `registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:`.
  */
-@property (nonatomic, readonly, strong) NSString *clientIdentifier;
+@property (nonatomic, readonly, copy) NSString *clientIdentifier;
 
 /** The User Info used for registration.
  
@@ -445,6 +445,6 @@
 @property (weak, nonatomic, readonly) NSString *unsynchronizedSyncChangesStorePath;
 
 /** The integrity key used to check whether the synchronization data matches what's expected. */
-@property (nonatomic, strong) NSString *integrityKey;
+@property (nonatomic, copy) NSString *integrityKey;
 
 @end

@@ -239,10 +239,10 @@
 /** @name Properties */
 
 /** The application identifier. */
-@property (nonatomic, strong) NSString *appIdentifier;
+@property (nonatomic, copy) NSString *appIdentifier;
 
 /** The client description. */
-@property (nonatomic, strong) NSString *clientDescription;
+@property (nonatomic, copy) NSString *clientDescription;
 
 /** The user info. */
 @property (nonatomic, strong) NSDictionary *applicationUserInfo;
@@ -251,7 +251,7 @@
 @property (assign, getter = isPaused) BOOL paused;
 
 /** The password to use for encryption at initial global app registration, if `shouldUseEncryption` is `YES`. */
-@property (strong) NSString *password;
+@property (copy) NSString *password;
 
 /** The cached salt data, set only after fetching from the remote. */
 @property (nonatomic, strong) NSData *saltData;

@@ -23,9 +23,9 @@
 - (void)bailFromRemoveAllSyncDataProcessWithError:(NSError *)anError;
 
 @property (nonatomic, assign) TICDSApplicationSyncManagerState state;
-@property (nonatomic, strong) NSString *appIdentifier;
-@property (nonatomic, strong) NSString *clientIdentifier;
-@property (nonatomic, strong) NSString *clientDescription;
+@property (nonatomic, copy) NSString *appIdentifier;
+@property (nonatomic, copy) NSString *clientIdentifier;
+@property (nonatomic, copy) NSString *clientDescription;
 @property (nonatomic, strong) NSDictionary *applicationUserInfo;
 @property (nonatomic, strong) NSOperationQueue *otherTasksQueue;
 @property (nonatomic, strong) NSOperationQueue *registrationQueue;

@@ -34,10 +34,10 @@
 /** @name Paths */
 
 /** The path to the application's `ClientDevices` directory. */
-@property (nonatomic, strong) NSString *clientDevicesDirectoryPath;
+@property (nonatomic, copy) NSString *clientDevicesDirectoryPath;
 
 /** The path to the application's `Documents` directory. */
-@property (nonatomic, strong) NSString *documentsDirectoryPath;
+@property (nonatomic, copy) NSString *documentsDirectoryPath;
 
 @end
 

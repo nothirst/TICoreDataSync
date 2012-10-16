@@ -22,15 +22,15 @@
 /** @name Paths */
 
 /** The path to this client's directory within the `WholeStore` directory inside this document's `TemporaryFiles` directory. */
-@property (strong) NSString *thisDocumentTemporaryWholeStoreThisClientDirectoryPath;
+@property (copy) NSString *thisDocumentTemporaryWholeStoreThisClientDirectoryPath;
 
 /** The path to which the whole store file should be copied. */
-@property (strong) NSString *thisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFilePath;
+@property (copy) NSString *thisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFilePath;
 
 /** The path to which the applied sync change sets file should be copied. */
-@property (strong) NSString *thisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath;
+@property (copy) NSString *thisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath;
 
 /** The path to this client's directory within this document's `WholeStore` directory. */
-@property (strong) NSString *thisDocumentWholeStoreThisClientDirectoryPath;
+@property (copy) NSString *thisDocumentWholeStoreThisClientDirectoryPath;
 
 @end

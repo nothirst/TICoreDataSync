@@ -106,7 +106,7 @@
 /** @name Properties */
 
 /** The identifier of the document to delete. */
-@property (strong) NSString *documentIdentifier;
+@property (copy) NSString *documentIdentifier;
 
 /** Used to indicate (once the operation completes) whether the document was found and deleted successfully. */
 @property (assign) BOOL documentWasFoundAndDeleted;

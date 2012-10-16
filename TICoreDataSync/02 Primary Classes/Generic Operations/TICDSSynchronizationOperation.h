@@ -221,7 +221,7 @@
 @property (strong) NSMutableArray *synchronizationWarnings;
 
 /** The integrity key provided either by the client to check existing data matches integrity, or set during registration for new documents. */
-@property (strong) NSString *integrityKey;
+@property (copy) NSString *integrityKey;
 
 /** @name File Locations */
 

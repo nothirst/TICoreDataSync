@@ -34,13 +34,13 @@
 @property (nonatomic, strong) NSNumber * changeType;
 
 /** The name of the entity for this sync change. */
-@property (nonatomic, strong) NSString * objectEntityName;
+@property (nonatomic, copy) NSString * objectEntityName;
 
 /** The sync ID (`ticdsSyncID` attribute) of the managed object to which this sync change refers. */
-@property (nonatomic, strong) NSString * objectSyncID;
+@property (nonatomic, copy) NSString * objectSyncID;
 
 /** The relevant key that was changed if this is sync change represents an attribute change. */
-@property (nonatomic, strong) NSString * relevantKey;
+@property (nonatomic, copy) NSString * relevantKey;
 
 /** The changed values of the attributes (used for attribute change, and insertion). */
 @property (nonatomic, strong) id changedAttributes;
@@ -49,7 +49,7 @@
 @property (nonatomic, strong) id changedRelationships;
 
 /** The name of the related entity. */
-@property (nonatomic, strong) NSString * relatedObjectEntityName;
+@property (nonatomic, copy) NSString * relatedObjectEntityName;
 
 /** The local timestamp of this change; note this is used only to sort sync changes when they are being applied. The last modification date of the entire sync change set determines the order in which change sets are applied. */
 @property (nonatomic, strong) NSDate * localTimeStamp;

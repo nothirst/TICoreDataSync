@@ -33,13 +33,13 @@
 @property (weak, readonly) NSString *conflictDescription;
 
 /** The name of the entity for which conflicting changes were made to an object. */
-@property (strong) NSString *entityName;
+@property (copy) NSString *entityName;
 
 /** The name of the key for which a conflict exists. */
-@property (strong) NSString *relevantKey;
+@property (copy) NSString *relevantKey;
 
 /** The sync id (`ticdsSyncID` attribute) of the object for which the conflict was found. */
-@property (strong) NSString *objectSyncID;
+@property (copy) NSString *objectSyncID;
 
 /** Information about the conflicting information on the local change. */
 @property (strong) NSDictionary *localInformation;

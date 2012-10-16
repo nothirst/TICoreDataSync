@@ -156,7 +156,7 @@
 /** @name Properties */
 
 /** The identifier of the client to be deleted. */
-@property (strong) NSString *identifierOfClientToBeDeleted;
+@property (copy) NSString *identifierOfClientToBeDeleted;
 
 /** Used to indicate (once the operation completes) whether the client was found and deleted successfully. */
 @property (assign) BOOL clientWasFoundAndDeleted;

@@ -37,9 +37,9 @@
 - (void)startClientDeletionProcessForClient:(NSString *)anIdentifier;
 - (void)bailFromClientDeletionProcessForClient:(NSString *)anIdentifier withError:(NSError *)anError;
 
-@property (nonatomic, strong) NSString *documentIdentifier;
-@property (nonatomic, strong) NSString *documentDescription;
-@property (nonatomic, strong) NSString *clientIdentifier;
+@property (nonatomic, copy) NSString *documentIdentifier;
+@property (nonatomic, copy) NSString *documentDescription;
+@property (nonatomic, copy) NSString *clientIdentifier;
 @property (nonatomic, strong) NSDictionary *documentUserInfo;
 @property (strong) NSURL *helperFileDirectoryLocation;
 

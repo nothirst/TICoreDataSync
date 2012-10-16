@@ -46,9 +46,9 @@
 + (TICDSSyncChangeSet *)changeSetWithIdentifier:(NSString *)anIdentifier inManagedObjectContext:(NSManagedObjectContext *)aMoc;
 
 @property (nonatomic, strong) NSDate * creationDate;
-@property (nonatomic, strong) NSString * fileName;
-@property (nonatomic, strong) NSString * syncChangeSetIdentifier;
+@property (nonatomic, copy) NSString * fileName;
+@property (nonatomic, copy) NSString * syncChangeSetIdentifier;
 @property (nonatomic, strong) NSDate * localDateOfApplication;
-@property (nonatomic, strong) NSString * clientIdentifier;
+@property (nonatomic, copy) NSString * clientIdentifier;
 
 @end

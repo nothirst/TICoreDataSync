@@ -36,16 +36,16 @@
 /** @name Paths */
 
 /** The path to this document's `SyncChanges` directory. */
-@property (nonatomic, strong) NSString *thisDocumentSyncChangesDirectoryPath;
+@property (nonatomic, copy) NSString *thisDocumentSyncChangesDirectoryPath;
 
 /** The path to the application's `ClientDevices` directory. */
-@property (nonatomic, strong) NSString *clientDevicesDirectoryPath;
+@property (nonatomic, copy) NSString *clientDevicesDirectoryPath;
 
 /** The path to this document's `RecentSyncs` directory. */
-@property (nonatomic, strong) NSString *thisDocumentRecentSyncsDirectoryPath;
+@property (nonatomic, copy) NSString *thisDocumentRecentSyncsDirectoryPath;
 
 /** The path to this document's `WholeStore` directory. */
-@property (nonatomic, strong) NSString *thisDocumentWholeStoreDirectoryPath;
+@property (nonatomic, copy) NSString *thisDocumentWholeStoreDirectoryPath;
 
 /** Return the path to the `deviceInfo.plist` file for a given client identifier.
  

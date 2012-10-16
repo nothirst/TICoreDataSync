@@ -41,7 +41,7 @@
 /** @name Paths */
 
 /** The path to the root of the application. This will be set automatically when you register and supply a `TICDSFileManagerBasedApplicationSyncManager`. */
-@property (nonatomic, strong) NSString *applicationDirectoryPath;
+@property (nonatomic, copy) NSString *applicationDirectoryPath;
 
 /** The path to the `ClientDevices` directory. */
 @property (weak, nonatomic, readonly) NSString *clientDevicesDirectoryPath;

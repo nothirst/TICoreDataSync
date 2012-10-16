@@ -34,7 +34,7 @@
 /** @name Paths */
 
 /** The path to the `Documents` directory. */
-@property (strong) NSString *documentsDirectoryPath;
+@property (copy) NSString *documentsDirectoryPath;
 
 /** Returns the path to the `documentInfo.plist` file for a document with the specified identifier.
  

@@ -23,16 +23,16 @@
 /** @name Paths */
 
 /** The path to this document's `SyncChanges` directory. */
-@property (strong) NSString *thisDocumentSyncChangesDirectoryPath;
+@property (copy) NSString *thisDocumentSyncChangesDirectoryPath;
 
 /** The path to the `ClientDevices` directory. */
-@property (strong) NSString *clientDevicesDirectoryPath;
+@property (copy) NSString *clientDevicesDirectoryPath;
 
 /** The path to this document's `RecentSyncs` directory. */
-@property (strong) NSString *thisDocumentRecentSyncsDirectoryPath;
+@property (copy) NSString *thisDocumentRecentSyncsDirectoryPath;
 
 /** The path to this document's `WholeStore` directory. */
-@property (strong) NSString *thisDocumentWholeStoreDirectoryPath;
+@property (copy) NSString *thisDocumentWholeStoreDirectoryPath;
 
 /** Return the path to the `deviceInfo.plist` file for a specified client, inside the `ClientDevices` directory.
  

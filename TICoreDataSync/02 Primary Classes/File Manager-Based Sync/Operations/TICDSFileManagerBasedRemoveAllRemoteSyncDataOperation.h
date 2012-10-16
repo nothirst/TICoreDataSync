@@ -20,6 +20,6 @@
 /** @name Properties */
 
 /** The path to the application root directory. */
-@property (strong) NSString *applicationDirectoryPath;
+@property (copy) NSString *applicationDirectoryPath;
 
 @end

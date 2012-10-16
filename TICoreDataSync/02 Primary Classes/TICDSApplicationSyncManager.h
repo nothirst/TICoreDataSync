@@ -237,19 +237,19 @@
  
  Set the identifier when registering with `registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:`.
  */
-@property (nonatomic, readonly, strong) NSString *appIdentifier;
+@property (nonatomic, readonly, copy) NSString *appIdentifier;
 
 /** The Client Identifier used for registration.
  
  Set the identifier when registering with `registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:`.
  */
-@property (nonatomic, readonly, strong) NSString *clientIdentifier;
+@property (nonatomic, readonly, copy) NSString *clientIdentifier;
 
 /** The Client Description used for registration.
  
  Set the description when registering with `registerWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo:`.
  */
-@property (nonatomic, readonly, strong) NSString *clientDescription;
+@property (nonatomic, readonly, copy) NSString *clientDescription;
 
 /** The User Info used for registration.
  

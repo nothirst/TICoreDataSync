@@ -54,11 +54,11 @@
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-@property (nonatomic, strong) NSString *momdName;
+@property (nonatomic, copy) NSString *momdName;
 @property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
 
-@property (nonatomic, strong) NSString *persistentStoreDataFileName;
-@property (nonatomic, strong) NSString *persistentStoreDataPath;
+@property (nonatomic, copy) NSString *persistentStoreDataFileName;
+@property (nonatomic, copy) NSString *persistentStoreDataPath;
 
 @property (nonatomic, weak) NSString *persistentStoreType;
 @property (nonatomic, strong) NSDictionary *persistentStoreOptions;

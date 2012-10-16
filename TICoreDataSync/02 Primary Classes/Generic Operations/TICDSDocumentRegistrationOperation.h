@@ -246,18 +246,18 @@
 @property (assign) BOOL clientHasPreviouslySynchronizedThisDocument;
 
 /** The document identifier. */
-@property (strong) NSString *documentIdentifier;
+@property (copy) NSString *documentIdentifier;
 
 /** The document description (typically a filename). */
-@property (strong) NSString *documentDescription;
+@property (copy) NSString *documentDescription;
 
 /** The client description. */
-@property (strong) NSString *clientDescription;
+@property (copy) NSString *clientDescription;
 
 /** The user info. */
 @property (strong) NSDictionary *documentUserInfo;
 
 /** The integrity key provided either by the client to check existing data matches integrity, or set during registration for new documents. */
-@property (strong) NSString *integrityKey;
+@property (copy) NSString *integrityKey;
 
 @end

@@ -30,9 +30,9 @@
 - (NSString *)pathToAppliedSyncChangesFileForClientWithIdentifier:(NSString *)anIdentifier;
 
 /** The path to this document's directory. */
-@property (strong) NSString *thisDocumentDirectoryPath;
+@property (copy) NSString *thisDocumentDirectoryPath;
 
 /** The path to this document's `WholeStore` directory. */
-@property (strong) NSString *thisDocumentWholeStoreDirectoryPath;
+@property (copy) NSString *thisDocumentWholeStoreDirectoryPath;
 
 @end

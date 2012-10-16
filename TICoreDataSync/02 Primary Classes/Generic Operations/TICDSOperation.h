@@ -99,9 +99,9 @@
 @property (nonatomic, readonly, strong) NSFileManager *fileManager;
 
 /** The path to a directory inside `NSTemporaryDirectory()` guaranteed to be unique to this operation, created when path first requested and removed when operation finishes. */
-@property (nonatomic, strong) NSString *tempFileDirectoryPath;
+@property (nonatomic, copy) NSString *tempFileDirectoryPath;
 
 /** The identifier of the client application (not set automatically, but may be used whenever necessary by subclasses). */
-@property (strong) NSString *clientIdentifier;
+@property (copy) NSString *clientIdentifier;
 
 @end

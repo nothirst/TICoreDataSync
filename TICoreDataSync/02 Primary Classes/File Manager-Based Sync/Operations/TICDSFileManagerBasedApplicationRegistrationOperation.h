@@ -24,18 +24,18 @@
 /** @name Properties */
 
 /** The path to the application root directory. */
-@property (strong) NSString *applicationDirectoryPath;
+@property (copy) NSString *applicationDirectoryPath;
 
 /** The path to the `salt.ticdsync` file inside this application's `Encryption` directory. */
-@property (strong) NSString *encryptionDirectorySaltDataFilePath;
+@property (copy) NSString *encryptionDirectorySaltDataFilePath;
 
 /** The path to the `test.ticdsync` file inside this application's `Encryption` directory. */
-@property (strong) NSString *encryptionDirectoryTestDataFilePath;
+@property (copy) NSString *encryptionDirectoryTestDataFilePath;
 
 /** The path to the `ClientDevices` directory. */
-@property (strong) NSString *clientDevicesDirectoryPath;
+@property (copy) NSString *clientDevicesDirectoryPath;
 
 /** The path to the this client's directory inside the `ClientDevices` directory. */
-@property (strong) NSString *clientDevicesThisClientDeviceDirectoryPath;
+@property (copy) NSString *clientDevicesThisClientDeviceDirectoryPath;
 
 @end

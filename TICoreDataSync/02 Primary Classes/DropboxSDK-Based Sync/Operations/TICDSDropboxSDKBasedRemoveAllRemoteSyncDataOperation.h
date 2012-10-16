@@ -33,7 +33,7 @@
 /** @name Paths */
 
 /** The path to the root of the application. */
-@property (strong) NSString *applicationDirectoryPath;
+@property (copy) NSString *applicationDirectoryPath;
 
 @end
 

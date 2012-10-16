@@ -10,7 +10,7 @@
 
 @interface TICDSSynchronizationOperation () <TICoreDataFactoryDelegate>
 
-@property (nonatomic, strong) NSString *changeSetProgressString;
+@property (nonatomic, copy) NSString *changeSetProgressString;
 @property (nonatomic, readonly) NSNumberFormatter *uuidPrefixFormatter;
 
 - (void)beginCheckWhetherRemoteIntegrityKeyMatchesLocalKey;

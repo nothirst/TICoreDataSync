@@ -35,13 +35,13 @@
 /** @name Paths */
 
 /** The path to the directory that should be deleted. */
-@property (strong) NSString *documentDirectoryPath;
+@property (copy) NSString *documentDirectoryPath;
 
 /** The path to the document's `documentInfo.plist` file. */
-@property (strong) NSString *documentInfoPlistFilePath;
+@property (copy) NSString *documentInfoPlistFilePath;
 
 /** The path to the document's `identifier.plist` file inside the application's `DeletedDocuments` directory. */
-@property (strong) NSString *deletedDocumentsDirectoryIdentifierPlistFilePath;
+@property (copy) NSString *deletedDocumentsDirectoryIdentifierPlistFilePath;
 
 @end
 

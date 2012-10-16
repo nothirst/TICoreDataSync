@@ -26,24 +26,24 @@
 /** @name Paths */
 
 /** The path to the `Documents` directory. */
-@property (strong) NSString *documentsDirectoryPath;
+@property (copy) NSString *documentsDirectoryPath;
 
 /** The path to the `ClientDevices` directory. */
-@property (strong) NSString *clientDevicesDirectoryPath;
+@property (copy) NSString *clientDevicesDirectoryPath;
 
 /** The path to the document's `identifier.plist` file inside the `DeletedDocuments` directory. */
-@property (strong) NSString *deletedDocumentsThisDocumentIdentifierPlistPath;
+@property (copy) NSString *deletedDocumentsThisDocumentIdentifierPlistPath;
 
 /** The path to this document's `DeletedClients` directory. */
-@property (strong) NSString *thisDocumentDeletedClientsDirectoryPath;
+@property (copy) NSString *thisDocumentDeletedClientsDirectoryPath;
 
 /** The path to this document's directory inside the `Documents` directory. */
-@property (strong) NSString *thisDocumentDirectoryPath;
+@property (copy) NSString *thisDocumentDirectoryPath;
 
 /** The path to this client's directory inside this document's `SyncChanges` directory. */
-@property (strong) NSString *thisDocumentSyncChangesThisClientDirectoryPath;
+@property (copy) NSString *thisDocumentSyncChangesThisClientDirectoryPath;
 
 /** The path to this client's directory inside this document's `SyncCommands` directory. */
-@property (strong) NSString *thisDocumentSyncCommandsThisClientDirectoryPath;
+@property (copy) NSString *thisDocumentSyncCommandsThisClientDirectoryPath;
 
 @end
