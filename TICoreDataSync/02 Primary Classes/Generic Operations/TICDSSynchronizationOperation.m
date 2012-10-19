@@ -911,7 +911,11 @@
         
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    if ([object respondsToSelector:NSSelectorFromString(selectorName)]) {
         [object performSelector:NSSelectorFromString(selectorName) withObject:relatedObject];
+    } else {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object does not respond to selector: %@ [%@] %@", selectorName, aSyncChange, [aSyncChange objectEntityName]);
+    }
 #pragma clang diagnostic pop
         
         TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"%@", objectEntityName);
