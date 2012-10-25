@@ -1367,20 +1367,20 @@
     return syncChangesManagedObjectContext;
 }
 
-- (NSManagedObjectContext *)syncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext
+- (NSManagedObjectContext *)syncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)documentManagedObjectContext
 {
-    NSManagedObjectContext *context = [self.syncChangesMOCs valueForKey:[self keyForContext:aContext]];
+    NSManagedObjectContext *syncChangesManagedObjectContext = [self.syncChangesMOCs valueForKey:[self keyForContext:documentManagedObjectContext]];
 
-    if (context == nil) {
+    if (syncChangesManagedObjectContext == nil) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"SyncChanges MOC was requested for a managed object context that hasn't yet been added, so adding it before proceeding");
 
-        context = [self addSyncChangesMocForDocumentMoc:aContext];
-        if (context == nil) {
+        syncChangesManagedObjectContext = [self addSyncChangesMocForDocumentMoc:documentManagedObjectContext];
+        if (syncChangesManagedObjectContext == nil) {
             NSLog(@"%s There was a problem getting the sync changes MOC for the document MOC.", __PRETTY_FUNCTION__);
         }
     }
 
-    return context;
+    return syncChangesManagedObjectContext;
 }
 
 - (NSString *)keyForContext:(NSManagedObjectContext *)aContext
@@ -1395,27 +1395,30 @@
     // Do anything here that's needed before the application context is saved
 }
 
-- (void)synchronizedMOCDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc
+- (void)synchronizedMOCDidSave:(TICDSSynchronizedManagedObjectContext *)documentManagedObjectContext
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"MOC saved, so beginning post-save processing");
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didBeginProcessingSyncChangesAfterManagedObjectContextDidSave:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
-             [(id)self.delegate documentSyncManager:self didBeginProcessingSyncChangesAfterManagedObjectContextDidSave:aMoc];
+             [(id)self.delegate documentSyncManager:self didBeginProcessingSyncChangesAfterManagedObjectContextDidSave:documentManagedObjectContext];
          }];
     }
 
-    NSError *anyError = nil;
+    __block NSError *anyError = nil;
+    __block BOOL success = NO;
 
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Sync Manager will save Sync Changes context");
-
-    BOOL success = [[self syncChangesMocForDocumentMoc:aMoc] save:&anyError];
+    NSManagedObjectContext *syncChangesManagedObjectContext = [self syncChangesMocForDocumentMoc:documentManagedObjectContext];
+    [syncChangesManagedObjectContext performBlockAndWait:^{
+        success = [syncChangesManagedObjectContext save:&anyError];
+    }];
 
     if (success == NO) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Sync Manager failed to save Sync Changes context with error: %@", anyError);
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Sync Manager cannot continue processing any further, so bailing");
         if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToProcessSyncChangesAfterManagedObjectContextDidSave:withError:)]) {
             [self runOnMainQueueWithoutDeadlocking:^{
-                 [(id)self.delegate documentSyncManager:self didFailToProcessSyncChangesAfterManagedObjectContextDidSave:aMoc withError:[TICDSError errorWithCode:TICDSErrorCodeFailedToSaveSyncChangesMOC underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+                 [(id)self.delegate documentSyncManager:self didFailToProcessSyncChangesAfterManagedObjectContextDidSave:documentManagedObjectContext withError:[TICDSError errorWithCode:TICDSErrorCodeFailedToSaveSyncChangesMOC underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
              }];
         }
 
@@ -1425,12 +1428,12 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Sync Manager saved Sync Changes context successfully");
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFinishProcessingSyncChangesAfterManagedObjectContextDidSave:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
-             [(id)self.delegate documentSyncManager:self didFinishProcessingSyncChangesAfterManagedObjectContextDidSave:aMoc];
+             [(id)self.delegate documentSyncManager:self didFinishProcessingSyncChangesAfterManagedObjectContextDidSave:documentManagedObjectContext];
          }];
     }
 
     TICDSLog(TICDSLogVerbosityEveryStep, @"Asking delegate if we should sync after saving");
-    BOOL shouldSync = [self ti_delegateRespondsToSelector:@selector(documentSyncManager:shouldBeginSynchronizingAfterManagedObjectContextDidSave:)] && [(id)self.delegate documentSyncManager:self shouldBeginSynchronizingAfterManagedObjectContextDidSave:aMoc];
+    BOOL shouldSync = [self ti_delegateRespondsToSelector:@selector(documentSyncManager:shouldBeginSynchronizingAfterManagedObjectContextDidSave:)] && [(id)self.delegate documentSyncManager:self shouldBeginSynchronizingAfterManagedObjectContextDidSave:documentManagedObjectContext];
     if (shouldSync == NO) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate denied synchronization after saving");
         return;
