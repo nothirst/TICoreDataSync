@@ -1348,11 +1348,11 @@
 
     NSPersistentStoreCoordinator *persistentStoreCoordinator = [self.coreDataFactory persistentStoreCoordinator];
     if (persistentStoreCoordinator == nil) {
-        NSLog(@"%s We got a nil NSPersistentStoreCoordinator back from the Core Data Factory, trying to reset the factory.", __PRETTY_FUNCTION__);
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"We got a nil NSPersistentStoreCoordinator back from the Core Data Factory, trying to reset the factory.");
         self.coreDataFactory = nil;
         persistentStoreCoordinator = [self.coreDataFactory persistentStoreCoordinator];
         if (persistentStoreCoordinator == nil) {
-            NSLog(@"%s Resetting the Core Data Factory didn't help, bailing from this method.", __PRETTY_FUNCTION__);
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Resetting the Core Data Factory didn't help, bailing from this method.");
             return nil;
         }
     }
