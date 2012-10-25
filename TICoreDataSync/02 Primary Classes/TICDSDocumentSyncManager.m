@@ -1362,8 +1362,6 @@
         syncChangesManagedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator;
     }];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncChangesMocDidSave:) name:NSManagedObjectContextDidSaveNotification object:syncChangesManagedObjectContext];
-
     [self.syncChangesMOCs setValue:syncChangesManagedObjectContext forKey:[self keyForContext:documentManagedObjectContext]];
 
     return syncChangesManagedObjectContext;
@@ -1388,20 +1386,6 @@
 - (NSString *)keyForContext:(NSManagedObjectContext *)aContext
 {
     return [NSString stringWithFormat:@"%p", aContext];
-}
-
-- (void)syncChangesMocDidSave:(NSNotification *)aNotification
-{
-    if ([aNotification object] != self.primaryDocumentMOC) {
-        return;
-    }
-
-    if ([NSThread isMainThread] == NO) {
-        [self performSelectorOnMainThread:@selector(syncChangesMocDidSave:) withObject:aNotification waitUntilDone:NO];
-        return;
-    }
-
-    [[self syncChangesMocForDocumentMoc:self.primaryDocumentMOC] mergeChangesFromContextDidSaveNotification:aNotification];
 }
 
 #pragma mark - MANAGED OBJECT CONTEXT DID SAVE BEHAVIOR
