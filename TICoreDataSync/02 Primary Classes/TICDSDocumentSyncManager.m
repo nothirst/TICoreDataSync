@@ -1336,17 +1336,16 @@
     [self addSyncChangesMocForDocumentMoc:aContext];
 }
 
-- (NSManagedObjectContext *)addSyncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext
+- (NSManagedObjectContext *)addSyncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)documentManagedObjectContext
 {
-    NSManagedObjectContext *context = [[self syncChangesMOCs] valueForKey:[self keyForContext:aContext]];
+    NSManagedObjectContext *syncChangesManagedObjectContext = [[self syncChangesMOCs] valueForKey:[self keyForContext:documentManagedObjectContext]];
 
-    if (context) {
-        return context;
+    if (syncChangesManagedObjectContext != nil) {
+        return syncChangesManagedObjectContext;
     }
 
-    [aContext setDocumentSyncManager:self];
+    [documentManagedObjectContext setDocumentSyncManager:self];
 
-    context = [[NSManagedObjectContext alloc] init];
     NSPersistentStoreCoordinator *persistentStoreCoordinator = [[self coreDataFactory] persistentStoreCoordinator];
     if (persistentStoreCoordinator == nil) {
         NSLog(@"%s We got a nil NSPersistentStoreCoordinator back from the Core Data Factory, trying to reset the factory.", __PRETTY_FUNCTION__);
@@ -1358,11 +1357,16 @@
         }
     }
 
-    [context setPersistentStoreCoordinator:persistentStoreCoordinator];
-    [[self syncChangesMOCs] setValue:context forKey:[self keyForContext:aContext]];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncChangesMocDidSave:) name:NSManagedObjectContextDidSaveNotification object:context];
+    syncChangesManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    [syncChangesManagedObjectContext performBlockAndWait:^{
+        syncChangesManagedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator;
+    }];
 
-    return context;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncChangesMocDidSave:) name:NSManagedObjectContextDidSaveNotification object:syncChangesManagedObjectContext];
+
+    [[self syncChangesMOCs] setValue:syncChangesManagedObjectContext forKey:[self keyForContext:documentManagedObjectContext]];
+
+    return syncChangesManagedObjectContext;
 }
 
 - (NSManagedObjectContext *)syncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext
