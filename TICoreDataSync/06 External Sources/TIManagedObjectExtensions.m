@@ -161,8 +161,6 @@
 #pragma mark - Matching Predicate
 + (NSArray *)ti_objectsMatchingPredicate:(NSPredicate *)aPredicate inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext sortedWithDescriptors:(NSArray *)someDescriptors error:(NSError **)outError
 {
-    
-    
     __block NSError *anyError = nil;
     __block NSArray *results = nil;
     [managedObjectContext performBlockAndWait:^{
