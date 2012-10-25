@@ -65,14 +65,14 @@
 {
     [self preConfigureWithDelegate:aDelegate appSyncManager:anAppSyncManager documentIdentifier:aDocumentIdentifier];
 
-    [self setPrimaryDocumentMOC:aContext];
+    self.primaryDocumentMOC = aContext;
     [aContext setDocumentSyncManager:self];
 
     // setup the syncChangesMOC
     TICDSLog(TICDSLogVerbosityEveryStep, @"Creating SyncChangesMOC");
 
-    [self addSyncChangesMocForDocumentMoc:[self primaryDocumentMOC]];
-    if ([self syncChangesMocForDocumentMoc:[self primaryDocumentMOC]] == nil) {
+    [self addSyncChangesMocForDocumentMoc:self.primaryDocumentMOC];
+    if ([self syncChangesMocForDocumentMoc:self.primaryDocumentMOC] == nil) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create sync changes MOC");
         [self bailFromRegistrationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateSyncChangesMOC classAndMethod:__PRETTY_FUNCTION__]];
         return;
@@ -80,27 +80,27 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"Finished creating SyncChangesMOC");
 
     TICDSLog(TICDSLogVerbosityEveryStep, @"Registration Information:\n   Delegate: %@,\n   App Sync Manager: %@,\n   Document ID: %@,\n   Description: %@,\n   User Info: %@", aDelegate, anAppSyncManager, aDocumentIdentifier, aDocumentDescription, someUserInfo);
-    [self setApplicationSyncManager:anAppSyncManager];
-    [self setDocumentDescription:aDocumentDescription];
+    self.applicationSyncManager = anAppSyncManager;
+    self.documentDescription = aDocumentDescription;
     NSString *userDefaultsIntegrityKey = [TICDSUtilities userDefaultsKeyForIntegrityKeyForDocumentWithIdentifier:aDocumentIdentifier];
     NSString *integrityKey = [[NSUserDefaults standardUserDefaults] valueForKey:userDefaultsIntegrityKey];
-    [self setIntegrityKey:integrityKey];
-    [self setClientIdentifier:[anAppSyncManager clientIdentifier]];
-    [self setDocumentUserInfo:someUserInfo];
+    self.integrityKey = integrityKey;
+    self.clientIdentifier = [anAppSyncManager clientIdentifier];
+    self.documentUserInfo = someUserInfo;
 
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Document sync manager configured for future registration");
 }
 
 - (void)registerConfiguredDocumentSyncManager
 {
-    if ([self state] != TICDSDocumentSyncManagerStateConfigured) {
+    if (self.state != TICDSDocumentSyncManagerStateConfigured) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Can't register this document sync manager because it wasn't configured");
         [self bailFromRegistrationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeUnableToRegisterUnconfiguredSyncManager classAndMethod:__PRETTY_FUNCTION__]];
         return;
     }
 
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:[self applicationSyncManager]];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationSyncManagerWillRemoveAllRemoteSyncData:) name:TICDSApplicationSyncManagerWillRemoveAllSyncDataNotification object:[self applicationSyncManager]];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:self.applicationSyncManager];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationSyncManagerWillRemoveAllRemoteSyncData:) name:TICDSApplicationSyncManagerWillRemoveAllSyncDataNotification object:self.applicationSyncManager];
 
     [self postIncreaseActivityNotification];
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidBeginRegistering:)]) {
@@ -109,10 +109,10 @@
          }];
     }
 
-    if ([[self applicationSyncManager] state] == TICDSApplicationSyncManagerStateAbleToSync) {
-        [[self registrationQueue] setSuspended:NO];
+    if ([self.applicationSyncManager state] == TICDSApplicationSyncManagerStateAbleToSync) {
+        [self.registrationQueue setSuspended:NO];
     } else {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appSyncManagerDidRegister:) name:TICDSApplicationSyncManagerDidFinishRegisteringNotification object:[self applicationSyncManager]];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appSyncManagerDidRegister:) name:TICDSApplicationSyncManagerDidFinishRegisteringNotification object:self.applicationSyncManager];
     }
 
     NSError *anyError = nil;
@@ -128,9 +128,9 @@
 
 - (void)preConfigureWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager documentIdentifier:(NSString *)aDocumentIdentifier
 {
-    [self setDelegate:aDelegate];
-    [self setDocumentIdentifier:aDocumentIdentifier];
-    [self setShouldUseEncryption:[anAppSyncManager shouldUseEncryption]];
+    self.delegate = aDelegate;
+    self.documentIdentifier = aDocumentIdentifier;
+    self.shouldUseEncryption = [anAppSyncManager shouldUseEncryption];
 
     [self postIncreaseActivityNotification];
 
@@ -157,7 +157,7 @@
         return NO;
     }
 
-    [self setState:TICDSDocumentSyncManagerStateConfigured];
+    self.state = TICDSDocumentSyncManagerStateConfigured;
 
     return YES;
 }
@@ -174,7 +174,7 @@
 - (NSURL *)defaultHelperFileLocation
 {
     NSString *location = [[self applicationSupportDirectory] stringByAppendingPathComponent:TICDSDocumentsDirectoryName];
-    location = [location stringByAppendingPathComponent:[self documentIdentifier]];
+    location = [location stringByAppendingPathComponent:self.documentIdentifier];
 
     return [NSURL fileURLWithPath:location];
 }
@@ -183,16 +183,16 @@
 {
     NSError *anyError = nil;
 
-    NSString *unappliedSyncChangesPath = [[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSUnappliedSyncChangesDirectoryName];
+    NSString *unappliedSyncChangesPath = [[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnappliedSyncChangesDirectoryName];
     BOOL success = YES;
 
-    if ([[self fileManager] fileExistsAtPath:unappliedSyncChangesPath] == NO) {
-        success = [[self fileManager] createDirectoryAtPath:unappliedSyncChangesPath withIntermediateDirectories:YES attributes:nil error:&anyError];
+    if ([self.fileManager fileExistsAtPath:unappliedSyncChangesPath] == NO) {
+        success = [self.fileManager createDirectoryAtPath:unappliedSyncChangesPath withIntermediateDirectories:YES attributes:nil error:&anyError];
     }
 
-    NSString *unappliedSyncCommandsPath = [[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSUnappliedSyncCommandsDirectoryName];
-    if (success && ![[self fileManager] fileExistsAtPath:unappliedSyncCommandsPath]) {
-        success = [[self fileManager] createDirectoryAtPath:unappliedSyncCommandsPath withIntermediateDirectories:YES attributes:nil error:&anyError];
+    NSString *unappliedSyncCommandsPath = [[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnappliedSyncCommandsDirectoryName];
+    if (success && ![self.fileManager fileExistsAtPath:unappliedSyncCommandsPath]) {
+        success = [self.fileManager createDirectoryAtPath:unappliedSyncCommandsPath withIntermediateDirectories:YES attributes:nil error:&anyError];
     }
 
     if (success == NO) {
@@ -210,13 +210,13 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Asking delegate for location of helper file directory");
     NSURL *finalURL = nil;
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:helperFileDirectoryURLForDocumentWithIdentifier:description:userInfo:)]) {
-        finalURL = [(id)self.delegate documentSyncManager:self helperFileDirectoryURLForDocumentWithIdentifier:[self documentIdentifier] description:[self documentDescription] userInfo:[self documentUserInfo]];
+        finalURL = [(id)self.delegate documentSyncManager:self helperFileDirectoryURLForDocumentWithIdentifier:self.documentIdentifier description:self.documentDescription userInfo:self.documentUserInfo];
     }
 
     TICDSLog(TICDSLogVerbosityEveryStep, @"Checking that delegate-provided helper file directory exists");
 
-    if (finalURL && ![[self fileManager] fileExistsAtPath:[finalURL path]]) {
-        [self setState:TICDSDocumentSyncManagerStateUnableToSyncBecauseDelegateProvidedHelperFileDirectoryDoesNotExist];
+    if (finalURL && ![self.fileManager fileExistsAtPath:[finalURL path]]) {
+        self.state = TICDSDocumentSyncManagerStateUnableToSyncBecauseDelegateProvidedHelperFileDirectoryDoesNotExist;
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Delegate-provided helper file directory does not exist");
 
         if (outError) {
@@ -228,24 +228,24 @@
     if (finalURL) {
         TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Delegate-provided helper file directory");
 
-        [self setHelperFileDirectoryLocation:finalURL];
+        self.helperFileDirectoryLocation = finalURL;
         return [self createHelperFileDirectoryFileStructure:outError];
     }
 
     // delegate did not provide a location for the helper files
     TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate did not provide a location for helper files, so checking default location");
 
-    [self setHelperFileDirectoryLocation:[self defaultHelperFileLocation]];
-    if ([[self fileManager] fileExistsAtPath:[[self defaultHelperFileLocation] path]]) {
+    self.helperFileDirectoryLocation = [self defaultHelperFileLocation];
+    if ([self.fileManager fileExistsAtPath:[[self defaultHelperFileLocation] path]]) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Default helper file location exists, so using it");
         return [self createHelperFileDirectoryFileStructure:outError];
     }
 
     TICDSLog(TICDSLogVerbosityEveryStep, @"Default helper file location does not exist, so creating it");
     NSError *anyError = nil;
-    BOOL success = [[self fileManager] createDirectoryAtPath:[[self helperFileDirectoryLocation] path] withIntermediateDirectories:YES attributes:nil error:&anyError];
+    BOOL success = [self.fileManager createDirectoryAtPath:[self.helperFileDirectoryLocation path] withIntermediateDirectories:YES attributes:nil error:&anyError];
     if (success == NO) {
-        [self setState:TICDSDocumentSyncManagerStateFailedToCreateDefaultHelperFileDirectory];
+        self.state = TICDSDocumentSyncManagerStateFailedToCreateDefaultHelperFileDirectory;
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create default helper file directory: %@", anyError);
 
         if (outError) {
@@ -279,14 +279,14 @@
          }];
     }
 
-    [self setDelegate:aDelegate];
-    [self setDocumentIdentifier:aDocumentIdentifier];
-    [self setShouldUseEncryption:[anAppSyncManager shouldUseEncryption]];
+    self.delegate = aDelegate;
+    self.documentIdentifier = aDocumentIdentifier;
+    self.shouldUseEncryption = [anAppSyncManager shouldUseEncryption];
     NSString *userDefaultsIntegrityKey = [TICDSUtilities userDefaultsKeyForIntegrityKeyForDocumentWithIdentifier:aDocumentIdentifier];
     NSString *integrityKey = [[NSUserDefaults standardUserDefaults] valueForKey:userDefaultsIntegrityKey];
-    [self setIntegrityKey:integrityKey];
+    self.integrityKey = integrityKey;
 
-    if ([self state] != TICDSApplicationSyncManagerStateConfigured) {
+    if (self.state != TICDSApplicationSyncManagerStateConfigured) {
         shouldContinue = [self startDocumentConfigurationProcess:&anyError];
     }
 
@@ -295,17 +295,17 @@
         return;
     }
 
-    [self setState:TICDSDocumentSyncManagerStateRegistering];
+    self.state = TICDSDocumentSyncManagerStateRegistering;
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to register document sync manager");
 
-    [self setPrimaryDocumentMOC:aContext];
+    self.primaryDocumentMOC = aContext;
     [aContext setDocumentSyncManager:self];
 
     // setup the syncChangesMOC
     TICDSLog(TICDSLogVerbosityEveryStep, @"Creating SyncChangesMOC");
 
-    [self addSyncChangesMocForDocumentMoc:[self primaryDocumentMOC]];
-    if ([self syncChangesMocForDocumentMoc:[self primaryDocumentMOC]] == nil) {
+    [self addSyncChangesMocForDocumentMoc:self.primaryDocumentMOC];
+    if ([self syncChangesMocForDocumentMoc:self.primaryDocumentMOC] == nil) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create sync changes MOC");
         [self bailFromRegistrationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateSyncChangesMOC classAndMethod:__PRETTY_FUNCTION__]];
         return;
@@ -313,13 +313,13 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"Finished creating SyncChangesMOC");
 
     TICDSLog(TICDSLogVerbosityEveryStep, @"Registration Information:\n   Delegate: %@,\n   App Sync Manager: %@,\n   Document ID: %@,\n   Description: %@,\n   User Info: %@", aDelegate, anAppSyncManager, aDocumentIdentifier, aDocumentDescription, someUserInfo);
-    [self setApplicationSyncManager:anAppSyncManager];
-    [self setDocumentDescription:aDocumentDescription];
-    [self setClientIdentifier:[anAppSyncManager clientIdentifier]];
-    [self setDocumentUserInfo:someUserInfo];
+    self.applicationSyncManager = anAppSyncManager;
+    self.documentDescription = aDocumentDescription;
+    self.clientIdentifier = [anAppSyncManager clientIdentifier];
+    self.documentUserInfo = someUserInfo;
 
     if ([anAppSyncManager state] == TICDSApplicationSyncManagerStateAbleToSync) {
-        [[self registrationQueue] setSuspended:NO];
+        [self.registrationQueue setSuspended:NO];
     } else {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appSyncManagerDidRegister:) name:TICDSApplicationSyncManagerDidFinishRegisteringNotification object:anAppSyncManager];
     }
@@ -355,15 +355,15 @@
         return NO;
     }
 
-    [operation setShouldUseEncryption:[self shouldUseEncryption]];
-    [operation setDocumentIdentifier:[self documentIdentifier]];
-    [operation setIntegrityKey:[self integrityKey]];
-    [operation setClientIdentifier:[self clientIdentifier]];
-    [operation setClientDescription:[[self applicationSyncManager] clientDescription]];
-    [operation setDocumentDescription:[self documentDescription]];
-    [operation setDocumentUserInfo:[self documentUserInfo]];
+    [operation setShouldUseEncryption:self.shouldUseEncryption];
+    operation.documentIdentifier = self.documentIdentifier;
+    [operation setIntegrityKey:self.integrityKey];
+    [operation setClientIdentifier:self.clientIdentifier];
+    [operation setClientDescription:[self.applicationSyncManager clientDescription]];
+    [operation setDocumentDescription:self.documentDescription];
+    [operation setDocumentUserInfo:self.documentUserInfo];
 
-    [[self registrationQueue] addOperation:operation];
+    [self.registrationQueue addOperation:operation];
 
     return YES;
 }
@@ -375,7 +375,7 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"Removing existing helper file directory");
 
     NSError *anyError = nil;
-    if ([[self fileManager] fileExistsAtPath:[[self helperFileDirectoryLocation] path]] && ![[self fileManager] removeItemAtPath:[[self helperFileDirectoryLocation] path] error:&anyError]) {
+    if ([self.fileManager fileExistsAtPath:[self.helperFileDirectoryLocation path]] && ![self.fileManager removeItemAtPath:[self.helperFileDirectoryLocation path] error:&anyError]) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to delete existing local helper files for this document, but not absolutely catastrophic, so continuing. Error: %@", anyError);
     }
 }
@@ -402,13 +402,13 @@
         [self removeThenRecreateExistingHelperFileDirectory];
         if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:description:userInfo:)]) {
             [self runOnMainQueueWithoutDeadlocking:^{
-                 [(id)self.delegate documentSyncManager:self didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:[self documentIdentifier] description:[self documentDescription] userInfo:[self documentUserInfo]];
+                 [(id)self.delegate documentSyncManager:self didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:self.documentIdentifier description:self.documentDescription userInfo:self.documentUserInfo];
              }];
         }
     } else {
         if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:)]) {
             [self runOnMainQueueWithoutDeadlocking:^{
-                 [(id)self.delegate documentSyncManager:self didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:[self documentIdentifier] description:[self documentDescription] userInfo:[self documentUserInfo]];
+                 [(id)self.delegate documentSyncManager:self didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:self.documentIdentifier description:self.documentDescription userInfo:self.documentUserInfo];
              }];
         }
     }
@@ -430,10 +430,10 @@
 - (void)continueRegistrationByCreatingRemoteFileStructure:(BOOL)shouldCreateFileStructure
 {
     // Just start the registration operation again
-    [(TICDSDocumentRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setShouldCreateDocumentFileStructure:shouldCreateFileStructure];
-    [(TICDSDocumentRegistrationOperation *)[[[self registrationQueue] operations] lastObject] setPaused:NO];
+    [(TICDSDocumentRegistrationOperation *)[[self.registrationQueue operations] lastObject] setShouldCreateDocumentFileStructure:shouldCreateFileStructure];
+    [(TICDSDocumentRegistrationOperation *)[[self.registrationQueue operations] lastObject] setPaused:NO];
 
-    [self setMustUploadStoreAfterRegistration:YES];
+    self.mustUploadStoreAfterRegistration = YES;
 }
 
 #pragma mark Alerting Delegate that Client Was Deleted From Document
@@ -466,16 +466,16 @@
     // Primary Registration Complete from Operation
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Document Registration Operation Completed");
 
-    [self setState:TICDSDocumentSyncManagerStateAbleToSync];
+    self.state = TICDSDocumentSyncManagerStateAbleToSync;
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Finished registering document sync manager");
 
     [[NSNotificationCenter defaultCenter] postNotificationName:TICDSDocumentSyncManagerDidRegisterSuccessfullyNotification object:self];
 
     // Set integrity key for delegate to store
-    [self setIntegrityKey:[anOperation integrityKey]];
+    self.integrityKey = [anOperation integrityKey];
 
-    NSString *userDefaultsIntegrityKey = [TICDSUtilities userDefaultsKeyForIntegrityKeyForDocumentWithIdentifier:[self documentIdentifier]];
-    [[NSUserDefaults standardUserDefaults] setValue:[self integrityKey] forKey:userDefaultsIntegrityKey];
+    NSString *userDefaultsIntegrityKey = [TICDSUtilities userDefaultsKeyForIntegrityKeyForDocumentWithIdentifier:self.documentIdentifier];
+    [[NSUserDefaults standardUserDefaults] setValue:self.integrityKey forKey:userDefaultsIntegrityKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
     // Registration Complete
@@ -488,7 +488,7 @@
 
     // Upload whole store if necessary
     TICDSLog(TICDSLogVerbosityEveryStep, @"Checking whether to upload whole store after registration");
-    if ([self mustUploadStoreAfterRegistration]) {
+    if (self.mustUploadStoreAfterRegistration) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Must upload store because this is the first time this document has been registered");
         [self startWholeStoreUploadProcess];
     } else if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:)] && [(id)self.delegate documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:self]) {
@@ -498,22 +498,22 @@
         TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate denied whole store upload after registration");
     }
 
-    [self setShouldUseEncryption:[[self applicationSyncManager] shouldUseEncryption]];
+    self.shouldUseEncryption = [self.applicationSyncManager shouldUseEncryption];
 
     TICDSLog(TICDSLogVerbosityEveryStep, @"Resuming Operation Queues");
-    for ( TICDSOperation *eachOperation in [[self otherTasksQueue] operations]) {
-        [eachOperation setShouldUseEncryption:[self shouldUseEncryption]];
+    for ( TICDSOperation *eachOperation in [self.otherTasksQueue operations]) {
+        [eachOperation setShouldUseEncryption:self.shouldUseEncryption];
     }
 
-    for ( TICDSOperation *eachOperation in [[self synchronizationQueue] operations]) {
-        [eachOperation setShouldUseEncryption:[self shouldUseEncryption]];
+    for ( TICDSOperation *eachOperation in [self.synchronizationQueue operations]) {
+        [eachOperation setShouldUseEncryption:self.shouldUseEncryption];
     }
 
-    [[self otherTasksQueue] setSuspended:NO];
+    [self.otherTasksQueue setSuspended:NO];
 
-    if ([self mustUploadStoreAfterRegistration] == NO) {
+    if (self.mustUploadStoreAfterRegistration == NO) {
         // Don't resume sync queue until after store was uploaded
-        [[self synchronizationQueue] setSuspended:NO];
+        [self.synchronizationQueue setSuspended:NO];
     } else {
         // Don't offer to clean-up if document was just created on remote
         return;
@@ -531,7 +531,7 @@
 
 - (void)documentRegistrationOperationWasCancelled:(TICDSDocumentRegistrationOperation *)anOperation
 {
-    [self setState:TICDSDocumentSyncManagerStateConfigured];
+    self.state = TICDSDocumentSyncManagerStateConfigured;
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Registration Operation was Cancelled");
 
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToRegisterWithError:)]) {
@@ -544,7 +544,7 @@
 
 - (void)documentRegistrationOperation:(TICDSDocumentRegistrationOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
-    [self setState:TICDSDocumentSyncManagerStateNotYetRegistered];
+    self.state = TICDSDocumentSyncManagerStateNotYetRegistered;
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Registration Operation Failed to Complete with Error: %@", anError);
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToRegisterWithError:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
@@ -586,7 +586,7 @@
 
     TICDSLog(TICDSLogVerbosityEveryStep, @"Checking to see if there are unsynchronized SyncChanges");
     NSError *anyError = nil;
-    NSUInteger count = [TICDSSyncChange ti_numberOfObjectsInManagedObjectContext:[self syncChangesMocForDocumentMoc:[self primaryDocumentMOC]] error:&anyError];
+    NSUInteger count = [TICDSSyncChange ti_numberOfObjectsInManagedObjectContext:[self syncChangesMocForDocumentMoc:self.primaryDocumentMOC] error:&anyError];
     if (anyError) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to count number of SyncChange objects: %@", anyError);
         [self bailFromUploadProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataFetchError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
@@ -602,10 +602,10 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Asking delegate for URL of whole store to upload");
     NSURL *storeURL = nil;
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:)]) {
-        storeURL = [(id)self.delegate documentSyncManager:self URLForWholeStoreToUploadForDocumentWithIdentifier:[self documentIdentifier] description:[self documentDescription] userInfo:[self documentUserInfo]];
+        storeURL = [(id)self.delegate documentSyncManager:self URLForWholeStoreToUploadForDocumentWithIdentifier:self.documentIdentifier description:self.documentDescription userInfo:self.documentUserInfo];
     }
 
-    if (storeURL == nil || [[self fileManager] fileExistsAtPath:[storeURL path]] == NO) {
+    if (storeURL == nil || [self.fileManager fileExistsAtPath:[storeURL path]] == NO) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Store does not exist at provided path");
         [self bailFromUploadProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeUnexpectedOrIncompleteFileLocationOrDirectoryStructure classAndMethod:__PRETTY_FUNCTION__]];
         return;
@@ -619,17 +619,17 @@
         return;
     }
 
-    [operation setShouldUseEncryption:[self shouldUseEncryption]];
+    [operation setShouldUseEncryption:self.shouldUseEncryption];
     [operation setLocalWholeStoreFileLocation:storeURL];
 
-    [operation configureBackgroundApplicationContextForPersistentStoreCoordinator:[[self primaryDocumentMOC] persistentStoreCoordinator]];
+    [operation configureBackgroundApplicationContextForPersistentStoreCoordinator:[self.primaryDocumentMOC persistentStoreCoordinator]];
 
-    NSString *appliedSyncChangeSetsFilePath = [[self helperFileDirectoryLocation] path];
+    NSString *appliedSyncChangeSetsFilePath = [self.helperFileDirectoryLocation path];
     appliedSyncChangeSetsFilePath = [appliedSyncChangeSetsFilePath stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
 
     [operation setLocalAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:appliedSyncChangeSetsFilePath]];
 
-    [[self otherTasksQueue] addOperation:operation];
+    [self.otherTasksQueue addOperation:operation];
 }
 
 #pragma mark Operation Generation
@@ -653,8 +653,8 @@
     [self postDecreaseActivityNotification];
 
     // Unsuspend the sync queue in the case that this was a required upload for a newly-registered document
-    if ([self mustUploadStoreAfterRegistration]) {
-        [[self synchronizationQueue] setSuspended:NO];
+    if (self.mustUploadStoreAfterRegistration) {
+        [self.synchronizationQueue setSuspended:NO];
     }
 }
 
@@ -718,10 +718,10 @@
 
     // Set download to go to a temporary location
     NSString *temporaryPath = [NSTemporaryDirectory () stringByAppendingPathComponent:TICDSFrameworkName];
-    temporaryPath = [temporaryPath stringByAppendingPathComponent:[self documentIdentifier]];
+    temporaryPath = [temporaryPath stringByAppendingPathComponent:self.documentIdentifier];
 
     NSError *anyError = nil;
-    BOOL success = [[self fileManager] createDirectoryAtPath:temporaryPath withIntermediateDirectories:YES attributes:nil error:&anyError];
+    BOOL success = [self.fileManager createDirectoryAtPath:temporaryPath withIntermediateDirectories:YES attributes:nil error:&anyError];
     if (success == NO) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create temporary directory for whole store download: %@", anyError);
 
@@ -737,7 +737,7 @@
         return;
     }
 
-    [operation setShouldUseEncryption:[self shouldUseEncryption]];
+    [operation setShouldUseEncryption:self.shouldUseEncryption];
 
     NSString *wholeStoreFilePath = [temporaryPath stringByAppendingPathComponent:TICDSWholeStoreFilename];
     NSString *appliedSyncChangesFilePath = [temporaryPath stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
@@ -745,9 +745,9 @@
     [operation setLocalWholeStoreFileLocation:[NSURL fileURLWithPath:wholeStoreFilePath]];
     [operation setLocalAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:appliedSyncChangesFilePath]];
 
-    [operation setClientIdentifier:[self clientIdentifier]];
+    [operation setClientIdentifier:self.clientIdentifier];
 
-    [[self otherTasksQueue] addOperation:operation];
+    [self.otherTasksQueue addOperation:operation];
 }
 
 #pragma mark Operation Generation
@@ -770,7 +770,7 @@
     }
 
     if (finalWholeStoreLocation == nil) {
-        NSPersistentStoreCoordinator *psc = [[self primaryDocumentMOC] persistentStoreCoordinator];
+        NSPersistentStoreCoordinator *psc = [self.primaryDocumentMOC persistentStoreCoordinator];
 
         finalWholeStoreLocation = [psc URLForPersistentStore:[[psc persistentStores] lastObject]];
     }
@@ -782,26 +782,26 @@
     }
 
     // Remove old WholeStore
-    if ([[self fileManager] fileExistsAtPath:[finalWholeStoreLocation path]] && ![[self fileManager] removeItemAtPath:[finalWholeStoreLocation path] error:&anyError]) {
+    if ([self.fileManager fileExistsAtPath:[finalWholeStoreLocation path]] && ![self.fileManager removeItemAtPath:[finalWholeStoreLocation path] error:&anyError]) {
         [self bailFromDownloadPostProcessingWithFileManagerError:anyError];
         return;
     }
 
     // Move downloaded WholeStore
-    success = [[self fileManager] moveItemAtPath:[[anOperation localWholeStoreFileLocation] path] toPath:[finalWholeStoreLocation path] error:&anyError];
+    success = [self.fileManager moveItemAtPath:[[anOperation localWholeStoreFileLocation] path] toPath:[finalWholeStoreLocation path] error:&anyError];
     if (success == NO) {
         [self bailFromDownloadPostProcessingWithFileManagerError:anyError];
         return;
     }
 
     // Remove old AppliedSyncChanges
-    if ([[self fileManager] fileExistsAtPath:[self localAppliedSyncChangesFilePath]] && ![[self fileManager] removeItemAtPath:[self localAppliedSyncChangesFilePath] error:&anyError]) {
+    if ([self.fileManager fileExistsAtPath:self.localAppliedSyncChangesFilePath] && ![self.fileManager removeItemAtPath:self.localAppliedSyncChangesFilePath error:&anyError]) {
         [self bailFromDownloadPostProcessingWithFileManagerError:anyError];
         return;
     }
 
     // Move newly downloaded AppliedSyncChanges
-    if ([[self fileManager] fileExistsAtPath:[[anOperation localAppliedSyncChangeSetsFileLocation] path]] && ![[self fileManager] moveItemAtPath:[[anOperation localAppliedSyncChangeSetsFileLocation] path] toPath:[self localAppliedSyncChangesFilePath] error:&anyError]) {
+    if ([self.fileManager fileExistsAtPath:[[anOperation localAppliedSyncChangeSetsFileLocation] path]] && ![self.fileManager moveItemAtPath:[[anOperation localAppliedSyncChangeSetsFileLocation] path] toPath:self.localAppliedSyncChangesFilePath error:&anyError]) {
         [self bailFromDownloadPostProcessingWithFileManagerError:anyError];
         return;
     }
@@ -813,9 +813,9 @@
     }
 
     TICDSLog(TICDSLogVerbosityEveryStep, @"Updating local integrity key to match newly-downloaded store");
-    [self setIntegrityKey:[anOperation integrityKey]];
-    NSString *userDefaultsIntegrityKey = [TICDSUtilities userDefaultsKeyForIntegrityKeyForDocumentWithIdentifier:[self documentIdentifier]];
-    [[NSUserDefaults standardUserDefaults] setValue:[self integrityKey] forKey:userDefaultsIntegrityKey];
+    self.integrityKey = [anOperation integrityKey];
+    NSString *userDefaultsIntegrityKey = [TICDSUtilities userDefaultsKeyForIntegrityKeyForDocumentWithIdentifier:self.documentIdentifier];
+    [[NSUserDefaults standardUserDefaults] setValue:self.integrityKey forKey:userDefaultsIntegrityKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Whole Store Download complete");
@@ -889,39 +889,39 @@
         return;
     }
 
-    [operation setShouldUseEncryption:[self shouldUseEncryption]];
-    [operation setClientIdentifier:[self clientIdentifier]];
-    [operation setIntegrityKey:[self integrityKey]];
+    [operation setShouldUseEncryption:self.shouldUseEncryption];
+    [operation setClientIdentifier:self.clientIdentifier];
+    [operation setIntegrityKey:self.integrityKey];
     // Set location of sync changes to merge file
     NSURL *syncChangesToMergeLocation = nil;
-    if ([[self fileManager] fileExistsAtPath:[self syncChangesBeingSynchronizedStorePath]]) {
-        syncChangesToMergeLocation = [NSURL fileURLWithPath:[self syncChangesBeingSynchronizedStorePath]];
+    if ([self.fileManager fileExistsAtPath:self.syncChangesBeingSynchronizedStorePath]) {
+        syncChangesToMergeLocation = [NSURL fileURLWithPath:self.syncChangesBeingSynchronizedStorePath];
     }
     [operation setLocalSyncChangesToMergeLocation:syncChangesToMergeLocation];
 
     // Set locations of files
-    [operation setAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename]]];
-    [operation setUnappliedSyncChangesDirectoryLocation:[NSURL fileURLWithPath:[[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSUnappliedSyncChangesDirectoryName]]];
-    [operation setUnappliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSUnappliedChangeSetsFilename]]];
-    [operation setLocalRecentSyncFileLocation:[NSURL fileURLWithPath:[[[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:[self clientIdentifier]] stringByAppendingPathExtension:TICDSRecentSyncFileExtension]]];
+    [operation setAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename]]];
+    [operation setUnappliedSyncChangesDirectoryLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnappliedSyncChangesDirectoryName]]];
+    [operation setUnappliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnappliedChangeSetsFilename]]];
+    [operation setLocalRecentSyncFileLocation:[NSURL fileURLWithPath:[[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:self.clientIdentifier] stringByAppendingPathExtension:TICDSRecentSyncFileExtension]]];
 
     // Set background context
-    [operation configureBackgroundApplicationContextForPersistentStoreCoordinator:[[self primaryDocumentMOC] persistentStoreCoordinator]];
+    [operation configureBackgroundApplicationContextForPersistentStoreCoordinator:[self.primaryDocumentMOC persistentStoreCoordinator]];
 
-    [[self synchronizationQueue] addOperation:operation];
+    [self.synchronizationQueue addOperation:operation];
 }
 
 - (void)moveUnsynchronizedSyncChangesToMergeLocation
 {
     // check whether there's an existing set of sync changes to merge left over from a previous error
-    if ([[self fileManager] fileExistsAtPath:[self syncChangesBeingSynchronizedStorePath]]) {
+    if ([self.fileManager fileExistsAtPath:self.syncChangesBeingSynchronizedStorePath]) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"A SyncChangesBeingSynchronized.syncchg file already exists from a previous failed sync, so using it for this synchronization process. The most recent local sync changes won't be synchronized.");
         return;
     }
 
     TICDSLog(TICDSLogVerbosityEveryStep, @"Checking if there are local sync changes to merge and push");
     NSError *anyError = nil;
-    NSArray *syncChanges = [TICDSSyncChange ti_allObjectsInManagedObjectContext:[self syncChangesMocForDocumentMoc:[self primaryDocumentMOC]] error:&anyError];
+    NSArray *syncChanges = [TICDSSyncChange ti_allObjectsInManagedObjectContext:[self syncChangesMocForDocumentMoc:self.primaryDocumentMOC] error:&anyError];
 
     if (syncChanges == nil) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to fetch local sync changes");
@@ -936,11 +936,11 @@
 
     TICDSLog(TICDSLogVerbosityEveryStep, @"Moving UnsynchronizedSyncChanges to SyncChangesBeingSynchronized");
 
-    [self setCoreDataFactory:nil];
-    [[self syncChangesMOCs] setValue:nil forKey:[self keyForContext:[self primaryDocumentMOC]]];
+    self.coreDataFactory = nil;
+    [self.syncChangesMOCs setValue:nil forKey:[self keyForContext:self.primaryDocumentMOC]];
 
     // move UnsynchronizedSyncChanges file to SyncChangesBeingSynchronized
-    BOOL success = [[self fileManager] moveItemAtPath:[self unsynchronizedSyncChangesStorePath] toPath:[self syncChangesBeingSynchronizedStorePath] error:&anyError];
+    BOOL success = [self.fileManager moveItemAtPath:self.unsynchronizedSyncChangesStorePath toPath:self.syncChangesBeingSynchronizedStorePath error:&anyError];
 
     if (success == NO) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to move UnsynchronizedSyncChanges.syncchg to SyncChangesBeingSynchronized.syncchg");
@@ -950,8 +950,8 @@
 
     // setup the syncChangesMOC
     TICDSLog(TICDSLogVerbosityEveryStep, @"Re-Creating SyncChangesMOC");
-    [self addSyncChangesMocForDocumentMoc:[self primaryDocumentMOC]];
-    if ([self syncChangesMocForDocumentMoc:[self primaryDocumentMOC]] == nil) {
+    [self addSyncChangesMocForDocumentMoc:self.primaryDocumentMOC];
+    if ([self syncChangesMocForDocumentMoc:self.primaryDocumentMOC] == nil) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create sync changes MOC");
         [self bailFromSynchronizationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateSyncChangesMOC classAndMethod:__PRETTY_FUNCTION__]];
         return;
@@ -992,7 +992,7 @@
 
 - (void)continueSynchronizationByResolvingConflictWithResolutionType:(TICDSSyncConflictResolutionType)aType
 {
-    TICDSSynchronizationOperation *operation = [[[self synchronizationQueue] operations] lastObject];
+    TICDSSynchronizationOperation *operation = [[self.synchronizationQueue operations] lastObject];
 
     [operation setMostRecentConflictResolutionType:aType];
 
@@ -1096,9 +1096,9 @@
         return;
     }
 
-    [operation setShouldUseEncryption:[self shouldUseEncryption]];
+    [operation setShouldUseEncryption:self.shouldUseEncryption];
 
-    [[self otherTasksQueue] addOperation:operation];
+    [self.otherTasksQueue addOperation:operation];
 }
 
 #pragma mark Operation Generation
@@ -1183,9 +1183,9 @@
         return;
     }
 
-    [operation setShouldUseEncryption:[self shouldUseEncryption]];
+    [operation setShouldUseEncryption:self.shouldUseEncryption];
 
-    [[self otherTasksQueue] addOperation:operation];
+    [self.otherTasksQueue addOperation:operation];
 }
 
 #pragma mark Operation Generation
@@ -1273,9 +1273,9 @@
     }
 
     [operation setIdentifierOfClientToBeDeleted:anIdentifier];
-    [operation setShouldUseEncryption:[self shouldUseEncryption]];
+    [operation setShouldUseEncryption:self.shouldUseEncryption];
 
-    [[self otherTasksQueue] addOperation:operation];
+    [self.otherTasksQueue addOperation:operation];
 }
 
 #pragma mark Operation Generation
@@ -1338,7 +1338,7 @@
 
 - (NSManagedObjectContext *)addSyncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)documentManagedObjectContext
 {
-    NSManagedObjectContext *syncChangesManagedObjectContext = [[self syncChangesMOCs] valueForKey:[self keyForContext:documentManagedObjectContext]];
+    NSManagedObjectContext *syncChangesManagedObjectContext = [self.syncChangesMOCs valueForKey:[self keyForContext:documentManagedObjectContext]];
 
     if (syncChangesManagedObjectContext != nil) {
         return syncChangesManagedObjectContext;
@@ -1346,11 +1346,11 @@
 
     [documentManagedObjectContext setDocumentSyncManager:self];
 
-    NSPersistentStoreCoordinator *persistentStoreCoordinator = [[self coreDataFactory] persistentStoreCoordinator];
+    NSPersistentStoreCoordinator *persistentStoreCoordinator = [self.coreDataFactory persistentStoreCoordinator];
     if (persistentStoreCoordinator == nil) {
         NSLog(@"%s We got a nil NSPersistentStoreCoordinator back from the Core Data Factory, trying to reset the factory.", __PRETTY_FUNCTION__);
         self.coreDataFactory = nil;
-        persistentStoreCoordinator = [[self coreDataFactory] persistentStoreCoordinator];
+        persistentStoreCoordinator = [self.coreDataFactory persistentStoreCoordinator];
         if (persistentStoreCoordinator == nil) {
             NSLog(@"%s Resetting the Core Data Factory didn't help, bailing from this method.", __PRETTY_FUNCTION__);
             return nil;
@@ -1364,14 +1364,14 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncChangesMocDidSave:) name:NSManagedObjectContextDidSaveNotification object:syncChangesManagedObjectContext];
 
-    [[self syncChangesMOCs] setValue:syncChangesManagedObjectContext forKey:[self keyForContext:documentManagedObjectContext]];
+    [self.syncChangesMOCs setValue:syncChangesManagedObjectContext forKey:[self keyForContext:documentManagedObjectContext]];
 
     return syncChangesManagedObjectContext;
 }
 
 - (NSManagedObjectContext *)syncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext
 {
-    NSManagedObjectContext *context = [[self syncChangesMOCs] valueForKey:[self keyForContext:aContext]];
+    NSManagedObjectContext *context = [self.syncChangesMOCs valueForKey:[self keyForContext:aContext]];
 
     if (context == nil) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"SyncChanges MOC was requested for a managed object context that hasn't yet been added, so adding it before proceeding");
@@ -1392,7 +1392,7 @@
 
 - (void)syncChangesMocDidSave:(NSNotification *)aNotification
 {
-    if ([aNotification object] != [self primaryDocumentMOC]) {
+    if ([aNotification object] != self.primaryDocumentMOC) {
         return;
     }
 
@@ -1401,7 +1401,7 @@
         return;
     }
 
-    [[self syncChangesMocForDocumentMoc:[self primaryDocumentMOC]] mergeChangesFromContextDidSaveNotification:aNotification];
+    [[self syncChangesMocForDocumentMoc:self.primaryDocumentMOC] mergeChangesFromContextDidSaveNotification:aNotification];
 }
 
 #pragma mark - MANAGED OBJECT CONTEXT DID SAVE BEHAVIOR
@@ -1465,21 +1465,21 @@
 
 - (void)appSyncManagerDidRegister:(NSNotification *)aNotification
 {
-    [self setShouldUseEncryption:[[self applicationSyncManager] shouldUseEncryption]];
+    self.shouldUseEncryption = [self.applicationSyncManager shouldUseEncryption];
 
-    for ( TICDSOperation *eachOperation in [[self registrationQueue] operations]) {
-        [eachOperation setShouldUseEncryption:[self shouldUseEncryption]];
+    for ( TICDSOperation *eachOperation in [self.registrationQueue operations]) {
+        [eachOperation setShouldUseEncryption:self.shouldUseEncryption];
     }
 
-    for ( TICDSOperation *eachOperation in [[self synchronizationQueue] operations]) {
-        [eachOperation setShouldUseEncryption:[self shouldUseEncryption]];
+    for ( TICDSOperation *eachOperation in [self.synchronizationQueue operations]) {
+        [eachOperation setShouldUseEncryption:self.shouldUseEncryption];
     }
 
-    for ( TICDSOperation *eachOperation in [[self otherTasksQueue] operations]) {
-        [eachOperation setShouldUseEncryption:[self shouldUseEncryption]];
+    for ( TICDSOperation *eachOperation in [self.otherTasksQueue operations]) {
+        [eachOperation setShouldUseEncryption:self.shouldUseEncryption];
     }
 
-    [[self registrationQueue] setSuspended:NO];
+    [self.registrationQueue setSuspended:NO];
 }
 
 - (void)backgroundManagedObjectContextDidSave:(NSNotification *)aNotification
@@ -1630,7 +1630,7 @@
     _coreDataFactory = [[TICoreDataFactory alloc] initWithMomdName:TICDSSyncChangeDataModelName];
     [_coreDataFactory setDelegate:self];
     [_coreDataFactory setPersistentStoreType:TICDSSyncChangesCoreDataPersistentStoreType];
-    [_coreDataFactory setPersistentStoreDataPath:[self unsynchronizedSyncChangesStorePath]];
+    [_coreDataFactory setPersistentStoreDataPath:self.unsynchronizedSyncChangesStorePath];
 
     return _coreDataFactory;
 }
@@ -1649,12 +1649,12 @@
 
 - (NSString *)relativePathToInformationDeletedDocumentsDirectory
 {
-    return [[self relativePathToInformationDirectory] stringByAppendingPathComponent:TICDSDeletedDocumentsDirectoryName];
+    return [self.relativePathToInformationDirectory stringByAppendingPathComponent:TICDSDeletedDocumentsDirectoryName];
 }
 
 - (NSString *)relativePathToDeletedDocumentsThisDocumentIdentifierPlistFile
 {
-    return [[self relativePathToInformationDeletedDocumentsDirectory] stringByAppendingPathComponent:[[self documentIdentifier] stringByAppendingPathExtension:TICDSDocumentInfoPlistExtension]];
+    return [self.relativePathToInformationDeletedDocumentsDirectory stringByAppendingPathComponent:[self.documentIdentifier stringByAppendingPathExtension:TICDSDocumentInfoPlistExtension]];
 }
 
 - (NSString *)relativePathToDocumentsDirectory
@@ -1664,12 +1664,12 @@
 
 - (NSString *)relativePathToThisDocumentDirectory
 {
-    return [[self relativePathToDocumentsDirectory] stringByAppendingPathComponent:[self documentIdentifier]];
+    return [self.relativePathToDocumentsDirectory stringByAppendingPathComponent:self.documentIdentifier];
 }
 
 - (NSString *)relativePathToThisDocumentDeletedClientsDirectory
 {
-    return [[self relativePathToThisDocumentDirectory] stringByAppendingPathComponent:TICDSDeletedClientsDirectoryName];
+    return [self.relativePathToThisDocumentDirectory stringByAppendingPathComponent:TICDSDeletedClientsDirectoryName];
 }
 
 - (NSString *)relativePathToThisDocumentSyncChangesDirectory
@@ -1679,7 +1679,7 @@
 
 - (NSString *)relativePathToThisDocumentSyncChangesThisClientDirectory
 {
-    return [[self relativePathToThisDocumentSyncChangesDirectory] stringByAppendingPathComponent:[self clientIdentifier]];
+    return [self.relativePathToThisDocumentSyncChangesDirectory stringByAppendingPathComponent:self.clientIdentifier];
 }
 
 - (NSString *)relativePathToThisDocumentSyncCommandsDirectory
@@ -1689,7 +1689,7 @@
 
 - (NSString *)relativePathToThisDocumentSyncCommandsThisClientDirectory
 {
-    return [[self relativePathToThisDocumentSyncCommandsDirectory] stringByAppendingPathComponent:[self clientIdentifier]];
+    return [self.relativePathToThisDocumentSyncCommandsDirectory stringByAppendingPathComponent:self.clientIdentifier];
 }
 
 - (NSString *)relativePathToThisDocumentTemporaryFilesDirectory
@@ -1699,22 +1699,22 @@
 
 - (NSString *)relativePathToThisDocumentTemporaryWholeStoreDirectory
 {
-    return [[self relativePathToThisDocumentTemporaryFilesDirectory] stringByAppendingPathComponent:TICDSWholeStoreDirectoryName];
+    return [self.relativePathToThisDocumentTemporaryFilesDirectory stringByAppendingPathComponent:TICDSWholeStoreDirectoryName];
 }
 
 - (NSString *)relativePathToThisDocumentTemporaryWholeStoreThisClientDirectory
 {
-    return [[self relativePathToThisDocumentTemporaryWholeStoreDirectory] stringByAppendingPathComponent:[self clientIdentifier]];
+    return [self.relativePathToThisDocumentTemporaryWholeStoreDirectory stringByAppendingPathComponent:self.clientIdentifier];
 }
 
 - (NSString *)relativePathToThisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFile
 {
-    return [[self relativePathToThisDocumentTemporaryWholeStoreThisClientDirectory] stringByAppendingPathComponent:TICDSWholeStoreFilename];
+    return [self.relativePathToThisDocumentTemporaryWholeStoreThisClientDirectory stringByAppendingPathComponent:TICDSWholeStoreFilename];
 }
 
 - (NSString *)relativePathToThisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFile
 {
-    return [[self relativePathToThisDocumentTemporaryWholeStoreThisClientDirectory] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
+    return [self.relativePathToThisDocumentTemporaryWholeStoreThisClientDirectory stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
 }
 
 - (NSString *)relativePathToThisDocumentWholeStoreDirectory
@@ -1724,17 +1724,17 @@
 
 - (NSString *)relativePathToThisDocumentWholeStoreThisClientDirectory
 {
-    return [[self relativePathToThisDocumentWholeStoreDirectory] stringByAppendingPathComponent:[self clientIdentifier]];
+    return [self.relativePathToThisDocumentWholeStoreDirectory stringByAppendingPathComponent:self.clientIdentifier];
 }
 
 - (NSString *)relativePathToThisDocumentWholeStoreThisClientDirectoryWholeStoreFile
 {
-    return [[self relativePathToThisDocumentWholeStoreThisClientDirectory] stringByAppendingPathComponent:TICDSWholeStoreFilename];
+    return [self.relativePathToThisDocumentWholeStoreThisClientDirectory stringByAppendingPathComponent:TICDSWholeStoreFilename];
 }
 
 - (NSString *)relativePathToThisDocumentWholeStoreThisClientDirectoryAppliedSyncChangeSetsFile
 {
-    return [[self relativePathToThisDocumentWholeStoreThisClientDirectory] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
+    return [self.relativePathToThisDocumentWholeStoreThisClientDirectory stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
 }
 
 - (NSString *)relativePathToThisDocumentRecentSyncsDirectory
@@ -1744,22 +1744,22 @@
 
 - (NSString *)relativePathToThisDocumentRecentSyncsDirectoryThisClientFile
 {
-    return [[[self relativePathToThisDocumentRecentSyncsDirectory] stringByAppendingPathComponent:[self clientIdentifier]] stringByAppendingPathExtension:TICDSRecentSyncFileExtension];
+    return [[self.relativePathToThisDocumentRecentSyncsDirectory stringByAppendingPathComponent:self.clientIdentifier] stringByAppendingPathExtension:TICDSRecentSyncFileExtension];
 }
 
 - (NSString *)localAppliedSyncChangesFilePath
 {
-    return [[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
+    return [[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
 }
 
 - (NSString *)syncChangesBeingSynchronizedStorePath
 {
-    return [[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSSyncChangesBeingSynchronizedStoreName];
+    return [[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSSyncChangesBeingSynchronizedStoreName];
 }
 
 - (NSString *)unsynchronizedSyncChangesStorePath
 {
-    return [[[self helperFileDirectoryLocation] path] stringByAppendingPathComponent:TICDSUnsynchronizedSyncChangesStoreName];
+    return [[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnsynchronizedSyncChangesStoreName];
 }
 
 #pragma mark - Properties
