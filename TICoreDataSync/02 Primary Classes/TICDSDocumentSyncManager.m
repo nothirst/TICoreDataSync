@@ -1357,10 +1357,8 @@
         }
     }
 
-    syncChangesManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-    [syncChangesManagedObjectContext performBlockAndWait:^{
-        syncChangesManagedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator;
-    }];
+    syncChangesManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
+    syncChangesManagedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator;
 
     [self.syncChangesMOCs setValue:syncChangesManagedObjectContext forKey:[self keyForContext:documentManagedObjectContext]];
 
@@ -1404,14 +1402,12 @@
          }];
     }
 
-    __block NSError *anyError = nil;
-    __block BOOL success = NO;
+    NSError *anyError = nil;
+    BOOL success = NO;
 
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Sync Manager will save Sync Changes context");
     NSManagedObjectContext *syncChangesManagedObjectContext = [self syncChangesMocForDocumentMoc:documentManagedObjectContext];
-    [syncChangesManagedObjectContext performBlockAndWait:^{
-        success = [syncChangesManagedObjectContext save:&anyError];
-    }];
+    success = [syncChangesManagedObjectContext save:&anyError];
 
     if (success == NO) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Sync Manager failed to save Sync Changes context with error: %@", anyError);

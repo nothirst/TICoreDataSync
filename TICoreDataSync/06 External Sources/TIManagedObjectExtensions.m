@@ -111,17 +111,15 @@
 + (NSUInteger)ti_numberOfObjectsMatchingPredicate:(NSPredicate *)aPredicate inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext error:(NSError **)outError
 {
     
-    __block NSError *anyError = nil;
-    __block NSUInteger count = 0;
+    NSError *anyError = nil;
+    NSUInteger count = 0;
     
-    [managedObjectContext performBlockAndWait:^{
-        NSFetchRequest *countRequest = [self ti_fetchRequestWithPredicate:aPredicate inManagedObjectContext:managedObjectContext];
-        count = [managedObjectContext countForFetchRequest:countRequest error:&anyError];
-        
-        if (outError && anyError) {
-            *outError = anyError;
-        }
-    }];
+    NSFetchRequest *countRequest = [self ti_fetchRequestWithPredicate:aPredicate inManagedObjectContext:managedObjectContext];
+    count = [managedObjectContext countForFetchRequest:countRequest error:&anyError];
+    
+    if (outError && anyError) {
+        *outError = anyError;
+    }
     
     return count;
 }
@@ -161,12 +159,11 @@
 #pragma mark - Matching Predicate
 + (NSArray *)ti_objectsMatchingPredicate:(NSPredicate *)aPredicate inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext sortedWithDescriptors:(NSArray *)someDescriptors error:(NSError **)outError
 {
-    __block NSError *anyError = nil;
-    __block NSArray *results = nil;
-    [managedObjectContext performBlockAndWait:^{
-        NSFetchRequest *request = [self ti_fetchRequestWithPredicate:aPredicate inManagedObjectContext:managedObjectContext sortedWithDescriptors:someDescriptors];
-        results = [managedObjectContext executeFetchRequest:request error:&anyError];
-    }];
+    NSError *anyError = nil;
+    NSArray *results = nil;
+    
+    NSFetchRequest *request = [self ti_fetchRequestWithPredicate:aPredicate inManagedObjectContext:managedObjectContext sortedWithDescriptors:someDescriptors];
+    results = [managedObjectContext executeFetchRequest:request error:&anyError];
     
     if (!results && outError) {
         *outError = anyError;
