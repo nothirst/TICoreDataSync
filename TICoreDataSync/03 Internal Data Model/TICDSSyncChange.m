@@ -8,67 +8,7 @@
 
 #import "TICoreDataSync.h"
 
-@interface TICDSSyncChange ()
-
-#ifdef DEBUG
-@property NSString *fetchingThreadName;
-#endif
-
-@end
-
-
 @implementation TICDSSyncChange
-
-
-#pragma mark - Overridden KVO methods to provide thread access checks methods
-
-#ifdef DEBUG
-
-@synthesize fetchingThreadName = _fetchingThreadName;
-
-- (void)awakeFromFetch
-{
-    [super awakeFromFetch];
-    self.fetchingThreadName = [[NSThread currentThread] name];
-}
-
-- (void)willChangeValueForKey:(NSString *)key
-{
-    NSAssert([self.fetchingThreadName isEqualToString:[[NSThread currentThread] name]], @"This object is being accessed from a different thread/queue from where it was originally fetched.");
-    [super willChangeValueForKey:key];
-}
-
-- (void)didChangeValueForKey:(NSString *)key
-{
-    NSAssert([self.fetchingThreadName isEqualToString:[[NSThread currentThread] name]], @"This object is being accessed from a different thread/queue from where it was originally fetched.");
-    [super didChangeValueForKey:key];
-}
-
-- (void)willChange:(NSKeyValueChange)changeKind valuesAtIndexes:(NSIndexSet *)indexes forKey:(NSString *)key
-{
-    NSAssert([self.fetchingThreadName isEqualToString:[[NSThread currentThread] name]], @"This object is being accessed from a different thread/queue from where it was originally fetched.");
-    [super willChange:changeKind valuesAtIndexes:indexes forKey:key];
-}
-
-- (void)didChange:(NSKeyValueChange)changeKind valuesAtIndexes:(NSIndexSet *)indexes forKey:(NSString *)key
-{
-    NSAssert([self.fetchingThreadName isEqualToString:[[NSThread currentThread] name]], @"This object is being accessed from a different thread/queue from where it was originally fetched.");
-    [super didChange:changeKind valuesAtIndexes:indexes forKey:key];
-}
-
-- (void)willChangeValueForKey:(NSString *)key withSetMutation:(NSKeyValueSetMutationKind)mutationKind usingObjects:(NSSet *)objects
-{
-    NSAssert([self.fetchingThreadName isEqualToString:[[NSThread currentThread] name]], @"This object is being accessed from a different thread/queue from where it was originally fetched.");
-    [super willChangeValueForKey:key withSetMutation:mutationKind usingObjects:objects];
-}
-
-- (void)didChangeValueForKey:(NSString *)key withSetMutation:(NSKeyValueSetMutationKind)mutationKind usingObjects:(NSSet *)objects
-{
-    NSAssert([self.fetchingThreadName isEqualToString:[[NSThread currentThread] name]], @"This object is being accessed from a different thread/queue from where it was originally fetched.");
-    [super didChangeValueForKey:key withSetMutation:mutationKind usingObjects:objects];
-}
-
-#endif
 
 #pragma mark - Helper Methods
 + (id)syncChangeOfType:(TICDSSyncChangeType)aType inManagedObjectContext:(NSManagedObjectContext *)aMoc
