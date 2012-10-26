@@ -1123,9 +1123,9 @@
 }
 
 #pragma mark - Configuration
-- (void)configureBackgroundApplicationContextForPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)aPersistentStoreCoordinator
+- (void)configureBackgroundApplicationContextForPrimaryManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
 {
-    self.primaryPersistentStoreCoordinator = aPersistentStoreCoordinator;
+    self.primaryManagedObjectContext = managedObjectContext;
 }
 
 #pragma mark - Initialization and Deallocation
@@ -1155,7 +1155,6 @@
     _unappliedSyncChangesContext = nil;
     _localSyncChangesToMergeCoreDataFactory = nil;
     _localSyncChangesToMergeContext = nil;
-    _primaryPersistentStoreCoordinator = nil;
     _backgroundApplicationContext = nil;
 }
 
@@ -1265,9 +1264,11 @@
         return _backgroundApplicationContext;
     }
 
-    _backgroundApplicationContext = [[TICDSSynchronizationOperationManagedObjectContext alloc] init];
-    [_backgroundApplicationContext setPersistentStoreCoordinator:self.primaryPersistentStoreCoordinator];
-    [_backgroundApplicationContext setUndoManager:nil];
+    _backgroundApplicationContext = [[TICDSSynchronizationOperationManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    [_backgroundApplicationContext performBlockAndWait:^{
+        _backgroundApplicationContext.parentContext = self.primaryManagedObjectContext;
+        [_backgroundApplicationContext setUndoManager:nil];
+    }];
 
     [[NSNotificationCenter defaultCenter] addObserver:[self delegate] selector:@selector(backgroundManagedObjectContextDidSave:) name:NSManagedObjectContextDidSaveNotification object:_backgroundApplicationContext];
 
@@ -1306,7 +1307,7 @@
 @synthesize unappliedSyncChangesContext = _unappliedSyncChangesContext;
 @synthesize localSyncChangesToMergeCoreDataFactory = _localSyncChangesToMergeCoreDataFactory;
 @synthesize localSyncChangesToMergeContext = _localSyncChangesToMergeContext;
-@synthesize primaryPersistentStoreCoordinator = _primaryPersistentStoreCoordinator;
+//@synthesize primaryPersistentStoreCoordinator = _primaryPersistentStoreCoordinator;
 @synthesize backgroundApplicationContext = _backgroundApplicationContext;
 
 @synthesize numberOfSyncChangeSetIDArraysToFetch = _numberOfSyncChangeSetIDArraysToFetch;

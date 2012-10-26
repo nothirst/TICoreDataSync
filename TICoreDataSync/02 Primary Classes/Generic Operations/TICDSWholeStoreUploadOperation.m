@@ -37,6 +37,7 @@
     
     NSMutableArray *problemEntities = [NSMutableArray array];
     
+    [self.backgroundApplicationContext performBlockAndWait:^{
     NSArray *allEntities = [[[[self backgroundApplicationContext] persistentStoreCoordinator] managedObjectModel] entities];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -81,6 +82,7 @@
         TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Missing ticdsSyncIDs need to be fixed before uploading the store");
         [self beginSettingMissingSyncIDAttributesForEntityDescriptions:problemEntities];
     }
+    }];
 }
 
 - (void)beginSettingMissingSyncIDAttributesForEntityDescriptions:(NSArray *)someEntityDescriptions
@@ -366,18 +368,9 @@
 }
 
 #pragma mark - Configuration
-- (void)configureBackgroundApplicationContextForPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)aPersistentStoreCoordinator
+- (void)configureBackgroundApplicationContextForPrimaryManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
 {
-    /*NSManagedObjectContext *backgroundContext = [[NSManagedObjectContext alloc] init];
-    [backgroundContext setUndoManager:nil];
-    [backgroundContext setPersistentStoreCoordinator:aPersistentStoreCoordinator];
-    
-    [self setBackgroundApplicationContext:backgroundContext];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:[self delegate] selector:@selector(backgroundManagedObjectContextDidSave:) name:NSManagedObjectContextDidSaveNotification object:backgroundContext];
-    
-    [backgroundContext release];*/
-    [self setPrimaryPersistentStoreCoordinator:aPersistentStoreCoordinator];
+    self.primaryManagedObjectContext = managedObjectContext;
 }
 
 #pragma mark - Initialization and Deallocation
@@ -385,7 +378,7 @@
 {
     _localWholeStoreFileLocation = nil;
     _localAppliedSyncChangeSetsFileLocation = nil;
-    _primaryPersistentStoreCoordinator = nil;
+//    _primaryPersistentStoreCoordinator = nil;
     _backgroundApplicationContext = nil;
 
 }
@@ -396,9 +389,11 @@
         return _backgroundApplicationContext;
     }
     
-    _backgroundApplicationContext = [[NSManagedObjectContext alloc] init];
-    [_backgroundApplicationContext setPersistentStoreCoordinator:[self primaryPersistentStoreCoordinator]];
-    [_backgroundApplicationContext setUndoManager:nil];
+    _backgroundApplicationContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    [_backgroundApplicationContext performBlockAndWait:^{
+        _backgroundApplicationContext.parentContext = self.primaryManagedObjectContext;
+        [_backgroundApplicationContext setUndoManager:nil];
+    }];
     
     [[NSNotificationCenter defaultCenter] addObserver:[self delegate] selector:@selector(backgroundManagedObjectContextDidSave:) name:NSManagedObjectContextDidSaveNotification object:_backgroundApplicationContext];
     
@@ -408,7 +403,7 @@
 #pragma mark - Properties
 @synthesize localWholeStoreFileLocation = _localWholeStoreFileLocation;
 @synthesize localAppliedSyncChangeSetsFileLocation = _localAppliedSyncChangeSetsFileLocation;
-@synthesize primaryPersistentStoreCoordinator = _primaryPersistentStoreCoordinator;
+//@synthesize primaryPersistentStoreCoordinator = _primaryPersistentStoreCoordinator;
 @synthesize backgroundApplicationContext = _backgroundApplicationContext;
 
 @end

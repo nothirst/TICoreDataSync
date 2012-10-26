@@ -622,7 +622,7 @@
     [operation setShouldUseEncryption:self.shouldUseEncryption];
     [operation setLocalWholeStoreFileLocation:storeURL];
 
-    [operation configureBackgroundApplicationContextForPersistentStoreCoordinator:[self.primaryDocumentMOC persistentStoreCoordinator]];
+    [operation configureBackgroundApplicationContextForPrimaryManagedObjectContext:self.primaryDocumentMOC];
 
     NSString *appliedSyncChangeSetsFilePath = [self.helperFileDirectoryLocation path];
     appliedSyncChangeSetsFilePath = [appliedSyncChangeSetsFilePath stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
@@ -906,7 +906,7 @@
     [operation setLocalRecentSyncFileLocation:[NSURL fileURLWithPath:[[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:self.clientIdentifier] stringByAppendingPathExtension:TICDSRecentSyncFileExtension]]];
 
     // Set background context
-    [operation configureBackgroundApplicationContextForPersistentStoreCoordinator:[self.primaryDocumentMOC persistentStoreCoordinator]];
+    [operation configureBackgroundApplicationContextForPrimaryManagedObjectContext:self.primaryDocumentMOC];
 
     [self.synchronizationQueue addOperation:operation];
 }
