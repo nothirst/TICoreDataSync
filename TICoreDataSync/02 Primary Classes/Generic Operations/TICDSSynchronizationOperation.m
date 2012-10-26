@@ -40,8 +40,8 @@
 - (void)continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully;
 
 - (BOOL)beginApplyingSyncChangesInChangeSet:(TICDSSyncChangeSet *)aChangeSet;
-- (NSArray *)syncChangesAfterCheckingForConflicts:(NSArray *)syncChanges;
-- (NSArray *)remoteSyncChangesForObjectWithIdentifier:(NSString *)anIdentifier afterCheckingForConflictsInRemoteSyncChanges:(NSArray *)remoteSyncChanges;
+- (NSArray *)syncChangesAfterCheckingForConflicts:(NSArray *)syncChanges inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
+- (NSArray *)remoteSyncChangesForObjectWithIdentifier:(NSString *)anIdentifier afterCheckingForConflictsInRemoteSyncChanges:(NSArray *)remoteSyncChanges inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 - (void)addWarningsForRemoteDeletionWithLocalChanges:(NSArray *)localChanges;
 - (void)addWarningsForRemoteChangesWithLocalDeletion:(NSArray *)remoteChanges;
 - (TICDSSyncConflictResolutionType)resolutionTypeForConflict:(TICDSSyncConflict *)aConflict;
@@ -292,9 +292,9 @@
     // Check whether it already exists
     NSError *anyError = nil;
 
-    TICDSSyncChangeSet *set = [TICDSSyncChangeSet ti_firstObjectMatchingPredicate:[NSPredicate predicateWithFormat:@"syncChangeSetIdentifier == %@", aChangeSetIdentifier] inManagedObjectContext:self.unappliedSyncChangeSetsContext error:&anyError];
+    TICDSSyncChangeSet *unappliedSyncChangeSet = [TICDSSyncChangeSet ti_firstObjectMatchingPredicate:[NSPredicate predicateWithFormat:@"syncChangeSetIdentifier == %@", aChangeSetIdentifier] inManagedObjectContext:self.unappliedSyncChangeSetsContext error:&anyError];
 
-    if (set) {
+    if (unappliedSyncChangeSet != nil) {
         return YES;
     }
 
@@ -304,9 +304,9 @@
         return NO;
     }
 
-    set = [TICDSSyncChangeSet syncChangeSetWithIdentifier:aChangeSetIdentifier fromClient:aClientIdentifier creationDate:aDate inManagedObjectContext:self.unappliedSyncChangeSetsContext];
+    unappliedSyncChangeSet = [TICDSSyncChangeSet syncChangeSetWithIdentifier:aChangeSetIdentifier fromClient:aClientIdentifier creationDate:aDate inManagedObjectContext:self.unappliedSyncChangeSetsContext];
 
-    if (set == nil) {
+    if (unappliedSyncChangeSet == nil) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeObjectCreationError classAndMethod:__PRETTY_FUNCTION__]];
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to add unapplied sync change set to UnappliedSyncChangeSets.ticdsync.");
         return NO;
@@ -325,6 +325,7 @@
 }
 
 #pragma mark - APPLICATION OF UNAPPLIED SYNC CHANGE SETS
+
 - (void)beginApplyingUnappliedSyncChangeSets
 {
     if ([NSThread isMainThread]) {
@@ -335,18 +336,18 @@
     @autoreleasepool {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Checking how many sync change sets need to be applied");
 
-        NSError *anyError = nil;
+        __block NSError *anyError = nil;
         NSArray *sortDescriptors = [NSArray arrayWithObjects:[[NSSortDescriptor alloc] initWithKey:@"creationDate" ascending:YES], [[NSSortDescriptor alloc] initWithKey:@"syncChangeSetIdentifier" ascending:YES], nil];
 
-        NSArray *syncChangeSetsToApply = [TICDSSyncChangeSet ti_allObjectsInManagedObjectContext:self.unappliedSyncChangeSetsContext sortedWithDescriptors:sortDescriptors error:&anyError];
+        NSArray *unappliedSyncChangeSets = [TICDSSyncChangeSet ti_allObjectsInManagedObjectContext:self.unappliedSyncChangeSetsContext sortedWithDescriptors:sortDescriptors error:&anyError];
 
-        if (syncChangeSetsToApply == nil) {
+        if (unappliedSyncChangeSets == nil) {
             [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataFetchError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
             [self continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully];
             return;
         }
 
-        if ([syncChangeSetsToApply count] < 1) {
+        if ([unappliedSyncChangeSets count] < 1) {
             TICDSLog(TICDSLogVerbosityEveryStep, @"No other clients have uploaded any sync change sets, so proceeding to upload local sync commands");
             [self continueAfterApplyingUnappliedSyncChangeSetsSuccessfully];
             return;
@@ -354,13 +355,17 @@
 
         self.synchronizationWarnings = [NSMutableArray arrayWithCapacity:20];
 
-        BOOL shouldContinue = [self applyUnappliedSyncChangeSets:syncChangeSetsToApply];
+        BOOL shouldContinue = [self applyUnappliedSyncChangeSets:unappliedSyncChangeSets];
 
         if (shouldContinue) {
             anyError = nil;
 
             // Save Background Context (changes made to objects in application's context)
-            BOOL success = [self.backgroundApplicationContext save:&anyError];
+            __block BOOL success = NO;
+            [self.backgroundApplicationContext performBlockAndWait:^{
+                success = [self.backgroundApplicationContext save:&anyError];
+            }];
+
             if (success == NO) {
                 TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save background context: %@", anyError);
                 [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
@@ -401,41 +406,49 @@
     }
 }
 
-- (BOOL)applyUnappliedSyncChangeSets:(NSArray *)syncChangeSets
+- (BOOL)applyUnappliedSyncChangeSets:(NSArray *)unappliedSyncChangeSets
 {
     BOOL shouldContinue = YES;
 
     NSInteger changeSetCount = 1;
-    for ( TICDSSyncChangeSet *eachChangeSet in syncChangeSets) {
-        self.changeSetProgressString = [NSString stringWithFormat:@"Change set %ld of %lu", (long)changeSetCount++, (unsigned long)[syncChangeSets count]];
-        shouldContinue = [self beginApplyingSyncChangesInChangeSet:eachChangeSet];
+    for ( TICDSSyncChangeSet *unappliedSyncChangeSet in unappliedSyncChangeSets) {
+        self.changeSetProgressString = [NSString stringWithFormat:@"Change set %ld of %lu", (long)changeSetCount++, (unsigned long)[unappliedSyncChangeSets count]];
+        shouldContinue = [self beginApplyingSyncChangesInChangeSet:unappliedSyncChangeSet];
         if (shouldContinue == NO) {
             break;
         }
 
-        shouldContinue = [self addSyncChangeSetToAppliedSyncChangeSets:eachChangeSet];
+        shouldContinue = [self addSyncChangeSetToAppliedSyncChangeSets:unappliedSyncChangeSet];
         if (shouldContinue == NO) {
             break;
         }
 
-        shouldContinue = [self removeSyncChangeSetFileForSyncChangeSet:eachChangeSet];
+        shouldContinue = [self removeSyncChangeSetFileForSyncChangeSet:unappliedSyncChangeSet];
         if (shouldContinue == NO) {
             break;
         }
 
         // Finally, remove the change set from the UnappliedSyncChangeSets context;
-        [self.unappliedSyncChangeSetsContext deleteObject:eachChangeSet];
+            [self.unappliedSyncChangeSetsContext deleteObject:unappliedSyncChangeSet];
     }
 
     return shouldContinue;
 }
 
-- (BOOL)addSyncChangeSetToAppliedSyncChangeSets:(TICDSSyncChangeSet *)aChangeSet
+- (BOOL)addSyncChangeSetToAppliedSyncChangeSets:(TICDSSyncChangeSet *)previouslyUnappliedSyncChangeSet
 {
-    TICDSSyncChangeSet *appliedSyncChangeSet = [TICDSSyncChangeSet changeSetWithIdentifier:[aChangeSet syncChangeSetIdentifier] inManagedObjectContext:self.appliedSyncChangeSetsContext];
+    NSString *syncChangeSetIdentifier = nil;
+    NSString *clientIdentifier = nil;
+    NSDate *creationDate = nil;
+    
+        syncChangeSetIdentifier = previouslyUnappliedSyncChangeSet.syncChangeSetIdentifier;
+        clientIdentifier = previouslyUnappliedSyncChangeSet.clientIdentifier;
+        creationDate = previouslyUnappliedSyncChangeSet.creationDate;
+    
+    TICDSSyncChangeSet *appliedSyncChangeSet = [TICDSSyncChangeSet changeSetWithIdentifier:syncChangeSetIdentifier inManagedObjectContext:self.appliedSyncChangeSetsContext];
 
     if (appliedSyncChangeSet == nil) {
-        appliedSyncChangeSet = [TICDSSyncChangeSet syncChangeSetWithIdentifier:[aChangeSet syncChangeSetIdentifier] fromClient:[aChangeSet clientIdentifier] creationDate:[aChangeSet creationDate] inManagedObjectContext:self.appliedSyncChangeSetsContext];
+        appliedSyncChangeSet = [TICDSSyncChangeSet syncChangeSetWithIdentifier:syncChangeSetIdentifier fromClient:clientIdentifier creationDate:creationDate inManagedObjectContext:self.appliedSyncChangeSetsContext];
     }
 
     if (appliedSyncChangeSet == nil) {
@@ -444,15 +457,15 @@
         return NO;
     }
 
-    [appliedSyncChangeSet setLocalDateOfApplication:[NSDate date]];
+        [appliedSyncChangeSet setLocalDateOfApplication:[NSDate date]];
 
     return YES;
 }
 
-- (BOOL)removeSyncChangeSetFileForSyncChangeSet:(TICDSSyncChangeSet *)aChangeSet
+- (BOOL)removeSyncChangeSetFileForSyncChangeSet:(TICDSSyncChangeSet *)syncChangeSet
 {
     NSString *pathToSyncChangeSetFile = [self.unappliedSyncChangesDirectoryLocation path];
-    pathToSyncChangeSetFile = [pathToSyncChangeSetFile stringByAppendingPathComponent:[aChangeSet fileName]];
+    pathToSyncChangeSetFile = [pathToSyncChangeSetFile stringByAppendingPathComponent:[syncChangeSet fileName]];
 
     if ([[self fileManager] fileExistsAtPath:pathToSyncChangeSetFile] == NO) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Sync change set just applied no longer seems to exist on disc, which is strange, but not fatal, so continuing");
@@ -491,71 +504,81 @@
 }
 
 #pragma mark - APPLYING EACH CHANGE SET
-- (BOOL)beginApplyingSyncChangesInChangeSet:(TICDSSyncChangeSet *)aChangeSet
+
+- (BOOL)beginApplyingSyncChangesInChangeSet:(TICDSSyncChangeSet *)unappliedSyncChangeSet
 {
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Applying change set %@", [aChangeSet syncChangeSetIdentifier]);
-
-    NSManagedObjectContext *syncChangesContext = [self contextForSyncChangesInUnappliedSyncChangeSet:aChangeSet];
-
+    NSString *syncChangeSetIdentifier = [unappliedSyncChangeSet syncChangeSetIdentifier];
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Applying change set %@", syncChangeSetIdentifier);
+    
+    NSManagedObjectContext *unappliedSyncChangesContext = [self contextForSyncChangesInUnappliedSyncChangeSet:unappliedSyncChangeSet];
+    
     NSError *anyError = nil;
-    NSArray *syncChanges = [TICDSSyncChange ti_allObjectsInManagedObjectContext:syncChangesContext sortedWithDescriptors:self.syncChangeSortDescriptors error:&anyError];
-
-    TICDSLog(TICDSLogVerbosityEveryStep, @"There are %lu changes in this set", (unsigned long)[syncChanges count]);
-
-    syncChanges = [self syncChangesAfterCheckingForConflicts:syncChanges];
-    NSSortDescriptor *sequenceSort = [[NSSortDescriptor alloc] initWithKey:@"changeType" ascending:YES];
-    syncChanges = [syncChanges sortedArrayUsingDescriptors:[NSArray arrayWithObject:sequenceSort]];
-    sequenceSort = nil;
-
-    NSInteger changeCount = 1;
-    // Apply each object's changes in turn
-    for ( TICDSSyncChange *eachChange in syncChanges) {
-        switch ( [[eachChange changeType] unsignedIntegerValue]) {
-            case TICDSSyncChangeTypeObjectInserted:
-                [self applyObjectInsertedSyncChange:eachChange];
-                [self.backgroundApplicationContext processPendingChanges];
-                break;
-
-            case TICDSSyncChangeTypeAttributeChanged:
-                [self applyAttributeChangeSyncChange:eachChange];
-                break;
-
-            case TICDSSyncChangeTypeToOneRelationshipChanged:
-                [self applyToOneRelationshipSyncChange:eachChange];
-                break;
-
-            case TICDSSyncChangeTypeToManyRelationshipChangedByAddingObject:
-            case TICDSSyncChangeTypeToManyRelationshipChangedByRemovingObject:
-                [self applyToManyRelationshipSyncChange:eachChange];
-                break;
-
-            case TICDSSyncChangeTypeObjectDeleted:
-                [self applyObjectDeletedSyncChange:eachChange];
-                break;
+    __block NSArray *unappliedSyncChanges = [TICDSSyncChange ti_allObjectsInManagedObjectContext:unappliedSyncChangesContext sortedWithDescriptors:self.syncChangeSortDescriptors error:&anyError];
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"There are %lu changes in this set", (unsigned long)[unappliedSyncChanges count]);
+    
+    unappliedSyncChanges = [self syncChangesAfterCheckingForConflicts:unappliedSyncChanges inManagedObjectContext:unappliedSyncChangesContext];
+    
+        NSSortDescriptor *sequenceSort = [[NSSortDescriptor alloc] initWithKey:@"changeType" ascending:YES];
+        unappliedSyncChanges = [unappliedSyncChanges sortedArrayUsingDescriptors:[NSArray arrayWithObject:sequenceSort]];
+        
+        NSInteger changeCount = 1;
+        // Apply each object's changes in turn
+        for ( TICDSSyncChange *eachChange in unappliedSyncChanges) {
+            switch ( [[eachChange changeType] unsignedIntegerValue]) {
+                case TICDSSyncChangeTypeObjectInserted: {
+                    [self applyObjectInsertedSyncChange:eachChange];
+                    [self.backgroundApplicationContext performBlockAndWait:^{
+                        [self.backgroundApplicationContext processPendingChanges];
+                    }];
+                    break;
+                }
+                case TICDSSyncChangeTypeAttributeChanged: {
+                    [self applyAttributeChangeSyncChange:eachChange];
+                    break;
+                }
+                case TICDSSyncChangeTypeToOneRelationshipChanged: {
+                    [self applyToOneRelationshipSyncChange:eachChange];
+                    break;
+                }
+                case TICDSSyncChangeTypeToManyRelationshipChangedByAddingObject:
+                case TICDSSyncChangeTypeToManyRelationshipChangedByRemovingObject: {
+                    [self applyToManyRelationshipSyncChange:eachChange];
+                    break;
+                }
+                case TICDSSyncChangeTypeObjectDeleted: {
+                    [self applyObjectDeletedSyncChange:eachChange];
+                    break;
+                }
+            }
+            
+            changeCount++;
+            if ([self ti_delegateRespondsToSelector:@selector(synchronizationOperation:processedChangeNumber:outOfTotalChangeCount:fromClientNamed:)]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [(id)self.delegate synchronizationOperation:self processedChangeNumber:[NSNumber numberWithInteger:changeCount] outOfTotalChangeCount:[NSNumber numberWithInteger:[unappliedSyncChanges count]] fromClientNamed:self.changeSetProgressString];
+                });
+            }
         }
-
-        changeCount++;
-        if ([self ti_delegateRespondsToSelector:@selector(synchronizationOperation:processedChangeNumber:outOfTotalChangeCount:fromClientNamed:)]) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                               [(id)self.delegate synchronizationOperation:self processedChangeNumber:[NSNumber numberWithInteger:changeCount] outOfTotalChangeCount:[NSNumber numberWithInteger:[syncChanges count]] fromClientNamed:self.changeSetProgressString];
-                           });
-        }
-    }
-
-    [self.backgroundApplicationContext processPendingChanges];
-
+    
+    [self.backgroundApplicationContext performBlockAndWait:^{
+        [self.backgroundApplicationContext processPendingChanges];
+    }];
+    
     return YES;
 }
 
-- (NSManagedObjectContext *)contextForSyncChangesInUnappliedSyncChangeSet:(TICDSSyncChangeSet *)aChangeSet
+- (NSManagedObjectContext *)contextForSyncChangesInUnappliedSyncChangeSet:(TICDSSyncChangeSet *)unappliedSyncChangeSet
 {
+    NSString *fileName = [unappliedSyncChangeSet fileName];
+    
     self.unappliedSyncChangesContext = nil;
     self.unappliedSyncChangesCoreDataFactory = nil;
 
     TICoreDataFactory *factory = [[TICoreDataFactory alloc] initWithMomdName:TICDSSyncChangeDataModelName];
     [factory setDelegate:self];
     [factory setPersistentStoreType:TICDSSyncChangesCoreDataPersistentStoreType];
-    [factory setPersistentStoreDataPath:[[self.unappliedSyncChangesDirectoryLocation path] stringByAppendingPathComponent:[aChangeSet fileName]]];
+    [factory setPersistentStoreDataPath:[[self.unappliedSyncChangesDirectoryLocation path] stringByAppendingPathComponent:fileName]];
 
     self.unappliedSyncChangesCoreDataFactory = factory;
 
@@ -565,113 +588,142 @@
 }
 
 #pragma mark Conflicts
-- (NSArray *)syncChangesAfterCheckingForConflicts:(NSArray *)syncChanges
+- (NSArray *)syncChangesAfterCheckingForConflicts:(NSArray *)syncChanges inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
 {
     NSArray *identifiersOfAffectedObjects = [syncChanges valueForKeyPath:@"@distinctUnionOfObjects.objectSyncID"];
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Affected Object identifiers: %@", [identifiersOfAffectedObjects componentsJoinedByString:@", "]);
-
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Affected Object identifiers: %@", [identifiersOfAffectedObjects componentsJoinedByString:@", "]);
+    
     if (self.localSyncChangesToMergeContext == nil) {
         return syncChanges;
     }
-
+    
     NSMutableArray *syncChangesToReturn = [NSMutableArray arrayWithCapacity:[syncChanges count]];
-
-    NSArray *syncChangesForEachObject = nil;
-    for ( NSString *eachIdentifier in identifiersOfAffectedObjects) {
-        syncChangesForEachObject = [syncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"objectSyncID == %@", eachIdentifier]];
-
-        syncChangesForEachObject = [self remoteSyncChangesForObjectWithIdentifier:eachIdentifier afterCheckingForConflictsInRemoteSyncChanges:syncChangesForEachObject];
-        [syncChangesToReturn addObjectsFromArray:syncChangesForEachObject];
-    }
-
+    
+        NSArray *syncChangesForEachObject = nil;
+        for (NSString *eachIdentifier in identifiersOfAffectedObjects) {
+            syncChangesForEachObject = [syncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"objectSyncID == %@", eachIdentifier]];
+            
+            syncChangesForEachObject = [self remoteSyncChangesForObjectWithIdentifier:eachIdentifier afterCheckingForConflictsInRemoteSyncChanges:syncChangesForEachObject inManagedObjectContext:managedObjectContext];
+            [syncChangesToReturn addObjectsFromArray:syncChangesForEachObject];
+        }
+    
     return syncChangesToReturn;
 }
 
-- (NSArray *)remoteSyncChangesForObjectWithIdentifier:(NSString *)anIdentifier afterCheckingForConflictsInRemoteSyncChanges:(NSArray *)remoteSyncChanges
+- (NSArray *)remoteSyncChangesForObjectWithIdentifier:(NSString *)anIdentifier afterCheckingForConflictsInRemoteSyncChanges:(NSArray *)remoteSyncChanges inManagedObjectContext:(NSManagedObjectContext *)remoteSyncChangesManagedObjectContext
 {
     NSError *anyError = nil;
     NSArray *localSyncChanges = [TICDSSyncChange ti_objectsMatchingPredicate:[NSPredicate predicateWithFormat:@"objectSyncID == %@", anIdentifier] inManagedObjectContext:self.localSyncChangesToMergeContext sortedByKey:@"changeType" ascending:YES error:&anyError];
-
-// Used to trigger faults on all objects if debugging
-/*    NSArray *allSyncChanges = [TICDSSyncChange ti_allObjectsInManagedObjectContext:self.localSyncChangesToMergeContext error:&anyError];
-    for( TICDSSyncChange *eachChange in allSyncChanges) {
-        NSString *something = [eachChange objectEntityName];
-        something = [eachChange relatedObjectEntityName];
-    }
- */
+    
+    // Used to trigger faults on all objects if debugging
+    /*    NSArray *allSyncChanges = [TICDSSyncChange ti_allObjectsInManagedObjectContext:self.localSyncChangesToMergeContext error:&anyError];
+     for( TICDSSyncChange *eachChange in allSyncChanges) {
+     NSString *something = [eachChange objectEntityName];
+     something = [eachChange relatedObjectEntityName];
+     }
+     */
     if (localSyncChanges == nil) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to fetch local sync changes while checking for conflicts: %@", anyError);
         return remoteSyncChanges;
     }
-
+    
     if ([localSyncChanges count] < 1) {
         // No matching local sync changes, so all remote changes can be processed
         return remoteSyncChanges;
     }
-
+    
     NSMutableArray *remoteSyncChangesToReturn = [NSMutableArray arrayWithArray:remoteSyncChanges];
-
+    
     // Check if remote has deleted an object that has been changed locally
     NSArray *deletionChanges = [remoteSyncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"changeType == %u", TICDSSyncChangeTypeObjectDeleted]];
+    
     if ([deletionChanges count] > 0) {
-        // remote has deleted an object, so add warnings for all local changes
-        [self addWarningsForRemoteDeletionWithLocalChanges:localSyncChanges];
-
-        // Delete all local sync changes for this object
-        for ( TICDSSyncChange *eachLocalChange in localSyncChanges) {
-            [self.localSyncChangesToMergeContext deleteObject:eachLocalChange];
-        }
+            // remote has deleted an object, so add warnings for all local changes
+            [self addWarningsForRemoteDeletionWithLocalChanges:localSyncChanges];
+            
+            // Delete all local sync changes for this object
+            for ( TICDSSyncChange *eachLocalChange in localSyncChanges) {
+                [self.localSyncChangesToMergeContext deleteObject:eachLocalChange];
+            }
     }
-
+    
     // Check if remote has changed attributes on an object that has been deleted locally
     NSArray *changeChanges = [remoteSyncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"changeType == %u", TICDSSyncChangeTypeAttributeChanged]];
+    
     deletionChanges = [localSyncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"changeType == %u", TICDSSyncChangeTypeObjectDeleted]];
-
+    
     if ([changeChanges count] > 0 && [deletionChanges count] > 0) {
-        // remote has changed an object, so add warnings for each of the changes
-        [self addWarningsForRemoteChangesWithLocalDeletion:changeChanges];
-
-        // Remove change sync changs from remoteSyncChanges
-        [remoteSyncChangesToReturn removeObjectsInArray:changeChanges];
+            // remote has changed an object, so add warnings for each of the changes
+            [self addWarningsForRemoteChangesWithLocalDeletion:changeChanges];
+            
+            // Remove change sync changs from remoteSyncChanges
+            [remoteSyncChangesToReturn removeObjectsInArray:changeChanges];
     }
-
+    
+    NSString *const objectID = @"objectID";
+    NSString *const relevantKey = @"relevantKey";
+    NSString *const changedAttributes = @"changedAttributes";
+    NSString *const objectEntityName = @"objectEntityName";
+    NSString *const objectSyncID = @"objectSyncID";
+    
+    NSMutableArray *remoteChangeDictionaries = [[NSMutableArray alloc] init];;
+        NSArray *remoteAttributeChanges = [remoteSyncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"changeType == %u", TICDSSyncChangeTypeAttributeChanged]];
+        for ( TICDSSyncChange *eachRemoteChange in remoteAttributeChanges) {
+            [remoteChangeDictionaries addObject:@{ objectID : eachRemoteChange.objectID,
+                                  objectSyncID : eachRemoteChange.objectSyncID,
+                              objectEntityName : eachRemoteChange.objectEntityName,
+                                   relevantKey : eachRemoteChange.relevantKey,
+                             changedAttributes : eachRemoteChange.changedAttributes }];
+        }
+    
+    NSMutableArray *localChangeDictionaries = [[NSMutableArray alloc] init];
+        NSArray *localAttributeChanges = [localSyncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"changeType == %u", TICDSSyncChangeTypeAttributeChanged]];
+        for (TICDSSyncChange *eachLocalChange in localAttributeChanges) {
+            [localChangeDictionaries addObject:@{ objectID : eachLocalChange.objectID,
+                                 objectSyncID : eachLocalChange.objectSyncID,
+                             objectEntityName : eachLocalChange.objectEntityName,
+                                  relevantKey : eachLocalChange.relevantKey,
+                            changedAttributes : eachLocalChange.changedAttributes }];
+        }
+    
     // Check if remote has changed an object's attribute and local has changed the same object attribute
-    NSArray *remoteAttributeChanges = [remoteSyncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"changeType == %u", TICDSSyncChangeTypeAttributeChanged]];
-    NSArray *localAttributeChanges = [localSyncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"changeType == %u", TICDSSyncChangeTypeAttributeChanged]];
-    for ( TICDSSyncChange *eachRemoteChange in remoteAttributeChanges) {
+    for ( NSDictionary *eachRemoteChangeDictionary in remoteChangeDictionaries) {
         // check the attribute name against each local attribute name
-        for ( TICDSSyncChange *eachLocalChange in localAttributeChanges) {
-            if ([[eachLocalChange relevantKey] isEqualToString:[eachRemoteChange relevantKey]] == NO) {
+        for ( NSDictionary *eachLocalChangeDictionary in localChangeDictionaries) {
+            if ([eachLocalChangeDictionary[relevantKey] isEqualToString:eachRemoteChangeDictionary[relevantKey]] == NO) {
                 continue;
             }
-
-            if ([[eachLocalChange changedAttributes] isEqual:[eachRemoteChange changedAttributes]]) {
+            
+            if ([eachLocalChangeDictionary[changedAttributes] isEqual:eachRemoteChangeDictionary[changedAttributes]]) {
                 // both changes changed the value to the same thing so remove the local, unpushed sync change
-                [self.localSyncChangesToMergeContext deleteObject:eachLocalChange];
+                    TICDSSyncChange *localChange = (TICDSSyncChange *)[self.localSyncChangesToMergeContext objectWithID:eachLocalChangeDictionary[objectID]];
+                    [self.localSyncChangesToMergeContext deleteObject:localChange];
                 continue;
             }
-
+            
             // if we get here, we have a conflict between eachRemoteChange and eachLocalChange
-            TICDSSyncConflict *conflict = [TICDSSyncConflict syncConflictOfType:TICDSSyncConflictRemoteAttributeChangedAndLocalAttributeChanged forEntityName:[eachLocalChange objectEntityName] key:[eachLocalChange relevantKey] objectSyncID:[eachLocalChange objectSyncID]];
-            [conflict setLocalInformation:[NSDictionary dictionaryWithObject:[eachLocalChange changedAttributes] forKey:kTICDSChangedAttributeValue]];
-            [conflict setRemoteInformation:[NSDictionary dictionaryWithObject:[eachRemoteChange changedAttributes] forKey:kTICDSChangedAttributeValue]];
+            TICDSSyncConflict *conflict = [TICDSSyncConflict syncConflictOfType:TICDSSyncConflictRemoteAttributeChangedAndLocalAttributeChanged forEntityName:eachLocalChangeDictionary[objectEntityName] key:eachLocalChangeDictionary[relevantKey] objectSyncID:eachLocalChangeDictionary[objectSyncID]];
+            [conflict setLocalInformation:[NSDictionary dictionaryWithObject:eachLocalChangeDictionary[changedAttributes] forKey:kTICDSChangedAttributeValue]];
+            [conflict setRemoteInformation:[NSDictionary dictionaryWithObject:eachRemoteChangeDictionary[changedAttributes] forKey:kTICDSChangedAttributeValue]];
             TICDSSyncConflictResolutionType resolutionType = [self resolutionTypeForConflict:conflict];
-
+            
             if ([self isCancelled]) {
                 [self operationWasCancelled];
                 return nil;
             }
-
+            
             if (resolutionType == TICDSSyncConflictResolutionTypeRemoteWins) {
                 // just delete the local sync change so the remote change wins
-                [self.localSyncChangesToMergeContext deleteObject:eachLocalChange];
+                    TICDSSyncChange *localChange = (TICDSSyncChange *)[self.localSyncChangesToMergeContext objectWithID:eachLocalChangeDictionary[objectID]];
+                    [self.localSyncChangesToMergeContext deleteObject:localChange];
             } else if (resolutionType == TICDSSyncConflictResolutionTypeLocalWins) {
                 // remove the remote sync change so it's not applied
-                [remoteSyncChangesToReturn removeObject:eachRemoteChange];
+                    TICDSSyncChange *remoteChange = (TICDSSyncChange *)[remoteSyncChangesManagedObjectContext objectWithID:eachRemoteChangeDictionary[objectID]];
+                    [remoteSyncChangesToReturn removeObject:remoteChange];
             }
         }
     }
-
+    
     return remoteSyncChangesToReturn;
 }
 
@@ -727,6 +779,10 @@
 }
 
 #pragma mark Fetching Affected Objects
+
+/**
+ This method always needs to be scoped within the confines of a call to performBlock: or performBlockAndWait: on the backgroundApplicationContext.
+ */
 - (NSManagedObject *)backgroundApplicationContextObjectForEntityName:(NSString *)entityName syncIdentifier:(NSString *)aSyncIdentifier
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -743,130 +799,169 @@
 }
 
 #pragma mark Applying Changes
-- (void)applyObjectInsertedSyncChange:(TICDSSyncChange *)aSyncChange
+
+- (void)applyObjectInsertedSyncChange:(TICDSSyncChange *)syncChange
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Applying Insertion sync change");
 
-    NSString *entityName = [aSyncChange objectEntityName];
-    NSString *ticdsSyncID = aSyncChange.objectSyncID;
-    NSManagedObject *object = nil;
+    NSString *entityName = syncChange.objectEntityName;
+    NSString *ticdsSyncID = syncChange.objectSyncID;
+    id changedAttributes = [syncChange changedAttributes];
+    NSArray *changedAttributeKeys = [[syncChange changedAttributes] allKeys];
 
-    // Check to see if the object already exists before inserting it.
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    [fetchRequest setEntity:[NSEntityDescription entityForName:entityName inManagedObjectContext:self.backgroundApplicationContext]];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%K == %@", TICDSSyncIDAttributeName, ticdsSyncID]];
+    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", syncChange, entityName);
 
-    NSError *anyError = nil;
-    NSArray *results = [self.backgroundApplicationContext executeFetchRequest:fetchRequest error:&anyError];
-    if ([results count] == 0) {
-        object = [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:self.backgroundApplicationContext];
-        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Inserted object: %@", object);
-    } else {
-        object = [results lastObject];
-        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Attempted to insert an object that already existed, updating existing object instead.: %@", object);
-    }
-
-    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", aSyncChange, entityName);
-
-    NSArray *changedAttributeKeys = [[aSyncChange changedAttributes] allKeys];
-    for (id key in changedAttributeKeys) {
-        [object willChangeValueForKey:key];
-        [object setPrimitiveValue:[[aSyncChange changedAttributes] valueForKey:key] forKey:key];
-        [object didChangeValueForKey:key];
-    }
-
-    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Updated object: %@", object);
+    [self.backgroundApplicationContext performBlockAndWait:^{
+        NSManagedObject *insertedObject = nil;
+        
+        // Check to see if the object already exists before inserting it.
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        [fetchRequest setEntity:[NSEntityDescription entityForName:entityName inManagedObjectContext:self.backgroundApplicationContext]];
+        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%K == %@", TICDSSyncIDAttributeName, ticdsSyncID]];
+        
+        NSError *anyError = nil;
+        NSArray *results = [self.backgroundApplicationContext executeFetchRequest:fetchRequest error:&anyError];
+        if ([results count] == 0) {
+            insertedObject = [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:self.backgroundApplicationContext];
+            TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Inserted object: %@", insertedObject);
+        } else {
+            insertedObject = [results lastObject];
+            TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Attempted to insert an object that already existed, updating existing object instead.: %@", insertedObject);
+        }
+        
+        for (id key in changedAttributeKeys) {
+            [insertedObject willChangeValueForKey:key];
+            [insertedObject setPrimitiveValue:[changedAttributes valueForKey:key] forKey:key];
+            [insertedObject didChangeValueForKey:key];
+        }
+        
+        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Updated object: %@", insertedObject);
+    }];
 }
 
-- (void)applyAttributeChangeSyncChange:(TICDSSyncChange *)aSyncChange
+- (void)applyAttributeChangeSyncChange:(TICDSSyncChange *)syncChange
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Applying Attribute Change sync change");
-
-    NSManagedObject *object = [self backgroundApplicationContextObjectForEntityName:[aSyncChange objectEntityName] syncIdentifier:[aSyncChange objectSyncID]];
-
-    if (object == nil) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object not found locally for attribute change [%@] %@", aSyncChange, [aSyncChange objectEntityName]);
-        [self.synchronizationWarnings addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteAttributeSyncChange entityName:[aSyncChange objectEntityName] relatedObjectEntityName:nil attributes:[aSyncChange changedAttributes]]];
-        return;
-    }
-
-    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", aSyncChange, [aSyncChange objectEntityName]);
-
-    [object willChangeValueForKey:[aSyncChange relevantKey]];
-    [object setPrimitiveValue:[aSyncChange changedAttributes] forKey:[aSyncChange relevantKey]];
-    [object didChangeValueForKey:[aSyncChange relevantKey]];
-
-    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed attribute on object: %@", object);
+    
+    NSString *objectEntityName = syncChange.objectEntityName;
+    NSString *objectSyncID = syncChange.objectSyncID;
+    id changedAttributes = syncChange.changedAttributes;
+    NSString *relevantKey = syncChange.relevantKey;
+    
+    [self.backgroundApplicationContext performBlockAndWait:^{
+        NSManagedObject *object = [self backgroundApplicationContextObjectForEntityName:objectEntityName syncIdentifier:objectSyncID];
+        
+        if (object == nil) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object not found locally for attribute change to %@", objectEntityName);
+            [self.synchronizationWarnings addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteAttributeSyncChange entityName:objectEntityName relatedObjectEntityName:nil attributes:changedAttributes]];
+            return;
+        }
+        
+        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"%@", objectEntityName);
+        
+        [object willChangeValueForKey:relevantKey];
+        [object setPrimitiveValue:changedAttributes forKey:relevantKey];
+        [object didChangeValueForKey:relevantKey];
+        
+        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed attribute on object: %@", object);
+    }];
 }
 
-- (void)applyToOneRelationshipSyncChange:(TICDSSyncChange *)aSyncChange
+- (void)applyToOneRelationshipSyncChange:(TICDSSyncChange *)syncChange
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Applying Relationship Change sync change");
-
-    NSManagedObject *object = [self backgroundApplicationContextObjectForEntityName:[aSyncChange objectEntityName] syncIdentifier:[aSyncChange objectSyncID]];
-
-    if (object == nil) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object not found locally for attribute change [%@] %@", aSyncChange, [aSyncChange objectEntityName]);
-        [self.synchronizationWarnings addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteRelationshipSyncChange entityName:[aSyncChange objectEntityName] relatedObjectEntityName:[aSyncChange relatedObjectEntityName] attributes:[aSyncChange changedAttributes]]];
-        return;
-    }
-
-    NSManagedObject *relatedObject = [self backgroundApplicationContextObjectForEntityName:[aSyncChange relatedObjectEntityName] syncIdentifier:[aSyncChange changedRelationships]];
-
-    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", aSyncChange, [aSyncChange objectEntityName]);
-    [object willChangeValueForKey:[aSyncChange relevantKey]];
-    [object setPrimitiveValue:relatedObject forKey:[aSyncChange relevantKey]];
-    [object didChangeValueForKey:[aSyncChange relevantKey]];
-
-    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed to-one relationship on object: %@", object);
+    
+    NSString *objectEntityName = syncChange.objectEntityName;
+    NSString *objectSyncID = syncChange.objectSyncID;
+    id changedAttributes = syncChange.changedAttributes;
+    NSString *relevantKey = syncChange.relevantKey;
+    NSString *relatedObjectEntityName = syncChange.relatedObjectEntityName;
+    id changedRelationships = syncChange.changedRelationships;
+    
+    [self.backgroundApplicationContext performBlockAndWait:^{
+        NSManagedObject *object = [self backgroundApplicationContextObjectForEntityName:objectEntityName syncIdentifier:objectSyncID];
+        
+        if (object == nil) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object not found locally for attribute change %@", objectEntityName);
+            [self.synchronizationWarnings addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteRelationshipSyncChange entityName:objectEntityName relatedObjectEntityName:relatedObjectEntityName attributes:changedAttributes]];
+            return;
+        }
+        
+        NSManagedObject *relatedObject = [self backgroundApplicationContextObjectForEntityName:relatedObjectEntityName syncIdentifier:changedRelationships];
+        
+        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"%@", objectEntityName);
+        [object willChangeValueForKey:relevantKey];
+        [object setPrimitiveValue:relatedObject forKey:relevantKey];
+        [object didChangeValueForKey:relevantKey];
+        
+        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed to-one relationship on object: %@", object);
+    }];
 }
 
-- (void)applyToManyRelationshipSyncChange:(TICDSSyncChange *)aSyncChange
+- (void)applyToManyRelationshipSyncChange:(TICDSSyncChange *)syncChange
 {
-    NSManagedObject *object = [self backgroundApplicationContextObjectForEntityName:[aSyncChange objectEntityName] syncIdentifier:[aSyncChange objectSyncID]];
-
-    if (object == nil) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object not found locally for attribute change [%@] %@", aSyncChange, [aSyncChange objectEntityName]);
-        [self.synchronizationWarnings addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteRelationshipSyncChange entityName:[aSyncChange objectEntityName] relatedObjectEntityName:[aSyncChange relatedObjectEntityName] attributes:[aSyncChange changedAttributes]]];
-        return;
-    }
-
-    // capitalize the first char of relationship name to change e.g., someObjects into SomeObjects
-    NSString *relationshipName = [[aSyncChange relevantKey] substringToIndex:1];
-    relationshipName = [relationshipName capitalizedString];
-    relationshipName = [relationshipName stringByAppendingString:[[aSyncChange relevantKey] substringFromIndex:1]];
-
-    NSString *selectorName = nil;
-
-    if ([[aSyncChange changeType] unsignedIntegerValue] == TICDSSyncChangeTypeToManyRelationshipChangedByAddingObject) {
-        selectorName = [NSString stringWithFormat:@"add%@Object:", relationshipName];
-    } else {
-        selectorName = [NSString stringWithFormat:@"remove%@Object:", relationshipName];
-    }
-
-    NSManagedObject *relatedObject = [self backgroundApplicationContextObjectForEntityName:[aSyncChange relatedObjectEntityName] syncIdentifier:[aSyncChange changedRelationships]];
-
-    [object performSelector:NSSelectorFromString(selectorName) withObject:relatedObject];
-
-    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", aSyncChange, [aSyncChange objectEntityName]);
-    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed to-many relationships on object: %@", object);
+    NSString *objectEntityName = syncChange.objectEntityName;
+    NSString *objectSyncID = syncChange.objectSyncID;
+    id changedAttributes = syncChange.changedAttributes;
+    NSString *relevantKey = syncChange.relevantKey;
+    NSString *relatedObjectEntityName = syncChange.relatedObjectEntityName;
+    id changedRelationships = syncChange.changedRelationships;
+    NSNumber *changeType = syncChange.changeType;
+    
+    [self.backgroundApplicationContext performBlockAndWait:^{
+        NSManagedObject *object = [self backgroundApplicationContextObjectForEntityName:objectEntityName syncIdentifier:objectSyncID];
+        
+        if (object == nil) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object not found locally for attribute change %@", objectEntityName);
+            [self.synchronizationWarnings addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteRelationshipSyncChange entityName:objectEntityName relatedObjectEntityName:relatedObjectEntityName attributes:changedAttributes]];
+            return;
+        }
+        
+        // capitalize the first char of relationship name to change e.g., someObjects into SomeObjects
+        NSString *relationshipName = [relevantKey substringToIndex:1];
+        relationshipName = [relationshipName capitalizedString];
+        relationshipName = [relationshipName stringByAppendingString:[relevantKey substringFromIndex:1]];
+        
+        NSString *selectorName = nil;
+        
+        if ([changeType unsignedIntegerValue] == TICDSSyncChangeTypeToManyRelationshipChangedByAddingObject) {
+            selectorName = [NSString stringWithFormat:@"add%@Object:", relationshipName];
+        } else {
+            selectorName = [NSString stringWithFormat:@"remove%@Object:", relationshipName];
+        }
+        
+        NSManagedObject *relatedObject = [self backgroundApplicationContextObjectForEntityName:relatedObjectEntityName syncIdentifier:changedRelationships];
+        
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        [object performSelector:NSSelectorFromString(selectorName) withObject:relatedObject];
+#pragma clang diagnostic pop
+        
+        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"%@", objectEntityName);
+        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed to-many relationships on object: %@", object);
+    }];
 }
 
-- (void)applyObjectDeletedSyncChange:(TICDSSyncChange *)aSyncChange
+- (void)applyObjectDeletedSyncChange:(TICDSSyncChange *)syncChange
 {
+    NSString *objectEntityName = syncChange.objectEntityName;
+    NSString *objectSyncID = syncChange.objectSyncID;
+    
     TICDSLog(TICDSLogVerbosityEveryStep, @"Applying Deletion sync change");
 
-    NSManagedObject *object = [self backgroundApplicationContextObjectForEntityName:[aSyncChange objectEntityName] syncIdentifier:[aSyncChange objectSyncID]];
-
-    if (object == nil) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object not found locally for deletion sync change [%@] %@", aSyncChange, [aSyncChange objectEntityName]);
-        [self.synchronizationWarnings addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteDeletionSyncChange entityName:[aSyncChange objectEntityName] relatedObjectEntityName:nil attributes:nil]];
-        return;
-    }
-
-    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", aSyncChange, [aSyncChange objectEntityName]);
-
-    [self.backgroundApplicationContext deleteObject:object];
+    [self.backgroundApplicationContext performBlockAndWait:^{
+        NSManagedObject *object = [self backgroundApplicationContextObjectForEntityName:objectEntityName syncIdentifier:objectSyncID];
+        
+        if (object == nil) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object not found locally for deletion sync change %@", objectEntityName);
+            [self.synchronizationWarnings addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteDeletionSyncChange entityName:objectEntityName relatedObjectEntityName:nil attributes:nil]];
+            return;
+        }
+        
+        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"%@", objectEntityName);
+        
+        [self.backgroundApplicationContext deleteObject:object];
+    }];
 }
 
 #pragma mark - UPLOAD OF LOCAL SYNC COMMANDS
