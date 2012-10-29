@@ -209,7 +209,7 @@
 
 - (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:(NSNotification *)aNotification
 {
-    [[self managedObjectContext] mergeChangesFromContextDidSaveNotification:aNotification];
+    [self.managedObjectContext save:nil];
 }
 
 - (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToSynchronizeWithError:(NSError *)anError
