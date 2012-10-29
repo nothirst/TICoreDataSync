@@ -14,7 +14,7 @@ TICoreDataSync is a collection of classes to enable synchronization via the Clou
 
 ##Requirements
 
-TICoreDataSync works under Mac OS X 10.5 or later (it may run under 10.4 with minimal tweaking, but hasn't been tested) and iOS 3.0+. 
+TICoreDataSync works under Mac OS X 10.7 or later and iOS 5.1 or later. 
 
 In order for synchronization to work, your model objects must inherit from [`TICDSSynchronizedManagedObject`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObject.html), and have one extra string attribute called `ticdsSyncID`, which is used to track an object across multiple clients. All model object changes that you wish to synchronize must take place inside a [`TICDSSynchronizedManagedObjectContext`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObjectContext.html).
 
@@ -63,7 +63,7 @@ The synchronization process includes the following:
 
 3. If it runs into conflicts, it alerts your Sync Manager delegate ([`TICDSDocumentSyncManagerDelegate`](http://timisted.github.com/TICoreDataSync/reference/html/Protocols/TICDSDocumentSyncManagerDelegate.html) protocol), which is responsible for deciding whether the local change or the remote sync change take priority (see the **Conflicts and Warnings** section below).
 
-4. The background context is saved. The framework will alert you through a [`TICDSDocumentSyncManagerDelegate`](http://timisted.github.com/TICoreDataSync/reference/html/Protocols/TICDSDocumentSyncManagerDelegate.html) method, and pass you the `NSManagedObjectContextDidSave` notification object for you to merge changes.
+4. The background context is saved and, since it is a child of your application's context, all the changes are automatically merged into your main context. The framework will alert you through a [`TICDSDocumentSyncManagerDelegate`](http://timisted.github.com/TICoreDataSync/reference/html/Protocols/TICDSDocumentSyncManagerDelegate.html) method.
 
 5. Once all the remote sync changes have been applied, the local set of sync changes are pushed.
 
@@ -74,7 +74,7 @@ If left unchecked, the sync-related files will stay on the remote indefinitely. 
 ###Types of Sync Manager
 You never instantiate one of the [`TICDSApplicationSyncManager`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSApplicationSyncManager.html) or [`TICDSDocumentSyncManager`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSDocumentSyncManager.html) directly, but instead use one of the subclasses specific to your required method of synchronization.
 
-The framework includes a set of file-manager-based sync classes, used to synchronize with anything that can be accessed using `NSFileManager`, including a desktop **Dropbox** or iDisk. Although these classes are effectively accessing a "local" volume, they never have Core Data talk directly to the files stored "remotely."
+The framework includes a set of file-manager-based sync classes, used to synchronize with anything that can be accessed using `NSFileManager`, including a desktop **Dropbox** or network drive. Although these classes are effectively accessing a "local" volume, they never have Core Data talk directly to the files stored "remotely."
 
 No matter what the type of sync, the framework downloads files to a local *helper file directory* (location is customizable through delegate callbacks) before working on them, then uploads them to the remote. No file is ever edited directly on the remote store.
 
@@ -132,6 +132,13 @@ At present, TICoreDataSync only supports file-manager-based sync, or iOS Dropbox
 There is currently no automated functionality to remove the entire sync data directory from a remote service, nor is it yet possible to remove a client's files from synchronizing an entire application. These tasks will be added soon.
 
 ##Recent Changes <a name="recentchanges"></a>
+
+* **2012-Oct-29**
+
+    The framework has undergone some significant changes since April including:
+    * The framework now uses `NSPrivateQueueConcurencyType` for the background managed object context to which it applies sync changes. As such your application must supply a managed object context that is instantiated as either `NSMainQueueConcurrencyType` or `NSPrivateQueueConcurrencyType`.
+    * Due to the new MOC concurrency type the project now has a minimum deployment version of OS X 10.7 and iOS 5.1.
+    * The framework now provides static libraries for both Mac and iOS. Your project should now include the static library project as a dependency instead of adding the TICDS files to your project directly.
 
 * **2012-Apr-26**
 
