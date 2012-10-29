@@ -660,66 +660,39 @@
             [remoteSyncChangesToReturn removeObjectsInArray:changeChanges];
     }
     
-    NSString *const objectID = @"objectID";
-    NSString *const relevantKey = @"relevantKey";
-    NSString *const changedAttributes = @"changedAttributes";
-    NSString *const objectEntityName = @"objectEntityName";
-    NSString *const objectSyncID = @"objectSyncID";
-    
-    NSMutableArray *remoteChangeDictionaries = [[NSMutableArray alloc] init];;
-        NSArray *remoteAttributeChanges = [remoteSyncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"changeType == %u", TICDSSyncChangeTypeAttributeChanged]];
-        for ( TICDSSyncChange *eachRemoteChange in remoteAttributeChanges) {
-            [remoteChangeDictionaries addObject:@{ objectID : eachRemoteChange.objectID,
-                                  objectSyncID : eachRemoteChange.objectSyncID,
-                              objectEntityName : eachRemoteChange.objectEntityName,
-                                   relevantKey : eachRemoteChange.relevantKey,
-                             changedAttributes : eachRemoteChange.changedAttributes }];
-        }
-    
-    NSMutableArray *localChangeDictionaries = [[NSMutableArray alloc] init];
-        NSArray *localAttributeChanges = [localSyncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"changeType == %u", TICDSSyncChangeTypeAttributeChanged]];
-        for (TICDSSyncChange *eachLocalChange in localAttributeChanges) {
-            [localChangeDictionaries addObject:@{ objectID : eachLocalChange.objectID,
-                                 objectSyncID : eachLocalChange.objectSyncID,
-                             objectEntityName : eachLocalChange.objectEntityName,
-                                  relevantKey : eachLocalChange.relevantKey,
-                            changedAttributes : eachLocalChange.changedAttributes }];
-        }
-    
     // Check if remote has changed an object's attribute and local has changed the same object attribute
-    for ( NSDictionary *eachRemoteChangeDictionary in remoteChangeDictionaries) {
+    NSArray *remoteAttributeChanges = [remoteSyncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"changeType == %u", TICDSSyncChangeTypeAttributeChanged]];
+    NSArray *localAttributeChanges = [localSyncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"changeType == %u", TICDSSyncChangeTypeAttributeChanged]];
+    for( TICDSSyncChange *eachRemoteChange in remoteAttributeChanges ) {
         // check the attribute name against each local attribute name
-        for ( NSDictionary *eachLocalChangeDictionary in localChangeDictionaries) {
-            if ([eachLocalChangeDictionary[relevantKey] isEqualToString:eachRemoteChangeDictionary[relevantKey]] == NO) {
+        for( TICDSSyncChange *eachLocalChange in localAttributeChanges ) {
+            if( ![[eachLocalChange relevantKey] isEqualToString:[eachRemoteChange relevantKey]] ) {
                 continue;
             }
             
-            if ([eachLocalChangeDictionary[changedAttributes] isEqual:eachRemoteChangeDictionary[changedAttributes]]) {
+            if( [[eachLocalChange changedAttributes] isEqual:[eachRemoteChange changedAttributes]] ) {
                 // both changes changed the value to the same thing so remove the local, unpushed sync change
-                    TICDSSyncChange *localChange = (TICDSSyncChange *)[self.localSyncChangesToMergeContext objectWithID:eachLocalChangeDictionary[objectID]];
-                    [self.localSyncChangesToMergeContext deleteObject:localChange];
+                [[self localSyncChangesToMergeContext] deleteObject:eachLocalChange];
                 continue;
             }
             
             // if we get here, we have a conflict between eachRemoteChange and eachLocalChange
-            TICDSSyncConflict *conflict = [TICDSSyncConflict syncConflictOfType:TICDSSyncConflictRemoteAttributeChangedAndLocalAttributeChanged forEntityName:eachLocalChangeDictionary[objectEntityName] key:eachLocalChangeDictionary[relevantKey] objectSyncID:eachLocalChangeDictionary[objectSyncID]];
-            [conflict setLocalInformation:[NSDictionary dictionaryWithObject:eachLocalChangeDictionary[changedAttributes] forKey:kTICDSChangedAttributeValue]];
-            [conflict setRemoteInformation:[NSDictionary dictionaryWithObject:eachRemoteChangeDictionary[changedAttributes] forKey:kTICDSChangedAttributeValue]];
+            TICDSSyncConflict *conflict = [TICDSSyncConflict syncConflictOfType:TICDSSyncConflictRemoteAttributeChangedAndLocalAttributeChanged forEntityName:[eachLocalChange objectEntityName] key:[eachLocalChange relevantKey] objectSyncID:[eachLocalChange objectSyncID]];
+            [conflict setLocalInformation:[NSDictionary dictionaryWithObject:[eachLocalChange changedAttributes] forKey:kTICDSChangedAttributeValue]];
+            [conflict setRemoteInformation:[NSDictionary dictionaryWithObject:[eachRemoteChange changedAttributes] forKey:kTICDSChangedAttributeValue]];
             TICDSSyncConflictResolutionType resolutionType = [self resolutionTypeForConflict:conflict];
             
-            if ([self isCancelled]) {
+            if( [self isCancelled] ) {
                 [self operationWasCancelled];
                 return nil;
             }
             
-            if (resolutionType == TICDSSyncConflictResolutionTypeRemoteWins) {
+            if( resolutionType == TICDSSyncConflictResolutionTypeRemoteWins ) {
                 // just delete the local sync change so the remote change wins
-                    TICDSSyncChange *localChange = (TICDSSyncChange *)[self.localSyncChangesToMergeContext objectWithID:eachLocalChangeDictionary[objectID]];
-                    [self.localSyncChangesToMergeContext deleteObject:localChange];
-            } else if (resolutionType == TICDSSyncConflictResolutionTypeLocalWins) {
+                [[self localSyncChangesToMergeContext] deleteObject:eachLocalChange];
+            } else if( resolutionType == TICDSSyncConflictResolutionTypeLocalWins ) {
                 // remove the remote sync change so it's not applied
-                    TICDSSyncChange *remoteChange = (TICDSSyncChange *)[remoteSyncChangesManagedObjectContext objectWithID:eachRemoteChangeDictionary[objectID]];
-                    [remoteSyncChangesToReturn removeObject:remoteChange];
+                [remoteSyncChangesToReturn removeObject:eachRemoteChange];
             }
         }
     }
