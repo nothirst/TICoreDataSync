@@ -16,8 +16,8 @@
     [[self documentSyncManager] synchronizedMOCWillSave:self];
     
     for (NSPersistentStore *persistentStore in [self.persistentStoreCoordinator persistentStores]) {
-        NSLog(@"%s Persistent store exists at %@ ? %hhd", __PRETTY_FUNCTION__, persistentStore.URL, [[NSFileManager defaultManager] fileExistsAtPath:[persistentStore.URL path]]);
         if ([[NSFileManager defaultManager] fileExistsAtPath:[persistentStore.URL path]] == NO) {
+            NSLog(@"%s There is no persistent store behind this managed object context at %@", __PRETTY_FUNCTION__, persistentStore.URL);
             return NO;
         }
     }
