@@ -112,23 +112,23 @@
 - (BOOL)startRegistrationProcess:(NSError **)outError
 {
     TICDSApplicationRegistrationOperation *operation = [self applicationRegistrationOperation];
-    
-    if( !operation ) {
-        if( outError ) {
+
+    if (operation == nil) {
+        if (outError != nil) {
             *outError = [TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__];
         }
-        
+
         return NO;
     }
-    
+
     [operation setShouldUseEncryption:[self shouldUseEncryption]];
     [operation setAppIdentifier:[self appIdentifier]];
     [operation setClientDescription:[self clientDescription]];
     [operation setClientIdentifier:[self clientIdentifier]];
     [operation setApplicationUserInfo:[self applicationUserInfo]];
-    
+
     [[self registrationQueue] addOperation:operation];
-    
+
     return YES;
 }
 
@@ -255,9 +255,10 @@
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Application Registration Operation Failed to Complete with Error: %@", anError);
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToRegisterWithError:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
-            [(id)self.delegate applicationSyncManager:self didFailToRegisterWithError:anError];
-        }];
+             [(id)self.delegate applicationSyncManager:self didFailToRegisterWithError:anError];
+         }];
     }
+ 
     [self postDecreaseActivityNotification];
 }
 
