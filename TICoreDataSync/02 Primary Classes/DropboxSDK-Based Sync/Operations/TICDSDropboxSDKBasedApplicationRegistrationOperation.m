@@ -252,21 +252,19 @@
 - (void)restClient:(DBRestClient *)client createdFolder:(DBMetadata *)folder
 {
     NSString *path = [folder path];
-    
-    if( [path isEqualToString:[self clientDevicesThisClientDeviceDirectoryPath]] ) {
-        [self createdRemoteClientDeviceDirectoryWithSuccess:YES];
-        return;
-    }
-    
-    // if we get here, it's a global app directory
-    _numberOfAppDirectoriesThatWereCreated++;
-    
-    [self checkForGlobalAppDirectoryCompletion];
+    [self folderCreatedAtPath:path];
 }
 
 - (void)restClient:(DBRestClient *)client createFolderFailedWithError:(NSError *)error
 {
+    NSInteger errorCode = [error code];
     NSString *path = [[error userInfo] valueForKey:@"path"];
+
+    if (errorCode == 403) { // A folder already exists at this location. We do not consider this case a failure.
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"DBRestClient reported that a folder we asked it to create already existed. Treating this as a non-error.");
+        [self folderCreatedAtPath:path];
+        return;
+    }
     
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
@@ -275,8 +273,21 @@
         return;
     }
     
-    // if we here, it's a global app directory
+    // if we're here, it's a global app directory
     _numberOfAppDirectoriesThatFailedToBeCreated++;
+    
+    [self checkForGlobalAppDirectoryCompletion];
+}
+
+- (void)folderCreatedAtPath:(NSString *)path
+{
+    if( [path isEqualToString:[self clientDevicesThisClientDeviceDirectoryPath]] ) {
+        [self createdRemoteClientDeviceDirectoryWithSuccess:YES];
+        return;
+    }
+    
+    // if we get here, it's a global app directory
+    _numberOfAppDirectoriesThatWereCreated++;
     
     [self checkForGlobalAppDirectoryCompletion];
 }
