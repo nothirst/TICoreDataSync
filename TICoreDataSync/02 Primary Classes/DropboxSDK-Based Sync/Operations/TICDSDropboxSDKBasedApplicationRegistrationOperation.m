@@ -215,7 +215,7 @@
     NSInteger errorCode = [error code];
     BOOL notFound = YES;
     
-    if( errorCode != 404 ) {
+    if (errorCode != 404) { // File not found is a fine error to get here. Anything else is trouble.
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
         notFound = NO;
     }
@@ -252,7 +252,7 @@
 - (void)restClient:(DBRestClient *)client createdFolder:(DBMetadata *)folder
 {
     NSString *path = [folder path];
-    [self folderCreatedAtPath:path];
+    [self handleFolderCreatedAtPath:path];
 }
 
 - (void)restClient:(DBRestClient *)client createFolderFailedWithError:(NSError *)error
@@ -262,7 +262,7 @@
 
     if (errorCode == 403) { // A folder already exists at this location. We do not consider this case a failure.
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"DBRestClient reported that a folder we asked it to create already existed. Treating this as a non-error.");
-        [self folderCreatedAtPath:path];
+        [self handleFolderCreatedAtPath:path];
         return;
     }
     
@@ -279,7 +279,7 @@
     [self checkForGlobalAppDirectoryCompletion];
 }
 
-- (void)folderCreatedAtPath:(NSString *)path
+- (void)handleFolderCreatedAtPath:(NSString *)path
 {
     if( [path isEqualToString:[self clientDevicesThisClientDeviceDirectoryPath]] ) {
         [self createdRemoteClientDeviceDirectoryWithSuccess:YES];
@@ -387,7 +387,7 @@
 - (void)restClient:(DBRestClient *)client loadFileFailedWithError:(NSError *)error
 {
     NSString *path = [[error userInfo] valueForKey:@"path"];
-    
+
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
     if( [[path lastPathComponent] isEqualToString:TICDSSaltFilenameWithExtension] ) {
