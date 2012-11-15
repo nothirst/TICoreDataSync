@@ -66,7 +66,11 @@
     [self preConfigureWithDelegate:aDelegate appSyncManager:anAppSyncManager documentIdentifier:aDocumentIdentifier];
 
     self.primaryDocumentMOC = aContext;
+    if ([aContext respondsToSelector:@selector(setDocumentSyncManager:)]) {
     [aContext setDocumentSyncManager:self];
+    } else {
+        NSLog(@"%s We're passing a regular MOC to our SyncManager and it expects a TICDS MOC.", __PRETTY_FUNCTION__);
+    }
 
     // setup the syncChangesMOC
     TICDSLog(TICDSLogVerbosityEveryStep, @"Creating SyncChangesMOC");
