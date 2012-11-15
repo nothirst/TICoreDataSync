@@ -257,8 +257,8 @@
 
 - (void)restClient:(DBRestClient *)client createFolderFailedWithError:(NSError *)error
 {
-    NSInteger errorCode = [error code];
     NSString *path = [[error userInfo] valueForKey:@"path"];
+    NSInteger errorCode = [error code];
 
     if (errorCode == 403) { // A folder already exists at this location. We do not consider this case a failure.
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"DBRestClient reported that a folder we asked it to create already existed. Treating this as a non-error.");

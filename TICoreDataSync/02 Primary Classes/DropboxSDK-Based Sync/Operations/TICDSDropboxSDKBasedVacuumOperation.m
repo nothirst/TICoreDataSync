@@ -192,6 +192,33 @@
 #pragma mark Deletion
 - (void)restClient:(DBRestClient*)client deletedPath:(NSString *)path
 {
+    [self handleDeletionAtPath:path];
+}
+
+- (void)restClient:(DBRestClient*)client deletePathFailedWithError:(NSError*)error
+{
+    NSString *path = [[error userInfo] valueForKey:@"path"];
+    NSInteger errorCode = [error code];
+    
+    if (errorCode == 404) { // A file or folder does not exist at this location. We do not consider this case a failure.
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"DBRestClient reported that an object we asked it to delete did not exist. Treating this as a non-error.");
+        [self handleDeletionAtPath:path];
+        return;
+    }
+    
+    [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
+    if( [[path stringByDeletingLastPathComponent] isEqualToString:[self thisDocumentSyncChangesThisClientDirectoryPath]] ) {
+        _numberOfFilesThatFailedToBeDeleted++;
+        
+        if( _numberOfFilesDeleted + _numberOfFilesThatFailedToBeDeleted == _numberOfFilesToDelete ) {
+            [self removedOldSyncChangeSetFilesWithSuccess:NO];
+            return;
+        }
+    }
+}
+
+- (void)handleDeletionAtPath:(NSString *)path
+{
     if( [[path stringByDeletingLastPathComponent] isEqualToString:[self thisDocumentSyncChangesThisClientDirectoryPath]] ) {
         _numberOfFilesDeleted++;
         
@@ -206,21 +233,6 @@
         }
         
         return;
-    }
-}
-
-- (void)restClient:(DBRestClient*)client deletePathFailedWithError:(NSError*)error
-{
-    NSString *path = [[error userInfo] valueForKey:@"path"];
-    
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
-    if( [[path stringByDeletingLastPathComponent] isEqualToString:[self thisDocumentSyncChangesThisClientDirectoryPath]] ) {
-        _numberOfFilesThatFailedToBeDeleted++;
-        
-        if( _numberOfFilesDeleted + _numberOfFilesThatFailedToBeDeleted == _numberOfFilesToDelete ) {
-            [self removedOldSyncChangeSetFilesWithSuccess:NO];
-            return;
-        }
     }
 }
 
