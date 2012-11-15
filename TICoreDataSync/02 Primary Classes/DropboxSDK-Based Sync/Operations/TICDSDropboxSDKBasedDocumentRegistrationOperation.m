@@ -143,7 +143,7 @@
         return;
     }
   
-    // The integrity will not exist in this point in the workflow. There is no point in doing the dance to figure out if there is a parent revision because there won't be one.
+    // The integrity key will not exist in this point in the workflow. There is no point in doing the dance to figure out if there is a parent revision because there won't be one.
     [[self restClient] uploadFile:aKey toPath:remoteDirectory withParentRev:nil fromPath:localFilePath];
 }
 
@@ -312,27 +312,19 @@
 - (void)restClient:(DBRestClient *)client createdFolder:(DBMetadata *)folder
 {
     NSString *path = [folder path];
-    
-    if( [path isEqualToString:[self thisDocumentSyncChangesThisClientDirectoryPath]] ) {
-        _completedThisDocumentSyncChangesThisClientDirectory = YES;
-        [self checkForThisDocumentClientDirectoryCompletion];
-        return;
-    }
-    
-    if( [path isEqualToString:[self thisDocumentSyncCommandsThisClientDirectoryPath]] ) {
-        _completedThisDocumentSyncCommandsThisClientDirectory = YES;
-        [self checkForThisDocumentClientDirectoryCompletion];
-        return;
-    }
-    
-    // if we get here, it's part of the document directory hierarchy
-    _numberOfDocumentDirectoriesThatWereCreated++;
-    [self checkForRemoteDocumentDirectoryCompletion];
+    [self handleFolderCreatedAtPath:path];
 }
 
 - (void)restClient:(DBRestClient *)client createFolderFailedWithError:(NSError *)error
 {
     NSString *path = [[error userInfo] valueForKey:@"path"];
+    NSInteger errorCode = [error code];
+    
+    if (errorCode == 403) { // A folder already exists at this location. We do not consider this case a failure.
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"DBRestClient reported that a folder we asked it to create already existed. Treating this as a non-error.");
+        [self handleFolderCreatedAtPath:path];
+        return;
+    }
     
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
@@ -352,6 +344,25 @@
     
     // if we get here, it's part of the document directory hierarchy
     _numberOfDocumentDirectoriesThatFailedToBeCreated++;
+    [self checkForRemoteDocumentDirectoryCompletion];
+}
+
+- (void)handleFolderCreatedAtPath:(NSString *)path
+{
+    if( [path isEqualToString:[self thisDocumentSyncChangesThisClientDirectoryPath]] ) {
+        _completedThisDocumentSyncChangesThisClientDirectory = YES;
+        [self checkForThisDocumentClientDirectoryCompletion];
+        return;
+    }
+    
+    if( [path isEqualToString:[self thisDocumentSyncCommandsThisClientDirectoryPath]] ) {
+        _completedThisDocumentSyncCommandsThisClientDirectory = YES;
+        [self checkForThisDocumentClientDirectoryCompletion];
+        return;
+    }
+    
+    // if we get here, it's part of the document directory hierarchy
+    _numberOfDocumentDirectoriesThatWereCreated++;
     [self checkForRemoteDocumentDirectoryCompletion];
 }
 
@@ -389,21 +400,20 @@
 #pragma mark Deletion
 - (void)restClient:(DBRestClient*)client deletedPath:(NSString *)path
 {
-    if( [path isEqualToString:[self deletedDocumentsDirectoryIdentifierPlistFilePath]] ) {
-        [self deletedDocumentInfoPlistFromDeletedDocumentsDirectoryWithSuccess:YES];
-        return;
-    }
-    
-    if( [[path pathExtension] isEqualToString:TICDSDeviceInfoPlistExtension] ) {
-        [self deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:YES];
-        return;
-    }
+    [self handleDeletionAtPath:path];
 }
 
 - (void)restClient:(DBRestClient*)client deletePathFailedWithError:(NSError*)error
 {
     NSString *path = [[error userInfo] valueForKey:@"path"];
+    NSInteger errorCode = [error code];
     
+    if (errorCode == 404) { // A file or folder does not exist at this location. We do not consider this case a failure.
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"DBRestClient reported that an object we asked it to delete did not exist. Treating this as a non-error.");
+        [self handleDeletionAtPath:path];
+        return;
+    }
+
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
     if( [path isEqualToString:[self deletedDocumentsDirectoryIdentifierPlistFilePath]] ) {
@@ -413,6 +423,19 @@
     
     if( [[path pathExtension] isEqualToString:TICDSDeviceInfoPlistFilename] ) {
         [self deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:NO];
+        return;
+    }
+}
+
+- (void)handleDeletionAtPath:(NSString *)path
+{
+    if( [path isEqualToString:[self deletedDocumentsDirectoryIdentifierPlistFilePath]] ) {
+        [self deletedDocumentInfoPlistFromDeletedDocumentsDirectoryWithSuccess:YES];
+        return;
+    }
+    
+    if( [[path pathExtension] isEqualToString:TICDSDeviceInfoPlistExtension] ) {
+        [self deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:YES];
         return;
     }
 }
