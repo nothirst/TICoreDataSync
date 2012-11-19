@@ -37,13 +37,11 @@
 #pragma mark - ACTIVITY
 - (void)postIncreaseActivityNotification
 {
-    NSLog(@"%s Is on main thread:%hhd", __PRETTY_FUNCTION__, [NSThread isMainThread]);
     [[NSNotificationCenter defaultCenter] postNotificationName:TICDSApplicationSyncManagerDidIncreaseActivityNotification object:self];
 }
 
 - (void)postDecreaseActivityNotification
 {
-    NSLog(@"%s Is on main thread:%hhd", __PRETTY_FUNCTION__, [NSThread isMainThread]);
     [[NSNotificationCenter defaultCenter] postNotificationName:TICDSApplicationSyncManagerDidDecreaseActivityNotification object:self];
 }
 
