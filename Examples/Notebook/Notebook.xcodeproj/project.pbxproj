@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		13A969751663FECF008CB958 /* TICDSSyncChange.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 13A9691D1663FECF008CB958 /* TICDSSyncChange.xcdatamodel */; };
+		13A969771663FECF008CB958 /* TICDSSyncChangeSet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 13A969201663FECF008CB958 /* TICDSSyncChangeSet.xcdatamodeld */; };
+		13A969801663FECF008CB958 /* deviceInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13A969351663FECF008CB958 /* deviceInfo.plist */; };
+		13A969811663FECF008CB958 /* documentInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13A969361663FECF008CB958 /* documentInfo.plist */; };
+		13A969821663FECF008CB958 /* ReadMe.txt in Resources */ = {isa = PBXBuildFile; fileRef = 13A969371663FECF008CB958 /* ReadMe.txt */; };
 		13E94DE8163ED1960058A989 /* libTICoreDataSync-Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13E94DE5163ED1660058A989 /* libTICoreDataSync-Mac.a */; };
 		13E94DEC163ED1ED0058A989 /* TICDSSyncChange.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 13E94DE9163ED1ED0058A989 /* TICDSSyncChange.xcdatamodel */; };
 		13E94DED163ED1ED0058A989 /* TICDSSyncChangeSet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 13E94DEA163ED1ED0058A989 /* TICDSSyncChangeSet.xcdatamodeld */; };
@@ -42,6 +47,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		13A9691D1663FECF008CB958 /* TICDSSyncChange.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TICDSSyncChange.xcdatamodel; sourceTree = "<group>"; };
+		13A969211663FECF008CB958 /* TICDSSyncChangeSet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TICDSSyncChangeSet.xcdatamodel; sourceTree = "<group>"; };
+		13A969351663FECF008CB958 /* deviceInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = deviceInfo.plist; sourceTree = "<group>"; };
+		13A969361663FECF008CB958 /* documentInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = documentInfo.plist; sourceTree = "<group>"; };
+		13A969371663FECF008CB958 /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
 		13E94DDD163ED1660058A989 /* TICoreDataSync-Mac.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "TICoreDataSync-Mac.xcodeproj"; path = "../../TICoreDataSync-Mac.xcodeproj"; sourceTree = "<group>"; };
 		13E94DE9163ED1ED0058A989 /* TICDSSyncChange.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; name = TICDSSyncChange.xcdatamodel; path = "../../../TICoreDataSync/03 Internal Data Model/TICDSSyncChange.xcdatamodel"; sourceTree = "<group>"; };
 		13E94DEB163ED1ED0058A989 /* TICDSSyncChangeSet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TICDSSyncChangeSet.xcdatamodel; sourceTree = "<group>"; };
@@ -84,6 +94,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		13A968AC1663FECF008CB958 /* TICoreDataSync */ = {
+			isa = PBXGroup;
+			children = (
+				13A9691A1663FECF008CB958 /* 03 Internal Data Model */,
+				13A969341663FECF008CB958 /* 05 File Structure */,
+			);
+			name = TICoreDataSync;
+			path = ../../TICoreDataSync;
+			sourceTree = "<group>";
+		};
+		13A9691A1663FECF008CB958 /* 03 Internal Data Model */ = {
+			isa = PBXGroup;
+			children = (
+				13A9691D1663FECF008CB958 /* TICDSSyncChange.xcdatamodel */,
+				13A969201663FECF008CB958 /* TICDSSyncChangeSet.xcdatamodeld */,
+			);
+			path = "03 Internal Data Model";
+			sourceTree = "<group>";
+		};
+		13A969341663FECF008CB958 /* 05 File Structure */ = {
+			isa = PBXGroup;
+			children = (
+				13A969351663FECF008CB958 /* deviceInfo.plist */,
+				13A969361663FECF008CB958 /* documentInfo.plist */,
+				13A969371663FECF008CB958 /* ReadMe.txt */,
+			);
+			path = "05 File Structure";
+			sourceTree = "<group>";
+		};
 		13E94DDE163ED1660058A989 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -97,6 +136,7 @@
 			children = (
 				13E94DDD163ED1660058A989 /* TICoreDataSync-Mac.xcodeproj */,
 				386F07D613715D0800D4F31B /* Notebook */,
+				13A968AC1663FECF008CB958 /* TICoreDataSync */,
 				386F07CF13715D0800D4F31B /* Frameworks */,
 				386F07CD13715D0800D4F31B /* Products */,
 			);
@@ -234,6 +274,9 @@
 				386F07DB13715D0800D4F31B /* InfoPlist.strings in Resources */,
 				386F07E113715D0800D4F31B /* Credits.rtf in Resources */,
 				386F07E713715D0800D4F31B /* MainMenu.xib in Resources */,
+				13A969801663FECF008CB958 /* deviceInfo.plist in Resources */,
+				13A969811663FECF008CB958 /* documentInfo.plist in Resources */,
+				13A969821663FECF008CB958 /* ReadMe.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,6 +295,8 @@
 				386D4C7F1371893500020F72 /* TIManagedObjectsToStringsValueTransfomer.m in Sources */,
 				13E94DEC163ED1ED0058A989 /* TICDSSyncChange.xcdatamodel in Sources */,
 				13E94DED163ED1ED0058A989 /* TICDSSyncChangeSet.xcdatamodeld in Sources */,
+				13A969751663FECF008CB958 /* TICDSSyncChange.xcdatamodel in Sources */,
+				13A969771663FECF008CB958 /* TICDSSyncChangeSet.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,6 +378,11 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/TICoreDataSync/07 External Frameworks\"",
+					"\"$(SRCROOT)/../../TICoreDataSync/07 External Frameworks\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -352,6 +402,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/TICoreDataSync/07 External Frameworks\"",
+					"\"$(SRCROOT)/../../TICoreDataSync/07 External Frameworks\"",
+				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Notebook/Notebook-Prefix.pch";
@@ -387,6 +442,16 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
+		13A969201663FECF008CB958 /* TICDSSyncChangeSet.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				13A969211663FECF008CB958 /* TICDSSyncChangeSet.xcdatamodel */,
+			);
+			currentVersion = 13A969211663FECF008CB958 /* TICDSSyncChangeSet.xcdatamodel */;
+			path = TICDSSyncChangeSet.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
 		13E94DEA163ED1ED0058A989 /* TICDSSyncChangeSet.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
