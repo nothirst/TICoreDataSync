@@ -33,7 +33,7 @@
     NSURL *_localAppliedSyncChangeSetsFileLocation;
     
 //    NSPersistentStoreCoordinator *_primaryPersistentStoreCoordinator;
-    NSManagedObjectContext *_backgroundApplicationContext;
+//    NSManagedObjectContext *_backgroundApplicationContext;
 }
 
 #pragma mark - Overridden Methods
