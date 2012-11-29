@@ -58,7 +58,6 @@
 		13023D21161366E10071C497 /* TICDSSyncConflict.m in Sources */ = {isa = PBXBuildFile; fileRef = 13023CC4161366E10071C497 /* TICDSSyncConflict.m */; };
 		13023D22161366E10071C497 /* TICDSSynchronizationOperationManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 13023CC6161366E10071C497 /* TICDSSynchronizationOperationManagedObjectContext.m */; };
 		13023D23161366E10071C497 /* TICDSSynchronizedManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 13023CC8161366E10071C497 /* TICDSSynchronizedManagedObject.m */; };
-		13023D24161366E10071C497 /* TICDSSynchronizedManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 13023CCA161366E10071C497 /* TICDSSynchronizedManagedObjectContext.m */; };
 		13023D25161366E10071C497 /* TICDSSyncChange.m in Sources */ = {isa = PBXBuildFile; fileRef = 13023CCD161366E10071C497 /* TICDSSyncChange.m */; };
 		13023D26161366E10071C497 /* TICDSSyncChange.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 13023CCE161366E10071C497 /* TICDSSyncChange.xcdatamodel */; };
 		13023D27161366E10071C497 /* TICDSSyncChangeSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 13023CD0161366E10071C497 /* TICDSSyncChangeSet.m */; };
@@ -75,6 +74,7 @@
 		13023D32161366E10071C497 /* TICoreDataFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 13023CED161366E10071C497 /* TICoreDataFactory.m */; };
 		13023D33161366E10071C497 /* TIKQDirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 13023CEF161366E10071C497 /* TIKQDirectoryWatcher.m */; };
 		13023D34161366E10071C497 /* TIManagedObjectExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 13023CF1161366E10071C497 /* TIManagedObjectExtensions.m */; };
+		13371E121666B3D200470CE5 /* NSManagedObjectContext+TICDSAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 13371E111666B3D200470CE5 /* NSManagedObjectContext+TICDSAdditions.m */; };
 		135B62911665479E0093865C /* DBAccountInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 135B620F1665479D0093865C /* DBAccountInfo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		135B62931665479E0093865C /* DBConnectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 135B62111665479D0093865C /* DBConnectController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		135B62941665479E0093865C /* DBDeltaEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 135B62131665479D0093865C /* DBDeltaEntry.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -229,8 +229,6 @@
 		13023CC6161366E10071C497 /* TICDSSynchronizationOperationManagedObjectContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSynchronizationOperationManagedObjectContext.m; sourceTree = "<group>"; };
 		13023CC7161366E10071C497 /* TICDSSynchronizedManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSynchronizedManagedObject.h; sourceTree = "<group>"; };
 		13023CC8161366E10071C497 /* TICDSSynchronizedManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSynchronizedManagedObject.m; sourceTree = "<group>"; };
-		13023CC9161366E10071C497 /* TICDSSynchronizedManagedObjectContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSynchronizedManagedObjectContext.h; sourceTree = "<group>"; };
-		13023CCA161366E10071C497 /* TICDSSynchronizedManagedObjectContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSynchronizedManagedObjectContext.m; sourceTree = "<group>"; };
 		13023CCC161366E10071C497 /* TICDSSyncChange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSyncChange.h; sourceTree = "<group>"; };
 		13023CCD161366E10071C497 /* TICDSSyncChange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSyncChange.m; sourceTree = "<group>"; };
 		13023CCE161366E10071C497 /* TICDSSyncChange.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TICDSSyncChange.xcdatamodel; sourceTree = "<group>"; };
@@ -265,6 +263,8 @@
 		13023CF0161366E10071C497 /* TIManagedObjectExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TIManagedObjectExtensions.h; sourceTree = "<group>"; };
 		13023CF1161366E10071C497 /* TIManagedObjectExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TIManagedObjectExtensions.m; sourceTree = "<group>"; };
 		13023CF4161366E10071C497 /* TICoreDataSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICoreDataSync.h; sourceTree = "<group>"; };
+		13371E101666B3D200470CE5 /* NSManagedObjectContext+TICDSAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+TICDSAdditions.h"; sourceTree = "<group>"; };
+		13371E111666B3D200470CE5 /* NSManagedObjectContext+TICDSAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+TICDSAdditions.m"; sourceTree = "<group>"; };
 		135B620F1665479D0093865C /* DBAccountInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBAccountInfo.m; sourceTree = "<group>"; };
 		135B62111665479D0093865C /* DBConnectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBConnectController.m; sourceTree = "<group>"; };
 		135B62121665479D0093865C /* DBDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBDefines.h; sourceTree = "<group>"; };
@@ -447,8 +447,8 @@
 				13023CC6161366E10071C497 /* TICDSSynchronizationOperationManagedObjectContext.m */,
 				13023CC7161366E10071C497 /* TICDSSynchronizedManagedObject.h */,
 				13023CC8161366E10071C497 /* TICDSSynchronizedManagedObject.m */,
-				13023CC9161366E10071C497 /* TICDSSynchronizedManagedObjectContext.h */,
-				13023CCA161366E10071C497 /* TICDSSynchronizedManagedObjectContext.m */,
+				13371E101666B3D200470CE5 /* NSManagedObjectContext+TICDSAdditions.h */,
+				13371E111666B3D200470CE5 /* NSManagedObjectContext+TICDSAdditions.m */,
 			);
 			path = "02 Primary Classes";
 			sourceTree = "<group>";
@@ -887,7 +887,6 @@
 				13023D21161366E10071C497 /* TICDSSyncConflict.m in Sources */,
 				13023D22161366E10071C497 /* TICDSSynchronizationOperationManagedObjectContext.m in Sources */,
 				13023D23161366E10071C497 /* TICDSSynchronizedManagedObject.m in Sources */,
-				13023D24161366E10071C497 /* TICDSSynchronizedManagedObjectContext.m in Sources */,
 				13023D25161366E10071C497 /* TICDSSyncChange.m in Sources */,
 				13023D26161366E10071C497 /* TICDSSyncChange.xcdatamodel in Sources */,
 				13023D27161366E10071C497 /* TICDSSyncChangeSet.m in Sources */,
@@ -940,6 +939,7 @@
 				135B62B51665479E0093865C /* NSURLResponse+Encoding.m in Sources */,
 				135B62B61665479E0093865C /* NSDictionary+Dropbox.m in Sources */,
 				135B62B71665479E0093865C /* NSString+Dropbox.m in Sources */,
+				13371E121666B3D200470CE5 /* NSManagedObjectContext+TICDSAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

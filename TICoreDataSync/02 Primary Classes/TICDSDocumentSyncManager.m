@@ -28,7 +28,7 @@
 - (void)startWholeStoreDownloadProcess;
 - (void)bailFromDownloadProcessWithError:(NSError *)anError;
 
-- (NSManagedObjectContext *)addSyncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext;
+- (NSManagedObjectContext *)addSyncChangesMocForDocumentMoc:(NSManagedObjectContext *)aContext;
 - (NSString *)keyForContext:(NSManagedObjectContext *)aContext;
 
 - (void)startRegisteredDevicesInformationProcess;
@@ -61,16 +61,13 @@
 
 #pragma mark - DELAYED REGISTRATION
 
-- (void)configureWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo
+- (void)configureWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(NSManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo
 {
     [self preConfigureWithDelegate:aDelegate appSyncManager:anAppSyncManager documentIdentifier:aDocumentIdentifier];
 
     self.primaryDocumentMOC = aContext;
-    if ([aContext respondsToSelector:@selector(setDocumentSyncManager:)]) {
-    [aContext setDocumentSyncManager:self];
-    } else {
-        NSLog(@"%s We're passing a regular MOC to our SyncManager and it expects a TICDS MOC.", __PRETTY_FUNCTION__);
-    }
+    self.primaryDocumentMOC.documentSyncManager = self;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(synchronizedMOCDidSave:) name:NSManagedObjectContextDidSaveNotification object:self.primaryDocumentMOC];
 
     // setup the syncChangesMOC
     TICDSLog(TICDSLogVerbosityEveryStep, @"Creating SyncChangesMOC");
@@ -270,7 +267,7 @@
 
 #pragma mark - ONE-SHOT REGISTRATION
 
-- (void)registerWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo
+- (void)registerWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(NSManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo
 {
     // configure the document, if necessary
     NSError *anyError;
@@ -303,6 +300,7 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to register document sync manager");
 
     self.primaryDocumentMOC = aContext;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(synchronizedMOCDidSave:) name:NSManagedObjectContextDidSaveNotification object:self.primaryDocumentMOC];
     [aContext setDocumentSyncManager:self];
 
     // setup the syncChangesMOC
@@ -1334,13 +1332,13 @@
 
 #pragma mark - ADDITIONAL MANAGED OBJECT CONTEXTS
 
-- (void)addManagedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext
+- (void)addManagedObjectContext:(NSManagedObjectContext *)aContext
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Adding SyncChanges MOC for document context: %@", aContext);
     [self addSyncChangesMocForDocumentMoc:aContext];
 }
 
-- (NSManagedObjectContext *)addSyncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)documentManagedObjectContext
+- (NSManagedObjectContext *)addSyncChangesMocForDocumentMoc:(NSManagedObjectContext *)documentManagedObjectContext
 {
     NSManagedObjectContext *syncChangesManagedObjectContext = [self.syncChangesMOCs valueForKey:[self keyForContext:documentManagedObjectContext]];
 
@@ -1369,7 +1367,7 @@
     return syncChangesManagedObjectContext;
 }
 
-- (NSManagedObjectContext *)syncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)documentManagedObjectContext
+- (NSManagedObjectContext *)syncChangesMocForDocumentMoc:(NSManagedObjectContext *)documentManagedObjectContext
 {
     NSManagedObjectContext *syncChangesManagedObjectContext = [self.syncChangesMOCs valueForKey:[self keyForContext:documentManagedObjectContext]];
 
@@ -1392,13 +1390,14 @@
 
 #pragma mark - MANAGED OBJECT CONTEXT DID SAVE BEHAVIOR
 
-- (void)synchronizedMOCWillSave:(TICDSSynchronizedManagedObjectContext *)aMoc
+- (void)synchronizedMOCWillSave:(NSManagedObjectContext *)aMoc
 {
     // Do anything here that's needed before the application context is saved
 }
 
-- (void)synchronizedMOCDidSave:(TICDSSynchronizedManagedObjectContext *)documentManagedObjectContext
+- (void)synchronizedMOCDidSave:(NSNotification *)notification
 {
+    NSManagedObjectContext *documentManagedObjectContext = notification.object;
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"MOC saved, so beginning post-save processing");
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didBeginProcessingSyncChangesAfterManagedObjectContextDidSave:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
@@ -1441,11 +1440,6 @@
 
     TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate allowed synchronization after saving");
     [self startSynchronizationProcess];
-}
-
-- (void)synchronizedMOCFailedToSave:(TICDSSynchronizedManagedObjectContext *)aMoc withError:(NSError *)anError
-{
-    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Synchronized context failed to save with error: %@", anError);
 }
 
 #pragma mark - NOTIFICATIONS
