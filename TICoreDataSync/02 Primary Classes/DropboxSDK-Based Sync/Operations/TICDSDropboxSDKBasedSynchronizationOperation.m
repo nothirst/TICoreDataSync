@@ -249,7 +249,7 @@
     if (path != nil && downloadDestination != nil && [[self.failedDownloadRetryDictionary objectForKey:path] integerValue] < 5) {
         NSInteger retryCount = [[self.failedDownloadRetryDictionary objectForKey:path] integerValue];
         retryCount++;
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to download %@. Going for try number %d", path, retryCount);
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Failed to download %@. Going for try number %d", path, retryCount);
         [self.failedDownloadRetryDictionary setObject:[NSNumber numberWithInteger:retryCount] forKey:path];
         [[self restClient] loadFile:path intoPath:downloadDestination];
         return;
@@ -302,7 +302,7 @@
     if (destPath != nil && [[self.failedDownloadRetryDictionary objectForKey:destPath] integerValue] < 5) {
         NSInteger retryCount = [[self.failedDownloadRetryDictionary objectForKey:destPath] integerValue];
         retryCount++;
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to load revisions for %@. Going for try number %d", destPath, retryCount);
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Failed to load revisions for %@. Going for try number %d", destPath, retryCount);
         [self.failedDownloadRetryDictionary setObject:[NSNumber numberWithInteger:retryCount] forKey:destPath];
         [self.restClient loadRevisionsForFile:destPath limit:1];
         return;
@@ -312,6 +312,7 @@
         [self.failedDownloadRetryDictionary removeObjectForKey:destPath];
     }
     
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Download of %@ has failed after 5 attempts, we're falling through to the error condition.", destPath);
     // A failure in this case could be caused by the file not existing, so we attempt to upload the file with no parent revision. That, of course, has its own failure checks.
     
     if( [[[destPath lastPathComponent] pathExtension] isEqualToString:TICDSSyncChangeSetFileExtension] ) {
