@@ -300,8 +300,8 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to register document sync manager");
 
     self.primaryDocumentMOC = aContext;
+    self.primaryDocumentMOC.documentSyncManager = self;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(synchronizedMOCDidSave:) name:NSManagedObjectContextDidSaveNotification object:self.primaryDocumentMOC];
-    [aContext setDocumentSyncManager:self];
 
     // setup the syncChangesMOC
     TICDSLog(TICDSLogVerbosityEveryStep, @"Creating SyncChangesMOC");
@@ -1398,6 +1398,11 @@
 - (void)synchronizedMOCDidSave:(NSNotification *)notification
 {
     NSManagedObjectContext *documentManagedObjectContext = notification.object;
+    if (documentManagedObjectContext != self.primaryDocumentMOC) {
+        NSLog(@"%s Processing a synchronizedMOCDidSave: method for a MOC that isn't the primary document MOC", __PRETTY_FUNCTION__);
+        return;
+    }
+    
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"MOC saved, so beginning post-save processing");
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didBeginProcessingSyncChangesAfterManagedObjectContextDidSave:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
