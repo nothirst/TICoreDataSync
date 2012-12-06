@@ -287,7 +287,7 @@
     NSString *integrityKey = [[NSUserDefaults standardUserDefaults] valueForKey:userDefaultsIntegrityKey];
     self.integrityKey = integrityKey;
 
-    if (self.state != TICDSApplicationSyncManagerStateConfigured) {
+    if (self.state != TICDSDocumentSyncManagerStateConfigured) {
         shouldContinue = [self startDocumentConfigurationProcess:&anyError];
     }
 
