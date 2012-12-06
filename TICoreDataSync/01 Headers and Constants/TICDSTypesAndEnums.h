@@ -16,10 +16,7 @@ typedef enum _TICDSApplicationSyncManagerState {
     TICDSApplicationSyncManagerStateUnknown = 0,
     
     TICDSApplicationSyncManagerStateAbleToSync = 1,
-    
-    /** Configuration Phase */
-    TICDSApplicationSyncManagerStateConfigured = -50,
-    
+        
     /** Registration Phase */
     TICDSApplicationSyncManagerStateNotYetRegistered = -100,
     TICDSApplicationSyncManagerStateRegistering = -110,

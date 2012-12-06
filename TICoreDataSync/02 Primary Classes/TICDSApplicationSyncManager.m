@@ -56,7 +56,7 @@
     [self setClientDescription:aClientDescription];
     [self setApplicationUserInfo:someUserInfo];
     
-    [self setState:TICDSApplicationSyncManagerStateConfigured];
+    self.configured = YES;
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Application sync manager configured for future registration");
 }
 
@@ -78,7 +78,7 @@
         }];
     }
     
-    if( [self state] != TICDSApplicationSyncManagerStateConfigured ) {
+    if (self.isConfigured == NO) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Unable to register an application sync manager using registerPreConfiguredApplicationSyncManager - it hasn't already configured");
         [self bailFromRegistrationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeUnableToRegisterUnconfiguredSyncManager classAndMethod:__PRETTY_FUNCTION__]];
         return;
@@ -236,7 +236,6 @@
 
 - (void)applicationRegistrationOperationWasCancelled:(TICDSApplicationRegistrationOperation *)anOperation
 {
-    [self setState:TICDSApplicationSyncManagerStateConfigured];
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Application Registration Operation was Cancelled");
     
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToRegisterWithError:)]) {
@@ -250,14 +249,14 @@
 - (void)applicationRegistrationOperation:(TICDSApplicationRegistrationOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
     [self setState:TICDSApplicationSyncManagerStateNotYetRegistered];
+    [self postDecreaseActivityNotification];
+
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Application Registration Operation Failed to Complete with Error: %@", anError);
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToRegisterWithError:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
              [(id)self.delegate applicationSyncManager:self didFailToRegisterWithError:anError];
          }];
     }
- 
-    [self postDecreaseActivityNotification];
 }
 
 #pragma mark - LIST OF PREVIOUSLY SYNCHRONIZED DOCUMENTS
