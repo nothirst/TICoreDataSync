@@ -458,31 +458,31 @@
 
 - (void)fetchedPasswordTestData:(NSData *)testData
 {
-    if( testData ) {
+    if (testData) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Fetched test data and decrypted successfully");
-        
-        if( [self shouldCreateClientDirectory] ) {
+
+        if ([self shouldCreateClientDirectory]) {
             [self beginCreatingRemoteClientDeviceDirectory];
         } else {
             [self operationDidCompleteSuccessfully];
         }
         return;
     }
-    
+
     // an error occurred
     NSError *underlyingError = [[[self error] userInfo] valueForKey:NSUnderlyingErrorKey];
-    
+
     // incorrect password
-    if( [underlyingError code] == FZACryptorErrorCodeFailedIntegrityCheck && [[underlyingError domain] isEqualToString:FZACryptorErrorDomain] ) {
+    if ( [underlyingError code] == FZACryptorErrorCodeFailedIntegrityCheck && [[underlyingError domain] isEqualToString:FZACryptorErrorDomain] ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Password was incorrect, so ask the delegate for a new one");
-        
+
         [self blitzKeychainItems];
         [self beginRequestForEncryptionPassword];
         return;
     }
-    
+
     // generic error
-    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to fetch test data");
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to fetch password test data");
     [self operationDidFailToComplete];
 }
 
