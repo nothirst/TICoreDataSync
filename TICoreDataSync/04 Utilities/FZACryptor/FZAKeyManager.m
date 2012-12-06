@@ -29,16 +29,21 @@
 
 @implementation FZAKeyManager
 
-- (NSData *)keyFromPassword:(NSString *)password salt: (NSData *)salt {
-    NSData *passwordBytes = [password dataUsingEncoding: NSUTF16LittleEndianStringEncoding];
+- (NSData *)keyFromPassword:(NSString *)password salt:(NSData *)salt
+{
+    NSData *passwordBytes = [password dataUsingEncoding:NSUTF16LittleEndianStringEncoding];
     NSMutableData *saltedPW = [passwordBytes mutableCopy];
-    [saltedPW appendData: salt];
-    uint8_t hashBuffer[CC_SHA256_DIGEST_LENGTH] = {0};
+    [saltedPW appendData:salt];
+    uint8_t hashBuffer[CC_SHA256_DIGEST_LENGTH] = {
+        0
+    };
+
     CC_SHA256([saltedPW bytes], (CC_LONG)[saltedPW length], hashBuffer);
     for (int i = 0; i < 7499; i++) {
         CC_SHA256(hashBuffer, CC_SHA256_DIGEST_LENGTH, hashBuffer);
     }
-    return [NSData dataWithBytes: hashBuffer length: CC_SHA256_DIGEST_LENGTH];
+    
+    return [NSData dataWithBytes:hashBuffer length:CC_SHA256_DIGEST_LENGTH];
 }
 
 - (BOOL)hasKey {
