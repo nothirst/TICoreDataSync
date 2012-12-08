@@ -102,6 +102,16 @@ const NSInteger FZAFileBlockLength = 4096;
     
     //set up the crypto
     NSData *syncKey = [keyManager key];
+    if (syncKey == nil || [syncKey bytes] == nil) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Our sync key was nil");
+        if (error) {
+            *error = [NSError errorWithDomain:FZACryptorErrorDomain
+                                         code:FZACryptorErrorCodeFailedIntegrityCheck
+                                     userInfo:nil];
+        }
+        return NO;
+    }
+
     NSData *topLevelIV = [keyManager randomDataOfLength: kCCBlockSizeAES128];
     CCHmacContext hmacContext;
     CCHmacInit(&hmacContext, kCCHmacAlgSHA256, [syncKey bytes], [syncKey length]);
