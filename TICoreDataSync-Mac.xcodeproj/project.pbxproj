@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0ADF2BCD16769F120032BC42 /* NSManagedObjectContext+TICDSAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ADF2BCB16769F120032BC42 /* NSManagedObjectContext+TICDSAdditions.m */; };
+		0ADF2BCE16769F120032BC42 /* NSManagedObjectContext+TICDSAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 0ADF2BCC16769F120032BC42 /* NSManagedObjectContext+TICDSAdditions.h */; };
 		13B3933B1626183700D7C7C0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B3933A1626183700D7C7C0 /* Cocoa.framework */; };
 		13B393E71626186A00D7C7C0 /* TICDSAllClassHeaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393531626186A00D7C7C0 /* TICDSAllClassHeaders.h */; };
 		13B393E81626186A00D7C7C0 /* TICDSClassesAndProtocols.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393541626186A00D7C7C0 /* TICDSClassesAndProtocols.h */; };
@@ -106,7 +108,6 @@
 		13B394461626186A00D7C7C0 /* TICDSSynchronizedManagedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393B81626186A00D7C7C0 /* TICDSSynchronizedManagedObject.h */; };
 		13B394471626186A00D7C7C0 /* TICDSSynchronizedManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393B91626186A00D7C7C0 /* TICDSSynchronizedManagedObject.m */; };
 		13B394481626186A00D7C7C0 /* TICDSSynchronizedManagedObjectContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393BA1626186A00D7C7C0 /* TICDSSynchronizedManagedObjectContext.h */; };
-		13B394491626186A00D7C7C0 /* TICDSSynchronizedManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393BB1626186A00D7C7C0 /* TICDSSynchronizedManagedObjectContext.m */; };
 		13B3944A1626186A00D7C7C0 /* TICDSSyncChange.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393BD1626186A00D7C7C0 /* TICDSSyncChange.h */; };
 		13B3944B1626186A00D7C7C0 /* TICDSSyncChange.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393BE1626186A00D7C7C0 /* TICDSSyncChange.m */; };
 		13B3944C1626186A00D7C7C0 /* TICDSSyncChange.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 13B393BF1626186A00D7C7C0 /* TICDSSyncChange.xcdatamodel */; };
@@ -146,6 +147,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0ADF2BCB16769F120032BC42 /* NSManagedObjectContext+TICDSAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObjectContext+TICDSAdditions.m"; path = "TICoreDataSync/02 Primary Classes/NSManagedObjectContext+TICDSAdditions.m"; sourceTree = SOURCE_ROOT; };
+		0ADF2BCC16769F120032BC42 /* NSManagedObjectContext+TICDSAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObjectContext+TICDSAdditions.h"; path = "TICoreDataSync/02 Primary Classes/NSManagedObjectContext+TICDSAdditions.h"; sourceTree = SOURCE_ROOT; };
 		13B393371626183700D7C7C0 /* libTICoreDataSync-Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libTICoreDataSync-Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B3933A1626183700D7C7C0 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		13B3933D1626183700D7C7C0 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -249,7 +252,6 @@
 		13B393B81626186A00D7C7C0 /* TICDSSynchronizedManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSynchronizedManagedObject.h; sourceTree = "<group>"; };
 		13B393B91626186A00D7C7C0 /* TICDSSynchronizedManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSynchronizedManagedObject.m; sourceTree = "<group>"; };
 		13B393BA1626186A00D7C7C0 /* TICDSSynchronizedManagedObjectContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSynchronizedManagedObjectContext.h; sourceTree = "<group>"; };
-		13B393BB1626186A00D7C7C0 /* TICDSSynchronizedManagedObjectContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSynchronizedManagedObjectContext.m; sourceTree = "<group>"; };
 		13B393BD1626186A00D7C7C0 /* TICDSSyncChange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSyncChange.h; sourceTree = "<group>"; };
 		13B393BE1626186A00D7C7C0 /* TICDSSyncChange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSyncChange.m; sourceTree = "<group>"; };
 		13B393BF1626186A00D7C7C0 /* TICDSSyncChange.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TICDSSyncChange.xcdatamodel; sourceTree = "<group>"; };
@@ -375,6 +377,8 @@
 				13B393551626186A00D7C7C0 /* TICDSConstants.h */,
 				13B393561626186A00D7C7C0 /* TICDSConstants.m */,
 				13B393571626186A00D7C7C0 /* TICDSTypesAndEnums.h */,
+				0ADF2BCB16769F120032BC42 /* NSManagedObjectContext+TICDSAdditions.m */,
+				0ADF2BCC16769F120032BC42 /* NSManagedObjectContext+TICDSAdditions.h */,
 			);
 			path = "01 Headers and Constants";
 			sourceTree = "<group>";
@@ -396,7 +400,6 @@
 				13B393B81626186A00D7C7C0 /* TICDSSynchronizedManagedObject.h */,
 				13B393B91626186A00D7C7C0 /* TICDSSynchronizedManagedObject.m */,
 				13B393BA1626186A00D7C7C0 /* TICDSSynchronizedManagedObjectContext.h */,
-				13B393BB1626186A00D7C7C0 /* TICDSSynchronizedManagedObjectContext.m */,
 			);
 			path = "02 Primary Classes";
 			sourceTree = "<group>";
@@ -670,6 +673,7 @@
 				13B394661626186A00D7C7C0 /* TIManagedObjectExtensions.h in Headers */,
 				13B394691626186A00D7C7C0 /* TICoreDataSync.h in Headers */,
 				13B3947516261A0600D7C7C0 /* TICoreDataSync-Mac-Prefix.pch in Headers */,
+				0ADF2BCE16769F120032BC42 /* NSManagedObjectContext+TICDSAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -771,7 +775,6 @@
 				13B394431626186A00D7C7C0 /* TICDSSyncConflict.m in Sources */,
 				13B394451626186A00D7C7C0 /* TICDSSynchronizationOperationManagedObjectContext.m in Sources */,
 				13B394471626186A00D7C7C0 /* TICDSSynchronizedManagedObject.m in Sources */,
-				13B394491626186A00D7C7C0 /* TICDSSynchronizedManagedObjectContext.m in Sources */,
 				13B3944B1626186A00D7C7C0 /* TICDSSyncChange.m in Sources */,
 				13B3944C1626186A00D7C7C0 /* TICDSSyncChange.xcdatamodel in Sources */,
 				13B3944E1626186A00D7C7C0 /* TICDSSyncChangeSet.m in Sources */,
@@ -788,6 +791,7 @@
 				13B394631626186A00D7C7C0 /* TICoreDataFactory.m in Sources */,
 				13B394651626186A00D7C7C0 /* TIKQDirectoryWatcher.m in Sources */,
 				13B394671626186A00D7C7C0 /* TIManagedObjectExtensions.m in Sources */,
+				0ADF2BCD16769F120032BC42 /* NSManagedObjectContext+TICDSAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -818,7 +822,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -842,7 +846,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -850,6 +854,7 @@
 		13B393491626183700D7C7C0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -864,6 +869,7 @@
 		13B3934A1626183700D7C7C0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
