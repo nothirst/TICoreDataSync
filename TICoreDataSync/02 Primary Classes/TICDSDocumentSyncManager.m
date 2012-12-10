@@ -94,7 +94,7 @@
 
 - (void)registerConfiguredDocumentSyncManager
 {
-    if (self.state != TICDSDocumentSyncManagerStateConfigured) {
+    if (self.isConfigured == NO) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Can't register this document sync manager because it wasn't configured");
         [self bailFromRegistrationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeUnableToRegisterUnconfiguredSyncManager classAndMethod:__PRETTY_FUNCTION__]];
         return;
@@ -158,7 +158,7 @@
         return NO;
     }
 
-    self.state = TICDSDocumentSyncManagerStateConfigured;
+    self.configured = YES;
 
     return YES;
 }
@@ -287,7 +287,7 @@
     NSString *integrityKey = [[NSUserDefaults standardUserDefaults] valueForKey:userDefaultsIntegrityKey];
     self.integrityKey = integrityKey;
 
-    if (self.state != TICDSDocumentSyncManagerStateConfigured) {
+    if (self.isConfigured == NO) {
         shouldContinue = [self startDocumentConfigurationProcess:&anyError];
     }
 
@@ -533,7 +533,6 @@
 
 - (void)documentRegistrationOperationWasCancelled:(TICDSDocumentRegistrationOperation *)anOperation
 {
-    self.state = TICDSDocumentSyncManagerStateConfigured;
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Document Registration Operation was Cancelled");
 
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToRegisterWithError:)]) {
