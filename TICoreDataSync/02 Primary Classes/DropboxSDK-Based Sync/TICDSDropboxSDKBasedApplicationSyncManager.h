@@ -20,15 +20,9 @@
 
 @class DBSession;
 
-@interface TICDSDropboxSDKBasedApplicationSyncManager : TICDSApplicationSyncManager {
-@private
-    DBSession *_dbSession;
-}
+@interface TICDSDropboxSDKBasedApplicationSyncManager : TICDSApplicationSyncManager
 
 /** @name Properties */
-
-/** The DropboxSDK `DBSession` object to use for Dropbox access. If you don't set this property, TICoreDataSync will use the `[DBSession sharedSession]`. */
-@property (nonatomic, strong) DBSession *dbSession;
 
 /** @name Paths */
 /** The path to root application directory (will be `/globalAppIdentifier`). */
