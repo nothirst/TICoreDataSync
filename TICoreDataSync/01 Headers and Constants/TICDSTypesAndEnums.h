@@ -29,9 +29,6 @@ typedef enum _TICDSDocumentSyncManagerState {
     
     TICDSDocumentSyncManagerStateAbleToSync = 1,
     
-    /** Configuration Phase */
-    TICDSDocumentSyncManagerStateConfigured = -50,
-    
     /** Registration Phase */
     TICDSDocumentSyncManagerStateNotYetRegistered = -100,
     TICDSDocumentSyncManagerStateRegistering = -110,
