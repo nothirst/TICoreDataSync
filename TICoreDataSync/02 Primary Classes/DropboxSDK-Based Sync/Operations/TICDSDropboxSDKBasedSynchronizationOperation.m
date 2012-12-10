@@ -345,7 +345,7 @@
 
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error
 {
-    NSString *path = [[error userInfo] valueForKey:@"path"];
+    NSString *path = [[error userInfo] valueForKey:@"destinationPath"];
     
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
@@ -358,6 +358,9 @@
         [self uploadedRecentSyncFileSuccessfully:NO];
         return;
     }
+ 
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an upload failure that we're not handling properly for the file located at %@", path);
+    [self operationDidFailToComplete];
 }
 
 #pragma mark - Paths
@@ -376,7 +379,6 @@
 {
     [_restClient setDelegate:nil];
 
-    _dbSession = nil;
     _restClient = nil;
     _clientIdentifiersForChangeSetIdentifiers = nil;
     _changeSetModificationDates = nil;
@@ -392,7 +394,7 @@
 {
     if( _restClient ) return _restClient;
     
-    _restClient = [[DBRestClient alloc] initWithSession:[self dbSession]];
+    _restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
     [_restClient setDelegate:self];
     
     return _restClient;
@@ -408,8 +410,6 @@
 }
 
 #pragma mark - Properties
-@synthesize dbSession = _dbSession;
-@synthesize restClient = _restClient;
 @synthesize clientIdentifiersForChangeSetIdentifiers = _clientIdentifiersForChangeSetIdentifiers;
 @synthesize changeSetModificationDates = _changeSetModificationDates;
 @synthesize thisDocumentDirectoryPath = _thisDocumentDirectoryPath;

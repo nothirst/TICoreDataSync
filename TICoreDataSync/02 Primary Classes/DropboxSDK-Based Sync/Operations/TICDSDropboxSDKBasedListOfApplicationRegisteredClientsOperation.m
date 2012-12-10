@@ -170,7 +170,6 @@
 {
     [_restClient setDelegate:nil];
 
-    _dbSession = nil;
     _restClient = nil;
     _clientDevicesDirectoryPath = nil;
     _documentsDirectoryPath = nil;
@@ -182,15 +181,13 @@
 {
     if( _restClient ) return _restClient;
     
-    _restClient = [[DBRestClient alloc] initWithSession:[self dbSession]];
+    _restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
     [_restClient setDelegate:self];
     
     return _restClient;
 }
 
 #pragma mark - Properties
-@synthesize dbSession = _dbSession;
-@synthesize restClient = _restClient;
 @synthesize clientDevicesDirectoryPath = _clientDevicesDirectoryPath;
 @synthesize documentsDirectoryPath = _documentsDirectoryPath;
 

@@ -339,6 +339,9 @@
 /** The `TICoreDataFactory` object used for SyncChange managed object contexts. */
 @property (nonatomic, strong) TICoreDataFactory *coreDataFactory;
 
+/** Used to indicate if the document sync manager has been configured via the -configureWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo: method. */
+@property (nonatomic, getter = isConfigured) BOOL configured;
+
 #pragma mark - Operation Queues
 /** @name Operation Queues */
 

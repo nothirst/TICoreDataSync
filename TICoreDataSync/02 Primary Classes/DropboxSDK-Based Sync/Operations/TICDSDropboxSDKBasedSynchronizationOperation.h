@@ -17,7 +17,6 @@
 
 @interface TICDSDropboxSDKBasedSynchronizationOperation : TICDSSynchronizationOperation <DBRestClientDelegate> {
 @private
-    DBSession *_dbSession;
     DBRestClient *_restClient;
     
     NSMutableDictionary *_clientIdentifiersForChangeSetIdentifiers;
@@ -32,9 +31,6 @@
 }
 
 /** @name Properties */
-
-/** The DropboxSDK `DBSession` for use by this operation's `DBRestClient`. */
-@property (strong) DBSession *dbSession;
 
 /** The DropboxSDK `DBRestClient` for use by this operation. */
 @property (nonatomic, readonly) DBRestClient *restClient;

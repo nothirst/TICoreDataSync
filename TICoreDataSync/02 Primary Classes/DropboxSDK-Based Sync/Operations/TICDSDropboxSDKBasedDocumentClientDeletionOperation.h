@@ -16,7 +16,6 @@
 
 @interface TICDSDropboxSDKBasedDocumentClientDeletionOperation : TICDSDocumentClientDeletionOperation <DBRestClientDelegate> {
 @private
-    DBSession *_dbSession;
     DBRestClient *_restClient;
     
     NSString *_clientDevicesDirectoryPath;
@@ -28,9 +27,6 @@
 }
 
 /** @name Properties */
-
-/** The DropboxSDK `DBSession` for use by this operation's `DBRestClient`. */
-@property (strong) DBSession *dbSession;
 
 /** The DropboxSDK `DBRestClient` for use by this operation for methods relating to the global application directory. */
 @property (nonatomic, readonly) DBRestClient *restClient;

@@ -319,7 +319,7 @@
 
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error
 {
-    NSString *path = [[error userInfo] valueForKey:@"path"];
+    NSString *path = [[error userInfo] valueForKey:@"destinationPath"];
     
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
@@ -400,7 +400,6 @@
 {
     [_restClient setDelegate:nil];
 
-    _dbSession = nil;
     _restClient = nil;
     _applicationDirectoryPath = nil;
     _encryptionDirectorySaltDataFilePath = nil;
@@ -414,15 +413,13 @@
 {
     if( _restClient ) return _restClient;
     
-    _restClient = [[DBRestClient alloc] initWithSession:[self dbSession]];
+    _restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
     [_restClient setDelegate:self];
     
     return _restClient;
 }
 
 #pragma mark - Properties
-@synthesize dbSession = _dbSession;
-@synthesize restClient = _restClient;
 @synthesize applicationDirectoryPath = _applicationDirectoryPath;
 @synthesize encryptionDirectorySaltDataFilePath = _encryptionDirectorySaltDataFilePath;
 @synthesize encryptionDirectoryTestDataFilePath = _encryptionDirectoryTestDataFilePath;
