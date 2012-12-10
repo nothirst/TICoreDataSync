@@ -345,7 +345,7 @@
 
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error
 {
-    NSString *path = [[error userInfo] valueForKey:@"path"];
+    NSString *path = [[error userInfo] valueForKey:@"destinationPath"];
     
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
@@ -358,6 +358,9 @@
         [self uploadedRecentSyncFileSuccessfully:NO];
         return;
     }
+ 
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an upload failure that we're not handling properly for the file located at %@", path);
+    [self operationDidFailToComplete];
 }
 
 #pragma mark - Paths

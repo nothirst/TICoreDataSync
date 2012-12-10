@@ -319,7 +319,7 @@
 
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error
 {
-    NSString *path = [[error userInfo] valueForKey:@"path"];
+    NSString *path = [[error userInfo] valueForKey:@"destinationPath"];
     
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
