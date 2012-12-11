@@ -392,6 +392,10 @@
     
     if( [[path lastPathComponent] isEqualToString:TICDSSaltFilenameWithExtension] ) {
         [self fetchedSaltData:nil];
+    } else if ([path isEqualToString:[self encryptionDirectoryTestDataFilePath]]) {
+        [self fetchedPasswordTestData:nil];
+    } else {
+        [self operationDidFailToComplete];
     }
 }
 
