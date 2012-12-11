@@ -914,7 +914,7 @@
     if ([object respondsToSelector:NSSelectorFromString(selectorName)]) {
         [object performSelector:NSSelectorFromString(selectorName) withObject:relatedObject];
     } else {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object does not respond to selector: %@ [%@] %@", selectorName, aSyncChange, [aSyncChange objectEntityName]);
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object does not respond to selector: %@ [%@] %@", selectorName, syncChange, [syncChange objectEntityName]);
     }
 #pragma clang diagnostic pop
         
