@@ -12,6 +12,7 @@
 
 @property (nonatomic, copy) NSString *changeSetProgressString;
 @property (nonatomic, readonly) NSNumberFormatter *uuidPrefixFormatter;
+@property (nonatomic, copy) NSString *localSyncChangeSetIdentifier;
 
 - (void)beginCheckWhetherRemoteIntegrityKeyMatchesLocalKey;
 
@@ -973,43 +974,20 @@
 
     TICDSLog(TICDSLogVerbosityEveryStep, @"Renaming sync changes file ready for upload");
 
-    NSString *identifier = [NSString stringWithFormat:@"%@-%@", [self.uuidPrefixFormatter stringFromNumber:[NSNumber numberWithDouble:CFAbsoluteTimeGetCurrent()]], [TICDSUtilities uuidString]];
+    self.localSyncChangeSetIdentifier = [NSString stringWithFormat:@"%@-%@", [self.uuidPrefixFormatter stringFromNumber:[NSNumber numberWithDouble:CFAbsoluteTimeGetCurrent()]], [TICDSUtilities uuidString]];
 
     NSString *filePath = [self.localSyncChangesToMergeLocation path];
     filePath = [filePath stringByDeletingLastPathComponent];
-    filePath = [filePath stringByAppendingPathComponent:identifier];
+    filePath = [filePath stringByAppendingPathComponent:self.localSyncChangeSetIdentifier];
     filePath = [filePath stringByAppendingPathExtension:TICDSSyncChangeSetFileExtension];
 
     NSError *anyError = nil;
-    BOOL success = [[self fileManager] moveItemAtPath:[self.localSyncChangesToMergeLocation path] toPath:filePath error:&anyError];
+    BOOL success = [[self fileManager] copyItemAtPath:[self.localSyncChangesToMergeLocation path] toPath:filePath error:&anyError];
 
     if (success == NO) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to move local sync changes to merge file");
 
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [self operationDidFailToComplete];
-        return;
-    }
-
-    NSDate *date = [NSDate date];
-
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Adding local sync change set into AppliedSyncChanges");
-    TICDSSyncChangeSet *appliedSyncChangeSet = [TICDSSyncChangeSet syncChangeSetWithIdentifier:identifier fromClient:[self clientIdentifier] creationDate:date inManagedObjectContext:self.appliedSyncChangeSetsContext];
-
-    if (appliedSyncChangeSet == nil) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Unable to create sync change set in applied sync change sets context");
-        [self setError:[TICDSError errorWithCode:TICDSErrorCodeObjectCreationError classAndMethod:__PRETTY_FUNCTION__]];
-        [self operationDidFailToComplete];
-        return;
-    }
-
-    [appliedSyncChangeSet setLocalDateOfApplication:date];
-
-    // Save Applied Sync Change Sets context (AppliedSyncChangeSets.ticdsync file)
-    success = [self.appliedSyncChangeSetsContext save:&anyError];
-    if (success == NO) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save applied sync change sets context, after adding local merged changes: %@", anyError);
-        [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
         [self operationDidFailToComplete];
         return;
     }
@@ -1027,6 +1005,33 @@
     }
 
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Uploaded local sync changes file");
+
+    NSDate *date = [NSDate date];
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Adding local sync change set into AppliedSyncChanges");
+    TICDSSyncChangeSet *appliedSyncChangeSet = [TICDSSyncChangeSet syncChangeSetWithIdentifier:self.localSyncChangeSetIdentifier fromClient:[self clientIdentifier] creationDate:date inManagedObjectContext:self.appliedSyncChangeSetsContext];
+    
+    if (appliedSyncChangeSet == nil) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Unable to create sync change set in applied sync change sets context");
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeObjectCreationError classAndMethod:__PRETTY_FUNCTION__]];
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    [appliedSyncChangeSet setLocalDateOfApplication:date];
+    
+    // Save Applied Sync Change Sets context (AppliedSyncChangeSets.ticdsync file)
+    NSError *anyError = nil;
+    success = [self.appliedSyncChangeSetsContext save:&anyError];
+    if (success == NO) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save applied sync change sets context, after adding local merged changes: %@", anyError);
+        [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        [self operationDidFailToComplete];
+        return;
+    }
+    
+    // The file has been copied and uploaded so we can get rid of the original version
+    [[self fileManager] removeItemAtPath:[self.localSyncChangesToMergeLocation path] error:&anyError];
 
     [self beginUploadOfRecentSyncFile];
 }
