@@ -908,6 +908,11 @@
         }
         
         NSManagedObject *relatedObject = [self backgroundApplicationContextObjectForEntityName:relatedObjectEntityName syncIdentifier:changedRelationships];
+        if (relatedObject == nil) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Could not fetch %@ object with syncIdentifier %@ so bailing from trying to call %@ on our %@", relatedObjectEntityName, changedRelationships, selectorName, objectEntityName);
+            [self.synchronizationWarnings addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteRelationshipSyncChange entityName:relatedObjectEntityName relatedObjectEntityName:nil attributes:changedRelationships]];
+            return;
+        }
         
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
@@ -935,11 +940,11 @@
         
         if (object == nil) {
             TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object not found locally for deletion sync change %@", objectEntityName);
-            [self.synchronizationWarnings addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteDeletionSyncChange entityName:objectEntityName relatedObjectEntityName:nil attributes:nil]];
+            [self.synchronizationWarnings addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteDeletionSyncChange entityName:objectEntityName relatedObjectEntityName:nil attributes:@{ @"objectSyncID":objectSyncID}]];
             return;
         }
         
-        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"%@", objectEntityName);
+        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"%@ (%@)", objectEntityName, objectSyncID);
         
         [self.backgroundApplicationContext deleteObject:object];
     }];
