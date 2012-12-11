@@ -9,12 +9,12 @@
 #import "iOSNotebookAppDelegate.h"
 #import "RootViewController.h"
 #import "TICoreDataSync.h"
-#import "DropboxSDK.h"
+#import <DropboxSDK/DropboxSDK.h>
 
-#define kTICDDropboxSyncKey @"dpuxoo9xf6nu2fa"
-#define kTICDDropboxSyncSecret @"6oa8sklxct5d2gy"
+#define kTICDDropboxSyncKey @"fqv4grvh4a1u885"
+#define kTICDDropboxSyncSecret @"x7yo7k9bnrus87z"
 
-@interface iOSNotebookAppDelegate () <DBSessionDelegate, DBLoginControllerDelegate, TICDSApplicationSyncManagerDelegate, TICDSDocumentSyncManagerDelegate>
+@interface iOSNotebookAppDelegate () <DBSessionDelegate, TICDSApplicationSyncManagerDelegate, TICDSDocumentSyncManagerDelegate>
 - (void)registerSyncManager;
 - (void)configureSyncManagerForLaterRegistration;
 @end
@@ -47,23 +47,35 @@
 {
     [TICDSLog setVerbosity:TICDSLogVerbosityEveryStep];
     
-    DBSession *session = [[DBSession alloc] initWithConsumerKey:kTICDDropboxSyncKey consumerSecret:kTICDDropboxSyncSecret];
-    [session setDelegate:self];
-    
-    [DBSession setSharedSession:session];
-    [session release];
+	DBSession *session = [[DBSession alloc] initWithAppKey:kTICDDropboxSyncKey appSecret:kTICDDropboxSyncSecret root:kDBRootDropbox];
+	[session setDelegate:self];
+	[DBSession setSharedSession:session];
+	[session release];
     
     if( [session isLinked] ) {
-        [self configureSyncManagerForLaterRegistration];
+        [self registerSyncManager];
     } else {
-        DBLoginController *loginController = [[DBLoginController alloc] init];
-        [loginController setDelegate:self];
-        [[self navigationController] pushViewController:loginController animated:NO];
-        [loginController release];
+        [[DBSession sharedSession] link];
     }
     
     [[self window] setRootViewController:[self navigationController]];
     [[self window] makeKeyAndVisible];
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    if ([[DBSession sharedSession] handleOpenURL:url] == YES) {
+        if ([[DBSession sharedSession] isLinked]) {
+            NSLog(@"%s App linked successfully!", __PRETTY_FUNCTION__);
+            [self registerSyncManager];
+        } else {
+            NSLog(@"%s App was not linked successfully.", __PRETTY_FUNCTION__);
+        }
+    } else {
+        NSLog(@"%s DBSession couldn't handle opening the URL %@", __PRETTY_FUNCTION__, url);
+    }
+    
     return YES;
 }
 
@@ -253,29 +265,21 @@ didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:
      mergeChangesFromContextDidSaveNotification:aNotification];
 }
 
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToSynchronizeWithError:(NSError *)anError
+{
+    if( [anError code] != TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeysDoNotMatch ) {
+        return;
+    }
+    
+    [aSyncManager initiateDownloadOfWholeStore];
+}
+
 #pragma mark -
-#pragma mark DBLoginControllerDelegate
-- (void)sessionDidReceiveAuthorizationFailure:(DBSession *)session
-{
-    DBLoginController *loginController = 
-    [[DBLoginController alloc] init];
-    [loginController setDelegate:self];
-    
-    [[self navigationController] pushViewController:loginController 
-                                           animated:YES];
-    [loginController release];
-}
+#pragma mark DBSessionDelegate methods
 
-- (void)loginControllerDidLogin:(DBLoginController *)controller
+- (void)sessionDidReceiveAuthorizationFailure:(DBSession *)session userId:(NSString *)userId;
 {
-    [[self navigationController] popViewControllerAnimated:YES];
-    
-    [self registerSyncManager];
-}
-
-- (void)loginControllerDidCancel:(DBLoginController *)controller
-{
-    [[self navigationController] popViewControllerAnimated:YES];
+    NSLog(@"%s Could not create DBSession for user %@", __PRETTY_FUNCTION__, userId);
 }
 
 #pragma mark -
@@ -349,7 +353,7 @@ didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil)
     {
-        __managedObjectContext = [[TICDSSynchronizedManagedObjectContext alloc] init];
+        __managedObjectContext = [[TICDSSynchronizedManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
         [__managedObjectContext setPersistentStoreCoordinator:coordinator];
     }
     return __managedObjectContext;

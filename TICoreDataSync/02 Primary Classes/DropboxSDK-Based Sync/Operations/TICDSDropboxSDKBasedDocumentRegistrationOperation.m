@@ -143,7 +143,7 @@
         return;
     }
   
-    // The integrity will not exist in this point in the workflow. There is no point in doing the dance to figure out if there is a parent revision because there won't be one.
+    // The integrity key will not exist in this point in the workflow. There is no point in doing the dance to figure out if there is a parent revision because there won't be one.
     [[self restClient] uploadFile:aKey toPath:remoteDirectory withParentRev:nil fromPath:localFilePath];
 }
 
@@ -312,27 +312,19 @@
 - (void)restClient:(DBRestClient *)client createdFolder:(DBMetadata *)folder
 {
     NSString *path = [folder path];
-    
-    if( [path isEqualToString:[self thisDocumentSyncChangesThisClientDirectoryPath]] ) {
-        _completedThisDocumentSyncChangesThisClientDirectory = YES;
-        [self checkForThisDocumentClientDirectoryCompletion];
-        return;
-    }
-    
-    if( [path isEqualToString:[self thisDocumentSyncCommandsThisClientDirectoryPath]] ) {
-        _completedThisDocumentSyncCommandsThisClientDirectory = YES;
-        [self checkForThisDocumentClientDirectoryCompletion];
-        return;
-    }
-    
-    // if we get here, it's part of the document directory hierarchy
-    _numberOfDocumentDirectoriesThatWereCreated++;
-    [self checkForRemoteDocumentDirectoryCompletion];
+    [self handleFolderCreatedAtPath:path];
 }
 
 - (void)restClient:(DBRestClient *)client createFolderFailedWithError:(NSError *)error
 {
     NSString *path = [[error userInfo] valueForKey:@"path"];
+    NSInteger errorCode = [error code];
+    
+    if (errorCode == 403) { // A folder already exists at this location. We do not consider this case a failure.
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"DBRestClient reported that a folder we asked it to create already existed. Treating this as a non-error.");
+        [self handleFolderCreatedAtPath:path];
+        return;
+    }
     
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
@@ -355,6 +347,25 @@
     [self checkForRemoteDocumentDirectoryCompletion];
 }
 
+- (void)handleFolderCreatedAtPath:(NSString *)path
+{
+    if( [path isEqualToString:[self thisDocumentSyncChangesThisClientDirectoryPath]] ) {
+        _completedThisDocumentSyncChangesThisClientDirectory = YES;
+        [self checkForThisDocumentClientDirectoryCompletion];
+        return;
+    }
+    
+    if( [path isEqualToString:[self thisDocumentSyncCommandsThisClientDirectoryPath]] ) {
+        _completedThisDocumentSyncCommandsThisClientDirectory = YES;
+        [self checkForThisDocumentClientDirectoryCompletion];
+        return;
+    }
+    
+    // if we get here, it's part of the document directory hierarchy
+    _numberOfDocumentDirectoriesThatWereCreated++;
+    [self checkForRemoteDocumentDirectoryCompletion];
+}
+
 #pragma mark Uploads
 - (void)restClient:(DBRestClient*)client uploadedFile:(NSString*)destPath from:(NSString*)srcPath
 {
@@ -371,7 +382,7 @@
 
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error
 {
-    NSString *path = [[error userInfo] valueForKey:@"path"];
+    NSString *path = [[error userInfo] valueForKey:@"destinationPath"];
     
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
@@ -389,21 +400,20 @@
 #pragma mark Deletion
 - (void)restClient:(DBRestClient*)client deletedPath:(NSString *)path
 {
-    if( [path isEqualToString:[self deletedDocumentsDirectoryIdentifierPlistFilePath]] ) {
-        [self deletedDocumentInfoPlistFromDeletedDocumentsDirectoryWithSuccess:YES];
-        return;
-    }
-    
-    if( [[path pathExtension] isEqualToString:TICDSDeviceInfoPlistExtension] ) {
-        [self deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:YES];
-        return;
-    }
+    [self handleDeletionAtPath:path];
 }
 
 - (void)restClient:(DBRestClient*)client deletePathFailedWithError:(NSError*)error
 {
     NSString *path = [[error userInfo] valueForKey:@"path"];
+    NSInteger errorCode = [error code];
     
+    if (errorCode == 404) { // A file or folder does not exist at this location. We do not consider this case a failure.
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"DBRestClient reported that an object we asked it to delete did not exist. Treating this as a non-error.");
+        [self handleDeletionAtPath:path];
+        return;
+    }
+
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
     if( [path isEqualToString:[self deletedDocumentsDirectoryIdentifierPlistFilePath]] ) {
@@ -413,6 +423,19 @@
     
     if( [[path pathExtension] isEqualToString:TICDSDeviceInfoPlistFilename] ) {
         [self deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:NO];
+        return;
+    }
+}
+
+- (void)handleDeletionAtPath:(NSString *)path
+{
+    if( [path isEqualToString:[self deletedDocumentsDirectoryIdentifierPlistFilePath]] ) {
+        [self deletedDocumentInfoPlistFromDeletedDocumentsDirectoryWithSuccess:YES];
+        return;
+    }
+    
+    if( [[path pathExtension] isEqualToString:TICDSDeviceInfoPlistExtension] ) {
+        [self deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:YES];
         return;
     }
 }
@@ -439,7 +462,6 @@
 {
     [_restClient setDelegate:nil];
 
-    _dbSession = nil;
     _restClient = nil;
     _documentsDirectoryPath = nil;
     _clientDevicesDirectoryPath = nil;
@@ -456,15 +478,13 @@
 {
     if( _restClient ) return _restClient;
     
-    _restClient = [[DBRestClient alloc] initWithSession:[self dbSession]];
+    _restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
     [_restClient setDelegate:self];
     
     return _restClient;
 }
 
 #pragma mark - Properties
-@synthesize dbSession = _dbSession;
-@synthesize restClient = _restClient;
 @synthesize documentsDirectoryPath = _documentsDirectoryPath;
 @synthesize clientDevicesDirectoryPath = _clientDevicesDirectoryPath;
 @synthesize thisDocumentDirectoryPath = _thisDocumentDirectoryPath;

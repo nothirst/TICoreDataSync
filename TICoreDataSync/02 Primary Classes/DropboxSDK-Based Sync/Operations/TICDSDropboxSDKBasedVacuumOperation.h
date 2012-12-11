@@ -18,7 +18,6 @@
 
 @interface TICDSDropboxSDKBasedVacuumOperation : TICDSVacuumOperation <DBRestClientDelegate> {
 @private
-    DBSession *_dbSession;
     DBRestClient *_restClient;
     
     NSDate *_oldestStoreDate;
@@ -36,9 +35,6 @@
 }
 
 /** @name Properties */
-
-/** The DropboxSDK `DBSession` for use by this operation's `DBRestClient`. */
-@property (strong) DBSession *dbSession;
 
 /** The DropboxSDK `DBRestClient` for use by this operation for methods relating to the global application directory. */
 @property (nonatomic, readonly) DBRestClient *restClient;

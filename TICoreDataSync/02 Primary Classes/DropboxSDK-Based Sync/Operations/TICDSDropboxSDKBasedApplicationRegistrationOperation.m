@@ -215,7 +215,7 @@
     NSInteger errorCode = [error code];
     BOOL notFound = YES;
     
-    if( errorCode != 404 ) {
+    if (errorCode != 404) { // File not found is a fine error to get here. Anything else is trouble.
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
         notFound = NO;
     }
@@ -252,21 +252,19 @@
 - (void)restClient:(DBRestClient *)client createdFolder:(DBMetadata *)folder
 {
     NSString *path = [folder path];
-    
-    if( [path isEqualToString:[self clientDevicesThisClientDeviceDirectoryPath]] ) {
-        [self createdRemoteClientDeviceDirectoryWithSuccess:YES];
-        return;
-    }
-    
-    // if we get here, it's a global app directory
-    _numberOfAppDirectoriesThatWereCreated++;
-    
-    [self checkForGlobalAppDirectoryCompletion];
+    [self handleFolderCreatedAtPath:path];
 }
 
 - (void)restClient:(DBRestClient *)client createFolderFailedWithError:(NSError *)error
 {
     NSString *path = [[error userInfo] valueForKey:@"path"];
+    NSInteger errorCode = [error code];
+
+    if (errorCode == 403) { // A folder already exists at this location. We do not consider this case a failure.
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"DBRestClient reported that a folder we asked it to create already existed. Treating this as a non-error.");
+        [self handleFolderCreatedAtPath:path];
+        return;
+    }
     
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
@@ -275,8 +273,21 @@
         return;
     }
     
-    // if we here, it's a global app directory
+    // if we're here, it's a global app directory
     _numberOfAppDirectoriesThatFailedToBeCreated++;
+    
+    [self checkForGlobalAppDirectoryCompletion];
+}
+
+- (void)handleFolderCreatedAtPath:(NSString *)path
+{
+    if( [path isEqualToString:[self clientDevicesThisClientDeviceDirectoryPath]] ) {
+        [self createdRemoteClientDeviceDirectoryWithSuccess:YES];
+        return;
+    }
+    
+    // if we get here, it's a global app directory
+    _numberOfAppDirectoriesThatWereCreated++;
     
     [self checkForGlobalAppDirectoryCompletion];
 }
@@ -308,7 +319,7 @@
 
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error
 {
-    NSString *path = [[error userInfo] valueForKey:@"path"];
+    NSString *path = [[error userInfo] valueForKey:@"destinationPath"];
     
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
@@ -376,11 +387,15 @@
 - (void)restClient:(DBRestClient *)client loadFileFailedWithError:(NSError *)error
 {
     NSString *path = [[error userInfo] valueForKey:@"path"];
-    
+
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
     if( [[path lastPathComponent] isEqualToString:TICDSSaltFilenameWithExtension] ) {
         [self fetchedSaltData:nil];
+    } else if ([path isEqualToString:[self encryptionDirectoryTestDataFilePath]]) {
+        [self fetchedPasswordTestData:nil];
+    } else {
+        [self operationDidFailToComplete];
     }
 }
 
@@ -389,7 +404,6 @@
 {
     [_restClient setDelegate:nil];
 
-    _dbSession = nil;
     _restClient = nil;
     _applicationDirectoryPath = nil;
     _encryptionDirectorySaltDataFilePath = nil;
@@ -403,15 +417,13 @@
 {
     if( _restClient ) return _restClient;
     
-    _restClient = [[DBRestClient alloc] initWithSession:[self dbSession]];
+    _restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
     [_restClient setDelegate:self];
     
     return _restClient;
 }
 
 #pragma mark - Properties
-@synthesize dbSession = _dbSession;
-@synthesize restClient = _restClient;
 @synthesize applicationDirectoryPath = _applicationDirectoryPath;
 @synthesize encryptionDirectorySaltDataFilePath = _encryptionDirectorySaltDataFilePath;
 @synthesize encryptionDirectoryTestDataFilePath = _encryptionDirectoryTestDataFilePath;

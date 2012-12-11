@@ -141,20 +141,19 @@
 #pragma mark Deletion
 - (void)restClient:(DBRestClient*)client deletedPath:(NSString *)path
 {
-    if( [path isEqualToString:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath]] ) {
-        [self deletedThisClientTemporaryWholeStoreDirectoryWithSuccess:YES];
-        return;
-    }
-    
-    if( [path isEqualToString:[self thisDocumentWholeStoreThisClientDirectoryPath]] ) {
-        [self deletedThisClientWholeStoreDirectoryWithSuccess:YES];
-        return;
-    }
+    [self handleDeletionAtPath:path];
 }
 
 - (void)restClient:(DBRestClient*)client deletePathFailedWithError:(NSError*)error
 {
     NSString *path = [[error userInfo] valueForKey:@"path"];
+    NSInteger errorCode = [error code];
+    
+    if (errorCode == 404) { // A file or folder does not exist at this location. We do not consider this case a failure.
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"DBRestClient reported that an object we asked it to delete did not exist. Treating this as a non-error.");
+        [self handleDeletionAtPath:path];
+        return;
+    }
     
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     if( [path isEqualToString:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath]] ) {
@@ -164,6 +163,19 @@
     
     if( [path isEqualToString:[self thisDocumentWholeStoreThisClientDirectoryPath]] ) {
         [self deletedThisClientWholeStoreDirectoryWithSuccess:NO];
+        return;
+    }
+}
+
+- (void)handleDeletionAtPath:(NSString *)path
+{
+    if( [path isEqualToString:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath]] ) {
+        [self deletedThisClientTemporaryWholeStoreDirectoryWithSuccess:YES];
+        return;
+    }
+    
+    if( [path isEqualToString:[self thisDocumentWholeStoreThisClientDirectoryPath]] ) {
+        [self deletedThisClientWholeStoreDirectoryWithSuccess:YES];
         return;
     }
 }
@@ -242,7 +254,7 @@
 
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error
 {
-    NSString *path = [[error userInfo] valueForKey:@"path"];
+    NSString *path = [[error userInfo] valueForKey:@"destinationPath"];
     
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
@@ -277,7 +289,6 @@
 {
     [_restClient setDelegate:nil];
 
-    _dbSession = nil;
     _restClient = nil;
     
     _thisDocumentTemporaryWholeStoreThisClientDirectoryPath = nil;
@@ -292,15 +303,13 @@
 {
     if( _restClient ) return _restClient;
     
-    _restClient = [[DBRestClient alloc] initWithSession:[self dbSession]];
+    _restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
     [_restClient setDelegate:self];
     
     return _restClient;
 }
 
 #pragma mark - Properties
-@synthesize dbSession = _dbSession;
-@synthesize restClient = _restClient;
 @synthesize thisDocumentTemporaryWholeStoreThisClientDirectoryPath = _thisDocumentTemporaryWholeStoreThisClientDirectoryPath;
 @synthesize thisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFilePath = _thisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFilePath;
 @synthesize thisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath = _thisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath;

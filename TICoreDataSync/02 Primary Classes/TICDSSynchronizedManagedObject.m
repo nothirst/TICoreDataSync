@@ -226,30 +226,29 @@
 - (void)willSave
 {
     [super willSave];
-    
+
     // if not in a synchronized MOC, or we don't have a doc sync manager, exit now
-    if( ![[self managedObjectContext] isKindOfClass:[TICDSSynchronizedManagedObjectContext class]] || ![(TICDSSynchronizedManagedObjectContext *)[self managedObjectContext] documentSyncManager] ) {
-        
-        if(![[self managedObjectContext] isKindOfClass:[TICDSSynchronizedManagedObjectContext class]]) {
-            TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Skipping sync change creation for %@ because our managedObjectContext is not a TICDSSynchronizedManagedObjectContext.", [self class]);
+    if (self.managedObjectContext.isSynchronized == NO || self.managedObjectContext.documentSyncManager == nil) {
+        if (self.managedObjectContext.isSynchronized == NO) {
+            TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Skipping sync change creation for %@ because our managedObjectContext is not marked as synchronized.", [self class]);
         }
-        
-        if([[self managedObjectContext] isKindOfClass:[TICDSSynchronizedManagedObjectContext class]] && ![(TICDSSynchronizedManagedObjectContext *)[self managedObjectContext] documentSyncManager]) {
+
+        if (self.managedObjectContext.documentSyncManager == nil) {
             TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Skipping sync change creation for %@ because our managedObjectContext has no documentSyncManager.", [self class]);
         }
-        
+
         return;
     }
-    
-    if( [self isInserted] ) {
+
+    if ( [self isInserted] ) {
         [self createSyncChangeForInsertion];
     }
-    
-    if( [self isUpdated] ) {
+
+    if ( [self isUpdated] ) {
         [self createSyncChangesForChangedProperties];
     }
-    
-    if( [self isDeleted] ) {
+
+    if ( [self isDeleted] ) {
         [self createSyncChangeForDeletion];
     }
 }
@@ -265,9 +264,13 @@
 #pragma mark - Properties
 - (NSManagedObjectContext *)syncChangesMOC
 {
-    if( ![[self managedObjectContext] isKindOfClass:[TICDSSynchronizedManagedObjectContext class]] ) return nil;
+    TICDSDocumentSyncManager *documentSyncManager = self.managedObjectContext.documentSyncManager;
+    if (documentSyncManager == nil) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Could not return a syncChangesMOC from %@ because our managedObjectContext has no documentSyncManager.", [self class]);
+        return nil;
+    }
     
-    return [[(TICDSSynchronizedManagedObjectContext *)[self managedObjectContext] documentSyncManager] syncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)[self managedObjectContext]];
+    return [documentSyncManager syncChangesMocForDocumentMoc:self.managedObjectContext];
 }
 
 @end

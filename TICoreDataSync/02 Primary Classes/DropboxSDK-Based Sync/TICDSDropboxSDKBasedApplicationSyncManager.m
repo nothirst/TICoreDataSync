@@ -19,7 +19,6 @@
 {
     TICDSDropboxSDKBasedApplicationRegistrationOperation *operation = [[TICDSDropboxSDKBasedApplicationRegistrationOperation alloc] initWithDelegate:self];
     
-    [operation setDbSession:[self dbSession]];
     [operation setApplicationDirectoryPath:[self applicationDirectoryPath]];
     [operation setEncryptionDirectorySaltDataFilePath:[self encryptionDirectorySaltDataFilePath]];
     [operation setEncryptionDirectoryTestDataFilePath:[self encryptionDirectoryTestDataFilePath]];
@@ -32,7 +31,6 @@
 {
     TICDSDropboxSDKBasedListOfPreviouslySynchronizedDocumentsOperation *operation = [[TICDSDropboxSDKBasedListOfPreviouslySynchronizedDocumentsOperation alloc] initWithDelegate:self];
     
-    [operation setDbSession:[self dbSession]];
     [operation setDocumentsDirectoryPath:[self documentsDirectoryPath]];
     
     return operation;
@@ -42,7 +40,6 @@
 {
     TICDSDropboxSDKBasedWholeStoreDownloadOperation *operation = [[TICDSDropboxSDKBasedWholeStoreDownloadOperation alloc] initWithDelegate:self];
     
-    [operation setDbSession:[self dbSession]];
     [operation setThisDocumentDirectoryPath:[[self documentsDirectoryPath] stringByAppendingPathComponent:anIdentifier]];
     [operation setThisDocumentWholeStoreDirectoryPath:[self pathToWholeStoreDirectoryForDocumentWithIdentifier:anIdentifier]];
     
@@ -53,7 +50,6 @@
 {
     TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation *operation = [[TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation alloc] initWithDelegate:self];
     
-    [operation setDbSession:[self dbSession]];
     [operation setClientDevicesDirectoryPath:[self clientDevicesDirectoryPath]];
     [operation setDocumentsDirectoryPath:[self documentsDirectoryPath]];
     
@@ -64,7 +60,6 @@
 {
     TICDSDropboxSDKBasedDocumentDeletionOperation *operation = [[TICDSDropboxSDKBasedDocumentDeletionOperation alloc] initWithDelegate:self];
     
-    [operation setDbSession:[self dbSession]];
     [operation setDeletedDocumentsDirectoryIdentifierPlistFilePath:[[self deletedDocumentsDirectoryPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", anIdentifier, TICDSDocumentInfoPlistExtension]]];
     [operation setDocumentDirectoryPath:[[self documentsDirectoryPath] stringByAppendingPathComponent:anIdentifier]];
     [operation setDocumentInfoPlistFilePath:[[[self documentsDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSDocumentInfoPlistFilenameWithExtension]];
@@ -76,7 +71,6 @@
 {
     TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation *operation = [[TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation alloc] initWithDelegate:self];
     
-    [operation setDbSession:[self dbSession]];
     [operation setApplicationDirectoryPath:[self applicationDirectoryPath]];
     
     return operation;
@@ -126,24 +120,12 @@
 #pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
-    _dbSession = nil;
 
 }
 
 #pragma mark - Lazy Accessors
-- (DBSession *)dbSession
-{
-    if( _dbSession ) {
-        return _dbSession;
-    }
-    
-    _dbSession = [DBSession sharedSession];
-    
-    return _dbSession;
-}
 
 #pragma mark - Properties
-@synthesize dbSession = _dbSession;
 
 @end
 

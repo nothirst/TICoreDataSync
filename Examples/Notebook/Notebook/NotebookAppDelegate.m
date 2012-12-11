@@ -193,8 +193,7 @@ didReplaceStoreWithDownloadedStoreAtURL:(NSURL *)aStoreURL
 didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:
 (NSNotification *)aNotification
 {
-    [[self managedObjectContext] 
-     mergeChangesFromContextDidSaveNotification:aNotification];
+    [self.managedObjectContext save:nil];
     
     NSLog(@"%s %@", __PRETTY_FUNCTION__, [self.managedObjectContext deletedObjects]);
 }
@@ -473,7 +472,7 @@ _downloadStoreAfterRegistering;
         [[NSApplication sharedApplication] presentError:error];
         return nil;
     }
-    __managedObjectContext = [[TICDSSynchronizedManagedObjectContext alloc] init];
+    __managedObjectContext = [[TICDSSynchronizedManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     [__managedObjectContext setPersistentStoreCoordinator:coordinator];
     
     return __managedObjectContext;

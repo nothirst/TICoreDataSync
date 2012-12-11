@@ -66,7 +66,7 @@
     TICoreDataFactory *_localSyncChangesToMergeCoreDataFactory;
     NSManagedObjectContext *_localSyncChangesToMergeContext;
     
-    NSPersistentStoreCoordinator *_primaryPersistentStoreCoordinator;
+//    NSPersistentStoreCoordinator *_primaryPersistentStoreCoordinator;
     TICDSSynchronizationOperationManagedObjectContext *_backgroundApplicationContext;
     
     NSUInteger _numberOfSyncChangeSetIDArraysToFetch;
@@ -197,7 +197,7 @@
 /** Configure a background context (for applying sync changes) using the same persistent store coordinator as the main application context.
  
  @param aPersistentStoreCoordinator The persistent store coordinator to use for the background context. */
-- (void)configureBackgroundApplicationContextForPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)aPersistentStoreCoordinator;
+- (void)configureBackgroundApplicationContextForPrimaryManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 
 #pragma mark Properties
 /** @name Properties */
@@ -266,8 +266,11 @@
 /** The managed object context for the local, unsynchronized set of `SyncChange`s. */
 @property (nonatomic, strong) NSManagedObjectContext *localSyncChangesToMergeContext;
 
-/** The persistent store coordinator for the application - used to create a background application context, when needed. */
-@property (strong) NSPersistentStoreCoordinator *primaryPersistentStoreCoordinator;
+///** The persistent store coordinator for the application - used to create a background application context, when needed. */
+//@property (strong) NSPersistentStoreCoordinator *primaryPersistentStoreCoordinator;
+
+///** The parent managed object context for the application - used to create a background application context, when needed. */
+@property (strong) NSManagedObjectContext *primaryManagedObjectContext;
 
 /** The managed object context (tied to the application's persistent store coordinator) in which `SyncChanges` are applied. */
 @property (nonatomic, strong) TICDSSynchronizationOperationManagedObjectContext *backgroundApplicationContext;

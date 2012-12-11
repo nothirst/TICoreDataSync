@@ -260,6 +260,9 @@
 /** A File Manager for use by the application sync manager. */
 @property (nonatomic, readonly, strong) NSFileManager *fileManager;
 
+/** Used to indicate if the application sync manager has been configured via the -configureWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo: method. */
+@property (nonatomic, getter = isConfigured) BOOL configured;
+
 #pragma mark - Operation Queues
 /** @name Operation Queues */
 

@@ -9,10 +9,10 @@
 #pragma mark - Primary Classes
 #import "TICDSApplicationSyncManager.h"
 #import "TICDSDocumentSyncManager.h"
-#import "TICDSSynchronizedManagedObjectContext.h"
 #import "TICDSSynchronizedManagedObject.h"
 #import "TICDSSyncConflict.h"
 #import "TICDSSynchronizationOperationManagedObjectContext.h"
+#import "NSManagedObjectContext+TICDSAdditions.h"
 
 #pragma mark Operations
 #import "TICDSOperation.h"

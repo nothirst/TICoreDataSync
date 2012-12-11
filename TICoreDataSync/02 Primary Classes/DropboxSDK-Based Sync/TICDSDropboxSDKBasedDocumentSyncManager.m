@@ -14,7 +14,7 @@
 @implementation TICDSDropboxSDKBasedDocumentSyncManager
 
 #pragma mark - Registration
-- (void)registerWithDelegate:(id<TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo
+- (void)registerWithDelegate:(id<TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(NSManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo
 {
     if( [anAppSyncManager isKindOfClass:[TICDSDropboxSDKBasedApplicationSyncManager class]] ) {
         [self setApplicationDirectoryPath:[(TICDSDropboxSDKBasedApplicationSyncManager *)anAppSyncManager applicationDirectoryPath]];
@@ -37,7 +37,6 @@
 {
     TICDSDropboxSDKBasedDocumentRegistrationOperation *operation = [[TICDSDropboxSDKBasedDocumentRegistrationOperation alloc] initWithDelegate:self];
     
-    [operation setDbSession:[self dbSession]];
     [operation setClientDevicesDirectoryPath:[self clientDevicesDirectoryPath]];
     [operation setThisDocumentDirectoryPath:[self thisDocumentDirectoryPath]];
     [operation setThisDocumentDeletedClientsDirectoryPath:[self thisDocumentDeletedClientsDirectoryPath]];
@@ -52,7 +51,6 @@
 {
     TICDSDropboxSDKBasedWholeStoreDownloadOperation *operation = [[TICDSDropboxSDKBasedWholeStoreDownloadOperation alloc] initWithDelegate:self];
     
-    [operation setDbSession:[self dbSession]];
     [operation setThisDocumentDirectoryPath:[self thisDocumentDirectoryPath]];
     [operation setThisDocumentWholeStoreDirectoryPath:[self thisDocumentWholeStoreDirectoryPath]];
     
@@ -63,7 +61,6 @@
 {
     TICDSDropboxSDKBasedWholeStoreUploadOperation *operation = [[TICDSDropboxSDKBasedWholeStoreUploadOperation alloc] initWithDelegate:self];
     
-    [operation setDbSession:[self dbSession]];
     [operation setThisDocumentTemporaryWholeStoreThisClientDirectoryPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath]];
     [operation setThisDocumentTemporaryWholeStoreThisClientDirectoryWholeStoreFilePath:[self thisDocumentTemporaryWholeStoreFilePath]];
     [operation setThisDocumentTemporaryWholeStoreThisClientDirectoryAppliedSyncChangeSetsFilePath:[self thisDocumentTemporaryAppliedSyncChangeSetsFilePath]];
@@ -76,7 +73,6 @@
 {
     TICDSDropboxSDKBasedSynchronizationOperation *operation = [[TICDSDropboxSDKBasedSynchronizationOperation alloc] initWithDelegate:self];
     
-    [operation setDbSession:[self dbSession]];
     [operation setThisDocumentDirectoryPath:[self thisDocumentDirectoryPath]];
     [operation setThisDocumentSyncChangesDirectoryPath:[self thisDocumentSyncChangesDirectoryPath]];
     [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
@@ -89,7 +85,6 @@
 {
     TICDSDropboxSDKBasedVacuumOperation *operation = [[TICDSDropboxSDKBasedVacuumOperation alloc] initWithDelegate:self];
     
-    [operation setDbSession:[self dbSession]];
     [operation setThisDocumentWholeStoreDirectoryPath:[self thisDocumentWholeStoreDirectoryPath]];
     [operation setThisDocumentRecentSyncsDirectoryPath:[self thisDocumentRecentSyncsDirectoryPath]];
     [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
@@ -101,7 +96,6 @@
 {
     TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation *operation = [[TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation alloc] initWithDelegate:self];
     
-    [operation setDbSession:[self dbSession]];
     [operation setThisDocumentSyncChangesDirectoryPath:[self thisDocumentSyncChangesDirectoryPath]];
     [operation setClientDevicesDirectoryPath:[self clientDevicesDirectoryPath]];
     [operation setThisDocumentRecentSyncsDirectoryPath:[self thisDocumentRecentSyncsDirectoryPath]];
@@ -114,7 +108,6 @@
 {
     TICDSDropboxSDKBasedDocumentClientDeletionOperation *operation = [[TICDSDropboxSDKBasedDocumentClientDeletionOperation alloc] initWithDelegate:self];
     
-    [operation setDbSession:[self dbSession]];
     [operation setClientDevicesDirectoryPath:[self clientDevicesDirectoryPath]];
     [operation setThisDocumentDeletedClientsDirectoryPath:[self thisDocumentDeletedClientsDirectoryPath]];
     [operation setThisDocumentSyncChangesDirectoryPath:[self thisDocumentSyncChangesDirectoryPath]];
@@ -219,25 +212,13 @@
 #pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
-    _dbSession = nil;
     _applicationDirectoryPath = nil;
 
 }
 
 #pragma mark - Lazy Accessors
-- (DBSession *)dbSession
-{
-    if( _dbSession ) {
-        return _dbSession;
-    }
-    
-    _dbSession = [DBSession sharedSession];
-    
-    return _dbSession;
-}
 
 #pragma mark - Properties
-@synthesize dbSession = _dbSession;
 @synthesize applicationDirectoryPath = _applicationDirectoryPath;
 
 @end

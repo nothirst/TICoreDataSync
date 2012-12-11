@@ -23,7 +23,9 @@
 #pragma mark Initial Sync Registration
 - (void)registerSyncManager
 {
-//    [TICDSLog setVerbosity:TICDSLogVerbosityEveryStep];
+    [self.managedObjectContext save:NULL];
+
+    [TICDSLog setVerbosity:TICDSLogVerbosityEveryStep];
     
     TICDSDropboxSDKBasedApplicationSyncManager *manager = [TICDSDropboxSDKBasedApplicationSyncManager defaultApplicationSyncManager];
     
@@ -209,7 +211,7 @@
 
 - (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:(NSNotification *)aNotification
 {
-    [[self managedObjectContext] mergeChangesFromContextDidSaveNotification:aNotification];
+    [self.managedObjectContext save:nil];
 }
 
 - (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToSynchronizeWithError:(NSError *)anError
@@ -336,7 +338,7 @@
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil)
     {
-        __managedObjectContext = [[TICDSSynchronizedManagedObjectContext alloc] init];
+        __managedObjectContext = [[TICDSSynchronizedManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
         [__managedObjectContext setPersistentStoreCoordinator:coordinator];
     }
     return __managedObjectContext;

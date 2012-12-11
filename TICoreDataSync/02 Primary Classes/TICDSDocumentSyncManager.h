@@ -39,7 +39,7 @@
     
     NSURL *_helperFileDirectoryLocation;
     
-    TICDSSynchronizedManagedObjectContext *_primaryDocumentMOC;
+    NSManagedObjectContext *_primaryDocumentMOC;
     TICoreDataFactory *_coreDataFactory;
     NSMutableDictionary *_syncChangesMOCs;
     
@@ -69,12 +69,12 @@
  
  @param aDelegate The object you wish to be notified regarding document-related sync information; this object must conform to the `TICDSDocumentSyncManagerDelegate` protocol, which includes some required methods.
  @param anAppSyncManager The application sync manager responsible for overseeing this document.
- @param aContext The primary managed object context in your application; this must be an instance of `TICDSSynchronizedManagedObjectContext` and not just a plain `NSManagedObjectContext`.
+ @param aContext The primary managed object context in your application; this must be an instance of `NSManagedObjectContext` whose synchronized property is set to YES.
  @param aDocumentIdentifier An identification string to identify this document uniquely. You would typically create a UUID string the first time this doc is registered and store this in e.g. the store metadata.
  @param aDocumentDescription A human-readable string used to identify this document, e.g. the full name of the document.
  @param someUserInfo A dictionary of information that will be saved throughout all future synchronizations. Because this information is saved in a plist, everything in the dictionary must be archivable using `NSKeyedArchiver`.
  */
-- (void)registerWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo;
+- (void)registerWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(NSManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo;
 
 #pragma mark - Delayed Document Registration
 /** @name Delayed Document Registration */
@@ -91,12 +91,12 @@
  
  @param aDelegate The object you wish to be notified regarding document-related sync information; this object must conform to the `TICDSDocumentSyncManagerDelegate` protocol, which includes some required methods.
  @param anAppSyncManager The application sync manager responsible for overseeing this document.
- @param aContext The primary managed object context in your application; this must be an instance of `TICDSSynchronizedManagedObjectContext` and not just a plain `NSManagedObjectContext`.
+ @param aContext The primary managed object context in your application; this must be an instance of `NSManagedObjectContext` and not just a plain `NSManagedObjectContext`.
  @param aDocumentIdentifier An identification string to identify this document uniquely. You would typically create a UUID string the first time this doc is registered and store this in e.g. the store metadata.
  @param aDocumentDescription A human-readable string used to identify this document, e.g. the full name of the document.
  @param someUserInfo A dictionary of information that will be saved throughout all future synchronizations. Because this information is saved in a plist, everything in the dictionary must be archivable using `NSKeyedArchiver`.
  */
-- (void)configureWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo;
+- (void)configureWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(NSManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo;
 
 /** Register a document that has already been pre-configured.
  
@@ -137,7 +137,7 @@
  Use this method to add an additional managed object context in which changes should be tracked, for example a context used to add items in the background. 
  
  @param aContext The additional managed object context to add. */
-- (void)addManagedObjectContext:(TICDSSynchronizedManagedObjectContext *)aContext;
+- (void)addManagedObjectContext:(NSManagedObjectContext *)aContext;
 
 #pragma mark - Whole Store Upload and Download
 /** @name Whole Store Upload and Download */
@@ -251,28 +251,19 @@
 
 /** Indicate that the synchronized managed object context is about to save.
  
- This method is called automatically by `TICDSSynchronizedManagedObjectContext` when it's about to initiate a `save:`.
+ This method is called automatically by `NSManagedObjectContext` when it's about to initiate a `save:`.
  
  @param aMoc The synchronized managed object context.
  */
-- (void)synchronizedMOCWillSave:(TICDSSynchronizedManagedObjectContext *)aMoc;
+- (void)synchronizedMOCWillSave:(NSManagedObjectContext *)aMoc;
 
 /** Indicate that the synchronized managed object context completed a successful save.
  
- This method is called automatically by `TICDSSynchronizedManagedObjectContext` when it has successfully completed a `save:`.
+ This method is called automatically by `NSManagedObjectContext` when it has successfully completed a `save:`.
  
  @param aMoc The synchronized managed object context.
  */
-- (void)synchronizedMOCDidSave:(TICDSSynchronizedManagedObjectContext *)aMoc;
-
-/** Indicate that the synchronized managed object context failed to save.
- 
- This method is called automatically by `TICDSSynchronizedManagedObjectContext` when it's failed to `save:`.
- 
- @param aMoc The synchronized managed object context.
- @param anError The relevant saving error.
- */
-- (void)synchronizedMOCFailedToSave:(TICDSSynchronizedManagedObjectContext *)aMoc withError:(NSError *)anError;
+- (void)synchronizedMOCDidSave:(NSManagedObjectContext *)aMoc;
 
 #pragma mark - Properties
 /** @name Properties */
@@ -340,13 +331,16 @@
 @property (strong) NSMutableDictionary *syncChangesMOCs;
 
 /** Returns a SyncChanges managed object context for a given document managed object context. */
-- (NSManagedObjectContext *)syncChangesMocForDocumentMoc:(TICDSSynchronizedManagedObjectContext *)aContext;
+- (NSManagedObjectContext *)syncChangesMocForDocumentMoc:(NSManagedObjectContext *)aContext;
 
 /** The document managed object context that was supplied at registration, and therefore treated as the primary context. */
-@property (nonatomic, strong) TICDSSynchronizedManagedObjectContext *primaryDocumentMOC;
+@property (nonatomic, strong) NSManagedObjectContext *primaryDocumentMOC;
 
 /** The `TICoreDataFactory` object used for SyncChange managed object contexts. */
 @property (nonatomic, strong) TICoreDataFactory *coreDataFactory;
+
+/** Used to indicate if the document sync manager has been configured via the -configureWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo: method. */
+@property (nonatomic, getter = isConfigured) BOOL configured;
 
 #pragma mark - Operation Queues
 /** @name Operation Queues */

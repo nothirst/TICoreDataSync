@@ -1,0 +1,3 @@
+[submodule "Submodules/DropboxSDK"]
+	path = Submodules/DropboxSDK
+	url = git@github.com:nothirst/dropbox-sdk-ios.git
