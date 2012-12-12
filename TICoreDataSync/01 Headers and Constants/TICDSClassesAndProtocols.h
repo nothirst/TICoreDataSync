@@ -482,8 +482,8 @@
  @param aSyncManager The document sync manager object that sent the message. 
  @param changeNumber The number of the change that was processed so it can be presented to the user like 2 of 10.
  @param totalChangeCount The total number of changes that will be processed.
- @param humanReadableClientName The name of the client whose changes we are processing, like Michael's MacBook Pro. */
-- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager processedChangeNumber:(NSNumber *)changeNumber outOfTotalChangeCount:(NSNumber *)totalChangeCount fromClientNamed:(NSString *)humanReadableClientName;
+ @param clientIdentifier The unique identifier of the client whose changes we are processing. */
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager processedChangeNumber:(NSNumber *)changeNumber outOfTotalChangeCount:(NSNumber *)totalChangeCount fromClientWithID:(NSString *)clientIdentifier;
 
 
 /** Informs the delegate that the document sync manager paused the sychronization process because a conflict was detected.
@@ -716,8 +716,8 @@
  @param anOperation The operation object that sent the message.
  @param changeNumber The number of the change that was processed so it can be presented to the user like 2 of 10.
  @param totalChangeCount The total number of changes that will be processed.
- @param humanReadableClientName The name of the client whose changes we are processing, like Michael's MacBook Pro. */
-- (void)synchronizationOperation:(TICDSSynchronizationOperation *)anOperation processedChangeNumber:(NSNumber *)changeNumber outOfTotalChangeCount:(NSNumber *)totalChangeCount fromClientNamed:(NSString *)humanReadableClientName;
+ @param clientIdentifier The unique ID of the client whose changes we are processing. */
+- (void)synchronizationOperation:(TICDSSynchronizationOperation *)anOperation processedChangeNumber:(NSNumber *)changeNumber outOfTotalChangeCount:(NSNumber *)totalChangeCount fromClientWithID:(NSString *)clientIdentifier;
 
 /** Informs the delegate that the operation has been paused because of a conflict. The delegate should query its own delegate to ask how to resolve the conflict.
  

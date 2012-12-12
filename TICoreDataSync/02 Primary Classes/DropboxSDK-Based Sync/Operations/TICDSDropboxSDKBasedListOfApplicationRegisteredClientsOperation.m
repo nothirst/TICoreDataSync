@@ -162,7 +162,8 @@
     
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
-    [self fetchedDeviceInfoDictionary:nil forClientWithIdentifier:[path lastPathComponent]];
+    NSString *clientIdentifier = [[path stringByDeletingLastPathComponent] lastPathComponent];
+    [self fetchedDeviceInfoDictionary:nil forClientWithIdentifier:clientIdentifier];
 }
 
 #pragma mark - Initialization and Deallocation

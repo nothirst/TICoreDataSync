@@ -511,65 +511,66 @@
 - (BOOL)beginApplyingSyncChangesInChangeSet:(TICDSSyncChangeSet *)unappliedSyncChangeSet
 {
     NSString *syncChangeSetIdentifier = [unappliedSyncChangeSet syncChangeSetIdentifier];
+    NSString *clientIdentifier = unappliedSyncChangeSet.clientIdentifier;
     
     TICDSLog(TICDSLogVerbosityEveryStep, @"Applying change set %@", syncChangeSetIdentifier);
-    
+
     NSManagedObjectContext *unappliedSyncChangesContext = [self contextForSyncChangesInUnappliedSyncChangeSet:unappliedSyncChangeSet];
-    
+
     NSError *anyError = nil;
     __block NSArray *unappliedSyncChanges = [TICDSSyncChange ti_allObjectsInManagedObjectContext:unappliedSyncChangesContext sortedWithDescriptors:self.syncChangeSortDescriptors error:&anyError];
-    
+
     TICDSLog(TICDSLogVerbosityEveryStep, @"There are %lu changes in this set", (unsigned long)[unappliedSyncChanges count]);
-    
+
     unappliedSyncChanges = [self syncChangesAfterCheckingForConflicts:unappliedSyncChanges inManagedObjectContext:unappliedSyncChangesContext];
-    
-        NSSortDescriptor *sequenceSort = [[NSSortDescriptor alloc] initWithKey:@"changeType" ascending:YES];
-        unappliedSyncChanges = [unappliedSyncChanges sortedArrayUsingDescriptors:[NSArray arrayWithObject:sequenceSort]];
-        
-        NSInteger changeCount = 1;
-        // Apply each object's changes in turn
-        for ( TICDSSyncChange *eachChange in unappliedSyncChanges) {
-            @autoreleasepool {
-                switch ( [[eachChange changeType] unsignedIntegerValue]) {
-                    case TICDSSyncChangeTypeObjectInserted: {
-                        [self applyObjectInsertedSyncChange:eachChange];
-                        [self.backgroundApplicationContext performBlockAndWait:^{
-                            [self.backgroundApplicationContext processPendingChanges];
-                        }];
-                        break;
-                    }
-                    case TICDSSyncChangeTypeAttributeChanged: {
-                        [self applyAttributeChangeSyncChange:eachChange];
-                        break;
-                    }
-                    case TICDSSyncChangeTypeToOneRelationshipChanged: {
-                        [self applyToOneRelationshipSyncChange:eachChange];
-                        break;
-                    }
-                    case TICDSSyncChangeTypeToManyRelationshipChangedByAddingObject:
-                    case TICDSSyncChangeTypeToManyRelationshipChangedByRemovingObject: {
-                        [self applyToManyRelationshipSyncChange:eachChange];
-                        break;
-                    }
-                    case TICDSSyncChangeTypeObjectDeleted: {
-                        [self applyObjectDeletedSyncChange:eachChange];
-                        break;
-                    }
+
+    NSSortDescriptor *sequenceSort = [[NSSortDescriptor alloc] initWithKey:@"changeType" ascending:YES];
+    unappliedSyncChanges = [unappliedSyncChanges sortedArrayUsingDescriptors:[NSArray arrayWithObject:sequenceSort]];
+
+    NSInteger changeCount = 1;
+    // Apply each object's changes in turn
+    for ( TICDSSyncChange *eachChange in unappliedSyncChanges) {
+        @autoreleasepool {
+            switch ( [[eachChange changeType] unsignedIntegerValue]) {
+                case TICDSSyncChangeTypeObjectInserted: {
+                    [self applyObjectInsertedSyncChange:eachChange];
+                    [self.backgroundApplicationContext performBlockAndWait:^{
+                         [self.backgroundApplicationContext processPendingChanges];
+                     }];
+                    break;
+                }
+                case TICDSSyncChangeTypeAttributeChanged: {
+                    [self applyAttributeChangeSyncChange:eachChange];
+                    break;
+                }
+                case TICDSSyncChangeTypeToOneRelationshipChanged: {
+                    [self applyToOneRelationshipSyncChange:eachChange];
+                    break;
+                }
+                case TICDSSyncChangeTypeToManyRelationshipChangedByAddingObject:
+                case TICDSSyncChangeTypeToManyRelationshipChangedByRemovingObject: {
+                    [self applyToManyRelationshipSyncChange:eachChange];
+                    break;
+                }
+                case TICDSSyncChangeTypeObjectDeleted: {
+                    [self applyObjectDeletedSyncChange:eachChange];
+                    break;
                 }
             }
-
-            changeCount++;
-            if ([self ti_delegateRespondsToSelector:@selector(synchronizationOperation:processedChangeNumber:outOfTotalChangeCount:fromClientNamed:)]) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [(id)self.delegate synchronizationOperation:self processedChangeNumber:[NSNumber numberWithInteger:changeCount] outOfTotalChangeCount:[NSNumber numberWithInteger:[unappliedSyncChanges count]] fromClientNamed:self.changeSetProgressString];
-                });
-            }
         }
-    
+
+        changeCount++;
+        if ([self ti_delegateRespondsToSelector:@selector(synchronizationOperation:processedChangeNumber:outOfTotalChangeCount:fromClientWithID:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                               [(id)self.delegate synchronizationOperation:self processedChangeNumber:[NSNumber numberWithInteger:changeCount] outOfTotalChangeCount:[NSNumber numberWithInteger:[unappliedSyncChanges count]] fromClientWithID:clientIdentifier];
+                           });
+        }
+    }
+
     [self.backgroundApplicationContext performBlockAndWait:^{
-        [self.backgroundApplicationContext processPendingChanges];
-    }];
-    
+         [self.backgroundApplicationContext processPendingChanges];
+     }];
+
     return YES;
 }
 

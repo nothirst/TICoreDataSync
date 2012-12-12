@@ -960,11 +960,11 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"Finished creating SyncChangesMOC");
 }
 
-- (void)synchronizationOperation:(TICDSSynchronizationOperation *)anOperation processedChangeNumber:(NSNumber *)changeNumber outOfTotalChangeCount:(NSNumber *)totalChangeCount fromClientNamed:(NSString *)humanReadableClientName
+- (void)synchronizationOperation:(TICDSSynchronizationOperation *)anOperation processedChangeNumber:(NSNumber *)changeNumber outOfTotalChangeCount:(NSNumber *)totalChangeCount fromClientWithID:(NSString *)clientIdentifier
 {
-    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:processedChangeNumber:outOfTotalChangeCount:fromClientNamed:)]) {
+    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:processedChangeNumber:outOfTotalChangeCount:fromClientWithID:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
-             [(id)self.delegate documentSyncManager:self processedChangeNumber:changeNumber outOfTotalChangeCount:totalChangeCount fromClientNamed:humanReadableClientName];
+             [(id)self.delegate documentSyncManager:self processedChangeNumber:changeNumber outOfTotalChangeCount:totalChangeCount fromClientWithID:clientIdentifier];
          }];
     }
 }
