@@ -96,7 +96,8 @@
         [[self temporaryDeviceInfoDictionaries] setValue:dictionary forKey:anIdentifier];
     }
     
-    if( _numberOfDeviceInfoDictionariesFetched == _numberOfDeviceInfoDictionariesToFetch ) {
+    // TODO: Failure to fetch some clients should be a warning, not an operation failure.
+    if( _numberOfDeviceInfoDictionariesFetched == _numberOfDeviceInfoDictionariesToFetch || ( _numberOfDeviceInfoDictionariesFetched + _numberOfDeviceInfoDictionariesThatFailedToFetch == _numberOfDeviceInfoDictionariesToFetch )) {
         TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Finished fetching device info dictionaries");
         
         [self setDeviceInfoDictionaries:[self temporaryDeviceInfoDictionaries]];
@@ -108,10 +109,10 @@
         
         [self beginFetchingArrayOfDocumentUUIDStrings];
         
-    } else if( _numberOfDeviceInfoDictionariesFetched + _numberOfDeviceInfoDictionariesThatFailedToFetch == _numberOfDeviceInfoDictionariesToFetch ) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"An error occurred fetching one or more device info dictionaries");
-        [self operationDidFailToComplete];
-        return;
+//    } else if( _numberOfDeviceInfoDictionariesFetched + _numberOfDeviceInfoDictionariesThatFailedToFetch == _numberOfDeviceInfoDictionariesToFetch ) {
+//        TICDSLog(TICDSLogVerbosityErrorsOnly, @"An error occurred fetching one or more device info dictionaries");
+//        [self operationDidFailToComplete];
+//        return;
     }
 }
 
