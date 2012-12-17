@@ -246,7 +246,7 @@
     NSString *path = [[error userInfo] valueForKey:@"path"];
     NSString *downloadDestination = [[error userInfo] valueForKey:@"destinationPath"];
     
-    if (path != nil && downloadDestination != nil && [[self.failedDownloadRetryDictionary objectForKey:path] integerValue] < 5) {
+    if (error.code != 401 && path != nil && downloadDestination != nil && [[self.failedDownloadRetryDictionary objectForKey:path] integerValue] < 5) {
         NSInteger retryCount = [[self.failedDownloadRetryDictionary objectForKey:path] integerValue];
         retryCount++;
         TICDSLog(TICDSLogVerbosityEveryStep, @"Failed to download %@. Going for try number %d", path, retryCount);
