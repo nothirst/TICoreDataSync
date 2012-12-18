@@ -136,6 +136,17 @@
  @warning The document will first be downloaded to a temporary location. If any file already exists at the location specified by `aLocation`, it will be removed once the dowload completes, before the newly-downloaded temporary file is moved to `aLocation`. */
 - (void)requestDownloadOfDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation;
 
+#pragma mark - Encryption Password Clearing
+
+/** @name Clearing Encryption Password */
+
+/** Clears the encryption password from the keychain. Intended for use after encryption errors are found.
+
+ This method will wipe the encyption password from the keychain, causing the application sync manager to request it during the next registration. The application sync manager should be reregistered after this method is called.
+
+ */
+- (void)clearSyncEncryptionPassword;
+
 #pragma mark - Client Information
 /** @name Accessing Client Information */
 

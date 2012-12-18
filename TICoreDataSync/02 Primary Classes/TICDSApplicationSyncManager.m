@@ -45,6 +45,14 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:TICDSApplicationSyncManagerDidDecreaseActivityNotification object:self];
 }
 
+#pragma mark - ENCRYPTION UPDATING
+
+- (void)clearSyncEncryptionPassword
+{
+    FZACryptor *cryptor = [[FZACryptor alloc] init];
+    [cryptor clearPasswordAndSalt];
+}
+
 #pragma mark - CONFIGURATION
 - (void)configureWithDelegate:(id <TICDSApplicationSyncManagerDelegate>)aDelegate globalAppIdentifier:(NSString *)anAppIdentifier uniqueClientIdentifier:(NSString *)aClientIdentifier description:(NSString *)aClientDescription userInfo:(NSDictionary *)someUserInfo
 {
