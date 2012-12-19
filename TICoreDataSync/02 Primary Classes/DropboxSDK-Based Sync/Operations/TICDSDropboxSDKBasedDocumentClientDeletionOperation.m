@@ -107,8 +107,14 @@
 - (void)restClient:(DBRestClient*)client loadMetadataFailedWithError:(NSError*)error
 {
     NSString *path = [[error userInfo] valueForKey:@"path"];
-    
     NSInteger errorCode = [error code];
+
+    if (errorCode == 503) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+        [client loadMetadata:path];
+        return;
+    }
+    
     TICDSRemoteFileStructureExistsResponseType status = TICDSRemoteFileStructureExistsResponseTypeDoesNotExist;
     
     if( errorCode != 404 ) {
@@ -147,6 +153,12 @@
 {
     NSString *path = [[error userInfo] valueForKey:@"path"];
     NSInteger errorCode = [error code];
+    
+    if (errorCode == 503) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+        [client deletePath:path];
+        return;
+    }
     
     if (errorCode == 404) { // A file or folder does not exist at this location. We do not consider this case a failure.
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"DBRestClient reported that an object we asked it to delete did not exist. Treating this as a non-error.");
@@ -219,6 +231,16 @@
 
 - (void)restClient:(DBRestClient*)client copyPathFailedWithError:(NSError*)error
 {
+    NSString *sourcePath = [error.userInfo objectForKey:@"from_path"];
+    NSString *destinationPath = [error.userInfo objectForKey:@"to_path"];
+    NSInteger errorCode = error.code;
+    
+    if (errorCode == 503) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@ to %@", sourcePath, destinationPath);
+        [client copyFrom:sourcePath toPath:destinationPath];
+        return;
+    }
+    
     // should really check the paths, but there's only one copy procedure in this operation...
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     

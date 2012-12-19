@@ -27,6 +27,9 @@
 /** When uploading recent sync files we need to first ask the Dropbox for any parent revisions. We store off the file path of the file we intend to upload while we get its revisions. */
 @property (nonatomic, copy) NSString *recentSyncFilePath;
 
+@property (nonatomic, copy) NSString *localSyncChangeSetFileParentRevision;
+@property (nonatomic, copy) NSString *recentSyncFileParentRevision;
+
 - (void)uploadLocalSyncChangeSetFileWithParentRevision:(NSString *)parentRevision;
 - (void)uploadRecentSyncFileWithParentRevision:(NSString *)parentRevision;
 
@@ -180,6 +183,14 @@
 {
     NSString *path = [[error userInfo] valueForKey:@"path"];
     
+    NSInteger errorCode = [error code];
+    
+    if (errorCode == 503) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+        [client loadMetadata:path];
+        return;
+    }
+    
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
 
     if( [path isEqualToString:[self thisDocumentSyncChangesDirectoryPath]] ) {
@@ -285,11 +296,13 @@
     }
     
     if( [[path lastPathComponent] isEqualToString:[self.localSyncChangeSetFilePath lastPathComponent]] ) {
+        self.localSyncChangeSetFileParentRevision = parentRevision;
         [self uploadLocalSyncChangeSetFileWithParentRevision:parentRevision];
         return;
     }
     
     if( [[path lastPathComponent] isEqualToString:[self.recentSyncFilePath lastPathComponent]] ) {
+        self.recentSyncFileParentRevision = parentRevision;
         [self uploadRecentSyncFileWithParentRevision:parentRevision];
         return;
     }
@@ -298,6 +311,13 @@
 - (void)restClient:(DBRestClient*)client loadRevisionsFailedWithError:(NSError *)error
 {
     NSString *destPath = [[error userInfo] valueForKey:@"path"];
+    NSInteger errorCode = error.code;
+    
+    if (errorCode == 503) { // Potentially bogus rate-limiting error code. Current advice from Dropbox is to retry immediately. --M.Fey, 2012-12-19
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", destPath);
+        [client loadRevisionsForFile:destPath limit:1];
+        return;
+    }
 
     if (destPath != nil && [[self.failedDownloadRetryDictionary objectForKey:destPath] integerValue] < 5) {
         NSInteger retryCount = [[self.failedDownloadRetryDictionary objectForKey:destPath] integerValue];
@@ -312,7 +332,7 @@
         [self.failedDownloadRetryDictionary removeObjectForKey:destPath];
     }
     
-    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Download of %@ has failed after 5 attempts, we're falling through to the error condition.", destPath);
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to load revisions of %@ after 5 attempts, we're falling through to the error condition.", destPath);
     // A failure in this case could be caused by the file not existing, so we attempt to upload the file with no parent revision. That, of course, has its own failure checks.
     
     if( [[[destPath lastPathComponent] pathExtension] isEqualToString:TICDSSyncChangeSetFileExtension] ) {
@@ -346,6 +366,20 @@
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error
 {
     NSString *path = [[error userInfo] valueForKey:@"destinationPath"];
+    NSInteger errorCode = error.code;
+    
+    if (errorCode == 503) { // Potentially bogus rate-limiting error code. Current advice from Dropbox is to retry immediately. --M.Fey, 2012-12-19
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+        if ( [[path lastPathComponent] isEqualToString:[self.localSyncChangeSetFilePath lastPathComponent]] ) {
+            [self uploadLocalSyncChangeSetFileWithParentRevision:self.localSyncChangeSetFileParentRevision];
+            return;
+        }
+        
+        if ( [[path lastPathComponent] isEqualToString:[self.recentSyncFilePath lastPathComponent]] ) {
+            [self uploadRecentSyncFileWithParentRevision:self.recentSyncFileParentRevision];
+            return;
+        }
+    }
     
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     

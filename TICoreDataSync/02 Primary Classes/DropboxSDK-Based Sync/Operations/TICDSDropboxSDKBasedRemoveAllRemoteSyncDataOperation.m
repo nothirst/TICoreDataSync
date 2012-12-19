@@ -33,6 +33,15 @@
 
 - (void)restClient:(DBRestClient*)client deletePathFailedWithError:(NSError*)error
 {
+    NSString *path = [[error userInfo] valueForKey:@"path"];
+    NSInteger errorCode = [error code];
+    
+    if (errorCode == 503) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+        [client deletePath:path];
+        return;
+    }
+    
     if( [error code] == 404 ) {
         // path didn't exist to delete, so deletion is 'complete'
         [self removedRemoteSyncDataDirectoryWithSuccess:YES];

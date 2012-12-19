@@ -211,8 +211,14 @@
 - (void)restClient:(DBRestClient*)client loadMetadataFailedWithError:(NSError*)error
 {
     NSString *path = [[error userInfo] valueForKey:@"path"];
-    
     NSInteger errorCode = [error code];
+
+    if (errorCode == 503) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+        [client loadMetadata:path];
+        return;
+    }
+    
     BOOL notFound = YES;
     
     if (errorCode != 404) { // File not found is a fine error to get here. Anything else is trouble.
@@ -259,6 +265,12 @@
 {
     NSString *path = [[error userInfo] valueForKey:@"path"];
     NSInteger errorCode = [error code];
+
+    if (errorCode == 503) { // Potentially bogus rate-limiting error code. Current advice from Dropbox is to retry immediately. --M.Fey, 2012-12-19
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+        [client createFolder:path];
+        return;
+    }
 
     if (errorCode == 403) { // A folder already exists at this location. We do not consider this case a failure.
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"DBRestClient reported that a folder we asked it to create already existed. Treating this as a non-error.");
@@ -319,8 +331,16 @@
 
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error
 {
+    NSString *sourcePath = [error.userInfo valueForKey:@"sourcePath"];
     NSString *path = [[error userInfo] valueForKey:@"destinationPath"];
+    NSInteger errorCode = error.code;
     
+    if (errorCode == 503) { // Potentially bogus rate-limiting error code. Current advice from Dropbox is to retry immediately. --M.Fey, 2012-12-19
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+        [client uploadFile:[sourcePath lastPathComponent] toPath:path withParentRev:nil fromPath:sourcePath];
+        return;
+    }
+
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
     if( [path isEqualToString:[[self clientDevicesThisClientDeviceDirectoryPath] stringByAppendingPathComponent:TICDSDeviceInfoPlistFilenameWithExtension]] ) {
@@ -387,7 +407,15 @@
 - (void)restClient:(DBRestClient *)client loadFileFailedWithError:(NSError *)error
 {
     NSString *path = [[error userInfo] valueForKey:@"path"];
-
+    NSString *destinationPath = [[error userInfo] valueForKey:@"destinationPath"];
+    NSInteger errorCode = error.code;
+    
+    if (errorCode == 503) { // Potentially bogus rate-limiting error code. Current advice from Dropbox is to retry immediately. --M.Fey, 2012-12-19
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+        [client loadFile:path intoPath:destinationPath];
+        return;
+    }
+    
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
     if( [[path lastPathComponent] isEqualToString:TICDSSaltFilenameWithExtension] ) {

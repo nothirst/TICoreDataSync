@@ -267,8 +267,14 @@
 - (void)restClient:(DBRestClient*)client loadMetadataFailedWithError:(NSError*)error
 {
     NSString *path = [[error userInfo] valueForKey:@"path"];
-    
     NSInteger errorCode = [error code];
+    
+    if (errorCode == 503) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+        [client loadMetadata:path];
+        return;
+    }
+    
     TICDSRemoteFileStructureExistsResponseType status = TICDSRemoteFileStructureExistsResponseTypeDoesNotExist;
     
     if( errorCode != 404 ) {
@@ -319,6 +325,12 @@
 {
     NSString *path = [[error userInfo] valueForKey:@"path"];
     NSInteger errorCode = [error code];
+    
+    if (errorCode == 503) { // Potentially bogus rate-limiting error code. Current advice from Dropbox is to retry immediately. --M.Fey, 2012-12-19
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+        [client createFolder:path];
+        return;
+    }
     
     if (errorCode == 403) { // A folder already exists at this location. We do not consider this case a failure.
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"DBRestClient reported that a folder we asked it to create already existed. Treating this as a non-error.");
@@ -382,7 +394,15 @@
 
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error
 {
+    NSString *sourcePath = [error.userInfo valueForKey:@"sourcePath"];
     NSString *path = [[error userInfo] valueForKey:@"destinationPath"];
+    NSInteger errorCode = error.code;
+    
+    if (errorCode == 503) { // Potentially bogus rate-limiting error code. Current advice from Dropbox is to retry immediately. --M.Fey, 2012-12-19
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+        [client uploadFile:[sourcePath lastPathComponent] toPath:path withParentRev:nil fromPath:sourcePath];
+        return;
+    }
     
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
@@ -407,6 +427,12 @@
 {
     NSString *path = [[error userInfo] valueForKey:@"path"];
     NSInteger errorCode = [error code];
+    
+    if (errorCode == 503) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+        [client deletePath:path];
+        return;
+    }
     
     if (errorCode == 404) { // A file or folder does not exist at this location. We do not consider this case a failure.
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"DBRestClient reported that an object we asked it to delete did not exist. Treating this as a non-error.");
@@ -449,12 +475,19 @@
 
 - (void)restClient:(DBRestClient*)client copyPathFailedWithError:(NSError*)error
 {
-    // should really check the paths, but there's only one copy procedure in this operation...
-    NSString *path = [[error userInfo] valueForKey:@"path"];
+    NSString *sourcePath = [error.userInfo objectForKey:@"from_path"];
+    NSString *destinationPath = [error.userInfo objectForKey:@"to_path"];
+    NSInteger errorCode = error.code;
+    
+    if (errorCode == 503) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@ to %@", sourcePath, destinationPath);
+        [client copyFrom:sourcePath toPath:destinationPath];
+        return;
+    }
     
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
-    [self addedDeviceInfoPlistToDocumentDeletedClientsForClientWithIdentifier:[[path lastPathComponent] stringByDeletingPathExtension] withSuccess:NO];
+    [self addedDeviceInfoPlistToDocumentDeletedClientsForClientWithIdentifier:[[sourcePath lastPathComponent] stringByDeletingPathExtension] withSuccess:NO];
 }
 
 #pragma mark - Initialization and Deallocation

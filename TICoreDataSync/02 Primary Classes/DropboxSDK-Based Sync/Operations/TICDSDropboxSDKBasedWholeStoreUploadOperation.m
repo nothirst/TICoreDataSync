@@ -12,6 +12,9 @@
 
 @interface TICDSDropboxSDKBasedWholeStoreUploadOperation ()
 
+@property (nonatomic, copy) NSString *wholeStoreFileParentRevision;
+@property (nonatomic, copy) NSString *appliedSyncChangeSetsFileParentRevision;
+
 - (void)uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithParentRevision:(NSString *)parentRevision;
 - (void)uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithParentRevision:(NSString *)parentRevision;
 
@@ -119,8 +122,14 @@
 - (void)restClient:(DBRestClient*)client loadMetadataFailedWithError:(NSError*)error
 {
     NSString *path = [[error userInfo] valueForKey:@"path"];
-    
     NSInteger errorCode = [error code];
+    
+    if (errorCode == 503) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+        [client loadMetadata:path];
+        return;
+    }
+    
     TICDSRemoteFileStructureExistsResponseType status = TICDSRemoteFileStructureExistsResponseTypeDoesNotExist;
     
     if( errorCode != 404 ) {
@@ -148,6 +157,12 @@
 {
     NSString *path = [[error userInfo] valueForKey:@"path"];
     NSInteger errorCode = [error code];
+    
+    if (errorCode == 503) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+        [client deletePath:path];
+        return;
+    }
     
     if (errorCode == 404) { // A file or folder does not exist at this location. We do not consider this case a failure.
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"DBRestClient reported that an object we asked it to delete did not exist. Treating this as a non-error.");
@@ -194,6 +209,13 @@
 - (void)restClient:(DBRestClient *)client createFolderFailedWithError:(NSError *)error
 {
     NSString *path = [[error userInfo] valueForKey:@"path"];
+    NSInteger errorCode = [error code];
+    
+    if (errorCode == 503) { // Potentially bogus rate-limiting error code. Current advice from Dropbox is to retry immediately. --M.Fey, 2012-12-19
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+        [client createFolder:path];
+        return;
+    }
     
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
@@ -212,12 +234,14 @@
     }
     
     if( [[path lastPathComponent] isEqualToString:TICDSWholeStoreFilename] ) {
-        [self uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithParentRevision:parentRevision];
+        self.wholeStoreFileParentRevision = parentRevision;
+        [self uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithParentRevision:self.wholeStoreFileParentRevision];
         return;
     }
 
     if( [[path lastPathComponent] isEqualToString:TICDSAppliedSyncChangeSetsFilename] ) {
-        [self uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithParentRevision:parentRevision];
+        self.appliedSyncChangeSetsFileParentRevision = parentRevision;
+        [self uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithParentRevision:self.appliedSyncChangeSetsFileParentRevision];
         return;
     }
 }
@@ -226,7 +250,14 @@
 {
     // A failure in this case could be caused by the file not existing, so we attempt to upload the file with no parent revision. That, of course, has its own failure checks.
     NSString *path = [[error userInfo] valueForKey:@"path"];
+    NSInteger errorCode = error.code;
     
+    if (errorCode == 503) { // Potentially bogus rate-limiting error code. Current advice from Dropbox is to retry immediately. --M.Fey, 2012-12-19
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+        [client loadRevisionsForFile:path limit:1];
+        return;
+    }
+
     if( [[path lastPathComponent] isEqualToString:TICDSWholeStoreFilename] ) {
         [self uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithParentRevision:nil];
         return;
@@ -255,6 +286,20 @@
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error
 {
     NSString *path = [[error userInfo] valueForKey:@"destinationPath"];
+    NSInteger errorCode = error.code;
+    
+    if (errorCode == 503) { // Potentially bogus rate-limiting error code. Current advice from Dropbox is to retry immediately. --M.Fey, 2012-12-19
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+        if( [[path lastPathComponent] isEqualToString:TICDSWholeStoreFilename] ) {
+            [self uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithParentRevision:self.wholeStoreFileParentRevision];
+            return;
+        }
+        
+        if( [[path lastPathComponent] isEqualToString:TICDSAppliedSyncChangeSetsFilename] ) {
+            [self uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithParentRevision:self.appliedSyncChangeSetsFileParentRevision];
+            return;
+        }
+    }
     
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
@@ -278,6 +323,16 @@
 
 - (void)restClient:(DBRestClient*)client copyPathFailedWithError:(NSError*)error
 {
+    NSString *sourcePath = [error.userInfo objectForKey:@"from_path"];
+    NSString *destinationPath = [error.userInfo objectForKey:@"to_path"];
+    NSInteger errorCode = error.code;
+    
+    if (errorCode == 503) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@ to %@", sourcePath, destinationPath);
+        [client copyFrom:sourcePath toPath:destinationPath];
+        return;
+    }
+    
     // should really check the paths, but there's only one copy procedure in this operation...
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeDropboxSDKRestClientError underlyingError:error classAndMethod:__PRETTY_FUNCTION__]];
     
