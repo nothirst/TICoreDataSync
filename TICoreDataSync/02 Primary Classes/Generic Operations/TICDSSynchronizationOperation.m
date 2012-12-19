@@ -557,6 +557,8 @@
                     break;
                 }
             }
+            
+            [eachChange.managedObjectContext refreshObject:eachChange mergeChanges:NO];
         }
 
         changeCount++;
