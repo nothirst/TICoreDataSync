@@ -46,6 +46,11 @@
 #pragma mark Integrity Key
 - (void)fetchRemoteIntegrityKey
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     NSString *directoryPath = [[self thisDocumentDirectoryPath] stringByAppendingPathComponent:TICDSIntegrityKeyDirectoryName];
     
     [[self restClient] loadMetadata:directoryPath];
@@ -54,16 +59,31 @@
 #pragma mark Sync Change Sets
 - (void)buildArrayOfClientDeviceIdentifiers
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     [[self restClient] loadMetadata:[self thisDocumentSyncChangesDirectoryPath]];
 }
 
 - (void)buildArrayOfSyncChangeSetIdentifiersForClientIdentifier:(NSString *)anIdentifier
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     [[self restClient] loadMetadata:[self pathToSyncChangesDirectoryForClientWithIdentifier:anIdentifier]];
 }
 
 - (void)fetchSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier toLocation:(NSURL *)aLocation
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     if( ![self clientIdentifiersForChangeSetIdentifiers] ) {
         [self setClientIdentifiersForChangeSetIdentifiers:[NSMutableDictionary dictionaryWithCapacity:10]];
     }
@@ -76,6 +96,11 @@
 #pragma mark Uploading Change Sets
 - (void)uploadLocalSyncChangeSetFileAtLocation:(NSURL *)aLocation
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     NSString *finalFilePath = [aLocation path];
     
     if( [self shouldUseEncryption] ) {
@@ -99,18 +124,33 @@
 
 - (void)uploadLocalSyncChangeSetFileWithParentRevision:(NSString *)parentRevision
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     [[self restClient] uploadFile:[self.localSyncChangeSetFilePath lastPathComponent] toPath:[self thisDocumentSyncChangesThisClientDirectoryPath] withParentRev:parentRevision fromPath:self.localSyncChangeSetFilePath];
 }
 
 #pragma mark Uploading Recent Sync File
 - (void)uploadRecentSyncFileAtLocation:(NSURL *)aLocation
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     self.recentSyncFilePath = [aLocation path];
     [self.restClient loadRevisionsForFile:[[[self thisDocumentRecentSyncsThisClientFilePath] stringByDeletingLastPathComponent] stringByAppendingPathComponent:[[aLocation path] lastPathComponent]] limit:1];
 }
 
 - (void)uploadRecentSyncFileWithParentRevision:(NSString *)parentRevision
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     [[self restClient] uploadFile:[self.recentSyncFilePath lastPathComponent] toPath:[[self thisDocumentRecentSyncsThisClientFilePath] stringByDeletingLastPathComponent] withParentRev:parentRevision fromPath:self.recentSyncFilePath];
 }
 
@@ -118,6 +158,11 @@
 #pragma mark Metadata
 - (void)restClient:(DBRestClient*)client loadedMetadata:(DBMetadata*)metadata
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     NSString *path = [metadata path];
     
     if( [path isEqualToString:[self thisDocumentSyncChangesDirectoryPath]] ) {
@@ -181,6 +226,11 @@
 
 - (void)restClient:(DBRestClient*)client loadMetadataFailedWithError:(NSError*)error
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     NSString *path = [[error userInfo] valueForKey:@"path"];
     
     NSInteger errorCode = [error code];
@@ -217,6 +267,11 @@
 #pragma mark Loading Files
 - (void)restClient:(DBRestClient*)client loadedFile:(NSString*)destPath
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     NSError *anyError = nil;
     BOOL success = YES;
 
@@ -254,6 +309,11 @@
 
 - (void)restClient:(DBRestClient *)client loadFileFailedWithError:(NSError *)error
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     NSString *path = [[error userInfo] valueForKey:@"path"];
     NSString *downloadDestination = [[error userInfo] valueForKey:@"destinationPath"];
     
@@ -286,6 +346,11 @@
 #pragma mark Revisions
 - (void)restClient:(DBRestClient*)client loadedRevisions:(NSArray *)revisions forFile:(NSString *)path
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     if (path != nil) {
         [self.failedDownloadRetryDictionary removeObjectForKey:path];
     }
@@ -310,6 +375,11 @@
 
 - (void)restClient:(DBRestClient*)client loadRevisionsFailedWithError:(NSError *)error
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     NSString *destPath = [[error userInfo] valueForKey:@"path"];
     NSInteger errorCode = error.code;
     
@@ -352,6 +422,11 @@
 #pragma mark Uploads
 - (void)restClient:(DBRestClient*)client uploadedFile:(NSString*)destPath from:(NSString*)srcPath
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     if( [[[destPath lastPathComponent] pathExtension] isEqualToString:TICDSSyncChangeSetFileExtension] ) {
         [self uploadedLocalSyncChangeSetFileSuccessfully:YES];
         return;
@@ -365,6 +440,11 @@
 
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     NSString *path = [[error userInfo] valueForKey:@"destinationPath"];
     NSInteger errorCode = error.code;
     

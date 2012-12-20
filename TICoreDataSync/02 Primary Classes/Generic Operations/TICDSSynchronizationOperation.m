@@ -62,6 +62,11 @@
 
 - (void)main
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     [self beginCheckWhetherRemoteIntegrityKeyMatchesLocalKey];
 }
 
@@ -70,11 +75,21 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Fetching remote integrity key");
 
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     [self fetchRemoteIntegrityKey];
 }
 
 - (void)fetchedRemoteIntegrityKey:(NSString *)aKey
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     if (aKey == nil) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to fetch an integrity key: %@", [[self error] localizedDescription]);
 
@@ -107,11 +122,21 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Starting to fetch list of client device identifiers");
 
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     [self buildArrayOfClientDeviceIdentifiers];
 }
 
 - (void)builtArrayOfClientDeviceIdentifiers:(NSArray *)anArray
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     if (anArray == nil) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error fetching list of client device identifiers");
         [self operationDidFailToComplete];
@@ -153,6 +178,11 @@
     // TODO: Fetch of Sync Commands
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"***Not yet implemented*** so 'finished' fetch of local sync commands");
 
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     [self beginFetchOfListOfSyncChangeSetIdentifiers];
 }
 
@@ -161,6 +191,11 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Starting to fetch list of SyncChangeSet identifiers");
 
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     self.numberOfSyncChangeSetIDArraysToFetch = [self.otherSynchronizedClientDeviceIdentifiers count];
 
     self.otherSynchronizedClientDeviceSyncChangeSetIdentifiers = [NSMutableDictionary dictionaryWithCapacity:[self.otherSynchronizedClientDeviceIdentifiers count]];
@@ -172,6 +207,11 @@
 
 - (void)builtArrayOfClientSyncChangeSetIdentifiers:(NSArray *)anArray forClientIdentifier:(NSString *)aClientIdentifier
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     if (anArray == nil) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Failed to fetch an array of client sync change set identifiers for client identifier: %@", aClientIdentifier);
         [self increaseNumberOfSyncChangeSetIdentifierArraysThatFailedToFetch];
@@ -227,6 +267,11 @@
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Fetching unapplied sync change sets");
 
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     if ([self.otherSynchronizedClientDeviceSyncChangeSetIdentifiers count] < 1) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"No unapplied sync change sets to download and apply");
 
@@ -262,6 +307,11 @@
 
 - (void)fetchedSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier modificationDate:(NSDate *)aDate withSuccess:(BOOL)success
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     if (success) {
         success = [self addUnappliedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientWithIdentifier:aClientIdentifier modificationDate:aDate];
     }
@@ -334,6 +384,11 @@
         return;
     }
 
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     @autoreleasepool {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Checking how many sync change sets need to be applied");
 
@@ -413,6 +468,11 @@
 
     NSInteger changeSetCount = 1;
     for ( TICDSSyncChangeSet *unappliedSyncChangeSet in unappliedSyncChangeSets) {
+        if (self.isCancelled) {
+            [self operationWasCancelled];
+            return NO;
+        }
+        
         @autoreleasepool {
             self.changeSetProgressString = [NSString stringWithFormat:@"Change set %ld of %lu", (long)changeSetCount++, (unsigned long)[unappliedSyncChangeSets count]];
             shouldContinue = [self beginApplyingSyncChangesInChangeSet:unappliedSyncChangeSet];
@@ -488,6 +548,11 @@
 
 - (void)continueAfterApplyingUnappliedSyncChangeSetsSuccessfully
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     if ([self needsMainThread] && ![NSThread isMainThread]) {
         [self performSelectorOnMainThread:@selector(continueAfterApplyingUnappliedSyncChangeSetsSuccessfully) withObject:nil waitUntilDone:NO];
         return;
@@ -498,6 +563,11 @@
 
 - (void)continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     if ([self needsMainThread] && ![NSThread isMainThread]) {
         [self performSelectorOnMainThread:@selector(continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully) withObject:nil waitUntilDone:NO];
         return;
@@ -530,6 +600,11 @@
     NSInteger changeCount = 1;
     // Apply each object's changes in turn
     for ( TICDSSyncChange *eachChange in unappliedSyncChanges) {
+        if (self.isCancelled) {
+            [self operationWasCancelled];
+            return NO;
+        }
+        
         @autoreleasepool {
             switch ( [[eachChange changeType] unsignedIntegerValue]) {
                 case TICDSSyncChangeTypeObjectInserted: {
@@ -785,6 +860,11 @@
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Applying Insertion sync change");
 
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     NSString *entityName = syncChange.objectEntityName;
     NSString *ticdsSyncID = syncChange.objectSyncID;
     id changedAttributes = [syncChange changedAttributes];
@@ -824,6 +904,11 @@
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Applying Attribute Change sync change");
     
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     NSString *objectEntityName = syncChange.objectEntityName;
     NSString *objectSyncID = syncChange.objectSyncID;
     id changedAttributes = syncChange.changedAttributes;
@@ -851,6 +936,11 @@
 - (void)applyToOneRelationshipSyncChange:(TICDSSyncChange *)syncChange
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Applying Relationship Change sync change");
+    
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
     
     NSString *objectEntityName = syncChange.objectEntityName;
     NSString *objectSyncID = syncChange.objectSyncID;
@@ -881,6 +971,11 @@
 
 - (void)applyToManyRelationshipSyncChange:(TICDSSyncChange *)syncChange
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     NSString *objectEntityName = syncChange.objectEntityName;
     NSString *objectSyncID = syncChange.objectSyncID;
     id changedAttributes = syncChange.changedAttributes;
@@ -934,6 +1029,11 @@
 
 - (void)applyObjectDeletedSyncChange:(TICDSSyncChange *)syncChange
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     NSString *objectEntityName = syncChange.objectEntityName;
     NSString *objectSyncID = syncChange.objectSyncID;
     
@@ -969,6 +1069,11 @@
 
 - (void)beginUploadOfLocalSyncChanges
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     if ([[self fileManager] fileExistsAtPath:[self.localSyncChangesToMergeLocation path]] == NO) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"No local sync changes file to push on this sync");
         [self beginUploadOfRecentSyncFile];
@@ -1001,6 +1106,11 @@
 
 - (void)uploadedLocalSyncChangeSetFileSuccessfully:(BOOL)success
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     if (success == NO) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to upload local sync changes files");
         [self operationDidFailToComplete];
@@ -1049,6 +1159,11 @@
 #pragma mark - RECENT SYNC FILE
 - (void)beginUploadOfRecentSyncFile
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     NSString *recentSyncFilePath = [self.localRecentSyncFileLocation path];
 
     NSDictionary *recentSyncDictionary = [NSDictionary dictionaryWithObject:[NSDate date] forKey:kTICDSLastSyncDate];
@@ -1066,6 +1181,11 @@
 
 - (void)uploadedRecentSyncFileSuccessfully:(BOOL)success
 {
+    if (self.isCancelled) {
+        [self operationWasCancelled];
+        return;
+    }
+    
     if (success == NO) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to upload RecentSync file, but not absolutely fatal so continuing: %@", [self error]);
     }

@@ -164,6 +164,11 @@
  This will automatically spawn a `TICDSSynchronizationOperation`, and notify you of progress through the `TICDSDocumentSyncManagerDelegate` methods. */
 - (void)initiateSynchronization;
 
+/** Cancel synchronizing the document with the remote location.
+ 
+ This will cancel all synchronization operations and notify you of progress through the `TICDSDocumentSyncManagerDelegate` methods. */
+- (void)cancelSynchronization;
+
 /** If a conflict is encountered during synchronization, your delegate will be notified with the `solveConflict:` method. You must decide whether the remote or local `SyncChange` wins, and inform the document sync manager using this method to continue synchronization.
  
  @param aType The type of conflict resolution; see `TICDSTypesAndEnums.h` for possible values. */

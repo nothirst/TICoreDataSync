@@ -859,6 +859,11 @@
     [self startSynchronizationProcess];
 }
 
+- (void)cancelSynchronization
+{
+    [self.synchronizationQueue cancelAllOperations];
+}
+
 - (void)bailFromSynchronizationProcessWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from synchronization process");
