@@ -14,48 +14,6 @@
 @property (nonatomic, readonly) NSNumberFormatter *uuidPrefixFormatter;
 @property (nonatomic, copy) NSString *localSyncChangeSetIdentifier;
 
-- (void)beginCheckWhetherRemoteIntegrityKeyMatchesLocalKey;
-
-- (void)beginFetchOfListOfClientDeviceIdentifiers;
-- (void)beginFetchOfListOfSyncCommandSetIdentifiers;
-
-- (void)increaseNumberOfSyncChangeSetIdentifierArraysToFetch;
-- (void)increaseNumberOfSyncChangeSetIdentifierArraysFetched;
-- (void)increaseNumberOfSyncChangeSetIdentifierArraysThatFailedToFetch;
-- (void)beginFetchOfListOfSyncChangeSetIdentifiers;
-- (NSArray *)unappliedSyncChangeSetIdentifiersFromAvailableSyncChangeSetIdentifiers:(NSArray *)changeSetIdentifiers;
-- (BOOL)syncChangeSetHasBeenAppliedWithIdentifier:(NSString *)anIdentifier;
-
-- (void)increaseNumberOfUnappliedSyncChangeSetsToFetch;
-- (void)increaseNumberOfUnappliedSyncChangeSetsFetched;
-- (void)increaseNumberOfUnappliedSyncChangeSetsThatFailedToFetch;
-- (void)beginFetchOfUnappliedSyncChanges;
-
-- (BOOL)addUnappliedSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientWithIdentifier:(NSString *)aClientIdentifier modificationDate:(NSDate *)aDate;
-
-- (void)beginApplyingUnappliedSyncChangeSets;
-- (BOOL)applyUnappliedSyncChangeSets:(NSArray *)syncChangeSets;
-- (BOOL)addSyncChangeSetToAppliedSyncChangeSets:(TICDSSyncChangeSet *)aChangeSet;
-- (BOOL)removeSyncChangeSetFileForSyncChangeSet:(TICDSSyncChangeSet *)aChangeSet;
-- (void)continueAfterApplyingUnappliedSyncChangeSetsSuccessfully;
-- (void)continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully;
-
-- (BOOL)beginApplyingSyncChangesInChangeSet:(TICDSSyncChangeSet *)aChangeSet;
-- (NSArray *)syncChangesAfterCheckingForConflicts:(NSArray *)syncChanges inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
-- (NSArray *)remoteSyncChangesForObjectWithIdentifier:(NSString *)anIdentifier afterCheckingForConflictsInRemoteSyncChanges:(NSArray *)remoteSyncChanges inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
-- (void)addWarningsForRemoteDeletionWithLocalChanges:(NSArray *)localChanges;
-- (void)addWarningsForRemoteChangesWithLocalDeletion:(NSArray *)remoteChanges;
-- (TICDSSyncConflictResolutionType)resolutionTypeForConflict:(TICDSSyncConflict *)aConflict;
-- (void)applyObjectInsertedSyncChange:(TICDSSyncChange *)aSyncChange;
-- (void)applyAttributeChangeSyncChange:(TICDSSyncChange *)aSyncChange;
-- (void)applyObjectDeletedSyncChange:(TICDSSyncChange *)aSyncChange;
-- (void)applyToOneRelationshipSyncChange:(TICDSSyncChange *)aSyncChange;
-- (void)applyToManyRelationshipSyncChange:(TICDSSyncChange *)aSyncChange;
-
-- (void)beginUploadOfLocalSyncCommands;
-- (void)beginUploadOfLocalSyncChanges;
-- (void)beginUploadOfRecentSyncFile;
-
 @end
 
 @implementation TICDSSynchronizationOperation
