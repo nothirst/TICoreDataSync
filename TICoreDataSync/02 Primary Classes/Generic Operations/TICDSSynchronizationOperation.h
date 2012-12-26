@@ -48,7 +48,7 @@
     NSArray *_syncChangeSortDescriptors;
     NSMutableArray *_synchronizationWarnings;
     
-    NSURL *_localSyncChangesToMergeLocation;
+    NSURL *_localSyncChangesToMergeURL;
     NSURL *_appliedSyncChangeSetsFileLocation;
     NSURL *_unappliedSyncChangesDirectoryLocation;
     NSURL *_unappliedSyncChangeSetsFileLocation;
@@ -226,7 +226,7 @@
 /** @name File Locations */
 
 /** The location of the `SyncChangesBeingSynchronized.syncchg` file for this synchronization operation. */
-@property (strong) NSURL *localSyncChangesToMergeLocation;
+@property (strong) NSURL *localSyncChangesToMergeURL;
 
 /** The location of this document's `AppliedSyncChangeSets.ticdsync` file. */
 @property (strong) NSURL *appliedSyncChangeSetsFileLocation;

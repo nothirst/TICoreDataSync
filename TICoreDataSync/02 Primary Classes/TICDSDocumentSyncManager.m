@@ -898,12 +898,13 @@
     [operation setShouldUseEncryption:self.shouldUseEncryption];
     [operation setClientIdentifier:self.clientIdentifier];
     [operation setIntegrityKey:self.integrityKey];
+
     // Set location of sync changes to merge file
     NSURL *syncChangesToMergeLocation = nil;
     if ([self.fileManager fileExistsAtPath:self.syncChangesBeingSynchronizedStorePath]) {
         syncChangesToMergeLocation = [NSURL fileURLWithPath:self.syncChangesBeingSynchronizedStorePath];
     }
-    [operation setLocalSyncChangesToMergeLocation:syncChangesToMergeLocation];
+    [operation setLocalSyncChangesToMergeURL:syncChangesToMergeLocation];
 
     // Set locations of files
     [operation setAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename]]];

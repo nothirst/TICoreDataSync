@@ -1032,7 +1032,7 @@
         return;
     }
     
-    if ([[self fileManager] fileExistsAtPath:[self.localSyncChangesToMergeLocation path]] == NO) {
+    if ([[self fileManager] fileExistsAtPath:[self.localSyncChangesToMergeURL path]] == NO) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"No local sync changes file to push on this sync");
         [self beginUploadOfRecentSyncFile];
         return;
@@ -1042,13 +1042,13 @@
 
     self.localSyncChangeSetIdentifier = [NSString stringWithFormat:@"%@-%@", [self.uuidPrefixFormatter stringFromNumber:[NSNumber numberWithDouble:CFAbsoluteTimeGetCurrent()]], [TICDSUtilities uuidString]];
 
-    NSString *filePath = [self.localSyncChangesToMergeLocation path];
+    NSString *filePath = [self.localSyncChangesToMergeURL path];
     filePath = [filePath stringByDeletingLastPathComponent];
     filePath = [filePath stringByAppendingPathComponent:self.localSyncChangeSetIdentifier];
     filePath = [filePath stringByAppendingPathExtension:TICDSSyncChangeSetFileExtension];
 
     NSError *anyError = nil;
-    BOOL success = [[self fileManager] copyItemAtPath:[self.localSyncChangesToMergeLocation path] toPath:filePath error:&anyError];
+    BOOL success = [[self fileManager] copyItemAtPath:[self.localSyncChangesToMergeURL path] toPath:filePath error:&anyError];
 
     if (success == NO) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to move local sync changes to merge file");
@@ -1102,7 +1102,7 @@
     }
     
     // The file has been copied and uploaded so we can get rid of the original version
-    [[self fileManager] removeItemAtPath:[self.localSyncChangesToMergeLocation path] error:&anyError];
+    [[self fileManager] removeItemAtPath:[self.localSyncChangesToMergeURL path] error:&anyError];
 
     [self beginUploadOfRecentSyncFile];
 }
@@ -1213,7 +1213,7 @@
     _syncChangeSortDescriptors = nil;
     _synchronizationWarnings = nil;
 
-    _localSyncChangesToMergeLocation = nil;
+    _localSyncChangesToMergeURL = nil;
     _appliedSyncChangeSetsFileLocation = nil;
     _unappliedSyncChangesDirectoryLocation = nil;
     _unappliedSyncChangeSetsFileLocation = nil;
@@ -1317,7 +1317,7 @@
         return _localSyncChangesToMergeCoreDataFactory;
     }
 
-    if (self.localSyncChangesToMergeLocation == nil) {
+    if (self.localSyncChangesToMergeURL == nil) {
         return nil;
     }
 
@@ -1325,7 +1325,7 @@
     _localSyncChangesToMergeCoreDataFactory = [[TICoreDataFactory alloc] initWithMomdName:TICDSSyncChangeDataModelName];
     [_localSyncChangesToMergeCoreDataFactory setDelegate:self];
     [_localSyncChangesToMergeCoreDataFactory setPersistentStoreType:TICDSSyncChangesCoreDataPersistentStoreType];
-    [_localSyncChangesToMergeCoreDataFactory setPersistentStoreDataPath:[self.localSyncChangesToMergeLocation path]];
+    [_localSyncChangesToMergeCoreDataFactory setPersistentStoreDataPath:[self.localSyncChangesToMergeURL path]];
 
     return _localSyncChangesToMergeCoreDataFactory;
 }
@@ -1365,7 +1365,7 @@
 @synthesize syncChangeSortDescriptors = _syncChangeSortDescriptors;
 @synthesize synchronizationWarnings = _synchronizationWarnings;
 
-@synthesize localSyncChangesToMergeLocation = _localSyncChangesToMergeLocation;
+@synthesize localSyncChangesToMergeURL = _localSyncChangesToMergeURL;
 @synthesize appliedSyncChangeSetsFileLocation = _appliedSyncChangeSetsFileLocation;
 @synthesize unappliedSyncChangesDirectoryLocation = _unappliedSyncChangesDirectoryLocation;
 @synthesize unappliedSyncChangeSetsFileLocation = _unappliedSyncChangeSetsFileLocation;
