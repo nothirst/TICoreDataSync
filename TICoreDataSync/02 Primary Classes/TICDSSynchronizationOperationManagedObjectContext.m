@@ -19,4 +19,11 @@
     [super deleteObject:object];
 }
 
+- (void)insertObject:(NSManagedObject *)object
+{
+    [TICDSChangeIntegrityStoreManager addObjectIDToInsertionIntegrityStore:[object objectID]];
+    
+    [super insertObject:object];
+}
+
 @end

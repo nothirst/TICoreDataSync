@@ -11,6 +11,7 @@
 @interface TICDSChangeIntegrityStoreManager ()
 
 @property (nonatomic, strong) NSMutableSet *deletionSet;
+@property (nonatomic, strong) NSMutableSet *insertionSet;
 @property (nonatomic, strong) NSMutableDictionary *changeDictionary;
 
 @end
@@ -18,6 +19,7 @@
 @implementation TICDSChangeIntegrityStoreManager
 
 static NSLock *deletionStoreLock = nil;
+static NSLock *insertionStoreLock = nil;
 static NSLock *changeStoreLock = nil;
 
 @synthesize deletionSet = _deletionSet;
@@ -35,6 +37,16 @@ static NSLock *changeStoreLock = nil;
     return containsDeletionRecord;
 }
 
++ (BOOL)containsInsertionRecordForObjectID:(NSManagedObjectID *)objectID;
+{
+    BOOL containsInsertionRecord = NO;
+    @synchronized(insertionStoreLock) {
+        containsInsertionRecord = [[[self sharedChangeIntegrityStoreManager] insertionSet] containsObject:objectID];
+    }
+    
+    return containsInsertionRecord;
+}
+
 + (void)addObjectIDToDeletionIntegrityStore:(NSManagedObjectID *)objectID
 {
     @synchronized(deletionStoreLock) {
@@ -46,6 +58,20 @@ static NSLock *changeStoreLock = nil;
 {
     @synchronized(deletionStoreLock) {
         [[[self sharedChangeIntegrityStoreManager] deletionSet] removeObject:objectID];
+    }
+}
+
++ (void)addObjectIDToInsertionIntegrityStore:(NSManagedObjectID *)objectID
+{
+    @synchronized(insertionStoreLock) {
+        [[[self sharedChangeIntegrityStoreManager] insertionSet] addObject:objectID];
+    }
+}
+
++ (void)removeObjectIDFromInsertionIntegrityStore:(NSManagedObjectID *)objectID
+{
+    @synchronized(insertionStoreLock) {
+        [[[self sharedChangeIntegrityStoreManager] insertionSet] removeObject:objectID];
     }
 }
 
@@ -82,6 +108,15 @@ static NSLock *changeStoreLock = nil;
     return _deletionSet;
 }
 
+- (NSMutableSet *)insertionSet
+{
+    if (_insertionSet == nil) {
+        _insertionSet = [[NSMutableSet alloc] init];
+    }
+    
+    return _insertionSet;
+}
+
 - (NSMutableDictionary *)changeDictionary
 {
     if (_changeDictionary == nil) {
@@ -98,6 +133,7 @@ static TICDSChangeIntegrityStoreManager *sharedChangeIntegrityStoreManager = nil
 + (void)initialize
 {
     deletionStoreLock = [[NSLock alloc] init];
+    insertionStoreLock = [[NSLock alloc] init];
     changeStoreLock = [[NSLock alloc] init];
 }
 

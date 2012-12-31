@@ -33,6 +33,11 @@
     // changedAttributes = a dictionary containing the values of _all_ the object's attributes at time it was saved
     // this method also creates extra sync changes for _all_ the object's relationships 
     
+    if ([TICDSChangeIntegrityStoreManager containsInsertionRecordForObjectID:[self objectID]]) {
+        [TICDSChangeIntegrityStoreManager removeObjectIDFromInsertionIntegrityStore:[self objectID]];
+        return;
+    }
+    
     TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeObjectInserted];
     
     TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", syncChange.objectSyncID, [self class]);

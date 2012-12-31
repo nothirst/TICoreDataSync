@@ -16,9 +16,13 @@
 + (TICDSChangeIntegrityStoreManager *)sharedChangeIntegrityStoreManager;
 
 + (BOOL)containsDeletionRecordForObjectID:(NSManagedObjectID *)objectID;
++ (BOOL)containsInsertionRecordForObjectID:(NSManagedObjectID *)objectID;
 
 + (void)addObjectIDToDeletionIntegrityStore:(NSManagedObjectID *)objectID;
 + (void)removeObjectIDFromDeletionIntegrityStore:(NSManagedObjectID *)objectID;
+
++ (void)addObjectIDToInsertionIntegrityStore:(NSManagedObjectID *)objectID;
++ (void)removeObjectIDFromInsertionIntegrityStore:(NSManagedObjectID *)objectID;
 
 + (void)addChangedProperties:(NSDictionary *)changedProperties toChangeIntegrityStoreForObjectID:(NSManagedObjectID *)objectID;
 + (void)removeChangedProperties:(NSDictionary *)changedProperties fromChangeIntegrityStoreForObjectID:(NSManagedObjectID *)objectID;
