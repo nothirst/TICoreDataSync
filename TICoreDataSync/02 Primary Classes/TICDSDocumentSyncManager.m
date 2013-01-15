@@ -997,13 +997,15 @@
     [self postIncreaseActivityNotification];
 }
 
-- (void)continueSynchronizationByResolvingConflictWithResolutionType:(TICDSSyncConflictResolutionType)aType
+- (void)continueSynchronizationByResolvingConflictWithResolutionType:(TICDSSyncConflictResolutionType)conflictResolutionType
 {
-    TICDSSynchronizationOperation *operation = [[self.synchronizationQueue operations] lastObject];
-
-    [operation setMostRecentConflictResolutionType:aType];
-
-    [operation setPaused:NO];
+    if (self.synchronizationQueue.operations.count == 0) {
+        return;
+    }
+    
+    TICDSSynchronizationOperation *operation = [[self.synchronizationQueue operations] objectAtIndex:0];
+    operation.mostRecentConflictResolutionType = conflictResolutionType;
+    operation.paused = NO;
 }
 
 #pragma mark Operation Generation
