@@ -95,9 +95,10 @@ preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(activityDidIncrease:) name:TICDSDocumentSyncManagerDidIncreaseActivityNotification object:docSyncManager];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(activityDidDecrease:) name:TICDSDocumentSyncManagerDidDecreaseActivityNotification object:docSyncManager];
     
+    self.managedObjectContext.synchronized = YES;
     [docSyncManager registerWithDelegate:self 
                           appSyncManager:aSyncManager 
-                    managedObjectContext:(TICDSSynchronizedManagedObjectContext *)[self managedObjectContext]
+                    managedObjectContext:self.managedObjectContext
                       documentIdentifier:@"Notebook"
                              description:@"Application's data" 
                                 userInfo:nil];
@@ -200,7 +201,7 @@ didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:
 
 - (BOOL)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager
 shouldBeginSynchronizingAfterManagedObjectContextDidSave:
-(TICDSSynchronizedManagedObjectContext *)aMoc
+(NSManagedObjectContext *)aMoc
 {
     return YES;
 }
@@ -472,7 +473,7 @@ _downloadStoreAfterRegistering;
         [[NSApplication sharedApplication] presentError:error];
         return nil;
     }
-    __managedObjectContext = [[TICDSSynchronizedManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+    __managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     [__managedObjectContext setPersistentStoreCoordinator:coordinator];
     
     return __managedObjectContext;

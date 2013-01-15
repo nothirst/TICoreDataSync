@@ -14,9 +14,9 @@
 		13A968A61663FEA7008CB958 /* ReadMe.txt in Resources */ = {isa = PBXBuildFile; fileRef = 13A9685B1663FEA7008CB958 /* ReadMe.txt */; };
 		13E94D88163EC1310058A989 /* libTICoreDataSync-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13E94D85163EC0C80058A989 /* libTICoreDataSync-iOS.a */; };
 		13E94DA7163EC2010058A989 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13E94DA6163EC2010058A989 /* Default-568h@2x.png */; };
-		13E94DA9163EC4C00058A989 /* DropboxSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13E94DA8163EC4C00058A989 /* DropboxSDK.framework */; };
 		13E94DAD163EC6720058A989 /* TICDSSyncChange.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 13E94DAA163EC6720058A989 /* TICDSSyncChange.xcdatamodel */; };
 		13E94DAE163EC6720058A989 /* TICDSSyncChangeSet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 13E94DAB163EC6720058A989 /* TICDSSyncChangeSet.xcdatamodeld */; };
+		13F223A716A5A4FD00C0995C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13F223A616A5A4FD00C0995C /* QuartzCore.framework */; };
 		3821AF32138013CD004860A0 /* NoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3821AF30138013CD004860A0 /* NoteViewController.m */; };
 		3821AF33138013CD004860A0 /* NoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3821AF31138013CD004860A0 /* NoteViewController.xib */; };
 		384E17D9137D647B00629EFD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384E17D8137D647B00629EFD /* UIKit.framework */; };
@@ -63,9 +63,9 @@
 		13A9685B1663FEA7008CB958 /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
 		13E94D7D163EC0C80058A989 /* TICoreDataSync-iOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "TICoreDataSync-iOS.xcodeproj"; path = "../../TICoreDataSync-iOS.xcodeproj"; sourceTree = "<group>"; };
 		13E94DA6163EC2010058A989 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
-		13E94DA8163EC4C00058A989 /* DropboxSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropboxSDK.framework; path = "../../TICoreDataSync/07 External Frameworks/DropboxSDK.framework"; sourceTree = "<group>"; };
 		13E94DAA163EC6720058A989 /* TICDSSyncChange.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; name = TICDSSyncChange.xcdatamodel; path = "../../../TICoreDataSync/03 Internal Data Model/TICDSSyncChange.xcdatamodel"; sourceTree = "<group>"; };
 		13E94DAC163EC6720058A989 /* TICDSSyncChangeSet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TICDSSyncChangeSet.xcdatamodel; sourceTree = "<group>"; };
+		13F223A616A5A4FD00C0995C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3821AF2F138013CD004860A0 /* NoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteViewController.h; sourceTree = "<group>"; };
 		3821AF30138013CD004860A0 /* NoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteViewController.m; sourceTree = "<group>"; };
 		3821AF31138013CD004860A0 /* NoteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteViewController.xib; sourceTree = "<group>"; };
@@ -106,7 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13E94DA9163EC4C00058A989 /* DropboxSDK.framework in Frameworks */,
+				13F223A716A5A4FD00C0995C /* QuartzCore.framework in Frameworks */,
 				13E94D88163EC1310058A989 /* libTICoreDataSync-iOS.a in Frameworks */,
 				3890AB751397AC0200CC64B5 /* Security.framework in Frameworks */,
 				384E17D9137D647B00629EFD /* UIKit.framework in Frameworks */,
@@ -178,7 +178,7 @@
 		384E17D7137D647B00629EFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				13E94DA8163EC4C00058A989 /* DropboxSDK.framework */,
+				13F223A616A5A4FD00C0995C /* QuartzCore.framework */,
 				3890AB741397AC0200CC64B5 /* Security.framework */,
 				38E6592213969B7900D3156B /* Security.framework */,
 				384E188E137D7B7F00629EFD /* SystemConfiguration.framework */,

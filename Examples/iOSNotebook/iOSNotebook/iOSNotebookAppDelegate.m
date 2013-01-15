@@ -110,11 +110,10 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(activityDidDecrease:) name:TICDSDocumentSyncManagerDidDecreaseActivityNotification object:docSyncManager];
     
+    self.managedObjectContext.synchronized = YES;
     [docSyncManager registerWithDelegate:self 
                           appSyncManager:aSyncManager 
-                    managedObjectContext:
-     (TICDSSynchronizedManagedObjectContext *)
-                                         [self managedObjectContext]
+                    managedObjectContext:self.managedObjectContext
                       documentIdentifier:@"Notebook" 
                              description:@"Application's data" 
                                 userInfo:nil];
@@ -232,14 +231,15 @@
 	[DBSession setSharedSession:session];
 	[session release];
 
+    [[self window] setRootViewController:[self navigationController]];
+    [[self window] makeKeyAndVisible];
+
     if( [session isLinked] ) {
         [self registerSyncManager];
     } else {
-        [[DBSession sharedSession] link];
+        [[DBSession sharedSession] linkFromController:self.navigationController];
     }
     
-    [[self window] setRootViewController:[self navigationController]];
-    [[self window] makeKeyAndVisible];
     return YES;
 }
 
@@ -338,7 +338,7 @@
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil)
     {
-        __managedObjectContext = [[TICDSSynchronizedManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+        __managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
         [__managedObjectContext setPersistentStoreCoordinator:coordinator];
     }
     return __managedObjectContext;
