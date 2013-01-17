@@ -6,10 +6,14 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
-#if TARGET_OS_IPHONE
 
 #import "TICDSWholeStoreDownloadOperation.h"
+
+#if TARGET_OS_IPHONE
 #import <DropboxSDK/DropboxSDK.h>
+#else
+#import <DropboxSDK/DropboxOSX.h>
+#endif
 
 /**
  `TICDSDropboxSDKBasedWholeStoreDownloadOperation` is a "whole store download" operation designed for use with a `TICDSDropboxSDKBasedDocumentSyncManager`.
@@ -51,4 +55,3 @@
 
 @end
 
-#endif
