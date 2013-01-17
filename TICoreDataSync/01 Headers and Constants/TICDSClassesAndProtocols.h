@@ -45,7 +45,6 @@
 @class TICDSFileManagerBasedRemoveAllRemoteSyncDataOperation;
 
 #pragma mark DropboxSDK-Based
-#if TARGET_OS_IPHONE
 @class TICDSDropboxSDKBasedApplicationSyncManager;
 @class TICDSDropboxSDKBasedDocumentSyncManager;
 @class TICDSDropboxSDKBasedApplicationRegistrationOperation;

@@ -46,7 +46,6 @@
 #import "TICDSFileManagerBasedRemoveAllRemoteSyncDataOperation.h"
 
 #pragma mark DropboxSDK-Based
-#if TARGET_OS_IPHONE
 #import "TICDSDropboxSDKBasedApplicationSyncManager.h"
 #import "TICDSDropboxSDKBasedDocumentSyncManager.h"
 #import "TICDSDropboxSDKBasedApplicationRegistrationOperation.h"
@@ -61,7 +60,6 @@
 #import "TICDSDropboxSDKBasedDocumentDeletionOperation.h"
 #import "TICDSDropboxSDKBasedDocumentClientDeletionOperation.h"
 #import "TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation.h"
-#endif
 
 #pragma mark - Internal Data Model
 #import "TICDSSyncChange.h"

@@ -6,7 +6,6 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
-#if TARGET_OS_IPHONE
 
 #import "TICDSDocumentSyncManager.h"
 
@@ -87,4 +86,3 @@
 
 @end
 
-#endif

@@ -6,7 +6,6 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
-#if TARGET_OS_IPHONE
 
 #import "TICoreDataSync.h"
 
@@ -320,7 +319,7 @@
     if (error.code != 401 && path != nil && downloadDestination != nil && [[self.failedDownloadRetryDictionary objectForKey:path] integerValue] < 5) {
         NSInteger retryCount = [[self.failedDownloadRetryDictionary objectForKey:path] integerValue];
         retryCount++;
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Failed to download %@. Going for try number %d", path, retryCount);
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Failed to download %@. Going for try number %ld", path, retryCount);
         [self.failedDownloadRetryDictionary setObject:[NSNumber numberWithInteger:retryCount] forKey:path];
         [[self restClient] loadFile:path intoPath:downloadDestination];
         return;
@@ -392,7 +391,7 @@
     if (destPath != nil && [[self.failedDownloadRetryDictionary objectForKey:destPath] integerValue] < 5) {
         NSInteger retryCount = [[self.failedDownloadRetryDictionary objectForKey:destPath] integerValue];
         retryCount++;
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Failed to load revisions for %@. Going for try number %d", destPath, retryCount);
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Failed to load revisions for %@. Going for try number %ld", destPath, retryCount);
         [self.failedDownloadRetryDictionary setObject:[NSNumber numberWithInteger:retryCount] forKey:destPath];
         [self.restClient loadRevisionsForFile:destPath limit:1];
         return;
@@ -536,4 +535,3 @@
 
 @end
 
-#endif
