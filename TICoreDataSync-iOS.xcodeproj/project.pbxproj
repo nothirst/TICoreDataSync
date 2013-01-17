@@ -113,18 +113,6 @@
 		135B62B71665479E0093865C /* NSString+Dropbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 135B62721665479D0093865C /* NSString+Dropbox.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		13023C3B161363D50071C497 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "include/${PRODUCT_NAME}";
-			dstSubfolderSpec = 16;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		13023C3D161363D50071C497 /* libTICoreDataSync-iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libTICoreDataSync-iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13023C40161363D50071C497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -798,7 +786,6 @@
 			buildPhases = (
 				13023C39161363D50071C497 /* Sources */,
 				13023C3A161363D50071C497 /* Frameworks */,
-				13023C3B161363D50071C497 /* CopyFiles */,
 			);
 			buildRules = (
 			);

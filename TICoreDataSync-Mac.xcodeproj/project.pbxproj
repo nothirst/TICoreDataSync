@@ -8,10 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0ADF2BCD16769F120032BC42 /* NSManagedObjectContext+TICDSAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ADF2BCB16769F120032BC42 /* NSManagedObjectContext+TICDSAdditions.m */; };
-		0ADF2BCE16769F120032BC42 /* NSManagedObjectContext+TICDSAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 0ADF2BCC16769F120032BC42 /* NSManagedObjectContext+TICDSAdditions.h */; };
 		13A8D49816A4B1FB00EB1FF2 /* DBAccountInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D41616A4B1FB00EB1FF2 /* DBAccountInfo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13A8D49916A4B1FB00EB1FF2 /* DBAuthHelperOSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D41716A4B1FB00EB1FF2 /* DBAuthHelperOSX.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		13A8D49B16A4B1FB00EB1FF2 /* DBDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D41916A4B1FB00EB1FF2 /* DBDefines.h */; };
 		13A8D49C16A4B1FB00EB1FF2 /* DBDeltaEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D41A16A4B1FB00EB1FF2 /* DBDeltaEntry.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13A8D49D16A4B1FB00EB1FF2 /* DBError.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D41B16A4B1FB00EB1FF2 /* DBError.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13A8D49F16A4B1FB00EB1FF2 /* DBKeychain-OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D41D16A4B1FB00EB1FF2 /* DBKeychain-OSX.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -22,59 +20,11 @@
 		13A8D4A416A4B1FB00EB1FF2 /* DBRestClient+OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D42216A4B1FB00EB1FF2 /* DBRestClient+OSX.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13A8D4A516A4B1FB00EB1FF2 /* DBRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D42316A4B1FB00EB1FF2 /* DBRestClient.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13A8D4A716A4B1FB00EB1FF2 /* DBSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D42516A4B1FB00EB1FF2 /* DBSession.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		13A8D4A916A4B1FB00EB1FF2 /* DBAccountInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D42916A4B1FB00EB1FF2 /* DBAccountInfo.h */; };
-		13A8D4AA16A4B1FB00EB1FF2 /* DBAuthHelperOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D42A16A4B1FB00EB1FF2 /* DBAuthHelperOSX.h */; };
-		13A8D4AB16A4B1FB00EB1FF2 /* DBBase64Transcoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D42B16A4B1FB00EB1FF2 /* DBBase64Transcoder.h */; };
-		13A8D4AD16A4B1FB00EB1FF2 /* DBDeltaEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D42D16A4B1FB00EB1FF2 /* DBDeltaEntry.h */; };
-		13A8D4AE16A4B1FB00EB1FF2 /* DBError.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D42E16A4B1FB00EB1FF2 /* DBError.h */; };
-		13A8D4AF16A4B1FB00EB1FF2 /* DBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D42F16A4B1FB00EB1FF2 /* DBJSON.h */; };
-		13A8D4B016A4B1FB00EB1FF2 /* DBJsonBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D43016A4B1FB00EB1FF2 /* DBJsonBase.h */; };
-		13A8D4B116A4B1FB00EB1FF2 /* DBJsonParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D43116A4B1FB00EB1FF2 /* DBJsonParser.h */; };
-		13A8D4B216A4B1FB00EB1FF2 /* DBJsonWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D43216A4B1FB00EB1FF2 /* DBJsonWriter.h */; };
-		13A8D4B316A4B1FB00EB1FF2 /* DBKeychain.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D43316A4B1FB00EB1FF2 /* DBKeychain.h */; };
-		13A8D4B416A4B1FB00EB1FF2 /* DBLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D43416A4B1FB00EB1FF2 /* DBLog.h */; };
-		13A8D4B516A4B1FB00EB1FF2 /* DBMetadata.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D43516A4B1FB00EB1FF2 /* DBMetadata.h */; };
-		13A8D4B616A4B1FB00EB1FF2 /* DBQuota.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D43616A4B1FB00EB1FF2 /* DBQuota.h */; };
-		13A8D4B716A4B1FB00EB1FF2 /* DBRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D43716A4B1FB00EB1FF2 /* DBRequest.h */; };
-		13A8D4B816A4B1FB00EB1FF2 /* DBRestClient+OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D43816A4B1FB00EB1FF2 /* DBRestClient+OSX.h */; };
-		13A8D4B916A4B1FB00EB1FF2 /* DBRestClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D43916A4B1FB00EB1FF2 /* DBRestClient.h */; };
-		13A8D4BB16A4B1FB00EB1FF2 /* DBSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D43B16A4B1FB00EB1FF2 /* DBSession.h */; };
-		13A8D4BC16A4B1FB00EB1FF2 /* DropboxOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D43C16A4B1FB00EB1FF2 /* DropboxOSX.h */; };
-		13A8D4BE16A4B1FB00EB1FF2 /* JSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D43E16A4B1FB00EB1FF2 /* JSON.h */; };
-		13A8D4BF16A4B1FB00EB1FF2 /* MPDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D43F16A4B1FB00EB1FF2 /* MPDebug.h */; };
-		13A8D4C016A4B1FB00EB1FF2 /* MPOAuth.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D44016A4B1FB00EB1FF2 /* MPOAuth.h */; };
-		13A8D4C116A4B1FB00EB1FF2 /* MPOAuthAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D44116A4B1FB00EB1FF2 /* MPOAuthAPI.h */; };
-		13A8D4C216A4B1FB00EB1FF2 /* MPOAuthAPIRequestLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D44216A4B1FB00EB1FF2 /* MPOAuthAPIRequestLoader.h */; };
-		13A8D4C316A4B1FB00EB1FF2 /* MPOAuthAuthenticationMethod.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D44316A4B1FB00EB1FF2 /* MPOAuthAuthenticationMethod.h */; };
-		13A8D4C416A4B1FB00EB1FF2 /* MPOAuthAuthenticationMethodOAuth.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D44416A4B1FB00EB1FF2 /* MPOAuthAuthenticationMethodOAuth.h */; };
-		13A8D4C516A4B1FB00EB1FF2 /* MPOAuthConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D44516A4B1FB00EB1FF2 /* MPOAuthConnection.h */; };
-		13A8D4C616A4B1FB00EB1FF2 /* MPOAuthCredentialConcreteStore+KeychainAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D44616A4B1FB00EB1FF2 /* MPOAuthCredentialConcreteStore+KeychainAdditions.h */; };
-		13A8D4C716A4B1FB00EB1FF2 /* MPOAuthCredentialConcreteStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D44716A4B1FB00EB1FF2 /* MPOAuthCredentialConcreteStore.h */; };
-		13A8D4C816A4B1FB00EB1FF2 /* MPOAuthCredentialStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D44816A4B1FB00EB1FF2 /* MPOAuthCredentialStore.h */; };
-		13A8D4C916A4B1FB00EB1FF2 /* MPOAuthParameterFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D44916A4B1FB00EB1FF2 /* MPOAuthParameterFactory.h */; };
-		13A8D4CA16A4B1FB00EB1FF2 /* MPOAuthSignatureParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D44A16A4B1FB00EB1FF2 /* MPOAuthSignatureParameter.h */; };
-		13A8D4CB16A4B1FB00EB1FF2 /* MPOAuthURLRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D44B16A4B1FB00EB1FF2 /* MPOAuthURLRequest.h */; };
-		13A8D4CC16A4B1FB00EB1FF2 /* MPOAuthURLResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D44C16A4B1FB00EB1FF2 /* MPOAuthURLResponse.h */; };
-		13A8D4CD16A4B1FB00EB1FF2 /* MPURLRequestParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D44D16A4B1FB00EB1FF2 /* MPURLRequestParameter.h */; };
-		13A8D4CE16A4B1FB00EB1FF2 /* NSDictionary+Dropbox.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D44E16A4B1FB00EB1FF2 /* NSDictionary+Dropbox.h */; };
-		13A8D4CF16A4B1FB00EB1FF2 /* NSObject+DBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D44F16A4B1FB00EB1FF2 /* NSObject+DBJSON.h */; };
-		13A8D4D016A4B1FB00EB1FF2 /* NSString+DBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D45016A4B1FB00EB1FF2 /* NSString+DBJSON.h */; };
-		13A8D4D116A4B1FB00EB1FF2 /* NSString+Dropbox.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D45116A4B1FB00EB1FF2 /* NSString+Dropbox.h */; };
-		13A8D4D216A4B1FB00EB1FF2 /* NSString+URLEscapingAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D45216A4B1FB00EB1FF2 /* NSString+URLEscapingAdditions.h */; };
-		13A8D4D316A4B1FB00EB1FF2 /* NSURL+MPURLParameterAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D45316A4B1FB00EB1FF2 /* NSURL+MPURLParameterAdditions.h */; };
-		13A8D4D416A4B1FB00EB1FF2 /* NSURLResponse+Encoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D45416A4B1FB00EB1FF2 /* NSURLResponse+Encoding.h */; };
-		13A8D4D716A4B1FB00EB1FF2 /* DBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D45916A4B1FB00EB1FF2 /* DBJSON.h */; };
 		13A8D4D816A4B1FB00EB1FF2 /* DBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D45A16A4B1FB00EB1FF2 /* DBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		13A8D4D916A4B1FB00EB1FF2 /* DBJsonBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D45B16A4B1FB00EB1FF2 /* DBJsonBase.h */; };
 		13A8D4DA16A4B1FB00EB1FF2 /* DBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D45C16A4B1FB00EB1FF2 /* DBJsonBase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		13A8D4DB16A4B1FB00EB1FF2 /* DBJsonParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D45D16A4B1FB00EB1FF2 /* DBJsonParser.h */; };
 		13A8D4DC16A4B1FB00EB1FF2 /* DBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D45E16A4B1FB00EB1FF2 /* DBJsonParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		13A8D4DD16A4B1FB00EB1FF2 /* DBJsonWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D45F16A4B1FB00EB1FF2 /* DBJsonWriter.h */; };
 		13A8D4DE16A4B1FB00EB1FF2 /* DBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D46016A4B1FB00EB1FF2 /* DBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		13A8D4DF16A4B1FB00EB1FF2 /* JSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D46116A4B1FB00EB1FF2 /* JSON.h */; };
-		13A8D4E016A4B1FB00EB1FF2 /* NSObject+DBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D46216A4B1FB00EB1FF2 /* NSObject+DBJSON.h */; };
 		13A8D4E116A4B1FB00EB1FF2 /* NSObject+DBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D46316A4B1FB00EB1FF2 /* NSObject+DBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		13A8D4E216A4B1FB00EB1FF2 /* NSString+DBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D46416A4B1FB00EB1FF2 /* NSString+DBJSON.h */; };
 		13A8D4E316A4B1FB00EB1FF2 /* NSString+DBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D46516A4B1FB00EB1FF2 /* NSString+DBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13A8D4E416A4B1FB00EB1FF2 /* DBBase64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D46816A4B1FB00EB1FF2 /* DBBase64Transcoder.c */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13A8D4E516A4B1FB00EB1FF2 /* MPOAuthAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D46916A4B1FB00EB1FF2 /* MPOAuthAPI.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -95,140 +45,73 @@
 		13A8D4F416A4B1FB00EB1FF2 /* NSDictionary+Dropbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D47816A4B1FB00EB1FF2 /* NSDictionary+Dropbox.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13A8D4F516A4B1FB00EB1FF2 /* NSString+Dropbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D47916A4B1FB00EB1FF2 /* NSString+Dropbox.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13B3933B1626183700D7C7C0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B3933A1626183700D7C7C0 /* Cocoa.framework */; };
-		13B393E71626186A00D7C7C0 /* TICDSAllClassHeaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393531626186A00D7C7C0 /* TICDSAllClassHeaders.h */; };
-		13B393E81626186A00D7C7C0 /* TICDSClassesAndProtocols.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393541626186A00D7C7C0 /* TICDSClassesAndProtocols.h */; };
-		13B393E91626186A00D7C7C0 /* TICDSConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393551626186A00D7C7C0 /* TICDSConstants.h */; };
 		13B393EA1626186A00D7C7C0 /* TICDSConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393561626186A00D7C7C0 /* TICDSConstants.m */; };
-		13B393EB1626186A00D7C7C0 /* TICDSTypesAndEnums.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393571626186A00D7C7C0 /* TICDSTypesAndEnums.h */; };
-		13B393EC1626186A00D7C7C0 /* TICDSDropboxSDKBasedApplicationRegistrationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B3935B1626186A00D7C7C0 /* TICDSDropboxSDKBasedApplicationRegistrationOperation.h */; };
 		13B393ED1626186A00D7C7C0 /* TICDSDropboxSDKBasedApplicationRegistrationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B3935C1626186A00D7C7C0 /* TICDSDropboxSDKBasedApplicationRegistrationOperation.m */; };
-		13B393EE1626186A00D7C7C0 /* TICDSDropboxSDKBasedDocumentClientDeletionOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B3935D1626186A00D7C7C0 /* TICDSDropboxSDKBasedDocumentClientDeletionOperation.h */; };
 		13B393EF1626186A00D7C7C0 /* TICDSDropboxSDKBasedDocumentClientDeletionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B3935E1626186A00D7C7C0 /* TICDSDropboxSDKBasedDocumentClientDeletionOperation.m */; };
-		13B393F01626186A00D7C7C0 /* TICDSDropboxSDKBasedDocumentDeletionOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B3935F1626186A00D7C7C0 /* TICDSDropboxSDKBasedDocumentDeletionOperation.h */; };
 		13B393F11626186A00D7C7C0 /* TICDSDropboxSDKBasedDocumentDeletionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393601626186A00D7C7C0 /* TICDSDropboxSDKBasedDocumentDeletionOperation.m */; };
-		13B393F21626186A00D7C7C0 /* TICDSDropboxSDKBasedDocumentRegistrationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393611626186A00D7C7C0 /* TICDSDropboxSDKBasedDocumentRegistrationOperation.h */; };
 		13B393F31626186A00D7C7C0 /* TICDSDropboxSDKBasedDocumentRegistrationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393621626186A00D7C7C0 /* TICDSDropboxSDKBasedDocumentRegistrationOperation.m */; };
-		13B393F41626186A00D7C7C0 /* TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393631626186A00D7C7C0 /* TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation.h */; };
 		13B393F51626186A00D7C7C0 /* TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393641626186A00D7C7C0 /* TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation.m */; };
-		13B393F61626186A00D7C7C0 /* TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393651626186A00D7C7C0 /* TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation.h */; };
 		13B393F71626186A00D7C7C0 /* TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393661626186A00D7C7C0 /* TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation.m */; };
-		13B393F81626186A00D7C7C0 /* TICDSDropboxSDKBasedListOfPreviouslySynchronizedDocumentsOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393671626186A00D7C7C0 /* TICDSDropboxSDKBasedListOfPreviouslySynchronizedDocumentsOperation.h */; };
 		13B393F91626186A00D7C7C0 /* TICDSDropboxSDKBasedListOfPreviouslySynchronizedDocumentsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393681626186A00D7C7C0 /* TICDSDropboxSDKBasedListOfPreviouslySynchronizedDocumentsOperation.m */; };
-		13B393FA1626186A00D7C7C0 /* TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393691626186A00D7C7C0 /* TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation.h */; };
 		13B393FB1626186A00D7C7C0 /* TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B3936A1626186A00D7C7C0 /* TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation.m */; };
-		13B393FC1626186A00D7C7C0 /* TICDSDropboxSDKBasedSynchronizationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B3936B1626186A00D7C7C0 /* TICDSDropboxSDKBasedSynchronizationOperation.h */; };
 		13B393FD1626186A00D7C7C0 /* TICDSDropboxSDKBasedSynchronizationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B3936C1626186A00D7C7C0 /* TICDSDropboxSDKBasedSynchronizationOperation.m */; };
-		13B393FE1626186A00D7C7C0 /* TICDSDropboxSDKBasedVacuumOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B3936D1626186A00D7C7C0 /* TICDSDropboxSDKBasedVacuumOperation.h */; };
 		13B393FF1626186A00D7C7C0 /* TICDSDropboxSDKBasedVacuumOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B3936E1626186A00D7C7C0 /* TICDSDropboxSDKBasedVacuumOperation.m */; };
-		13B394001626186A00D7C7C0 /* TICDSDropboxSDKBasedWholeStoreDownloadOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B3936F1626186A00D7C7C0 /* TICDSDropboxSDKBasedWholeStoreDownloadOperation.h */; };
 		13B394011626186A00D7C7C0 /* TICDSDropboxSDKBasedWholeStoreDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393701626186A00D7C7C0 /* TICDSDropboxSDKBasedWholeStoreDownloadOperation.m */; };
-		13B394021626186A00D7C7C0 /* TICDSDropboxSDKBasedWholeStoreUploadOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393711626186A00D7C7C0 /* TICDSDropboxSDKBasedWholeStoreUploadOperation.h */; };
 		13B394031626186A00D7C7C0 /* TICDSDropboxSDKBasedWholeStoreUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393721626186A00D7C7C0 /* TICDSDropboxSDKBasedWholeStoreUploadOperation.m */; };
-		13B394041626186A00D7C7C0 /* TICDSDropboxSDKBasedApplicationSyncManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393731626186A00D7C7C0 /* TICDSDropboxSDKBasedApplicationSyncManager.h */; };
 		13B394051626186A00D7C7C0 /* TICDSDropboxSDKBasedApplicationSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393741626186A00D7C7C0 /* TICDSDropboxSDKBasedApplicationSyncManager.m */; };
-		13B394061626186A00D7C7C0 /* TICDSDropboxSDKBasedDocumentSyncManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393751626186A00D7C7C0 /* TICDSDropboxSDKBasedDocumentSyncManager.h */; };
 		13B394071626186A00D7C7C0 /* TICDSDropboxSDKBasedDocumentSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393761626186A00D7C7C0 /* TICDSDropboxSDKBasedDocumentSyncManager.m */; };
-		13B394081626186A00D7C7C0 /* TICDSFileManagerBasedApplicationRegistrationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393791626186A00D7C7C0 /* TICDSFileManagerBasedApplicationRegistrationOperation.h */; };
 		13B394091626186A00D7C7C0 /* TICDSFileManagerBasedApplicationRegistrationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B3937A1626186A00D7C7C0 /* TICDSFileManagerBasedApplicationRegistrationOperation.m */; };
-		13B3940A1626186A00D7C7C0 /* TICDSFileManagerBasedDocumentClientDeletionOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B3937B1626186A00D7C7C0 /* TICDSFileManagerBasedDocumentClientDeletionOperation.h */; };
 		13B3940B1626186A00D7C7C0 /* TICDSFileManagerBasedDocumentClientDeletionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B3937C1626186A00D7C7C0 /* TICDSFileManagerBasedDocumentClientDeletionOperation.m */; };
-		13B3940C1626186A00D7C7C0 /* TICDSFileManagerBasedDocumentDeletionOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B3937D1626186A00D7C7C0 /* TICDSFileManagerBasedDocumentDeletionOperation.h */; };
 		13B3940D1626186A00D7C7C0 /* TICDSFileManagerBasedDocumentDeletionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B3937E1626186A00D7C7C0 /* TICDSFileManagerBasedDocumentDeletionOperation.m */; };
-		13B3940E1626186A00D7C7C0 /* TICDSFileManagerBasedDocumentRegistrationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B3937F1626186A00D7C7C0 /* TICDSFileManagerBasedDocumentRegistrationOperation.h */; };
 		13B3940F1626186A00D7C7C0 /* TICDSFileManagerBasedDocumentRegistrationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393801626186A00D7C7C0 /* TICDSFileManagerBasedDocumentRegistrationOperation.m */; };
-		13B394101626186A00D7C7C0 /* TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393811626186A00D7C7C0 /* TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.h */; };
 		13B394111626186A00D7C7C0 /* TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393821626186A00D7C7C0 /* TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.m */; };
-		13B394121626186A00D7C7C0 /* TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393831626186A00D7C7C0 /* TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation.h */; };
 		13B394131626186A00D7C7C0 /* TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393841626186A00D7C7C0 /* TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation.m */; };
-		13B394141626186A00D7C7C0 /* TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393851626186A00D7C7C0 /* TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation.h */; };
 		13B394151626186A00D7C7C0 /* TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393861626186A00D7C7C0 /* TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation.m */; };
-		13B394161626186A00D7C7C0 /* TICDSFileManagerBasedRemoveAllRemoteSyncDataOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393871626186A00D7C7C0 /* TICDSFileManagerBasedRemoveAllRemoteSyncDataOperation.h */; };
 		13B394171626186A00D7C7C0 /* TICDSFileManagerBasedRemoveAllRemoteSyncDataOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393881626186A00D7C7C0 /* TICDSFileManagerBasedRemoveAllRemoteSyncDataOperation.m */; };
-		13B394181626186A00D7C7C0 /* TICDSFileManagerBasedSynchronizationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393891626186A00D7C7C0 /* TICDSFileManagerBasedSynchronizationOperation.h */; };
 		13B394191626186A00D7C7C0 /* TICDSFileManagerBasedSynchronizationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B3938A1626186A00D7C7C0 /* TICDSFileManagerBasedSynchronizationOperation.m */; };
-		13B3941A1626186A00D7C7C0 /* TICDSFileManagerBasedVacuumOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B3938B1626186A00D7C7C0 /* TICDSFileManagerBasedVacuumOperation.h */; };
 		13B3941B1626186A00D7C7C0 /* TICDSFileManagerBasedVacuumOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B3938C1626186A00D7C7C0 /* TICDSFileManagerBasedVacuumOperation.m */; };
-		13B3941C1626186A00D7C7C0 /* TICDSFileManagerBasedWholeStoreDownloadOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B3938D1626186A00D7C7C0 /* TICDSFileManagerBasedWholeStoreDownloadOperation.h */; };
 		13B3941D1626186A00D7C7C0 /* TICDSFileManagerBasedWholeStoreDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B3938E1626186A00D7C7C0 /* TICDSFileManagerBasedWholeStoreDownloadOperation.m */; };
-		13B3941E1626186A00D7C7C0 /* TICDSFileManagerBasedWholeStoreUploadOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B3938F1626186A00D7C7C0 /* TICDSFileManagerBasedWholeStoreUploadOperation.h */; };
 		13B3941F1626186A00D7C7C0 /* TICDSFileManagerBasedWholeStoreUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393901626186A00D7C7C0 /* TICDSFileManagerBasedWholeStoreUploadOperation.m */; };
-		13B394201626186A00D7C7C0 /* TICDSFileManagerBasedApplicationSyncManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393911626186A00D7C7C0 /* TICDSFileManagerBasedApplicationSyncManager.h */; };
 		13B394211626186A00D7C7C0 /* TICDSFileManagerBasedApplicationSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393921626186A00D7C7C0 /* TICDSFileManagerBasedApplicationSyncManager.m */; };
-		13B394221626186A00D7C7C0 /* TICDSFileManagerBasedDocumentSyncManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393931626186A00D7C7C0 /* TICDSFileManagerBasedDocumentSyncManager.h */; };
 		13B394231626186A00D7C7C0 /* TICDSFileManagerBasedDocumentSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393941626186A00D7C7C0 /* TICDSFileManagerBasedDocumentSyncManager.m */; };
-		13B394241626186A00D7C7C0 /* TICDSApplicationRegistrationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393961626186A00D7C7C0 /* TICDSApplicationRegistrationOperation.h */; };
 		13B394251626186A00D7C7C0 /* TICDSApplicationRegistrationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393971626186A00D7C7C0 /* TICDSApplicationRegistrationOperation.m */; };
-		13B394261626186A00D7C7C0 /* TICDSDocumentClientDeletionOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393981626186A00D7C7C0 /* TICDSDocumentClientDeletionOperation.h */; };
 		13B394271626186A00D7C7C0 /* TICDSDocumentClientDeletionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393991626186A00D7C7C0 /* TICDSDocumentClientDeletionOperation.m */; };
-		13B394281626186A00D7C7C0 /* TICDSDocumentDeletionOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B3939A1626186A00D7C7C0 /* TICDSDocumentDeletionOperation.h */; };
 		13B394291626186A00D7C7C0 /* TICDSDocumentDeletionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B3939B1626186A00D7C7C0 /* TICDSDocumentDeletionOperation.m */; };
-		13B3942A1626186A00D7C7C0 /* TICDSDocumentRegistrationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B3939C1626186A00D7C7C0 /* TICDSDocumentRegistrationOperation.h */; };
 		13B3942B1626186A00D7C7C0 /* TICDSDocumentRegistrationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B3939D1626186A00D7C7C0 /* TICDSDocumentRegistrationOperation.m */; };
-		13B3942C1626186A00D7C7C0 /* TICDSListOfApplicationRegisteredClientsOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B3939E1626186A00D7C7C0 /* TICDSListOfApplicationRegisteredClientsOperation.h */; };
 		13B3942D1626186A00D7C7C0 /* TICDSListOfApplicationRegisteredClientsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B3939F1626186A00D7C7C0 /* TICDSListOfApplicationRegisteredClientsOperation.m */; };
-		13B3942E1626186A00D7C7C0 /* TICDSListOfDocumentRegisteredClientsOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393A01626186A00D7C7C0 /* TICDSListOfDocumentRegisteredClientsOperation.h */; };
 		13B3942F1626186A00D7C7C0 /* TICDSListOfDocumentRegisteredClientsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393A11626186A00D7C7C0 /* TICDSListOfDocumentRegisteredClientsOperation.m */; };
-		13B394301626186A00D7C7C0 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393A21626186A00D7C7C0 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.h */; };
 		13B394311626186A00D7C7C0 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393A31626186A00D7C7C0 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.m */; };
-		13B394321626186A00D7C7C0 /* TICDSOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393A41626186A00D7C7C0 /* TICDSOperation.h */; };
 		13B394331626186A00D7C7C0 /* TICDSOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393A51626186A00D7C7C0 /* TICDSOperation.m */; };
-		13B394341626186A00D7C7C0 /* TICDSRemoveAllRemoteSyncDataOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393A61626186A00D7C7C0 /* TICDSRemoveAllRemoteSyncDataOperation.h */; };
 		13B394351626186A00D7C7C0 /* TICDSRemoveAllRemoteSyncDataOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393A71626186A00D7C7C0 /* TICDSRemoveAllRemoteSyncDataOperation.m */; };
-		13B394361626186A00D7C7C0 /* TICDSSynchronizationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393A81626186A00D7C7C0 /* TICDSSynchronizationOperation.h */; };
 		13B394371626186A00D7C7C0 /* TICDSSynchronizationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393A91626186A00D7C7C0 /* TICDSSynchronizationOperation.m */; };
-		13B394381626186A00D7C7C0 /* TICDSVacuumOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393AA1626186A00D7C7C0 /* TICDSVacuumOperation.h */; };
 		13B394391626186A00D7C7C0 /* TICDSVacuumOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393AB1626186A00D7C7C0 /* TICDSVacuumOperation.m */; };
-		13B3943A1626186A00D7C7C0 /* TICDSWholeStoreDownloadOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393AC1626186A00D7C7C0 /* TICDSWholeStoreDownloadOperation.h */; };
 		13B3943B1626186A00D7C7C0 /* TICDSWholeStoreDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393AD1626186A00D7C7C0 /* TICDSWholeStoreDownloadOperation.m */; };
-		13B3943C1626186A00D7C7C0 /* TICDSWholeStoreUploadOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393AE1626186A00D7C7C0 /* TICDSWholeStoreUploadOperation.h */; };
 		13B3943D1626186A00D7C7C0 /* TICDSWholeStoreUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393AF1626186A00D7C7C0 /* TICDSWholeStoreUploadOperation.m */; };
-		13B3943E1626186A00D7C7C0 /* TICDSApplicationSyncManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393B01626186A00D7C7C0 /* TICDSApplicationSyncManager.h */; };
 		13B3943F1626186A00D7C7C0 /* TICDSApplicationSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393B11626186A00D7C7C0 /* TICDSApplicationSyncManager.m */; };
-		13B394401626186A00D7C7C0 /* TICDSDocumentSyncManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393B21626186A00D7C7C0 /* TICDSDocumentSyncManager.h */; };
 		13B394411626186A00D7C7C0 /* TICDSDocumentSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393B31626186A00D7C7C0 /* TICDSDocumentSyncManager.m */; };
-		13B394421626186A00D7C7C0 /* TICDSSyncConflict.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393B41626186A00D7C7C0 /* TICDSSyncConflict.h */; };
 		13B394431626186A00D7C7C0 /* TICDSSyncConflict.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393B51626186A00D7C7C0 /* TICDSSyncConflict.m */; };
-		13B394441626186A00D7C7C0 /* TICDSSynchronizationOperationManagedObjectContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393B61626186A00D7C7C0 /* TICDSSynchronizationOperationManagedObjectContext.h */; };
 		13B394451626186A00D7C7C0 /* TICDSSynchronizationOperationManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393B71626186A00D7C7C0 /* TICDSSynchronizationOperationManagedObjectContext.m */; };
-		13B394461626186A00D7C7C0 /* TICDSSynchronizedManagedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393B81626186A00D7C7C0 /* TICDSSynchronizedManagedObject.h */; };
 		13B394471626186A00D7C7C0 /* TICDSSynchronizedManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393B91626186A00D7C7C0 /* TICDSSynchronizedManagedObject.m */; };
-		13B394481626186A00D7C7C0 /* TICDSSynchronizedManagedObjectContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393BA1626186A00D7C7C0 /* TICDSSynchronizedManagedObjectContext.h */; };
-		13B3944A1626186A00D7C7C0 /* TICDSSyncChange.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393BD1626186A00D7C7C0 /* TICDSSyncChange.h */; };
 		13B3944B1626186A00D7C7C0 /* TICDSSyncChange.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393BE1626186A00D7C7C0 /* TICDSSyncChange.m */; };
 		13B3944C1626186A00D7C7C0 /* TICDSSyncChange.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 13B393BF1626186A00D7C7C0 /* TICDSSyncChange.xcdatamodel */; };
-		13B3944D1626186A00D7C7C0 /* TICDSSyncChangeSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393C01626186A00D7C7C0 /* TICDSSyncChangeSet.h */; };
 		13B3944E1626186A00D7C7C0 /* TICDSSyncChangeSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393C11626186A00D7C7C0 /* TICDSSyncChangeSet.m */; };
 		13B3944F1626186A00D7C7C0 /* TICDSSyncChangeSet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 13B393C21626186A00D7C7C0 /* TICDSSyncChangeSet.xcdatamodeld */; };
-		13B394501626186A00D7C7C0 /* FZACryptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393C61626186A00D7C7C0 /* FZACryptor.h */; };
 		13B394511626186A00D7C7C0 /* FZACryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393C71626186A00D7C7C0 /* FZACryptor.m */; };
-		13B394521626186A00D7C7C0 /* FZAKeyManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393C81626186A00D7C7C0 /* FZAKeyManager.h */; };
 		13B394531626186A00D7C7C0 /* FZAKeyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393C91626186A00D7C7C0 /* FZAKeyManager.m */; };
-		13B394541626186A00D7C7C0 /* FZAKeyManageriPhone.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393CA1626186A00D7C7C0 /* FZAKeyManageriPhone.h */; };
 		13B394551626186A00D7C7C0 /* FZAKeyManageriPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393CB1626186A00D7C7C0 /* FZAKeyManageriPhone.m */; };
-		13B394561626186A00D7C7C0 /* FZAKeyManagerMac.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393CC1626186A00D7C7C0 /* FZAKeyManagerMac.h */; };
 		13B394571626186A00D7C7C0 /* FZAKeyManagerMac.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393CD1626186A00D7C7C0 /* FZAKeyManagerMac.m */; };
-		13B394581626186A00D7C7C0 /* TICDSChangeIntegrityStoreManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393CE1626186A00D7C7C0 /* TICDSChangeIntegrityStoreManager.h */; };
 		13B394591626186A00D7C7C0 /* TICDSChangeIntegrityStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393CF1626186A00D7C7C0 /* TICDSChangeIntegrityStoreManager.m */; };
-		13B3945A1626186A00D7C7C0 /* TICDSError.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393D01626186A00D7C7C0 /* TICDSError.h */; };
 		13B3945B1626186A00D7C7C0 /* TICDSError.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393D11626186A00D7C7C0 /* TICDSError.m */; };
-		13B3945C1626186A00D7C7C0 /* TICDSLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393D21626186A00D7C7C0 /* TICDSLog.h */; };
 		13B3945D1626186A00D7C7C0 /* TICDSLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393D31626186A00D7C7C0 /* TICDSLog.m */; };
-		13B3945E1626186A00D7C7C0 /* TICDSUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393D41626186A00D7C7C0 /* TICDSUtilities.h */; };
 		13B3945F1626186A00D7C7C0 /* TICDSUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393D51626186A00D7C7C0 /* TICDSUtilities.m */; };
-		13B394601626186A00D7C7C0 /* NSObject+TIDelegateCommunications.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393DB1626186A00D7C7C0 /* NSObject+TIDelegateCommunications.h */; };
 		13B394611626186A00D7C7C0 /* NSObject+TIDelegateCommunications.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393DC1626186A00D7C7C0 /* NSObject+TIDelegateCommunications.m */; };
-		13B394621626186A00D7C7C0 /* TICoreDataFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393DD1626186A00D7C7C0 /* TICoreDataFactory.h */; };
 		13B394631626186A00D7C7C0 /* TICoreDataFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393DE1626186A00D7C7C0 /* TICoreDataFactory.m */; };
-		13B394641626186A00D7C7C0 /* TIKQDirectoryWatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393DF1626186A00D7C7C0 /* TIKQDirectoryWatcher.h */; };
 		13B394651626186A00D7C7C0 /* TIKQDirectoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393E01626186A00D7C7C0 /* TIKQDirectoryWatcher.m */; };
-		13B394661626186A00D7C7C0 /* TIManagedObjectExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393E11626186A00D7C7C0 /* TIManagedObjectExtensions.h */; };
 		13B394671626186A00D7C7C0 /* TIManagedObjectExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393E21626186A00D7C7C0 /* TIManagedObjectExtensions.m */; };
-		13B394691626186A00D7C7C0 /* TICoreDataSync.h in Headers */ = {isa = PBXBuildFile; fileRef = 13B393E51626186A00D7C7C0 /* TICoreDataSync.h */; };
 		13B3946B1626189700D7C7C0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B3946A1626189700D7C7C0 /* QuartzCore.framework */; };
 		13B3946C1626189F00D7C7C0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B3933E1626183700D7C7C0 /* CoreData.framework */; };
 		13B3946E162618A600D7C7C0 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B3946D162618A600D7C7C0 /* Security.framework */; };
 		13B3946F162618AD00D7C7C0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B3933F1626183700D7C7C0 /* Foundation.framework */; };
-		13B3947516261A0600D7C7C0 /* TICoreDataSync-Mac-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 13B3947416261A0600D7C7C0 /* TICoreDataSync-Mac-Prefix.pch */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -912,133 +795,6 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		13B393351626183700D7C7C0 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				13B393E71626186A00D7C7C0 /* TICDSAllClassHeaders.h in Headers */,
-				13B393E81626186A00D7C7C0 /* TICDSClassesAndProtocols.h in Headers */,
-				13B393E91626186A00D7C7C0 /* TICDSConstants.h in Headers */,
-				13B393EB1626186A00D7C7C0 /* TICDSTypesAndEnums.h in Headers */,
-				13B393EC1626186A00D7C7C0 /* TICDSDropboxSDKBasedApplicationRegistrationOperation.h in Headers */,
-				13B393EE1626186A00D7C7C0 /* TICDSDropboxSDKBasedDocumentClientDeletionOperation.h in Headers */,
-				13B393F01626186A00D7C7C0 /* TICDSDropboxSDKBasedDocumentDeletionOperation.h in Headers */,
-				13B393F21626186A00D7C7C0 /* TICDSDropboxSDKBasedDocumentRegistrationOperation.h in Headers */,
-				13B393F41626186A00D7C7C0 /* TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation.h in Headers */,
-				13B393F61626186A00D7C7C0 /* TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation.h in Headers */,
-				13B393F81626186A00D7C7C0 /* TICDSDropboxSDKBasedListOfPreviouslySynchronizedDocumentsOperation.h in Headers */,
-				13B393FA1626186A00D7C7C0 /* TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation.h in Headers */,
-				13B393FC1626186A00D7C7C0 /* TICDSDropboxSDKBasedSynchronizationOperation.h in Headers */,
-				13B393FE1626186A00D7C7C0 /* TICDSDropboxSDKBasedVacuumOperation.h in Headers */,
-				13B394001626186A00D7C7C0 /* TICDSDropboxSDKBasedWholeStoreDownloadOperation.h in Headers */,
-				13B394021626186A00D7C7C0 /* TICDSDropboxSDKBasedWholeStoreUploadOperation.h in Headers */,
-				13B394041626186A00D7C7C0 /* TICDSDropboxSDKBasedApplicationSyncManager.h in Headers */,
-				13B394061626186A00D7C7C0 /* TICDSDropboxSDKBasedDocumentSyncManager.h in Headers */,
-				13B394081626186A00D7C7C0 /* TICDSFileManagerBasedApplicationRegistrationOperation.h in Headers */,
-				13B3940A1626186A00D7C7C0 /* TICDSFileManagerBasedDocumentClientDeletionOperation.h in Headers */,
-				13B3940C1626186A00D7C7C0 /* TICDSFileManagerBasedDocumentDeletionOperation.h in Headers */,
-				13B3940E1626186A00D7C7C0 /* TICDSFileManagerBasedDocumentRegistrationOperation.h in Headers */,
-				13B394101626186A00D7C7C0 /* TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.h in Headers */,
-				13B394121626186A00D7C7C0 /* TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation.h in Headers */,
-				13B394141626186A00D7C7C0 /* TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation.h in Headers */,
-				13B394161626186A00D7C7C0 /* TICDSFileManagerBasedRemoveAllRemoteSyncDataOperation.h in Headers */,
-				13B394181626186A00D7C7C0 /* TICDSFileManagerBasedSynchronizationOperation.h in Headers */,
-				13B3941A1626186A00D7C7C0 /* TICDSFileManagerBasedVacuumOperation.h in Headers */,
-				13B3941C1626186A00D7C7C0 /* TICDSFileManagerBasedWholeStoreDownloadOperation.h in Headers */,
-				13B3941E1626186A00D7C7C0 /* TICDSFileManagerBasedWholeStoreUploadOperation.h in Headers */,
-				13B394201626186A00D7C7C0 /* TICDSFileManagerBasedApplicationSyncManager.h in Headers */,
-				13B394221626186A00D7C7C0 /* TICDSFileManagerBasedDocumentSyncManager.h in Headers */,
-				13B394241626186A00D7C7C0 /* TICDSApplicationRegistrationOperation.h in Headers */,
-				13B394261626186A00D7C7C0 /* TICDSDocumentClientDeletionOperation.h in Headers */,
-				13B394281626186A00D7C7C0 /* TICDSDocumentDeletionOperation.h in Headers */,
-				13B3942A1626186A00D7C7C0 /* TICDSDocumentRegistrationOperation.h in Headers */,
-				13B3942C1626186A00D7C7C0 /* TICDSListOfApplicationRegisteredClientsOperation.h in Headers */,
-				13B3942E1626186A00D7C7C0 /* TICDSListOfDocumentRegisteredClientsOperation.h in Headers */,
-				13B394301626186A00D7C7C0 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.h in Headers */,
-				13B394321626186A00D7C7C0 /* TICDSOperation.h in Headers */,
-				13B394341626186A00D7C7C0 /* TICDSRemoveAllRemoteSyncDataOperation.h in Headers */,
-				13B394361626186A00D7C7C0 /* TICDSSynchronizationOperation.h in Headers */,
-				13B394381626186A00D7C7C0 /* TICDSVacuumOperation.h in Headers */,
-				13B3943A1626186A00D7C7C0 /* TICDSWholeStoreDownloadOperation.h in Headers */,
-				13B3943C1626186A00D7C7C0 /* TICDSWholeStoreUploadOperation.h in Headers */,
-				13B3943E1626186A00D7C7C0 /* TICDSApplicationSyncManager.h in Headers */,
-				13B394401626186A00D7C7C0 /* TICDSDocumentSyncManager.h in Headers */,
-				13B394421626186A00D7C7C0 /* TICDSSyncConflict.h in Headers */,
-				13B394441626186A00D7C7C0 /* TICDSSynchronizationOperationManagedObjectContext.h in Headers */,
-				13B394461626186A00D7C7C0 /* TICDSSynchronizedManagedObject.h in Headers */,
-				13B394481626186A00D7C7C0 /* TICDSSynchronizedManagedObjectContext.h in Headers */,
-				13B3944A1626186A00D7C7C0 /* TICDSSyncChange.h in Headers */,
-				13B3944D1626186A00D7C7C0 /* TICDSSyncChangeSet.h in Headers */,
-				13B394501626186A00D7C7C0 /* FZACryptor.h in Headers */,
-				13B394521626186A00D7C7C0 /* FZAKeyManager.h in Headers */,
-				13B394541626186A00D7C7C0 /* FZAKeyManageriPhone.h in Headers */,
-				13B394561626186A00D7C7C0 /* FZAKeyManagerMac.h in Headers */,
-				13B394581626186A00D7C7C0 /* TICDSChangeIntegrityStoreManager.h in Headers */,
-				13B3945A1626186A00D7C7C0 /* TICDSError.h in Headers */,
-				13B3945C1626186A00D7C7C0 /* TICDSLog.h in Headers */,
-				13B3945E1626186A00D7C7C0 /* TICDSUtilities.h in Headers */,
-				13B394601626186A00D7C7C0 /* NSObject+TIDelegateCommunications.h in Headers */,
-				13B394621626186A00D7C7C0 /* TICoreDataFactory.h in Headers */,
-				13B394641626186A00D7C7C0 /* TIKQDirectoryWatcher.h in Headers */,
-				13B394661626186A00D7C7C0 /* TIManagedObjectExtensions.h in Headers */,
-				13B394691626186A00D7C7C0 /* TICoreDataSync.h in Headers */,
-				13B3947516261A0600D7C7C0 /* TICoreDataSync-Mac-Prefix.pch in Headers */,
-				0ADF2BCE16769F120032BC42 /* NSManagedObjectContext+TICDSAdditions.h in Headers */,
-				13A8D49B16A4B1FB00EB1FF2 /* DBDefines.h in Headers */,
-				13A8D4A916A4B1FB00EB1FF2 /* DBAccountInfo.h in Headers */,
-				13A8D4AA16A4B1FB00EB1FF2 /* DBAuthHelperOSX.h in Headers */,
-				13A8D4AB16A4B1FB00EB1FF2 /* DBBase64Transcoder.h in Headers */,
-				13A8D4AD16A4B1FB00EB1FF2 /* DBDeltaEntry.h in Headers */,
-				13A8D4AE16A4B1FB00EB1FF2 /* DBError.h in Headers */,
-				13A8D4AF16A4B1FB00EB1FF2 /* DBJSON.h in Headers */,
-				13A8D4B016A4B1FB00EB1FF2 /* DBJsonBase.h in Headers */,
-				13A8D4B116A4B1FB00EB1FF2 /* DBJsonParser.h in Headers */,
-				13A8D4B216A4B1FB00EB1FF2 /* DBJsonWriter.h in Headers */,
-				13A8D4B316A4B1FB00EB1FF2 /* DBKeychain.h in Headers */,
-				13A8D4B416A4B1FB00EB1FF2 /* DBLog.h in Headers */,
-				13A8D4B516A4B1FB00EB1FF2 /* DBMetadata.h in Headers */,
-				13A8D4B616A4B1FB00EB1FF2 /* DBQuota.h in Headers */,
-				13A8D4B716A4B1FB00EB1FF2 /* DBRequest.h in Headers */,
-				13A8D4B816A4B1FB00EB1FF2 /* DBRestClient+OSX.h in Headers */,
-				13A8D4B916A4B1FB00EB1FF2 /* DBRestClient.h in Headers */,
-				13A8D4BB16A4B1FB00EB1FF2 /* DBSession.h in Headers */,
-				13A8D4BC16A4B1FB00EB1FF2 /* DropboxOSX.h in Headers */,
-				13A8D4BE16A4B1FB00EB1FF2 /* JSON.h in Headers */,
-				13A8D4BF16A4B1FB00EB1FF2 /* MPDebug.h in Headers */,
-				13A8D4C016A4B1FB00EB1FF2 /* MPOAuth.h in Headers */,
-				13A8D4C116A4B1FB00EB1FF2 /* MPOAuthAPI.h in Headers */,
-				13A8D4C216A4B1FB00EB1FF2 /* MPOAuthAPIRequestLoader.h in Headers */,
-				13A8D4C316A4B1FB00EB1FF2 /* MPOAuthAuthenticationMethod.h in Headers */,
-				13A8D4C416A4B1FB00EB1FF2 /* MPOAuthAuthenticationMethodOAuth.h in Headers */,
-				13A8D4C516A4B1FB00EB1FF2 /* MPOAuthConnection.h in Headers */,
-				13A8D4C616A4B1FB00EB1FF2 /* MPOAuthCredentialConcreteStore+KeychainAdditions.h in Headers */,
-				13A8D4C716A4B1FB00EB1FF2 /* MPOAuthCredentialConcreteStore.h in Headers */,
-				13A8D4C816A4B1FB00EB1FF2 /* MPOAuthCredentialStore.h in Headers */,
-				13A8D4C916A4B1FB00EB1FF2 /* MPOAuthParameterFactory.h in Headers */,
-				13A8D4CA16A4B1FB00EB1FF2 /* MPOAuthSignatureParameter.h in Headers */,
-				13A8D4CB16A4B1FB00EB1FF2 /* MPOAuthURLRequest.h in Headers */,
-				13A8D4CC16A4B1FB00EB1FF2 /* MPOAuthURLResponse.h in Headers */,
-				13A8D4CD16A4B1FB00EB1FF2 /* MPURLRequestParameter.h in Headers */,
-				13A8D4CE16A4B1FB00EB1FF2 /* NSDictionary+Dropbox.h in Headers */,
-				13A8D4CF16A4B1FB00EB1FF2 /* NSObject+DBJSON.h in Headers */,
-				13A8D4D016A4B1FB00EB1FF2 /* NSString+DBJSON.h in Headers */,
-				13A8D4D116A4B1FB00EB1FF2 /* NSString+Dropbox.h in Headers */,
-				13A8D4D216A4B1FB00EB1FF2 /* NSString+URLEscapingAdditions.h in Headers */,
-				13A8D4D316A4B1FB00EB1FF2 /* NSURL+MPURLParameterAdditions.h in Headers */,
-				13A8D4D416A4B1FB00EB1FF2 /* NSURLResponse+Encoding.h in Headers */,
-				13A8D4D716A4B1FB00EB1FF2 /* DBJSON.h in Headers */,
-				13A8D4D916A4B1FB00EB1FF2 /* DBJsonBase.h in Headers */,
-				13A8D4DB16A4B1FB00EB1FF2 /* DBJsonParser.h in Headers */,
-				13A8D4DD16A4B1FB00EB1FF2 /* DBJsonWriter.h in Headers */,
-				13A8D4DF16A4B1FB00EB1FF2 /* JSON.h in Headers */,
-				13A8D4E016A4B1FB00EB1FF2 /* NSObject+DBJSON.h in Headers */,
-				13A8D4E216A4B1FB00EB1FF2 /* NSString+DBJSON.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
 		13B393361626183700D7C7C0 /* TICoreDataSync-Mac */ = {
 			isa = PBXNativeTarget;
@@ -1046,7 +802,6 @@
 			buildPhases = (
 				13B393331626183700D7C7C0 /* Sources */,
 				13B393341626183700D7C7C0 /* Frameworks */,
-				13B393351626183700D7C7C0 /* Headers */,
 			);
 			buildRules = (
 			);
@@ -1220,6 +975,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -1243,6 +999,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -1258,6 +1015,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TICoreDataSync/00 Precompiled Headers/TICoreDataSync-Mac-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1273,6 +1031,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TICoreDataSync/00 Precompiled Headers/TICoreDataSync-Mac-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
