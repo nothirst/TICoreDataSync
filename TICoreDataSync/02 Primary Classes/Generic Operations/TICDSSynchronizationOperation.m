@@ -711,7 +711,7 @@
                 continue;
             }
             
-            if( [[eachLocalChange changedAttributes] isEqual:[eachRemoteChange changedAttributes]] ) {
+            if( ([eachLocalChange changedAttributes] == nil && [eachRemoteChange changedAttributes] == nil) || [[eachLocalChange changedAttributes] isEqual:[eachRemoteChange changedAttributes]] ) {
                 // both changes changed the value to the same thing so remove the local, unpushed sync change
                 [[self localSyncChangesToMergeContext] deleteObject:eachLocalChange];
                 continue;
@@ -719,8 +719,14 @@
             
             // if we get here, we have a conflict between eachRemoteChange and eachLocalChange
             TICDSSyncConflict *conflict = [TICDSSyncConflict syncConflictOfType:TICDSSyncConflictRemoteAttributeChangedAndLocalAttributeChanged forEntityName:[eachLocalChange objectEntityName] key:[eachLocalChange relevantKey] objectSyncID:[eachLocalChange objectSyncID]];
-            [conflict setLocalInformation:[NSDictionary dictionaryWithObject:[eachLocalChange changedAttributes] forKey:kTICDSChangedAttributeValue]];
-            [conflict setRemoteInformation:[NSDictionary dictionaryWithObject:[eachRemoteChange changedAttributes] forKey:kTICDSChangedAttributeValue]];
+            if ([eachLocalChange changedAttributes] != nil) {
+                [conflict setLocalInformation:[NSDictionary dictionaryWithObject:[eachLocalChange changedAttributes] forKey:kTICDSChangedAttributeValue]];
+            }
+            
+            if ([eachRemoteChange changedAttributes] != nil) {
+                [conflict setRemoteInformation:[NSDictionary dictionaryWithObject:[eachRemoteChange changedAttributes] forKey:kTICDSChangedAttributeValue]];
+            }
+            
             TICDSSyncConflictResolutionType resolutionType = [self resolutionTypeForConflict:conflict];
             
             if( [self isCancelled] ) {
