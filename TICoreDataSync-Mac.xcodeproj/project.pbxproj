@@ -304,7 +304,6 @@
 		13B393B71626186A00D7C7C0 /* TICDSSynchronizationOperationManagedObjectContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSynchronizationOperationManagedObjectContext.m; sourceTree = "<group>"; };
 		13B393B81626186A00D7C7C0 /* TICDSSynchronizedManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSynchronizedManagedObject.h; sourceTree = "<group>"; };
 		13B393B91626186A00D7C7C0 /* TICDSSynchronizedManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSynchronizedManagedObject.m; sourceTree = "<group>"; };
-		13B393BA1626186A00D7C7C0 /* TICDSSynchronizedManagedObjectContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSynchronizedManagedObjectContext.h; sourceTree = "<group>"; };
 		13B393BD1626186A00D7C7C0 /* TICDSSyncChange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSyncChange.h; sourceTree = "<group>"; };
 		13B393BE1626186A00D7C7C0 /* TICDSSyncChange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSyncChange.m; sourceTree = "<group>"; };
 		13B393BF1626186A00D7C7C0 /* TICDSSyncChange.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TICDSSyncChange.xcdatamodel; sourceTree = "<group>"; };
@@ -600,7 +599,6 @@
 				13B393B71626186A00D7C7C0 /* TICDSSynchronizationOperationManagedObjectContext.m */,
 				13B393B81626186A00D7C7C0 /* TICDSSynchronizedManagedObject.h */,
 				13B393B91626186A00D7C7C0 /* TICDSSynchronizedManagedObject.m */,
-				13B393BA1626186A00D7C7C0 /* TICDSSynchronizedManagedObjectContext.h */,
 			);
 			path = "02 Primary Classes";
 			sourceTree = "<group>";
