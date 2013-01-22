@@ -139,7 +139,7 @@
 }
 
 #pragma mark Copying
-- (void)restClient:(DBRestClient*)client copiedPath:(NSString *)from_path toPath:(NSString *)to_path
+- (void)restClient:(DBRestClient*)client copiedPath:(NSString *)froPath to:(NSString *)toPath
 {
     // should really check the paths, but there's only one copy procedure in this operation...
     [self copiedDocumentInfoPlistToDeletedDocumentsDirectoryWithSuccess:YES];
