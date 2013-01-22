@@ -223,7 +223,7 @@
 }
 
 #pragma mark Copying
-- (void)restClient:(DBRestClient*)client copiedPath:(NSString *)from_path toPath:(NSString *)to_path
+- (void)restClient:(DBRestClient*)client copiedPath:(NSString *)fromPath to:(NSString *)toPath
 {
     // should really check the paths, but there's only one copy procedure in this operation...
     [self copiedClientDeviceInfoPlistToDeletedClientsDirectoryWithSuccess:YES];

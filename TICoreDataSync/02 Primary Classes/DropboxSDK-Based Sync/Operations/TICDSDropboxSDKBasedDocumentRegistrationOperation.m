@@ -467,10 +467,10 @@
 }
 
 #pragma mark Copying
-- (void)restClient:(DBRestClient*)client copiedPath:(NSString *)from_path toPath:(NSString *)to_path
+- (void)restClient:(DBRestClient*)client copiedPath:(NSString *)from_path to:(NSString *)toPath
 {
     // should really check the paths, but there's only one copy procedure in this operation...
-    [self addedDeviceInfoPlistToDocumentDeletedClientsForClientWithIdentifier:[[to_path lastPathComponent] stringByDeletingPathExtension] withSuccess:YES];
+    [self addedDeviceInfoPlistToDocumentDeletedClientsForClientWithIdentifier:[[toPath lastPathComponent] stringByDeletingPathExtension] withSuccess:YES];
 }
 
 - (void)restClient:(DBRestClient*)client copyPathFailedWithError:(NSError*)error
