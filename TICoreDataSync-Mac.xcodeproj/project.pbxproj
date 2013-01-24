@@ -22,7 +22,6 @@
 		13A8D4A416A4B1FB00EB1FF2 /* DBRestClient+OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D42216A4B1FB00EB1FF2 /* DBRestClient+OSX.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13A8D4A516A4B1FB00EB1FF2 /* DBRestClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D42316A4B1FB00EB1FF2 /* DBRestClient.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13A8D4A716A4B1FB00EB1FF2 /* DBSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D42516A4B1FB00EB1FF2 /* DBSession.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		13A8D4A816A4B1FB00EB1FF2 /* DropboxOSX-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D42716A4B1FB00EB1FF2 /* DropboxOSX-Prefix.pch */; };
 		13A8D4A916A4B1FB00EB1FF2 /* DBAccountInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D42916A4B1FB00EB1FF2 /* DBAccountInfo.h */; };
 		13A8D4AA16A4B1FB00EB1FF2 /* DBAuthHelperOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D42A16A4B1FB00EB1FF2 /* DBAuthHelperOSX.h */; };
 		13A8D4AB16A4B1FB00EB1FF2 /* DBBase64Transcoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D42B16A4B1FB00EB1FF2 /* DBBase64Transcoder.h */; };
@@ -41,7 +40,6 @@
 		13A8D4B916A4B1FB00EB1FF2 /* DBRestClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D43916A4B1FB00EB1FF2 /* DBRestClient.h */; };
 		13A8D4BB16A4B1FB00EB1FF2 /* DBSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D43B16A4B1FB00EB1FF2 /* DBSession.h */; };
 		13A8D4BC16A4B1FB00EB1FF2 /* DropboxOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D43C16A4B1FB00EB1FF2 /* DropboxOSX.h */; };
-		13A8D4BD16A4B1FB00EB1FF2 /* DropboxSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D43D16A4B1FB00EB1FF2 /* DropboxSDK.h */; };
 		13A8D4BE16A4B1FB00EB1FF2 /* JSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D43E16A4B1FB00EB1FF2 /* JSON.h */; };
 		13A8D4BF16A4B1FB00EB1FF2 /* MPDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D43F16A4B1FB00EB1FF2 /* MPDebug.h */; };
 		13A8D4C016A4B1FB00EB1FF2 /* MPOAuth.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D44016A4B1FB00EB1FF2 /* MPOAuth.h */; };
@@ -65,8 +63,6 @@
 		13A8D4D216A4B1FB00EB1FF2 /* NSString+URLEscapingAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D45216A4B1FB00EB1FF2 /* NSString+URLEscapingAdditions.h */; };
 		13A8D4D316A4B1FB00EB1FF2 /* NSURL+MPURLParameterAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D45316A4B1FB00EB1FF2 /* NSURL+MPURLParameterAdditions.h */; };
 		13A8D4D416A4B1FB00EB1FF2 /* NSURLResponse+Encoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D45416A4B1FB00EB1FF2 /* NSURLResponse+Encoding.h */; };
-		13A8D4D516A4B1FB00EB1FF2 /* DropboxSDK-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D45616A4B1FB00EB1FF2 /* DropboxSDK-Prefix.pch */; };
-		13A8D4D616A4B1FB00EB1FF2 /* DropboxSDK_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D45716A4B1FB00EB1FF2 /* DropboxSDK_Prefix.pch */; };
 		13A8D4D716A4B1FB00EB1FF2 /* DBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D45916A4B1FB00EB1FF2 /* DBJSON.h */; };
 		13A8D4D816A4B1FB00EB1FF2 /* DBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D45A16A4B1FB00EB1FF2 /* DBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13A8D4D916A4B1FB00EB1FF2 /* DBJsonBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 13A8D45B16A4B1FB00EB1FF2 /* DBJsonBase.h */; };
@@ -251,8 +247,6 @@
 		13A8D42216A4B1FB00EB1FF2 /* DBRestClient+OSX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DBRestClient+OSX.m"; sourceTree = "<group>"; };
 		13A8D42316A4B1FB00EB1FF2 /* DBRestClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBRestClient.m; sourceTree = "<group>"; };
 		13A8D42516A4B1FB00EB1FF2 /* DBSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBSession.m; sourceTree = "<group>"; };
-		13A8D42616A4B1FB00EB1FF2 /* DropboxOSX-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DropboxOSX-Info.plist"; sourceTree = "<group>"; };
-		13A8D42716A4B1FB00EB1FF2 /* DropboxOSX-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DropboxOSX-Prefix.pch"; sourceTree = "<group>"; };
 		13A8D42916A4B1FB00EB1FF2 /* DBAccountInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBAccountInfo.h; sourceTree = "<group>"; };
 		13A8D42A16A4B1FB00EB1FF2 /* DBAuthHelperOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBAuthHelperOSX.h; sourceTree = "<group>"; };
 		13A8D42B16A4B1FB00EB1FF2 /* DBBase64Transcoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBBase64Transcoder.h; sourceTree = "<group>"; };
@@ -271,7 +265,6 @@
 		13A8D43916A4B1FB00EB1FF2 /* DBRestClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBRestClient.h; sourceTree = "<group>"; };
 		13A8D43B16A4B1FB00EB1FF2 /* DBSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBSession.h; sourceTree = "<group>"; };
 		13A8D43C16A4B1FB00EB1FF2 /* DropboxOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropboxOSX.h; sourceTree = "<group>"; };
-		13A8D43D16A4B1FB00EB1FF2 /* DropboxSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropboxSDK.h; sourceTree = "<group>"; };
 		13A8D43E16A4B1FB00EB1FF2 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		13A8D43F16A4B1FB00EB1FF2 /* MPDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPDebug.h; sourceTree = "<group>"; };
 		13A8D44016A4B1FB00EB1FF2 /* MPOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPOAuth.h; sourceTree = "<group>"; };
@@ -295,9 +288,6 @@
 		13A8D45216A4B1FB00EB1FF2 /* NSString+URLEscapingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEscapingAdditions.h"; sourceTree = "<group>"; };
 		13A8D45316A4B1FB00EB1FF2 /* NSURL+MPURLParameterAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+MPURLParameterAdditions.h"; sourceTree = "<group>"; };
 		13A8D45416A4B1FB00EB1FF2 /* NSURLResponse+Encoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLResponse+Encoding.h"; sourceTree = "<group>"; };
-		13A8D45516A4B1FB00EB1FF2 /* DropboxSDK-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DropboxSDK-Info.plist"; sourceTree = "<group>"; };
-		13A8D45616A4B1FB00EB1FF2 /* DropboxSDK-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DropboxSDK-Prefix.pch"; sourceTree = "<group>"; };
-		13A8D45716A4B1FB00EB1FF2 /* DropboxSDK_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropboxSDK_Prefix.pch; sourceTree = "<group>"; };
 		13A8D45916A4B1FB00EB1FF2 /* DBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBJSON.h; sourceTree = "<group>"; };
 		13A8D45A16A4B1FB00EB1FF2 /* DBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBJSON.m; sourceTree = "<group>"; };
 		13A8D45B16A4B1FB00EB1FF2 /* DBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBJsonBase.h; sourceTree = "<group>"; };
@@ -527,12 +517,7 @@
 				13A8D42216A4B1FB00EB1FF2 /* DBRestClient+OSX.m */,
 				13A8D42316A4B1FB00EB1FF2 /* DBRestClient.m */,
 				13A8D42516A4B1FB00EB1FF2 /* DBSession.m */,
-				13A8D42616A4B1FB00EB1FF2 /* DropboxOSX-Info.plist */,
-				13A8D42716A4B1FB00EB1FF2 /* DropboxOSX-Prefix.pch */,
 				13A8D42816A4B1FB00EB1FF2 /* DropboxSDK */,
-				13A8D45516A4B1FB00EB1FF2 /* DropboxSDK-Info.plist */,
-				13A8D45616A4B1FB00EB1FF2 /* DropboxSDK-Prefix.pch */,
-				13A8D45716A4B1FB00EB1FF2 /* DropboxSDK_Prefix.pch */,
 				13A8D45816A4B1FB00EB1FF2 /* JSON */,
 				13A8D46616A4B1FB00EB1FF2 /* MPOAuth */,
 				13A8D47816A4B1FB00EB1FF2 /* NSDictionary+Dropbox.m */,
@@ -562,7 +547,6 @@
 				13A8D43916A4B1FB00EB1FF2 /* DBRestClient.h */,
 				13A8D43B16A4B1FB00EB1FF2 /* DBSession.h */,
 				13A8D43C16A4B1FB00EB1FF2 /* DropboxOSX.h */,
-				13A8D43D16A4B1FB00EB1FF2 /* DropboxSDK.h */,
 				13A8D43E16A4B1FB00EB1FF2 /* JSON.h */,
 				13A8D43F16A4B1FB00EB1FF2 /* MPDebug.h */,
 				13A8D44016A4B1FB00EB1FF2 /* MPOAuth.h */,
@@ -1002,7 +986,6 @@
 				13B3947516261A0600D7C7C0 /* TICoreDataSync-Mac-Prefix.pch in Headers */,
 				0ADF2BCE16769F120032BC42 /* NSManagedObjectContext+TICDSAdditions.h in Headers */,
 				13A8D49B16A4B1FB00EB1FF2 /* DBDefines.h in Headers */,
-				13A8D4A816A4B1FB00EB1FF2 /* DropboxOSX-Prefix.pch in Headers */,
 				13A8D4A916A4B1FB00EB1FF2 /* DBAccountInfo.h in Headers */,
 				13A8D4AA16A4B1FB00EB1FF2 /* DBAuthHelperOSX.h in Headers */,
 				13A8D4AB16A4B1FB00EB1FF2 /* DBBase64Transcoder.h in Headers */,
@@ -1021,7 +1004,6 @@
 				13A8D4B916A4B1FB00EB1FF2 /* DBRestClient.h in Headers */,
 				13A8D4BB16A4B1FB00EB1FF2 /* DBSession.h in Headers */,
 				13A8D4BC16A4B1FB00EB1FF2 /* DropboxOSX.h in Headers */,
-				13A8D4BD16A4B1FB00EB1FF2 /* DropboxSDK.h in Headers */,
 				13A8D4BE16A4B1FB00EB1FF2 /* JSON.h in Headers */,
 				13A8D4BF16A4B1FB00EB1FF2 /* MPDebug.h in Headers */,
 				13A8D4C016A4B1FB00EB1FF2 /* MPOAuth.h in Headers */,
@@ -1045,8 +1027,6 @@
 				13A8D4D216A4B1FB00EB1FF2 /* NSString+URLEscapingAdditions.h in Headers */,
 				13A8D4D316A4B1FB00EB1FF2 /* NSURL+MPURLParameterAdditions.h in Headers */,
 				13A8D4D416A4B1FB00EB1FF2 /* NSURLResponse+Encoding.h in Headers */,
-				13A8D4D516A4B1FB00EB1FF2 /* DropboxSDK-Prefix.pch in Headers */,
-				13A8D4D616A4B1FB00EB1FF2 /* DropboxSDK_Prefix.pch in Headers */,
 				13A8D4D716A4B1FB00EB1FF2 /* DBJSON.h in Headers */,
 				13A8D4D916A4B1FB00EB1FF2 /* DBJsonBase.h in Headers */,
 				13A8D4DB16A4B1FB00EB1FF2 /* DBJsonParser.h in Headers */,
