@@ -1008,7 +1008,10 @@
         
         if (object == nil) {
             TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object not found locally for deletion sync change %@", objectEntityName);
-            [self.synchronizationWarnings addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteDeletionSyncChange entityName:objectEntityName relatedObjectEntityName:nil attributes:@{ @"objectSyncID":objectSyncID}]];
+            if (objectSyncID != nil) {
+                [self.synchronizationWarnings addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteDeletionSyncChange entityName:objectEntityName relatedObjectEntityName:nil attributes:@{ @"objectSyncID":objectSyncID}]];
+            }
+
             return;
         }
         
