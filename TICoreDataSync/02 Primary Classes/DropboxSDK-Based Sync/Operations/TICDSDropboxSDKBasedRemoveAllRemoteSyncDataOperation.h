@@ -6,10 +6,14 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
-#if TARGET_OS_IPHONE
 
 #import "TICDSRemoveAllRemoteSyncDataOperation.h"
+
+#if TARGET_OS_IPHONE
 #import <DropboxSDK/DropboxSDK.h>
+#else
+#import <DropboxSDK/DropboxOSX.h>
+#endif
 
 /**
  `TICDSDropboxSDKBasedApplicationRegistrationOperation` is an application registration operation designed for use with a `TICDSDropboxSDKBasedApplicationSyncManager`.
@@ -33,4 +37,3 @@
 
 @end
 
-#endif

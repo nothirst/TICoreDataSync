@@ -6,10 +6,14 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
-#if TARGET_OS_IPHONE
-
 #import "TICDSDocumentClientDeletionOperation.h"
+
+#if TARGET_OS_IPHONE
 #import <DropboxSDK/DropboxSDK.h>
+#else
+#import <DropboxSDK/DropboxOSX.h>
+#endif
+
 /**
  `TICDSDropboxSDKBasedDocumentClientDeletionOperation` is a "deletion of client's sync data from a document" operation designed for use with a `TICDSDropboxSDKBasedDocumentSyncManager`.
  */
@@ -52,5 +56,3 @@
 @property (copy) NSString *thisDocumentWholeStoreDirectoryPath;
 
 @end
-
-#endif

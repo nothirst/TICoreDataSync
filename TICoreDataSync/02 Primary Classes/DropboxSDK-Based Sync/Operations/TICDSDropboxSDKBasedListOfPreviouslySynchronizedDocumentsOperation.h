@@ -6,10 +6,14 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
-#if TARGET_OS_IPHONE
 
 #import "TICDSListOfPreviouslySynchronizedDocumentsOperation.h"
+
+#if TARGET_OS_IPHONE
 #import <DropboxSDK/DropboxSDK.h>
+#else
+#import <DropboxSDK/DropboxOSX.h>
+#endif
 
 /**
  `TICDSDropboxSDKBasedListOfPreviouslySynchronizedDocumentsOperation` is a "List of Previously Synchronized Documents" operation designed for use with a `TICDSDropboxSDKBasedDocumentSyncManager`.
@@ -48,4 +52,3 @@
 
 @end
 
-#endif
