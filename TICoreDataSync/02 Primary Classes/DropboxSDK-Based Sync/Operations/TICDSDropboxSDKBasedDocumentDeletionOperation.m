@@ -47,7 +47,11 @@
     NSString *path = [metadata path];
     
     if( [path isEqualToString:[self documentDirectoryPath]] ) {
-        [self discoveredStatusOfIdentifiedDocumentDirectory:![metadata isDeleted] ? TICDSRemoteFileStructureExistsResponseTypeDoesExist : TICDSRemoteFileStructureExistsResponseTypeDoesNotExist];
+        if (metadata.isDeleted == NO) {
+            [self discoveredStatusOfIdentifiedDocumentDirectory:TICDSRemoteFileStructureExistsResponseTypeDoesExist];
+        } else {
+            [self discoveredStatusOfIdentifiedDocumentDirectory:TICDSRemoteFileStructureExistsResponseTypeDoesNotExist];
+        }
         
         return;
     }
