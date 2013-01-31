@@ -10,9 +10,75 @@
 
 @interface TICDSSynchronizationOperation () <TICoreDataFactoryDelegate>
 
+#pragma mark Properties
+/** @name Properties */
+
+/** A boolean indicating whether the operation is currently paused awaiting an instruction to continue, e.g. for conflict resolution. */
+@property (assign, getter = isPaused) BOOL paused;
+
+/** The resolution type for the most recent conflict, set before resuming the operation after a conflict is detected. */
+@property (assign) TICDSSyncConflictResolutionType mostRecentConflictResolutionType;
+
+/** The sort descriptors used to sort sync change objects in a `SyncChangeSet` before being applied. */
+@property (nonatomic, strong) NSArray *syncChangeSortDescriptors;
+
+/** The warnings generated during this synchronization. */
+@property (strong) NSMutableArray *synchronizationWarnings;
+
+/** @name File Locations */
+
+/** The location of the `SyncChangesBeingSynchronized.syncchg` file for this synchronization operation. */
+@property (strong) NSURL *localSyncChangesToMergeURL;
+
+/** The location of this document's `AppliedSyncChangeSets.ticdsync` file. */
+@property (strong) NSURL *appliedSyncChangeSetsFileLocation;
+
+/** The location of the `UnappliedSyncChanges` directory for this synchronization operation. */
+@property (strong) NSURL *unappliedSyncChangesDirectoryLocation;
+
+/** The location of this document's `UnappliedSyncChangeSets.ticdsync` file. */
+@property (strong) NSURL *unappliedSyncChangeSetsFileLocation;
+
+/** @name Managed Object Contexts and Factories */
+
+/** A `TICoreDataFactory` to access the contents of the `AppliedSyncChangeSets.ticdsync` file. */
+@property (nonatomic, strong) TICoreDataFactory *appliedSyncChangeSetsCoreDataFactory;
+
+/** The managed object context for the `AppliedSyncChangeSets.ticdsync` file. */
+@property (nonatomic, strong) NSManagedObjectContext *appliedSyncChangeSetsContext;
+
+/** A `TICoreDataFactory` to access the contents of the `UnappliedSyncChangeSets.ticdsync` file. */
+@property (nonatomic, strong) TICoreDataFactory *unappliedSyncChangeSetsCoreDataFactory;
+
+/** The managed object context for the `UnappliedSyncChangeSets.ticdsync` file. */
+@property (nonatomic, strong) NSManagedObjectContext *unappliedSyncChangeSetsContext;
+
+/** A `TICoreDataFactory` to access the contents of a single, unapplied `SyncChangeSet` file. */
+@property (nonatomic, strong) TICoreDataFactory *unappliedSyncChangesCoreDataFactory;
+
+/** The managed object context for the changes in a single, unapplied `SyncChangeSet` file. */
+@property (nonatomic, strong) NSManagedObjectContext *unappliedSyncChangesContext;
+
+/** A `TICoreDataFactory` to access the contents of the local, unsynchronized set of `SyncChange`s. */
+@property (nonatomic, strong) TICoreDataFactory *localSyncChangesToMergeCoreDataFactory;
+
+/** The managed object context for the local, unsynchronized set of `SyncChange`s. */
+@property (nonatomic, strong) NSManagedObjectContext *localSyncChangesToMergeContext;
+
+/** The parent managed object context for the application - used to create a background application context, when needed. */
+@property (strong) NSManagedObjectContext *primaryManagedObjectContext;
+
+/** The managed object context (tied to the application's persistent store coordinator) in which `SyncChanges` are applied. */
+@property (nonatomic, strong) TICDSSynchronizationOperationManagedObjectContext *backgroundApplicationContext;
+
 @property (nonatomic, copy) NSString *changeSetProgressString;
-@property (nonatomic, readonly) NSNumberFormatter *uuidPrefixFormatter;
-@property (nonatomic, copy) NSString *localSyncChangeSetIdentifier;
+
+/** Releases any existing `unappliedSyncChangesContext` and `unappliedSyncChangesCoreDataFactory` and sets new ones, linked to the set of sync changes specified in the given sync change set.
+ 
+ @param aChangeSet The `TICDSSyncChangeSet` object specifying the set of changes to use.
+ 
+ @return A managed object context to access the sync changes. */
+- (NSManagedObjectContext *)contextForSyncChangesInUnappliedSyncChangeSet:(TICDSSyncChangeSet *)aChangeSet;
 
 @end
 
@@ -25,323 +91,13 @@
         return;
     }
     
-    [self beginCheckWhetherRemoteIntegrityKeyMatchesLocalKey];
-}
-
-#pragma mark - INTEGRITY KEY
-- (void)beginCheckWhetherRemoteIntegrityKeyMatchesLocalKey
-{
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Fetching remote integrity key");
-
-    if (self.isCancelled) {
-        [self operationWasCancelled];
-        return;
-    }
-    
-    [self fetchRemoteIntegrityKey];
-}
-
-- (void)fetchedRemoteIntegrityKey:(NSString *)aKey
-{
-    if (self.isCancelled) {
-        [self operationWasCancelled];
-        return;
-    }
-    
-    if (aKey == nil) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to fetch an integrity key: %@", [[self error] localizedDescription]);
-
-        [self operationDidFailToComplete];
-        return;
-    }
-
-    if (self.integrityKey && ![self.integrityKey isEqualToString:aKey]) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"The keys do not match: got %@, expecting %@", aKey, self.integrityKey);
-
-        [self setError:[TICDSError errorWithCode:TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeysDoNotMatch classAndMethod:__PRETTY_FUNCTION__]];
-
-        [self operationDidFailToComplete];
-        return;
-    }
-
-    TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"Integrity keys match, so continuing synchronization");
-    [self beginFetchOfListOfClientDeviceIdentifiers];
-}
-
-#pragma mark Overridden Method
-- (void)fetchRemoteIntegrityKey
-{
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self fetchedRemoteIntegrityKey:nil];
-}
-
-#pragma mark - LIST OF DEVICE IDENTIFIERS
-- (void)beginFetchOfListOfClientDeviceIdentifiers
-{
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Starting to fetch list of client device identifiers");
-
-    if (self.isCancelled) {
-        [self operationWasCancelled];
-        return;
-    }
-    
-    [self buildArrayOfClientDeviceIdentifiers];
-}
-
-- (void)builtArrayOfClientDeviceIdentifiers:(NSArray *)anArray
-{
-    if (self.isCancelled) {
-        [self operationWasCancelled];
-        return;
-    }
-    
-    if (anArray == nil) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error fetching list of client device identifiers");
-        [self operationDidFailToComplete];
-        return;
-    }
-
-    NSMutableArray *clientIdentifiers = [NSMutableArray arrayWithCapacity:[anArray count]];
-
-    for ( NSString *eachClientIdentifier in anArray) {
-        if ([eachClientIdentifier isEqualToString:[self clientIdentifier]]) {
-            continue;
-        }
-
-        [clientIdentifiers addObject:eachClientIdentifier];
-    }
-
-    if ([clientIdentifiers count] < 1) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"No other clients are synchronizing with this document, so skipping to upload local sync commands");
-        [self beginUploadOfLocalSyncCommands];
-    }
-
-    self.otherSynchronizedClientDeviceIdentifiers = clientIdentifiers;
-
-    [self beginFetchOfListOfSyncCommandSetIdentifiers];
-}
-
-#pragma mark Overridden Method
-- (void)buildArrayOfClientDeviceIdentifiers
-{
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self builtArrayOfClientDeviceIdentifiers:nil];
-}
-
-#pragma mark - LIST OF SYNC COMMAND SETS
-- (void)beginFetchOfListOfSyncCommandSetIdentifiers
-{
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Starting to fetch list of SyncCommandSet identifiers for clients %@", self.otherSynchronizedClientDeviceIdentifiers);
-
-    // TODO: Fetch of Sync Commands
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"***Not yet implemented*** so 'finished' fetch of local sync commands");
-
-    if (self.isCancelled) {
-        [self operationWasCancelled];
-        return;
-    }
-    
-    [self beginFetchOfListOfSyncChangeSetIdentifiers];
-}
-
-#pragma mark - LIST OF SYNC CHANGE SETS
-- (void)beginFetchOfListOfSyncChangeSetIdentifiers
-{
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Starting to fetch list of SyncChangeSet identifiers");
-
-    if (self.isCancelled) {
-        [self operationWasCancelled];
-        return;
-    }
-    
-    self.numberOfSyncChangeSetIDArraysToFetch = [self.otherSynchronizedClientDeviceIdentifiers count];
-
-    self.otherSynchronizedClientDeviceSyncChangeSetIdentifiers = [NSMutableDictionary dictionaryWithCapacity:[self.otherSynchronizedClientDeviceIdentifiers count]];
-
-    for ( NSString *eachClientIdentifier in self.otherSynchronizedClientDeviceIdentifiers) {
-        [self buildArrayOfSyncChangeSetIdentifiersForClientIdentifier:eachClientIdentifier];
-    }
-}
-
-- (void)builtArrayOfClientSyncChangeSetIdentifiers:(NSArray *)anArray forClientIdentifier:(NSString *)aClientIdentifier
-{
-    if (self.isCancelled) {
-        [self operationWasCancelled];
-        return;
-    }
-    
-    if (anArray == nil) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Failed to fetch an array of client sync change set identifiers for client identifier: %@", aClientIdentifier);
-        [self increaseNumberOfSyncChangeSetIdentifierArraysThatFailedToFetch];
-    } else {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Fetched an array of client sync change set identifiers");
-        [self increaseNumberOfSyncChangeSetIdentifierArraysFetched];
-        anArray = [self unappliedSyncChangeSetIdentifiersFromAvailableSyncChangeSetIdentifiers:anArray];
-    }
-
-    if ([anArray count] > 0) {
-        [self.otherSynchronizedClientDeviceSyncChangeSetIdentifiers setValue:anArray forKey:aClientIdentifier];
-    }
-
-    if (self.numberOfSyncChangeSetIDArraysToFetch == self.numberOfSyncChangeSetIDArraysFetched) {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Finished fetching client sync change set IDs");
-
-        [self beginFetchOfUnappliedSyncChanges];
-    } else if (self.numberOfSyncChangeSetIDArraysToFetch == self.numberOfSyncChangeSetIDArraysFetched + self.numberOfSyncChangeSetIDArraysThatFailedToFetch) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"One or more sync change set IDs failed to fetch");
-        [self operationDidFailToComplete];
-    }
-}
-
-- (NSArray *)unappliedSyncChangeSetIdentifiersFromAvailableSyncChangeSetIdentifiers:(NSArray *)changeSetIdentifiers
-{
-    NSMutableArray *addedIdentifiers = [NSMutableArray array];
-
-    for ( NSString *eachIdentifier in changeSetIdentifiers) {
-        if ([self syncChangeSetHasBeenAppliedWithIdentifier:eachIdentifier]) {
-            continue;
-        }
-
-        [addedIdentifiers addObject:eachIdentifier];
-    }
-
-    return addedIdentifiers;
-}
-
-- (BOOL)syncChangeSetHasBeenAppliedWithIdentifier:(NSString *)anIdentifier
-{
-    return [TICDSSyncChangeSet hasSyncChangeSetWithIdentifer:anIdentifier alreadyBeenAppliedInManagedObjectContext:self.appliedSyncChangeSetsContext];
-}
-
-#pragma mark Overridden Method
-- (void)buildArrayOfSyncChangeSetIdentifiersForClientIdentifier:(NSString *)anIdentifier
-{
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self builtArrayOfClientSyncChangeSetIdentifiers:nil forClientIdentifier:anIdentifier];
-}
-
-#pragma mark - FETCH OF UNAPPLIED SYNC CHANGE SETS
-- (void)beginFetchOfUnappliedSyncChanges
-{
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Fetching unapplied sync change sets");
-
-    if (self.isCancelled) {
-        [self operationWasCancelled];
-        return;
-    }
-    
-    if ([self.otherSynchronizedClientDeviceSyncChangeSetIdentifiers count] < 1) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"No unapplied sync change sets to download and apply");
-
-        [self beginUploadOfLocalSyncCommands];
-        return;
-    }
-
-    NSString *unappliedSyncChangesPath = [self.unappliedSyncChangesDirectoryLocation path];
-
-    for ( NSString *eachClientIdentifier in self.otherSynchronizedClientDeviceSyncChangeSetIdentifiers) {
-        NSArray *syncChangeSets = [self.otherSynchronizedClientDeviceSyncChangeSetIdentifiers valueForKey:eachClientIdentifier];
-
-        self.numberOfUnappliedSyncChangeSetsToFetch = self.numberOfUnappliedSyncChangeSetsToFetch + [syncChangeSets count];
-    }
-
-    NSString *fileLocation = nil;
-    NSError *anyError = nil;
-    for ( NSString *eachClientIdentifier in self.otherSynchronizedClientDeviceSyncChangeSetIdentifiers) {
-        NSArray *syncChangeSets = [self.otherSynchronizedClientDeviceSyncChangeSetIdentifiers valueForKey:eachClientIdentifier];
-
-        for ( NSString *eachSyncChangeSetIdentifier in syncChangeSets) {
-            fileLocation = [unappliedSyncChangesPath stringByAppendingPathComponent:eachSyncChangeSetIdentifier];
-            fileLocation = [fileLocation stringByAppendingPathExtension:TICDSSyncChangeSetFileExtension];
-
-            if ([[self fileManager] fileExistsAtPath:fileLocation] && ![[self fileManager] removeItemAtPath:fileLocation error:&anyError]) {
-                TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to remove existing downloaded but unapplied sync change set %@", eachSyncChangeSetIdentifier);
-            }
-
-            [self fetchSyncChangeSetWithIdentifier:eachSyncChangeSetIdentifier forClientIdentifier:eachClientIdentifier toLocation:[NSURL fileURLWithPath:fileLocation]];
-        }
-    }
-}
-
-- (void)fetchedSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier modificationDate:(NSDate *)aDate withSuccess:(BOOL)success
-{
-    if (self.isCancelled) {
-        [self operationWasCancelled];
-        return;
-    }
-    
-    if (success) {
-        success = [self addUnappliedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientWithIdentifier:aClientIdentifier modificationDate:aDate];
-    }
-
-    if (success) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Fetched an unapplied sync change set");
-        [self increaseNumberOfUnappliedSyncChangeSetsFetched];
-    } else {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to fetch an unapplied sync change set");
-        [self increaseNumberOfUnappliedSyncChangeSetsThatFailedToFetch];
-    }
-
-    if (self.numberOfUnappliedSyncChangeSetsToFetch == self.numberOfUnappliedSyncChangeSetsFetched) {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Finished fetching unapplied sync change sets");
-        NSError *anyError = nil;
-        BOOL saveSuccess = [self.unappliedSyncChangeSetsContext save:&anyError];
-        if (saveSuccess == NO) {
-            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save UnappliedSyncChanges.ticdsync file: %@", anyError);
-        }
-        [self beginApplyingUnappliedSyncChangeSets];
-    } else if (self.numberOfUnappliedSyncChangeSetsToFetch == self.numberOfUnappliedSyncChangeSetsFetched + self.numberOfUnappliedSyncChangeSetsThatFailedToFetch) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"One of more sync change sets failed to be fetched");
-        [self operationDidFailToComplete];
-    }
-}
-
-- (BOOL)addUnappliedSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientWithIdentifier:(NSString *)aClientIdentifier modificationDate:(NSDate *)aDate
-{
-    // Check whether it already exists
-    NSError *anyError = nil;
-
-    TICDSSyncChangeSet *unappliedSyncChangeSet = [TICDSSyncChangeSet ti_firstObjectMatchingPredicate:[NSPredicate predicateWithFormat:@"syncChangeSetIdentifier == %@", aChangeSetIdentifier] inManagedObjectContext:self.unappliedSyncChangeSetsContext error:&anyError];
-
-    if (unappliedSyncChangeSet != nil) {
-        return YES;
-    }
-
-    if (anyError) {
-        [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataFetchError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to add unapplied sync change set to UnappliedSyncChangeSets.ticdsync: %@", anyError);
-        return NO;
-    }
-
-    unappliedSyncChangeSet = [TICDSSyncChangeSet syncChangeSetWithIdentifier:aChangeSetIdentifier fromClient:aClientIdentifier creationDate:aDate inManagedObjectContext:self.unappliedSyncChangeSetsContext];
-
-    if (unappliedSyncChangeSet == nil) {
-        [self setError:[TICDSError errorWithCode:TICDSErrorCodeObjectCreationError classAndMethod:__PRETTY_FUNCTION__]];
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to add unapplied sync change set to UnappliedSyncChangeSets.ticdsync.");
-        return NO;
-    }
-
-    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Added sync change set to UnappliedSyncChangeSets.ticdsync");
-
-    return YES;
-}
-
-#pragma mark Overridden Method
-- (void)fetchSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier toLocation:(NSURL *)aLocation
-{
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:nil withSuccess:NO];
+    [self beginApplyingUnappliedSyncChangeSets];
 }
 
 #pragma mark - APPLICATION OF UNAPPLIED SYNC CHANGE SETS
 
 - (void)beginApplyingUnappliedSyncChangeSets
 {
-    if ([NSThread isMainThread]) {
-        [self performSelectorInBackground:@selector(beginApplyingUnappliedSyncChangeSets) withObject:nil];
-        return;
-    }
-
     if (self.isCancelled) {
         [self operationWasCancelled];
         return;
@@ -516,7 +272,7 @@
         return;
     }
 
-    [self beginUploadOfLocalSyncCommands];
+    [self operationDidCompleteSuccessfully];
 }
 
 - (void)continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully
@@ -1021,182 +777,6 @@
     }];
 }
 
-#pragma mark - UPLOAD OF LOCAL SYNC COMMANDS
-- (void)beginUploadOfLocalSyncCommands
-{
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Starting to upload local sync commands");
-
-    // TODO: Upload of Local Sync Commands
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"***Not yet implemented*** so 'finished' local sync commands");
-
-    [self beginUploadOfLocalSyncChanges];
-}
-
-#pragma mark - UPLOAD OF LOCAL SYNC CHANGES
-
-- (void)beginUploadOfLocalSyncChanges
-{
-    if (self.isCancelled) {
-        [self operationWasCancelled];
-        return;
-    }
-    
-    if ([[self fileManager] fileExistsAtPath:[self.localSyncChangesToMergeURL path]] == NO) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"No local sync changes file to push on this sync");
-        [self beginUploadOfRecentSyncFile];
-        return;
-    }
-
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Renaming sync changes file ready for upload");
-
-    self.localSyncChangeSetIdentifier = [NSString stringWithFormat:@"%@-%@", [self.uuidPrefixFormatter stringFromNumber:[NSNumber numberWithDouble:CFAbsoluteTimeGetCurrent()]], [TICDSUtilities uuidString]];
-
-    NSString *filePath = [self.localSyncChangesToMergeURL path];
-    filePath = [filePath stringByDeletingLastPathComponent];
-    filePath = [filePath stringByAppendingPathComponent:self.localSyncChangeSetIdentifier];
-    filePath = [filePath stringByAppendingPathExtension:TICDSSyncChangeSetFileExtension];
-
-    NSError *anyError = nil;
-    BOOL success = [[self fileManager] copyItemAtPath:[self.localSyncChangesToMergeURL path] toPath:filePath error:&anyError];
-
-    if (success == NO) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to move local sync changes to merge file");
-
-        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [self operationDidFailToComplete];
-        return;
-    }
-
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Starting to upload local sync changes");
-    [self uploadLocalSyncChangeSetFileAtLocation:[NSURL fileURLWithPath:filePath]];
-}
-
-- (void)uploadedLocalSyncChangeSetFileSuccessfully:(BOOL)success
-{
-    if (self.isCancelled) {
-        [self operationWasCancelled];
-        return;
-    }
-    
-    if (success == NO) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to upload local sync changes files");
-        [self operationDidFailToComplete];
-        return;
-    }
-
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Uploaded local sync changes file");
-
-    NSDate *date = [NSDate date];
-    
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Adding local sync change set into AppliedSyncChanges");
-    TICDSSyncChangeSet *appliedSyncChangeSet = [TICDSSyncChangeSet syncChangeSetWithIdentifier:self.localSyncChangeSetIdentifier fromClient:[self clientIdentifier] creationDate:date inManagedObjectContext:self.appliedSyncChangeSetsContext];
-    
-    if (appliedSyncChangeSet == nil) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Unable to create sync change set in applied sync change sets context");
-        [self setError:[TICDSError errorWithCode:TICDSErrorCodeObjectCreationError classAndMethod:__PRETTY_FUNCTION__]];
-        [self operationDidFailToComplete];
-        return;
-    }
-    
-    [appliedSyncChangeSet setLocalDateOfApplication:date];
-    
-    // Save Applied Sync Change Sets context (AppliedSyncChangeSets.ticdsync file)
-    NSError *anyError = nil;
-    success = [self.appliedSyncChangeSetsContext save:&anyError];
-    if (success == NO) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save applied sync change sets context, after adding local merged changes: %@", anyError);
-        [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [self operationDidFailToComplete];
-        return;
-    }
-    
-    // The file has been copied and uploaded so we can get rid of the original version
-    [[self fileManager] removeItemAtPath:[self.localSyncChangesToMergeURL path] error:&anyError];
-
-    [self beginUploadOfRecentSyncFile];
-}
-
-#pragma mark Overridden Method
-- (void)uploadLocalSyncChangeSetFileAtLocation:(NSURL *)aLocation
-{
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self uploadedLocalSyncChangeSetFileSuccessfully:NO];
-}
-
-#pragma mark - RECENT SYNC FILE
-- (void)beginUploadOfRecentSyncFile
-{
-    if (self.isCancelled) {
-        [self operationWasCancelled];
-        return;
-    }
-    
-    NSString *recentSyncFilePath = [self.localRecentSyncFileLocation path];
-
-    NSDictionary *recentSyncDictionary = [NSDictionary dictionaryWithObject:[NSDate date] forKey:kTICDSLastSyncDate];
-
-    BOOL success = [recentSyncDictionary writeToFile:recentSyncFilePath atomically:YES];
-
-    if (success == NO) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to write RecentSync file to helper file location, but not absolutely fatal so continuing");
-        [self operationDidCompleteSuccessfully];
-        return;
-    }
-
-    [self uploadRecentSyncFileAtLocation:[NSURL fileURLWithPath:recentSyncFilePath]];
-}
-
-- (void)uploadedRecentSyncFileSuccessfully:(BOOL)success
-{
-    if (self.isCancelled) {
-        [self operationWasCancelled];
-        return;
-    }
-    
-    if (success == NO) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to upload RecentSync file, but not absolutely fatal so continuing: %@", [self error]);
-    }
-
-    [self operationDidCompleteSuccessfully];
-}
-
-#pragma mark Overridden Method
-- (void)uploadRecentSyncFileAtLocation:(NSURL *)aLocation
-{
-    [self setError:[TICDSError errorWithCode:TICDSErrorCodeMethodNotOverriddenBySubclass classAndMethod:__PRETTY_FUNCTION__]];
-    [self uploadedRecentSyncFileSuccessfully:NO];
-}
-
-- (void)increaseNumberOfSyncChangeSetIdentifierArraysToFetch
-{
-    self.numberOfSyncChangeSetIDArraysToFetch = self.numberOfSyncChangeSetIDArraysToFetch + 1;
-}
-
-- (void)increaseNumberOfSyncChangeSetIdentifierArraysFetched
-{
-    self.numberOfSyncChangeSetIDArraysFetched = self.numberOfSyncChangeSetIDArraysFetched + 1;
-}
-
-- (void)increaseNumberOfSyncChangeSetIdentifierArraysThatFailedToFetch
-{
-    self.numberOfSyncChangeSetIDArraysThatFailedToFetch = self.numberOfSyncChangeSetIDArraysThatFailedToFetch + 1;
-}
-
-- (void)increaseNumberOfUnappliedSyncChangeSetsToFetch
-{
-    self.numberOfUnappliedSyncChangeSetsToFetch = self.numberOfUnappliedSyncChangeSetsToFetch + 1;
-}
-
-- (void)increaseNumberOfUnappliedSyncChangeSetsFetched
-{
-    self.numberOfUnappliedSyncChangeSetsFetched = self.numberOfUnappliedSyncChangeSetsFetched + 1;
-}
-
-- (void)increaseNumberOfUnappliedSyncChangeSetsThatFailedToFetch
-{
-    self.numberOfUnappliedSyncChangeSetsThatFailedToFetch = self.numberOfUnappliedSyncChangeSetsThatFailedToFetch + 1;
-}
-
 #pragma mark - TICoreDataFactory Delegate
 - (void)coreDataFactory:(TICoreDataFactory *)aFactory encounteredError:(NSError *)anError
 {
@@ -1213,30 +793,6 @@
 - (id)initWithDelegate:(NSObject<TICDSSynchronizationOperationDelegate> *)aDelegate
 {
     return [super initWithDelegate:aDelegate];
-}
-
-- (void)dealloc
-{
-    _otherSynchronizedClientDeviceIdentifiers = nil;
-    _otherSynchronizedClientDeviceSyncChangeSetIdentifiers = nil;
-    _syncChangeSortDescriptors = nil;
-    _synchronizationWarnings = nil;
-
-    _localSyncChangesToMergeURL = nil;
-    _appliedSyncChangeSetsFileLocation = nil;
-    _unappliedSyncChangesDirectoryLocation = nil;
-    _unappliedSyncChangeSetsFileLocation = nil;
-    _localRecentSyncFileLocation = nil;
-
-    _appliedSyncChangeSetsCoreDataFactory = nil;
-    _appliedSyncChangeSetsContext = nil;
-    _unappliedSyncChangeSetsCoreDataFactory = nil;
-    _unappliedSyncChangeSetsContext = nil;
-    _unappliedSyncChangesCoreDataFactory = nil;
-    _unappliedSyncChangesContext = nil;
-    _localSyncChangesToMergeCoreDataFactory = nil;
-    _localSyncChangesToMergeContext = nil;
-    _backgroundApplicationContext = nil;
 }
 
 #pragma mark - Lazy Accessors
@@ -1355,51 +911,5 @@
 
     return _backgroundApplicationContext;
 }
-
-- (NSNumberFormatter *)uuidPrefixFormatter
-{
-    if (_uuidPrefixFormatter == nil) {
-        _uuidPrefixFormatter = [[NSNumberFormatter alloc] init];
-        [_uuidPrefixFormatter setPositiveFormat:@"0000000000.000000"];
-    }
-
-    return _uuidPrefixFormatter;
-}
-
-#pragma mark - Properties
-@synthesize paused = _paused;
-@synthesize mostRecentConflictResolutionType = _mostRecentConflictResolutionType;
-@synthesize otherSynchronizedClientDeviceIdentifiers = _otherSynchronizedClientDeviceIdentifiers;
-@synthesize otherSynchronizedClientDeviceSyncChangeSetIdentifiers = _otherSynchronizedClientDeviceSyncChangeSetIdentifiers;
-@synthesize syncChangeSortDescriptors = _syncChangeSortDescriptors;
-@synthesize synchronizationWarnings = _synchronizationWarnings;
-
-@synthesize localSyncChangesToMergeURL = _localSyncChangesToMergeURL;
-@synthesize appliedSyncChangeSetsFileLocation = _appliedSyncChangeSetsFileLocation;
-@synthesize unappliedSyncChangesDirectoryLocation = _unappliedSyncChangesDirectoryLocation;
-@synthesize unappliedSyncChangeSetsFileLocation = _unappliedSyncChangeSetsFileLocation;
-@synthesize localRecentSyncFileLocation = _localRecentSyncFileLocation;
-
-@synthesize appliedSyncChangeSetsCoreDataFactory = _appliedSyncChangeSetsCoreDataFactory;
-@synthesize appliedSyncChangeSetsContext = _appliedSyncChangeSetsContext;
-@synthesize unappliedSyncChangeSetsCoreDataFactory = _unappliedSyncChangeSetsCoreDataFactory;
-@synthesize unappliedSyncChangeSetsContext = _unappliedSyncChangeSetsContext;
-@synthesize unappliedSyncChangesCoreDataFactory = _unappliedSyncChangesCoreDataFactory;
-@synthesize unappliedSyncChangesContext = _unappliedSyncChangesContext;
-@synthesize localSyncChangesToMergeCoreDataFactory = _localSyncChangesToMergeCoreDataFactory;
-@synthesize localSyncChangesToMergeContext = _localSyncChangesToMergeContext;
-//@synthesize primaryPersistentStoreCoordinator = _primaryPersistentStoreCoordinator;
-@synthesize backgroundApplicationContext = _backgroundApplicationContext;
-
-@synthesize numberOfSyncChangeSetIDArraysToFetch = _numberOfSyncChangeSetIDArraysToFetch;
-@synthesize numberOfSyncChangeSetIDArraysFetched = _numberOfSyncChangeSetIDArraysFetched;
-@synthesize numberOfSyncChangeSetIDArraysThatFailedToFetch = _numberOfSyncChangeSetIDArraysThatFailedToFetch;
-@synthesize numberOfUnappliedSyncChangeSetsToFetch = _numberOfUnappliedSyncChangeSetsToFetch;
-@synthesize numberOfUnappliedSyncChangeSetsFetched = _numberOfUnappliedSyncChangeSetsFetched;
-@synthesize numberOfUnappliedSyncChangeSetsThatFailedToFetch = _numberOfUnappliedSyncChangeSetsThatFailedToFetch;
-
-@synthesize integrityKey = _integrityKey;
-@synthesize changeSetProgressString = _changeSetProgressString;
-@synthesize uuidPrefixFormatter = _uuidPrefixFormatter;
 
 @end

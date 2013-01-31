@@ -112,6 +112,8 @@
 		13B3946C1626189F00D7C7C0 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B3933E1626183700D7C7C0 /* CoreData.framework */; };
 		13B3946E162618A600D7C7C0 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B3946D162618A600D7C7C0 /* Security.framework */; };
 		13B3946F162618AD00D7C7C0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B3933F1626183700D7C7C0 /* Foundation.framework */; };
+		13DC98D916B9FC81008D9584 /* TICDSPostSynchronizationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13DC98D616B9FC81008D9584 /* TICDSPostSynchronizationOperation.m */; };
+		13DC98DA16B9FC81008D9584 /* TICDSPreSynchronizationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13DC98D816B9FC81008D9584 /* TICDSPreSynchronizationOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -341,6 +343,10 @@
 		13B3946A1626189700D7C7C0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		13B3946D162618A600D7C7C0 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		13B3947416261A0600D7C7C0 /* TICoreDataSync-Mac-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TICoreDataSync-Mac-Prefix.pch"; sourceTree = "<group>"; };
+		13DC98D516B9FC81008D9584 /* TICDSPostSynchronizationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSPostSynchronizationOperation.h; sourceTree = "<group>"; };
+		13DC98D616B9FC81008D9584 /* TICDSPostSynchronizationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSPostSynchronizationOperation.m; sourceTree = "<group>"; };
+		13DC98D716B9FC81008D9584 /* TICDSPreSynchronizationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSPreSynchronizationOperation.h; sourceTree = "<group>"; };
+		13DC98D816B9FC81008D9584 /* TICDSPreSynchronizationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSPreSynchronizationOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -710,8 +716,12 @@
 				13B393A51626186A00D7C7C0 /* TICDSOperation.m */,
 				13B393A61626186A00D7C7C0 /* TICDSRemoveAllRemoteSyncDataOperation.h */,
 				13B393A71626186A00D7C7C0 /* TICDSRemoveAllRemoteSyncDataOperation.m */,
+				13DC98D716B9FC81008D9584 /* TICDSPreSynchronizationOperation.h */,
+				13DC98D816B9FC81008D9584 /* TICDSPreSynchronizationOperation.m */,
 				13B393A81626186A00D7C7C0 /* TICDSSynchronizationOperation.h */,
 				13B393A91626186A00D7C7C0 /* TICDSSynchronizationOperation.m */,
+				13DC98D516B9FC81008D9584 /* TICDSPostSynchronizationOperation.h */,
+				13DC98D616B9FC81008D9584 /* TICDSPostSynchronizationOperation.m */,
 				13B393AA1626186A00D7C7C0 /* TICDSVacuumOperation.h */,
 				13B393AB1626186A00D7C7C0 /* TICDSVacuumOperation.m */,
 				13B393AC1626186A00D7C7C0 /* TICDSWholeStoreDownloadOperation.h */,
@@ -941,6 +951,8 @@
 				13A8D4F316A4B1FB00EB1FF2 /* NSURLResponse+Encoding.m in Sources */,
 				13A8D4F416A4B1FB00EB1FF2 /* NSDictionary+Dropbox.m in Sources */,
 				13A8D4F516A4B1FB00EB1FF2 /* NSString+Dropbox.m in Sources */,
+				13DC98D916B9FC81008D9584 /* TICDSPostSynchronizationOperation.m in Sources */,
+				13DC98DA16B9FC81008D9584 /* TICDSPreSynchronizationOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
