@@ -875,46 +875,121 @@
     [self postDecreaseActivityNotification];
 }
 
-- (void)startSynchronizationProcess
+- (void)startPreSynchronizationProcess
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting synchronization process");
     [self postIncreaseActivityNotification];
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidBeginSynchronizing:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
-             [(id)self.delegate documentSyncManagerDidBeginSynchronizing:self];
-         }];
+            [(id)self.delegate documentSyncManagerDidBeginSynchronizing:self];
+        }];
     }
-
+    
     [self moveUnsynchronizedSyncChangesToMergeLocation];
-
-    TICDSSynchronizationOperation *operation = [self synchronizationOperation];
-
+    
+    TICDSPreSynchronizationOperation *operation = [self preSynchronizationOperation];
+    
     if (operation == nil) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create synchronization operation object");
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create pre-synchronization operation object");
         [self bailFromSynchronizationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
         return;
     }
-
+    
     [operation setShouldUseEncryption:self.shouldUseEncryption];
     [operation setClientIdentifier:self.clientIdentifier];
     [operation setIntegrityKey:self.integrityKey];
-
+    
     // Set location of sync changes to merge file
     NSURL *syncChangesToMergeLocation = nil;
     if ([self.fileManager fileExistsAtPath:self.syncChangesBeingSynchronizedStorePath]) {
         syncChangesToMergeLocation = [NSURL fileURLWithPath:self.syncChangesBeingSynchronizedStorePath];
     }
-    [operation setLocalSyncChangesToMergeURL:syncChangesToMergeLocation];
-
+//    [operation setLocalSyncChangesToMergeURL:syncChangesToMergeLocation];
+    
     // Set locations of files
     [operation setAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename]]];
     [operation setUnappliedSyncChangesDirectoryLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnappliedSyncChangesDirectoryName]]];
     [operation setUnappliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnappliedChangeSetsFilename]]];
-    [operation setLocalRecentSyncFileLocation:[NSURL fileURLWithPath:[[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:self.clientIdentifier] stringByAppendingPathExtension:TICDSRecentSyncFileExtension]]];
+//    [operation setLocalRecentSyncFileLocation:[NSURL fileURLWithPath:[[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:self.clientIdentifier] stringByAppendingPathExtension:TICDSRecentSyncFileExtension]]];
+    
+    [self.synchronizationQueue addOperation:operation];
+}
 
+- (void)startSynchronizationProcess
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting synchronization process");
+    [self postIncreaseActivityNotification];
+//    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidBeginSynchronizing:)]) {
+//        [self runOnMainQueueWithoutDeadlocking:^{
+//            [(id)self.delegate documentSyncManagerDidBeginSynchronizing:self];
+//        }];
+//    }
+//    
+//    [self moveUnsynchronizedSyncChangesToMergeLocation];
+    
+    TICDSSynchronizationOperation *operation = [self synchronizationOperation];
+    
+    if (operation == nil) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create synchronization operation object");
+        [self bailFromSynchronizationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
+        return;
+    }
+    
+    [operation setShouldUseEncryption:self.shouldUseEncryption];
+    [operation setClientIdentifier:self.clientIdentifier];
+    
+    // Set location of sync changes to merge file
+    NSURL *syncChangesToMergeLocation = nil;
+    if ([self.fileManager fileExistsAtPath:self.syncChangesBeingSynchronizedStorePath]) {
+        syncChangesToMergeLocation = [NSURL fileURLWithPath:self.syncChangesBeingSynchronizedStorePath];
+    }
+//    [operation setLocalSyncChangesToMergeURL:syncChangesToMergeLocation];
+    
+    // Set locations of files
+//    [operation setAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename]]];
+//    [operation setUnappliedSyncChangesDirectoryLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnappliedSyncChangesDirectoryName]]];
+//    [operation setUnappliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnappliedChangeSetsFilename]]];
+//    [operation setLocalRecentSyncFileLocation:[NSURL fileURLWithPath:[[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:self.clientIdentifier] stringByAppendingPathExtension:TICDSRecentSyncFileExtension]]];
+    
     // Set background context
     [operation configureBackgroundApplicationContextForPrimaryManagedObjectContext:self.primaryDocumentMOC];
+    
+    [self.synchronizationQueue addOperation:operation];
+}
 
+- (void)startPostSynchronizationProcess
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting post-synchronization process");
+    [self postIncreaseActivityNotification];
+
+    TICDSPostSynchronizationOperation *operation = [self postSynchronizationOperation];
+    
+    if (operation == nil) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create synchronization operation object");
+        [self bailFromSynchronizationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
+        return;
+    }
+    
+    [operation setShouldUseEncryption:self.shouldUseEncryption];
+    [operation setClientIdentifier:self.clientIdentifier];
+//    [operation setIntegrityKey:self.integrityKey];
+    
+    // Set location of sync changes to merge file
+    NSURL *syncChangesToMergeLocation = nil;
+    if ([self.fileManager fileExistsAtPath:self.syncChangesBeingSynchronizedStorePath]) {
+        syncChangesToMergeLocation = [NSURL fileURLWithPath:self.syncChangesBeingSynchronizedStorePath];
+    }
+//    [operation setLocalSyncChangesToMergeURL:syncChangesToMergeLocation];
+    
+    // Set locations of files
+//    [operation setAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename]]];
+//    [operation setUnappliedSyncChangesDirectoryLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnappliedSyncChangesDirectoryName]]];
+//    [operation setUnappliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnappliedChangeSetsFilename]]];
+//    [operation setLocalRecentSyncFileLocation:[NSURL fileURLWithPath:[[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:self.clientIdentifier] stringByAppendingPathExtension:TICDSRecentSyncFileExtension]]];
+    
+    // Set background context
+//    [operation configureBackgroundApplicationContextForPrimaryManagedObjectContext:self.primaryDocumentMOC];
+    
     [self.synchronizationQueue addOperation:operation];
 }
 
@@ -1010,9 +1085,19 @@
 
 #pragma mark Operation Generation
 
+- (TICDSPreSynchronizationOperation *)preSynchronizationOperation
+{
+    return [[TICDSPreSynchronizationOperation alloc] initWithDelegate:self];
+}
+
 - (TICDSSynchronizationOperation *)synchronizationOperation
 {
     return [[TICDSSynchronizationOperation alloc] initWithDelegate:self];
+}
+
+- (TICDSPostSynchronizationOperation *)postSynchronizationOperation
+{
+    return [[TICDSPostSynchronizationOperation alloc] initWithDelegate:self];
 }
 
 #pragma mark Operation Communications

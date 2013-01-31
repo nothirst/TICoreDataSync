@@ -19,20 +19,6 @@
 /** A dictionary of arrays; keys are client identifiers, values are sync change set identifiers for each of those clients. */
 @property (strong) NSMutableDictionary *otherSynchronizedClientDeviceSyncChangeSetIdentifiers;
 
-/** The integrity key provided either by the client to check existing data matches integrity, or set during registration for new documents. */
-@property (copy) NSString *integrityKey;
-
-/** @name File Locations */
-
-/** The location of this document's `AppliedSyncChangeSets.ticdsync` file. */
-@property (strong) NSURL *appliedSyncChangeSetsFileLocation;
-
-/** The location of the `UnappliedSyncChanges` directory for this synchronization operation. */
-@property (strong) NSURL *unappliedSyncChangesDirectoryLocation;
-
-/** The location of this document's `UnappliedSyncChangeSets.ticdsync` file. */
-@property (strong) NSURL *unappliedSyncChangeSetsFileLocation;
-
 /** @name Managed Object Contexts and Factories */
 
 /** A `TICoreDataFactory` to access the contents of the `AppliedSyncChangeSets.ticdsync` file. */
@@ -169,7 +155,7 @@
     }
 
     if ([clientIdentifiers count] < 1) {
-        TICDSLog(TICDSLogVerbosityEveryStep, @"No other clients are synchronizing with this document, so skipping to upload local sync commands");
+        TICDSLog(TICDSLogVerbosityEveryStep, @"No other clients are synchronizing with this document, so finishing");
         [self operationDidCompleteSuccessfully];
         return;
     }

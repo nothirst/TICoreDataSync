@@ -54,7 +54,6 @@
 		13B393F71626186A00D7C7C0 /* TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393661626186A00D7C7C0 /* TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation.m */; };
 		13B393F91626186A00D7C7C0 /* TICDSDropboxSDKBasedListOfPreviouslySynchronizedDocumentsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393681626186A00D7C7C0 /* TICDSDropboxSDKBasedListOfPreviouslySynchronizedDocumentsOperation.m */; };
 		13B393FB1626186A00D7C7C0 /* TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B3936A1626186A00D7C7C0 /* TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation.m */; };
-		13B393FD1626186A00D7C7C0 /* TICDSDropboxSDKBasedSynchronizationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B3936C1626186A00D7C7C0 /* TICDSDropboxSDKBasedSynchronizationOperation.m */; };
 		13B393FF1626186A00D7C7C0 /* TICDSDropboxSDKBasedVacuumOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B3936E1626186A00D7C7C0 /* TICDSDropboxSDKBasedVacuumOperation.m */; };
 		13B394011626186A00D7C7C0 /* TICDSDropboxSDKBasedWholeStoreDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393701626186A00D7C7C0 /* TICDSDropboxSDKBasedWholeStoreDownloadOperation.m */; };
 		13B394031626186A00D7C7C0 /* TICDSDropboxSDKBasedWholeStoreUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B393721626186A00D7C7C0 /* TICDSDropboxSDKBasedWholeStoreUploadOperation.m */; };
@@ -114,6 +113,8 @@
 		13B3946F162618AD00D7C7C0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B3933F1626183700D7C7C0 /* Foundation.framework */; };
 		13DC98D916B9FC81008D9584 /* TICDSPostSynchronizationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13DC98D616B9FC81008D9584 /* TICDSPostSynchronizationOperation.m */; };
 		13DC98DA16B9FC81008D9584 /* TICDSPreSynchronizationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13DC98D816B9FC81008D9584 /* TICDSPreSynchronizationOperation.m */; };
+		13F8F5BD16BB05D300A8B7BB /* TICDSDropboxSDKBasedPostSynchronizationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13F8F5BA16BB05D300A8B7BB /* TICDSDropboxSDKBasedPostSynchronizationOperation.m */; };
+		13F8F5BE16BB05D300A8B7BB /* TICDSDropboxSDKBasedPreSynchronizationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13F8F5BC16BB05D300A8B7BB /* TICDSDropboxSDKBasedPreSynchronizationOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -230,8 +231,6 @@
 		13B393681626186A00D7C7C0 /* TICDSDropboxSDKBasedListOfPreviouslySynchronizedDocumentsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSDropboxSDKBasedListOfPreviouslySynchronizedDocumentsOperation.m; sourceTree = "<group>"; };
 		13B393691626186A00D7C7C0 /* TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation.h; sourceTree = "<group>"; };
 		13B3936A1626186A00D7C7C0 /* TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation.m; sourceTree = "<group>"; };
-		13B3936B1626186A00D7C7C0 /* TICDSDropboxSDKBasedSynchronizationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSDropboxSDKBasedSynchronizationOperation.h; sourceTree = "<group>"; };
-		13B3936C1626186A00D7C7C0 /* TICDSDropboxSDKBasedSynchronizationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSDropboxSDKBasedSynchronizationOperation.m; sourceTree = "<group>"; };
 		13B3936D1626186A00D7C7C0 /* TICDSDropboxSDKBasedVacuumOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSDropboxSDKBasedVacuumOperation.h; sourceTree = "<group>"; };
 		13B3936E1626186A00D7C7C0 /* TICDSDropboxSDKBasedVacuumOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSDropboxSDKBasedVacuumOperation.m; sourceTree = "<group>"; };
 		13B3936F1626186A00D7C7C0 /* TICDSDropboxSDKBasedWholeStoreDownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSDropboxSDKBasedWholeStoreDownloadOperation.h; sourceTree = "<group>"; };
@@ -347,6 +346,10 @@
 		13DC98D616B9FC81008D9584 /* TICDSPostSynchronizationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSPostSynchronizationOperation.m; sourceTree = "<group>"; };
 		13DC98D716B9FC81008D9584 /* TICDSPreSynchronizationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSPreSynchronizationOperation.h; sourceTree = "<group>"; };
 		13DC98D816B9FC81008D9584 /* TICDSPreSynchronizationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSPreSynchronizationOperation.m; sourceTree = "<group>"; };
+		13F8F5BA16BB05D300A8B7BB /* TICDSDropboxSDKBasedPostSynchronizationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSDropboxSDKBasedPostSynchronizationOperation.m; sourceTree = "<group>"; };
+		13F8F5BB16BB05D300A8B7BB /* TICDSDropboxSDKBasedPreSynchronizationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSDropboxSDKBasedPreSynchronizationOperation.h; sourceTree = "<group>"; };
+		13F8F5BC16BB05D300A8B7BB /* TICDSDropboxSDKBasedPreSynchronizationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSDropboxSDKBasedPreSynchronizationOperation.m; sourceTree = "<group>"; };
+		13F8F5BF16BB060700A8B7BB /* TICDSDropboxSDKBasedPostSynchronizationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSDropboxSDKBasedPostSynchronizationOperation.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -640,8 +643,10 @@
 				13B393681626186A00D7C7C0 /* TICDSDropboxSDKBasedListOfPreviouslySynchronizedDocumentsOperation.m */,
 				13B393691626186A00D7C7C0 /* TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation.h */,
 				13B3936A1626186A00D7C7C0 /* TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation.m */,
-				13B3936B1626186A00D7C7C0 /* TICDSDropboxSDKBasedSynchronizationOperation.h */,
-				13B3936C1626186A00D7C7C0 /* TICDSDropboxSDKBasedSynchronizationOperation.m */,
+				13F8F5BB16BB05D300A8B7BB /* TICDSDropboxSDKBasedPreSynchronizationOperation.h */,
+				13F8F5BC16BB05D300A8B7BB /* TICDSDropboxSDKBasedPreSynchronizationOperation.m */,
+				13F8F5BF16BB060700A8B7BB /* TICDSDropboxSDKBasedPostSynchronizationOperation.h */,
+				13F8F5BA16BB05D300A8B7BB /* TICDSDropboxSDKBasedPostSynchronizationOperation.m */,
 				13B3936D1626186A00D7C7C0 /* TICDSDropboxSDKBasedVacuumOperation.h */,
 				13B3936E1626186A00D7C7C0 /* TICDSDropboxSDKBasedVacuumOperation.m */,
 				13B3936F1626186A00D7C7C0 /* TICDSDropboxSDKBasedWholeStoreDownloadOperation.h */,
@@ -860,7 +865,6 @@
 				13B393F71626186A00D7C7C0 /* TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation.m in Sources */,
 				13B393F91626186A00D7C7C0 /* TICDSDropboxSDKBasedListOfPreviouslySynchronizedDocumentsOperation.m in Sources */,
 				13B393FB1626186A00D7C7C0 /* TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation.m in Sources */,
-				13B393FD1626186A00D7C7C0 /* TICDSDropboxSDKBasedSynchronizationOperation.m in Sources */,
 				13B393FF1626186A00D7C7C0 /* TICDSDropboxSDKBasedVacuumOperation.m in Sources */,
 				13B394011626186A00D7C7C0 /* TICDSDropboxSDKBasedWholeStoreDownloadOperation.m in Sources */,
 				13B394031626186A00D7C7C0 /* TICDSDropboxSDKBasedWholeStoreUploadOperation.m in Sources */,
@@ -953,6 +957,8 @@
 				13A8D4F516A4B1FB00EB1FF2 /* NSString+Dropbox.m in Sources */,
 				13DC98D916B9FC81008D9584 /* TICDSPostSynchronizationOperation.m in Sources */,
 				13DC98DA16B9FC81008D9584 /* TICDSPreSynchronizationOperation.m in Sources */,
+				13F8F5BD16BB05D300A8B7BB /* TICDSDropboxSDKBasedPostSynchronizationOperation.m in Sources */,
+				13F8F5BE16BB05D300A8B7BB /* TICDSDropboxSDKBasedPreSynchronizationOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

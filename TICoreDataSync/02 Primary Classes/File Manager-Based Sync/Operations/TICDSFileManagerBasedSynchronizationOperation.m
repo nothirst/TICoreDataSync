@@ -21,7 +21,7 @@
     if( !contents ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeyDirectoryIsMissing underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
         
-        [self fetchedRemoteIntegrityKey:nil];
+#warning        [self fetchedRemoteIntegrityKey:nil];
         return;
     }
     
@@ -30,12 +30,12 @@
             continue;
         }
         
-        [self fetchedRemoteIntegrityKey:eachFile];
+  #warning      [self fetchedRemoteIntegrityKey:eachFile];
         return;
     }
     
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeyDirectoryIsMissing underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-    [self fetchedRemoteIntegrityKey:nil];
+  #warning  [self fetchedRemoteIntegrityKey:nil];
 }
 
 - (void)buildArrayOfClientDeviceIdentifiers
@@ -45,7 +45,7 @@
     
     if( !directoryContents ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [self builtArrayOfClientDeviceIdentifiers:nil];
+  #warning      [self builtArrayOfClientDeviceIdentifiers:nil];
         return;
     }
     
@@ -58,7 +58,7 @@
         [clientDeviceIdentifiers addObject:eachDirectory];
     }
     
-    [self builtArrayOfClientDeviceIdentifiers:clientDeviceIdentifiers];
+  #warning  [self builtArrayOfClientDeviceIdentifiers:clientDeviceIdentifiers];
 }
 
 - (void)uploadLocalSyncChangeSetFileAtLocation:(NSURL *)aLocation
@@ -73,7 +73,7 @@
         success = [[self cryptor] encryptFileAtLocation:aLocation writingToLocation:tmpFileLocation error:&anyError];
         if( !success ) {
             [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            [self uploadedLocalSyncChangeSetFileSuccessfully:success];
+   #warning         [self uploadedLocalSyncChangeSetFileSuccessfully:success];
             return;
         }
         
@@ -88,7 +88,7 @@
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
     }
     
-    [self uploadedLocalSyncChangeSetFileSuccessfully:success];
+ #warning   [self uploadedLocalSyncChangeSetFileSuccessfully:success];
 }
 
 - (void)buildArrayOfSyncChangeSetIdentifiersForClientIdentifier:(NSString *)anIdentifier
@@ -109,7 +109,7 @@
         [identifiers addObject:[eachIdentifier stringByDeletingPathExtension]];
     }
     
-    [self builtArrayOfClientSyncChangeSetIdentifiers:identifiers forClientIdentifier:anIdentifier];
+#warning    [self builtArrayOfClientSyncChangeSetIdentifiers:identifiers forClientIdentifier:anIdentifier];
 }
 
 - (void)fetchSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier toLocation:(NSURL *)aLocation
@@ -123,7 +123,7 @@
     NSDictionary *attributes = [[self fileManager] attributesOfItemAtPath:remoteFileToFetch error:&anyError];
     if( !attributes ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:modificationDate withSuccess:NO];
+#warning        [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:modificationDate withSuccess:NO];
         return;
     }
     
@@ -140,13 +140,13 @@
     
     if( !success ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:modificationDate withSuccess:success];
+#warning        [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:modificationDate withSuccess:success];
         return;
     }
     
     // if unencrypted, we're done
     if( ![self shouldUseEncryption] ) {
-        [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:modificationDate withSuccess:success];
+ #warning       [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:modificationDate withSuccess:success];
         return;
     }
     
@@ -156,7 +156,7 @@
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
     }
     
-    [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:modificationDate withSuccess:success];
+#warning    [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:modificationDate withSuccess:success];
 }
 
 - (void)uploadRecentSyncFileAtLocation:(NSURL *)aLocation
@@ -172,7 +172,7 @@
     
     if( !success ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [self uploadedRecentSyncFileSuccessfully:success];
+#warning        [self uploadedRecentSyncFileSuccessfully:success];
         return;
     }
     
@@ -182,7 +182,7 @@
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
     }
     
-    [self uploadedRecentSyncFileSuccessfully:success];
+#warning    [self uploadedRecentSyncFileSuccessfully:success];
 }
 
 #pragma mark - Initialization and Deallocation

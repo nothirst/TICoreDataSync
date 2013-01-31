@@ -68,11 +68,20 @@
     return operation;
 }
 
-- (TICDSSynchronizationOperation *)synchronizationOperation
+- (TICDSPreSynchronizationOperation *)preSynchronizationOperation
 {
-    TICDSDropboxSDKBasedSynchronizationOperation *operation = [[TICDSDropboxSDKBasedSynchronizationOperation alloc] initWithDelegate:self];
+    TICDSDropboxSDKBasedPreSynchronizationOperation *operation = [[TICDSDropboxSDKBasedPreSynchronizationOperation alloc] initWithDelegate:self];
     
     [operation setThisDocumentDirectoryPath:[self thisDocumentDirectoryPath]];
+    [operation setThisDocumentSyncChangesDirectoryPath:[self thisDocumentSyncChangesDirectoryPath]];
+    
+    return operation;
+}
+
+- (TICDSPostSynchronizationOperation *)postSynchronizationOperation
+{
+    TICDSDropboxSDKBasedPostSynchronizationOperation *operation = [[TICDSDropboxSDKBasedPostSynchronizationOperation alloc] initWithDelegate:self];
+    
     [operation setThisDocumentSyncChangesDirectoryPath:[self thisDocumentSyncChangesDirectoryPath]];
     [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
     [operation setThisDocumentRecentSyncsThisClientFilePath:[self thisDocumentRecentSyncsThisClientFilePath]];

@@ -13,17 +13,8 @@
 #pragma mark Properties
 /** @name Properties */
 
-/** A boolean indicating whether the operation is currently paused awaiting an instruction to continue, e.g. for conflict resolution. */
-@property (assign, getter = isPaused) BOOL paused;
-
-/** The resolution type for the most recent conflict, set before resuming the operation after a conflict is detected. */
-@property (assign) TICDSSyncConflictResolutionType mostRecentConflictResolutionType;
-
 /** The sort descriptors used to sort sync change objects in a `SyncChangeSet` before being applied. */
 @property (nonatomic, strong) NSArray *syncChangeSortDescriptors;
-
-/** The warnings generated during this synchronization. */
-@property (strong) NSMutableArray *synchronizationWarnings;
 
 /** @name File Locations */
 

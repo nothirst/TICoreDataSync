@@ -43,4 +43,16 @@
  @param aPersistentStoreCoordinator The persistent store coordinator to use for the background context. */
 - (void)configureBackgroundApplicationContextForPrimaryManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
 
+#pragma mark Properties
+/** @name Properties */
+
+/** The warnings generated during this synchronization. */
+@property (strong) NSMutableArray *synchronizationWarnings;
+
+/** A boolean indicating whether the operation is currently paused awaiting an instruction to continue, e.g. for conflict resolution. */
+@property (assign, getter = isPaused) BOOL paused;
+
+/** The resolution type for the most recent conflict, set before resuming the operation after a conflict is detected. */
+@property (assign) TICDSSyncConflictResolutionType mostRecentConflictResolutionType;
+
 @end

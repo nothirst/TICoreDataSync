@@ -98,4 +98,21 @@
  @param success A Boolean indicating whether the sync change set file was downloaded or not. */
 - (void)fetchedSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier modificationDate:(NSDate *)aDate withSuccess:(BOOL)success;
 
+#pragma mark Properties
+/** @name Properties */
+
+/** The integrity key provided either by the client to check existing data matches integrity, or set during registration for new documents. */
+@property (copy) NSString *integrityKey;
+
+/** @name File Locations */
+
+/** The location of this document's `UnappliedSyncChangeSets.ticdsync` file. */
+@property (strong) NSURL *unappliedSyncChangeSetsFileLocation;
+
+/** The location of the `UnappliedSyncChanges` directory for this synchronization operation. */
+@property (strong) NSURL *unappliedSyncChangesDirectoryLocation;
+
+/** The location of this document's `AppliedSyncChangeSets.ticdsync` file. */
+@property (strong) NSURL *appliedSyncChangeSetsFileLocation;
+
 @end
