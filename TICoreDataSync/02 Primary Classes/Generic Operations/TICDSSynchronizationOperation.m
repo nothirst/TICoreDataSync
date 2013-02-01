@@ -137,7 +137,7 @@
                 return;
             }
 
-            // Save Unapplied Sync Change Sets context (UnappliedSYncChangeSets.ticdsync file)
+            // Save Unapplied Sync Change Sets context (UnappliedSyncChangeSets.ticdsync file)
             success = [self.unappliedSyncChangeSetsContext save:&anyError];
             if (success == NO) {
                 TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save unapplied sync change sets context, after saving applied sync change sets context: %@", anyError);
@@ -680,6 +680,7 @@
     NSString *relatedObjectEntityName = syncChange.relatedObjectEntityName;
     id changedRelationships = syncChange.changedRelationships;
     NSNumber *changeType = syncChange.changeType;
+    NSString *syncChangeDescription = [NSString stringWithFormat:@"%@", syncChange];
     
     [self.backgroundApplicationContext performBlockAndWait:^{
         NSManagedObject *object = [self backgroundApplicationContextObjectForEntityName:objectEntityName syncIdentifier:objectSyncID];
@@ -715,7 +716,7 @@
     if ([object respondsToSelector:NSSelectorFromString(selectorName)]) {
         [object performSelector:NSSelectorFromString(selectorName) withObject:relatedObject];
     } else {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object does not respond to selector: %@ [%@] %@", selectorName, syncChange, [syncChange objectEntityName]);
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object does not respond to selector: %@ [%@] %@", selectorName, syncChangeDescription, objectEntityName);
     }
 #pragma clang diagnostic pop
         
@@ -874,7 +875,7 @@
 
 - (TICDSSynchronizationOperationManagedObjectContext *)backgroundApplicationContext
 {
-    if (_backgroundApplicationContext) {
+    if (_backgroundApplicationContext != nil) {
         return _backgroundApplicationContext;
     }
 
