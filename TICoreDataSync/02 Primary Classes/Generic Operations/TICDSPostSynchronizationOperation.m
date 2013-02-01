@@ -12,15 +12,6 @@
 
 /** @name File Locations */
 
-/** The location of the `SyncChangesBeingSynchronized.syncchg` file for this synchronization operation. */
-@property (strong) NSURL *localSyncChangesToMergeURL;
-
-/** The location of this document's `AppliedSyncChangeSets.ticdsync` file. */
-@property (strong) NSURL *appliedSyncChangeSetsFileLocation;
-
-/** The location of the local RecentSync file to upload at the end of the synchronization process. */
-@property (strong) NSURL *localRecentSyncFileLocation;
-
 /** @name Managed Object Contexts and Factories */
 
 /** A `TICoreDataFactory` to access the contents of the `AppliedSyncChangeSets.ticdsync` file. */

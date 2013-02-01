@@ -16,20 +16,6 @@
 /** The sort descriptors used to sort sync change objects in a `SyncChangeSet` before being applied. */
 @property (nonatomic, strong) NSArray *syncChangeSortDescriptors;
 
-/** @name File Locations */
-
-/** The location of the `SyncChangesBeingSynchronized.syncchg` file for this synchronization operation. */
-@property (strong) NSURL *localSyncChangesToMergeURL;
-
-/** The location of this document's `AppliedSyncChangeSets.ticdsync` file. */
-@property (strong) NSURL *appliedSyncChangeSetsFileLocation;
-
-/** The location of the `UnappliedSyncChanges` directory for this synchronization operation. */
-@property (strong) NSURL *unappliedSyncChangesDirectoryLocation;
-
-/** The location of this document's `UnappliedSyncChangeSets.ticdsync` file. */
-@property (strong) NSURL *unappliedSyncChangeSetsFileLocation;
-
 /** @name Managed Object Contexts and Factories */
 
 /** A `TICoreDataFactory` to access the contents of the `AppliedSyncChangeSets.ticdsync` file. */

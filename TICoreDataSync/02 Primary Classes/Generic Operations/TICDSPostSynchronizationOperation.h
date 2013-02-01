@@ -56,4 +56,15 @@
  @param success `YES` if the RecentSync file was uploaded, otherwise `NO`. */
 - (void)uploadedRecentSyncFileSuccessfully:(BOOL)success;
 
+/** @name File Locations */
+
+/** The location of the `SyncChangesBeingSynchronized.syncchg` file for this synchronization operation. */
+@property (strong) NSURL *localSyncChangesToMergeURL;
+
+/** The location of the local RecentSync file to upload at the end of the synchronization process. */
+@property (strong) NSURL *localRecentSyncFileLocation;
+
+/** The location of this document's `AppliedSyncChangeSets.ticdsync` file. */
+@property (strong) NSURL *appliedSyncChangeSetsFileLocation;
+
 @end

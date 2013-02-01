@@ -55,4 +55,18 @@
 /** The resolution type for the most recent conflict, set before resuming the operation after a conflict is detected. */
 @property (assign) TICDSSyncConflictResolutionType mostRecentConflictResolutionType;
 
+/** @name File Locations */
+
+/** The location of the `SyncChangesBeingSynchronized.syncchg` file for this synchronization operation. */
+@property (strong) NSURL *localSyncChangesToMergeURL;
+
+/** The location of this document's `AppliedSyncChangeSets.ticdsync` file. */
+@property (strong) NSURL *appliedSyncChangeSetsFileLocation;
+
+/** The location of the `UnappliedSyncChanges` directory for this synchronization operation. */
+@property (strong) NSURL *unappliedSyncChangesDirectoryLocation;
+
+/** The location of this document's `UnappliedSyncChangeSets.ticdsync` file. */
+@property (strong) NSURL *unappliedSyncChangeSetsFileLocation;
+
 @end
