@@ -1,5 +1,5 @@
 //
-//  TICDSFileManagerBasedSynchronizationOperation.m
+//  TICDSFileManagerBasedPreSynchronizationOperation.m
 //  ShoppingListMac
 //
 //  Created by Tim Isted on 26/04/2011.
@@ -9,7 +9,7 @@
 #import "TICoreDataSync.h"
 
 
-@implementation TICDSFileManagerBasedSynchronizationOperation
+@implementation TICDSFileManagerBasedPreSynchronizationOperation
 
 - (void)fetchRemoteIntegrityKey
 {
@@ -21,7 +21,7 @@
     if( !contents ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeyDirectoryIsMissing underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
         
-#warning        [self fetchedRemoteIntegrityKey:nil];
+        [self fetchedRemoteIntegrityKey:nil];
         return;
     }
     
@@ -30,12 +30,12 @@
             continue;
         }
         
-  #warning      [self fetchedRemoteIntegrityKey:eachFile];
+        [self fetchedRemoteIntegrityKey:eachFile];
         return;
     }
     
     [self setError:[TICDSError errorWithCode:TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeyDirectoryIsMissing underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-  #warning  [self fetchedRemoteIntegrityKey:nil];
+    [self fetchedRemoteIntegrityKey:nil];
 }
 
 - (void)buildArrayOfClientDeviceIdentifiers
@@ -45,7 +45,7 @@
     
     if( !directoryContents ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-  #warning      [self builtArrayOfClientDeviceIdentifiers:nil];
+        [self builtArrayOfClientDeviceIdentifiers:nil];
         return;
     }
     
@@ -58,37 +58,7 @@
         [clientDeviceIdentifiers addObject:eachDirectory];
     }
     
-  #warning  [self builtArrayOfClientDeviceIdentifiers:clientDeviceIdentifiers];
-}
-
-- (void)uploadLocalSyncChangeSetFileAtLocation:(NSURL *)aLocation
-{
-    NSError *anyError = nil;
-    BOOL success = YES;
-    
-    if( [self shouldUseEncryption] ) {
-        // encrypt file first
-        NSURL *tmpFileLocation = [NSURL fileURLWithPath:[[self tempFileDirectoryPath] stringByAppendingPathComponent:[[aLocation path] lastPathComponent]]];
-        
-        success = [[self cryptor] encryptFileAtLocation:aLocation writingToLocation:tmpFileLocation error:&anyError];
-        if( !success ) {
-            [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-   #warning         [self uploadedLocalSyncChangeSetFileSuccessfully:success];
-            return;
-        }
-        
-        aLocation = tmpFileLocation;
-    }
-    
-    NSString *uploadPath = [[self thisDocumentSyncChangesThisClientDirectoryPath] stringByAppendingPathComponent:[[aLocation path] lastPathComponent]];
-    
-    success = [[self fileManager] moveItemAtPath:[aLocation path] toPath:uploadPath error:&anyError];
-    
-    if( !success ) {
-        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-    }
-    
- #warning   [self uploadedLocalSyncChangeSetFileSuccessfully:success];
+    [self builtArrayOfClientDeviceIdentifiers:clientDeviceIdentifiers];
 }
 
 - (void)buildArrayOfSyncChangeSetIdentifiersForClientIdentifier:(NSString *)anIdentifier
@@ -109,7 +79,7 @@
         [identifiers addObject:[eachIdentifier stringByDeletingPathExtension]];
     }
     
-#warning    [self builtArrayOfClientSyncChangeSetIdentifiers:identifiers forClientIdentifier:anIdentifier];
+    [self builtArrayOfClientSyncChangeSetIdentifiers:identifiers forClientIdentifier:anIdentifier];
 }
 
 - (void)fetchSyncChangeSetWithIdentifier:(NSString *)aChangeSetIdentifier forClientIdentifier:(NSString *)aClientIdentifier toLocation:(NSURL *)aLocation
@@ -123,7 +93,7 @@
     NSDictionary *attributes = [[self fileManager] attributesOfItemAtPath:remoteFileToFetch error:&anyError];
     if( !attributes ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-#warning        [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:modificationDate withSuccess:NO];
+        [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:modificationDate withSuccess:NO];
         return;
     }
     
@@ -140,13 +110,13 @@
     
     if( !success ) {
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-#warning        [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:modificationDate withSuccess:success];
+        [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:modificationDate withSuccess:success];
         return;
     }
     
     // if unencrypted, we're done
     if( ![self shouldUseEncryption] ) {
- #warning       [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:modificationDate withSuccess:success];
+        [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:modificationDate withSuccess:success];
         return;
     }
     
@@ -156,33 +126,7 @@
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
     }
     
-#warning    [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:modificationDate withSuccess:success];
-}
-
-- (void)uploadRecentSyncFileAtLocation:(NSURL *)aLocation
-{
-    NSString *remoteFile = [self thisDocumentRecentSyncsThisClientFilePath];
-    
-    NSError *anyError = nil;
-    BOOL success = YES;
-    
-    if( [[self fileManager] fileExistsAtPath:remoteFile] ) {
-        success = [[self fileManager] removeItemAtPath:remoteFile error:&anyError]; 
-    }
-    
-    if( !success ) {
-        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-#warning        [self uploadedRecentSyncFileSuccessfully:success];
-        return;
-    }
-    
-    success = [[self fileManager] copyItemAtPath:[aLocation path] toPath:remoteFile error:&anyError];
-    
-    if( !success ) {
-        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-    }
-    
-#warning    [self uploadedRecentSyncFileSuccessfully:success];
+    [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:modificationDate withSuccess:success];
 }
 
 #pragma mark - Initialization and Deallocation
@@ -192,7 +136,7 @@
     _thisDocumentSyncChangesDirectoryPath = nil;
     _thisDocumentSyncChangesThisClientDirectoryPath = nil;
     _thisDocumentRecentSyncsThisClientFilePath = nil;
-
+    
 }
 
 #pragma mark - Paths
