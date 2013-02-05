@@ -246,7 +246,7 @@
     if (error.code != 401 && path != nil && downloadDestination != nil && [[self.failedDownloadRetryDictionary objectForKey:path] integerValue] < 5) {
         NSInteger retryCount = [[self.failedDownloadRetryDictionary objectForKey:path] integerValue];
         retryCount++;
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Failed to download %@. Going for try number %ld", path, retryCount);
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Failed to download %@. Going for try number %ld", path, (long)retryCount);
         [self.failedDownloadRetryDictionary setObject:[NSNumber numberWithInteger:retryCount] forKey:path];
         [[self restClient] loadFile:path intoPath:downloadDestination];
         return;

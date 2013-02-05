@@ -148,7 +148,7 @@
     if (destPath != nil && [[self.failedDownloadRetryDictionary objectForKey:destPath] integerValue] < 5) {
         NSInteger retryCount = [[self.failedDownloadRetryDictionary objectForKey:destPath] integerValue];
         retryCount++;
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Failed to load revisions for %@. Going for try number %ld", destPath, retryCount);
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Failed to load revisions for %@. Going for try number %ld", destPath, (long)retryCount);
         [self.failedDownloadRetryDictionary setObject:[NSNumber numberWithInteger:retryCount] forKey:destPath];
         [self.restClient loadRevisionsForFile:destPath limit:1];
         return;
