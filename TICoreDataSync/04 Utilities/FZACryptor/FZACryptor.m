@@ -69,8 +69,16 @@ const NSInteger FZAFileBlockLength = 4096;
 {
     NSParameterAssert([plainTextURL isFileURL]);
     NSParameterAssert([cipherTextURL isFileURL]);
-    NSAssert([self isConfigured], @"can't encrypt without a key");
-
+    if ([self isConfigured] == NO) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Our sync key was nil");
+        if (error) {
+            *error = [NSError errorWithDomain:FZACryptorErrorDomain
+                                         code:FZACryptorErrorCodeFailedIntegrityCheck
+                                     userInfo:nil];
+        }
+        return NO;
+    }
+    
     // set up the files
     NSFileHandle *readHandle = [NSFileHandle fileHandleForReadingAtPath:[plainTextURL path]];
     if (!readHandle) {
