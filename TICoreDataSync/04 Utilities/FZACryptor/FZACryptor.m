@@ -2,7 +2,7 @@
 // FZACryptor.m
 //
 // Created by Graham J Lee on 05/05/2011.
-// Copyright 2011 Fuzzy Aliens Ltd. 
+// Copyright 2011 Fuzzy Aliens Ltd.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,8 @@ const NSInteger FZAFileBlockLength = 4096;
 
 #pragma mark Configuration of key material
 
-- (BOOL)isConfigured {
+- (BOOL)isConfigured
+{
     return [keyManager hasKey];
 }
 
@@ -42,65 +43,67 @@ const NSInteger FZAFileBlockLength = 4096;
     [keyManager clearPasswordAndSalt];
 }
 
-- (NSData *)setPassword: (NSString *)password salt: (NSData *)salt error: (NSError **)outError {
+- (NSData *)setPassword:(NSString *)password salt:(NSData *)salt error:(NSError **)outError
+{
     if (salt == nil) {
-        salt = [keyManager randomDataOfLength: FZASaltLength];
+        salt = [keyManager randomDataOfLength:FZASaltLength];
         if (salt == nil) {
             return nil;
         }
     }
 
     NSError *error = nil;
-    BOOL success = [keyManager storeKeyDerivedFromPassword: password salt: salt error: &error];
-    
-    if( !success && outError ) {
+    BOOL success = [keyManager storeKeyDerivedFromPassword:password salt:salt error:&error];
+
+    if ( !success && outError ) {
         *outError = error;
         return nil;
     }
-    
+
     return salt;
 }
 
 #pragma mark Crypto
 
-- (BOOL)encryptFileAtLocation:(NSURL *)plainTextURL writingToLocation:(NSURL *)cipherTextURL error:(NSError **)error {
+- (BOOL)encryptFileAtLocation:(NSURL *)plainTextURL writingToLocation:(NSURL *)cipherTextURL error:(NSError **)error
+{
     NSParameterAssert([plainTextURL isFileURL]);
     NSParameterAssert([cipherTextURL isFileURL]);
     NSAssert([self isConfigured], @"can't encrypt without a key");
 
-    //set up the files
-	NSFileHandle *readHandle = [NSFileHandle fileHandleForReadingAtPath:[plainTextURL path]];
+    // set up the files
+    NSFileHandle *readHandle = [NSFileHandle fileHandleForReadingAtPath:[plainTextURL path]];
     if (!readHandle) {
         return NO;
     }
-    //unilaterally destroy anything already at the target location
+    // unilaterally destroy anything already at the target location
     NSFileManager *mgr = [[NSFileManager alloc] init];
-    BOOL fileCreated = [mgr createFileAtPath: [cipherTextURL path]
-                                    contents: nil
-                                  attributes: nil];
-    NSDictionary *inputFileAttributes = [mgr attributesOfItemAtPath: [plainTextURL path]
-                                                              error: error];
+    BOOL fileCreated = [mgr createFileAtPath:[cipherTextURL path]
+                                    contents:nil
+                                  attributes:nil];
+    NSDictionary *inputFileAttributes = [mgr attributesOfItemAtPath:[plainTextURL path]
+                                                              error:error];
     if (inputFileAttributes == nil) {
         return NO;
     }
     unsigned long long inputFileLength = [inputFileAttributes fileSize];
-    
+
     if (!fileCreated) {
         return NO;
     }
-    NSFileHandle *writeHandle = [NSFileHandle fileHandleForWritingAtPath: [cipherTextURL path]];
+    NSFileHandle *writeHandle = [NSFileHandle fileHandleForWritingAtPath:[cipherTextURL path]];
     if (!writeHandle) {
         return NO;
     }
     uint8_t *bytesToWrite = malloc(FZAFileBlockLength);
     if (!bytesToWrite) {
         if (error) {
-            *error = [NSError errorWithDomain: NSPOSIXErrorDomain code: errno userInfo: nil];
+            *error = [NSError errorWithDomain:NSPOSIXErrorDomain code:errno userInfo:nil];
         }
         return NO;
     }
-    
-    //set up the crypto
+
+    // set up the crypto
     NSData *syncKey = [keyManager key];
     if (syncKey == nil || [syncKey bytes] == nil) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Our sync key was nil");
@@ -112,13 +115,15 @@ const NSInteger FZAFileBlockLength = 4096;
         return NO;
     }
 
-    NSData *topLevelIV = [keyManager randomDataOfLength: kCCBlockSizeAES128];
+    NSData *topLevelIV = [keyManager randomDataOfLength:kCCBlockSizeAES128];
     CCHmacContext hmacContext;
     CCHmacInit(&hmacContext, kCCHmacAlgSHA256, [syncKey bytes], [syncKey length]);
     CCHmacUpdate(&hmacContext, [topLevelIV bytes], [topLevelIV length]);
-    [writeHandle writeData: topLevelIV];
-    NSData *fileKeyAndIV = [keyManager randomDataOfLength: kCCKeySizeAES256 + kCCBlockSizeAES128];
-    uint8_t cryptedKeyIV[kCCKeySizeAES256 + kCCBlockSizeAES128] = {0};
+    [writeHandle writeData:topLevelIV];
+    NSData *fileKeyAndIV = [keyManager randomDataOfLength:kCCKeySizeAES256 + kCCBlockSizeAES128];
+    uint8_t cryptedKeyIV[kCCKeySizeAES256 + kCCBlockSizeAES128] = {
+        0
+    };
     size_t cryptedLength = 0;
     CCCryptorStatus status = CCCrypt(kCCEncrypt,
                                      kCCAlgorithmAES128,
@@ -128,28 +133,28 @@ const NSInteger FZAFileBlockLength = 4096;
                                      [topLevelIV bytes],
                                      [fileKeyAndIV bytes],
                                      [fileKeyAndIV length],
-                                     cryptedKeyIV, 
-                                     kCCKeySizeAES256 + kCCBlockSizeAES128, 
+                                     cryptedKeyIV,
+                                     kCCKeySizeAES256 + kCCBlockSizeAES128,
                                      &cryptedLength);
     if (status != kCCSuccess) {
         if (error) {
-            *error = [NSError errorWithDomain: FZACryptorErrorDomain
-                                         code: status
-                                     userInfo: nil];
+            *error = [NSError errorWithDomain:FZACryptorErrorDomain
+                                         code:status
+                                     userInfo:nil];
         }
         free(bytesToWrite);
         return NO;
     }
-    NSData *outgoingData = [NSData dataWithBytesNoCopy: cryptedKeyIV
-                                                length: cryptedLength
-                                          freeWhenDone: NO];
-    [writeHandle writeData: outgoingData];
-    
+    NSData *outgoingData = [NSData dataWithBytesNoCopy:cryptedKeyIV
+                                                length:cryptedLength
+                                          freeWhenDone:NO];
+    [writeHandle writeData:outgoingData];
+
     CCHmacUpdate(&hmacContext, [outgoingData bytes], [outgoingData length]);
-    
-    NSData *key = [NSData dataWithBytes: [fileKeyAndIV bytes] length: kCCKeySizeAES256];
-    NSData *iv = [NSData dataWithBytes: [fileKeyAndIV bytes] + kCCKeySizeAES256
-                                length: kCCBlockSizeAES128];
+
+    NSData *key = [NSData dataWithBytes:[fileKeyAndIV bytes] length:kCCKeySizeAES256];
+    NSData *iv = [NSData dataWithBytes:[fileKeyAndIV bytes] + kCCKeySizeAES256
+                                length:kCCBlockSizeAES128];
     CCCryptorRef cryptor = NULL;
     status = CCCryptorCreate(kCCEncrypt,
                              kCCAlgorithmAES128,
@@ -160,38 +165,37 @@ const NSInteger FZAFileBlockLength = 4096;
                              &cryptor);
     if (status != kCCSuccess) {
         if (error) {
-            *error = [NSError errorWithDomain: FZACryptorErrorDomain code: status userInfo: nil];
+            *error = [NSError errorWithDomain:FZACryptorErrorDomain code:status userInfo:nil];
         }
         free(bytesToWrite);
         return NO;
     }
-    
-    //do it!
+
+    // do it!
     do {
         @autoreleasepool {
-        NSData *dataRead = [readHandle readDataOfLength: FZAFileBlockLength];
-        size_t bytesOut = 0;
-        status = CCCryptorUpdate(cryptor,
-                                 [dataRead bytes],
-                                 [dataRead length],
-                                 bytesToWrite,
-                                 FZAFileBlockLength,
-                                 &bytesOut);
-        if (status != kCCSuccess) {
-            if (error) {
-                *error = [NSError errorWithDomain: FZACryptorErrorDomain
-                                             code: status
-                                         userInfo: nil];
+            NSData *dataRead = [readHandle readDataOfLength:FZAFileBlockLength];
+            size_t bytesOut = 0;
+            status = CCCryptorUpdate(cryptor,
+                                     [dataRead bytes],
+                                     [dataRead length],
+                                     bytesToWrite,
+                                     FZAFileBlockLength,
+                                     &bytesOut);
+            if (status != kCCSuccess) {
+                if (error) {
+                    *error = [NSError errorWithDomain:FZACryptorErrorDomain
+                                                 code:status
+                                             userInfo:nil];
+                }
+                free(bytesToWrite);
+                return NO;
             }
-            free(bytesToWrite);
-            return NO;
-        }
-        NSData *outData = [NSData dataWithBytesNoCopy: bytesToWrite
-                                               length: bytesOut
-                                         freeWhenDone: NO];
-        [writeHandle writeData: outData];
-        CCHmacUpdate(&hmacContext, [outData bytes], [outData length]);
-        
+            NSData *outData = [NSData dataWithBytesNoCopy:bytesToWrite
+                                                   length:bytesOut
+                                             freeWhenDone:NO];
+            [writeHandle writeData:outData];
+            CCHmacUpdate(&hmacContext, [outData bytes], [outData length]);
         }
     } while ([readHandle offsetInFile] < inputFileLength);
 
@@ -202,32 +206,31 @@ const NSInteger FZAFileBlockLength = 4096;
                             &finalBlockSize);
     if (status != kCCSuccess) {
         if (error) {
-            *error = [NSError errorWithDomain: FZACryptorErrorDomain
-                                         code: status
-                                     userInfo: nil];
+            *error = [NSError errorWithDomain:FZACryptorErrorDomain
+                                         code:status
+                                     userInfo:nil];
         }
         free(bytesToWrite);
         return NO;
     }
     CCCryptorRelease(cryptor);
-    
-    NSData *finalBlock = [NSData dataWithBytesNoCopy: bytesToWrite
-                                              length: finalBlockSize
-                                        freeWhenDone: NO];
-    [writeHandle writeData: finalBlock];
-    
+
+    NSData *finalBlock = [NSData dataWithBytesNoCopy:bytesToWrite
+                                              length:finalBlockSize
+                                        freeWhenDone:NO];
+    [writeHandle writeData:finalBlock];
+
     CCHmacUpdate(&hmacContext, [finalBlock bytes], [finalBlock length]);
     uint8_t hmac[CC_SHA256_DIGEST_LENGTH];
     CCHmacFinal(&hmacContext, hmac);
-    NSData *hmacData = [NSData dataWithBytesNoCopy: hmac
-                                            length: CC_SHA256_DIGEST_LENGTH
-                                      freeWhenDone: NO];
-    [writeHandle writeData: hmacData];
-    
+    NSData *hmacData = [NSData dataWithBytesNoCopy:hmac
+                                            length:CC_SHA256_DIGEST_LENGTH
+                                      freeWhenDone:NO];
+    [writeHandle writeData:hmacData];
 
     free(bytesToWrite);
     [writeHandle closeFile];
-    
+
     return YES;
 }
 
@@ -254,7 +257,7 @@ const NSInteger FZAFileBlockLength = 4096;
     if (fileCreated == NO) {
         return NO;
     }
-    
+
     NSFileHandle *writeHandle = [NSFileHandle fileHandleForWritingAtPath:[plainTextURL path]];
     if (writeHandle == nil) {
         return NO;
@@ -292,14 +295,13 @@ const NSInteger FZAFileBlockLength = 4096;
                 TICDSLog(TICDSLogVerbosityErrorsOnly, @"Caught an exception while trying to read a file %@ %@, %@", [cipherTextURL path], exception.name, exception.reason);
                 return NO;
             }
-            @finally {
-            }
-            
+            @finally {}
+
             if ([readData bytes] == nil) {
                 TICDSLog(TICDSLogVerbosityErrorsOnly, @"Read no bytes from the data");
                 return NO;
             }
-            
+
             CCHmacUpdate(&hmacContext, [readData bytes], [readData length]);
         }
     } while ([readHandle offsetInFile] < cipherSize - CC_SHA256_DIGEST_LENGTH);
@@ -437,9 +439,8 @@ const NSInteger FZAFileBlockLength = 4096;
     if (self) {
         keyManager = [FZAKeyManager newKeyManager];
     }
-    
+
     return self;
 }
-
 
 @end
