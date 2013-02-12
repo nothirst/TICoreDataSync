@@ -70,7 +70,12 @@
     CFDictionaryRef localResult;
     OSStatus searchResult = SecItemCopyMatching((__bridge CFDictionaryRef)searchAttributes, (CFTypeRef *)&localResult);
     OSStatus storeResult = noErr;
-    if (searchResult == noErr) {
+
+    if (searchResult == noErr || searchResult == errSecDuplicateItem) {
+        if (searchResult == errSecDuplicateItem) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"A call to SecItemCopyMatching returned errSecDuplicateItem. This is not an error, but it's slightly unexpected. Either way, we've handled it so let's carry on.");
+        }
+        
         NSDictionary *foundAttributes = (__bridge NSDictionary *)localResult;
         TICDSLog(TICDSLogVerbosityEveryStep, @"FZACryptor iOS Key Manager updating %@", foundAttributes);
         NSMutableDictionary *updateAttributes = [[self searchAttributes] mutableCopy];
@@ -90,6 +95,13 @@
         // [storeAttributes setObject: (id)kCFBooleanTrue forKey: (id)kSecReturnPersistentRef];
         [storeAttributes removeObjectForKey:(__bridge id)kSecReturnAttributes];
         storeResult = SecItemAdd((__bridge CFDictionaryRef)storeAttributes, NULL);
+        if (storeResult == errSecDuplicateItem) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"A call to SecItemAdd returned errSecDuplicateItem. This is not an error because we've handled it so let's carry on.");
+            NSMutableDictionary *updateAttributes = [[self searchAttributes] mutableCopy];
+            [updateAttributes removeObjectForKey:(__bridge id)kSecReturnAttributes];
+            storeResult = SecItemUpdate((__bridge CFDictionaryRef)updateAttributes,
+                                        (__bridge CFDictionaryRef)storeAttributes);
+        }
     }
     
     if (storeResult != noErr) {
