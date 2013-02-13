@@ -469,6 +469,10 @@
     BOOL success = YES;
     
     NSURL *finalWholeStoreLocation = [[anOperation userInfo] valueForKey:kTICDSDocumentDownloadFinalWholeStoreLocation];
+    if (finalWholeStoreLocation == nil || [finalWholeStoreLocation path] == nil) {
+        [self bailFromDocumentDownloadPostProcessingForOperation:anOperation withError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError classAndMethod:__PRETTY_FUNCTION__]];
+        return;
+    }
     
     // Remove existing WholeStore, if necessary
     if( [[self fileManager] fileExistsAtPath:[finalWholeStoreLocation path]] ) {
