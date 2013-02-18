@@ -59,6 +59,19 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:TICDSDocumentSyncManagerDidDecreaseActivityNotification object:self];
 }
 
+#pragma mark - LOCAL HELPER FILE REMOVAL
+
+- (void)removeLocalHelperFiles:(NSError **)error
+{
+    if ([self.fileManager fileExistsAtPath:[self.helperFileDirectoryLocation path]]) {
+        [self.fileManager removeItemAtPath:[self.helperFileDirectoryLocation path] error:error];
+    }
+    
+    if ([self.fileManager fileExistsAtPath:[self.defaultHelperFileLocation path]]) {
+        [self.fileManager removeItemAtPath:[self.defaultHelperFileLocation path] error:error];
+    }
+}
+
 #pragma mark - DELAYED REGISTRATION
 
 - (void)configureWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(NSManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo
