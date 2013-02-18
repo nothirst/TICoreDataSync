@@ -71,6 +71,7 @@
     OSStatus searchResult = SecItemCopyMatching((__bridge CFDictionaryRef)searchAttributes, (CFTypeRef *)&localResult);
     OSStatus storeResult = noErr;
 
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Debugging call, SecItemCopyMatching returned %ld for searchAttributes %@", searchResult, searchAttributes);
     if (searchResult == noErr || searchResult == errSecDuplicateItem) {
         if (searchResult == errSecDuplicateItem) {
             TICDSLog(TICDSLogVerbosityErrorsOnly, @"A call to SecItemCopyMatching returned errSecDuplicateItem. This is not an error, but it's slightly unexpected. Either way, we've handled it so let's carry on.");
@@ -92,15 +93,15 @@
         [storeAttributes setObject:key forKey:(__bridge id)kSecValueData];
         [storeAttributes setObject:@"fza-sync" forKey:(__bridge id)kSecAttrLabel];
         
-        // [storeAttributes setObject: (id)kCFBooleanTrue forKey: (id)kSecReturnPersistentRef];
         [storeAttributes removeObjectForKey:(__bridge id)kSecReturnAttributes];
         storeResult = SecItemAdd((__bridge CFDictionaryRef)storeAttributes, NULL);
         if (storeResult == errSecDuplicateItem) {
             TICDSLog(TICDSLogVerbosityErrorsOnly, @"A call to SecItemAdd returned errSecDuplicateItem. This is not an error because we've handled it so let's carry on.");
             NSMutableDictionary *updateAttributes = [[self searchAttributes] mutableCopy];
             [updateAttributes removeObjectForKey:(__bridge id)kSecReturnAttributes];
+            NSDictionary *updatedStoreAttributes = @{(__bridge id)kSecValueData : key};
             storeResult = SecItemUpdate((__bridge CFDictionaryRef)updateAttributes,
-                                        (__bridge CFDictionaryRef)storeAttributes);
+                                        (__bridge CFDictionaryRef)updatedStoreAttributes);
         }
     }
     
