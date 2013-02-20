@@ -71,7 +71,6 @@
     OSStatus searchResult = SecItemCopyMatching((__bridge CFDictionaryRef)searchAttributes, (CFTypeRef *)&localResult);
     OSStatus storeResult = noErr;
 
-    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Debugging call, SecItemCopyMatching returned %ld for searchAttributes %@", searchResult, searchAttributes);
     if (searchResult == noErr || searchResult == errSecDuplicateItem) {
         if (searchResult == errSecDuplicateItem) {
             TICDSLog(TICDSLogVerbosityErrorsOnly, @"A call to SecItemCopyMatching returned errSecDuplicateItem. This is not an error, but it's slightly unexpected. Either way, we've handled it so let's carry on.");
