@@ -17,6 +17,7 @@
  
  1. `TICDSFileManagerBasedDocumentSyncManager`
  2. `TICDSDropboxSDKBasedDocumentSyncManager`
+ 3. `TICDSiCloudBasedDocumentSyncManager`
  
  @warning You must register the document sync manager before you can use it to synchronize the document, or perform any other tasks. */
 

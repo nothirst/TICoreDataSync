@@ -69,6 +69,41 @@
 /** Call this method if the operation is cancelled midway through its work. This will set the required values for `isExecuting` and `isFinished`. */
 - (void)operationWasCancelled;
 
+/** @name Coordinated I/O */
+
+/** Copy a file or directory using coordinated reads/writes. **/
+- (BOOL)copyItemAtPath:(NSString *)fromPath toPath:(NSString *)toPath error:(NSError **)error;
+
+/** Move a file or directory using coordinated reads/writes. **/
+- (BOOL)moveItemAtPath:(NSString *)fromPath toPath:(NSString *)toPath error:(NSError **)error;
+
+/** Remove a file or directory using coordinated reads/writes. **/
+- (BOOL)removeItemAtPath:(NSString *)fromPath error:(NSError **)error;
+
+/** Create directory using coordinated write **/
+- (BOOL)createDirectoryAtPath:(NSString *)path withIntermediateDirectories:(BOOL)createIntermediates attributes:(NSDictionary *)attributes error:(NSError **)error;
+
+/** Check for existence of file or directory using coordinated read **/
+- (BOOL)fileExistsAtPath:(NSString *)path;
+
+/** Get directory contents using coordinated read **/
+- (NSArray *)contentsOfDirectoryAtPath:(NSString *)path error:(NSError **)error;
+
+/** Get item attributes using coordinated read **/
+- (NSDictionary *)attributesOfItemAtPath:(NSString *)path error:(NSError **)error;
+
+/** Write data to file in coordinated way **/
+-(BOOL)writeData:(NSData *)data toFile:(NSString *)path error:(NSError **)error;
+
+/** Write object to file in coordinated way **/
+-(BOOL)writeObject:(id)object toFile:(NSString *)path;
+
+/** Read data in coordinated way **/
+-(NSData *)dataWithContentsOfFile:(NSString *)file error:(NSError **)error;
+
+/** Read data in a coordinated way **/
+-(id)readObjectFromFile:(NSString *)path;
+
 /** @name Properties */
 
 /** Used to indicate whether the operation should encrypt files stored on the remote. */

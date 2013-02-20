@@ -74,7 +74,7 @@
 {
     // cleanup temporary directory, if necessary
     if( _tempFileDirectoryPath ) {
-        [[self fileManager] removeItemAtPath:_tempFileDirectoryPath error:nil];
+        [self removeItemAtPath:_tempFileDirectoryPath error:NULL];
     }
     
     if( success ) {
@@ -187,6 +187,328 @@
     _tempFileDirectoryPath = aDirectoryPath;
     
     return _tempFileDirectoryPath;
+}
+
+#pragma mark - Coordinated I/O
+
+// This queue is used to schedule file coordinator cancels, and serialize access to state variables
+// used to determine whether to continue a file operation.
++ (dispatch_queue_t)fileCoordinationDispatchQueue
+{
+    static dispatch_queue_t queue = NULL;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        queue = dispatch_queue_create("ticdsoperationfilecoordinatorqueue", DISPATCH_QUEUE_SERIAL);
+    });
+    return queue;
+}
+
++ (void)scheduleFileCoordinatorTimeoutBlock:(void(^)(void))block
+{
+    static const double TICDSOperationFileCoordinatorTimeout = 20.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, TICDSOperationFileCoordinatorTimeout * NSEC_PER_SEC);
+    dispatch_after(popTime, [self fileCoordinationDispatchQueue], block);
+}
+
+- (BOOL)copyItemAtPath:(NSString *)fromPath toPath:(NSString *)toPath error:(NSError **)error
+{
+    __block NSError *anyError = nil;
+    __block BOOL success = NO;
+    
+    NSURL *readURL = [NSURL fileURLWithPath:fromPath];
+    NSURL *writeURL = [NSURL fileURLWithPath:toPath];
+    
+    __block BOOL beganFileOperation = NO;
+    __block BOOL cancelled = NO;
+    NSFileCoordinator *fileCoordinator = [[NSFileCoordinator alloc] initWithFilePresenter:nil];
+    [self.class scheduleFileCoordinatorTimeoutBlock:^{
+        if ( !beganFileOperation ) {
+            [fileCoordinator cancel];
+            cancelled = YES;
+        }
+    }];
+    
+    [fileCoordinator coordinateReadingItemAtURL:readURL options:0 writingItemAtURL:writeURL options:NSFileCoordinatorWritingForReplacing error:&anyError byAccessor:^(NSURL *newReadingURL, NSURL *newWritingURL) {
+        dispatch_sync([self.class fileCoordinationDispatchQueue], ^{ beganFileOperation = YES; });
+        if ( cancelled ) return;
+        [[self fileManager] removeItemAtURL:newWritingURL error:NULL];
+        success = [[self fileManager] copyItemAtURL:newReadingURL toURL:newWritingURL error:&anyError];
+    }];
+    
+    if ( !success && !cancelled ) {
+        // Force it
+        anyError = nil;
+        [[self fileManager] removeItemAtURL:writeURL error:NULL];
+        success = [[self fileManager] copyItemAtURL:readURL toURL:writeURL error:&anyError];
+    }
+
+    if ( error ) *error = anyError;
+    return success;
+}
+
+- (BOOL)moveItemAtPath:(NSString *)fromPath toPath:(NSString *)toPath error:(NSError **)error
+{
+    __block NSError *anyError = nil;
+    NSURL *fromURL = [NSURL fileURLWithPath:fromPath];
+    NSURL *toURL = [NSURL fileURLWithPath:toPath];
+    __block BOOL success = NO;
+    
+    __block BOOL beganFileOperation = NO;
+    __block BOOL cancelled = NO;
+    NSFileCoordinator *fileCoordinator = [[NSFileCoordinator alloc] initWithFilePresenter:nil];
+    [self.class scheduleFileCoordinatorTimeoutBlock:^{
+        if ( !beganFileOperation ) {
+            [fileCoordinator cancel];
+            cancelled = YES;
+        }
+    }];
+    
+    [fileCoordinator coordinateWritingItemAtURL:fromURL options:NSFileCoordinatorWritingForDeleting writingItemAtURL:toURL options:NSFileCoordinatorWritingForReplacing error:&anyError byAccessor:^(NSURL *newFromURL, NSURL *newToURL) {
+        dispatch_sync([self.class fileCoordinationDispatchQueue], ^{ beganFileOperation = YES; });
+        if ( cancelled ) return;
+        success = [[self fileManager] moveItemAtURL:newFromURL toURL:newToURL error:&anyError];
+        [fileCoordinator itemAtURL:newFromURL didMoveToURL:newToURL];
+    }];
+    
+    if ( error ) *error = anyError;
+    return success;
+}
+
+- (BOOL)removeItemAtPath:(NSString *)fromPath error:(NSError **)error
+{
+    NSURL *fromURL = [NSURL fileURLWithPath:fromPath];
+    __block BOOL success = NO;
+    __block NSError *anyError = nil;
+    
+    __block BOOL beganFileOperation = NO;
+    __block BOOL cancelled = NO;
+    NSFileCoordinator *fileCoordinator = [[NSFileCoordinator alloc] initWithFilePresenter:nil];
+    [self.class scheduleFileCoordinatorTimeoutBlock:^{
+        if ( !beganFileOperation ) {
+            [fileCoordinator cancel];
+            cancelled = YES;
+        }
+    }];
+    
+    [fileCoordinator coordinateWritingItemAtURL:fromURL options:NSFileCoordinatorWritingForDeleting error:&anyError byAccessor:^(NSURL *newURL) {
+        dispatch_sync([self.class fileCoordinationDispatchQueue], ^{ beganFileOperation = YES; });
+        if ( cancelled ) return;
+        success = [[self fileManager] removeItemAtURL:newURL error:&anyError];
+    }];
+    
+    if ( error ) *error = anyError;
+    
+    return success;
+}
+
+- (BOOL)fileExistsAtPath:(NSString *)fromPath
+{
+    NSURL *url = [NSURL fileURLWithPath:fromPath];
+    __block NSError *anyError = nil;
+    __block BOOL result = NO;
+    
+    __block BOOL beganFileOperation = NO;
+    __block BOOL cancelled = NO;
+    NSFileCoordinator *fileCoordinator = [[NSFileCoordinator alloc] initWithFilePresenter:nil];
+    [self.class scheduleFileCoordinatorTimeoutBlock:^{
+        if ( !beganFileOperation ) {
+            [fileCoordinator cancel];
+            cancelled = YES;
+        }
+    }];
+    
+    [fileCoordinator coordinateReadingItemAtURL:url options:0 error:&anyError byAccessor:^(NSURL *newURL) {
+        dispatch_sync([self.class fileCoordinationDispatchQueue], ^{ beganFileOperation = YES; });
+        if ( cancelled ) return;
+        result = [[self fileManager] fileExistsAtPath:newURL.path];
+    }];
+    
+    if ( anyError ) {
+        result = [[self fileManager] fileExistsAtPath:url.path];
+    }
+    
+    return result;
+}
+
+- (BOOL)createDirectoryAtPath:(NSString *)path withIntermediateDirectories:(BOOL)createIntermediates attributes:(NSDictionary *)attributes error:(NSError **)error
+{
+    NSURL *url = [NSURL fileURLWithPath:path];
+    __block BOOL success = NO;
+    __block NSError *anyError = nil;
+
+    __block BOOL beganFileOperation = NO;
+    __block BOOL cancelled = NO;
+    NSFileCoordinator *fileCoordinator = [[NSFileCoordinator alloc] initWithFilePresenter:nil];
+    [self.class scheduleFileCoordinatorTimeoutBlock:^{
+        if ( !beganFileOperation ) {
+            [fileCoordinator cancel];
+            cancelled = YES;
+        }
+    }];
+    
+    [fileCoordinator coordinateWritingItemAtURL:url options:NSFileCoordinatorWritingForReplacing error:&anyError byAccessor:^(NSURL *newURL) {
+        dispatch_sync([self.class fileCoordinationDispatchQueue], ^{ beganFileOperation = YES; });
+        if ( cancelled ) return;
+        success = [[self fileManager] createDirectoryAtPath:newURL.path withIntermediateDirectories:createIntermediates attributes:attributes error:&anyError];
+    }];
+
+    if ( error ) *error = anyError;
+    return success;
+}
+
+- (NSArray *)contentsOfDirectoryAtPath:(NSString *)path error:(NSError **)error
+{
+    NSURL *url = [NSURL fileURLWithPath:path];
+    __block NSError *anyError;
+    __block NSArray *result = nil;
+
+    __block BOOL beganFileOperation = NO;
+    __block BOOL cancelled = NO;
+    NSFileCoordinator *fileCoordinator = [[NSFileCoordinator alloc] initWithFilePresenter:nil];
+    [self.class scheduleFileCoordinatorTimeoutBlock:^{
+        if ( !beganFileOperation ) {
+            [fileCoordinator cancel];
+            cancelled = YES;
+        }
+    }];
+    
+    [fileCoordinator coordinateReadingItemAtURL:url options:0 error:&anyError byAccessor:^(NSURL *newURL) {
+        dispatch_sync([self.class fileCoordinationDispatchQueue], ^{ beganFileOperation = YES; });
+        if ( cancelled ) return;
+        result = [[self fileManager] contentsOfDirectoryAtPath:newURL.path error:&anyError];
+    }];
+    
+    if ( error ) *error = anyError;
+    return result;
+}
+
+- (NSDictionary *)attributesOfItemAtPath:(NSString *)path error:(NSError **)error
+{
+    NSURL *url = [NSURL fileURLWithPath:path];
+    __block NSError *anyError;
+    __block NSDictionary *result = nil;
+
+    __block BOOL beganFileOperation = NO;
+    __block BOOL cancelled = NO;
+    NSFileCoordinator *fileCoordinator = [[NSFileCoordinator alloc] initWithFilePresenter:nil];
+    [self.class scheduleFileCoordinatorTimeoutBlock:^{
+        if ( !beganFileOperation ) {
+            [fileCoordinator cancel];
+            cancelled = YES;
+        }
+    }];
+    
+    [fileCoordinator coordinateReadingItemAtURL:url options:0 error:&anyError byAccessor:^(NSURL *newURL) {
+        dispatch_sync([self.class fileCoordinationDispatchQueue], ^{ beganFileOperation = YES; });
+        if ( cancelled ) return;
+        result = [[self fileManager] attributesOfItemAtPath:newURL.path error:&anyError];
+    }];
+    
+    if ( error ) *error = anyError;
+    return result;
+}
+
+-(BOOL)writeData:(NSData *)data toFile:(NSString *)path error:(NSError **)error
+{
+    NSURL *url = [NSURL fileURLWithPath:path];
+    __block BOOL success = NO;
+    __block NSError *anyError = nil;
+
+    __block BOOL beganFileOperation = NO;
+    __block BOOL cancelled = NO;
+    NSFileCoordinator *fileCoordinator = [[NSFileCoordinator alloc] initWithFilePresenter:nil];
+    [self.class scheduleFileCoordinatorTimeoutBlock:^{
+        if ( !beganFileOperation ) {
+            [fileCoordinator cancel];
+            cancelled = YES;
+        }
+    }];
+    
+    [fileCoordinator coordinateWritingItemAtURL:url options:NSFileCoordinatorWritingForReplacing error:&anyError byAccessor:^(NSURL *newURL) {
+        dispatch_sync([self.class fileCoordinationDispatchQueue], ^{ beganFileOperation = YES; });
+        if ( cancelled ) return;
+        success = [data writeToFile:newURL.path options:0 error:&anyError];
+    }];
+    
+    if ( error ) *error = anyError;
+    return success;
+}
+
+-(BOOL)writeObject:(id)object toFile:(NSString *)path
+{
+    NSURL *url = [NSURL fileURLWithPath:path];
+    __block BOOL success = NO;
+    __block NSError *anyError = nil;
+
+    __block BOOL beganFileOperation = NO;
+    __block BOOL cancelled = NO;
+    NSFileCoordinator *fileCoordinator = [[NSFileCoordinator alloc] initWithFilePresenter:nil];
+    [self.class scheduleFileCoordinatorTimeoutBlock:^{
+        if ( !beganFileOperation ) {
+            [fileCoordinator cancel];
+            cancelled = YES;
+        }
+    }];
+    
+    [fileCoordinator coordinateWritingItemAtURL:url options:NSFileCoordinatorWritingForReplacing error:&anyError byAccessor:^(NSURL *newURL) {
+        dispatch_sync([self.class fileCoordinationDispatchQueue], ^{ beganFileOperation = YES; });
+        if ( cancelled ) return;
+        success = [object writeToFile:newURL.path atomically:NO];
+    }];
+    
+    return success;
+}
+
+-(NSData *)dataWithContentsOfFile:(NSString *)path error:(NSError **)error
+{
+    NSURL *url = [NSURL fileURLWithPath:path];
+    __block NSError *anyError;
+    __block NSData *result = nil;
+
+    __block BOOL beganFileOperation = NO;
+    __block BOOL cancelled = NO;
+    NSFileCoordinator *fileCoordinator = [[NSFileCoordinator alloc] initWithFilePresenter:nil];
+    [self.class scheduleFileCoordinatorTimeoutBlock:^{
+        if ( !beganFileOperation ) {
+            [fileCoordinator cancel];
+            cancelled = YES;
+        }
+    }];
+    
+    [fileCoordinator coordinateReadingItemAtURL:url options:0 error:&anyError byAccessor:^(NSURL *newURL) {
+        dispatch_sync([self.class fileCoordinationDispatchQueue], ^{ beganFileOperation = YES; });
+        if ( cancelled ) return;
+        result = [NSData dataWithContentsOfFile:newURL.path options:0 error:&anyError];
+    }];
+    
+    if ( error ) *error = anyError;
+    return result;
+}
+
+-(id)readObjectFromFile:(NSString *)path
+{
+    NSURL *url = [NSURL fileURLWithPath:path];
+    __block NSError *anyError;
+    __block id result = nil;
+
+    __block BOOL beganFileOperation = NO;
+    __block BOOL cancelled = NO;
+    NSFileCoordinator *fileCoordinator = [[NSFileCoordinator alloc] initWithFilePresenter:nil];
+    [self.class scheduleFileCoordinatorTimeoutBlock:^{
+        if ( !beganFileOperation ) {
+            [fileCoordinator cancel];
+            cancelled = YES;
+        }
+    }];
+    
+    [fileCoordinator coordinateReadingItemAtURL:url options:0 error:&anyError byAccessor:^(NSURL *newURL) {
+        dispatch_sync([self.class fileCoordinationDispatchQueue], ^{ beganFileOperation = YES; });
+        if ( cancelled ) return;
+        NSInputStream *stream = [NSInputStream inputStreamWithFileAtPath:newURL.path];
+        result = [NSPropertyListSerialization propertyListWithStream:stream options:0 format:0 error:&anyError];
+    }];
+    
+    return result;
 }
 
 #pragma mark - Properties

@@ -17,6 +17,7 @@
  
  1. `TICDSFileManagerBasedApplicationSyncManager`
  2. `TICDSDropboxSDKBasedApplicationSyncManager`
+ 3. `TICDSiCloudBasedApplicationSyncManager`
  
  @warning You must register the application sync manager before you can use it to perform any other tasks, or register any documents.
 */

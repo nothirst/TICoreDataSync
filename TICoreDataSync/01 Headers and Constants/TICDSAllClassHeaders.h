@@ -31,6 +31,23 @@
 #import "TICDSDocumentClientDeletionOperation.h"
 #import "TICDSRemoveAllRemoteSyncDataOperation.h"
 
+#pragma mark iCloud-Based
+#import "TICDSiCloudBasedApplicationSyncManager.h"
+#import "TICDSiCloudBasedDocumentSyncManager.h"
+#import "TICDSiCloudBasedApplicationRegistrationOperation.h"
+#import "TICDSiCloudBasedDocumentRegistrationOperation.h"
+#import "TICDSiCloudBasedListOfPreviouslySynchronizedDocumentsOperation.h"
+#import "TICDSiCloudBasedWholeStoreUploadOperation.h"
+#import "TICDSiCloudBasedWholeStoreDownloadOperation.h"
+#import "TICDSiCloudBasedPreSynchronizationOperation.h"
+#import "TICDSiCloudBasedPostSynchronizationOperation.h"
+#import "TICDSiCloudBasedVacuumOperation.h"
+#import "TICDSiCloudBasedListOfDocumentRegisteredClientsOperation.h"
+#import "TICDSiCloudBasedListOfApplicationRegisteredClientsOperation.h"
+#import "TICDSiCloudBasedDocumentDeletionOperation.h"
+#import "TICDSiCloudBasedDocumentClientDeletionOperation.h"
+#import "TICDSiCloudBasedRemoveAllRemoteSyncDataOperation.h"
+
 #pragma mark File Manager-Based
 #import "TICDSFileManagerBasedApplicationSyncManager.h"
 #import "TICDSFileManagerBasedDocumentSyncManager.h"
@@ -89,3 +106,4 @@
 #import "TICoreDataFactory.h"
 #import "TIManagedObjectExtensions.h"
 #import "TIKQDirectoryWatcher.h"
+#import "TIUbiquityMonitor.h"

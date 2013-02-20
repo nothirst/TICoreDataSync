@@ -612,21 +612,29 @@
     NSString *relevantKey = syncChange.relevantKey;
     
     [self.backgroundApplicationContext performBlockAndWait:^{
-        NSManagedObject *object = [self backgroundApplicationContextObjectForEntityName:objectEntityName syncIdentifier:objectSyncID];
-        
-        if (object == nil) {
-            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object not found locally for attribute change to %@", objectEntityName);
-            [self.synchronizationWarnings addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteAttributeSyncChange entityName:objectEntityName relatedObjectEntityName:nil attributes:changedAttributes]];
-            return;
+        @try {
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Applying Attribute Change sync change");
+            
+            TICDSSynchronizedManagedObject *object = (id)[self backgroundApplicationContextObjectForEntityName:objectEntityName syncIdentifier:objectSyncID];
+            
+            if( object == nil || object.managedObjectContext == nil || object.isDeleted ) {
+                TICDSLog(TICDSLogVerbosityErrorsOnly, @"Object not found locally for attribute change to %@", objectEntityName);
+                [self.synchronizationWarnings addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteAttributeSyncChange entityName:objectEntityName relatedObjectEntityName:nil attributes:changedAttributes]];
+                return;
+            }
+            
+            TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"%@", objectEntityName);
+            
+            [object willChangeValueForKey:relevantKey];
+            [object setPrimitiveValue:changedAttributes forKey:relevantKey];
+            [object didChangeValueForKey:relevantKey];
+            
+            TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed attribute on object: %@", object);
         }
-        
-        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"%@", objectEntityName);
-        
-        [object willChangeValueForKey:relevantKey];
-        [object setPrimitiveValue:changedAttributes forKey:relevantKey];
-        [object didChangeValueForKey:relevantKey];
-        
-        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed attribute on object: %@", object);
+        @catch ( NSException *exception ) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Exception thrown while applying attribute change %@: %@", objectEntityName, exception);
+            [[self synchronizationWarnings] addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectExceptionAroseWhileApplyingAttributeSyncChange entityName:objectEntityName relatedObjectEntityName:nil attributes:changedAttributes]];
+        }
     }];
 }
 

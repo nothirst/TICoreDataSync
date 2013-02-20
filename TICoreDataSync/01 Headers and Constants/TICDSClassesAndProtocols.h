@@ -28,6 +28,23 @@
 @class TICDSDocumentClientDeletionOperation;
 @class TICDSRemoveAllRemoteSyncDataOperation;
 
+#pragma mark iCloud-Based
+@class TICDSiCloudBasedApplicationSyncManager;
+@class TICDSiCloudBasedDocumentSyncManager;
+@class TICDSiCloudBasedApplicationRegistrationOperation;
+@class TICDSiCloudBasedDocumentRegistrationOperation;
+@class TICDSiCloudBasedListOfPreviouslySynchronizedDocumentsOperation;
+@class TICDSiCloudBasedWholeStoreUploadOperation;
+@class TICDSiCloudBasedWholeStoreDownloadOperation;
+@class TICDSiCloudBasedPreSynchronizationOperation;
+@class TICDSiCloudBasedPostSynchronizationOperation;
+@class TICDSiCloudBasedVacuumOperation;
+@class TICDSiCloudBasedListOfDocumentRegisteredClientsOperation;
+@class TICDSiCloudBasedListOfApplicationRegisteredClientsOperation;
+@class TICDSiCloudBasedDocumentDeletionOperation;
+@class TICDSiCloudBasedDocumentClientDeletionOperation;
+@class TICDSiCloudBasedRemoveAllRemoteSyncDataOperation;
+
 #pragma mark File Manager-Based
 @class TICDSFileManagerBasedApplicationSyncManager;
 @class TICDSFileManagerBasedDocumentSyncManager;

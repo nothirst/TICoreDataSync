@@ -149,6 +149,7 @@ typedef enum _TICDSSyncWarningType {
     TICDSSyncWarningTypeObjectWithRelationshipsChangedLocallyAlreadyDeletedByRemoteSyncChange = 5,
     TICDSSyncWarningTypeObjectWithAttributesChangedRemotelyNowDeletedByLocalSyncChange = 6,
     TICDSSyncWarningTypeObjectWithRelationshipsChangedRemotelyNowDeletedByLocalSyncChange = 7,
+    TICDSSyncWarningTypeObjectExceptionAroseWhileApplyingAttributeSyncChange = 8,
     
 } TICDSSyncWarningType;
 
