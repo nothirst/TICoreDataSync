@@ -1,5 +1,5 @@
 //
-//  TICDSFileManagerBasedSynchronizationOperation.m
+//  TICDSFileManagerBasedPreSynchronizationOperation.m
 //  ShoppingListMac
 //
 //  Created by Tim Isted on 26/04/2011.
@@ -9,7 +9,7 @@
 #import "TICoreDataSync.h"
 
 
-@implementation TICDSFileManagerBasedSynchronizationOperation
+@implementation TICDSFileManagerBasedPreSynchronizationOperation
 
 - (void)fetchRemoteIntegrityKey
 {
@@ -59,36 +59,6 @@
     }
     
     [self builtArrayOfClientDeviceIdentifiers:clientDeviceIdentifiers];
-}
-
-- (void)uploadLocalSyncChangeSetFileAtLocation:(NSURL *)aLocation
-{
-    NSError *anyError = nil;
-    BOOL success = YES;
-    
-    if( [self shouldUseEncryption] ) {
-        // encrypt file first
-        NSURL *tmpFileLocation = [NSURL fileURLWithPath:[[self tempFileDirectoryPath] stringByAppendingPathComponent:[[aLocation path] lastPathComponent]]];
-        
-        success = [[self cryptor] encryptFileAtLocation:aLocation writingToLocation:tmpFileLocation error:&anyError];
-        if( !success ) {
-            [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            [self uploadedLocalSyncChangeSetFileSuccessfully:success];
-            return;
-        }
-        
-        aLocation = tmpFileLocation;
-    }
-    
-    NSString *uploadPath = [[self thisDocumentSyncChangesThisClientDirectoryPath] stringByAppendingPathComponent:[[aLocation path] lastPathComponent]];
-    
-    success = [[self fileManager] moveItemAtPath:[aLocation path] toPath:uploadPath error:&anyError];
-    
-    if( !success ) {
-        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-    }
-    
-    [self uploadedLocalSyncChangeSetFileSuccessfully:success];
 }
 
 - (void)buildArrayOfSyncChangeSetIdentifiersForClientIdentifier:(NSString *)anIdentifier
@@ -159,32 +129,6 @@
     [self fetchedSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientIdentifier:aClientIdentifier modificationDate:modificationDate withSuccess:success];
 }
 
-- (void)uploadRecentSyncFileAtLocation:(NSURL *)aLocation
-{
-    NSString *remoteFile = [self thisDocumentRecentSyncsThisClientFilePath];
-    
-    NSError *anyError = nil;
-    BOOL success = YES;
-    
-    if( [[self fileManager] fileExistsAtPath:remoteFile] ) {
-        success = [[self fileManager] removeItemAtPath:remoteFile error:&anyError]; 
-    }
-    
-    if( !success ) {
-        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-        [self uploadedRecentSyncFileSuccessfully:success];
-        return;
-    }
-    
-    success = [[self fileManager] copyItemAtPath:[aLocation path] toPath:remoteFile error:&anyError];
-    
-    if( !success ) {
-        [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-    }
-    
-    [self uploadedRecentSyncFileSuccessfully:success];
-}
-
 #pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
@@ -192,7 +136,7 @@
     _thisDocumentSyncChangesDirectoryPath = nil;
     _thisDocumentSyncChangesThisClientDirectoryPath = nil;
     _thisDocumentRecentSyncsThisClientFilePath = nil;
-
+    
 }
 
 #pragma mark - Paths

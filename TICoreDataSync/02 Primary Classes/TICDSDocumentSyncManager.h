@@ -50,6 +50,17 @@
     NSString *_integrityKey;
 }
 
+#pragma mark - Local helper file removal
+/** @name Local Helper File Removal */
+
+/** Remove Local Helper Files.
+ 
+ Use this method to teardown the local sync helper files that TICDS stores. This method does not require a configured and registered document sync manager unless you've specified a custom location for TICDS to store the helper files.
+ 
+ @param error If the file manager fails to remove the files the error will be non-nil.
+  */
+- (void)removeLocalHelperFiles:(NSError **)error;
+
 #pragma mark - One-Shot Document Registration
 /** @name One-Shot Document Registration */
 

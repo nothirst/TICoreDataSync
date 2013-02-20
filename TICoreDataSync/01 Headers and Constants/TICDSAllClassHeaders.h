@@ -21,7 +21,9 @@
 #import "TICDSListOfPreviouslySynchronizedDocumentsOperation.h"
 #import "TICDSWholeStoreUploadOperation.h"
 #import "TICDSWholeStoreDownloadOperation.h"
+#import "TICDSPreSynchronizationOperation.h"
 #import "TICDSSynchronizationOperation.h"
+#import "TICDSPostSynchronizationOperation.h"
 #import "TICDSVacuumOperation.h"
 #import "TICDSListOfDocumentRegisteredClientsOperation.h"
 #import "TICDSListOfApplicationRegisteredClientsOperation.h"
@@ -37,7 +39,8 @@
 #import "TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation.h"
 #import "TICDSFileManagerBasedWholeStoreUploadOperation.h"
 #import "TICDSFileManagerBasedWholeStoreDownloadOperation.h"
-#import "TICDSFileManagerBasedSynchronizationOperation.h"
+#import "TICDSFileManagerBasedPreSynchronizationOperation.h"
+#import "TICDSFileManagerBasedPostSynchronizationOperation.h"
 #import "TICDSFileManagerBasedVacuumOperation.h"
 #import "TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation.h"
 #import "TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation.h"
@@ -46,7 +49,6 @@
 #import "TICDSFileManagerBasedRemoveAllRemoteSyncDataOperation.h"
 
 #pragma mark DropboxSDK-Based
-#if TARGET_OS_IPHONE
 #import "TICDSDropboxSDKBasedApplicationSyncManager.h"
 #import "TICDSDropboxSDKBasedDocumentSyncManager.h"
 #import "TICDSDropboxSDKBasedApplicationRegistrationOperation.h"
@@ -54,14 +56,14 @@
 #import "TICDSDropboxSDKBasedListOfPreviouslySynchronizedDocumentsOperation.h"
 #import "TICDSDropboxSDKBasedWholeStoreUploadOperation.h"
 #import "TICDSDropboxSDKBasedWholeStoreDownloadOperation.h"
-#import "TICDSDropboxSDKBasedSynchronizationOperation.h"
+#import "TICDSDropboxSDKBasedPreSynchronizationOperation.h"
+#import "TICDSDropboxSDKBasedPostSynchronizationOperation.h"
 #import "TICDSDropboxSDKBasedVacuumOperation.h"
 #import "TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation.h"
 #import "TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation.h"
 #import "TICDSDropboxSDKBasedDocumentDeletionOperation.h"
 #import "TICDSDropboxSDKBasedDocumentClientDeletionOperation.h"
 #import "TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation.h"
-#endif
 
 #pragma mark - Internal Data Model
 #import "TICDSSyncChange.h"

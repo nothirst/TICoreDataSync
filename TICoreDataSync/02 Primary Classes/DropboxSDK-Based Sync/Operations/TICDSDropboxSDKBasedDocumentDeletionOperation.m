@@ -6,8 +6,6 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
-#if TARGET_OS_IPHONE
-
 #import "TICoreDataSync.h"
 
 @implementation TICDSDropboxSDKBasedDocumentDeletionOperation
@@ -49,7 +47,11 @@
     NSString *path = [metadata path];
     
     if( [path isEqualToString:[self documentDirectoryPath]] ) {
-        [self discoveredStatusOfIdentifiedDocumentDirectory:![metadata isDeleted] ? TICDSRemoteFileStructureExistsResponseTypeDoesExist : TICDSRemoteFileStructureExistsResponseTypeDoesNotExist];
+        if (metadata.isDeleted == NO) {
+            [self discoveredStatusOfIdentifiedDocumentDirectory:TICDSRemoteFileStructureExistsResponseTypeDoesExist];
+        } else {
+            [self discoveredStatusOfIdentifiedDocumentDirectory:TICDSRemoteFileStructureExistsResponseTypeDoesNotExist];
+        }
         
         return;
     }
@@ -141,7 +143,7 @@
 }
 
 #pragma mark Copying
-- (void)restClient:(DBRestClient*)client copiedPath:(NSString *)from_path toPath:(NSString *)to_path
+- (void)restClient:(DBRestClient*)client copiedPath:(NSString *)froPath to:(NSString *)toPath
 {
     // should really check the paths, but there's only one copy procedure in this operation...
     [self copiedDocumentInfoPlistToDeletedDocumentsDirectoryWithSuccess:YES];
@@ -195,4 +197,3 @@
 
 @end
 
-#endif

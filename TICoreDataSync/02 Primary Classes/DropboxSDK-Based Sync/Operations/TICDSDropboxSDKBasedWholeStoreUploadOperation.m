@@ -6,7 +6,6 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
-#if TARGET_OS_IPHONE
 
 #import "TICoreDataSync.h"
 
@@ -97,6 +96,7 @@
 }
 
 #pragma mark - Rest Client Delegate
+
 #pragma mark Metadata
 - (void)restClient:(DBRestClient*)client loadedMetadata:(DBMetadata*)metadata
 {
@@ -198,6 +198,7 @@
 #pragma mark Directories
 - (void)restClient:(DBRestClient *)client createdFolder:(DBMetadata *)folder
 {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
     NSString *path = [folder path];
     
     if( [path isEqualToString:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath]] ) {
@@ -208,6 +209,7 @@
 
 - (void)restClient:(DBRestClient *)client createFolderFailedWithError:(NSError *)error
 {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
     NSString *path = [[error userInfo] valueForKey:@"path"];
     NSInteger errorCode = [error code];
     
@@ -270,7 +272,7 @@
 }
 
 #pragma mark Uploads
-- (void)restClient:(DBRestClient*)client uploadedFile:(NSString*)destPath from:(NSString*)srcPath
+-(void)restClient:(DBRestClient *)client uploadedFile:(NSString *)destPath from:(NSString *)srcPath
 {
     if( [[destPath lastPathComponent] isEqualToString:TICDSWholeStoreFilename] ) {
         [self uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:YES];
@@ -315,14 +317,17 @@
 }
 
 #pragma mark Copying
-- (void)restClient:(DBRestClient*)client copiedPath:(NSString *)from_path toPath:(NSString *)to_path
+
+- (void)restClient:(DBRestClient*)client copiedPath:(NSString *)fromPath to:(DBMetadata *)toPath
 {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
     // should really check the paths, but there's only one copy procedure in this operation...
     [self copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:YES];
 }
 
 - (void)restClient:(DBRestClient*)client copyPathFailedWithError:(NSError*)error
 {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
     NSString *sourcePath = [error.userInfo objectForKey:@"from_path"];
     NSString *destinationPath = [error.userInfo objectForKey:@"to_path"];
     NSInteger errorCode = error.code;
@@ -372,4 +377,3 @@
 
 @end
 
-#endif

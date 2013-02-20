@@ -6,8 +6,6 @@
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
-#if TARGET_OS_IPHONE
-
 #import "TICoreDataSync.h"
 
 @implementation TICDSDropboxSDKBasedDocumentClientDeletionOperation
@@ -223,7 +221,7 @@
 }
 
 #pragma mark Copying
-- (void)restClient:(DBRestClient*)client copiedPath:(NSString *)from_path toPath:(NSString *)to_path
+- (void)restClient:(DBRestClient*)client copiedPath:(NSString *)fromPath to:(NSString *)toPath
 {
     // should really check the paths, but there's only one copy procedure in this operation...
     [self copiedClientDeviceInfoPlistToDeletedClientsDirectoryWithSuccess:YES];
@@ -283,5 +281,3 @@
 @synthesize thisDocumentWholeStoreDirectoryPath = _thisDocumentWholeStoreDirectoryPath;
 
 @end
-
-#endif

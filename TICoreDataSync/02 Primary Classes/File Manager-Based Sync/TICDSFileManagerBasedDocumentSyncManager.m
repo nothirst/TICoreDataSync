@@ -175,9 +175,21 @@
     return operation;
 }
 
-- (TICDSSynchronizationOperation *)synchronizationOperation
+- (TICDSPreSynchronizationOperation *)preSynchronizationOperation
 {
-    TICDSFileManagerBasedSynchronizationOperation *operation = [[TICDSFileManagerBasedSynchronizationOperation alloc] initWithDelegate:self];
+    TICDSFileManagerBasedPreSynchronizationOperation *operation = [[TICDSFileManagerBasedPreSynchronizationOperation alloc] initWithDelegate:self];
+    
+    [operation setThisDocumentDirectoryPath:[self thisDocumentDirectoryPath]];
+    [operation setThisDocumentSyncChangesDirectoryPath:[self thisDocumentSyncChangesDirectoryPath]];
+    [operation setThisDocumentSyncChangesThisClientDirectoryPath:[self thisDocumentSyncChangesThisClientDirectoryPath]];
+    [operation setThisDocumentRecentSyncsThisClientFilePath:[self thisDocumentRecentSyncsThisClientFilePath]];
+    
+    return operation;
+}
+
+- (TICDSPostSynchronizationOperation *)postSynchronizationOperation
+{
+    TICDSFileManagerBasedPostSynchronizationOperation *operation = [[TICDSFileManagerBasedPostSynchronizationOperation alloc] initWithDelegate:self];
     
     [operation setThisDocumentDirectoryPath:[self thisDocumentDirectoryPath]];
     [operation setThisDocumentSyncChangesDirectoryPath:[self thisDocumentSyncChangesDirectoryPath]];

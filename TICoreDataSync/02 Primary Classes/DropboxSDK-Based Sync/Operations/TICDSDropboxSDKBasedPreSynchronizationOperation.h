@@ -1,21 +1,25 @@
 //
-//  TICDSDropboxSDKBasedSynchronizationOperation.h
+//  TICDSDropboxSDKBasedPreSynchronizationOperation.h
 //  iOSNotebook
 //
 //  Created by Tim Isted on 14/05/2011.
 //  Copyright 2011 Tim Isted. All rights reserved.
 //
 
-#if TARGET_OS_IPHONE
 
-#import "TICDSSynchronizationOperation.h"
+#import "TICDSPreSynchronizationOperation.h"
+
+#if TARGET_OS_IPHONE
 #import <DropboxSDK/DropboxSDK.h>
+#else
+#import <DropboxSDK/DropboxOSX.h>
+#endif
 
 /**
- `TICDSDropboxSDKBasedSynchronizationOperation` is a synchronization operation designed for use with a `TICDSDropboxSDKBasedDocumentSyncManager`.
+ `TICDSDropboxSDKBasedPreSynchronizationOperation` is a synchronization operation designed for use with a `TICDSDropboxSDKBasedDocumentSyncManager`.
  */
 
-@interface TICDSDropboxSDKBasedSynchronizationOperation : TICDSSynchronizationOperation <DBRestClientDelegate> {
+@interface TICDSDropboxSDKBasedPreSynchronizationOperation : TICDSPreSynchronizationOperation <DBRestClientDelegate> {
 @private
     DBRestClient *_restClient;
     
@@ -24,9 +28,7 @@
     
     NSString *_thisDocumentDirectoryPath;
     NSString *_thisDocumentSyncChangesDirectoryPath;
-    NSString *_thisDocumentSyncChangesThisClientDirectoryPath;
-    NSString *_thisDocumentRecentSyncsThisClientFilePath;
-    
+
     NSMutableDictionary *_failedDownloadRetryDictionary;
 }
 
@@ -43,12 +45,6 @@
 /** The path to this document's `SyncChanges` directory. */
 @property (copy) NSString *thisDocumentSyncChangesDirectoryPath;
 
-/** The path this client's directory inside this document's `SyncChanges` directory. */
-@property (copy) NSString *thisDocumentSyncChangesThisClientDirectoryPath;
-
-/** The path this client's RecentSync file inside this document's `RecentSyncs` directory. */
-@property (copy) NSString *thisDocumentRecentSyncsThisClientFilePath;
-
 /** The path to a given client's `SyncChanges` directory.
  
  @param anIdentifier The unique sync identifier of the document. */
@@ -62,4 +58,3 @@
 
 @end
 
-#endif

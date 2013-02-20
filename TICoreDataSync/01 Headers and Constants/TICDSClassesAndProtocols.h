@@ -36,7 +36,8 @@
 @class TICDSFileManagerBasedListOfPreviouslySynchronizedDocumentsOperation;
 @class TICDSFileManagerBasedWholeStoreUploadOperation;
 @class TICDSFileManagerBasedWholeStoreDownloadOperation;
-@class TICDSFileManagerBasedSynchronizationOperation;
+@class TICDSFileManagerBasedPreSynchronizationOperation;
+@class TICDSFileManagerBasedPostSynchronizationOperation;
 @class TICDSFileManagerBasedVacuumOperation;
 @class TICDSFileManagerBasedListOfDocumentRegisteredClientsOperation;
 @class TICDSFileManagerBasedListOfApplicationRegisteredClientsOperation;
@@ -45,7 +46,6 @@
 @class TICDSFileManagerBasedRemoveAllRemoteSyncDataOperation;
 
 #pragma mark DropboxSDK-Based
-#if TARGET_OS_IPHONE
 @class TICDSDropboxSDKBasedApplicationSyncManager;
 @class TICDSDropboxSDKBasedDocumentSyncManager;
 @class TICDSDropboxSDKBasedApplicationRegistrationOperation;
@@ -53,14 +53,12 @@
 @class TICDSDropboxSDKBasedListOfPreviouslySynchronizedDocumentsOperation;
 @class TICDSDropboxSDKBasedWholeStoreUploadOperation;
 @class TICDSDropboxSDKBasedWholeStoreDownloadOperation;
-@class TICDSDropboxSDKBasedSynchronizationOperation;
 @class TICDSDropboxSDKBasedVacuumOperation;
 @class TICDSDropboxSDKBasedListOfDocumentRegisteredClientsOperation;
 @class TICDSDropboxSDKBasedListOfApplicationRegisteredClientsOperation;
 @class TICDSDropboxSDKBasedDocumentDeletionOperation;
 @class TICDSDropboxSDKBasedDocumentClientDeletionOperation;
 @class TICDSDropboxSDKBasedRemoveAllRemoteSyncDataOperation;
-#endif
 
 #pragma mark - INTERNAL DATA MODEL
 @class TICDSSyncChange;
@@ -70,9 +68,9 @@
 @class FZACryptor;
 @class FZAKeyManager;
 #if (TARGET_OS_IPHONE)
-@class FZAKeyManagerMac;
-#else
 @class FZAKeyManageriPhone;
+#else
+@class FZAKeyManagerMac;
 #endif
 
 #pragma mark - EXTERNAL CLASSES

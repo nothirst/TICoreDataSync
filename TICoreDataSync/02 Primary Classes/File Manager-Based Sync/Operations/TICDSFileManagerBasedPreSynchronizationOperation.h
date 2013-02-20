@@ -1,5 +1,5 @@
 //
-//  TICDSFileManagerBasedSynchronizationOperation.h
+//  TICDSFileManagerBasedPreSynchronizationOperation.h
 //  ShoppingListMac
 //
 //  Created by Tim Isted on 26/04/2011.
@@ -9,10 +9,10 @@
 #import "TICDSSynchronizationOperation.h"
 
 /**
- `TICDSFileManagerBasedSynchronizationOperation` is a synchronization operation designed for use with a `TICDSFileManagerBasedDocumentSyncManager`.
+ `TICDSFileManagerBasedPreSynchronizationOperation` is a synchronization operation designed for use with a `TICDSFileManagerBasedDocumentSyncManager`.
  */
 
-@interface TICDSFileManagerBasedSynchronizationOperation : TICDSSynchronizationOperation {
+@interface TICDSFileManagerBasedPreSynchronizationOperation : TICDSPreSynchronizationOperation {
 @private
     NSString *_thisDocumentDirectoryPath;
     NSString *_thisDocumentSyncChangesDirectoryPath;

@@ -59,6 +59,19 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:TICDSDocumentSyncManagerDidDecreaseActivityNotification object:self];
 }
 
+#pragma mark - LOCAL HELPER FILE REMOVAL
+
+- (void)removeLocalHelperFiles:(NSError **)error
+{
+    if ([self.fileManager fileExistsAtPath:[self.helperFileDirectoryLocation path]]) {
+        [self.fileManager removeItemAtPath:[self.helperFileDirectoryLocation path] error:error];
+    }
+    
+    if ([self.fileManager fileExistsAtPath:[self.defaultHelperFileLocation path]]) {
+        [self.fileManager removeItemAtPath:[self.defaultHelperFileLocation path] error:error];
+    }
+}
+
 #pragma mark - DELAYED REGISTRATION
 
 - (void)configureWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(NSManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo
@@ -856,7 +869,7 @@
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Manual initiation of synchronization");
 
-    [self startSynchronizationProcess];
+    [self startPreSynchronizationProcess];
 }
 
 - (void)cancelSynchronization
@@ -875,46 +888,99 @@
     [self postDecreaseActivityNotification];
 }
 
+- (void)startPreSynchronizationProcess
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting pre-synchronization process");
+    [self postIncreaseActivityNotification];
+    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidBeginSynchronizing:)]) {
+        [self runOnMainQueueWithoutDeadlocking:^{
+            [(id)self.delegate documentSyncManagerDidBeginSynchronizing:self];
+        }];
+    }
+    
+    [self moveUnsynchronizedSyncChangesToMergeLocation];
+    
+    TICDSPreSynchronizationOperation *operation = [self preSynchronizationOperation];
+    
+    if (operation == nil) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create pre-synchronization operation object");
+        [self bailFromSynchronizationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
+        return;
+    }
+    
+    [operation setShouldUseEncryption:self.shouldUseEncryption];
+    [operation setClientIdentifier:self.clientIdentifier];
+    [operation setIntegrityKey:self.integrityKey];
+    
+    // Set locations of files
+    [operation setAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename]]];
+    [operation setUnappliedSyncChangesDirectoryLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnappliedSyncChangesDirectoryName]]];
+    [operation setUnappliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnappliedChangeSetsFilename]]];
+    
+    [self.synchronizationQueue addOperation:operation];
+}
+
 - (void)startSynchronizationProcess
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting synchronization process");
     [self postIncreaseActivityNotification];
-    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidBeginSynchronizing:)]) {
-        [self runOnMainQueueWithoutDeadlocking:^{
-             [(id)self.delegate documentSyncManagerDidBeginSynchronizing:self];
-         }];
-    }
-
-    [self moveUnsynchronizedSyncChangesToMergeLocation];
-
+    
     TICDSSynchronizationOperation *operation = [self synchronizationOperation];
-
+    
     if (operation == nil) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create synchronization operation object");
         [self bailFromSynchronizationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
         return;
     }
-
+    
     [operation setShouldUseEncryption:self.shouldUseEncryption];
     [operation setClientIdentifier:self.clientIdentifier];
-    [operation setIntegrityKey:self.integrityKey];
-
+    
     // Set location of sync changes to merge file
     NSURL *syncChangesToMergeLocation = nil;
     if ([self.fileManager fileExistsAtPath:self.syncChangesBeingSynchronizedStorePath]) {
         syncChangesToMergeLocation = [NSURL fileURLWithPath:self.syncChangesBeingSynchronizedStorePath];
     }
     [operation setLocalSyncChangesToMergeURL:syncChangesToMergeLocation];
-
+    
     // Set locations of files
     [operation setAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename]]];
     [operation setUnappliedSyncChangesDirectoryLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnappliedSyncChangesDirectoryName]]];
     [operation setUnappliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnappliedChangeSetsFilename]]];
-    [operation setLocalRecentSyncFileLocation:[NSURL fileURLWithPath:[[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:self.clientIdentifier] stringByAppendingPathExtension:TICDSRecentSyncFileExtension]]];
-
+    
     // Set background context
     [operation configureBackgroundApplicationContextForPrimaryManagedObjectContext:self.primaryDocumentMOC];
+    
+    [self.synchronizationQueue addOperation:operation];
+}
 
+- (void)startPostSynchronizationProcess
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting post-synchronization process");
+    [self postIncreaseActivityNotification];
+
+    TICDSPostSynchronizationOperation *operation = [self postSynchronizationOperation];
+    
+    if (operation == nil) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create post-synchronization operation object");
+        [self bailFromSynchronizationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateOperationObject classAndMethod:__PRETTY_FUNCTION__]];
+        return;
+    }
+    
+    [operation setShouldUseEncryption:self.shouldUseEncryption];
+    [operation setClientIdentifier:self.clientIdentifier];
+    
+    // Set location of sync changes to merge file
+    NSURL *syncChangesToMergeLocation = nil;
+    if ([self.fileManager fileExistsAtPath:self.syncChangesBeingSynchronizedStorePath]) {
+        syncChangesToMergeLocation = [NSURL fileURLWithPath:self.syncChangesBeingSynchronizedStorePath];
+    }
+    [operation setLocalSyncChangesToMergeURL:syncChangesToMergeLocation];
+    
+    // Set locations of files
+    [operation setAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename]]];
+    [operation setLocalRecentSyncFileLocation:[NSURL fileURLWithPath:[[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:self.clientIdentifier] stringByAppendingPathExtension:TICDSRecentSyncFileExtension]]];
+    
     [self.synchronizationQueue addOperation:operation];
 }
 
@@ -1010,30 +1076,69 @@
 
 #pragma mark Operation Generation
 
+- (TICDSPreSynchronizationOperation *)preSynchronizationOperation
+{
+    return [[TICDSPreSynchronizationOperation alloc] initWithDelegate:self];
+}
+
 - (TICDSSynchronizationOperation *)synchronizationOperation
 {
     return [[TICDSSynchronizationOperation alloc] initWithDelegate:self];
 }
 
+- (TICDSPostSynchronizationOperation *)postSynchronizationOperation
+{
+    return [[TICDSPostSynchronizationOperation alloc] initWithDelegate:self];
+}
+
 #pragma mark Operation Communications
+#pragma Success
+- (void)preSynchronizationOperationCompleted:(TICDSPreSynchronizationOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Pre-Synchronization Operation Completed");
+    
+    [self startSynchronizationProcess];
+    [self postDecreaseActivityNotification];
+}
 
 - (void)synchronizationOperationCompleted:(TICDSSynchronizationOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Synchronization Operation Completed");
-
+    
     if ([[anOperation synchronizationWarnings] count] > 0) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Synchronization encountered warnings: \n%@", [anOperation synchronizationWarnings]);
         if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didEncounterWarningsWhileSynchronizing:)]) {
             [self runOnMainQueueWithoutDeadlocking:^{
-                 [(id)self.delegate documentSyncManager:self didEncounterWarningsWhileSynchronizing:[anOperation synchronizationWarnings]];
-             }];
+                [(id)self.delegate documentSyncManager:self didEncounterWarningsWhileSynchronizing:[anOperation synchronizationWarnings]];
+            }];
         }
     }
 
+    [self startPostSynchronizationProcess];
+    [self postDecreaseActivityNotification];
+}
+
+- (void)postSynchronizationOperationCompleted:(TICDSPostSynchronizationOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Post-Synchronization Operation Completed");
+    
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidFinishSynchronizing:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
-             [(id)self.delegate documentSyncManagerDidFinishSynchronizing:self];
-         }];
+            [(id)self.delegate documentSyncManagerDidFinishSynchronizing:self];
+        }];
+    }
+    [self postDecreaseActivityNotification];
+}
+
+#pragma Cancellation
+- (void)preSynchronizationOperationWasCancelled:(TICDSPreSynchronizationOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Pre-Synchronization Operation was Cancelled");
+    
+    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToSynchronizeWithError:)]) {
+        [self runOnMainQueueWithoutDeadlocking:^{
+            [(id)self.delegate documentSyncManager:self didFailToSynchronizeWithError:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -1041,11 +1146,41 @@
 - (void)synchronizationOperationWasCancelled:(TICDSSynchronizationOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Synchronization Operation was Cancelled");
-
+    
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToSynchronizeWithError:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
-             [(id)self.delegate documentSyncManager:self didFailToSynchronizeWithError:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
-         }];
+            [(id)self.delegate documentSyncManager:self didFailToSynchronizeWithError:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+        }];
+    }
+    [self postDecreaseActivityNotification];
+}
+
+- (void)postSynchronizationOperationWasCancelled:(TICDSPostSynchronizationOperation *)anOperation
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Post-Synchronization Operation was Cancelled");
+    
+    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToSynchronizeWithError:)]) {
+        [self runOnMainQueueWithoutDeadlocking:^{
+            [(id)self.delegate documentSyncManager:self didFailToSynchronizeWithError:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+        }];
+    }
+    [self postDecreaseActivityNotification];
+}
+
+#pragma Failure
+- (void)preSynchronizationOperation:(TICDSPreSynchronizationOperation *)anOperation failedToCompleteWithError:(NSError *)anError
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Pre-Synchronization Operation Failed to Complete with Error: %@", anError);
+    
+    if ([anError code] == TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeysDoNotMatch) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Removing helper file directory because integrity keys do not match");
+        [self removeThenRecreateExistingHelperFileDirectory];
+    }
+    
+    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToSynchronizeWithError:)]) {
+        [self runOnMainQueueWithoutDeadlocking:^{
+            [(id)self.delegate documentSyncManager:self didFailToSynchronizeWithError:anError];
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -1053,16 +1188,33 @@
 - (void)synchronizationOperation:(TICDSSynchronizationOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Synchronization Operation Failed to Complete with Error: %@", anError);
-
+    
     if ([anError code] == TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeysDoNotMatch) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Removing helper file directory because integrity keys do not match");
         [self removeThenRecreateExistingHelperFileDirectory];
     }
-
+    
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToSynchronizeWithError:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
-             [(id)self.delegate documentSyncManager:self didFailToSynchronizeWithError:anError];
-         }];
+            [(id)self.delegate documentSyncManager:self didFailToSynchronizeWithError:anError];
+        }];
+    }
+    [self postDecreaseActivityNotification];
+}
+
+- (void)postSynchronizationOperation:(TICDSPostSynchronizationOperation *)anOperation failedToCompleteWithError:(NSError *)anError
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Post-Synchronization Operation Failed to Complete with Error: %@", anError);
+    
+    if ([anError code] == TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeysDoNotMatch) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Removing helper file directory because integrity keys do not match");
+        [self removeThenRecreateExistingHelperFileDirectory];
+    }
+    
+    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToSynchronizeWithError:)]) {
+        [self runOnMainQueueWithoutDeadlocking:^{
+            [(id)self.delegate documentSyncManager:self didFailToSynchronizeWithError:anError];
+        }];
     }
     [self postDecreaseActivityNotification];
 }
@@ -1451,7 +1603,7 @@
     }
 
     TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate allowed synchronization after saving");
-    [self startSynchronizationProcess];
+    [self startPreSynchronizationProcess];
 }
 
 #pragma mark - NOTIFICATIONS
@@ -1495,8 +1647,12 @@
         [self documentRegistrationOperationCompleted:(id)anOperation];
     } else if ([anOperation isKindOfClass:[TICDSWholeStoreUploadOperation class]]) {
         [self wholeStoreUploadOperationCompleted:(id)anOperation];
+    } else if ([anOperation isKindOfClass:[TICDSPreSynchronizationOperation class]]) {
+        [self preSynchronizationOperationCompleted:(id)anOperation];
     } else if ([anOperation isKindOfClass:[TICDSSynchronizationOperation class]]) {
         [self synchronizationOperationCompleted:(id)anOperation];
+    } else if ([anOperation isKindOfClass:[TICDSPostSynchronizationOperation class]]) {
+        [self postSynchronizationOperationCompleted:(id)anOperation];
     } else if ([anOperation isKindOfClass:[TICDSVacuumOperation class]]) {
         [self vacuumOperationCompleted:(id)anOperation];
     } else if ([anOperation isKindOfClass:[TICDSWholeStoreDownloadOperation class]]) {
@@ -1514,8 +1670,12 @@
         [self documentRegistrationOperationWasCancelled:(id)anOperation];
     } else if ([anOperation isKindOfClass:[TICDSWholeStoreUploadOperation class]]) {
         [self wholeStoreUploadOperationWasCancelled:(id)anOperation];
+    } else if ([anOperation isKindOfClass:[TICDSPreSynchronizationOperation class]]) {
+        [self preSynchronizationOperationWasCancelled:(id)anOperation];
     } else if ([anOperation isKindOfClass:[TICDSSynchronizationOperation class]]) {
         [self synchronizationOperationWasCancelled:(id)anOperation];
+    } else if ([anOperation isKindOfClass:[TICDSPostSynchronizationOperation class]]) {
+        [self postSynchronizationOperationWasCancelled:(id)anOperation];
     } else if ([anOperation isKindOfClass:[TICDSVacuumOperation class]]) {
         [self vacuumOperationWasCancelled:(id)anOperation];
     } else if ([anOperation isKindOfClass:[TICDSWholeStoreDownloadOperation class]]) {
@@ -1533,8 +1693,12 @@
         [self documentRegistrationOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     } else if ([anOperation isKindOfClass:[TICDSWholeStoreUploadOperation class]]) {
         [self wholeStoreUploadOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
+    } else if ([anOperation isKindOfClass:[TICDSPreSynchronizationOperation class]]) {
+        [self preSynchronizationOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     } else if ([anOperation isKindOfClass:[TICDSSynchronizationOperation class]]) {
         [self synchronizationOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
+    } else if ([anOperation isKindOfClass:[TICDSPostSynchronizationOperation class]]) {
+        [self postSynchronizationOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     } else if ([anOperation isKindOfClass:[TICDSVacuumOperation class]]) {
         [self vacuumOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     } else if ([anOperation isKindOfClass:[TICDSWholeStoreDownloadOperation class]]) {
