@@ -16,9 +16,9 @@ TICoreDataSync is a collection of classes to enable synchronization via the Clou
 
 TICoreDataSync works under Mac OS X 10.7 or later and iOS 5.1 or later. 
 
-In order for synchronization to work, your model objects must inherit from [`TICDSSynchronizedManagedObject`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObject.html), and have one extra string attribute called `ticdsSyncID`, which is used to track an object across multiple clients. All model object changes that you wish to synchronize must take place inside a [`TICDSSynchronizedManagedObjectContext`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObjectContext.html).
+In order for synchronization to work, your model objects must inherit from [`TICDSSynchronizedManagedObject`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObject.html), and have one extra string attribute called `ticdsSyncID`, which is used to track an object across multiple clients. All model object changes that you wish to synchronize must take place inside a `NSManagedObjectContext` that is marked as `synchronized`.
 
-In practice, this means changing any `NSManagedObject` use in your `.xcdatamodel` to [`TICDSSynchronizedManagedObject`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObject.html), changing any custom `NSManagedObject` subclass to inherit from [`TICDSSynchronizedManagedObject`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObject.html), and creating a [`TICDSSynchronizedManagedObjectContext`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObjectContext.html) when you build your Core Data stack. Because TICoreDataSync includes its own `.xcdatamodel`s, you won't be able to build your stack by merging all the models in the bundle, you'll need to specify your data model file directly.
+In practice, this means changing any `NSManagedObject` use in your `.xcdatamodel` to [`TICDSSynchronizedManagedObject`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObject.html), changing any custom `NSManagedObject` subclass to inherit from [`TICDSSynchronizedManagedObject`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObject.html), and marking your main `NSManagedObjectContext` as synchronized when you build your Core Data stack. Because TICoreDataSync includes its own `.xcdatamodel`s, you won't be able to build your stack by merging all the models in the bundle, you'll need to specify your data model file directly.
 
 Your application will need to keep track of one instance of [`TICDSApplicationSyncManager`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSApplicationSyncManager.html) for the type of synchronization you wish to use in your application, and you must **register** this sync manager before you can perform any other tasks. If your application is non-document-based, you'll then need a single [`TICDSDocumentSyncManager`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSDocumentSyncManager.html) instance to handle synchronization of your application's data. If you have a document-based app, you'll need one [`TICDSDocumentSyncManager`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSDocumentSyncManager.html) per document. Again, a document sync manager must be registered before it can be used.
 
@@ -47,7 +47,7 @@ The [Guide to Example Apps](http://timisted.github.com/TICoreDataSync/guide-to-e
 
 ##How it Works
 
-When your primary managed object context (an instance of [`TICDSSynchronizedManagedObjectContext`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObjectContext.html)) saves, the framework jumps into action, performing the following tasks:
+When your primary managed object context saves, the framework jumps into action, performing the following tasks:
 
 1. Sync Change objects ([`TICDSSyncChange`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSyncChange.html)) are created for every change to any modified object: insertion, deletion, attribute changes and relationship changes. This is handled by the [`TICDSSynchronizedManagedObject`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObject.html) class.
 
@@ -132,7 +132,10 @@ At present, TICoreDataSync only supports file-manager-based sync, or iOS Dropbox
 There is currently no automated functionality to remove the entire sync data directory from a remote service, nor is it yet possible to remove a client's files from synchronizing an entire application. These tasks will be added soon.
 
 ##Recent Changes <a name="recentchanges"></a>
-
+* **2013-01-23**
+    
+    The TICDSSynchronizedManagedObjectContext class no longer exists and has been replaced by a category on NSManagedObjectContext.
+ 
 * **2012-Oct-29**
 
     The framework has undergone some significant changes since April including:
