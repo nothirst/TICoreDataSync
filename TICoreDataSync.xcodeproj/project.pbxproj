@@ -177,36 +177,36 @@
 		AA3A4C0416D6742000F64E85 /* TICoreDataFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 13023CEC161366E10071C497 /* TICoreDataFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA3A4C0516D6742000F64E85 /* TIKQDirectoryWatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 13023CEE161366E10071C497 /* TIKQDirectoryWatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA3A4C0616D6742000F64E85 /* TIManagedObjectExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 13023CF0161366E10071C497 /* TIManagedObjectExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AA6364FC16D66104000F84F3 /* TICDSiCloudBasedApplicationRegistrationOperation.h in Resources */ = {isa = PBXBuildFile; fileRef = AA6364DC16D66104000F84F3 /* TICDSiCloudBasedApplicationRegistrationOperation.h */; };
-		AA6364FD16D66104000F84F3 /* TICDSiCloudBasedApplicationRegistrationOperation.m in Resources */ = {isa = PBXBuildFile; fileRef = AA6364DD16D66104000F84F3 /* TICDSiCloudBasedApplicationRegistrationOperation.m */; };
-		AA6364FE16D66104000F84F3 /* TICDSiCloudBasedDocumentClientDeletionOperation.h in Resources */ = {isa = PBXBuildFile; fileRef = AA6364DE16D66104000F84F3 /* TICDSiCloudBasedDocumentClientDeletionOperation.h */; };
-		AA6364FF16D66104000F84F3 /* TICDSiCloudBasedDocumentClientDeletionOperation.m in Resources */ = {isa = PBXBuildFile; fileRef = AA6364DF16D66104000F84F3 /* TICDSiCloudBasedDocumentClientDeletionOperation.m */; };
-		AA63650016D66104000F84F3 /* TICDSiCloudBasedDocumentDeletionOperation.h in Resources */ = {isa = PBXBuildFile; fileRef = AA6364E016D66104000F84F3 /* TICDSiCloudBasedDocumentDeletionOperation.h */; };
-		AA63650116D66104000F84F3 /* TICDSiCloudBasedDocumentDeletionOperation.m in Resources */ = {isa = PBXBuildFile; fileRef = AA6364E116D66104000F84F3 /* TICDSiCloudBasedDocumentDeletionOperation.m */; };
-		AA63650216D66104000F84F3 /* TICDSiCloudBasedDocumentRegistrationOperation.h in Resources */ = {isa = PBXBuildFile; fileRef = AA6364E216D66104000F84F3 /* TICDSiCloudBasedDocumentRegistrationOperation.h */; };
-		AA63650316D66104000F84F3 /* TICDSiCloudBasedDocumentRegistrationOperation.m in Resources */ = {isa = PBXBuildFile; fileRef = AA6364E316D66104000F84F3 /* TICDSiCloudBasedDocumentRegistrationOperation.m */; };
-		AA63650416D66104000F84F3 /* TICDSiCloudBasedListOfApplicationRegisteredClientsOperation.h in Resources */ = {isa = PBXBuildFile; fileRef = AA6364E416D66104000F84F3 /* TICDSiCloudBasedListOfApplicationRegisteredClientsOperation.h */; };
-		AA63650516D66104000F84F3 /* TICDSiCloudBasedListOfApplicationRegisteredClientsOperation.m in Resources */ = {isa = PBXBuildFile; fileRef = AA6364E516D66104000F84F3 /* TICDSiCloudBasedListOfApplicationRegisteredClientsOperation.m */; };
-		AA63650616D66104000F84F3 /* TICDSiCloudBasedListOfDocumentRegisteredClientsOperation.h in Resources */ = {isa = PBXBuildFile; fileRef = AA6364E616D66104000F84F3 /* TICDSiCloudBasedListOfDocumentRegisteredClientsOperation.h */; };
-		AA63650716D66104000F84F3 /* TICDSiCloudBasedListOfDocumentRegisteredClientsOperation.m in Resources */ = {isa = PBXBuildFile; fileRef = AA6364E716D66104000F84F3 /* TICDSiCloudBasedListOfDocumentRegisteredClientsOperation.m */; };
-		AA63650816D66104000F84F3 /* TICDSiCloudBasedListOfPreviouslySynchronizedDocumentsOperation.h in Resources */ = {isa = PBXBuildFile; fileRef = AA6364E816D66104000F84F3 /* TICDSiCloudBasedListOfPreviouslySynchronizedDocumentsOperation.h */; };
-		AA63650916D66104000F84F3 /* TICDSiCloudBasedListOfPreviouslySynchronizedDocumentsOperation.m in Resources */ = {isa = PBXBuildFile; fileRef = AA6364E916D66104000F84F3 /* TICDSiCloudBasedListOfPreviouslySynchronizedDocumentsOperation.m */; };
-		AA63650A16D66104000F84F3 /* TICDSiCloudBasedPreSynchronizationOperation.h in Resources */ = {isa = PBXBuildFile; fileRef = AA6364EA16D66104000F84F3 /* TICDSiCloudBasedPreSynchronizationOperation.h */; };
-		AA63650B16D66104000F84F3 /* TICDSiCloudBasedPreSynchronizationOperation.m in Resources */ = {isa = PBXBuildFile; fileRef = AA6364EB16D66104000F84F3 /* TICDSiCloudBasedPreSynchronizationOperation.m */; };
-		AA63650C16D66104000F84F3 /* TICDSiCloudBasedPostSynchronizationOperation.h in Resources */ = {isa = PBXBuildFile; fileRef = AA6364EC16D66104000F84F3 /* TICDSiCloudBasedPostSynchronizationOperation.h */; };
-		AA63650D16D66104000F84F3 /* TICDSiCloudBasedPostSynchronizationOperation.m in Resources */ = {isa = PBXBuildFile; fileRef = AA6364ED16D66104000F84F3 /* TICDSiCloudBasedPostSynchronizationOperation.m */; };
-		AA63650E16D66104000F84F3 /* TICDSiCloudBasedRemoveAllRemoteSyncDataOperation.h in Resources */ = {isa = PBXBuildFile; fileRef = AA6364EE16D66104000F84F3 /* TICDSiCloudBasedRemoveAllRemoteSyncDataOperation.h */; };
-		AA63650F16D66104000F84F3 /* TICDSiCloudBasedRemoveAllRemoteSyncDataOperation.m in Resources */ = {isa = PBXBuildFile; fileRef = AA6364EF16D66104000F84F3 /* TICDSiCloudBasedRemoveAllRemoteSyncDataOperation.m */; };
-		AA63651016D66104000F84F3 /* TICDSiCloudBasedVacuumOperation.h in Resources */ = {isa = PBXBuildFile; fileRef = AA6364F016D66104000F84F3 /* TICDSiCloudBasedVacuumOperation.h */; };
-		AA63651116D66104000F84F3 /* TICDSiCloudBasedVacuumOperation.m in Resources */ = {isa = PBXBuildFile; fileRef = AA6364F116D66104000F84F3 /* TICDSiCloudBasedVacuumOperation.m */; };
-		AA63651216D66104000F84F3 /* TICDSiCloudBasedWholeStoreDownloadOperation.h in Resources */ = {isa = PBXBuildFile; fileRef = AA6364F216D66104000F84F3 /* TICDSiCloudBasedWholeStoreDownloadOperation.h */; };
-		AA63651316D66104000F84F3 /* TICDSiCloudBasedWholeStoreDownloadOperation.m in Resources */ = {isa = PBXBuildFile; fileRef = AA6364F316D66104000F84F3 /* TICDSiCloudBasedWholeStoreDownloadOperation.m */; };
-		AA63651416D66104000F84F3 /* TICDSiCloudBasedWholeStoreUploadOperation.h in Resources */ = {isa = PBXBuildFile; fileRef = AA6364F416D66104000F84F3 /* TICDSiCloudBasedWholeStoreUploadOperation.h */; };
-		AA63651516D66104000F84F3 /* TICDSiCloudBasedWholeStoreUploadOperation.m in Resources */ = {isa = PBXBuildFile; fileRef = AA6364F516D66104000F84F3 /* TICDSiCloudBasedWholeStoreUploadOperation.m */; };
-		AA63651616D66104000F84F3 /* TICDSiCloudBasedApplicationSyncManager.h in Resources */ = {isa = PBXBuildFile; fileRef = AA6364F716D66104000F84F3 /* TICDSiCloudBasedApplicationSyncManager.h */; };
-		AA63651716D66104000F84F3 /* TICDSiCloudBasedApplicationSyncManager.m in Resources */ = {isa = PBXBuildFile; fileRef = AA6364F816D66104000F84F3 /* TICDSiCloudBasedApplicationSyncManager.m */; };
-		AA63651816D66104000F84F3 /* TICDSiCloudBasedDocumentSyncManager.h in Resources */ = {isa = PBXBuildFile; fileRef = AA6364F916D66104000F84F3 /* TICDSiCloudBasedDocumentSyncManager.h */; };
-		AA63651916D66104000F84F3 /* TICDSiCloudBasedDocumentSyncManager.m in Resources */ = {isa = PBXBuildFile; fileRef = AA6364FA16D66104000F84F3 /* TICDSiCloudBasedDocumentSyncManager.m */; };
+		AA3A4C1F16D74D6000F64E85 /* TICDSiCloudBasedApplicationRegistrationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = AA6364DC16D66104000F84F3 /* TICDSiCloudBasedApplicationRegistrationOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA3A4C2016D74D6000F64E85 /* TICDSiCloudBasedDocumentClientDeletionOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = AA6364DE16D66104000F84F3 /* TICDSiCloudBasedDocumentClientDeletionOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA3A4C2116D74D6000F64E85 /* TICDSiCloudBasedDocumentDeletionOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = AA6364E016D66104000F84F3 /* TICDSiCloudBasedDocumentDeletionOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA3A4C2216D74D6000F64E85 /* TICDSiCloudBasedDocumentRegistrationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = AA6364E216D66104000F84F3 /* TICDSiCloudBasedDocumentRegistrationOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA3A4C2316D74D6000F64E85 /* TICDSiCloudBasedListOfApplicationRegisteredClientsOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = AA6364E416D66104000F84F3 /* TICDSiCloudBasedListOfApplicationRegisteredClientsOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA3A4C2416D74D6000F64E85 /* TICDSiCloudBasedListOfDocumentRegisteredClientsOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = AA6364E616D66104000F84F3 /* TICDSiCloudBasedListOfDocumentRegisteredClientsOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA3A4C2516D74D6000F64E85 /* TICDSiCloudBasedListOfPreviouslySynchronizedDocumentsOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = AA6364E816D66104000F84F3 /* TICDSiCloudBasedListOfPreviouslySynchronizedDocumentsOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA3A4C2616D74D6000F64E85 /* TICDSiCloudBasedPreSynchronizationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = AA6364EA16D66104000F84F3 /* TICDSiCloudBasedPreSynchronizationOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA3A4C2716D74D6000F64E85 /* TICDSiCloudBasedPostSynchronizationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = AA6364EC16D66104000F84F3 /* TICDSiCloudBasedPostSynchronizationOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA3A4C2816D74D6000F64E85 /* TICDSiCloudBasedRemoveAllRemoteSyncDataOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = AA6364EE16D66104000F84F3 /* TICDSiCloudBasedRemoveAllRemoteSyncDataOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA3A4C2916D74D6000F64E85 /* TICDSiCloudBasedVacuumOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = AA6364F016D66104000F84F3 /* TICDSiCloudBasedVacuumOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA3A4C2A16D74D6000F64E85 /* TICDSiCloudBasedWholeStoreDownloadOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = AA6364F216D66104000F84F3 /* TICDSiCloudBasedWholeStoreDownloadOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA3A4C2B16D74D6000F64E85 /* TICDSiCloudBasedWholeStoreUploadOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = AA6364F416D66104000F84F3 /* TICDSiCloudBasedWholeStoreUploadOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA3A4C2C16D74D6000F64E85 /* TICDSiCloudBasedApplicationSyncManager.h in Headers */ = {isa = PBXBuildFile; fileRef = AA6364F716D66104000F84F3 /* TICDSiCloudBasedApplicationSyncManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA3A4C2D16D74D6000F64E85 /* TICDSiCloudBasedDocumentSyncManager.h in Headers */ = {isa = PBXBuildFile; fileRef = AA6364F916D66104000F84F3 /* TICDSiCloudBasedDocumentSyncManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA3A4C2E16D74D8500F64E85 /* TICDSiCloudBasedApplicationRegistrationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364DD16D66104000F84F3 /* TICDSiCloudBasedApplicationRegistrationOperation.m */; };
+		AA3A4C2F16D74D8500F64E85 /* TICDSiCloudBasedDocumentClientDeletionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364DF16D66104000F84F3 /* TICDSiCloudBasedDocumentClientDeletionOperation.m */; };
+		AA3A4C3016D74D8500F64E85 /* TICDSiCloudBasedDocumentDeletionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364E116D66104000F84F3 /* TICDSiCloudBasedDocumentDeletionOperation.m */; };
+		AA3A4C3116D74D8500F64E85 /* TICDSiCloudBasedDocumentRegistrationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364E316D66104000F84F3 /* TICDSiCloudBasedDocumentRegistrationOperation.m */; };
+		AA3A4C3216D74D8500F64E85 /* TICDSiCloudBasedListOfApplicationRegisteredClientsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364E516D66104000F84F3 /* TICDSiCloudBasedListOfApplicationRegisteredClientsOperation.m */; };
+		AA3A4C3316D74D8500F64E85 /* TICDSiCloudBasedListOfDocumentRegisteredClientsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364E716D66104000F84F3 /* TICDSiCloudBasedListOfDocumentRegisteredClientsOperation.m */; };
+		AA3A4C3416D74D8500F64E85 /* TICDSiCloudBasedListOfPreviouslySynchronizedDocumentsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364E916D66104000F84F3 /* TICDSiCloudBasedListOfPreviouslySynchronizedDocumentsOperation.m */; };
+		AA3A4C3516D74D8500F64E85 /* TICDSiCloudBasedPreSynchronizationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364EB16D66104000F84F3 /* TICDSiCloudBasedPreSynchronizationOperation.m */; };
+		AA3A4C3616D74D8500F64E85 /* TICDSiCloudBasedPostSynchronizationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364ED16D66104000F84F3 /* TICDSiCloudBasedPostSynchronizationOperation.m */; };
+		AA3A4C3716D74D8500F64E85 /* TICDSiCloudBasedRemoveAllRemoteSyncDataOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364EF16D66104000F84F3 /* TICDSiCloudBasedRemoveAllRemoteSyncDataOperation.m */; };
+		AA3A4C3816D74D8500F64E85 /* TICDSiCloudBasedVacuumOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364F116D66104000F84F3 /* TICDSiCloudBasedVacuumOperation.m */; };
+		AA3A4C3916D74D8500F64E85 /* TICDSiCloudBasedWholeStoreDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364F316D66104000F84F3 /* TICDSiCloudBasedWholeStoreDownloadOperation.m */; };
+		AA3A4C3A16D74D8500F64E85 /* TICDSiCloudBasedWholeStoreUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364F516D66104000F84F3 /* TICDSiCloudBasedWholeStoreUploadOperation.m */; };
+		AA3A4C3B16D74D8500F64E85 /* TICDSiCloudBasedApplicationSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364F816D66104000F84F3 /* TICDSiCloudBasedApplicationSyncManager.m */; };
+		AA3A4C3C16D74D8500F64E85 /* TICDSiCloudBasedDocumentSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364FA16D66104000F84F3 /* TICDSiCloudBasedDocumentSyncManager.m */; };
 		AA63651A16D664AA000F84F3 /* TICDSiCloudBasedApplicationRegistrationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364DD16D66104000F84F3 /* TICDSiCloudBasedApplicationRegistrationOperation.m */; };
 		AA63651B16D664AA000F84F3 /* TICDSiCloudBasedDocumentClientDeletionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364DF16D66104000F84F3 /* TICDSiCloudBasedDocumentClientDeletionOperation.m */; };
 		AA63651C16D664AA000F84F3 /* TICDSiCloudBasedDocumentDeletionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364E116D66104000F84F3 /* TICDSiCloudBasedDocumentDeletionOperation.m */; };
@@ -1170,6 +1170,21 @@
 				AA3A4C0016D6742000F64E85 /* TICoreDataFactory.h in Headers */,
 				AA3A4C0116D6742000F64E85 /* TIKQDirectoryWatcher.h in Headers */,
 				AA3A4C0216D6742000F64E85 /* TIManagedObjectExtensions.h in Headers */,
+				AA3A4C1F16D74D6000F64E85 /* TICDSiCloudBasedApplicationRegistrationOperation.h in Headers */,
+				AA3A4C2016D74D6000F64E85 /* TICDSiCloudBasedDocumentClientDeletionOperation.h in Headers */,
+				AA3A4C2116D74D6000F64E85 /* TICDSiCloudBasedDocumentDeletionOperation.h in Headers */,
+				AA3A4C2216D74D6000F64E85 /* TICDSiCloudBasedDocumentRegistrationOperation.h in Headers */,
+				AA3A4C2316D74D6000F64E85 /* TICDSiCloudBasedListOfApplicationRegisteredClientsOperation.h in Headers */,
+				AA3A4C2416D74D6000F64E85 /* TICDSiCloudBasedListOfDocumentRegisteredClientsOperation.h in Headers */,
+				AA3A4C2516D74D6000F64E85 /* TICDSiCloudBasedListOfPreviouslySynchronizedDocumentsOperation.h in Headers */,
+				AA3A4C2616D74D6000F64E85 /* TICDSiCloudBasedPreSynchronizationOperation.h in Headers */,
+				AA3A4C2716D74D6000F64E85 /* TICDSiCloudBasedPostSynchronizationOperation.h in Headers */,
+				AA3A4C2816D74D6000F64E85 /* TICDSiCloudBasedRemoveAllRemoteSyncDataOperation.h in Headers */,
+				AA3A4C2916D74D6000F64E85 /* TICDSiCloudBasedVacuumOperation.h in Headers */,
+				AA3A4C2A16D74D6000F64E85 /* TICDSiCloudBasedWholeStoreDownloadOperation.h in Headers */,
+				AA3A4C2B16D74D6000F64E85 /* TICDSiCloudBasedWholeStoreUploadOperation.h in Headers */,
+				AA3A4C2C16D74D6000F64E85 /* TICDSiCloudBasedApplicationSyncManager.h in Headers */,
+				AA3A4C2D16D74D6000F64E85 /* TICDSiCloudBasedDocumentSyncManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1277,36 +1292,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA8BFC8516D65FA200075E5E /* InfoPlist.strings in Resources */,
-				AA6364FC16D66104000F84F3 /* TICDSiCloudBasedApplicationRegistrationOperation.h in Resources */,
-				AA6364FD16D66104000F84F3 /* TICDSiCloudBasedApplicationRegistrationOperation.m in Resources */,
-				AA6364FE16D66104000F84F3 /* TICDSiCloudBasedDocumentClientDeletionOperation.h in Resources */,
-				AA6364FF16D66104000F84F3 /* TICDSiCloudBasedDocumentClientDeletionOperation.m in Resources */,
-				AA63650016D66104000F84F3 /* TICDSiCloudBasedDocumentDeletionOperation.h in Resources */,
-				AA63650116D66104000F84F3 /* TICDSiCloudBasedDocumentDeletionOperation.m in Resources */,
-				AA63650216D66104000F84F3 /* TICDSiCloudBasedDocumentRegistrationOperation.h in Resources */,
-				AA63650316D66104000F84F3 /* TICDSiCloudBasedDocumentRegistrationOperation.m in Resources */,
-				AA63650416D66104000F84F3 /* TICDSiCloudBasedListOfApplicationRegisteredClientsOperation.h in Resources */,
-				AA63650516D66104000F84F3 /* TICDSiCloudBasedListOfApplicationRegisteredClientsOperation.m in Resources */,
-				AA63650616D66104000F84F3 /* TICDSiCloudBasedListOfDocumentRegisteredClientsOperation.h in Resources */,
-				AA63650716D66104000F84F3 /* TICDSiCloudBasedListOfDocumentRegisteredClientsOperation.m in Resources */,
-				AA63650816D66104000F84F3 /* TICDSiCloudBasedListOfPreviouslySynchronizedDocumentsOperation.h in Resources */,
-				AA63650916D66104000F84F3 /* TICDSiCloudBasedListOfPreviouslySynchronizedDocumentsOperation.m in Resources */,
-				AA63650A16D66104000F84F3 /* TICDSiCloudBasedPreSynchronizationOperation.h in Resources */,
-				AA63650B16D66104000F84F3 /* TICDSiCloudBasedPreSynchronizationOperation.m in Resources */,
-				AA63650C16D66104000F84F3 /* TICDSiCloudBasedPostSynchronizationOperation.h in Resources */,
-				AA63650D16D66104000F84F3 /* TICDSiCloudBasedPostSynchronizationOperation.m in Resources */,
-				AA63650E16D66104000F84F3 /* TICDSiCloudBasedRemoveAllRemoteSyncDataOperation.h in Resources */,
-				AA63650F16D66104000F84F3 /* TICDSiCloudBasedRemoveAllRemoteSyncDataOperation.m in Resources */,
-				AA63651016D66104000F84F3 /* TICDSiCloudBasedVacuumOperation.h in Resources */,
-				AA63651116D66104000F84F3 /* TICDSiCloudBasedVacuumOperation.m in Resources */,
-				AA63651216D66104000F84F3 /* TICDSiCloudBasedWholeStoreDownloadOperation.h in Resources */,
-				AA63651316D66104000F84F3 /* TICDSiCloudBasedWholeStoreDownloadOperation.m in Resources */,
-				AA63651416D66104000F84F3 /* TICDSiCloudBasedWholeStoreUploadOperation.h in Resources */,
-				AA63651516D66104000F84F3 /* TICDSiCloudBasedWholeStoreUploadOperation.m in Resources */,
-				AA63651616D66104000F84F3 /* TICDSiCloudBasedApplicationSyncManager.h in Resources */,
-				AA63651716D66104000F84F3 /* TICDSiCloudBasedApplicationSyncManager.m in Resources */,
-				AA63651816D66104000F84F3 /* TICDSiCloudBasedDocumentSyncManager.h in Resources */,
-				AA63651916D66104000F84F3 /* TICDSiCloudBasedDocumentSyncManager.m in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1475,6 +1460,21 @@
 				AA63659916D6664F000F84F3 /* TICDSVacuumOperation.m in Sources */,
 				AA63659A16D6664F000F84F3 /* TICDSWholeStoreDownloadOperation.m in Sources */,
 				AA63659B16D6664F000F84F3 /* TICDSWholeStoreUploadOperation.m in Sources */,
+				AA3A4C2E16D74D8500F64E85 /* TICDSiCloudBasedApplicationRegistrationOperation.m in Sources */,
+				AA3A4C2F16D74D8500F64E85 /* TICDSiCloudBasedDocumentClientDeletionOperation.m in Sources */,
+				AA3A4C3016D74D8500F64E85 /* TICDSiCloudBasedDocumentDeletionOperation.m in Sources */,
+				AA3A4C3116D74D8500F64E85 /* TICDSiCloudBasedDocumentRegistrationOperation.m in Sources */,
+				AA3A4C3216D74D8500F64E85 /* TICDSiCloudBasedListOfApplicationRegisteredClientsOperation.m in Sources */,
+				AA3A4C3316D74D8500F64E85 /* TICDSiCloudBasedListOfDocumentRegisteredClientsOperation.m in Sources */,
+				AA3A4C3416D74D8500F64E85 /* TICDSiCloudBasedListOfPreviouslySynchronizedDocumentsOperation.m in Sources */,
+				AA3A4C3516D74D8500F64E85 /* TICDSiCloudBasedPreSynchronizationOperation.m in Sources */,
+				AA3A4C3616D74D8500F64E85 /* TICDSiCloudBasedPostSynchronizationOperation.m in Sources */,
+				AA3A4C3716D74D8500F64E85 /* TICDSiCloudBasedRemoveAllRemoteSyncDataOperation.m in Sources */,
+				AA3A4C3816D74D8500F64E85 /* TICDSiCloudBasedVacuumOperation.m in Sources */,
+				AA3A4C3916D74D8500F64E85 /* TICDSiCloudBasedWholeStoreDownloadOperation.m in Sources */,
+				AA3A4C3A16D74D8500F64E85 /* TICDSiCloudBasedWholeStoreUploadOperation.m in Sources */,
+				AA3A4C3B16D74D8500F64E85 /* TICDSiCloudBasedApplicationSyncManager.m in Sources */,
+				AA3A4C3C16D74D8500F64E85 /* TICDSiCloudBasedDocumentSyncManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1605,6 +1605,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = TICoreDataSync;
 				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -1633,6 +1634,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = TICoreDataSync;
 				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
