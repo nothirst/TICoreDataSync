@@ -69,7 +69,16 @@
 
     [self setMostRecentError:nil];
     NSError *error = nil;
-    NSPersistentStore *store = [_persistentStoreCoordinator addPersistentStoreWithType:[self persistentStoreType]
+    
+    NSString *persistentStoreType = [self persistentStoreType];
+    if ([NSBinaryStoreType isEqual:persistentStoreType]) {
+        NSData *magic = [[NSFileHandle fileHandleForReadingFromURL:urlForStore error:&error] readDataOfLength:15];
+        if ([magic isEqual:[@"SQLite format 3" dataUsingEncoding:NSUTF8StringEncoding]]) {
+            persistentStoreType = NSSQLiteStoreType;
+        }
+    }
+    
+    NSPersistentStore *store = [_persistentStoreCoordinator addPersistentStoreWithType:persistentStoreType
                                                                          configuration:nil URL:urlForStore
                                                                                options:[self persistentStoreOptions] error:&error];
     if ( !store ) {
