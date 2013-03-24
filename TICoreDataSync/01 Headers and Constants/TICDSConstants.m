@@ -91,7 +91,7 @@ NSString * const TICDSDocumentInfoPlistFilename = @"documentInfo";
 NSString * const TICDSDocumentInfoPlistExtension = @"plist";
 NSString * const TICDSSaltFilenameWithExtension = @"salt.ticdsync";
 NSString * const TICDSEncryptionTestFilenameWithExtension = @"test.ticdsync";
-NSString * const TICDSUserDefaultsPrefix = @"TICDSync.";
+NSString * const TICDSUserDefaultsPrefix = @"!TICDSync.";
 NSString * const TICDSUserDefaultsIntegrityKeyComponent = @"integrityKey.";
 
 NSString * const TICDSSyncIDAttributeName = @"ticdsSyncID";
