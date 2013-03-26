@@ -100,6 +100,7 @@ typedef enum _TICDSErrorCode {
     TICDSErrorCodeTaskWasCancelled,
     TICDSErrorCodeDropboxSDKRestClientError,
     TICDSErrorCodeEncryptionError,
+    TICDSErrorCodeCompressionError,
     TICDSErrorCodeUnableToRegisterUnconfiguredSyncManager,
     TICDSErrorCodeFZACryptorCreatedSaltDataButRespondedThatItWasNotCorrectlyConfiguredForEncryption,
     TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeysDoNotMatch,

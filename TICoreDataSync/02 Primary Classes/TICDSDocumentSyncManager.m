@@ -145,6 +145,7 @@
     self.delegate = aDelegate;
     self.documentIdentifier = aDocumentIdentifier;
     self.shouldUseEncryption = [anAppSyncManager shouldUseEncryption];
+    self.shouldUseCompressionForWholeStoreMoves = [anAppSyncManager shouldUseCompressionForWholeStoreMoves];
 
     [self postIncreaseActivityNotification];
 
@@ -296,6 +297,7 @@
     self.delegate = aDelegate;
     self.documentIdentifier = aDocumentIdentifier;
     self.shouldUseEncryption = [anAppSyncManager shouldUseEncryption];
+    self.shouldUseCompressionForWholeStoreMoves = [anAppSyncManager shouldUseCompressionForWholeStoreMoves];
     NSString *userDefaultsIntegrityKey = [TICDSUtilities userDefaultsKeyForIntegrityKeyForDocumentWithIdentifier:aDocumentIdentifier];
     NSString *integrityKey = [[NSUserDefaults standardUserDefaults] valueForKey:userDefaultsIntegrityKey];
     self.integrityKey = integrityKey;
@@ -371,6 +373,7 @@
     }
 
     [operation setShouldUseEncryption:self.shouldUseEncryption];
+    [operation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
     operation.documentIdentifier = self.documentIdentifier;
     [operation setIntegrityKey:self.integrityKey];
     [operation setClientIdentifier:self.clientIdentifier];
@@ -514,14 +517,17 @@
     }
 
     self.shouldUseEncryption = [self.applicationSyncManager shouldUseEncryption];
-
+    self.shouldUseCompressionForWholeStoreMoves = [self.applicationSyncManager shouldUseCompressionForWholeStoreMoves];
+    
     TICDSLog(TICDSLogVerbosityEveryStep, @"Resuming Operation Queues");
     for ( TICDSOperation *eachOperation in [self.otherTasksQueue operations]) {
         [eachOperation setShouldUseEncryption:self.shouldUseEncryption];
+        [eachOperation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
     }
 
     for ( TICDSOperation *eachOperation in [self.synchronizationQueue operations]) {
         [eachOperation setShouldUseEncryption:self.shouldUseEncryption];
+        [eachOperation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
     }
 
     [self.otherTasksQueue setSuspended:NO];
@@ -634,6 +640,7 @@
     }
 
     [operation setShouldUseEncryption:self.shouldUseEncryption];
+    [operation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
     [operation setLocalWholeStoreFileLocation:storeURL];
 
     [operation configureBackgroundApplicationContextForPrimaryManagedObjectContext:self.primaryDocumentMOC];
@@ -752,6 +759,7 @@
     }
 
     [operation setShouldUseEncryption:self.shouldUseEncryption];
+    [operation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
 
     NSString *wholeStoreFilePath = [temporaryPath stringByAppendingPathComponent:TICDSWholeStoreFilename];
     NSString *appliedSyncChangesFilePath = [temporaryPath stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
@@ -909,6 +917,7 @@
     }
     
     [operation setShouldUseEncryption:self.shouldUseEncryption];
+    [operation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
     [operation setClientIdentifier:self.clientIdentifier];
     [operation setIntegrityKey:self.integrityKey];
     
@@ -934,6 +943,7 @@
     }
     
     [operation setShouldUseEncryption:self.shouldUseEncryption];
+    [operation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
     [operation setClientIdentifier:self.clientIdentifier];
     
     // Set location of sync changes to merge file
@@ -968,6 +978,7 @@
     }
     
     [operation setShouldUseEncryption:self.shouldUseEncryption];
+    [operation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
     [operation setClientIdentifier:self.clientIdentifier];
     
     // Set location of sync changes to merge file
@@ -1258,6 +1269,7 @@
     }
 
     [operation setShouldUseEncryption:self.shouldUseEncryption];
+    [operation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
 
     [self.otherTasksQueue addOperation:operation];
 }
@@ -1345,6 +1357,7 @@
     }
 
     [operation setShouldUseEncryption:self.shouldUseEncryption];
+    [operation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
 
     [self.otherTasksQueue addOperation:operation];
 }
@@ -1435,6 +1448,7 @@
 
     [operation setIdentifierOfClientToBeDeleted:anIdentifier];
     [operation setShouldUseEncryption:self.shouldUseEncryption];
+    [operation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
 
     [self.otherTasksQueue addOperation:operation];
 }
@@ -1611,17 +1625,21 @@
 - (void)appSyncManagerDidRegister:(NSNotification *)aNotification
 {
     self.shouldUseEncryption = [self.applicationSyncManager shouldUseEncryption];
-
+    self.shouldUseCompressionForWholeStoreMoves = [self.applicationSyncManager shouldUseCompressionForWholeStoreMoves];
+    
     for ( TICDSOperation *eachOperation in [self.registrationQueue operations]) {
         [eachOperation setShouldUseEncryption:self.shouldUseEncryption];
+        [eachOperation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
     }
 
     for ( TICDSOperation *eachOperation in [self.synchronizationQueue operations]) {
         [eachOperation setShouldUseEncryption:self.shouldUseEncryption];
+        [eachOperation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
     }
 
     for ( TICDSOperation *eachOperation in [self.otherTasksQueue operations]) {
         [eachOperation setShouldUseEncryption:self.shouldUseEncryption];
+        [eachOperation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
     }
 
     [self.registrationQueue setSuspended:NO];
@@ -1923,6 +1941,7 @@
 
 @synthesize delegate = _delegate;
 @synthesize shouldUseEncryption = _shouldUseEncryption;
+@synthesize shouldUseCompressionForWholeStoreMoves = _shouldUseCompressionForWholeStoreMoves;
 @synthesize mustUploadStoreAfterRegistration = _mustUploadStoreAfterRegistration;
 @synthesize state = _state;
 @synthesize applicationSyncManager = _applicationSyncManager;

@@ -26,6 +26,7 @@
     TICDSApplicationSyncManagerState _state;
     
     BOOL _shouldUseEncryption;
+    BOOL _shouldUseCompressionForWholeStoreMoves;
     
     id <TICDSApplicationSyncManagerDelegate> __weak _delegate;
     NSString *_appIdentifier;
@@ -240,6 +241,11 @@
  
  This value is set automatically during the application registration process. */
 @property (nonatomic, assign) BOOL shouldUseEncryption;
+
+/** Used to indicate whether the application sync manager should use zip compression when moving the whole store.
+ 
+ This value is set automatically during the application sync manager configuration process. */
+@property (nonatomic, assign) BOOL shouldUseCompressionForWholeStoreMoves;
 
 /** The Application Sync Manager Delegate. */
 @property (nonatomic, weak) id <TICDSApplicationSyncManagerDelegate> delegate;
