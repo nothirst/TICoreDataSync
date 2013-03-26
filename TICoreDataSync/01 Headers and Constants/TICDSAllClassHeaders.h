@@ -89,3 +89,6 @@
 #import "TICoreDataFactory.h"
 #import "TIManagedObjectExtensions.h"
 #import "TIKQDirectoryWatcher.h"
+
+#pragma mark - Whole Store Compression
+#import "SSZipArchive.h"

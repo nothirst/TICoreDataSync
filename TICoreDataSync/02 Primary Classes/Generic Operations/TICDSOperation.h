@@ -30,6 +30,8 @@
     BOOL _shouldUseEncryption;
     FZACryptor *_cryptor;
     
+    BOOL _shouldUseCompressionForWholeStoreMoves;
+    
     NSObject <TICDSOperationDelegate> *__weak _delegate;
     NSDictionary *_userInfo;
     
@@ -76,6 +78,9 @@
 
 /** The `FZACryptor` object used to encrypt and decrypt files used by this operation, if `shouldUseEncryption` is `YES`. */
 @property (nonatomic, strong) FZACryptor *cryptor;
+
+/** Used to indicate whether the operation should use compression when moving the whole store. */
+@property (assign) BOOL shouldUseCompressionForWholeStoreMoves;
 
 /** The operation delegate. */
 @property (nonatomic, weak) NSObject <TICDSOperationDelegate> *delegate;

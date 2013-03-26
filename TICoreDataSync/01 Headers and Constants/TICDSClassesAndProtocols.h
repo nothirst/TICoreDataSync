@@ -77,6 +77,9 @@
 @class TICoreDataFactory;
 @class TIKQDirectoryWatcher;
 
+#pragma mark - Whole Store Compression
+@class SSZipArchive;
+
 #pragma mark - DELEGATE PROTOCOLS
 #pragma mark Application Sync Manager
 /** The `TICDSApplicationSyncManagerDelegate` protocol defines the methods implemented by delegates of a `TICDSApplicationSyncManager` object. */
