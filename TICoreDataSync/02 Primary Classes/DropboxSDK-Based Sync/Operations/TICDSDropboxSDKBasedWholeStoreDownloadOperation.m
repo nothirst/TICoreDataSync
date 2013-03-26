@@ -196,6 +196,40 @@
     BOOL success = YES;
     
     if( [[destPath lastPathComponent] isEqualToString:TICDSWholeStoreFilename] ) {
+
+        if ( [self shouldUseCompressionForWholeStoreMoves] ) {
+ 
+            // Rename the file with the .zip extension so that we can unzip it in place without having to manage separate temp locations
+            NSString *zipFilePath = [destPath stringByAppendingPathExtension:kSSZipArchiveFilenameSuffixForCompressedFile];
+            NSString *zipDecompressPath = [zipFilePath stringByDeletingLastPathComponent];
+            success = [[self fileManager] moveItemAtPath:destPath toPath:zipFilePath error:&anyError];
+            
+            if (!success) {
+                [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+                [self downloadedWholeStoreFileWithSuccess:success];
+                return;
+            }
+
+            // Unzip the file to the expected destPath location (this creates a subfolder named after the zip filename with the unzipped file within it)
+            success = [SSZipArchive unzipFileAtPath:zipFilePath toDestination:zipDecompressPath overwrite:YES password:nil error:&anyError];
+            
+            if (!success) {
+                [self setError:[TICDSError errorWithCode:TICDSErrorCodeCompressionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+                [self downloadedWholeStoreFileWithSuccess:success];
+                return;
+            }
+            
+            // Remove the file from zipFilePath to clean up
+            success = [[self fileManager] removeItemAtPath:zipFilePath error:&anyError];
+            
+            if (!success) {
+                [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+                [self downloadedWholeStoreFileWithSuccess:success];
+                return;
+            }
+            
+        }
+        
         if( [self shouldUseEncryption] ) {
             success = [[self cryptor] decryptFileAtLocation:[NSURL fileURLWithPath:destPath] writingToLocation:[self localWholeStoreFileLocation] error:&anyError];
             
