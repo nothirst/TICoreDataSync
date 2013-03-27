@@ -190,6 +190,22 @@
 }
 
 #pragma mark Loading Files
+
+- (void)restClient:(DBRestClient*)client loadProgress:(CGFloat)progress forFile:(NSString*)destPath;
+{
+    [self setProgress:progress];
+    if( [[destPath lastPathComponent] isEqualToString:TICDSWholeStoreFilename] ) {
+        
+        [self downloadingWholeStoreFileMadeProgress];
+        return;
+    }
+    
+    if( [[destPath lastPathComponent] isEqualToString:TICDSAppliedSyncChangeSetsFilename] ) {
+        [self downloadingAppliedSyncChangeSetsFileMadeProgress];
+        return;
+    }
+}
+
 - (void)restClient:(DBRestClient*)client loadedFile:(NSString*)destPath
 {
     NSError *anyError = nil;
