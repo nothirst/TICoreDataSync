@@ -197,11 +197,26 @@
     
     if( [[destPath lastPathComponent] isEqualToString:TICDSWholeStoreFilename] ) {
 
+        NSString *tempPath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:[[self localWholeStoreFileLocation] lastPathComponent]];
+
+        if( [self shouldUseEncryption] ) {
+            success = [[self cryptor] decryptFileAtLocation:[NSURL fileURLWithPath:destPath] writingToLocation:[NSURL fileURLWithPath:tempPath] error:&anyError];
+            
+            if( !success ) {
+                [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+            }
+            
+            destPath = tempPath;
+            
+        }
+        
         if ( [self shouldUseCompressionForWholeStoreMoves] ) {
  
             // Rename the file with the .zip extension so that we can unzip it in place without having to manage separate temp locations
-            NSString *zipFilePath = [destPath stringByAppendingPathExtension:kSSZipArchiveFilenameSuffixForCompressedFile];
+            NSString *zipFilePath = [tempPath stringByAppendingPathExtension:kSSZipArchiveFilenameSuffixForCompressedFile];
             NSString *zipDecompressPath = [zipFilePath stringByDeletingLastPathComponent];
+            NSString *unzippedFilePath = [zipDecompressPath stringByAppendingPathComponent:[[self thisDocumentDirectoryPath] lastPathComponent]];
+            
             success = [[self fileManager] moveItemAtPath:destPath toPath:zipFilePath error:&anyError];
             
             if (!success) {
@@ -214,35 +229,50 @@
             success = [SSZipArchive unzipFileAtPath:zipFilePath toDestination:zipDecompressPath overwrite:YES password:nil error:&anyError];
             
             if (!success) {
-                [self setError:[TICDSError errorWithCode:TICDSErrorCodeCompressionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-                [self downloadedWholeStoreFileWithSuccess:success];
-                return;
+                // If the unzip fails, it may be that a pre-compression feature store was downloaded, so we'll just bypass the rest of the zip process and let the download continue normally
+                
+                // Reverse the renaming of the downloaded file so it is ready for the next step of the download process
+                success = [[self fileManager] moveItemAtPath:zipFilePath toPath:destPath error:&anyError];
+
+                if (!success) {
+                    [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+                    [self downloadedWholeStoreFileWithSuccess:success];
+                    return;
+                }
+                
+            } else {
+                // The unzip was successful, so continue with the process
+                
+                // Remove the file from zipFilePath to clean up
+                success = [[self fileManager] removeItemAtPath:zipFilePath error:&anyError];
+                
+                if (!success) {
+                    [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+                    [self downloadedWholeStoreFileWithSuccess:success];
+                    return;
+                }
+                
+                // Verify that the store now exists at the tempPath location
+                success = [[self fileManager] fileExistsAtPath:unzippedFilePath];
+                
+                if (!success) {
+                    [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+                    [self downloadedWholeStoreFileWithSuccess:success];
+                    return;
+                }
+                
+                destPath = unzippedFilePath;
             }
-            
-            // Remove the file from zipFilePath to clean up
-            success = [[self fileManager] removeItemAtPath:zipFilePath error:&anyError];
-            
-            if (!success) {
-                [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-                [self downloadedWholeStoreFileWithSuccess:success];
-                return;
-            }
-            
         }
         
-        if( [self shouldUseEncryption] ) {
-            success = [[self cryptor] decryptFileAtLocation:[NSURL fileURLWithPath:destPath] writingToLocation:[self localWholeStoreFileLocation] error:&anyError];
-            
-            if( !success ) {
-                [self setError:[TICDSError errorWithCode:TICDSErrorCodeEncryptionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            }
-        } else {
-            success = [[self fileManager] moveItemAtPath:destPath toPath:[[self localWholeStoreFileLocation] path] error:&anyError];
-            
-            if( !success ) {
-                [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            }
+        success = [[self fileManager] moveItemAtPath:destPath toPath:[[self localWholeStoreFileLocation] path] error:&anyError];
+        
+        if( !success ) {
+            [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+            [self downloadedWholeStoreFileWithSuccess:success];
+            return;
         }
+        
         [self downloadedWholeStoreFileWithSuccess:success];
         return;
     }

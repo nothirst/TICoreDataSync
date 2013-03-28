@@ -54,9 +54,23 @@
     BOOL success = YES;
     NSString *filePath = [[self localWholeStoreFileLocation] path];
     
-    // Regardless of encryption or compression options, the upload will now occur from the tempPath
     NSString *tempPath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:[filePath lastPathComponent]];
 
+    if ( [self shouldUseCompressionForWholeStoreMoves] ) {
+        
+        // Create the zipped file
+        NSString *zipFilePath = [tempPath stringByAppendingPathExtension:kSSZipArchiveFilenameSuffixForCompressedFile];
+        success = [SSZipArchive createZipFileAtPath:zipFilePath withFilesAtPaths:[NSArray arrayWithObject:filePath]];
+        
+        if (!success) {
+            [self setError:[TICDSError errorWithCode:TICDSErrorCodeCompressionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+            [self uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:NO];
+            return;
+        }
+
+        filePath = zipFilePath;
+    }
+    
     if( [self shouldUseEncryption] ) {
         
         success = [[self cryptor] encryptFileAtLocation:[NSURL fileURLWithPath:filePath] writingToLocation:[NSURL fileURLWithPath:tempPath] error:&anyError];
@@ -67,64 +81,9 @@
         }
         
         filePath = tempPath;
-    } else {
-
-        // Create a copy of the whole store at the temp location
-        success = [[self fileManager] copyItemAtPath:filePath toPath:tempPath error:&anyError];
-        
-        if (!success) {
-            [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            [self uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:NO];
-            return;
-        }
     }
     
-    if ( [self shouldUseCompressionForWholeStoreMoves] ) {
-        
-        // Zip the file located at the temp location (it will either have been encrypted to or just copied to this location by steps above)
-
-        // First, rename it to the generic WholeStore.ticdsync format so it unzips with the expected name
-        NSString *genericWholeStoreFilePath = [[tempPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:TICDSWholeStoreFilename];
-        success = [[self fileManager] moveItemAtPath:tempPath toPath:genericWholeStoreFilePath error:&anyError];
-        
-        if (!success) {
-            [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            [self uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:NO];
-            return;
-        }
-        
-        // Now, create the zipped file
-        NSString *zipFilePath = [genericWholeStoreFilePath stringByAppendingPathExtension:kSSZipArchiveFilenameSuffixForCompressedFile];
-        success = [SSZipArchive createZipFileAtPath:zipFilePath withFilesAtPaths:[NSArray arrayWithObject:genericWholeStoreFilePath]];
-        
-        if (!success) {
-            [self setError:[TICDSError errorWithCode:TICDSErrorCodeCompressionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            [self uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:NO];
-            return;
-        }
-
-        // Remove the unzipped file from the genericWholeStoreFilePath location
-        success = [[self fileManager] removeItemAtPath:genericWholeStoreFilePath error:&anyError];
-        
-        if (!success) {
-            [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            [self uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:NO];
-            return;
-        }
-
-        // Remove the zip extension from the zipped file so it can be treated the same as in uncompressed situation
-        success = [[self fileManager] moveItemAtPath:zipFilePath toPath:genericWholeStoreFilePath error:&anyError];
-
-        if (!success) {
-            [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            [self uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:NO];
-            return;
-        }
-        
-        tempPath = genericWholeStoreFilePath;
-    }
-    
-    [[self restClient] uploadFile:TICDSWholeStoreFilename toPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] withParentRev:parentRevision fromPath:tempPath];
+    [[self restClient] uploadFile:TICDSWholeStoreFilename toPath:[self thisDocumentTemporaryWholeStoreThisClientDirectoryPath] withParentRev:parentRevision fromPath:filePath];
 }
 
 - (void)uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectory
