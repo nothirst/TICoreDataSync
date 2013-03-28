@@ -63,6 +63,7 @@
     [self setClientIdentifier:aClientIdentifier];
     [self setClientDescription:aClientDescription];
     [self setApplicationUserInfo:someUserInfo];
+    [self setShouldUseCompressionForWholeStoreMoves:YES];
     
     self.configured = YES;
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Application sync manager configured for future registration");
@@ -817,7 +818,8 @@
     [self setOtherTasksQueue:[[NSOperationQueue alloc] init]];
     [self setRegistrationQueue:[[NSOperationQueue alloc] init]];
     
-    [operation setShouldUseEncryption:[self shouldUseEncryption]];    
+    [operation setShouldUseEncryption:[self shouldUseEncryption]];
+    [operation setShouldUseCompressionForWholeStoreMoves:[self shouldUseCompressionForWholeStoreMoves]];
     [[self otherTasksQueue] addOperation:operation];
     
     return YES;
@@ -1067,6 +1069,7 @@ id __strong gTICDSDefaultApplicationSyncManager = nil;
 #pragma mark - Properties
 @synthesize state = _state;
 @synthesize shouldUseEncryption = _shouldUseEncryption;
+@synthesize shouldUseCompressionForWholeStoreMoves = _shouldUseCompressionForWholeStoreMoves;
 @synthesize delegate = _delegate;
 @synthesize appIdentifier = _appIdentifier;
 @synthesize clientIdentifier = _clientIdentifier;
