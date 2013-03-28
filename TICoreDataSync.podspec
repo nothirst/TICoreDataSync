@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "TICoreDataSync"
-  s.version      = "0.0.1"
+  s.version      = "1.0.1"
   s.summary      = "Automatic synchronization for Core Data Apps, between any combination of Mac OS X and iOS"
   s.homepage	 = "http://timisted.github.com/TICoreDataSync"
   s.license      = "MIT"
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   					 "Danny Greg" => "danny@dannygreg.com" }
   s.ios.deployment_target = '5.1'
   s.osx.deployment_target = '10.7'
-  s.source       = { :git => "https://github.com/nothirst/TICoreDataSync.git", :branch => "develop" }
+  s.source       = { :git => "https://github.com/nothirst/TICoreDataSync.git", :tag => "v1.0.1" }
   s.source_files = 'TICoreDataSync/0[1-6]*/**/*.{h,m}', 'TICoreDataSync/TICoreDataSync.h'
   s.resources = 'TICoreDataSync/05*/*.{plist,txt}'
   s.framework    = 'CoreData', 'Security'

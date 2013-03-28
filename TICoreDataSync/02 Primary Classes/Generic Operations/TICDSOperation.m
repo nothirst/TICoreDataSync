@@ -192,6 +192,7 @@
 #pragma mark - Properties
 @synthesize shouldUseEncryption = _shouldUseEncryption;
 @synthesize cryptor = _cryptor;
+@synthesize shouldUseCompressionForWholeStoreMoves = _shouldUseCompressionForWholeStoreMoves;
 @synthesize delegate = _delegate;
 @synthesize userInfo = _userInfo;
 @synthesize isExecuting = _isExecuting;

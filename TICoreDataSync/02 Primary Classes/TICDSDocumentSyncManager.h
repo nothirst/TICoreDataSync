@@ -25,6 +25,7 @@
     TICDSDocumentSyncManagerState _state;
     
     BOOL _shouldUseEncryption;
+    BOOL _shouldUseCompressionForWholeStoreMoves;
     
     BOOL _mustUploadStoreAfterRegistration;
     
@@ -296,6 +297,11 @@
  
  This value is set automatically by the application sync manager. */
 @property (nonatomic, assign) BOOL shouldUseEncryption;
+
+/** Used to indicate whether the document sync manager should use compression when moving whole store.
+ 
+This value is set automatically by the application sync manager. */
+@property (nonatomic, assign) BOOL shouldUseCompressionForWholeStoreMoves;
 
 /** Used internally to indicate whether the document sync manager must upload the store after registration has completed.
  

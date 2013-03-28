@@ -103,6 +103,7 @@ typedef NS_ENUM(NSInteger, TICDSErrorCode)
     TICDSErrorCodeTaskWasCancelled,
     TICDSErrorCodeDropboxSDKRestClientError,
     TICDSErrorCodeEncryptionError,
+    TICDSErrorCodeCompressionError,
     TICDSErrorCodeUnableToRegisterUnconfiguredSyncManager,
     TICDSErrorCodeFZACryptorCreatedSaltDataButRespondedThatItWasNotCorrectlyConfiguredForEncryption,
     TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeysDoNotMatch,
