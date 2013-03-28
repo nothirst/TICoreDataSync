@@ -23,6 +23,8 @@
         return;
     }
     
+    [self setProgress:0.0f];
+    
     // Configure the Cryptor object, if encryption is enabled
     if( [self shouldUseEncryption] ) {
         FZACryptor *aCryptor = [[FZACryptor alloc] init];
@@ -108,6 +110,16 @@
     }
 }
 
+-(void)ticdPrivate_operationDidMakeProgress;
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"TICDSOperation reported progress");
+    if ([self ti_delegateRespondsToSelector:@selector(operationReportedProgress:)]) {
+        [self runOnMainQueueWithoutDeadlocking:^{
+            [(id)self.delegate operationReportedProgress:self];
+        }];
+    }
+}
+
 - (void)operationDidStart
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"TICDSOperation started");
@@ -119,6 +131,7 @@
 
 - (void)operationDidCompleteSuccessfully
 {
+    [self setProgress:1.0f];
     [self ticdPrivate_operationDidCompleteSuccessfully:YES cancelled:NO];
 }
 
@@ -130,6 +143,11 @@
 - (void)operationWasCancelled
 {
     [self ticdPrivate_operationDidCompleteSuccessfully:NO cancelled:YES];
+}
+
+- (void)operationDidMakeProgress;
+{
+    [self ticdPrivate_operationDidMakeProgress];
 }
 
 #pragma mark - Lazy Accessors
@@ -201,5 +219,6 @@
 @synthesize fileManager = _fileManager;
 @synthesize tempFileDirectoryPath = _tempFileDirectoryPath;
 @synthesize clientIdentifier = _clientIdentifier;
+@synthesize progress = _progress;
 
 @end

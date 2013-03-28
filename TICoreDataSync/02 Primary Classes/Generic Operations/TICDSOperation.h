@@ -43,6 +43,8 @@
     NSString *_tempFileDirectoryPath;
     
     NSString *_clientIdentifier;
+    
+    CGFloat _progress;
 }
 
 /** @name Designated Initializer */
@@ -70,6 +72,9 @@
 
 /** Call this method if the operation is cancelled midway through its work. This will set the required values for `isExecuting` and `isFinished`. */
 - (void)operationWasCancelled;
+
+/** Call this method if the operation wants to announce an update in the task progress. */
+- (void)operationDidMakeProgress;
 
 /** @name Properties */
 
@@ -108,5 +113,8 @@
 
 /** The identifier of the client application (not set automatically, but may be used whenever necessary by subclasses). */
 @property (copy) NSString *clientIdentifier;
+
+/** Used to report the completion progress of the operation (eg. during device to cloud file transfers). */
+@property (nonatomic, assign) CGFloat progress;
 
 @end

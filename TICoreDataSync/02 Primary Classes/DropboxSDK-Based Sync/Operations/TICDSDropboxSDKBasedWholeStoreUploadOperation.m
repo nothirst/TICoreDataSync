@@ -301,6 +301,21 @@
     }
 }
 
+- (void)restClient:(DBRestClient*)client uploadProgress:(CGFloat)progress forFile:(NSString*)destPath from:(NSString*)srcPath
+{
+    [self setProgress:progress];
+    if( [[destPath lastPathComponent] isEqualToString:TICDSWholeStoreFilename] ) {
+        
+        [self uploadingWholeStoreFileToThisClientTemporaryWholeStoreDirectoryMadeProgress];
+        return;
+    }
+    
+    if( [[destPath lastPathComponent] isEqualToString:TICDSAppliedSyncChangeSetsFilename] ) {
+        [self uploadingLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryMadeProgress];
+        return;
+    }
+}
+
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error
 {
     NSString *path = [[error userInfo] valueForKey:@"destinationPath"];

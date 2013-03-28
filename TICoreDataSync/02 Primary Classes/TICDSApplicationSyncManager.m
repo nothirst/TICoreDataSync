@@ -465,6 +465,18 @@
 }
 
 #pragma mark Operation Communications
+
+-(void)wholeStoreDownloadOperationReportedProgress:(TICDSWholeStoreDownloadOperation *)anOperation;
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Whole Store Download Operation Progress Reported: %.2f",[anOperation progress]);
+    
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:whileDownloadingDocumentWithIdentifier:didReportProgress:)]) {
+        [self runOnMainQueueWithoutDeadlocking:^{
+            [(id)self.delegate applicationSyncManager:self whileDownloadingDocumentWithIdentifier:[[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier] didReportProgress:[anOperation progress]];
+        }];
+    }
+}
+
 - (void)documentDownloadOperationCompleted:(TICDSWholeStoreDownloadOperation *)anOperation
 {
     NSError *anyError = nil;
@@ -949,6 +961,14 @@
         [self documentDeletionOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     } else if( [anOperation isKindOfClass:[TICDSRemoveAllRemoteSyncDataOperation class]] ) {
         [self removeAllSyncDataOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
+    }
+}
+
+- (void)operationReportedProgress:(TICDSOperation *)anOperation
+{
+    // For now, only supporting progress reports on whole store movements, but could be extended to any operation
+    if( [anOperation isKindOfClass:[TICDSWholeStoreDownloadOperation class]] ) {
+        [self wholeStoreDownloadOperationReportedProgress:(id)anOperation];
     }
 }
 
