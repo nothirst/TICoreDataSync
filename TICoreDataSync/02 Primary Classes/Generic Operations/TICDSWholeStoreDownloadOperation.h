@@ -61,12 +61,18 @@
  @param anIdentifier The identifier of the client. */
 - (void)determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:(NSString *)anIdentifier;
 
+/** Indicate when the download operation makes progress. */
+-(void)downloadingWholeStoreFileMadeProgress;
+
 /** Indicate whether the download of the whole store file was successful.
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
  @param success `YES` if the whole store file was downloaded, otherwise `NO`. */
 - (void)downloadedWholeStoreFileWithSuccess:(BOOL)success;
+
+/** Indicate when the download operation makes progress. */
+- (void)downloadingAppliedSyncChangeSetsFileMadeProgress;
 
 /** Indicate whether the download of the applied sync change sets file was successful.
  

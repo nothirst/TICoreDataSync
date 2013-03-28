@@ -662,6 +662,17 @@
 
 #pragma mark Operation Communications
 
+-(void)wholeStoreUploadOperationReportedProgress:(TICDSWholeStoreUploadOperation *)anOperation;
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Whole Store Upload Operation Progress Reported: %.2f",[anOperation progress]);
+    
+    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:whileUploadingWholeStoreDidReportProgress:)]) {
+        [self runOnMainQueueWithoutDeadlocking:^{
+            [(id)self.delegate documentSyncManager:self whileUploadingWholeStoreDidReportProgress:[anOperation progress]];
+        }];
+    }
+}
+
 - (void)wholeStoreUploadOperationCompleted:(TICDSWholeStoreUploadOperation *)anOperation
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Whole Store Upload Operation Completed");
@@ -691,7 +702,7 @@
     [self postDecreaseActivityNotification];
 }
 
-- (void)wholeStoreUploadOperation:(TICDSDocumentRegistrationOperation *)anOperation failedToCompleteWithError:(NSError *)anError
+- (void)wholeStoreUploadOperation:(TICDSWholeStoreUploadOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Whole Store Upload Operation Failed to Complete with Error: %@", anError);
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToUploadWholeStoreWithError:)]) {
@@ -780,6 +791,17 @@
 }
 
 #pragma mark Operation Communications
+
+-(void)wholeStoreDownloadOperationReportedProgress:(TICDSWholeStoreDownloadOperation *)anOperation;
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Whole Store Download Operation Progress Reported: %.2f",[anOperation progress]);
+    
+    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:whileDownloadingWholeStoreDidReportProgress:)]) {
+        [self runOnMainQueueWithoutDeadlocking:^{
+            [(id)self.delegate documentSyncManager:self whileDownloadingWholeStoreDidReportProgress:[anOperation progress]];
+        }];
+    }
+}
 
 - (void)wholeStoreDownloadOperationCompleted:(TICDSWholeStoreDownloadOperation *)anOperation
 {
@@ -1725,6 +1747,16 @@
         [self registeredClientsOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
     } else if ([anOperation isKindOfClass:[TICDSDocumentClientDeletionOperation class]]) {
         [self documentClientDeletionOperation:(id)anOperation failedToCompleteWithError:[anOperation error]];
+    }
+}
+
+- (void)operationReportedProgress:(TICDSOperation *)anOperation
+{
+    // For now, only supporting progress reports on whole store movements, but could be extended to any operation
+    if ([anOperation isKindOfClass:[TICDSWholeStoreUploadOperation class]]) {
+        [self wholeStoreUploadOperationReportedProgress:(id)anOperation];
+    } else if ([anOperation isKindOfClass:[TICDSWholeStoreDownloadOperation class]]) {
+        [self wholeStoreDownloadOperationReportedProgress:(id)anOperation];
     }
 }
 
