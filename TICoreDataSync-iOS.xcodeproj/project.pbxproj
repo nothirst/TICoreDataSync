@@ -446,9 +446,11 @@
 		13023C67161366E10071C497 /* 02 Primary Classes */ = {
 			isa = PBXGroup;
 			children = (
+				13023CA4161366E10071C497 /* Generic Operations */,
 				13023C68161366E10071C497 /* DropboxSDK-Based Sync */,
 				13023C86161366E10071C497 /* File Manager-Based Sync */,
-				13023CA4161366E10071C497 /* Generic Operations */,
+				13371E101666B3D200470CE5 /* NSManagedObjectContext+TICDSAdditions.h */,
+				13371E111666B3D200470CE5 /* NSManagedObjectContext+TICDSAdditions.m */,
 				13023CBF161366E10071C497 /* TICDSApplicationSyncManager.h */,
 				13023CC0161366E10071C497 /* TICDSApplicationSyncManager.m */,
 				13023CC1161366E10071C497 /* TICDSDocumentSyncManager.h */,
@@ -459,8 +461,6 @@
 				13023CC6161366E10071C497 /* TICDSSynchronizationOperationManagedObjectContext.m */,
 				13023CC7161366E10071C497 /* TICDSSynchronizedManagedObject.h */,
 				13023CC8161366E10071C497 /* TICDSSynchronizedManagedObject.m */,
-				13371E101666B3D200470CE5 /* NSManagedObjectContext+TICDSAdditions.h */,
-				13371E111666B3D200470CE5 /* NSManagedObjectContext+TICDSAdditions.m */,
 			);
 			path = "02 Primary Classes";
 			sourceTree = "<group>";
@@ -558,10 +558,6 @@
 		13023CA4161366E10071C497 /* Generic Operations */ = {
 			isa = PBXGroup;
 			children = (
-				13FB9B9C16C2EE8F00B656F3 /* TICDSPostSynchronizationOperation.h */,
-				13FB9B9D16C2EE8F00B656F3 /* TICDSPostSynchronizationOperation.m */,
-				13FB9B9E16C2EE8F00B656F3 /* TICDSPreSynchronizationOperation.h */,
-				13FB9B9F16C2EE8F00B656F3 /* TICDSPreSynchronizationOperation.m */,
 				13023CA5161366E10071C497 /* TICDSApplicationRegistrationOperation.h */,
 				13023CA6161366E10071C497 /* TICDSApplicationRegistrationOperation.m */,
 				13023CA7161366E10071C497 /* TICDSDocumentClientDeletionOperation.h */,
@@ -578,10 +574,14 @@
 				13023CB2161366E10071C497 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.m */,
 				13023CB3161366E10071C497 /* TICDSOperation.h */,
 				13023CB4161366E10071C497 /* TICDSOperation.m */,
-				13023CB5161366E10071C497 /* TICDSRemoveAllRemoteSyncDataOperation.h */,
-				13023CB6161366E10071C497 /* TICDSRemoveAllRemoteSyncDataOperation.m */,
+				13FB9B9E16C2EE8F00B656F3 /* TICDSPreSynchronizationOperation.h */,
+				13FB9B9F16C2EE8F00B656F3 /* TICDSPreSynchronizationOperation.m */,
 				13023CB7161366E10071C497 /* TICDSSynchronizationOperation.h */,
 				13023CB8161366E10071C497 /* TICDSSynchronizationOperation.m */,
+				13FB9B9C16C2EE8F00B656F3 /* TICDSPostSynchronizationOperation.h */,
+				13FB9B9D16C2EE8F00B656F3 /* TICDSPostSynchronizationOperation.m */,
+				13023CB5161366E10071C497 /* TICDSRemoveAllRemoteSyncDataOperation.h */,
+				13023CB6161366E10071C497 /* TICDSRemoveAllRemoteSyncDataOperation.m */,
 				13023CB9161366E10071C497 /* TICDSVacuumOperation.h */,
 				13023CBA161366E10071C497 /* TICDSVacuumOperation.m */,
 				13023CBB161366E10071C497 /* TICDSWholeStoreDownloadOperation.h */,
