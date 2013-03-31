@@ -49,6 +49,7 @@
     NSOperationQueue *_otherTasksQueue;
     
     NSString *_integrityKey;
+    UIBackgroundTaskIdentifier _backgroundTaskID;
 }
 
 #pragma mark - Local helper file removal
@@ -462,5 +463,8 @@ This value is set automatically by the application sync manager. */
 
 /** The integrity key used to check whether the synchronization data matches what's expected. */
 @property (nonatomic, copy) NSString *integrityKey;
+
+/** Unique task identifier used when Sync Manager is performing a series of tasks that should be continued after app goes into background state */
+@property (nonatomic, assign) UIBackgroundTaskIdentifier backgroundTaskID;
 
 @end

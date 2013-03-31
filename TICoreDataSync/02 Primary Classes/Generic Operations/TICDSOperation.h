@@ -45,6 +45,7 @@
     NSString *_clientIdentifier;
     
     CGFloat _progress;
+    UIBackgroundTaskIdentifier _backgroundTaskID;
 }
 
 /** @name Designated Initializer */
@@ -116,5 +117,8 @@
 
 /** Used to report the completion progress of the operation (eg. during device to cloud file transfers). */
 @property (nonatomic, assign) CGFloat progress;
+
+/** Unique task identifier used when this operation must complete as a background operation */
+@property (nonatomic, assign) UIBackgroundTaskIdentifier backgroundTaskID;
 
 @end

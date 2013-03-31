@@ -899,6 +899,8 @@
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Manual initiation of synchronization");
 
+    [self beginBackgroundTask];
+    
     [self startPreSynchronizationProcess];
 }
 
@@ -1158,6 +1160,7 @@
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidFinishSynchronizing:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManagerDidFinishSynchronizing:self];
+            [self endBackgroundTask];
         }];
     }
     [self postDecreaseActivityNotification];
@@ -1195,6 +1198,7 @@
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToSynchronizeWithError:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToSynchronizeWithError:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+            [self endBackgroundTask];
         }];
     }
     [self postDecreaseActivityNotification];
@@ -1247,6 +1251,7 @@
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToSynchronizeWithError:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToSynchronizeWithError:anError];
+            [self endBackgroundTask];
         }];
     }
     [self postDecreaseActivityNotification];
@@ -1969,6 +1974,34 @@
     return [[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnsynchronizedSyncChangesStoreName];
 }
 
+#pragma mark - Background State Support
+
+- (void) beginBackgroundTask
+{
+    self.backgroundTaskID = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        [self endBackgroundTask];
+    }];
+}
+
+- (void) endBackgroundTask
+{
+    switch ([[UIApplication sharedApplication] applicationState]) {
+        case UIApplicationStateActive:  {
+            DDLogVerbose(@"Doc Sync Manager (%@), Task ID (%i) is ending while app state is Active",[self class],self.backgroundTaskID);
+        }   break;
+        case UIApplicationStateInactive:  {
+            DDLogVerbose(@"Doc Sync Manager (%@), Task ID (%i) is ending while app state is Inactive",[self class],self.backgroundTaskID);
+        }   break;
+        case UIApplicationStateBackground:  {
+            DDLogInfo(@"Doc Sync Manager (%@), Task ID (%i) is ending while app state is Background with %.0f seconds remaining",[self class],self.backgroundTaskID,[[UIApplication sharedApplication] backgroundTimeRemaining]);
+        }   break;
+        default:
+            break;
+    }
+    [[UIApplication sharedApplication] endBackgroundTask: self.backgroundTaskID];
+    self.backgroundTaskID = UIBackgroundTaskInvalid;
+}
+
 #pragma mark - Properties
 
 @synthesize delegate = _delegate;
@@ -1990,5 +2023,6 @@
 @synthesize synchronizationQueue = _synchronizationQueue;
 @synthesize otherTasksQueue = _otherTasksQueue;
 @synthesize integrityKey = _integrityKey;
+@synthesize backgroundTaskID = _backgroundTaskID;
 
 @end
