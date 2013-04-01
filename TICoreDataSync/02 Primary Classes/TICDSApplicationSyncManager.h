@@ -176,6 +176,12 @@
  This will spawn a `TICDSRemoveAllSyncDataOperation` and notify the delegate of progress. */
 - (void)removeAllSyncDataFromRemote;
 
+#pragma mark - Other Tasks Process
+/** @name Other Tasks Process */
+
+/** Cancel any operations in the ApplicationSyncManager's OtherTasks op queue */
+- (void)cancelOtherTasks;
+
 #pragma mark - Overridden Methods
 /** @name Methods Overridden by Subclasses */
 

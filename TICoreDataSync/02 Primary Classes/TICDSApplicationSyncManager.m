@@ -269,6 +269,13 @@
     }
 }
 
+#pragma mark - Other Tasks Process
+
+-(void)cancelOtherTasks;
+{
+    [self.otherTasksQueue cancelAllOperations];
+}
+
 #pragma mark - LIST OF PREVIOUSLY SYNCHRONIZED DOCUMENTS
 - (void)requestListOfPreviouslySynchronizedDocuments
 {

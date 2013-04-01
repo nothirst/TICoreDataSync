@@ -504,6 +504,9 @@
     }
     [self postDecreaseActivityNotification];
 
+    self.shouldUseEncryption = [self.applicationSyncManager shouldUseEncryption];
+    self.shouldUseCompressionForWholeStoreMoves = [self.applicationSyncManager shouldUseCompressionForWholeStoreMoves];
+    
     // Upload whole store if necessary
     TICDSLog(TICDSLogVerbosityEveryStep, @"Checking whether to upload whole store after registration");
     if (self.mustUploadStoreAfterRegistration) {
@@ -516,9 +519,6 @@
         TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate denied whole store upload after registration");
     }
 
-    self.shouldUseEncryption = [self.applicationSyncManager shouldUseEncryption];
-    self.shouldUseCompressionForWholeStoreMoves = [self.applicationSyncManager shouldUseCompressionForWholeStoreMoves];
-    
     TICDSLog(TICDSLogVerbosityEveryStep, @"Resuming Operation Queues");
     for ( TICDSOperation *eachOperation in [self.otherTasksQueue operations]) {
         [eachOperation setShouldUseEncryption:self.shouldUseEncryption];
@@ -1683,6 +1683,14 @@
 
 - (void)applicationSyncManagerWillRemoveAllRemoteSyncData:(NSNotification *)aNotification
 {}
+
+#pragma mark - Other Tasks Process
+
+-(void)cancelOtherTasks;
+{
+    [self.applicationSyncManager cancelOtherTasks];
+    [self.otherTasksQueue cancelAllOperations];
+}
 
 #pragma mark - OPERATION COMMUNICATIONS
 

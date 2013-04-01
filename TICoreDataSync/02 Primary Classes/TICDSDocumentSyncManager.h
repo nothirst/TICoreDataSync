@@ -187,6 +187,12 @@
  @param aType The type of conflict resolution; see `TICDSTypesAndEnums.h` for possible values. */
 - (void)continueSynchronizationByResolvingConflictWithResolutionType:(TICDSSyncConflictResolutionType)aType;
 
+#pragma mark - Other Tasks Process
+/** @name Other Tasks Process */
+
+/** Cancel any operations in both the ApplicationSyncManager's and DocumentSyncManager's OtherTasks op queues */
+- (void)cancelOtherTasks;
+
 #pragma mark - Vacuuming Files
 /** @name Vacuuming Unneeded Files */
 
