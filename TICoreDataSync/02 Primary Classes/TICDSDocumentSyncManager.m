@@ -1056,24 +1056,29 @@
         return;
     }
 
-    // move UnsynchronizedSyncChanges file to SyncChangesBeingSynchronized
-    success = [self.fileManager moveItemAtPath:self.unsynchronizedSyncChangesStorePath toPath:self.syncChangesBeingSynchronizedStorePath error:&anyError];
+    // Copy UnsynchronizedSyncChanges file to SyncChangesBeingSynchronized
+    success = [self.fileManager copyItemAtPath:self.unsynchronizedSyncChangesStorePath toPath:self.syncChangesBeingSynchronizedStorePath error:&anyError];
 
     if (success == NO) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to move UnsynchronizedSyncChanges.syncchg to SyncChangesBeingSynchronized.syncchg");
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to copy UnsynchronizedSyncChanges.syncchg to SyncChangesBeingSynchronized.syncchg");
         [self bailFromSynchronizationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
         return;
     }
+    
+    [self.fileManager removeItemAtPath:self.unsynchronizedSyncChangesStorePath error:&anyError];
+    if (success == NO) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to remove UnsynchronizedSyncChanges.syncchg, but not absolutely fatal so continuing.");
+    }
 
     // setup the syncChangesMOC
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Re-Creating SyncChangesMOC");
-    [self addSyncChangesMocForDocumentMoc:self.primaryDocumentMOC];
-    if ([self syncChangesMocForDocumentMoc:self.primaryDocumentMOC] == nil) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create sync changes MOC");
-        [self bailFromSynchronizationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateSyncChangesMOC classAndMethod:__PRETTY_FUNCTION__]];
-        return;
-    }
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Finished creating SyncChangesMOC");
+//    TICDSLog(TICDSLogVerbosityEveryStep, @"Re-Creating SyncChangesMOC");
+//    [self addSyncChangesMocForDocumentMoc:self.primaryDocumentMOC];
+//    if ([self syncChangesMocForDocumentMoc:self.primaryDocumentMOC] == nil) {
+//        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create sync changes MOC");
+//        [self bailFromSynchronizationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateSyncChangesMOC classAndMethod:__PRETTY_FUNCTION__]];
+//        return;
+//    }
+//    TICDSLog(TICDSLogVerbosityEveryStep, @"Finished creating SyncChangesMOC");
 }
 
 - (void)synchronizationOperation:(TICDSSynchronizationOperation *)anOperation processedChangeNumber:(NSNumber *)changeNumber outOfTotalChangeCount:(NSNumber *)totalChangeCount fromClientWithID:(NSString *)clientIdentifier
