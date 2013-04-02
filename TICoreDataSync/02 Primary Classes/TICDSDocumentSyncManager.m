@@ -146,7 +146,8 @@
     self.documentIdentifier = aDocumentIdentifier;
     self.shouldUseEncryption = [anAppSyncManager shouldUseEncryption];
     self.shouldUseCompressionForWholeStoreMoves = [anAppSyncManager shouldUseCompressionForWholeStoreMoves];
-
+    self.shouldContinueProcessingInBackgroundState = [self.delegate documentSyncManagerShouldSupportProcessingInBackgroundState:self];
+    
     [self postIncreaseActivityNotification];
 
     NSError *anyError = nil;
@@ -1773,6 +1774,36 @@
     }
 }
 
+-(BOOL)operationShouldSupportProcessingInBackgroundState:(TICDSOperation *)anOperation;
+{
+    BOOL allowProcessInBackgroundState = NO;
+    
+    if (!self.shouldContinueProcessingInBackgroundState) {
+        return allowProcessInBackgroundState;
+    }
+    
+    if ([anOperation isKindOfClass:[TICDSDocumentRegistrationOperation class]]) {
+        allowProcessInBackgroundState = NO;
+    } else if ([anOperation isKindOfClass:[TICDSWholeStoreUploadOperation class]]) {
+        allowProcessInBackgroundState = YES;
+    } else if ([anOperation isKindOfClass:[TICDSPreSynchronizationOperation class]]) {
+        allowProcessInBackgroundState = YES;
+    } else if ([anOperation isKindOfClass:[TICDSSynchronizationOperation class]]) {
+        allowProcessInBackgroundState = YES;
+    } else if ([anOperation isKindOfClass:[TICDSPostSynchronizationOperation class]]) {
+        allowProcessInBackgroundState = YES;
+    } else if ([anOperation isKindOfClass:[TICDSVacuumOperation class]]) {
+        allowProcessInBackgroundState = NO;
+    } else if ([anOperation isKindOfClass:[TICDSWholeStoreDownloadOperation class]]) {
+        allowProcessInBackgroundState = YES;
+    } else if ([anOperation isKindOfClass:[TICDSListOfDocumentRegisteredClientsOperation class]]) {
+        allowProcessInBackgroundState = NO;
+    } else if ([anOperation isKindOfClass:[TICDSDocumentClientDeletionOperation class]]) {
+        allowProcessInBackgroundState = NO;
+    }
+    return allowProcessInBackgroundState;
+}
+
 #pragma mark - TICoreDataFactory Delegate
 
 - (void)coreDataFactory:(TICoreDataFactory *)aFactory encounteredError:(NSError *)anError
@@ -1989,25 +2020,54 @@
     self.backgroundTaskID = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
         [self endBackgroundTask];
     }];
+    TICDSLog(TICDSLogVerbosityEveryStep,@"Doc Sync Manager (%@), Task ID (%i) is begining.",[self class],self.backgroundTaskID);
 }
 
 - (void) endBackgroundTask
 {
-    switch ([[UIApplication sharedApplication] applicationState]) {
-        case UIApplicationStateActive:  {
-            DDLogVerbose(@"Doc Sync Manager (%@), Task ID (%i) is ending while app state is Active",[self class],self.backgroundTaskID);
-        }   break;
-        case UIApplicationStateInactive:  {
-            DDLogVerbose(@"Doc Sync Manager (%@), Task ID (%i) is ending while app state is Inactive",[self class],self.backgroundTaskID);
-        }   break;
-        case UIApplicationStateBackground:  {
-            DDLogInfo(@"Doc Sync Manager (%@), Task ID (%i) is ending while app state is Background with %.0f seconds remaining",[self class],self.backgroundTaskID,[[UIApplication sharedApplication] backgroundTimeRemaining]);
-        }   break;
-        default:
-            break;
+    if (UIBackgroundTaskInvalid != _backgroundTaskID) {
+        switch ([[UIApplication sharedApplication] applicationState]) {
+            case UIApplicationStateActive:  {
+                TICDSLog(TICDSLogVerbosityEveryStep,@"Doc Sync Manager (%@), Task ID (%i) is ending while app state is Active",[self class],self.backgroundTaskID);
+            }   break;
+            case UIApplicationStateInactive:  {
+                TICDSLog(TICDSLogVerbosityEveryStep,@"Doc Sync Manager (%@), Task ID (%i) is ending while app state is Inactive",[self class],self.backgroundTaskID);
+            }   break;
+            case UIApplicationStateBackground:  {
+                TICDSLog(TICDSLogVerbosityEveryStep,@"Doc Sync Manager (%@), Task ID (%i) is ending while app state is Background with %.0f seconds remaining",[self class],self.backgroundTaskID,[[UIApplication sharedApplication] backgroundTimeRemaining]);
+            }   break;
+            default:
+                break;
+        }
+        [[UIApplication sharedApplication] endBackgroundTask: self.backgroundTaskID];
+        self.backgroundTaskID = UIBackgroundTaskInvalid;
     }
-    [[UIApplication sharedApplication] endBackgroundTask: self.backgroundTaskID];
-    self.backgroundTaskID = UIBackgroundTaskInvalid;
+}
+
+- (void)cancelNonBackgroundStateOperations;
+{
+    @synchronized(self) {
+        for (TICDSOperation *op in [self.registrationQueue operations]) {
+            if (!op.shouldContinueProcessingInBackgroundState) {
+                TICDSLog(TICDSLogVerbosityEveryStep,@"Doc Sync Manager is cancelling operation %@ (id:%i) because app has gone to background state.",[self class],self.backgroundTaskID);
+                [op cancel];
+            }
+        }
+        
+        for (TICDSOperation *op in [self.synchronizationQueue operations]) {
+            if (!op.shouldContinueProcessingInBackgroundState) {
+                TICDSLog(TICDSLogVerbosityEveryStep,@"Doc Sync Manager is cancelling operation %@ (id:%i) because app has gone to background state.",[self class],self.backgroundTaskID);
+                [op cancel];
+            }
+        }
+
+        for (TICDSOperation *op in [self.otherTasksQueue operations]) {
+            if (!op.shouldContinueProcessingInBackgroundState) {
+                TICDSLog(TICDSLogVerbosityEveryStep,@"Doc Sync Manager is cancelling operation %@ (id:%i) because app has gone to background state.",[self class],self.backgroundTaskID);
+                [op cancel];
+            }
+        }
+    }
 }
 
 #pragma mark - Properties
@@ -2032,5 +2092,6 @@
 @synthesize otherTasksQueue = _otherTasksQueue;
 @synthesize integrityKey = _integrityKey;
 @synthesize backgroundTaskID = _backgroundTaskID;
+@synthesize shouldContinueProcessingInBackgroundState = _shouldContinueProcessingInBackgroundState;
 
 @end

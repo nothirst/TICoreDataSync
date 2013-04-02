@@ -50,6 +50,7 @@
     
     NSString *_integrityKey;
     UIBackgroundTaskIdentifier _backgroundTaskID;
+    BOOL _shouldContinueProcessingInBackgroundState;
 }
 
 #pragma mark - Local helper file removal
@@ -192,6 +193,12 @@
 
 /** Cancel any operations in both the ApplicationSyncManager's and DocumentSyncManager's OtherTasks op queues */
 - (void)cancelOtherTasks;
+
+#pragma mark - Background State Processing
+/** @name Background State Processing */
+
+/** Initiate cancellation of tasks that are not marked as being supported in background state */
+- (void)cancelNonBackgroundStateOperations;
 
 #pragma mark - Vacuuming Files
 /** @name Vacuuming Unneeded Files */
@@ -371,6 +378,12 @@ This value is set automatically by the application sync manager. */
 /** Used to indicate if the document sync manager has been configured via the -configureWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo: method. */
 @property (nonatomic, getter = isConfigured) BOOL configured;
 
+/** Unique task identifier used when Sync Manager is performing a series of tasks that should be continued after app goes into background state */
+@property (nonatomic, assign) UIBackgroundTaskIdentifier backgroundTaskID;
+
+/** Indicates whether the document sync manager should be setup to continue processing after the app has been moved from the Active to Background state */
+@property (nonatomic, assign) BOOL shouldContinueProcessingInBackgroundState;
+
 #pragma mark - Operation Queues
 /** @name Operation Queues */
 
@@ -469,8 +482,5 @@ This value is set automatically by the application sync manager. */
 
 /** The integrity key used to check whether the synchronization data matches what's expected. */
 @property (nonatomic, copy) NSString *integrityKey;
-
-/** Unique task identifier used when Sync Manager is performing a series of tasks that should be continued after app goes into background state */
-@property (nonatomic, assign) UIBackgroundTaskIdentifier backgroundTaskID;
 
 @end
