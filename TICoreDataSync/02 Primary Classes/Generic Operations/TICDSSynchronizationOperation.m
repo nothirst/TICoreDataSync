@@ -365,22 +365,22 @@
 - (NSArray *)syncChangesAfterCheckingForConflicts:(NSArray *)syncChanges inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
 {
     NSArray *identifiersOfAffectedObjects = [syncChanges valueForKeyPath:@"@distinctUnionOfObjects.objectSyncID"];
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Affected Object identifiers: %@", [identifiersOfAffectedObjects componentsJoinedByString:@", "]);
-    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Affected Object identifiers: %@", [identifiersOfAffectedObjects componentsJoinedByString:@", "]);
+
     if (self.localSyncChangesToMergeContext == nil) {
         return syncChanges;
     }
-    
+
     NSMutableArray *syncChangesToReturn = [NSMutableArray arrayWithCapacity:[syncChanges count]];
-    
-        NSArray *syncChangesForEachObject = nil;
-        for (NSString *eachIdentifier in identifiersOfAffectedObjects) {
-            syncChangesForEachObject = [syncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"objectSyncID == %@", eachIdentifier]];
-            
-            syncChangesForEachObject = [self remoteSyncChangesForObjectWithIdentifier:eachIdentifier afterCheckingForConflictsInRemoteSyncChanges:syncChangesForEachObject inManagedObjectContext:managedObjectContext];
-            [syncChangesToReturn addObjectsFromArray:syncChangesForEachObject];
-        }
-    
+
+    NSArray *syncChangesForEachObject = nil;
+    for (NSString *eachIdentifier in identifiersOfAffectedObjects) {
+        syncChangesForEachObject = [syncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"objectSyncID == %@", eachIdentifier]];
+
+        syncChangesForEachObject = [self remoteSyncChangesForObjectWithIdentifier:eachIdentifier afterCheckingForConflictsInRemoteSyncChanges:syncChangesForEachObject inManagedObjectContext:managedObjectContext];
+        [syncChangesToReturn addObjectsFromArray:syncChangesForEachObject];
+    }
+
     return syncChangesToReturn;
 }
 
