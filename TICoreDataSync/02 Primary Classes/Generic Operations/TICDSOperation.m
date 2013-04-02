@@ -192,32 +192,35 @@
 
 #pragma mark - Background State Support
 
-- (void) beginBackgroundTask
+- (void)beginBackgroundTask
 {
     self.backgroundTaskID = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-        [self endBackgroundTask];
-    }];
+                                 [self endBackgroundTask];
+                             }];
 }
 
-- (void) endBackgroundTask
+- (void)endBackgroundTask
 {
-    if (UIBackgroundTaskInvalid != _backgroundTaskID) {
-        switch ([[UIApplication sharedApplication] applicationState]) {
-            case UIApplicationStateActive:  {
-                TICDSLog(TICDSLogVerbosityEveryStep,@"Operation (%@), Task ID (%i) is ending while app state is Active",[self class],self.backgroundTaskID);
-            }   break;
-            case UIApplicationStateInactive:  {
-                TICDSLog(TICDSLogVerbosityEveryStep,@"Operation (%@), Task ID (%i) is ending while app state is Inactive",[self class],self.backgroundTaskID);
-            }   break;
-            case UIApplicationStateBackground:  {
-                TICDSLog(TICDSLogVerbosityEveryStep,@"Operation (%@), Task ID (%i) is ending while app state is Background with %.0f seconds remaining",[self class],self.backgroundTaskID,[[UIApplication sharedApplication] backgroundTimeRemaining]);
-            }   break;
-            default:
-                break;
-        }
-        [[UIApplication sharedApplication] endBackgroundTask: self.backgroundTaskID];
-        self.backgroundTaskID = UIBackgroundTaskInvalid;
+    if (self.backgroundTaskID == UIBackgroundTaskInvalid) {
+        return;
     }
+
+    switch ([[UIApplication sharedApplication] applicationState]) {
+        case UIApplicationStateActive:  {
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Operation (%@), Task ID (%i) is ending while app state is Active", [self class], self.backgroundTaskID);
+        }   break;
+        case UIApplicationStateInactive:  {
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Operation (%@), Task ID (%i) is ending while app state is Inactive", [self class], self.backgroundTaskID);
+        }   break;
+        case UIApplicationStateBackground:  {
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Operation (%@), Task ID (%i) is ending while app state is Background with %.0f seconds remaining", [self class], self.backgroundTaskID, [[UIApplication sharedApplication] backgroundTimeRemaining]);
+        }   break;
+        default:
+            break;
+    }
+
+    [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskID];
+    self.backgroundTaskID = UIBackgroundTaskInvalid;
 }
 
 #pragma mark - Lazy Accessors
