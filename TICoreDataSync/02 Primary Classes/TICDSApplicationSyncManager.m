@@ -64,6 +64,7 @@
     [self setClientDescription:aClientDescription];
     [self setApplicationUserInfo:someUserInfo];
     [self setShouldUseCompressionForWholeStoreMoves:YES];
+    [self setShouldContinueProcessingInBackgroundState:[self.delegate applicationSyncManagerShouldSupportProcessingInBackgroundState:self]];
     
     self.configured = YES;
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Application sync manager configured for future registration");
@@ -269,6 +270,13 @@
     }
 }
 
+#pragma mark - Other Tasks Process
+
+-(void)cancelOtherTasks;
+{
+    [self.otherTasksQueue cancelAllOperations];
+}
+
 #pragma mark - LIST OF PREVIOUSLY SYNCHRONIZED DOCUMENTS
 - (void)requestListOfPreviouslySynchronizedDocuments
 {
@@ -404,6 +412,8 @@
 
 - (BOOL)startDocumentDownloadProcessForDocumentWithIdentifier:(NSString *)anIdentifier toLocation:(NSURL *)aLocation error:(NSError **)outError
 {
+    [self beginBackgroundTask];
+    
     // Set download to go to a temporary location
     NSString *temporaryPath = [NSTemporaryDirectory() stringByAppendingPathComponent:TICDSFrameworkName];
     temporaryPath = [temporaryPath stringByAppendingPathComponent:anIdentifier];
@@ -541,7 +551,10 @@
             [(id)self.delegate applicationSyncManager:self didFinishDownloadingDocumentWithIdentifier:[[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier] atURL:finalWholeStoreLocation];
         }];
     }
-[self postDecreaseActivityNotification];
+    
+    [self endBackgroundTask];
+    
+    [self postDecreaseActivityNotification];
 }
 
 - (void)documentDownloadOperationWasCancelled:(TICDSWholeStoreDownloadOperation *)anOperation
@@ -552,6 +565,7 @@
             [(id)self.delegate applicationSyncManager:self didFailToDownloadDocumentWithIdentifier:[[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier] error:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
         }];
     }
+    [self endBackgroundTask];
     [self postDecreaseActivityNotification];
 }
 
@@ -563,6 +577,7 @@
             [(id)self.delegate applicationSyncManager:self didFailToDownloadDocumentWithIdentifier:[[anOperation userInfo] valueForKey:kTICDSDocumentIdentifier] error:anError];
         }];
     }
+    [self endBackgroundTask];
     [self postDecreaseActivityNotification];
 }
 
@@ -972,6 +987,30 @@
     }
 }
 
+-(BOOL)operationShouldSupportProcessingInBackgroundState:(TICDSOperation *)anOperation;
+{
+    BOOL allowProcessInBackgroundState = NO;
+    
+    if (!self.shouldContinueProcessingInBackgroundState) {
+        return allowProcessInBackgroundState;
+    }
+    
+    if( [anOperation isKindOfClass:[TICDSApplicationRegistrationOperation class]] ) {
+        allowProcessInBackgroundState = NO;
+    } else if( [anOperation isKindOfClass:[TICDSListOfPreviouslySynchronizedDocumentsOperation class]] ) {
+        allowProcessInBackgroundState = NO;
+    } else if( [anOperation isKindOfClass:[TICDSWholeStoreDownloadOperation class]] ) {
+        allowProcessInBackgroundState = YES;
+    } else if( [anOperation isKindOfClass:[TICDSListOfApplicationRegisteredClientsOperation class]] ) {
+        allowProcessInBackgroundState = NO;
+    } else if( [anOperation isKindOfClass:[TICDSDocumentDeletionOperation class]] ) {
+        allowProcessInBackgroundState = NO;
+    } else if( [anOperation isKindOfClass:[TICDSRemoveAllRemoteSyncDataOperation class]] ) {
+        allowProcessInBackgroundState = NO;
+    }
+    return allowProcessInBackgroundState;
+}
+
 #pragma mark - Default Sync Manager
 id __strong gTICDSDefaultApplicationSyncManager = nil;
 
@@ -1076,6 +1115,56 @@ id __strong gTICDSDefaultApplicationSyncManager = nil;
 
 }
 
+#pragma mark - Background State Support
+
+- (void) beginBackgroundTask
+{
+    self.backgroundTaskID = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        [self endBackgroundTask];
+    }];
+    TICDSLog(TICDSLogVerbosityEveryStep,@"App Sync Manager (%@), Task ID (%i) is begining.",[self class],self.backgroundTaskID);
+}
+
+- (void) endBackgroundTask
+{
+    if (UIBackgroundTaskInvalid != _backgroundTaskID) {
+        switch ([[UIApplication sharedApplication] applicationState]) {
+            case UIApplicationStateActive:  {
+                TICDSLog(TICDSLogVerbosityEveryStep,@"App Sync Manager (%@), Task ID (%i) is ending while app state is Active",[self class],self.backgroundTaskID);
+            }   break;
+            case UIApplicationStateInactive:  {
+                TICDSLog(TICDSLogVerbosityEveryStep,@"App Sync Manager (%@), Task ID (%i) is ending while app state is Inactive",[self class],self.backgroundTaskID);
+            }   break;
+            case UIApplicationStateBackground:  {
+                TICDSLog(TICDSLogVerbosityEveryStep,@"App Sync Manager (%@), Task ID (%i) is ending while app state is Background with %.0f seconds remaining",[self class],self.backgroundTaskID,[[UIApplication sharedApplication] backgroundTimeRemaining]);
+            }   break;
+            default:
+                break;
+        }
+        [[UIApplication sharedApplication] endBackgroundTask: self.backgroundTaskID];
+        self.backgroundTaskID = UIBackgroundTaskInvalid;
+    }
+}
+
+- (void)cancelNonBackgroundStateOperations;
+{
+    @synchronized(self) {
+        for (TICDSOperation *op in [self.registrationQueue operations]) {
+            if (!op.shouldContinueProcessingInBackgroundState) {
+                TICDSLog(TICDSLogVerbosityEveryStep,@"App Sync Manager is cancelling operation %@ (id:%i) because app has gone to background state.",[self class],self.backgroundTaskID);
+                [op cancel];
+            }
+        }
+        
+        for (TICDSOperation *op in [self.otherTasksQueue operations]) {
+            if (!op.shouldContinueProcessingInBackgroundState) {
+                TICDSLog(TICDSLogVerbosityEveryStep,@"App Sync Manager is cancelling operation %@ (id:%i) because app has gone to background state.",[self class],self.backgroundTaskID);
+                [op cancel];
+            }
+        }
+    }
+}
+
 #pragma mark - Lazy Accessors
 - (NSFileManager *)fileManager
 {
@@ -1098,5 +1187,7 @@ id __strong gTICDSDefaultApplicationSyncManager = nil;
 @synthesize registrationQueue = _registrationQueue;
 @synthesize otherTasksQueue = _otherTasksQueue;
 @synthesize fileManager = _fileManager;
+@synthesize backgroundTaskID = _backgroundTaskID;
+@synthesize shouldContinueProcessingInBackgroundState = _shouldContinueProcessingInBackgroundState;
 
 @end

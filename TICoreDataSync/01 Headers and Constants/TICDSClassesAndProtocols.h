@@ -132,6 +132,11 @@
  @param aSyncManager The application sync manager object that sent the message. */
 - (void)applicationSyncManagerDidFinishRegistering:(TICDSApplicationSyncManager *)aSyncManager;
 
+/** Asks the delegate whether or not the application sync manager should support continued operation processing after the app has been sent to a background state. .
+ 
+ @param aSyncManager The application sync manager object that sent the message. */
+- (BOOL)applicationSyncManagerShouldSupportProcessingInBackgroundState:(TICDSApplicationSyncManager *)aSyncManager;
+
 #pragma mark Listing Previously Synchronized Documents
 /** @name Listing Previously Synchronized Documents */
 
@@ -369,6 +374,11 @@
  
  @param aSyncManager The document sync manager object that sent the message. */
 - (void)documentSyncManagerDidFinishRegistering:(TICDSDocumentSyncManager *)aSyncManager;
+
+/** Asks the delegate whether or not the document sync manager should support continued operation processing after the app has been sent to a background state. .
+ 
+ @param aSyncManager The document sync manager object that sent the message. */
+- (BOOL)documentSyncManagerShouldSupportProcessingInBackgroundState:(TICDSDocumentSyncManager *)aSyncManager;
 
 #pragma mark Helper Files
 /** @name Helper Files */
@@ -680,6 +690,11 @@
  
  @param anOperation The operation object that sent the message. */
 - (void)operationReportedProgress:(TICDSOperation *)anOperation;
+
+/** Asks the delegate whether or not the operation should support continued processing after the app has been sent to a background state. .
+ 
+ @param anOperation The operation object that sent the message. */
+- (BOOL)operationShouldSupportProcessingInBackgroundState:(TICDSOperation *)anOperation;
 
 @end
 
