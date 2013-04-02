@@ -85,6 +85,7 @@
 }
 
 #pragma mark - Sync Change Helper Methods
+
 - (TICDSSyncChange *)createSyncChangeForChangeType:(TICDSSyncChangeType)aType
 {
     TICDSSyncChange *syncChange = [TICDSSyncChange syncChangeOfType:aType inManagedObjectContext:[self syncChangesMOC]];
@@ -215,6 +216,7 @@
 }
 
 #pragma mark - Dictionaries
+
 - (NSDictionary *)dictionaryOfAllAttributes
 {
     NSDictionary *objectAttributeNames = [[self entity] attributesByName];
@@ -228,6 +230,7 @@
 }
 
 #pragma mark - Save Notification
+
 - (void)willSave
 {
     [super willSave];
@@ -259,6 +262,7 @@
 }
 
 #pragma mark - Managed Object Lifecycle
+
 - (void)awakeFromInsert
 {
     [super awakeFromInsert];
@@ -267,6 +271,7 @@
 }
 
 #pragma mark - Properties
+
 - (NSManagedObjectContext *)syncChangesMOC
 {
     TICDSDocumentSyncManager *documentSyncManager = self.managedObjectContext.documentSyncManager;

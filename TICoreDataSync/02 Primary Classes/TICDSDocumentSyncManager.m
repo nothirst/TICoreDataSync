@@ -1045,8 +1045,19 @@
     self.coreDataFactory = nil;
     [self.syncChangesMOCs setValue:nil forKey:[self keyForContext:self.primaryDocumentMOC]];
 
+    NSManagedObjectContext *syncChangesManagedObjectContext = [self syncChangesMocForDocumentMoc:self.primaryDocumentMOC];
+    BOOL success = [syncChangesManagedObjectContext save:&anyError];
+    
+    if (success == NO) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Sync Manager failed to save Sync Changes context with error: %@", anyError);
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Sync Manager cannot continue processing any further, so bailing");
+        [self bailFromSynchronizationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataFetchError underlyingError:[TICDSError errorWithCode:TICDSErrorCodeFailedToSaveSyncChangesMOC underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__] classAndMethod:__PRETTY_FUNCTION__]];
+        
+        return;
+    }
+
     // move UnsynchronizedSyncChanges file to SyncChangesBeingSynchronized
-    BOOL success = [self.fileManager moveItemAtPath:self.unsynchronizedSyncChangesStorePath toPath:self.syncChangesBeingSynchronizedStorePath error:&anyError];
+    success = [self.fileManager moveItemAtPath:self.unsynchronizedSyncChangesStorePath toPath:self.syncChangesBeingSynchronizedStorePath error:&anyError];
 
     if (success == NO) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to move UnsynchronizedSyncChanges.syncchg to SyncChangesBeingSynchronized.syncchg");
@@ -1609,6 +1620,7 @@
     BOOL success = NO;
 
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Sync Manager will save Sync Changes context");
+
     NSManagedObjectContext *syncChangesManagedObjectContext = [self syncChangesMocForDocumentMoc:documentManagedObjectContext];
     success = [syncChangesManagedObjectContext save:&anyError];
 
