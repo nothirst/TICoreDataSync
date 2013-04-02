@@ -146,7 +146,8 @@
     self.documentIdentifier = aDocumentIdentifier;
     self.shouldUseEncryption = [anAppSyncManager shouldUseEncryption];
     self.shouldUseCompressionForWholeStoreMoves = [anAppSyncManager shouldUseCompressionForWholeStoreMoves];
-
+    self.shouldContinueProcessingInBackgroundState = [self.delegate documentSyncManagerShouldSupportProcessingInBackgroundState:self];
+    
     [self postIncreaseActivityNotification];
 
     NSError *anyError = nil;
@@ -504,6 +505,9 @@
     }
     [self postDecreaseActivityNotification];
 
+    self.shouldUseEncryption = [self.applicationSyncManager shouldUseEncryption];
+    self.shouldUseCompressionForWholeStoreMoves = [self.applicationSyncManager shouldUseCompressionForWholeStoreMoves];
+    
     // Upload whole store if necessary
     TICDSLog(TICDSLogVerbosityEveryStep, @"Checking whether to upload whole store after registration");
     if (self.mustUploadStoreAfterRegistration) {
@@ -516,9 +520,6 @@
         TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate denied whole store upload after registration");
     }
 
-    self.shouldUseEncryption = [self.applicationSyncManager shouldUseEncryption];
-    self.shouldUseCompressionForWholeStoreMoves = [self.applicationSyncManager shouldUseCompressionForWholeStoreMoves];
-    
     TICDSLog(TICDSLogVerbosityEveryStep, @"Resuming Operation Queues");
     for ( TICDSOperation *eachOperation in [self.otherTasksQueue operations]) {
         [eachOperation setShouldUseEncryption:self.shouldUseEncryption];
@@ -899,6 +900,8 @@
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Manual initiation of synchronization");
 
+    [self beginBackgroundTask];
+    
     [self startPreSynchronizationProcess];
 }
 
@@ -1174,6 +1177,7 @@
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidFinishSynchronizing:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManagerDidFinishSynchronizing:self];
+            [self endBackgroundTask];
         }];
     }
     [self postDecreaseActivityNotification];
@@ -1211,6 +1215,7 @@
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToSynchronizeWithError:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToSynchronizeWithError:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+            [self endBackgroundTask];
         }];
     }
     [self postDecreaseActivityNotification];
@@ -1263,6 +1268,7 @@
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToSynchronizeWithError:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToSynchronizeWithError:anError];
+            [self endBackgroundTask];
         }];
     }
     [self postDecreaseActivityNotification];
@@ -1696,6 +1702,14 @@
 - (void)applicationSyncManagerWillRemoveAllRemoteSyncData:(NSNotification *)aNotification
 {}
 
+#pragma mark - Other Tasks Process
+
+-(void)cancelOtherTasks;
+{
+    [self.applicationSyncManager cancelOtherTasks];
+    [self.otherTasksQueue cancelAllOperations];
+}
+
 #pragma mark - OPERATION COMMUNICATIONS
 
 - (void)operationCompletedSuccessfully:(TICDSOperation *)anOperation
@@ -1775,6 +1789,36 @@
     } else if ([anOperation isKindOfClass:[TICDSWholeStoreDownloadOperation class]]) {
         [self wholeStoreDownloadOperationReportedProgress:(id)anOperation];
     }
+}
+
+-(BOOL)operationShouldSupportProcessingInBackgroundState:(TICDSOperation *)anOperation;
+{
+    BOOL allowProcessInBackgroundState = NO;
+    
+    if (!self.shouldContinueProcessingInBackgroundState) {
+        return allowProcessInBackgroundState;
+    }
+    
+    if ([anOperation isKindOfClass:[TICDSDocumentRegistrationOperation class]]) {
+        allowProcessInBackgroundState = NO;
+    } else if ([anOperation isKindOfClass:[TICDSWholeStoreUploadOperation class]]) {
+        allowProcessInBackgroundState = YES;
+    } else if ([anOperation isKindOfClass:[TICDSPreSynchronizationOperation class]]) {
+        allowProcessInBackgroundState = YES;
+    } else if ([anOperation isKindOfClass:[TICDSSynchronizationOperation class]]) {
+        allowProcessInBackgroundState = YES;
+    } else if ([anOperation isKindOfClass:[TICDSPostSynchronizationOperation class]]) {
+        allowProcessInBackgroundState = YES;
+    } else if ([anOperation isKindOfClass:[TICDSVacuumOperation class]]) {
+        allowProcessInBackgroundState = NO;
+    } else if ([anOperation isKindOfClass:[TICDSWholeStoreDownloadOperation class]]) {
+        allowProcessInBackgroundState = YES;
+    } else if ([anOperation isKindOfClass:[TICDSListOfDocumentRegisteredClientsOperation class]]) {
+        allowProcessInBackgroundState = NO;
+    } else if ([anOperation isKindOfClass:[TICDSDocumentClientDeletionOperation class]]) {
+        allowProcessInBackgroundState = NO;
+    }
+    return allowProcessInBackgroundState;
 }
 
 #pragma mark - TICoreDataFactory Delegate
@@ -1986,6 +2030,63 @@
     return [[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnsynchronizedSyncChangesStoreName];
 }
 
+#pragma mark - Background State Support
+
+- (void) beginBackgroundTask
+{
+    self.backgroundTaskID = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        [self endBackgroundTask];
+    }];
+    TICDSLog(TICDSLogVerbosityEveryStep,@"Doc Sync Manager (%@), Task ID (%i) is begining.",[self class],self.backgroundTaskID);
+}
+
+- (void) endBackgroundTask
+{
+    if (UIBackgroundTaskInvalid != _backgroundTaskID) {
+        switch ([[UIApplication sharedApplication] applicationState]) {
+            case UIApplicationStateActive:  {
+                TICDSLog(TICDSLogVerbosityEveryStep,@"Doc Sync Manager (%@), Task ID (%i) is ending while app state is Active",[self class],self.backgroundTaskID);
+            }   break;
+            case UIApplicationStateInactive:  {
+                TICDSLog(TICDSLogVerbosityEveryStep,@"Doc Sync Manager (%@), Task ID (%i) is ending while app state is Inactive",[self class],self.backgroundTaskID);
+            }   break;
+            case UIApplicationStateBackground:  {
+                TICDSLog(TICDSLogVerbosityEveryStep,@"Doc Sync Manager (%@), Task ID (%i) is ending while app state is Background with %.0f seconds remaining",[self class],self.backgroundTaskID,[[UIApplication sharedApplication] backgroundTimeRemaining]);
+            }   break;
+            default:
+                break;
+        }
+        [[UIApplication sharedApplication] endBackgroundTask: self.backgroundTaskID];
+        self.backgroundTaskID = UIBackgroundTaskInvalid;
+    }
+}
+
+- (void)cancelNonBackgroundStateOperations;
+{
+    @synchronized(self) {
+        for (TICDSOperation *op in [self.registrationQueue operations]) {
+            if (!op.shouldContinueProcessingInBackgroundState) {
+                TICDSLog(TICDSLogVerbosityEveryStep,@"Doc Sync Manager is cancelling operation %@ (id:%i) because app has gone to background state.",[self class],self.backgroundTaskID);
+                [op cancel];
+            }
+        }
+        
+        for (TICDSOperation *op in [self.synchronizationQueue operations]) {
+            if (!op.shouldContinueProcessingInBackgroundState) {
+                TICDSLog(TICDSLogVerbosityEveryStep,@"Doc Sync Manager is cancelling operation %@ (id:%i) because app has gone to background state.",[self class],self.backgroundTaskID);
+                [op cancel];
+            }
+        }
+
+        for (TICDSOperation *op in [self.otherTasksQueue operations]) {
+            if (!op.shouldContinueProcessingInBackgroundState) {
+                TICDSLog(TICDSLogVerbosityEveryStep,@"Doc Sync Manager is cancelling operation %@ (id:%i) because app has gone to background state.",[self class],self.backgroundTaskID);
+                [op cancel];
+            }
+        }
+    }
+}
+
 #pragma mark - Properties
 
 @synthesize delegate = _delegate;
@@ -2007,5 +2108,7 @@
 @synthesize synchronizationQueue = _synchronizationQueue;
 @synthesize otherTasksQueue = _otherTasksQueue;
 @synthesize integrityKey = _integrityKey;
+@synthesize backgroundTaskID = _backgroundTaskID;
+@synthesize shouldContinueProcessingInBackgroundState = _shouldContinueProcessingInBackgroundState;
 
 @end
