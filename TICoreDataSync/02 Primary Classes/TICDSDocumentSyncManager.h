@@ -49,7 +49,10 @@
     NSOperationQueue *_otherTasksQueue;
     
     NSString *_integrityKey;
+
+#if TARGET_OS_IPHONE
     UIBackgroundTaskIdentifier _backgroundTaskID;
+#endif
     BOOL _shouldContinueProcessingInBackgroundState;
 }
 
@@ -378,8 +381,10 @@ This value is set automatically by the application sync manager. */
 /** Used to indicate if the document sync manager has been configured via the -configureWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo: method. */
 @property (nonatomic, getter = isConfigured) BOOL configured;
 
+#if TARGET_OS_IPHONE
 /** Unique task identifier used when Sync Manager is performing a series of tasks that should be continued after app goes into background state */
 @property (nonatomic, assign) UIBackgroundTaskIdentifier backgroundTaskID;
+#endif
 
 /** Indicates whether the document sync manager should be setup to continue processing after the app has been moved from the Active to Background state */
 @property (nonatomic, assign) BOOL shouldContinueProcessingInBackgroundState;

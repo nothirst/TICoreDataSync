@@ -39,7 +39,9 @@
     
     NSFileManager *_fileManager;
 
+#if TARGET_OS_IPHONE
     UIBackgroundTaskIdentifier _backgroundTaskID;
+#endif
     BOOL _shouldContinueProcessingInBackgroundState;
 }
 
@@ -295,8 +297,10 @@
 /** Used to indicate if the application sync manager has been configured via the -configureWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo: method. */
 @property (nonatomic, getter = isConfigured) BOOL configured;
 
+#if TARGET_OS_IPHONE
 /** Unique task identifier used when Sync Manager is performing a series of tasks that should be continued after app goes into background state */
 @property (nonatomic, assign) UIBackgroundTaskIdentifier backgroundTaskID;
+#endif
 
 /** Indicates whether the application sync manager should be setup to continue processing after the app has been moved from the Active to Background state */
 @property (nonatomic, assign) BOOL shouldContinueProcessingInBackgroundState;

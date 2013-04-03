@@ -1129,14 +1129,17 @@ id __strong gTICDSDefaultApplicationSyncManager = nil;
 
 - (void)beginBackgroundTask
 {
+#if TARGET_OS_IPHONE
     self.backgroundTaskID = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
                                  [self endBackgroundTask];
                              }];
     TICDSLog(TICDSLogVerbosityEveryStep, @"App Sync Manager (%@), Task ID (%i) is begining.", [self class], self.backgroundTaskID);
+#endif
 }
 
 - (void)endBackgroundTask
 {
+#if TARGET_OS_IPHONE
     if (self.backgroundTaskID == UIBackgroundTaskInvalid) {
         return;
     }
@@ -1157,10 +1160,12 @@ id __strong gTICDSDefaultApplicationSyncManager = nil;
 
     [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskID];
     self.backgroundTaskID = UIBackgroundTaskInvalid;
+#endif
 }
 
 - (void)cancelNonBackgroundStateOperations;
 {
+#if TARGET_OS_IPHONE
     @synchronized(self) {
         for (TICDSOperation *op in [self.registrationQueue operations]) {
             if (!op.shouldContinueProcessingInBackgroundState) {
@@ -1176,6 +1181,7 @@ id __strong gTICDSDefaultApplicationSyncManager = nil;
             }
         }
     }
+#endif
 }
 
 #pragma mark - Lazy Accessors
@@ -1200,7 +1206,9 @@ id __strong gTICDSDefaultApplicationSyncManager = nil;
 @synthesize registrationQueue = _registrationQueue;
 @synthesize otherTasksQueue = _otherTasksQueue;
 @synthesize fileManager = _fileManager;
+#if TARGET_OS_IPHONE
 @synthesize backgroundTaskID = _backgroundTaskID;
+#endif
 @synthesize shouldContinueProcessingInBackgroundState = _shouldContinueProcessingInBackgroundState;
 
 @end

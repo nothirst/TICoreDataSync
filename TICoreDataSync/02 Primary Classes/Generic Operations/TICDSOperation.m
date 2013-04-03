@@ -194,13 +194,16 @@
 
 - (void)beginBackgroundTask
 {
+#if TARGET_OS_IPHONE
     self.backgroundTaskID = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
                                  [self endBackgroundTask];
                              }];
+#endif
 }
 
 - (void)endBackgroundTask
 {
+#if TARGET_OS_IPHONE
     if (self.backgroundTaskID == UIBackgroundTaskInvalid) {
         return;
     }
@@ -221,6 +224,7 @@
 
     [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskID];
     self.backgroundTaskID = UIBackgroundTaskInvalid;
+#endif
 }
 
 #pragma mark - Lazy Accessors
@@ -258,7 +262,9 @@
 @synthesize tempFileDirectoryPath = _tempFileDirectoryPath;
 @synthesize clientIdentifier = _clientIdentifier;
 @synthesize progress = _progress;
+#if TARGET_OS_IPHONE
 @synthesize backgroundTaskID = _backgroundTaskID;
+#endif
 @synthesize shouldContinueProcessingInBackgroundState = _shouldContinueProcessingInBackgroundState;
 
 @end

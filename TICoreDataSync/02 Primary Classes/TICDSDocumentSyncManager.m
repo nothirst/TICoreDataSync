@@ -2039,14 +2039,17 @@
 
 - (void)beginBackgroundTask
 {
+#if TARGET_OS_IPHONE
     self.backgroundTaskID = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
                                  [self endBackgroundTask];
                              }];
     TICDSLog(TICDSLogVerbosityEveryStep, @"Doc Sync Manager (%@), Task ID (%i) is begining.", [self class], self.backgroundTaskID);
+#endif
 }
 
 - (void)endBackgroundTask
 {
+#if TARGET_OS_IPHONE
     if (self.backgroundTaskID == UIBackgroundTaskInvalid) {
         return;
     }
@@ -2067,10 +2070,12 @@
 
     [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskID];
     self.backgroundTaskID = UIBackgroundTaskInvalid;
+#endif
 }
 
 - (void)cancelNonBackgroundStateOperations;
 {
+#if TARGET_OS_IPHONE
     @synchronized(self) {
         for (TICDSOperation *op in [self.registrationQueue operations]) {
             if (!op.shouldContinueProcessingInBackgroundState) {
@@ -2093,6 +2098,7 @@
             }
         }
     }
+#endif
 }
 
 #pragma mark - Properties
@@ -2116,7 +2122,9 @@
 @synthesize synchronizationQueue = _synchronizationQueue;
 @synthesize otherTasksQueue = _otherTasksQueue;
 @synthesize integrityKey = _integrityKey;
+#if TARGET_OS_IPHONE
 @synthesize backgroundTaskID = _backgroundTaskID;
+#endif
 @synthesize shouldContinueProcessingInBackgroundState = _shouldContinueProcessingInBackgroundState;
 
 @end
