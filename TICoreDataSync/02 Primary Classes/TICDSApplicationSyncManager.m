@@ -63,8 +63,18 @@
     [self setClientIdentifier:aClientIdentifier];
     [self setClientDescription:aClientDescription];
     [self setApplicationUserInfo:someUserInfo];
-    [self setShouldUseCompressionForWholeStoreMoves:YES];
-    [self setShouldContinueProcessingInBackgroundState:[self.delegate applicationSyncManagerShouldSupportProcessingInBackgroundState:self]];
+    
+    BOOL shouldUseCompression = YES;
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerShouldUseCompressionForWholeStoreMoves:)]) {
+        shouldUseCompression = [self.delegate applicationSyncManagerShouldUseCompressionForWholeStoreMoves:self];
+    }
+    [self setShouldUseCompressionForWholeStoreMoves:shouldUseCompression];
+
+    BOOL shouldProcessInBackgroundState = YES;
+    if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerShouldSupportProcessingInBackgroundState:)]) {
+        shouldProcessInBackgroundState = [self.delegate applicationSyncManagerShouldSupportProcessingInBackgroundState:self];
+    }
+    [self setShouldContinueProcessingInBackgroundState:shouldProcessInBackgroundState];
     
     self.configured = YES;
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Application sync manager configured for future registration");

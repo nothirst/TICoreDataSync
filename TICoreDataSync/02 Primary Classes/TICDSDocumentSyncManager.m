@@ -146,7 +146,12 @@
     self.documentIdentifier = aDocumentIdentifier;
     self.shouldUseEncryption = [anAppSyncManager shouldUseEncryption];
     self.shouldUseCompressionForWholeStoreMoves = [anAppSyncManager shouldUseCompressionForWholeStoreMoves];
-    self.shouldContinueProcessingInBackgroundState = [self.delegate documentSyncManagerShouldSupportProcessingInBackgroundState:self];
+
+    BOOL shouldProcessInBackgroundState = YES;
+    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerShouldSupportProcessingInBackgroundState:)]) {
+        shouldProcessInBackgroundState = [self.delegate documentSyncManagerShouldSupportProcessingInBackgroundState:self];
+    }
+    self.shouldContinueProcessingInBackgroundState = shouldProcessInBackgroundState;
     
     [self postIncreaseActivityNotification];
 
