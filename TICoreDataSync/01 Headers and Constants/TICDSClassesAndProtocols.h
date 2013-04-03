@@ -132,10 +132,15 @@
  @param aSyncManager The application sync manager object that sent the message. */
 - (void)applicationSyncManagerDidFinishRegistering:(TICDSApplicationSyncManager *)aSyncManager;
 
-/** Asks the delegate whether or not the application sync manager should support continued operation processing after the app has been sent to a background state. .
+/** Asks the delegate whether or not the application sync manager should support continued operation processing after the app has been sent to a background state. If this delegate method isn't implemented the application sync manager defaults to YES and will process items in the background. Background processing currently only applies to sync operations running on iOS.
  
  @param aSyncManager The application sync manager object that sent the message. */
 - (BOOL)applicationSyncManagerShouldSupportProcessingInBackgroundState:(TICDSApplicationSyncManager *)aSyncManager;
+
+/** Asks the delegate whether or not the application sync manager should support compressing the whole store file when transferring it between the local and remote locations. If this delegate method isn't implemented the application sync manager defaults to YES and will compress the whole store.
+ 
+ @param aSyncManager The application sync manager object that sent the message. */
+- (BOOL)applicationSyncManagerShouldUseCompressionForWholeStoreMoves:(TICDSApplicationSyncManager *)aSyncManager;
 
 #pragma mark Listing Previously Synchronized Documents
 /** @name Listing Previously Synchronized Documents */
