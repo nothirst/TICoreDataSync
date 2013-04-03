@@ -288,56 +288,63 @@
     NSSortDescriptor *sequenceSort = [[NSSortDescriptor alloc] initWithKey:@"changeType" ascending:YES];
     unappliedSyncChanges = [unappliedSyncChanges sortedArrayUsingDescriptors:[NSArray arrayWithObject:sequenceSort]];
 
-    NSInteger changeCount = 1;
-    // Apply each object's changes in turn
-    for ( TICDSSyncChange *eachChange in unappliedSyncChanges) {
-        if (self.isCancelled) {
-            [self operationWasCancelled];
-            return NO;
-        }
-        
-        @autoreleasepool {
-            switch ( [[eachChange changeType] unsignedIntegerValue]) {
-                case TICDSSyncChangeTypeObjectInserted: {
-                    [self applyObjectInsertedSyncChange:eachChange];
-                    [self.backgroundApplicationContext performBlockAndWait:^{
-                         [self.backgroundApplicationContext processPendingChanges];
-                     }];
-                    break;
-                }
-                case TICDSSyncChangeTypeAttributeChanged: {
-                    [self applyAttributeChangeSyncChange:eachChange];
-                    break;
-                }
-                case TICDSSyncChangeTypeToOneRelationshipChanged: {
-                    [self applyToOneRelationshipSyncChange:eachChange];
-                    break;
-                }
-                case TICDSSyncChangeTypeToManyRelationshipChangedByAddingObject:
-                case TICDSSyncChangeTypeToManyRelationshipChangedByRemovingObject: {
-                    [self applyToManyRelationshipSyncChange:eachChange];
-                    break;
-                }
-                case TICDSSyncChangeTypeObjectDeleted: {
-                    [self applyObjectDeletedSyncChange:eachChange];
-                    break;
-                }
+    @try {
+        NSInteger changeCount = 1;
+        // Apply each object's changes in turn
+        for ( TICDSSyncChange *eachChange in unappliedSyncChanges) {
+            if (self.isCancelled) {
+                [self operationWasCancelled];
+                return NO;
             }
             
-            [eachChange.managedObjectContext refreshObject:eachChange mergeChanges:NO];
+            @autoreleasepool {
+                switch ( [[eachChange changeType] unsignedIntegerValue]) {
+                    case TICDSSyncChangeTypeObjectInserted: {
+                        [self applyObjectInsertedSyncChange:eachChange];
+                        [self.backgroundApplicationContext performBlockAndWait:^{
+                            [self.backgroundApplicationContext processPendingChanges];
+                        }];
+                        break;
+                    }
+                    case TICDSSyncChangeTypeAttributeChanged: {
+                        [self applyAttributeChangeSyncChange:eachChange];
+                        break;
+                    }
+                    case TICDSSyncChangeTypeToOneRelationshipChanged: {
+                        [self applyToOneRelationshipSyncChange:eachChange];
+                        break;
+                    }
+                    case TICDSSyncChangeTypeToManyRelationshipChangedByAddingObject:
+                    case TICDSSyncChangeTypeToManyRelationshipChangedByRemovingObject: {
+                        [self applyToManyRelationshipSyncChange:eachChange];
+                        break;
+                    }
+                    case TICDSSyncChangeTypeObjectDeleted: {
+                        [self applyObjectDeletedSyncChange:eachChange];
+                        break;
+                    }
+                }
+                
+                [eachChange.managedObjectContext refreshObject:eachChange mergeChanges:NO];
+            }
+            
+            changeCount++;
+            if ([self ti_delegateRespondsToSelector:@selector(synchronizationOperation:processedChangeNumber:outOfTotalChangeCount:fromClientWithID:)]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [(id)self.delegate synchronizationOperation:self processedChangeNumber:[NSNumber numberWithInteger:changeCount] outOfTotalChangeCount:[NSNumber numberWithInteger:[unappliedSyncChanges count]] fromClientWithID:clientIdentifier];
+                });
+            }
         }
-
-        changeCount++;
-        if ([self ti_delegateRespondsToSelector:@selector(synchronizationOperation:processedChangeNumber:outOfTotalChangeCount:fromClientWithID:)]) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                               [(id)self.delegate synchronizationOperation:self processedChangeNumber:[NSNumber numberWithInteger:changeCount] outOfTotalChangeCount:[NSNumber numberWithInteger:[unappliedSyncChanges count]] fromClientWithID:clientIdentifier];
-                           });
-        }
+        
+        [self.backgroundApplicationContext performBlockAndWait:^{
+            [self.backgroundApplicationContext processPendingChanges];
+        }];
+        
     }
-
-    [self.backgroundApplicationContext performBlockAndWait:^{
-         [self.backgroundApplicationContext processPendingChanges];
-     }];
+    @catch ( NSException *exception ) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Exception occured applying changes: %@", exception);
+        return NO;
+    }
 
     return YES;
 }
