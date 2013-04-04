@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		13A969751663FECF008CB958 /* TICDSSyncChange.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 13A9691D1663FECF008CB958 /* TICDSSyncChange.xcdatamodel */; };
 		13A969771663FECF008CB958 /* TICDSSyncChangeSet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 13A969201663FECF008CB958 /* TICDSSyncChangeSet.xcdatamodeld */; };
 		13A969801663FECF008CB958 /* deviceInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13A969351663FECF008CB958 /* deviceInfo.plist */; };
 		13A969811663FECF008CB958 /* documentInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13A969361663FECF008CB958 /* documentInfo.plist */; };
@@ -230,7 +229,7 @@
 		386F07C313715D0800D4F31B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Tim Isted";
 			};
 			buildConfigurationList = 386F07C613715D0800D4F31B /* Build configuration list for PBXProject "Notebook" */;
@@ -295,7 +294,6 @@
 				386D4C7F1371893500020F72 /* TIManagedObjectsToStringsValueTransfomer.m in Sources */,
 				13E94DEC163ED1ED0058A989 /* TICDSSyncChange.xcdatamodel in Sources */,
 				13E94DED163ED1ED0058A989 /* TICDSSyncChangeSet.xcdatamodeld in Sources */,
-				13A969751663FECF008CB958 /* TICDSSyncChange.xcdatamodel in Sources */,
 				13A969771663FECF008CB958 /* TICDSSyncChangeSet.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -341,7 +339,11 @@
 		386F07EB13715D0800D4F31B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
@@ -350,6 +352,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
@@ -360,12 +363,17 @@
 		386F07EC13715D0800D4F31B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
@@ -380,14 +388,13 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/TICoreDataSync/07 External Frameworks\"",
-					"\"$(SRCROOT)/../../TICoreDataSync/07 External Frameworks\"",
+					"$(SRCROOT)/../../**",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Notebook/Notebook-Prefix.pch";
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../TICoreDataSync\"/**";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../**";
 				INFOPLIST_FILE = "Notebook/Notebook-Info.plist";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -404,13 +411,12 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/TICoreDataSync/07 External Frameworks\"",
-					"\"$(SRCROOT)/../../TICoreDataSync/07 External Frameworks\"",
+					"$(SRCROOT)/../../**",
 				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Notebook/Notebook-Prefix.pch";
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../TICoreDataSync\"/**";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../**";
 				INFOPLIST_FILE = "Notebook/Notebook-Info.plist";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

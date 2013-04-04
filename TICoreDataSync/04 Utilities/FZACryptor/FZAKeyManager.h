@@ -80,6 +80,6 @@
 
 @end
 
-enum {
+typedef NS_ENUM(NSInteger, FZAKeyManagerKeyErrorCode) {
     FZAKeyManagerKeyStorageError
 };

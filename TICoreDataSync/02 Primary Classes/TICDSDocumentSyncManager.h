@@ -26,6 +26,7 @@
     TICDSDocumentSyncManagerState _state;
     
     BOOL _shouldUseEncryption;
+    BOOL _shouldUseCompressionForWholeStoreMoves;
     
     BOOL _mustUploadStoreAfterRegistration;
     
@@ -49,7 +50,23 @@
     NSOperationQueue *_otherTasksQueue;
     
     NSString *_integrityKey;
+
+#if TARGET_OS_IPHONE
+    UIBackgroundTaskIdentifier _backgroundTaskID;
+#endif
+    BOOL _shouldContinueProcessingInBackgroundState;
 }
+
+#pragma mark - Local helper file removal
+/** @name Local Helper File Removal */
+
+/** Remove Local Helper Files.
+ 
+ Use this method to teardown the local sync helper files that TICDS stores. This method does not require a configured and registered document sync manager unless you've specified a custom location for TICDS to store the helper files.
+ 
+ @param error If the file manager fails to remove the files the error will be non-nil.
+  */
+- (void)removeLocalHelperFiles:(NSError **)error;
 
 #pragma mark - One-Shot Document Registration
 /** @name One-Shot Document Registration */
@@ -175,6 +192,18 @@
  @param aType The type of conflict resolution; see `TICDSTypesAndEnums.h` for possible values. */
 - (void)continueSynchronizationByResolvingConflictWithResolutionType:(TICDSSyncConflictResolutionType)aType;
 
+#pragma mark - Other Tasks Process
+/** @name Other Tasks Process */
+
+/** Cancel any operations in both the ApplicationSyncManager's and DocumentSyncManager's OtherTasks op queues */
+- (void)cancelOtherTasks;
+
+#pragma mark - Background State Processing
+/** @name Background State Processing */
+
+/** Initiate cancellation of tasks that are not marked as being supported in background state */
+- (void)cancelNonBackgroundStateOperations;
+
 #pragma mark - Vacuuming Files
 /** @name Vacuuming Unneeded Files */
 
@@ -287,6 +316,11 @@
  This value is set automatically by the application sync manager. */
 @property (nonatomic, assign) BOOL shouldUseEncryption;
 
+/** Used to indicate whether the document sync manager should use compression when moving whole store.
+ 
+This value is set automatically by the application sync manager. */
+@property (nonatomic, assign) BOOL shouldUseCompressionForWholeStoreMoves;
+
 /** Used internally to indicate whether the document sync manager must upload the store after registration has completed.
  
  This will be `YES` if this is the first time this document has been registered. */
@@ -347,6 +381,14 @@
 
 /** Used to indicate if the document sync manager has been configured via the -configureWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo: method. */
 @property (nonatomic, getter = isConfigured) BOOL configured;
+
+#if TARGET_OS_IPHONE
+/** Unique task identifier used when Sync Manager is performing a series of tasks that should be continued after app goes into background state */
+@property (nonatomic, assign) UIBackgroundTaskIdentifier backgroundTaskID;
+#endif
+
+/** Indicates whether the document sync manager should be setup to continue processing after the app has been moved from the Active to Background state */
+@property (nonatomic, assign) BOOL shouldContinueProcessingInBackgroundState;
 
 #pragma mark - Operation Queues
 /** @name Operation Queues */

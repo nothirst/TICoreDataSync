@@ -27,6 +27,7 @@
     TICDSApplicationSyncManagerState _state;
     
     BOOL _shouldUseEncryption;
+    BOOL _shouldUseCompressionForWholeStoreMoves;
     
     id <TICDSApplicationSyncManagerDelegate> __weak _delegate;
     NSString *_appIdentifier;
@@ -38,6 +39,11 @@
     NSOperationQueue *_otherTasksQueue;
     
     NSFileManager *_fileManager;
+
+#if TARGET_OS_IPHONE
+    UIBackgroundTaskIdentifier _backgroundTaskID;
+#endif
+    BOOL _shouldContinueProcessingInBackgroundState;
 }
 
 #pragma mark - Application-Wide Sync Manager
@@ -176,6 +182,18 @@
  This will spawn a `TICDSRemoveAllSyncDataOperation` and notify the delegate of progress. */
 - (void)removeAllSyncDataFromRemote;
 
+#pragma mark - Other Tasks Process
+/** @name Other Tasks Process */
+
+/** Cancel any operations in the ApplicationSyncManager's OtherTasks op queue */
+- (void)cancelOtherTasks;
+
+#pragma mark - Background State Processing
+/** @name Background State Processing */
+
+/** Initiate cancellation of tasks that are not marked as being supported in background state */
+- (void)cancelNonBackgroundStateOperations;
+
 #pragma mark - Overridden Methods
 /** @name Methods Overridden by Subclasses */
 
@@ -242,6 +260,11 @@
  This value is set automatically during the application registration process. */
 @property (nonatomic, assign) BOOL shouldUseEncryption;
 
+/** Used to indicate whether the application sync manager should use zip compression when moving the whole store.
+ 
+ This value is set automatically during the application sync manager configuration process. */
+@property (nonatomic, assign) BOOL shouldUseCompressionForWholeStoreMoves;
+
 /** The Application Sync Manager Delegate. */
 @property (nonatomic, weak) id <TICDSApplicationSyncManagerDelegate> delegate;
 
@@ -274,6 +297,14 @@
 
 /** Used to indicate if the application sync manager has been configured via the -configureWithDelegate:globalAppIdentifier:uniqueClientIdentifier:description:userInfo: method. */
 @property (nonatomic, getter = isConfigured) BOOL configured;
+
+#if TARGET_OS_IPHONE
+/** Unique task identifier used when Sync Manager is performing a series of tasks that should be continued after app goes into background state */
+@property (nonatomic, assign) UIBackgroundTaskIdentifier backgroundTaskID;
+#endif
+
+/** Indicates whether the application sync manager should be setup to continue processing after the app has been moved from the Active to Background state */
+@property (nonatomic, assign) BOOL shouldContinueProcessingInBackgroundState;
 
 #pragma mark - Operation Queues
 /** @name Operation Queues */

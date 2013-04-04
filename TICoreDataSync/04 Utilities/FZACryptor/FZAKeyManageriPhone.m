@@ -92,15 +92,15 @@
         [storeAttributes setObject:key forKey:(__bridge id)kSecValueData];
         [storeAttributes setObject:@"fza-sync" forKey:(__bridge id)kSecAttrLabel];
         
-        // [storeAttributes setObject: (id)kCFBooleanTrue forKey: (id)kSecReturnPersistentRef];
         [storeAttributes removeObjectForKey:(__bridge id)kSecReturnAttributes];
         storeResult = SecItemAdd((__bridge CFDictionaryRef)storeAttributes, NULL);
         if (storeResult == errSecDuplicateItem) {
             TICDSLog(TICDSLogVerbosityErrorsOnly, @"A call to SecItemAdd returned errSecDuplicateItem. This is not an error because we've handled it so let's carry on.");
             NSMutableDictionary *updateAttributes = [[self searchAttributes] mutableCopy];
             [updateAttributes removeObjectForKey:(__bridge id)kSecReturnAttributes];
+            NSDictionary *updatedStoreAttributes = @{(__bridge id)kSecValueData : key};
             storeResult = SecItemUpdate((__bridge CFDictionaryRef)updateAttributes,
-                                        (__bridge CFDictionaryRef)storeAttributes);
+                                        (__bridge CFDictionaryRef)updatedStoreAttributes);
         }
     }
     
