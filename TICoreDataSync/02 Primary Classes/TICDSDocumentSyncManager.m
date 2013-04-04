@@ -1050,9 +1050,6 @@
 
     TICDSLog(TICDSLogVerbosityEveryStep, @"Moving UnsynchronizedSyncChanges to SyncChangesBeingSynchronized");
 
-    self.coreDataFactory = nil;
-    [self.syncChangesMOCs setValue:nil forKey:[self keyForContext:self.primaryDocumentMOC]];
-
     NSManagedObjectContext *syncChangesManagedObjectContext = [self syncChangesMocForDocumentMoc:self.primaryDocumentMOC];
     BOOL success = [syncChangesManagedObjectContext save:&anyError];
     
@@ -1063,6 +1060,9 @@
         
         return;
     }
+
+    self.coreDataFactory = nil;
+    [self.syncChangesMOCs setValue:nil forKey:[self keyForContext:self.primaryDocumentMOC]];
 
     // Copy UnsynchronizedSyncChanges file to SyncChangesBeingSynchronized
     success = [self.fileManager copyItemAtPath:self.unsynchronizedSyncChangesStorePath toPath:self.syncChangesBeingSynchronizedStorePath error:&anyError];
