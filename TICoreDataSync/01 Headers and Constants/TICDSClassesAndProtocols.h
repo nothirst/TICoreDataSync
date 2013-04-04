@@ -645,7 +645,7 @@
  
  @param aSyncManager The document sync manager object that sent the message.
  @param aMoc The managed object context. */
-- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didBeginProcessingSyncChangesAfterManagedObjectContextDidSave:(NSManagedObjectContext *)aMoc;
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didBeginProcessingSyncChangesBeforeManagedObjectContextWillSave:(NSManagedObjectContext *)aMoc;
 
 /** Informs the delegate that the sync manager failed to process the changes that have occurred since the previous `save:` of the managed object context.
  

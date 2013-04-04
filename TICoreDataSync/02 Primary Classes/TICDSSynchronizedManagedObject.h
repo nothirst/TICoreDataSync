@@ -27,4 +27,6 @@
 
 @property (weak, nonatomic, readonly) NSManagedObjectContext *syncChangesMOC;
 
+- (void)createSyncChange;
+
 @end
