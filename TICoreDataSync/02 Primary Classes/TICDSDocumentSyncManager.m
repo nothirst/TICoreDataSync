@@ -42,7 +42,8 @@
 @property (nonatomic, copy) NSString *clientIdentifier;
 @property (nonatomic, strong) NSDictionary *documentUserInfo;
 @property (strong) NSURL *helperFileDirectoryLocation;
-
+#warning @property (nonatomic) NSMutableArray *uncommittedSyncProcessIDs;
+#warning @property NSString *currentSyncProcessIdentifier;
 @end
 
 @implementation TICDSDocumentSyncManager
@@ -78,9 +79,7 @@
 {
     [self preConfigureWithDelegate:aDelegate appSyncManager:anAppSyncManager documentIdentifier:aDocumentIdentifier];
 
-    self.primaryDocumentMOC = aContext;
-    self.primaryDocumentMOC.documentSyncManager = self;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(synchronizedMOCDidSave:) name:NSManagedObjectContextDidSaveNotification object:self.primaryDocumentMOC];
+    [self registerPrimaryDocumentManagedObjectContext:aContext];
 
     // setup the syncChangesMOC
     TICDSLog(TICDSLogVerbosityEveryStep, @"Creating SyncChangesMOC");
@@ -320,9 +319,7 @@
     self.state = TICDSDocumentSyncManagerStateRegistering;
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to register document sync manager");
 
-    self.primaryDocumentMOC = aContext;
-    self.primaryDocumentMOC.documentSyncManager = self;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(synchronizedMOCDidSave:) name:NSManagedObjectContextDidSaveNotification object:self.primaryDocumentMOC];
+    [self registerPrimaryDocumentManagedObjectContext:aContext];
 
     // setup the syncChangesMOC
     TICDSLog(TICDSLogVerbosityEveryStep, @"Creating SyncChangesMOC");
@@ -353,6 +350,21 @@
         [self bailFromRegistrationProcessWithError:anyError];
         return;
     }
+}
+
+- (void)registerPrimaryDocumentManagedObjectContext:(NSManagedObjectContext *)primaryManagedObjectContext
+{
+    self.primaryDocumentMOC = primaryManagedObjectContext;
+    self.primaryDocumentMOC.documentSyncManager = self;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(synchronizedMOCWillSave:) name:NSManagedObjectContextWillSaveNotification object:self.primaryDocumentMOC];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(synchronizedMOCDidSave:) name:NSManagedObjectContextDidSaveNotification object:self.primaryDocumentMOC];
+    
+    NSManagedObjectContext *rootContext = primaryManagedObjectContext;
+    while (rootContext.parentContext != nil) {
+        rootContext = rootContext.parentContext;
+    }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rootManagedObjectContextDidSave:) name:NSManagedObjectContextDidSaveNotification object:rootContext];
 }
 
 - (void)bailFromRegistrationProcessWithError:(NSError *)anError
@@ -903,7 +915,8 @@
 
 - (void)initiateSynchronization
 {
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Manual initiation of synchronization");
+#warning Move the code from our class to here that restricts things to one synchronization at a time
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Initiation of synchronization");
 
     [self beginBackgroundTask];
     
@@ -937,6 +950,8 @@
     }
     
     [self moveUnsynchronizedSyncChangesToMergeLocation];
+    
+#warning    self.currentSyncProcessIdentifier = [TICDSUtilities uuidString];
     
     TICDSPreSynchronizationOperation *operation = [self preSynchronizationOperation];
     
@@ -1667,7 +1682,12 @@
     }
 
     TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate allowed synchronization after saving");
-    [self startPreSynchronizationProcess];
+    [self initiateSynchronization];
+}
+
+- (void)rootManagedObjectContextDidSave:(NSNotification *)notification
+{
+#warning Commit all uncommitted applied sync change sets
 }
 
 #pragma mark - NOTIFICATIONS
