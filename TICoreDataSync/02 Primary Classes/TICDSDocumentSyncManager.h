@@ -307,14 +307,6 @@
  */
 - (void)synchronizedMOCWillSave:(NSManagedObjectContext *)aMoc;
 
-/** Indicate that the synchronized managed object context completed a successful save.
- 
- This method is called automatically by `NSManagedObjectContext` when it has successfully completed a `save:`.
- 
- @param aMoc The synchronized managed object context.
- */
-- (void)synchronizedMOCDidSave:(NSManagedObjectContext *)aMoc;
-
 #pragma mark - Properties
 /** @name Properties */
 
