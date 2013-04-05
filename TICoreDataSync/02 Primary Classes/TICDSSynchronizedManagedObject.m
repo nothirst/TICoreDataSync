@@ -231,10 +231,8 @@
 
 #pragma mark - Save Notification
 
-- (void)willSave
+- (void)createSyncChange
 {
-    [super willSave];
-
     // if not in a synchronized MOC, or we don't have a doc sync manager, exit now
     if (self.managedObjectContext.isSynchronized == NO || self.managedObjectContext.documentSyncManager == nil) {
         if (self.managedObjectContext.isSynchronized == NO) {
