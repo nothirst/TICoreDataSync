@@ -74,6 +74,7 @@
     
     if (hasMore && self.initialCallToDelta) {
         [self.restClient loadDelta:self.deltaCursor];
+        return;
     }
     
     self.initialCallToDelta = NO;
