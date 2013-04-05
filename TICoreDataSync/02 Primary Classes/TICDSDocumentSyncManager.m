@@ -44,6 +44,8 @@
 @property (strong) NSURL *helperFileDirectoryLocation;
 #warning @property (nonatomic) NSMutableArray *uncommittedSyncProcessIDs;
 #warning @property NSString *currentSyncProcessIdentifier;
+@property NSInteger queuedSyncsCount;
+
 @end
 
 @implementation TICDSDocumentSyncManager
@@ -358,6 +360,7 @@
     self.primaryDocumentMOC.documentSyncManager = self;
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(synchronizedMOCWillSave:) name:NSManagedObjectContextWillSaveNotification object:self.primaryDocumentMOC];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(synchronizedMOCDidSave:) name:NSManagedObjectContextDidSaveNotification object:self.primaryDocumentMOC];
     
     NSManagedObjectContext *rootContext = primaryManagedObjectContext;
     while (rootContext.parentContext != nil) {
@@ -915,8 +918,15 @@
 
 - (void)initiateSynchronization
 {
-#warning Move the code from our class to here that restricts things to one synchronization at a time
+    if (self.state == TICDSDocumentSyncManagerStateSynchronizing) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"We're already syncing, so queueing another sync.");
+        self.queuedSyncsCount = 1;
+        return;
+    }
+    
     TICDSLog(TICDSLogVerbosityEveryStep, @"Initiation of synchronization");
+    
+    self.state = TICDSDocumentSyncManagerStateSynchronizing;
 
     [self beginBackgroundTask];
     
@@ -937,6 +947,13 @@
          }];
     }
     [self postDecreaseActivityNotification];
+
+    self.state = TICDSDocumentSyncManagerStateAbleToSync;
+    
+    if (self.queuedSyncsCount > 0) {
+        self.queuedSyncsCount--;
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed a sync, found some queued up, but not kicking off another one in favor of letting the delegate decide what to do.");
+    }
 }
 
 - (void)startPreSynchronizationProcess
@@ -1201,6 +1218,14 @@
         }];
     }
     [self postDecreaseActivityNotification];
+
+    self.state = TICDSDocumentSyncManagerStateAbleToSync;
+    
+    if (self.queuedSyncsCount > 0) {
+        self.queuedSyncsCount--;
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Finished a sync, found some queued up, so kicking off another one. (%ld left in the queue)", (long)self.queuedSyncsCount);
+        [self initiateSynchronization];
+    }
 }
 
 #pragma Cancellation
@@ -1214,6 +1239,13 @@
         }];
     }
     [self postDecreaseActivityNotification];
+
+    self.state = TICDSDocumentSyncManagerStateAbleToSync;
+    
+    if (self.queuedSyncsCount > 0) {
+        self.queuedSyncsCount--;
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed a sync, found some queued up, but not kicking off another one in favor of letting the delegate decide what to do.");
+    }
 }
 
 - (void)synchronizationOperationWasCancelled:(TICDSSynchronizationOperation *)anOperation
@@ -1226,6 +1258,13 @@
         }];
     }
     [self postDecreaseActivityNotification];
+
+    self.state = TICDSDocumentSyncManagerStateAbleToSync;
+    
+    if (self.queuedSyncsCount > 0) {
+        self.queuedSyncsCount--;
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed a sync, found some queued up, but not kicking off another one in favor of letting the delegate decide what to do.");
+    }
 }
 
 - (void)postSynchronizationOperationWasCancelled:(TICDSPostSynchronizationOperation *)anOperation
@@ -1239,6 +1278,13 @@
         }];
     }
     [self postDecreaseActivityNotification];
+
+    self.state = TICDSDocumentSyncManagerStateAbleToSync;
+    
+    if (self.queuedSyncsCount > 0) {
+        self.queuedSyncsCount--;
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed a sync, found some queued up, but not kicking off another one in favor of letting the delegate decide what to do.");
+    }
 }
 
 #pragma Failure
@@ -1257,6 +1303,13 @@
         }];
     }
     [self postDecreaseActivityNotification];
+
+    self.state = TICDSDocumentSyncManagerStateAbleToSync;
+    
+    if (self.queuedSyncsCount > 0) {
+        self.queuedSyncsCount--;
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed a sync, found some queued up, but not kicking off another one in favor of letting the delegate decide what to do.");
+    }
 }
 
 - (void)synchronizationOperation:(TICDSSynchronizationOperation *)anOperation failedToCompleteWithError:(NSError *)anError
@@ -1274,6 +1327,13 @@
         }];
     }
     [self postDecreaseActivityNotification];
+
+    self.state = TICDSDocumentSyncManagerStateAbleToSync;
+    
+    if (self.queuedSyncsCount > 0) {
+        self.queuedSyncsCount--;
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed a sync, found some queued up, but not kicking off another one in favor of letting the delegate decide what to do.");
+    }
 }
 
 - (void)postSynchronizationOperation:(TICDSPostSynchronizationOperation *)anOperation failedToCompleteWithError:(NSError *)anError
@@ -1292,6 +1352,13 @@
         }];
     }
     [self postDecreaseActivityNotification];
+
+    self.state = TICDSDocumentSyncManagerStateAbleToSync;
+    
+    if (self.queuedSyncsCount > 0) {
+        self.queuedSyncsCount--;
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed a sync, found some queued up, but not kicking off another one in favor of letting the delegate decide what to do.");
+    }
 }
 
 #pragma mark - VACUUMING
@@ -1692,12 +1759,21 @@
     }
     
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Sync Manager saved Sync Changes context successfully");
-    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFinishProcessingSyncChangesAfterManagedObjectContextDidSave:)]) {
+    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFinishProcessingSyncChangesBeforeManagedObjectContextWillSave:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
-            [(id)self.delegate documentSyncManager:self didFinishProcessingSyncChangesAfterManagedObjectContextDidSave:documentManagedObjectContext];
+            [(id)self.delegate documentSyncManager:self didFinishProcessingSyncChangesBeforeManagedObjectContextWillSave:documentManagedObjectContext];
         }];
     }
-    
+}
+
+- (void)synchronizedMOCDidSave:(NSNotification *)notification
+{
+    NSManagedObjectContext *documentManagedObjectContext = notification.object;
+    if (documentManagedObjectContext != self.primaryDocumentMOC) {
+        NSLog(@"%s Processing a synchronizedMOCWillSave: method for a MOC that isn't the primary document MOC", __PRETTY_FUNCTION__);
+        return;
+    }
+
     TICDSLog(TICDSLogVerbosityEveryStep, @"Asking delegate if we should sync after saving");
     BOOL shouldSync = [self ti_delegateRespondsToSelector:@selector(documentSyncManager:shouldBeginSynchronizingAfterManagedObjectContextDidSave:)] && [(id)self.delegate documentSyncManager:self shouldBeginSynchronizingAfterManagedObjectContextDidSave:documentManagedObjectContext];
     if (shouldSync == NO) {
