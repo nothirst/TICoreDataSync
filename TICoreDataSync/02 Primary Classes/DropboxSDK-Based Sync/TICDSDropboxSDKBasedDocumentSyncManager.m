@@ -68,7 +68,7 @@
 
 - (void)restClient:(DBRestClient*)client loadedDeltaEntries:(NSArray *)entries reset:(BOOL)shouldReset cursor:(NSString *)cursor hasMore:(BOOL)hasMore
 {
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Processing a response from the polling call");
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Processing a response from the polling call. %ld changed files with %@ to load.", (long)[entries count], (hasMore? @"more":@"no more"));
 
     self.deltaCursor = cursor;
 
