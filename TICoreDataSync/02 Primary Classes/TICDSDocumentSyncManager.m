@@ -356,8 +356,8 @@
 {
     self.primaryDocumentMOC = primaryManagedObjectContext;
     self.primaryDocumentMOC.documentSyncManager = self;
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(synchronizedMOCWillSave:) name:NSManagedObjectContextWillSaveNotification object:self.primaryDocumentMOC];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(synchronizedMOCDidSave:) name:NSManagedObjectContextDidSaveNotification object:self.primaryDocumentMOC];
     
     NSManagedObjectContext *rootContext = primaryManagedObjectContext;
     while (rootContext.parentContext != nil) {
@@ -1645,7 +1645,7 @@
 {
     NSManagedObjectContext *documentManagedObjectContext = notification.object;
     if (documentManagedObjectContext != self.primaryDocumentMOC) {
-        NSLog(@"%s Processing a synchronizedMOCDidSave: method for a MOC that isn't the primary document MOC", __PRETTY_FUNCTION__);
+        NSLog(@"%s Processing a synchronizedMOCWillSave: method for a MOC that isn't the primary document MOC", __PRETTY_FUNCTION__);
         return;
     }
     
