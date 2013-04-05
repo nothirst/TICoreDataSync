@@ -1,3 +1,6 @@
 [submodule "Submodules/DropboxSDK"]
 	path = Submodules/DropboxSDK
 	url = git@github.com:nothirst/dropbox-sdk-ios.git
+[submodule "TICoreDataSync/04 Utilities/SSZipArchive"]
+	path = TICoreDataSync/04 Utilities/SSZipArchive
+	url = git@github.com:ChronicStim/ssziparchive.git

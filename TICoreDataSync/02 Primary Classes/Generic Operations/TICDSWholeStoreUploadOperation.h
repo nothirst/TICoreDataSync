@@ -104,12 +104,20 @@
  @param success `YES` if the directory was created, otherwise `NO`. */
 - (void)createdThisClientTemporaryWholeStoreDirectoryWithSuccess:(BOOL)success;
 
+/** Indicate that the upload of the whole store file made progress.
+ */
+- (void)uploadingWholeStoreFileToThisClientTemporaryWholeStoreDirectoryMadeProgress;
+
 /** Indicate whether the upload of the whole store file was successful.
  
  If not, call `setError:` first, then specify `NO` for `success`.
  
  @param success `YES` if the file was uploaded, otherwise `NO`. */
 - (void)uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:(BOOL)success;
+
+/** Indicate that the upload of the whole store file made progress.
+ */
+- (void)uploadingLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryMadeProgress;
 
 /** Indicate whether the upload of the applied sync change sets file was successful.
  

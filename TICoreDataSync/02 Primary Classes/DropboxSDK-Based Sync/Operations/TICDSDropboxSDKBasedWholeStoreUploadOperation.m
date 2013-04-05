@@ -54,8 +54,24 @@
     BOOL success = YES;
     NSString *filePath = [[self localWholeStoreFileLocation] path];
     
+    NSString *tempPath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:[filePath lastPathComponent]];
+
+    if ( [self shouldUseCompressionForWholeStoreMoves] ) {
+        
+        // Create the zipped file
+        NSString *zipFilePath = [tempPath stringByAppendingPathExtension:kSSZipArchiveFilenameSuffixForCompressedFile];
+        success = [SSZipArchive createZipFileAtPath:zipFilePath withFilesAtPaths:[NSArray arrayWithObject:filePath]];
+        
+        if (!success) {
+            [self setError:[TICDSError errorWithCode:TICDSErrorCodeCompressionError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+            [self uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:NO];
+            return;
+        }
+
+        filePath = zipFilePath;
+    }
+    
     if( [self shouldUseEncryption] ) {
-        NSString *tempPath = [[self tempFileDirectoryPath] stringByAppendingPathComponent:[filePath lastPathComponent]];
         
         success = [[self cryptor] encryptFileAtLocation:[NSURL fileURLWithPath:filePath] writingToLocation:[NSURL fileURLWithPath:tempPath] error:&anyError];
         if( !success ) {
@@ -281,6 +297,21 @@
     
     if( [[destPath lastPathComponent] isEqualToString:TICDSAppliedSyncChangeSetsFilename] ) {
         [self uploadedAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:YES];
+        return;
+    }
+}
+
+- (void)restClient:(DBRestClient*)client uploadProgress:(CGFloat)progress forFile:(NSString*)destPath from:(NSString*)srcPath
+{
+    [self setProgress:progress];
+    if( [[destPath lastPathComponent] isEqualToString:TICDSWholeStoreFilename] ) {
+        
+        [self uploadingWholeStoreFileToThisClientTemporaryWholeStoreDirectoryMadeProgress];
+        return;
+    }
+    
+    if( [[destPath lastPathComponent] isEqualToString:TICDSAppliedSyncChangeSetsFilename] ) {
+        [self uploadingLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryMadeProgress];
         return;
     }
 }

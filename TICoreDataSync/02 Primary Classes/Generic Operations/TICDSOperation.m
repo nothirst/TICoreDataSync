@@ -23,6 +23,11 @@
         return;
     }
     
+    [self setShouldContinueProcessingInBackgroundState:[self.delegate operationShouldSupportProcessingInBackgroundState:self]];
+    [self beginBackgroundTask];
+    
+    [self setProgress:0.0f];
+    
     // Configure the Cryptor object, if encryption is enabled
     if( [self shouldUseEncryption] ) {
         FZACryptor *aCryptor = [[FZACryptor alloc] init];
@@ -68,6 +73,8 @@
     
     [self didChangeValueForKey:@"isExecuting"];
     [self didChangeValueForKey:@"isFinished"];
+    
+    [self endBackgroundTask];
 }
 
 - (void)ticdPrivate_operationDidCompleteSuccessfully:(BOOL)success cancelled:(BOOL)wasCancelled
@@ -108,6 +115,16 @@
     }
 }
 
+-(void)ticdPrivate_operationDidMakeProgress;
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"TICDSOperation reported progress");
+    if ([self ti_delegateRespondsToSelector:@selector(operationReportedProgress:)]) {
+        [self runOnMainQueueWithoutDeadlocking:^{
+            [(id)self.delegate operationReportedProgress:self];
+        }];
+    }
+}
+
 - (void)operationDidStart
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"TICDSOperation started");
@@ -119,6 +136,7 @@
 
 - (void)operationDidCompleteSuccessfully
 {
+    [self setProgress:1.0f];
     [self ticdPrivate_operationDidCompleteSuccessfully:YES cancelled:NO];
 }
 
@@ -130,6 +148,11 @@
 - (void)operationWasCancelled
 {
     [self ticdPrivate_operationDidCompleteSuccessfully:NO cancelled:YES];
+}
+
+- (void)operationDidMakeProgress;
+{
+    [self ticdPrivate_operationDidMakeProgress];
 }
 
 #pragma mark - Lazy Accessors
@@ -165,6 +188,43 @@
     _fileManager = nil;
     _tempFileDirectoryPath = nil;
 
+}
+
+#pragma mark - Background State Support
+
+- (void)beginBackgroundTask
+{
+#if TARGET_OS_IPHONE
+    self.backgroundTaskID = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+                                 [self endBackgroundTask];
+                             }];
+#endif
+}
+
+- (void)endBackgroundTask
+{
+#if TARGET_OS_IPHONE
+    if (self.backgroundTaskID == UIBackgroundTaskInvalid) {
+        return;
+    }
+
+    switch ([[UIApplication sharedApplication] applicationState]) {
+        case UIApplicationStateActive:  {
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Operation (%@), Task ID (%i) is ending while app state is Active", [self class], self.backgroundTaskID);
+        }   break;
+        case UIApplicationStateInactive:  {
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Operation (%@), Task ID (%i) is ending while app state is Inactive", [self class], self.backgroundTaskID);
+        }   break;
+        case UIApplicationStateBackground:  {
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Operation (%@), Task ID (%i) is ending while app state is Background with %.0f seconds remaining", [self class], self.backgroundTaskID, [[UIApplication sharedApplication] backgroundTimeRemaining]);
+        }   break;
+        default:
+            break;
+    }
+
+    [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskID];
+    self.backgroundTaskID = UIBackgroundTaskInvalid;
+#endif
 }
 
 #pragma mark - Lazy Accessors
@@ -514,6 +574,7 @@
 #pragma mark - Properties
 @synthesize shouldUseEncryption = _shouldUseEncryption;
 @synthesize cryptor = _cryptor;
+@synthesize shouldUseCompressionForWholeStoreMoves = _shouldUseCompressionForWholeStoreMoves;
 @synthesize delegate = _delegate;
 @synthesize userInfo = _userInfo;
 @synthesize isExecuting = _isExecuting;
@@ -522,5 +583,10 @@
 @synthesize fileManager = _fileManager;
 @synthesize tempFileDirectoryPath = _tempFileDirectoryPath;
 @synthesize clientIdentifier = _clientIdentifier;
+@synthesize progress = _progress;
+#if TARGET_OS_IPHONE
+@synthesize backgroundTaskID = _backgroundTaskID;
+#endif
+@synthesize shouldContinueProcessingInBackgroundState = _shouldContinueProcessingInBackgroundState;
 
 @end

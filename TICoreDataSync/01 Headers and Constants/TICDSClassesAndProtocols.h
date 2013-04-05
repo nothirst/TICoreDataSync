@@ -94,6 +94,9 @@
 @class TICoreDataFactory;
 @class TIKQDirectoryWatcher;
 
+#pragma mark - Whole Store Compression
+@class SSZipArchive;
+
 #pragma mark - DELEGATE PROTOCOLS
 #pragma mark Application Sync Manager
 /** The `TICDSApplicationSyncManagerDelegate` protocol defines the methods implemented by delegates of a `TICDSApplicationSyncManager` object. */
@@ -145,6 +148,16 @@
  
  @param aSyncManager The application sync manager object that sent the message. */
 - (void)applicationSyncManagerDidFinishRegistering:(TICDSApplicationSyncManager *)aSyncManager;
+
+/** Asks the delegate whether or not the application sync manager should support continued operation processing after the app has been sent to a background state. If this delegate method isn't implemented the application sync manager defaults to YES and will process items in the background. Background processing currently only applies to sync operations running on iOS.
+ 
+ @param aSyncManager The application sync manager object that sent the message. */
+- (BOOL)applicationSyncManagerShouldSupportProcessingInBackgroundState:(TICDSApplicationSyncManager *)aSyncManager;
+
+/** Asks the delegate whether or not the application sync manager should support compressing the whole store file when transferring it between the local and remote locations. If this delegate method isn't implemented the application sync manager defaults to YES and will compress the whole store.
+ 
+ @param aSyncManager The application sync manager object that sent the message. */
+- (BOOL)applicationSyncManagerShouldUseCompressionForWholeStoreMoves:(TICDSApplicationSyncManager *)aSyncManager;
 
 #pragma mark Listing Previously Synchronized Documents
 /** @name Listing Previously Synchronized Documents */
@@ -226,6 +239,14 @@
  @param anIdentifier The unique synchronization identifier of the document.
  @param aFileURL The location of the downloaded store file. */
 - (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishDownloadingDocumentWithIdentifier:(NSString *)anIdentifier atURL:(NSURL *)aFileURL;
+
+/** Informs the delegate on the operation's progress being made in the download operation.
+ 
+ @param aSyncManager The application sync manager object that sent the message.
+ @param anIdentifier The unique synchronization identifier of the document.
+ @param progress The progress level (0 to 1) as reported by the operation. */
+- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager whileDownloadingDocumentWithIdentifier:(NSString *)anIdentifier didReportProgress:(CGFloat)progress;
+
 
 #pragma mark Registered Client Information
 /** @name Registered Client Information */
@@ -376,6 +397,11 @@
  @param aSyncManager The document sync manager object that sent the message. */
 - (void)documentSyncManagerDidFinishRegistering:(TICDSDocumentSyncManager *)aSyncManager;
 
+/** Asks the delegate whether or not the document sync manager should support continued operation processing after the app has been sent to a background state. .
+ 
+ @param aSyncManager The document sync manager object that sent the message. */
+- (BOOL)documentSyncManagerShouldSupportProcessingInBackgroundState:(TICDSDocumentSyncManager *)aSyncManager;
+
 #pragma mark Helper Files
 /** @name Helper Files */
 
@@ -433,6 +459,12 @@
  @param aSyncManager The document sync manager object that sent the message. */
 - (void)documentSyncManagerDidFinishUploadingWholeStore:(TICDSDocumentSyncManager *)aSyncManager;
 
+/** Informs the delegate on the operation's progress being made in the upload operation.
+ 
+ @param aSyncManager The document sync manager object that sent the message.
+ @param progress The progress level (0 to 1) as reported by the operation. */
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager whileUploadingWholeStoreDidReportProgress:(CGFloat)progress;
+
 #pragma mark Whole Store Download
 /** @name Whole Store Download */
 
@@ -480,6 +512,12 @@
  
  @param aSyncManager The document sync manager object that sent the message. */
 - (void)documentSyncManagerDidFinishDownloadingWholeStore:(TICDSDocumentSyncManager *)aSyncManager;
+
+/** Informs the delegate on the operation's progress being made in the download operation.
+ 
+ @param aSyncManager The document sync manager object that sent the message.
+ @param progress The progress level (0 to 1) as reported by the operation. */
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager whileDownloadingWholeStoreDidReportProgress:(CGFloat)progress;
 
 #pragma mark Synchronization
 
@@ -669,6 +707,16 @@
  
  @param anOperation The operation object that sent the message. */
 - (void)operationFailedToComplete:(TICDSOperation *)anOperation;
+
+/** Informs the delegate that the operation has reported progress.
+ 
+ @param anOperation The operation object that sent the message. */
+- (void)operationReportedProgress:(TICDSOperation *)anOperation;
+
+/** Asks the delegate whether or not the operation should support continued processing after the app has been sent to a background state. .
+ 
+ @param anOperation The operation object that sent the message. */
+- (BOOL)operationShouldSupportProcessingInBackgroundState:(TICDSOperation *)anOperation;
 
 @end
 

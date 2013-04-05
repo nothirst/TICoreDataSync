@@ -20,6 +20,8 @@
 - (void)beginCheckForThisClientWholeStoreDirectory;
 - (void)beginDeletingThisClientWholeStoreDirectory;
 - (void)beginCopyingThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectory;
+- (void)uploadingWholeStoreFileToThisClientTemporaryWholeStoreDirectoryMadeProgress;
+- (void)uploadingLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryMadeProgress;
 
 @end
 
@@ -225,6 +227,13 @@
     [self uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectory];
 }
 
+-(void)uploadingWholeStoreFileToThisClientTemporaryWholeStoreDirectoryMadeProgress;
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Uploading the WholeStore file to this client's temporary WholeStore directory made progress %.2f",[self progress]);
+    
+    [self operationDidMakeProgress];
+}
+
 - (void)uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:(BOOL)success
 {
     if( !success ) {
@@ -256,6 +265,13 @@
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Uploading the AppliedSyncChanges file to this client's temporary WholeStore directory");
     
     [self uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectory];
+}
+
+- (void)uploadingLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryMadeProgress;
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Uploading the AppliedSyncChanges file to this client's temporary WholeStore directory made progress %.2f",[self progress]);
+    
+    [self operationDidMakeProgress];
 }
 
 - (void)uploadedAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:(BOOL)success

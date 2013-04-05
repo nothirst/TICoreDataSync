@@ -151,7 +151,7 @@ NSString * const TICDSApplicationSyncManagerDidRefreshCloudTransferProgressNotif
 {
     NSMetadataQuery *newQuery = [[NSMetadataQuery alloc] init];
     newQuery.searchScopes = [NSArray arrayWithObject:NSMetadataQueryUbiquitousDataScope];
-    newQuery.predicate = [NSPredicate predicateWithFormat:@"%K like '*'", NSMetadataItemFSNameKey];
+    newQuery.predicate = [NSPredicate predicateWithFormat:@"%K = FALSE OR %K = FALSE", NSMetadataUbiquitousItemIsDownloadedKey, NSMetadataUbiquitousItemIsUploadedKey];
     newQuery.notificationBatchingInterval = 60.0;
     self.cloudMetadataQuery = newQuery;
 }
@@ -181,7 +181,7 @@ NSString * const TICDSApplicationSyncManagerDidRefreshCloudTransferProgressNotif
     if ( ![fm createDirectoryAtPath:tempDirPath withIntermediateDirectories:YES attributes:nil error:NULL] ) return;
     
     // Check for files that should be uploaded, but have gotten 'stuck'.
-    const NSTimeInterval ReuploadTimeInterval = 30*60; // 30 minutes
+    const NSTimeInterval ReuploadTimeInterval = 720*60; // 12 hours
     for ( NSURL *url in urls ) {
         @autoreleasepool {
             NSDictionary *fileAttributes = [fm attributesOfItemAtPath:url.path error:NULL];
