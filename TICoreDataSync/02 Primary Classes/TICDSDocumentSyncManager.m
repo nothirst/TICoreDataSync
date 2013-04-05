@@ -1504,6 +1504,20 @@
     [self.otherTasksQueue addOperation:operation];
 }
 
+#pragma mark - Polling methods
+
+- (void)beginPollingRemoteStorageForChanges
+{
+    NSLog(@"%s Not implemented by %@, you're not getting very far with this implementation. Each TICDSDocumentSyncManager subclass should implement its own version of this method.", __PRETTY_FUNCTION__, self.class);
+    [self doesNotRecognizeSelector:_cmd];
+}
+
+- (void)stopPollingRemoteStorageForChanges
+{
+    NSLog(@"%s Not implemented by %@, you're not getting very far with this implementation. Each TICDSDocumentSyncManager subclass should implement its own version of this method.", __PRETTY_FUNCTION__, self.class);
+    [self doesNotRecognizeSelector:_cmd];
+}
+
 #pragma mark Operation Generation
 
 - (TICDSDocumentClientDeletionOperation *)documentClientDeletionOperation
