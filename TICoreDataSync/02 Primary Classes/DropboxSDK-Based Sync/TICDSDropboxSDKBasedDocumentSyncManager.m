@@ -9,7 +9,11 @@
 
 #import "TICoreDataSync.h"
 
-#import "DBDeltaEntry.h"
+#if TARGET_OS_IPHONE
+#import <DropboxSDK/DropboxSDK.h>
+#else
+#import <DropboxSDK/DropboxOSX.h>
+#endif
 
 @interface TICDSDropboxSDKBasedDocumentSyncManager () <DBRestClientDelegate>
 
