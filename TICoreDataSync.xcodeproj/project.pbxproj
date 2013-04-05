@@ -83,19 +83,14 @@
 		AA25AECD170DCB1F00E5681A /* SSZipArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = AA25AECA170DCB1F00E5681A /* SSZipArchive.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA25AECE170DCB1F00E5681A /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = AA25AECB170DCB1F00E5681A /* SSZipArchive.m */; };
 		AA25AECF170DCB1F00E5681A /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = AA25AECB170DCB1F00E5681A /* SSZipArchive.m */; };
-		AA25AEDA170DCB2B00E5681A /* crypt.h in Headers */ = {isa = PBXBuildFile; fileRef = AA25AED1170DCB2B00E5681A /* crypt.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA25AEDC170DCB2B00E5681A /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = AA25AED2170DCB2B00E5681A /* ioapi.c */; };
 		AA25AEDD170DCB2B00E5681A /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = AA25AED2170DCB2B00E5681A /* ioapi.c */; };
-		AA25AEDE170DCB2B00E5681A /* ioapi.h in Headers */ = {isa = PBXBuildFile; fileRef = AA25AED3170DCB2B00E5681A /* ioapi.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA25AEE0170DCB2B00E5681A /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = AA25AED4170DCB2B00E5681A /* mztools.c */; };
 		AA25AEE1170DCB2B00E5681A /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = AA25AED4170DCB2B00E5681A /* mztools.c */; };
-		AA25AEE2170DCB2B00E5681A /* mztools.h in Headers */ = {isa = PBXBuildFile; fileRef = AA25AED5170DCB2B00E5681A /* mztools.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA25AEE4170DCB2B00E5681A /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = AA25AED6170DCB2B00E5681A /* unzip.c */; };
 		AA25AEE5170DCB2B00E5681A /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = AA25AED6170DCB2B00E5681A /* unzip.c */; };
-		AA25AEE6170DCB2B00E5681A /* unzip.h in Headers */ = {isa = PBXBuildFile; fileRef = AA25AED7170DCB2B00E5681A /* unzip.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA25AEE8170DCB2B00E5681A /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = AA25AED8170DCB2B00E5681A /* zip.c */; };
 		AA25AEE9170DCB2B00E5681A /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = AA25AED8170DCB2B00E5681A /* zip.c */; };
-		AA25AEEA170DCB2B00E5681A /* zip.h in Headers */ = {isa = PBXBuildFile; fileRef = AA25AED9170DCB2B00E5681A /* zip.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA25AEEF170DCB6800E5681A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AA25AEEE170DCB6800E5681A /* libz.dylib */; };
 		AA25AEF0170DCB7600E5681A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AA25AEEE170DCB6800E5681A /* libz.dylib */; };
 		AA25AEF2170DCE5F00E5681A /* crypt.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA25AED1170DCB2B00E5681A /* crypt.h */; };
@@ -343,6 +338,11 @@
 		AA63659A16D6664F000F84F3 /* TICDSWholeStoreDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13023CBC161366E10071C497 /* TICDSWholeStoreDownloadOperation.m */; };
 		AA63659B16D6664F000F84F3 /* TICDSWholeStoreUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13023CBE161366E10071C497 /* TICDSWholeStoreUploadOperation.m */; };
 		AA63659E16D6667E000F84F3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13023C58161366790071C497 /* Security.framework */; };
+		AA770743170F6CD3000A29E4 /* crypt.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA25AED1170DCB2B00E5681A /* crypt.h */; };
+		AA770744170F6CD3000A29E4 /* ioapi.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA25AED3170DCB2B00E5681A /* ioapi.h */; };
+		AA770745170F6CD3000A29E4 /* mztools.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA25AED5170DCB2B00E5681A /* mztools.h */; };
+		AA770746170F6CD3000A29E4 /* unzip.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA25AED7170DCB2B00E5681A /* unzip.h */; };
+		AA770747170F6CD3000A29E4 /* zip.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = AA25AED9170DCB2B00E5681A /* zip.h */; };
 		AA7C589016D65FF000B6D884 /* TICDSConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 13023C65161366E10071C497 /* TICDSConstants.m */; };
 		AA7C589116D65FF600B6D884 /* TICDSDropboxSDKBasedApplicationRegistrationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13023C6B161366E10071C497 /* TICDSDropboxSDKBasedApplicationRegistrationOperation.m */; };
 		AA7C589216D65FF600B6D884 /* TICDSDropboxSDKBasedDocumentClientDeletionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13023C6D161366E10071C497 /* TICDSDropboxSDKBasedDocumentClientDeletionOperation.m */; };
@@ -420,9 +420,14 @@
 		13023C3B161363D50071C497 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "include/${PRODUCT_NAME}";
-			dstSubfolderSpec = 16;
+			dstPath = "../IntermediateBuildFilesPath/UninstalledProducts/${PRODUCT_NAME}/minizip";
+			dstSubfolderSpec = 0;
 			files = (
+				AA770743170F6CD3000A29E4 /* crypt.h in CopyFiles */,
+				AA770744170F6CD3000A29E4 /* ioapi.h in CopyFiles */,
+				AA770745170F6CD3000A29E4 /* mztools.h in CopyFiles */,
+				AA770746170F6CD3000A29E4 /* unzip.h in CopyFiles */,
+				AA770747170F6CD3000A29E4 /* zip.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1175,11 +1180,6 @@
 				AA3A4C0516D6742000F64E85 /* TIKQDirectoryWatcher.h in Headers */,
 				AA3A4C0616D6742000F64E85 /* TIManagedObjectExtensions.h in Headers */,
 				AA25AECC170DCB1F00E5681A /* SSZipArchive.h in Headers */,
-				AA25AEDA170DCB2B00E5681A /* crypt.h in Headers */,
-				AA25AEDE170DCB2B00E5681A /* ioapi.h in Headers */,
-				AA25AEE2170DCB2B00E5681A /* mztools.h in Headers */,
-				AA25AEE6170DCB2B00E5681A /* unzip.h in Headers */,
-				AA25AEEA170DCB2B00E5681A /* zip.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
