@@ -75,6 +75,13 @@
     [self downloadWholeStoreFile];
 }
 
+-(void)downloadingWholeStoreFileMadeProgress;
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Downloading the WholeStore file to this client made progress %.2f",[self progress]);
+    
+    [self operationDidMakeProgress];
+}
+
 - (void)downloadedWholeStoreFileWithSuccess:(BOOL)success
 {
     if( !success ) {
@@ -110,6 +117,13 @@
     TICDSLog(TICDSLogVerbosityEveryStep, @"Downloading applied sync change sets file to %@", [self localAppliedSyncChangeSetsFileLocation]);
     
     [self downloadAppliedSyncChangeSetsFile];
+}
+
+- (void)downloadingAppliedSyncChangeSetsFileMadeProgress;
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Downloading the AppliedSyncChanges file to this client made progress %.2f",[self progress]);
+    
+    [self operationDidMakeProgress];
 }
 
 - (void)downloadedAppliedSyncChangeSetsFileWithSuccess:(BOOL)success

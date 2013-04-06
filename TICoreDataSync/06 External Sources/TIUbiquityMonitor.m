@@ -20,6 +20,9 @@
 
 #import "TIUbiquityMonitor.h"
 
+#import "TICDSLog.h"
+
+
 @implementation TIUbiquityMonitor {
     NSMetadataQuery *metadataQuery;
     void (^progressCallbackBlock)(long long toDownload, long long toUpload);
@@ -119,6 +122,7 @@
     NSUInteger count = [metadataQuery resultCount];
     long long toDownload = 0, toUpload = 0;
     for ( NSUInteger i = 0; i < count; i++ ) {
+        @autoreleasepool {
         NSURL *url = [metadataQuery valueOfAttribute:NSMetadataItemURLKey forResultAtIndex:i];
         
         NSNumber *percentDownloaded = [metadataQuery valueOfAttribute:NSMetadataUbiquitousItemPercentDownloadedKey forResultAtIndex:i];
@@ -134,8 +138,15 @@
             toDownload += fileDownloadSize;
             
             // Start download
-            NSError *error = nil;
-            if ( initiateTransfers && percentage < 1.e-6 && ![fileManager startDownloadingUbiquitousItemAtURL:url error:&error] ) NSLog(@"Failed to initiate download with error: %@", error);
+            if ( initiateTransfers && percentage < 1.e-6 ) {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+                    NSError *error;
+                    BOOL startedDownload = [fileManager startDownloadingUbiquitousItemAtURL:url error:&error];
+                    if ( !startedDownload ) {
+                        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error starting download: %@", error);
+                    }
+                });
+            }
         }
         else if ( uploaded && !uploaded.boolValue ) {
             double percentage = percentUploaded ? percentUploaded.doubleValue : 0.0;
@@ -143,8 +154,18 @@
             toUpload += fileDownloadSize;
             
             // Force upload
-            NSError *error = nil;
-            if ( initiateTransfers && percentage < 1.e-6 && ![fileManager startDownloadingUbiquitousItemAtURL:url error:&error] ) NSLog(@"Failed to initiate upload with error: %@", error);
+            if ( initiateTransfers && percentage < 1.e-6 ) {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+                    NSError *error;
+                    BOOL uploadStarted = [fileManager startDownloadingUbiquitousItemAtURL:url error:&error];
+                    if ( !uploadStarted ) {
+                        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error starting upload: %@", error);
+                    }
+                });
+            }
+
+        }
+
         }
     }
     
