@@ -124,6 +124,8 @@
         }
 
         self.remotePollingTimer = [NSTimer scheduledTimerWithTimeInterval:[retryAfterNumber doubleValue] target:self selector:@selector(pollRemoteStorage:) userInfo:nil repeats:NO];
+    } else {
+        self.remotePollingTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(pollRemoteStorage:) userInfo:nil repeats:NO];
     }
 }
 
