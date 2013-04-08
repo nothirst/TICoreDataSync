@@ -10,6 +10,37 @@
 
 @implementation TICDSSyncChange
 
+static NSString *bigDataDirectory = nil;
+
++ (void)initialize
+{
+    if ( bigDataDirectory == nil ) {
+        bigDataDirectory = [NSTemporaryDirectory() stringByAppendingPathComponent:@"TICDSSyncChangeData"];
+        if ( [[NSFileManager defaultManager] fileExistsAtPath:bigDataDirectory] ) {
+            
+            // Try to move aside the old directory, and delete it in the background
+            NSString *oldBigDataDirectory = [bigDataDirectory stringByAppendingPathExtension:@"old"];
+            [[NSFileManager defaultManager] removeItemAtPath:oldBigDataDirectory error:NULL]; // Remove in odd case that this folder already exists
+            
+            // Remove in background, because it can be expensive and lock up the main thread
+            if ( [[NSFileManager defaultManager] moveItemAtPath:bigDataDirectory toPath:oldBigDataDirectory error:NULL] ) {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+                    NSFileManager *fm = [NSFileManager new];
+                    NSError *error;
+                    BOOL success = [fm removeItemAtPath:oldBigDataDirectory error:&error];
+                    if ( !success ) NSLog(@"Failed to remove big data directory: %@", error);
+                });
+            }
+            else {
+                // Move failed, so just remove directly on main thread
+                [[NSFileManager defaultManager] removeItemAtPath:bigDataDirectory error:NULL];
+            }
+            
+        }
+        [[NSFileManager defaultManager] createDirectoryAtPath:bigDataDirectory withIntermediateDirectories:NO attributes:nil error:NULL];
+    }
+}
+
 #pragma mark - Helper Methods
 + (id)syncChangeOfType:(TICDSSyncChangeType)aType inManagedObjectContext:(NSManagedObjectContext *)aMoc
 {
@@ -36,6 +67,58 @@
 + (NSString *)ti_entityName
 {
     return NSStringFromClass([self class]);
+}
+
+#pragma mark -
+#pragma mark Low Memory
+
+- (NSData *)mappedDataFromData:(NSData *)data withFilename:(NSString *)filename
+{
+    NSString *path = [bigDataDirectory stringByAppendingPathComponent:filename];
+    [data writeToFile:path atomically:NO];
+    id newData = [NSData dataWithContentsOfFile:path options:NSDataReadingMappedAlways error:NULL];
+    return newData ? : data;
+}
+
+- (id)lowMemoryChangedAttributesFromAttributes:(id)changedAttributes
+{
+    id result = changedAttributes;
+    
+    if ( [changedAttributes isKindOfClass:[NSData class]] && [changedAttributes length] > 10000 ) {
+        NSString *uniqueString = [[NSProcessInfo processInfo] globallyUniqueString];
+        result = [self mappedDataFromData:changedAttributes withFilename:uniqueString];
+    }
+    else if ( [changedAttributes isKindOfClass:[NSDictionary class]] ) {
+        NSMutableDictionary *newResult = [NSMutableDictionary dictionaryWithDictionary:changedAttributes];
+        for ( id key in changedAttributes ) {
+            id value = [changedAttributes valueForKey:key];
+            if ( [value isKindOfClass:[NSData class]] && [value length] > 10000 ) {
+                NSString *uniqueString = [[NSProcessInfo processInfo] globallyUniqueString];
+                id newValue = [self mappedDataFromData:value withFilename:uniqueString];
+                [newResult setValue:newValue forKey:key];
+            }
+        }
+        result = newResult;
+    }
+    
+    return result;
+}
+
+- (void)setChangedAttributes:(id)changedAttributes
+{
+    [self willChangeValueForKey:@"changedAttributes"];
+    id lowMemAttributes = [self lowMemoryChangedAttributesFromAttributes:changedAttributes];
+    [self setPrimitiveValue:lowMemAttributes forKey:@"changedAttributes"];
+    [self didChangeValueForKey:@"changedAttributes"];
+}
+
+- (id)changedAttributes
+{
+    [self willAccessValueForKey:@"changedAttributes"];
+    id result = [self primitiveValueForKey:@"changedAttributes"];
+    result = [self lowMemoryChangedAttributesFromAttributes:result];
+    [self didAccessValueForKey:@"changedAttributes"];
+    return result;
 }
 
 @dynamic changeType;
