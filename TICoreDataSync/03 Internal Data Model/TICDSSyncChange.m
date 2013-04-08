@@ -8,6 +8,8 @@
 
 #import "TICoreDataSync.h"
 
+static const NSInteger kTICDSDataMaximumLogLength = 512;
+
 @implementation TICDSSyncChange
 
 static NSString *bigDataDirectory = nil;
@@ -58,9 +60,46 @@ static NSString *bigDataDirectory = nil;
     return [NSString stringWithFormat:@"%@ %@", TICDSSyncChangeTypeNames[ [[self changeType] unsignedIntValue] ], [self objectEntityName]];
 }
 
-- (NSString *)description
+- (NSString *) description
 {
-    return [NSString stringWithFormat:@"\n%@\nCHANGED ATTRIBUTES\n%@\nCHANGED RELATIONSHIPS\n%@", [super description], [self changedAttributes], [self changedRelationships]];
+    return [NSString stringWithFormat:@"\n<%@: %p> (entity: %@; id: %@; changeType: %@; "
+            "\nCHANGED ATTRIBUTES\n%@\nCHANGED RELATIONSHIPS\n%@)",
+            NSStringFromClass([self class]), self, [[self entity] name], self.objectID, self.changeType,
+            [self changedAttributesDescription], [self changedRelationships]];
+}
+
+- (NSString *) changedAttributesDescription
+{
+    NSMutableString *result = [NSMutableString string];
+    
+    id changedAttributes = self.changedAttributes;
+    
+    if ([changedAttributes isKindOfClass:[NSData class]]) {
+        if ([changedAttributes length] > kTICDSDataMaximumLogLength) {
+            [result appendFormat:@"    %@ (... %ld bytes)", [changedAttributes subdataWithRange:NSMakeRange(0, kTICDSDataMaximumLogLength)], (unsigned long)[changedAttributes length]];
+        } else {
+            [result appendFormat:@"    %@", changedAttributes];
+        }
+        
+    } else if ([changedAttributes isKindOfClass:[NSDictionary class]]) {
+        [result appendString:@"{\n"];
+        
+        for (id key in self.changedAttributes) {
+            id value = [changedAttributes valueForKey:key];
+            
+            [result appendFormat:@"    %@ = ", key];
+            
+            if ([value isKindOfClass:[NSData class]] && [value  length] > kTICDSDataMaximumLogLength) {
+                [result appendFormat:@"%@ (... %ld bytes);\n", [value  subdataWithRange:NSMakeRange(0, kTICDSDataMaximumLogLength)], (unsigned long)[value length]];
+            } else {
+                [result appendFormat:@"%@;\n", value ];
+            }
+        }
+    }
+    
+    [result appendString:@"}"];
+    
+    return result;
 }
 
 #pragma mark - TIManagedObjectExtensions
