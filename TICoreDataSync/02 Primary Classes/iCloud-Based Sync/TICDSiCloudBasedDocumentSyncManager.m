@@ -83,9 +83,11 @@
 {    
     NSString *aPath = [[aNotification userInfo] valueForKey:kTIKQExpandedDirectory];
     
-    if( ![[aPath lastPathComponent] isEqualToString:TICDSSyncChangesDirectoryName] ) {
+    if( ![[aPath lastPathComponent] isEqualToString:TICDSSyncChangesDirectoryName] && ![[aPath lastPathComponent] isEqualToString:self.clientIdentifier]) {
         // another client has synchronized
-        [self initiateSynchronization];
+        // coalesces call to initiateSynchronization to prevent many syncs to be started in short time
+        [NSThread cancelPreviousPerformRequestsWithTarget:self selector:@selector(initiateSynchronization) object:nil];
+        [self performSelector:@selector(initiateSynchronization) withObject:nil afterDelay:10.0];
         return;
     }
     
