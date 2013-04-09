@@ -9,6 +9,9 @@
 
 #import "TICoreDataSync.h"
 
+#import "SSZipArchive.h"
+
+
 @interface TICDSDropboxSDKBasedWholeStoreUploadOperation ()
 
 @property (nonatomic, copy) NSString *wholeStoreFileParentRevision;

@@ -9,6 +9,9 @@
 
 #import "TICoreDataSync.h"
 
+#import "SSZipArchive.h"
+
+
 @interface TICDSDropboxSDKBasedWholeStoreDownloadOperation ()
 
 /** A mutable dictionary to hold the last modified dates of each client identifier's whole store. */
