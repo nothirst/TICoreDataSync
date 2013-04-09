@@ -25,7 +25,7 @@
 
 @implementation TIUbiquityMonitor {
     NSMetadataQuery *metadataQuery;
-    void (^progressCallbackBlock)(long long toDownload, long long toUpload);
+    TIUbiquityMonitorProgressBlock progressCallbackBlock;
 }
 
 @synthesize ubiquitousBytesToDownload = ubiquitousBytesToDownload;
@@ -63,7 +63,7 @@
 
 #pragma mark Controlling Monitoring
 
-- (void)startMonitoringWithProgressBlock:(void(^)(long long toDownload, long long toUpload))block
+- (void)startMonitoringWithProgressBlock:(TIUbiquityMonitorProgressBlock)block
 {
     if ( isMonitoring ) @throw [NSException exceptionWithName:@"TIException" reason:@"Attempt to start monitoring in a TIUbiquityMonitor that is already monitoring" userInfo:nil];
     
@@ -121,6 +121,10 @@
     NSFileManager *fileManager = [[NSFileManager alloc] init];
     NSUInteger count = [metadataQuery resultCount];
     long long toDownload = 0, toUpload = 0;
+    
+    double percentDownloadedSummary = 0, percentUploadedSummary = 0;
+    int downloadingCount = 0, uploadingCount = 0;
+    
     for ( NSUInteger i = 0; i < count; i++ ) {
         @autoreleasepool {
         NSURL *url = [metadataQuery valueOfAttribute:NSMetadataItemURLKey forResultAtIndex:i];
@@ -136,12 +140,22 @@
             double percentage = percentDownloaded ? percentDownloaded.doubleValue : 0.0;
             long long fileDownloadSize = (1.0 - percentage / 100.0) * fileSize;
             toDownload += fileDownloadSize;
+
+            percentDownloadedSummary += percentage;
+            downloadingCount++;
             
             // Start download
             if ( initiateTransfers && percentage < 1.e-6 ) {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
                     NSError *error;
                     BOOL startedDownload = [fileManager startDownloadingUbiquitousItemAtURL:url error:&error];
+                    
+                    NSError *underlyingError = [[error userInfo] valueForKey:NSUnderlyingErrorKey];
+                    BOOL isFileNotFound = NO;
+                    if (underlyingError) {
+                        isFileNotFound = [[underlyingError domain] isEqual:NSPOSIXErrorDomain] && underlyingError.code == 2;
+                    }
+                    
                     if ( !startedDownload ) {
                         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error starting download: %@", error);
                     }
@@ -153,6 +167,9 @@
             long long fileDownloadSize = (1.0 - percentage / 100.0) * fileSize;
             toUpload += fileDownloadSize;
             
+            percentUploadedSummary += percentage;
+            uploadingCount++;
+
             // Force upload
             if ( initiateTransfers && percentage < 1.e-6 ) {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
@@ -169,10 +186,13 @@
         }
     }
     
+    double percentDownloading = downloadingCount == 0 ? 0 : percentDownloadedSummary / downloadingCount;
+    double percentUploading = uploadingCount == 0 ? 0 : percentUploadedSummary / uploadingCount;
+    
     ubiquitousBytesToDownload = toDownload;
     ubiquitousBytesToUpload = toUpload;
     
-    if ( progressCallbackBlock ) progressCallbackBlock(ubiquitousBytesToDownload, ubiquitousBytesToUpload);
+    if ( progressCallbackBlock ) progressCallbackBlock(ubiquitousBytesToDownload, percentDownloading, ubiquitousBytesToUpload, percentUploading);
     
     [metadataQuery enableUpdates];
     
