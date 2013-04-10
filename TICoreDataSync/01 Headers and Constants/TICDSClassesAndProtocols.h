@@ -12,6 +12,7 @@
 @class TICDSSynchronizedManagedObject;
 @class TICDSSyncConflict;
 @class TICDSSynchronizationOperationManagedObjectContext;
+@class TICDSSyncTransaction;
 
 #pragma mark Operations
 @class TICDSOperation;
