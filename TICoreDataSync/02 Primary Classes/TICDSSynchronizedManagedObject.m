@@ -28,6 +28,34 @@
     return nil;
 }
 
+- (void)createSyncChange
+{
+    // if not in a synchronized MOC, or we don't have a doc sync manager, exit now
+    if (self.managedObjectContext.isSynchronized == NO || self.managedObjectContext.documentSyncManager == nil) {
+        if (self.managedObjectContext.isSynchronized == NO) {
+            TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Skipping sync change creation for %@ because our managedObjectContext is not marked as synchronized.", [self class]);
+        }
+        
+        if (self.managedObjectContext.documentSyncManager == nil) {
+            TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Skipping sync change creation for %@ because our managedObjectContext has no documentSyncManager.", [self class]);
+        }
+        
+        return;
+    }
+    
+    if ( [self isInserted] ) {
+        [self createSyncChangeForInsertion];
+    }
+    
+    if ( [self isUpdated] ) {
+        [self createSyncChangesForChangedProperties];
+    }
+    
+    if ( [self isDeleted] ) {
+        [self createSyncChangeForDeletion];
+    }
+}
+
 - (void)createSyncChangeForInsertion
 {
     // changedAttributes = a dictionary containing the values of _all_ the object's attributes at time it was saved
@@ -227,36 +255,6 @@
     }
     
     return attributeValues;
-}
-
-#pragma mark - Save Notification
-
-- (void)createSyncChange
-{
-    // if not in a synchronized MOC, or we don't have a doc sync manager, exit now
-    if (self.managedObjectContext.isSynchronized == NO || self.managedObjectContext.documentSyncManager == nil) {
-        if (self.managedObjectContext.isSynchronized == NO) {
-            TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Skipping sync change creation for %@ because our managedObjectContext is not marked as synchronized.", [self class]);
-        }
-
-        if (self.managedObjectContext.documentSyncManager == nil) {
-            TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Skipping sync change creation for %@ because our managedObjectContext has no documentSyncManager.", [self class]);
-        }
-
-        return;
-    }
-
-    if ( [self isInserted] ) {
-        [self createSyncChangeForInsertion];
-    }
-
-    if ( [self isUpdated] ) {
-        [self createSyncChangesForChangedProperties];
-    }
-
-    if ( [self isDeleted] ) {
-        [self createSyncChangeForDeletion];
-    }
 }
 
 #pragma mark - Managed Object Lifecycle
