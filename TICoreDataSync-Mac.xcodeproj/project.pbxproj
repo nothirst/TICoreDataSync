@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0ADF2BCD16769F120032BC42 /* NSManagedObjectContext+TICDSAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ADF2BCB16769F120032BC42 /* NSManagedObjectContext+TICDSAdditions.m */; };
+		131CA8271714819C00A0171D /* TICDSSyncTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 131CA8261714819B00A0171D /* TICDSSyncTransaction.m */; };
 		13A8D49816A4B1FB00EB1FF2 /* DBAccountInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D41616A4B1FB00EB1FF2 /* DBAccountInfo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13A8D49916A4B1FB00EB1FF2 /* DBAuthHelperOSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D41716A4B1FB00EB1FF2 /* DBAuthHelperOSX.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13A8D49C16A4B1FB00EB1FF2 /* DBDeltaEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A8D41A16A4B1FB00EB1FF2 /* DBDeltaEntry.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -121,6 +122,8 @@
 /* Begin PBXFileReference section */
 		0ADF2BCB16769F120032BC42 /* NSManagedObjectContext+TICDSAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObjectContext+TICDSAdditions.m"; path = "TICoreDataSync/02 Primary Classes/NSManagedObjectContext+TICDSAdditions.m"; sourceTree = SOURCE_ROOT; };
 		0ADF2BCC16769F120032BC42 /* NSManagedObjectContext+TICDSAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObjectContext+TICDSAdditions.h"; path = "TICoreDataSync/02 Primary Classes/NSManagedObjectContext+TICDSAdditions.h"; sourceTree = SOURCE_ROOT; };
+		131CA8251714819B00A0171D /* TICDSSyncTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSyncTransaction.h; sourceTree = "<group>"; };
+		131CA8261714819B00A0171D /* TICDSSyncTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSyncTransaction.m; sourceTree = "<group>"; };
 		13A8D41616A4B1FB00EB1FF2 /* DBAccountInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBAccountInfo.m; sourceTree = "<group>"; };
 		13A8D41716A4B1FB00EB1FF2 /* DBAuthHelperOSX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBAuthHelperOSX.m; sourceTree = "<group>"; };
 		13A8D41916A4B1FB00EB1FF2 /* DBDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBDefines.h; sourceTree = "<group>"; };
@@ -611,6 +614,8 @@
 				13B393B71626186A00D7C7C0 /* TICDSSynchronizationOperationManagedObjectContext.m */,
 				13B393B81626186A00D7C7C0 /* TICDSSynchronizedManagedObject.h */,
 				13B393B91626186A00D7C7C0 /* TICDSSynchronizedManagedObject.m */,
+				131CA8251714819B00A0171D /* TICDSSyncTransaction.h */,
+				131CA8261714819B00A0171D /* TICDSSyncTransaction.m */,
 			);
 			path = "02 Primary Classes";
 			sourceTree = "<group>";
@@ -965,6 +970,7 @@
 				13F8F5BE16BB05D300A8B7BB /* TICDSDropboxSDKBasedPreSynchronizationOperation.m in Sources */,
 				13D96BC316BC3904002051BA /* TICDSFileManagerBasedPostSynchronizationOperation.m in Sources */,
 				13D96BC416BC3904002051BA /* TICDSFileManagerBasedPreSynchronizationOperation.m in Sources */,
+				131CA8271714819C00A0171D /* TICDSSyncTransaction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
