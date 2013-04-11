@@ -158,6 +158,17 @@ typedef NS_ENUM(NSInteger, TICDSSyncWarningType)
     TICDSSyncWarningTypeObjectWithRelationshipsChangedRemotelyNowDeletedByLocalSyncChange = 7,
 };
 
+#pragma mark Sync Transactions
+
+/** @name Sync Transactions */
+/** The states of a sync transaction */
+typedef NS_ENUM(NSInteger, TICDSSyncTransactionState) {
+    TICDSSyncTransactionStateNotYetOpen = -1,
+    TICDSSyncTransactionStateOpen = 1,
+    TICDSSyncTransactionStateClosed = 0,
+    TICDSSyncTransactionStateUnableToClose = -2
+};
+
 #pragma mark Sync Conflicts
 /** @name Sync Conflicts */
 

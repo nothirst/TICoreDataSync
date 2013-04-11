@@ -399,7 +399,6 @@
 {
     _localWholeStoreFileLocation = nil;
     _localAppliedSyncChangeSetsFileLocation = nil;
-//    _primaryPersistentStoreCoordinator = nil;
     _backgroundApplicationContext = nil;
 
 }

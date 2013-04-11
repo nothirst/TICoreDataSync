@@ -6,13 +6,14 @@
 //  Copyright (c) 2011 No Thirst Software. All rights reserved.
 //
 
-#import "TICDSChangeIntegrityStoreManager.h"
+#import "TICoreDataSync.h"
 
 @interface TICDSChangeIntegrityStoreManager ()
 
 @property (nonatomic, strong) NSMutableSet *deletionSet;
 @property (nonatomic, strong) NSMutableSet *insertionSet;
 @property (nonatomic, strong) NSMutableDictionary *changeDictionary;
+@property (nonatomic, strong) NSMutableDictionary *ticdsSyncIDDictionary;
 
 @end
 
@@ -97,6 +98,27 @@ static NSLock *changeStoreLock = nil;
 //    }
 }
 
++ (void)storeTICDSSyncID:(NSString *)ticdsSyncID forManagedObjectID:(NSManagedObjectID *)managedObjectID
+{
+    if ([ticdsSyncID length] == 0) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Attempted to store a 0 length ticdsSyncID for managedObject with ID %@", managedObjectID);
+        return;
+    }
+    
+    [[[self sharedChangeIntegrityStoreManager] ticdsSyncIDDictionary] setObject:ticdsSyncID forKey:managedObjectID];
+}
+
++ (NSString *)ticdsSyncIDForManagedObjectID:(NSManagedObjectID *)managedObjectID
+{
+    NSString *syncID = [[[self sharedChangeIntegrityStoreManager] ticdsSyncIDDictionary] objectForKey:managedObjectID];
+    if ([syncID length] == 0) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Retrieved a 0 length ticdsSyncID for managedObject with ID %@", managedObjectID);
+    }
+    
+    return syncID;
+}
+
+
 #pragma mark - Overridden getters/setters
 
 - (NSMutableSet *)deletionSet
@@ -124,6 +146,15 @@ static NSLock *changeStoreLock = nil;
     }
     
     return _changeDictionary;
+}
+
+- (NSMutableDictionary *)ticdsSyncIDDictionary
+{
+    if (_ticdsSyncIDDictionary == nil) {
+        _ticdsSyncIDDictionary = [[NSMutableDictionary alloc] init];
+    }
+    
+    return _ticdsSyncIDDictionary;
 }
 
 #pragma mark - Singleton methods

@@ -1382,9 +1382,19 @@
 
     TICDSLog(TICDSLogVerbosityEveryStep, @"Processing %ld open sync transactions.", (long)[self.syncTransactionsToBeClosed count]);
 
+    NSMutableArray *syncTransactionsToRemove = [[NSMutableArray alloc] init];
     for (TICDSSyncTransaction *syncTransaction in self.syncTransactionsToBeClosed) {
         [syncTransaction close];
+        if (syncTransaction.state == TICDSSyncTransactionStateClosed) {
+            [syncTransactionsToRemove addObject:syncTransaction];
+        } else if (syncTransaction.state == TICDSSyncTransactionStateUnableToClose) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Unable to close sync transaction. Error: %@", syncTransaction.error);
+        } else {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Unexpected sync transaction state: %ld", (long)syncTransaction.state);
+        }
     }
+    
+    [self.syncTransactionsToBeClosed removeObjectsInArray:syncTransactionsToRemove];
 }
 
 #pragma mark - VACUUMING
@@ -1838,11 +1848,17 @@
     [self.registrationQueue setSuspended:NO];
 }
 
-- (void)backgroundManagedObjectContextDidSave:(NSNotification *)aNotification
+- (void)backgroundManagedObjectContextDidSave:(NSNotification *)notification
 {
+    NSManagedObjectContext *notificationContext = [notification object];
+    if (notificationContext.parentContext != self.primaryDocumentMOC) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Received a NSManagedObjectContextDidSaveNotification for a context that was not a child of the primary document managed object context. Returning.");
+        return;
+    }
+    
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
-             [(id)self.delegate documentSyncManager:self didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:aNotification];
+             [(id)self.delegate documentSyncManager:self didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:notification];
          }];
     }
 }
@@ -1977,17 +1993,6 @@
 }
 
 #pragma mark - TICDSSyncTransactionDelegate methods
-
-- (void)syncTransaction:(TICDSSyncTransaction *)syncTransaction didCloseSuccessfully:(BOOL)successfully withError:(NSError *)error
-{
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Sync transaction %@ close successfully with error %@", successfully? @"did":@"did not", error);
-    
-    if (successfully) {
-        [self.syncTransactionsToBeClosed removeObject:syncTransaction];
-    } else {
-#warning Handle the failure
-    }
-}
 
 - (void)syncTransactionIsReadyToBeClosed:(TICDSSyncTransaction *)syncTransaction
 {

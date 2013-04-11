@@ -44,6 +44,7 @@
         return nil;
     }
 
+    self.state = TICDSSyncTransactionStateNotYetOpen;
     [self setupUnsavedAppliedSyncChangesFileURLInDirectoryPath:unsavedAppliedSyncChangesDirectoryPath];
     self.documentManagedObjectContext = managedObjectContext;
 
@@ -54,6 +55,7 @@
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Opening a sync transaction for unsaved applied sync changes located at %@", [self.unsavedAppliedSyncChangesFileURL.path lastPathComponent]);
     
+    self.state = TICDSSyncTransactionStateOpen;
     [self registerForManagedObjectContextDidSaveNotificationsForDocumentManagedObjectContextAndAllItsForefathers:self.documentManagedObjectContext];
 }
 
@@ -211,10 +213,10 @@
 
 - (void)closeTransactionWithSuccess:(BOOL)transactionClosedSuccessfully
 {
-    if ([self ti_delegateRespondsToSelector:@selector(syncTransaction:didCloseSuccessfully:withError:)]) {
-        [self runOnMainQueueWithoutDeadlocking:^{
-            [self.delegate syncTransaction:self didCloseSuccessfully:transactionClosedSuccessfully withError:self.error];
-        }];
+    if (transactionClosedSuccessfully) {
+        self.state = TICDSSyncTransactionStateClosed;
+    } else {
+        self.state = TICDSSyncTransactionStateUnableToClose;
     }
 }
 
