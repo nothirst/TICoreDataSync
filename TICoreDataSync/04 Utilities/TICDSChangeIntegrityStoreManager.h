@@ -25,4 +25,7 @@
 + (void)addChangedProperties:(NSDictionary *)changedProperties toChangeIntegrityStoreForObjectID:(NSManagedObjectID *)objectID;
 + (void)removeChangedProperties:(NSDictionary *)changedProperties fromChangeIntegrityStoreForObjectID:(NSManagedObjectID *)objectID;
 
++ (void)storeTICDSSyncID:(NSString *)ticdsSyncID forManagedObjectID:(NSManagedObjectID *)managedObjectID;
++ (NSString *)ticdsSyncIDForManagedObjectID:(NSManagedObjectID *)managedObjectID;
+
 @end

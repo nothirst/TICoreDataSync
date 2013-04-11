@@ -10,16 +10,11 @@
 
 @interface TICDSSynchronizedManagedObject ()
 
-- (TICDSSyncChange *)createSyncChangeForChangeType:(TICDSSyncChangeType)aType;
-- (void)createSyncChangesForAllRelationships;
-- (void)createSyncChangeIfApplicableForRelationship:(NSRelationshipDescription *)aRelationship;
-- (void)createToOneRelationshipSyncChange:(NSRelationshipDescription *)aRelationship;
-- (void)createToManyRelationshipSyncChanges:(NSRelationshipDescription *)aRelationship;
-- (NSDictionary *)dictionaryOfAllAttributes;
-
 @end
 
 @implementation TICDSSynchronizedManagedObject
+
+@dynamic ticdsSyncID;
 
 #pragma mark - Primary Sync Change Creation
 
@@ -65,6 +60,8 @@
         [TICDSChangeIntegrityStoreManager removeObjectIDFromInsertionIntegrityStore:[self objectID]];
         return;
     }
+    
+    [TICDSChangeIntegrityStoreManager storeTICDSSyncID:self.ticdsSyncID forManagedObjectID:self.objectID];
     
     TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeObjectInserted];
     
@@ -120,7 +117,12 @@
     
     TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", syncChange.objectSyncID, [self class]);
 
-    [syncChange setObjectSyncID:[self valueForKey:TICDSSyncIDAttributeName]];
+    NSString *syncID = self.ticdsSyncID;
+    if ([syncID length] == 0) {
+        syncID = [TICDSChangeIntegrityStoreManager ticdsSyncIDForManagedObjectID:self.objectID];
+    }
+        
+    [syncChange setObjectSyncID:syncID];
     [syncChange setObjectEntityName:[[self entity] name]];
     [syncChange setLocalTimeStamp:[NSDate date]];
     [syncChange setRelevantManagedObject:self];
