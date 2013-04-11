@@ -31,6 +31,9 @@
 /** The delegate that will receive `TICDSSyncTransactionDelegate` messages. */
 @property (weak) id<TICDSSyncTransactionDelegate> delegate;
 
+/** The current state of the sync transaction. Before the transaction has been opened its state will be TICDSSyncTransactionStateNotYetOpen. Once it has been opened its state will be TICDSSyncTransactionStateOpen. After the transaction has been closed successfully the state will be TICDSSyncTransactionStateClosed. If an attempt to close the transaction has been made and it fails the state will be TICDSSyncTransactionStateUnableToClose. The error property will most likely be non-nil as well. */
+@property TICDSSyncTransactionState state;
+
 #pragma mark Designated Initializer
 /** @name Designated Initializer */
 
