@@ -6,8 +6,6 @@
 //  Copyright (c) 2011 No Thirst Software. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 @interface TICDSChangeIntegrityStoreManager : NSObject {
     NSMutableSet *_deletionSet;
     NSMutableDictionary *_changeDictionary;
