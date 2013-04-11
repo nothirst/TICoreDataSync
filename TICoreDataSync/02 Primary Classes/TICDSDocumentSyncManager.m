@@ -1382,9 +1382,19 @@
 
     TICDSLog(TICDSLogVerbosityEveryStep, @"Processing %ld open sync transactions.", (long)[self.syncTransactionsToBeClosed count]);
 
+    NSMutableArray *syncTransactionsToRemove = [[NSMutableArray alloc] init];
     for (TICDSSyncTransaction *syncTransaction in self.syncTransactionsToBeClosed) {
         [syncTransaction close];
+        if (syncTransaction.state == TICDSSyncTransactionStateClosed) {
+            [syncTransactionsToRemove addObject:syncTransaction];
+        } else if (syncTransaction.state == TICDSSyncTransactionStateUnableToClose) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Unable to close sync transaction. Error: %@", syncTransaction.error);
+        } else {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Unexpected sync transaction state: %ld", (long)syncTransaction.state);
+        }
     }
+    
+    [self.syncTransactionsToBeClosed removeObjectsInArray:syncTransactionsToRemove];
 }
 
 #pragma mark - VACUUMING
@@ -1977,17 +1987,6 @@
 }
 
 #pragma mark - TICDSSyncTransactionDelegate methods
-
-- (void)syncTransaction:(TICDSSyncTransaction *)syncTransaction didCloseSuccessfully:(BOOL)successfully withError:(NSError *)error
-{
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Sync transaction %@ close successfully with error %@", successfully? @"did":@"did not", error);
-    
-    if (successfully) {
-        [self.syncTransactionsToBeClosed removeObject:syncTransaction];
-    } else {
-#warning Handle the failure
-    }
-}
 
 - (void)syncTransactionIsReadyToBeClosed:(TICDSSyncTransaction *)syncTransaction
 {

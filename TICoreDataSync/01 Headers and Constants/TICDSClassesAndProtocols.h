@@ -87,15 +87,6 @@
 /** The `TICDSSyncTransactionDelegate` protocol defines the methods implemented by delegates of a `TICDSSyncTransaction` object. */
 @protocol TICDSSyncTransactionDelegate <NSObject>
 
-/** Informs the delegate that the sync transaction has closed.
- 
- When a sync transaction is closed it will call this method indicating if the transaction was closed successfully or not.
- 
- @param syncTransaction The sync transaction object that sent the message.
- @param successfully Indicates whether the sync transaction closed successfully or not.
- @param error Any errors that may have been encountered while the sync transaction was attempting to close. */
-- (void)syncTransaction:(TICDSSyncTransaction *)syncTransaction didCloseSuccessfully:(BOOL)successfully withError:(NSError *)error;
-
 /** Informs the delegate that the sync transaction is ready to be closed.
   
  @param syncTransaction The sync transaction object that sent the message.
