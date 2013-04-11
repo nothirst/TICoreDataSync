@@ -1848,11 +1848,17 @@
     [self.registrationQueue setSuspended:NO];
 }
 
-- (void)backgroundManagedObjectContextDidSave:(NSNotification *)aNotification
+- (void)backgroundManagedObjectContextDidSave:(NSNotification *)notification
 {
+    NSManagedObjectContext *notificationContext = [notification object];
+    if (notificationContext.parentContext != self.primaryDocumentMOC) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Received a NSManagedObjectContextDidSaveNotification for a context that was not a child of the primary document managed object context. Returning.");
+        return;
+    }
+    
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
-             [(id)self.delegate documentSyncManager:self didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:aNotification];
+             [(id)self.delegate documentSyncManager:self didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:notification];
          }];
     }
 }
