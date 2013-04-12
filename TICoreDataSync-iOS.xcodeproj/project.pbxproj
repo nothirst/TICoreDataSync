@@ -115,6 +115,7 @@
 		1363A09217060071007AF704 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 1363A07217060071007AF704 /* zip.c */; };
 		1363A09817060071007AF704 /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 1363A08217060071007AF704 /* SSZipArchive.m */; };
 		1363A09E170600C8007AF704 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1363A09D170600C8007AF704 /* libz.dylib */; };
+		139E30151716F73100644289 /* TICDSSyncTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 139E30141716F73100644289 /* TICDSSyncTransaction.m */; };
 		13FB9BA016C2EE8F00B656F3 /* TICDSPostSynchronizationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FB9B9D16C2EE8F00B656F3 /* TICDSPostSynchronizationOperation.m */; };
 		13FB9BA116C2EE8F00B656F3 /* TICDSPreSynchronizationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FB9B9F16C2EE8F00B656F3 /* TICDSPreSynchronizationOperation.m */; };
 		13FBDD4E16C1A52F0030BDA2 /* TICDSDropboxSDKBasedPostSynchronizationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FBDD4B16C1A52F0030BDA2 /* TICDSDropboxSDKBasedPostSynchronizationOperation.m */; };
@@ -368,6 +369,8 @@
 		1363A08117060071007AF704 /* SSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSZipArchive.h; sourceTree = "<group>"; };
 		1363A08217060071007AF704 /* SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSZipArchive.m; sourceTree = "<group>"; };
 		1363A09D170600C8007AF704 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		139E30131716F73100644289 /* TICDSSyncTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSyncTransaction.h; sourceTree = "<group>"; };
+		139E30141716F73100644289 /* TICDSSyncTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSyncTransaction.m; sourceTree = "<group>"; };
 		13FB9B9C16C2EE8F00B656F3 /* TICDSPostSynchronizationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSPostSynchronizationOperation.h; sourceTree = "<group>"; };
 		13FB9B9D16C2EE8F00B656F3 /* TICDSPostSynchronizationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSPostSynchronizationOperation.m; sourceTree = "<group>"; };
 		13FB9B9E16C2EE8F00B656F3 /* TICDSPreSynchronizationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSPreSynchronizationOperation.h; sourceTree = "<group>"; };
@@ -477,6 +480,8 @@
 				13023CC2161366E10071C497 /* TICDSDocumentSyncManager.m */,
 				13023CC3161366E10071C497 /* TICDSSyncConflict.h */,
 				13023CC4161366E10071C497 /* TICDSSyncConflict.m */,
+				139E30131716F73100644289 /* TICDSSyncTransaction.h */,
+				139E30141716F73100644289 /* TICDSSyncTransaction.m */,
 				13023CC5161366E10071C497 /* TICDSSynchronizationOperationManagedObjectContext.h */,
 				13023CC6161366E10071C497 /* TICDSSynchronizationOperationManagedObjectContext.m */,
 				13023CC7161366E10071C497 /* TICDSSynchronizedManagedObject.h */,
@@ -1016,6 +1021,7 @@
 				1363A09117060071007AF704 /* unzip.c in Sources */,
 				1363A09217060071007AF704 /* zip.c in Sources */,
 				1363A09817060071007AF704 /* SSZipArchive.m in Sources */,
+				139E30151716F73100644289 /* TICDSSyncTransaction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
