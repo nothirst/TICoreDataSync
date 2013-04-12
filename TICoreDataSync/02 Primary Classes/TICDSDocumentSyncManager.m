@@ -659,16 +659,46 @@
         return;
     }
 
+    // Upload from a temporary location
+    NSString *temporaryPath = [NSTemporaryDirectory() stringByAppendingPathComponent:TICDSFrameworkName];
+    temporaryPath = [temporaryPath stringByAppendingPathComponent:[TICDSUtilities uuidString]];
+
+    // Create the temp directory for uploading
+    anyError = nil;
+    BOOL success = [self.fileManager createDirectoryAtPath:temporaryPath withIntermediateDirectories:YES attributes:nil error:&anyError];
+    if (success == NO) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create temporary directory for whole store upload: %@", anyError);
+
+        [self bailFromUploadProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        return;
+    }
+
+    NSString *tempWholeStoreFilePath = [temporaryPath stringByAppendingPathComponent:[[storeURL path] lastPathComponent]];
+    NSString *tempAppliedSyncChangesFilePath = [temporaryPath stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
+
+    success = [self.fileManager copyItemAtPath:[storeURL path] toPath:tempWholeStoreFilePath error:&anyError];
+    if (success == NO) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to copy whole store to temporary directory for whole store upload: %@", anyError);
+        [self bailFromUploadProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        return;
+    }
+
+    if([self.fileManager fileExistsAtPath:self.localAppliedSyncChangesFilePath]) {
+        success = [self.fileManager copyItemAtPath:self.localAppliedSyncChangesFilePath toPath:tempAppliedSyncChangesFilePath error:&anyError];
+        if (success == NO) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to copy applied sync changes to temporary directory before whole store upload: %@", anyError);
+            [self bailFromUploadProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+            return;
+        }
+    }
+
     [operation setShouldUseEncryption:self.shouldUseEncryption];
     [operation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
-    [operation setLocalWholeStoreFileLocation:storeURL];
+    [operation setLocalWholeStoreFileLocation:[NSURL fileURLWithPath:tempWholeStoreFilePath]];
 
     [operation configureBackgroundApplicationContextForPrimaryManagedObjectContext:self.primaryDocumentMOC];
 
-    NSString *appliedSyncChangeSetsFilePath = [self.helperFileDirectoryLocation path];
-    appliedSyncChangeSetsFilePath = [appliedSyncChangeSetsFilePath stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
-
-    [operation setLocalAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:appliedSyncChangeSetsFilePath]];
+    [operation setLocalAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:tempAppliedSyncChangesFilePath]];
 
     [self.otherTasksQueue addOperation:operation];
 }

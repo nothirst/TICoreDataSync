@@ -145,8 +145,9 @@
         return;
     }
 
-    if (destPath != nil && [[self.failedDownloadRetryDictionary objectForKey:destPath] integerValue] < 5) {
-        NSInteger retryCount = [[self.failedDownloadRetryDictionary objectForKey:destPath] integerValue];
+    NSInteger retryCount = 0;
+    if (destPath != nil && errorCode != 404 && [[self.failedDownloadRetryDictionary objectForKey:destPath] integerValue] < 5) {
+        retryCount = [[self.failedDownloadRetryDictionary objectForKey:destPath] integerValue];
         retryCount++;
         TICDSLog(TICDSLogVerbosityEveryStep, @"Failed to load revisions for %@. Going for try number %ld", destPath, (long)retryCount);
         [self.failedDownloadRetryDictionary setObject:[NSNumber numberWithInteger:retryCount] forKey:destPath];
@@ -157,8 +158,13 @@
     if (destPath != nil) {
         [self.failedDownloadRetryDictionary removeObjectForKey:destPath];
     }
-    
-    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to load revisions of %@ after 5 attempts, we're falling through to the error condition.", destPath);
+
+    if (retryCount >= 5) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Failed to load revisions of %@ after 5 attempts, we're falling through to the error condition.", destPath);
+    } else if (errorCode == 404) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"No previous revisions of %@ exist, uploading with no parent revision.", destPath);
+    }
+
     // A failure in this case could be caused by the file not existing, so we attempt to upload the file with no parent revision. That, of course, has its own failure checks.
     
     if( [[[destPath lastPathComponent] pathExtension] isEqualToString:TICDSSyncChangeSetFileExtension] ) {
@@ -172,7 +178,7 @@
     }
     
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Didn't catch the fact that we failed to load revisions for %@", destPath);
-    [self uploadedRecentSyncFileSuccessfully:NO];
+    [self operationDidFailToComplete];
 }
 
 #pragma mark Uploads
