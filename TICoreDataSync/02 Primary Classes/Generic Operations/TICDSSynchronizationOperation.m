@@ -601,6 +601,9 @@
             [insertedObject didChangeValueForKey:key];
         }
         
+        // Generate a permanent ID to fix a bug in 10.7 with child contexts
+        [self.backgroundApplicationContext obtainPermanentIDsForObjects:@[insertedObject] error:&anyError];
+        
         TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Updated object: %@", insertedObject);
     }];
 }
