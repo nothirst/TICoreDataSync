@@ -116,11 +116,15 @@
             TICDSLog(TICDSLogVerbosityEveryStep, @"Fixed missing ticdsSyncIDs in %@", [eachEntity name]);
         }];
     }
-    
+
+
     __block BOOL success = NO;
     [self.backgroundApplicationContext performBlockAndWait:^{
+        [self.backgroundApplicationContext.parentContext.undoManager disableUndoRegistration];
         success = [[self backgroundApplicationContext] save:&anyError];
+        [self.backgroundApplicationContext.parentContext.undoManager enableUndoRegistration];
     }];
+
 
     if( !success ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error saving background context during missing ticdsSyncID updates: %@", anyError);
