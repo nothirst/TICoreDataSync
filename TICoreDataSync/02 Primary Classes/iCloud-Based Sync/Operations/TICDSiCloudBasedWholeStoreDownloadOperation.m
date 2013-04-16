@@ -67,6 +67,11 @@
 
 - (BOOL)syncFileURL:(NSURL *)url timeout:(NSTimeInterval)timeout error:(NSError **)error
 {
+#if TARGET_IPHONE_SIMULATOR
+    // hack to support testing on iOS Simulator
+    return [[NSFileManager defaultManager] fileExistsAtPath:[url path]];
+#endif
+    
     NSNumber *isUbiquitousNumber;
     BOOL success = [url getResourceValue:&isUbiquitousNumber forKey:NSURLIsUbiquitousItemKey error:NULL];
     if ( !success ) return NO;
@@ -105,6 +110,13 @@
 
 - (BOOL)syncDirectoryURL:(NSURL *)url error:(NSError **)error
 {
+#if TARGET_IPHONE_SIMULATOR
+    // hack to support testing on iOS Simulator
+    BOOL _dir;
+    BOOL _success = [[NSFileManager defaultManager] fileExistsAtPath:[url path] isDirectory:&_dir];
+    return _success && _dir;
+#endif
+    
     NSString *path = url.path;
     NSNumber *isUbiquitousNumber;
     BOOL success = [url getResourceValue:&isUbiquitousNumber forKey:NSURLIsUbiquitousItemKey error:error];
