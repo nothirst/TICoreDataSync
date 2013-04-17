@@ -13,17 +13,17 @@
 
 + (TICDSChangeIntegrityStoreManager *)sharedChangeIntegrityStoreManager;
 
-+ (BOOL)containsDeletionRecordForObjectID:(NSManagedObjectID *)objectID;
-+ (BOOL)containsInsertionRecordForObjectID:(NSManagedObjectID *)objectID;
++ (BOOL)containsDeletionRecordForSyncID:(NSString *)ticdsSyncID;
++ (BOOL)containsInsertionRecordForSyncID:(NSString *)ticdsSyncID;
 
-+ (void)addObjectIDToDeletionIntegrityStore:(NSManagedObjectID *)objectID;
-+ (void)removeObjectIDFromDeletionIntegrityStore:(NSManagedObjectID *)objectID;
++ (void)addSyncIDToDeletionIntegrityStore:(NSString *)ticdsSyncID;
++ (void)removeSyncIDFromDeletionIntegrityStore:(NSString *)ticdsSyncID;
 
-+ (void)addObjectIDToInsertionIntegrityStore:(NSManagedObjectID *)objectID;
-+ (void)removeObjectIDFromInsertionIntegrityStore:(NSManagedObjectID *)objectID;
++ (void)addSyncIDToInsertionIntegrityStore:(NSString *)ticdsSyncID;
++ (void)removeSyncIDFromInsertionIntegrityStore:(NSString *)ticdsSyncID;
 
-+ (void)addChangedProperties:(NSDictionary *)changedProperties toChangeIntegrityStoreForObjectID:(NSManagedObjectID *)objectID;
-+ (void)removeChangedProperties:(NSDictionary *)changedProperties fromChangeIntegrityStoreForObjectID:(NSManagedObjectID *)objectID;
++ (void)addChangedProperties:(NSDictionary *)changedProperties toChangeIntegrityStoreForSyncID:(NSString *)ticdsSyncID;
++ (void)removeChangedProperties:(NSDictionary *)changedProperties fromChangeIntegrityStoreForSyncID:(NSString *)ticdsSyncID;
 
 + (void)storeTICDSSyncID:(NSString *)ticdsSyncID forManagedObjectID:(NSManagedObjectID *)managedObjectID;
 + (NSString *)ticdsSyncIDForManagedObjectID:(NSManagedObjectID *)managedObjectID;

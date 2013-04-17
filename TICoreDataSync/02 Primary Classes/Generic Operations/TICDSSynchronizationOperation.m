@@ -602,7 +602,9 @@
             [insertedObject setPrimitiveValue:[changedAttributes valueForKey:key] forKey:key];
             [insertedObject didChangeValueForKey:key];
         }
-        
+
+        [TICDSChangeIntegrityStoreManager addSyncIDToInsertionIntegrityStore:ticdsSyncID];
+
         TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Updated object: %@", insertedObject);
     }];
 }

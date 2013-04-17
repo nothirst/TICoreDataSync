@@ -28,58 +28,58 @@ static NSLock *changeStoreLock = nil;
 
 #pragma mark - Public methods
 
-+ (BOOL)containsDeletionRecordForObjectID:(NSManagedObjectID *)objectID
++ (BOOL)containsDeletionRecordForSyncID:(NSString *)ticdsSyncID
 {
     BOOL containsDeletionRecord = NO;
     @synchronized(deletionStoreLock) {
-        containsDeletionRecord = [[[self sharedChangeIntegrityStoreManager] deletionSet] containsObject:objectID];
+        containsDeletionRecord = [[[self sharedChangeIntegrityStoreManager] deletionSet] containsObject:ticdsSyncID];
     }
     
     return containsDeletionRecord;
 }
 
-+ (BOOL)containsInsertionRecordForObjectID:(NSManagedObjectID *)objectID;
++ (BOOL)containsInsertionRecordForSyncID:(NSString *)ticdsSyncID;
 {
     BOOL containsInsertionRecord = NO;
     @synchronized(insertionStoreLock) {
-        containsInsertionRecord = [[[self sharedChangeIntegrityStoreManager] insertionSet] containsObject:objectID];
+        containsInsertionRecord = [[[self sharedChangeIntegrityStoreManager] insertionSet] containsObject:ticdsSyncID];
     }
     
     return containsInsertionRecord;
 }
 
-+ (void)addObjectIDToDeletionIntegrityStore:(NSManagedObjectID *)objectID
++ (void)addSyncIDToDeletionIntegrityStore:(NSString *)ticdsSyncID
 {
     @synchronized(deletionStoreLock) {
-        [[[self sharedChangeIntegrityStoreManager] deletionSet] addObject:objectID];
+        [[[self sharedChangeIntegrityStoreManager] deletionSet] addObject:ticdsSyncID];
     }
 }
 
-+ (void)removeObjectIDFromDeletionIntegrityStore:(NSManagedObjectID *)objectID
++ (void)removeSyncIDFromDeletionIntegrityStore:(NSString *)ticdsSyncID
 {
     @synchronized(deletionStoreLock) {
-        [[[self sharedChangeIntegrityStoreManager] deletionSet] removeObject:objectID];
+        [[[self sharedChangeIntegrityStoreManager] deletionSet] removeObject:ticdsSyncID];
     }
 }
 
-+ (void)addObjectIDToInsertionIntegrityStore:(NSManagedObjectID *)objectID
++ (void)addSyncIDToInsertionIntegrityStore:(NSString *)ticdsSyncID
 {
     @synchronized(insertionStoreLock) {
-        [[[self sharedChangeIntegrityStoreManager] insertionSet] addObject:objectID];
+        [[[self sharedChangeIntegrityStoreManager] insertionSet] addObject:ticdsSyncID];
     }
 }
 
-+ (void)removeObjectIDFromInsertionIntegrityStore:(NSManagedObjectID *)objectID
++ (void)removeSyncIDFromInsertionIntegrityStore:(NSString *)ticdsSyncID
 {
     @synchronized(insertionStoreLock) {
-        [[[self sharedChangeIntegrityStoreManager] insertionSet] removeObject:objectID];
+        [[[self sharedChangeIntegrityStoreManager] insertionSet] removeObject:ticdsSyncID];
     }
 }
 
-+ (void)addChangedProperties:(NSDictionary *)changedProperties toChangeIntegrityStoreForObjectID:(NSManagedObjectID *)objectID
++ (void)addChangedProperties:(NSDictionary *)changedProperties toChangeIntegrityStoreForSyncID:(NSString *)ticdsSyncID
 {
 //    @synchronized(changeStoreLock) {
-//        NSMutableDictionary *previouslyChangedProperties = [[[self sharedChangeIntegrityStoreManager] changeDictionary] objectForKey:objectID];
+//        NSMutableDictionary *previouslyChangedProperties = [[[self sharedChangeIntegrityStoreManager] changeDictionary] objectForKey:ticdsSyncID];
 //        if (previouslyChangedProperties == nil) {
 //            previouslyChangedProperties = [NSMutableDictionary dictionaryWithDictionary:changedProperties];
 //        } else {
@@ -87,11 +87,11 @@ static NSLock *changeStoreLock = nil;
 //            
 //        }
 //        
-//        [[[self sharedChangeIntegrityStoreManager] changeDictionary] setObject:previouslyChangedProperties forKey:objectID];
+//        [[[self sharedChangeIntegrityStoreManager] changeDictionary] setObject:previouslyChangedProperties forKey:ticdsSyncID];
 //    }
 }
 
-+ (void)removeChangedProperties:(NSDictionary *)changedProperties fromChangeIntegrityStoreForObjectID:(NSManagedObjectID *)objectID
++ (void)removeChangedProperties:(NSDictionary *)changedProperties fromChangeIntegrityStoreForSyncID:(NSString *)ticdsSyncID
 {
 //    @synchronized(changeStoreLock) {
 //        
