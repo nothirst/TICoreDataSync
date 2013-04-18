@@ -10,16 +10,11 @@
 
 @interface TICDSSynchronizedManagedObject ()
 
-- (TICDSSyncChange *)createSyncChangeForChangeType:(TICDSSyncChangeType)aType;
-- (void)createSyncChangesForAllRelationships;
-- (void)createSyncChangeIfApplicableForRelationship:(NSRelationshipDescription *)aRelationship;
-- (void)createToOneRelationshipSyncChange:(NSRelationshipDescription *)aRelationship;
-- (void)createToManyRelationshipSyncChanges:(NSRelationshipDescription *)aRelationship;
-- (NSDictionary *)dictionaryOfAllAttributes;
-
 @end
 
 @implementation TICDSSynchronizedManagedObject
+
+@dynamic ticdsSyncID;
 
 #pragma mark - Primary Sync Change Creation
 
@@ -28,15 +23,45 @@
     return nil;
 }
 
+- (void)createSyncChange
+{
+    // if not in a synchronized MOC, or we don't have a doc sync manager, exit now
+    if (self.managedObjectContext.isSynchronized == NO || self.managedObjectContext.documentSyncManager == nil) {
+        if (self.managedObjectContext.isSynchronized == NO) {
+            TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Skipping sync change creation for %@ because our managedObjectContext is not marked as synchronized.", [self class]);
+        }
+        
+        if (self.managedObjectContext.documentSyncManager == nil) {
+            TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Skipping sync change creation for %@ because our managedObjectContext has no documentSyncManager.", [self class]);
+        }
+        
+        return;
+    }
+    
+    if ( [self isInserted] ) {
+        [self createSyncChangeForInsertion];
+    }
+    
+    if ( [self isUpdated] ) {
+        [self createSyncChangesForChangedProperties];
+    }
+    
+    if ( [self isDeleted] ) {
+        [self createSyncChangeForDeletion];
+    }
+}
+
 - (void)createSyncChangeForInsertion
 {
     // changedAttributes = a dictionary containing the values of _all_ the object's attributes at time it was saved
     // this method also creates extra sync changes for _all_ the object's relationships 
     
-    if ([TICDSChangeIntegrityStoreManager containsInsertionRecordForObjectID:[self objectID]]) {
-        [TICDSChangeIntegrityStoreManager removeObjectIDFromInsertionIntegrityStore:[self objectID]];
+    if ([TICDSChangeIntegrityStoreManager containsInsertionRecordForSyncID:self.ticdsSyncID]) {
+        [TICDSChangeIntegrityStoreManager removeSyncIDFromInsertionIntegrityStore:self.ticdsSyncID];
         return;
     }
+    
+    [TICDSChangeIntegrityStoreManager storeTICDSSyncID:self.ticdsSyncID forManagedObjectID:self.objectID];
     
     TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeObjectInserted];
     
@@ -48,8 +73,8 @@
 
 - (void)createSyncChangeForDeletion
 {
-    if ([TICDSChangeIntegrityStoreManager containsDeletionRecordForObjectID:[self objectID]]) {
-        [TICDSChangeIntegrityStoreManager removeObjectIDFromDeletionIntegrityStore:[self objectID]];
+    if ([TICDSChangeIntegrityStoreManager containsDeletionRecordForSyncID:self.ticdsSyncID]) {
+        [TICDSChangeIntegrityStoreManager removeSyncIDFromDeletionIntegrityStore:self.ticdsSyncID];
         return;
     }
 
@@ -92,7 +117,12 @@
     
     TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", syncChange.objectSyncID, [self class]);
 
-    [syncChange setObjectSyncID:[self valueForKey:TICDSSyncIDAttributeName]];
+    NSString *syncID = self.ticdsSyncID;
+    if ([syncID length] == 0) {
+        syncID = [TICDSChangeIntegrityStoreManager ticdsSyncIDForManagedObjectID:self.objectID];
+    }
+        
+    [syncChange setObjectSyncID:syncID];
     [syncChange setObjectEntityName:[[self entity] name]];
     [syncChange setLocalTimeStamp:[NSDate date]];
     [syncChange setRelevantManagedObject:self];
@@ -227,38 +257,6 @@
     }
     
     return attributeValues;
-}
-
-#pragma mark - Save Notification
-
-- (void)willSave
-{
-    [super willSave];
-
-    // if not in a synchronized MOC, or we don't have a doc sync manager, exit now
-    if (self.managedObjectContext.isSynchronized == NO || self.managedObjectContext.documentSyncManager == nil) {
-        if (self.managedObjectContext.isSynchronized == NO) {
-            TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Skipping sync change creation for %@ because our managedObjectContext is not marked as synchronized.", [self class]);
-        }
-
-        if (self.managedObjectContext.documentSyncManager == nil) {
-            TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Skipping sync change creation for %@ because our managedObjectContext has no documentSyncManager.", [self class]);
-        }
-
-        return;
-    }
-
-    if ( [self isInserted] ) {
-        [self createSyncChangeForInsertion];
-    }
-
-    if ( [self isUpdated] ) {
-        [self createSyncChangesForChangedProperties];
-    }
-
-    if ( [self isDeleted] ) {
-        [self createSyncChangeForDeletion];
-    }
 }
 
 #pragma mark - Managed Object Lifecycle

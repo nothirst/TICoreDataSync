@@ -12,6 +12,7 @@
 #import "TICDSSynchronizedManagedObject.h"
 #import "TICDSSyncConflict.h"
 #import "TICDSSynchronizationOperationManagedObjectContext.h"
+#import "TICDSSyncTransaction.h"
 #import "NSManagedObjectContext+TICDSAdditions.h"
 
 #pragma mark Operations

@@ -227,6 +227,22 @@
  @param anIdentifier The unique synchronization identifier of the client to delete. */
 - (void)deleteDocumentSynchronizationDataForClientWithIdentifier:(NSString *)anIdentifier;
 
+#pragma mark - Polling methods
+
+/** @name Polling Remote Storage for Changes */
+
+/** Begin polling the remote storage for changes to the sync directory.
+ 
+ This method will cause the document sync manager to periodically poll the remote storage for changes to the sync directory and will kick off a sync if changes are found.
+ */
+- (void)beginPollingRemoteStorageForChanges;
+
+/** Stop polling the remote storage for changes to the sync directory.
+ 
+ This method will cause the document sync manager to stop polling the remote storage for changes to the sync directory.
+ */
+- (void)stopPollingRemoteStorageForChanges;
+
 #pragma mark - Overridden Methods
 /** @name Methods Overridden by Subclasses */
 
@@ -291,14 +307,6 @@
  @param aMoc The synchronized managed object context.
  */
 - (void)synchronizedMOCWillSave:(NSManagedObjectContext *)aMoc;
-
-/** Indicate that the synchronized managed object context completed a successful save.
- 
- This method is called automatically by `NSManagedObjectContext` when it has successfully completed a `save:`.
- 
- @param aMoc The synchronized managed object context.
- */
-- (void)synchronizedMOCDidSave:(NSManagedObjectContext *)aMoc;
 
 #pragma mark - Properties
 /** @name Properties */

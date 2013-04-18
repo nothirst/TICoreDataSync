@@ -9,6 +9,21 @@
 
 #import "TICoreDataSync.h"
 
+#if TARGET_OS_IPHONE
+#import <DropboxSDK/DropboxSDK.h>
+#else
+#import <DropboxSDK/DropboxOSX.h>
+#endif
+
+@interface TICDSDropboxSDKBasedDocumentSyncManager () <DBRestClientDelegate>
+
+@property NSTimer *remotePollingTimer;
+@property (nonatomic) DBRestClient *restClient;
+@property (copy) NSString *deltaCursor;
+@property BOOL initialCallToDelta;
+
+@end
+
 
 @implementation TICDSDropboxSDKBasedDocumentSyncManager
 
@@ -29,6 +44,101 @@
     }
     
     [super registerConfiguredDocumentSyncManager];
+}
+
+#pragma mark - Remote Polling Methods
+
+- (void)beginPollingRemoteStorageForChanges
+{
+    [self pollRemoteStorage:nil];
+}
+
+- (void)stopPollingRemoteStorageForChanges
+{
+    [self.remotePollingTimer invalidate];
+    self.remotePollingTimer = nil;
+}
+
+- (void)pollRemoteStorage:(NSTimer *)timer
+{
+    [self.restClient loadDelta:self.deltaCursor];
+}
+
+#pragma mark - DBRestClientDelegate methods
+
+- (void)restClient:(DBRestClient*)client loadedDeltaEntries:(NSArray *)entries reset:(BOOL)shouldReset cursor:(NSString *)cursor hasMore:(BOOL)hasMore
+{
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Processing a response from the polling call. %ld changed files with %@ to load.", (long)[entries count], (hasMore? @"more":@"no more"));
+
+    self.deltaCursor = cursor;
+
+    if (shouldReset) {
+        self.initialCallToDelta = YES;
+    }
+    
+    if (hasMore && self.initialCallToDelta) {
+        [self.restClient loadDelta:self.deltaCursor];
+        return;
+    }
+    
+    self.initialCallToDelta = NO;
+
+    NSString *lowercaseDocumentDirectoryPath = [self.thisDocumentDirectoryPath lowercaseString];
+    NSString *lowercaseClientIdentifier = [self.clientIdentifier lowercaseString];
+    NSString *lowercaseRecentSyncsDirectoryName = [TICDSRecentSyncsDirectoryName lowercaseString];
+    for (DBDeltaEntry *entry in entries) {
+        if ([entry.lowercasePath hasPrefix:lowercaseDocumentDirectoryPath]) {
+            if ([entry.lowercasePath rangeOfString:lowercaseClientIdentifier].location != NSNotFound) {
+                TICDSLog(TICDSLogVerbosityEveryStep, @"Processing a response from the polling call, skipping changes made by this client.");
+                continue;
+            }
+            
+            if ([entry.lowercasePath rangeOfString:lowercaseRecentSyncsDirectoryName].location != NSNotFound) {
+                TICDSLog(TICDSLogVerbosityEveryStep, @"Processing a response from the polling call, skipping changes to the recent syncs directory made by other clients.");
+                continue;
+            }
+            
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Found changes to %@ during polling, kicking off a sync", entry.lowercasePath);
+            self.remotePollingTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(pollRemoteStorage:) userInfo:nil repeats:NO];
+            [self initiateSynchronization];
+            return;
+        }
+    }
+    
+    if (hasMore) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"REST client indicated more changes available during polling call");
+        [self.restClient loadDelta:self.deltaCursor];
+    }
+
+    self.remotePollingTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(pollRemoteStorage:) userInfo:nil repeats:NO];
+}
+
+- (void)restClient:(DBRestClient*)client loadDeltaFailedWithError:(NSError *)error
+{
+    TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error while polling: %@", error);
+
+    if (error.code == 503) {
+        NSNumber *retryAfterNumber = [error.userInfo valueForKey:@"Retry-After"];
+        if (retryAfterNumber == nil) {
+            return;
+        }
+
+        self.remotePollingTimer = [NSTimer scheduledTimerWithTimeInterval:[retryAfterNumber doubleValue] target:self selector:@selector(pollRemoteStorage:) userInfo:nil repeats:NO];
+    } else {
+        self.remotePollingTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(pollRemoteStorage:) userInfo:nil repeats:NO];
+    }
+}
+
+#pragma mark - Lazy Accessors
+
+- (DBRestClient *)restClient
+{
+    if (_restClient == nil) {
+        _restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+        _restClient.delegate = self;
+    }
+    
+    return _restClient;
 }
 
 #pragma mark - Operation Classes

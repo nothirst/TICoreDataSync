@@ -15,7 +15,6 @@
  
  No FileManagerBased-specific settings are required when you create a `TICDSFileManagerBasedDocumentSyncManager`--the `applicationDirectoryPath` is set automatically when you register (based on the properties set on the `TICDSFileManagerBasedApplicationSyncManager`).
  
- One **additional feature** is provided by an `NSFileManager`-based document sync manager---the ability to trigger a synchronization whenever changes are detected in other clients' `SyncChanges` directories. To make use of this functionality, simply call the `enableAutomaticSynchronizationAfterChangesDetectedFromOtherClients` method once the document has been registered.
  */
 @interface TICDSFileManagerBasedDocumentSyncManager : TICDSDocumentSyncManager {
 @private
@@ -24,11 +23,6 @@
     TIKQDirectoryWatcher *_directoryWatcher;
     NSMutableArray *_watchedClientDirectoryIdentifiers;
 }
-
-/** @name Automatic Change Detection */
-
-/** Configures the FileManager-based document sync manager to watch for changes uploaded by other clients, and initiate a sync operation automatically when new changes are detected. */
-- (void)enableAutomaticSynchronizationAfterChangesDetectedFromOtherClients;
 
 /** @name Properties */
 
