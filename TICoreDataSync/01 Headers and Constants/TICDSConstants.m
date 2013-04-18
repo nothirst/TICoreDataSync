@@ -115,3 +115,4 @@ NSString * const TICDSApplicationSyncManagerDidIncreaseActivityNotification = @"
 NSString * const TICDSApplicationSyncManagerDidDecreaseActivityNotification = @"TICDSApplicationSyncManagerDidDecreaseActivityNotification";
 NSString * const TICDSDocumentSyncManagerDidIncreaseActivityNotification = @"TICDSDocumentSyncManagerDidIncreaseActivityNotification";
 NSString * const TICDSDocumentSyncManagerDidDecreaseActivityNotification = @"TICDSDocumentSyncManagerDidDecreaseActivityNotification";
+NSString *const TICDSDocumentSyncManagerDidDirtyDocumentNotification = @"TICDSDocumentSyncManagerDidDirtyDocumentNotification";

@@ -1885,10 +1885,12 @@
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Received a NSManagedObjectContextDidSaveNotification for a context that was not a child of the primary document managed object context. Returning.");
         return;
     }
-    
+
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
              [(id)self.delegate documentSyncManager:self didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:notification];
+
+             [[NSNotificationCenter defaultCenter] postNotificationName:TICDSDocumentSyncManagerDidDirtyDocumentNotification object:self];
          }];
     }
 }
