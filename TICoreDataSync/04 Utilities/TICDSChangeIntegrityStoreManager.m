@@ -93,7 +93,7 @@ static NSLock *changeStoreLock = nil;
             return NO;
         }
 
-        return [storedValue isEqualTo:value];
+        return [storedValue isEqual:value];
     }
 }
 
