@@ -13,17 +13,25 @@
 
 + (TICDSChangeIntegrityStoreManager *)sharedChangeIntegrityStoreManager;
 
-+ (BOOL)containsDeletionRecordForSyncID:(NSString *)ticdsSyncID;
-+ (BOOL)containsInsertionRecordForSyncID:(NSString *)ticdsSyncID;
+#pragma mark - Deletion Integrity methods
 
++ (BOOL)containsDeletionRecordForSyncID:(NSString *)ticdsSyncID;
 + (void)addSyncIDToDeletionIntegrityStore:(NSString *)ticdsSyncID;
 + (void)removeSyncIDFromDeletionIntegrityStore:(NSString *)ticdsSyncID;
 
+#pragma mark - Insertion Integrity methods
+
++ (BOOL)containsInsertionRecordForSyncID:(NSString *)ticdsSyncID;
 + (void)addSyncIDToInsertionIntegrityStore:(NSString *)ticdsSyncID;
 + (void)removeSyncIDFromInsertionIntegrityStore:(NSString *)ticdsSyncID;
 
-+ (void)addChangedProperties:(NSDictionary *)changedProperties toChangeIntegrityStoreForSyncID:(NSString *)ticdsSyncID;
-+ (void)removeChangedProperties:(NSDictionary *)changedProperties fromChangeIntegrityStoreForSyncID:(NSString *)ticdsSyncID;
+#pragma mark - Change Integrity methods
+
++ (BOOL)containsChangedAttributeRecordForKey:(id)key withValue:(id)value syncID:(NSString *)ticdsSyncID;
++ (void)addChangedAttributeValue:(id)value forKey:(id)key toChangeIntegrityStoreForSyncID:(NSString *)ticdsSyncID;
++ (void)removeChangedAttributesEntryFromChangeIntegrityStoreForSyncID:(NSString *)ticdsSyncID;
+
+#pragma mark - Undo Integrity methods
 
 + (void)storeTICDSSyncID:(NSString *)ticdsSyncID forManagedObjectID:(NSManagedObjectID *)managedObjectID;
 + (NSString *)ticdsSyncIDForManagedObjectID:(NSManagedObjectID *)managedObjectID;

@@ -637,6 +637,8 @@
         [object willChangeValueForKey:relevantKey];
         [object setPrimitiveValue:changedAttributes forKey:relevantKey];
         [object didChangeValueForKey:relevantKey];
+
+        [TICDSChangeIntegrityStoreManager addChangedAttributeValue:changedAttributes forKey:relevantKey toChangeIntegrityStoreForSyncID:objectSyncID];
         
         TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed attribute on object: %@", object);
     }];
@@ -673,7 +675,9 @@
         [object willChangeValueForKey:relevantKey];
         [object setPrimitiveValue:relatedObject forKey:relevantKey];
         [object didChangeValueForKey:relevantKey];
-        
+
+        [TICDSChangeIntegrityStoreManager addChangedAttributeValue:changedRelationships forKey:relevantKey toChangeIntegrityStoreForSyncID:objectSyncID];
+
         TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed to-one relationship on object: %@", object);
     }];
 }
@@ -703,7 +707,7 @@
             return;
         }
         
-        // capitalize the first char of relationship name to change e.g., someObjects into SomeObjects
+        // capitalize the first char of relationship name to change e.g., someObject into SomeObject
         NSString *relationshipName = [relevantKey substringToIndex:1];
         relationshipName = [relationshipName capitalizedString];
         relationshipName = [relationshipName stringByAppendingString:[relevantKey substringFromIndex:1]];
@@ -722,7 +726,7 @@
             [self.synchronizationWarnings addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteRelationshipSyncChange entityName:relatedObjectEntityName relatedObjectEntityName:nil attributes:changedRelationships]];
             return;
         }
-        
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     if ([object respondsToSelector:NSSelectorFromString(selectorName)]) {
@@ -732,6 +736,8 @@
     }
 #pragma clang diagnostic pop
         
+        [TICDSChangeIntegrityStoreManager addChangedAttributeValue:changedRelationships forKey:relevantKey toChangeIntegrityStoreForSyncID:objectSyncID];
+
         TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"%@", objectEntityName);
         TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed to-many relationships on object: %@", object);
     }];
