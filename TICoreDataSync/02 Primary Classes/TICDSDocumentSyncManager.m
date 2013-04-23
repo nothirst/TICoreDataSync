@@ -311,6 +311,8 @@
 
 - (void)registerWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(NSManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo
 {
+    self.state = TICDSDocumentSyncManagerStateRegistering;
+
     // configure the document, if necessary
     NSError *anyError;
     BOOL shouldContinue = YES;
@@ -335,11 +337,11 @@
     }
 
     if (shouldContinue == NO) {
+        self.state = TICDSDocumentSyncManagerStateNotYetRegistered;
         [self bailFromRegistrationProcessWithError:anyError];
         return;
     }
 
-    self.state = TICDSDocumentSyncManagerStateRegistering;
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to register document sync manager");
 
     [self registerPrimaryDocumentManagedObjectContext:aContext];
