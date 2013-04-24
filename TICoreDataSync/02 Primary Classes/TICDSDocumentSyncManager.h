@@ -67,6 +67,15 @@
   */
 - (void)removeLocalHelperFiles:(NSError **)error;
 
+#pragma mark - Deregistration
+
+/** @name Deregistration */
+
+/**
+ Puts this document sync manager in a deregistered state.
+ */
+- (void)deregisterDocumentSyncManager;
+
 #pragma mark - One-Shot Document Registration
 /** @name One-Shot Document Registration */
 
