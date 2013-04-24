@@ -76,6 +76,22 @@
     }
 }
 
+#pragma mark - DEREGISTRATION
+
+- (void)deregisterDocumentSyncManager
+{
+    [self stopPollingRemoteStorageForChanges];
+    self.state = TICDSDocumentSyncManagerStateNotYetRegistered;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    self.documentIdentifier = nil;
+    self.documentDescription = nil;
+    self.clientIdentifier = nil;
+    self.openSyncTransactions = nil;
+    self.syncTransactionsToBeClosed = nil;
+    self.currentSyncTransaction = nil;
+    self.queuedSyncsCount = 0;
+}
+
 #pragma mark - DELAYED REGISTRATION
 
 - (void)configureWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(NSManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo
