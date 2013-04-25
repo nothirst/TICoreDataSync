@@ -1763,6 +1763,11 @@
 
     syncChangesManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
     syncChangesManagedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator;
+    NSError *error = nil;
+    [syncChangesManagedObjectContext save:&error];
+    if (error != nil) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Was not able to save the freshly created MOC.");
+    }
 
     [self.syncChangesMOCs setValue:syncChangesManagedObjectContext forKey:[self keyForContext:documentManagedObjectContext]];
 
