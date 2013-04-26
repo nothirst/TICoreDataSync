@@ -17,26 +17,41 @@
 
 - (void)checkWhetherIdentifiedDocumentDirectoryExists
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [[self restClient] loadMetadata:[self documentDirectoryPath]];
 }
 
 - (void)checkForExistingIdentifierPlistInDeletedDocumentsDirectory
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [[self restClient] loadMetadata:[self deletedDocumentsDirectoryIdentifierPlistFilePath]];
 }
 
 - (void)deleteDocumentInfoPlistFromDeletedDocumentsDirectory
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [[self restClient] deletePath:[self deletedDocumentsDirectoryIdentifierPlistFilePath]];
 }
 
 - (void)copyDocumentInfoPlistToDeletedDocumentsDirectory
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [[self restClient] copyFrom:[self documentInfoPlistFilePath] toPath:[self deletedDocumentsDirectoryIdentifierPlistFilePath]];
 }
 
 - (void)deleteDocumentDirectory
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [[self restClient] deletePath:[self documentDirectoryPath]];
 }
 
@@ -44,6 +59,10 @@
 #pragma mark Metadata
 - (void)restClient:(DBRestClient*)client loadedMetadata:(DBMetadata*)metadata
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     NSString *path = [metadata path];
     
     if( [path isEqualToString:[self documentDirectoryPath]] ) {
@@ -64,16 +83,25 @@
 
 - (void)restClient:(DBRestClient*)client metadataUnchangedAtPath:(NSString*)path
 {
-    
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
 }
 
 - (void)restClient:(DBRestClient*)client loadMetadataFailedWithError:(NSError*)error
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     NSString *path = [[error userInfo] valueForKey:@"path"];
     NSInteger errorCode = [error code];
     
     if (errorCode == 503) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+#if TARGET_OS_IPHONE
+        [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
         [client loadMetadata:path];
         return;
     }
@@ -96,16 +124,27 @@
 #pragma mark Deletion
 - (void)restClient:(DBRestClient*)client deletedPath:(NSString *)path
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     [self handleDeletionAtPath:path];
 }
 
 - (void)restClient:(DBRestClient*)client deletePathFailedWithError:(NSError*)error
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     NSString *path = [[error userInfo] valueForKey:@"path"];
     NSInteger errorCode = [error code];
     
     if (errorCode == 503) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+#if TARGET_OS_IPHONE
+        [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
         [client deletePath:path];
         return;
     }
@@ -145,18 +184,29 @@
 #pragma mark Copying
 - (void)restClient:(DBRestClient*)client copiedPath:(NSString *)froPath to:(NSString *)toPath
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     // should really check the paths, but there's only one copy procedure in this operation...
     [self copiedDocumentInfoPlistToDeletedDocumentsDirectoryWithSuccess:YES];
 }
 
 - (void)restClient:(DBRestClient*)client copyPathFailedWithError:(NSError*)error
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     NSString *sourcePath = [error.userInfo objectForKey:@"from_path"];
     NSString *destinationPath = [error.userInfo objectForKey:@"to_path"];
     NSInteger errorCode = error.code;
     
     if (errorCode == 503) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@ to %@", sourcePath, destinationPath);
+#if TARGET_OS_IPHONE
+        [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
         [client copyFrom:sourcePath toPath:destinationPath];
         return;
     }

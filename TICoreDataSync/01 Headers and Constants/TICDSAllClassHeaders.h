@@ -87,6 +87,7 @@
 
 #pragma mark - External Sources
 #import "NSObject+TIDelegateCommunications.h"
+#import "UIApplication+TICDSAdditions.h"
 #import "TICoreDataFactory.h"
 #import "TIManagedObjectExtensions.h"
 #import "TIKQDirectoryWatcher.h"

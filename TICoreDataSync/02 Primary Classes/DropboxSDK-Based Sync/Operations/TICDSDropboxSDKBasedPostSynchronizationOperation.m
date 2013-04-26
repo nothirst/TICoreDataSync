@@ -62,6 +62,9 @@
     }
     
     self.localSyncChangeSetFilePath = finalFilePath;
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [self.restClient loadRevisionsForFile:[[self thisDocumentSyncChangesThisClientDirectoryPath] stringByAppendingPathComponent:[finalFilePath lastPathComponent]] limit:1];
 }
 
@@ -72,6 +75,9 @@
         return;
     }
     
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [[self restClient] uploadFile:[self.localSyncChangeSetFilePath lastPathComponent] toPath:[self thisDocumentSyncChangesThisClientDirectoryPath] withParentRev:parentRevision fromPath:self.localSyncChangeSetFilePath];
 }
 
@@ -84,6 +90,9 @@
     }
     
     self.recentSyncFilePath = [aLocation path];
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [self.restClient loadRevisionsForFile:[[[self thisDocumentRecentSyncsThisClientFilePath] stringByDeletingLastPathComponent] stringByAppendingPathComponent:[[aLocation path] lastPathComponent]] limit:1];
 }
 
@@ -94,6 +103,9 @@
         return;
     }
     
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [[self restClient] uploadFile:[self.recentSyncFilePath lastPathComponent] toPath:[[self thisDocumentRecentSyncsThisClientFilePath] stringByDeletingLastPathComponent] withParentRev:parentRevision fromPath:self.recentSyncFilePath];
 }
 
@@ -102,6 +114,10 @@
 #pragma mark Revisions
 - (void)restClient:(DBRestClient*)client loadedRevisions:(NSArray *)revisions forFile:(NSString *)path
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     if (self.isCancelled) {
         [self operationWasCancelled];
         return;
@@ -131,6 +147,10 @@
 
 - (void)restClient:(DBRestClient*)client loadRevisionsFailedWithError:(NSError *)error
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     if (self.isCancelled) {
         [self operationWasCancelled];
         return;
@@ -141,6 +161,9 @@
     
     if (errorCode == 503) { // Potentially bogus rate-limiting error code. Current advice from Dropbox is to retry immediately. --M.Fey, 2012-12-19
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", destPath);
+#if TARGET_OS_IPHONE
+        [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
         [client loadRevisionsForFile:destPath limit:1];
         return;
     }
@@ -151,6 +174,9 @@
         retryCount++;
         TICDSLog(TICDSLogVerbosityEveryStep, @"Failed to load revisions for %@. Going for try number %ld", destPath, (long)retryCount);
         [self.failedDownloadRetryDictionary setObject:[NSNumber numberWithInteger:retryCount] forKey:destPath];
+#if TARGET_OS_IPHONE
+        [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
         [self.restClient loadRevisionsForFile:destPath limit:1];
         return;
     }
@@ -184,6 +210,10 @@
 #pragma mark Uploads
 - (void)restClient:(DBRestClient*)client uploadedFile:(NSString*)destPath from:(NSString*)srcPath
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     if (self.isCancelled) {
         [self operationWasCancelled];
         return;
@@ -202,6 +232,10 @@
 
 - (void)restClient:(DBRestClient*)client uploadFileFailedWithError:(NSError*)error
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     if (self.isCancelled) {
         [self operationWasCancelled];
         return;

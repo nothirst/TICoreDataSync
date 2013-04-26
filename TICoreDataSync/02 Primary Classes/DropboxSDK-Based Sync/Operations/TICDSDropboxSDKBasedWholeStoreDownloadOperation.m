@@ -25,6 +25,9 @@
 
 - (void)checkForMostRecentClientWholeStore
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [[self restClient] loadMetadata:[self thisDocumentWholeStoreDirectoryPath]];
 }
 
@@ -63,6 +66,9 @@
 {
     NSString *storeToDownload = [self pathToWholeStoreFileForClientWithIdentifier:[self requestedWholeStoreClientIdentifier]];
     
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [[self restClient] loadFile:storeToDownload intoPath:[[self tempFileDirectoryPath] stringByAppendingPathComponent:TICDSWholeStoreFilename]];
 }
 
@@ -70,6 +76,9 @@
 {
     NSString *fileToDownload = [self pathToAppliedSyncChangesFileForClientWithIdentifier:[self requestedWholeStoreClientIdentifier]];
     
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [[self restClient] loadFile:fileToDownload intoPath:[[self tempFileDirectoryPath] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename]];
 }
 
@@ -77,6 +86,9 @@
 {
     NSString *directoryPath = [[self thisDocumentDirectoryPath] stringByAppendingPathComponent:TICDSIntegrityKeyDirectoryName];
     
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [[self restClient] loadMetadata:directoryPath];
 }
 
@@ -84,6 +96,10 @@
 #pragma mark Metadata
 - (void)restClient:(DBRestClient*)client loadedMetadata:(DBMetadata*)metadata
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     NSString *path = [metadata path];
     
     if( [path isEqualToString:[self thisDocumentWholeStoreDirectoryPath]] ) {
@@ -107,6 +123,9 @@
                 continue;
             }
             
+#if TARGET_OS_IPHONE
+            [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
             [[self restClient] loadMetadata:[eachSubMetadata path]];
         }
         return;
@@ -149,16 +168,26 @@
 
 - (void)restClient:(DBRestClient*)client metadataUnchangedAtPath:(NSString*)path
 {
-    
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
 }
 
 - (void)restClient:(DBRestClient*)client loadMetadataFailedWithError:(NSError*)error
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     NSString *path = [[error userInfo] valueForKey:@"path"];
     NSInteger errorCode = [error code];
     
     if (errorCode == 503) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+#if TARGET_OS_IPHONE
+        [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
+        
         [client loadMetadata:path];
         return;
     }
@@ -208,6 +237,10 @@
 
 - (void)restClient:(DBRestClient*)client loadedFile:(NSString*)destPath
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     NSError *anyError = nil;
     BOOL success = YES;
     
@@ -307,12 +340,20 @@
 
 - (void)restClient:(DBRestClient *)client loadFileFailedWithError:(NSError *)error
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     NSString *path = [[error userInfo] valueForKey:@"path"];
     NSString *destinationPath = [[error userInfo] valueForKey:@"destinationPath"];
     NSInteger errorCode = error.code;
     
     if (errorCode == 503) { // Potentially bogus rate-limiting error code. Current advice from Dropbox is to retry immediately. --M.Fey, 2012-12-19
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+#if TARGET_OS_IPHONE
+        [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
+        
         [client loadFile:path intoPath:destinationPath];
         return;
     }
