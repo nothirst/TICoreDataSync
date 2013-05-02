@@ -61,6 +61,10 @@
 
 - (void)pollRemoteStorage:(NSTimer *)timer
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
+
     [self.restClient loadDelta:self.deltaCursor];
 }
 
@@ -70,6 +74,10 @@
 {
     TICDSLog(TICDSLogVerbosityEveryStep, @"Processing a response from the polling call. %ld changed files with %@ to load.", (long)[entries count], (hasMore? @"more":@"no more"));
 
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     self.deltaCursor = cursor;
 
     if (shouldReset) {
@@ -77,6 +85,9 @@
     }
     
     if (hasMore && self.initialCallToDelta) {
+#if TARGET_OS_IPHONE
+        [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
         [self.restClient loadDelta:self.deltaCursor];
         return;
     }
@@ -107,6 +118,9 @@
     
     if (hasMore) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"REST client indicated more changes available during polling call");
+#if TARGET_OS_IPHONE
+        [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
         [self.restClient loadDelta:self.deltaCursor];
     }
 
@@ -115,6 +129,10 @@
 
 - (void)restClient:(DBRestClient*)client loadDeltaFailedWithError:(NSError *)error
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error while polling: %@", error);
 
     if (error.code == 503) {

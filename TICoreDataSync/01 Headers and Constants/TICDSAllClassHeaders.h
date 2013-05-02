@@ -90,6 +90,9 @@
 #import "TICoreDataFactory.h"
 #import "TIManagedObjectExtensions.h"
 #import "TIKQDirectoryWatcher.h"
+#if (TARGET_OS_IPHONE)
+#import "UIApplication+TICDSAdditions.h"
+#endif
 
 #pragma mark - Whole Store Compression
 #import "SSZipArchive.h"
