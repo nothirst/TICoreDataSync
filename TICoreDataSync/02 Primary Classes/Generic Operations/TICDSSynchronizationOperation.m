@@ -678,7 +678,7 @@
 
         [TICDSChangeIntegrityStoreManager addChangedAttributeValue:changedRelationships forKey:relevantKey toChangeIntegrityStoreForSyncID:objectSyncID];
 
-        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed to-one relationship on object: %@", object);
+        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed to-one relationship on object: %@[%@]", objectEntityName, objectSyncID);
     }];
 }
 
