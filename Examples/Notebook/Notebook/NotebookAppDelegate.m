@@ -205,6 +205,11 @@
     return YES;
 }
 
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToSynchronizeWithError:(NSError *)anError
+{
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, anError);
+}
+
 #pragma mark - Sync Manager Activity Notification methods
 
 - (void)activityDidIncrease:(NSNotification *)aNotification
