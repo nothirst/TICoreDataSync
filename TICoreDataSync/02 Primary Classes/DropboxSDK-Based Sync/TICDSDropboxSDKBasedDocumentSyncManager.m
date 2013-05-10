@@ -138,6 +138,7 @@
     if (error.code == 503) {
         NSNumber *retryAfterNumber = [error.userInfo valueForKey:@"Retry-After"];
         if (retryAfterNumber == nil) {
+            self.remotePollingTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(pollRemoteStorage:) userInfo:nil repeats:NO];
             return;
         }
 

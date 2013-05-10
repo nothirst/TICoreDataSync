@@ -187,7 +187,7 @@
     NSManagedObject *relatedObject = [self valueForKey:relevantKey];
 
     // Check that the related object should be synchronized
-    if ([relatedObject isKindOfClass:[TICDSSynchronizedManagedObject class]] == NO) {
+    if (relatedObject != nil && [relatedObject isKindOfClass:[TICDSSynchronizedManagedObject class]] == NO) {
         return;
     }
 
@@ -230,7 +230,7 @@
     TICDSSyncChange *eachChange = nil;
     
     for( NSManagedObject *eachObject in addedObjects ) {
-        if( ![eachObject isKindOfClass:[TICDSSynchronizedManagedObject class]] ) {
+        if ([eachObject isKindOfClass:[TICDSSynchronizedManagedObject class]] == NO) {
             continue;
         }
 
@@ -251,7 +251,7 @@
     }
     
     for( NSManagedObject *eachObject in removedObjects ) {
-        if( ![eachObject isKindOfClass:[TICDSSynchronizedManagedObject class]] ) {
+        if ([eachObject isKindOfClass:[TICDSSynchronizedManagedObject class]] == NO) {
             continue;
         }
         
