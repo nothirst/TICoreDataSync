@@ -1045,6 +1045,7 @@
 				GCC_PREFIX_HEADER = "TICoreDataSync/00 Precompiled Headers/TICoreDataSync-Mac-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -1061,6 +1062,7 @@
 				GCC_PREFIX_HEADER = "TICoreDataSync/00 Precompiled Headers/TICoreDataSync-Mac-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
