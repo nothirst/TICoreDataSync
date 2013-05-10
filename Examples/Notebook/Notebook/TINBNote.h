@@ -6,10 +6,9 @@
 //  Copyright (c) 2011 Tim Isted. All rights reserved.
 //
 
+#import "TICoreDataSync.h"
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-
-#import "TICoreDataSync.h"
 
 @class TINBTag;
 

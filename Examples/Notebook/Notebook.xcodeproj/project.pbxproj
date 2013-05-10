@@ -7,13 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		13A969771663FECF008CB958 /* TICDSSyncChangeSet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 13A969201663FECF008CB958 /* TICDSSyncChangeSet.xcdatamodeld */; };
-		13A969801663FECF008CB958 /* deviceInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13A969351663FECF008CB958 /* deviceInfo.plist */; };
-		13A969811663FECF008CB958 /* documentInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13A969361663FECF008CB958 /* documentInfo.plist */; };
-		13A969821663FECF008CB958 /* ReadMe.txt in Resources */ = {isa = PBXBuildFile; fileRef = 13A969371663FECF008CB958 /* ReadMe.txt */; };
-		13E94DE8163ED1960058A989 /* libTICoreDataSync-Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13E94DE5163ED1660058A989 /* libTICoreDataSync-Mac.a */; };
-		13E94DEC163ED1ED0058A989 /* TICDSSyncChange.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 13E94DE9163ED1ED0058A989 /* TICDSSyncChange.xcdatamodel */; };
-		13E94DED163ED1ED0058A989 /* TICDSSyncChangeSet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 13E94DEA163ED1ED0058A989 /* TICDSSyncChangeSet.xcdatamodeld */; };
+		1347B7B9173C4B5A0070A08E /* TICDSSyncChange.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 1347B730173C4B5A0070A08E /* TICDSSyncChange.xcdatamodel */; };
+		1347B7BB173C4B5A0070A08E /* TICDSSyncChangeSet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1347B733173C4B5A0070A08E /* TICDSSyncChangeSet.xcdatamodeld */; };
+		1347B7DE173C4B5A0070A08E /* deviceInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1347B774173C4B5A0070A08E /* deviceInfo.plist */; };
+		1347B7DF173C4B5A0070A08E /* documentInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1347B775173C4B5A0070A08E /* documentInfo.plist */; };
+		1347B7E0173C4B5A0070A08E /* ReadMe.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1347B776173C4B5A0070A08E /* ReadMe.txt */; };
+		1395471A173C049800FEA183 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13954719173C049800FEA183 /* SystemConfiguration.framework */; };
+		1395471D173C049E00FEA183 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1395471C173C049E00FEA183 /* Security.framework */; };
+		1395471F173C04C900FEA183 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1395471E173C04C900FEA183 /* libz.dylib */; };
+		13954720173C04D000FEA183 /* libTICoreDataSync-Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13954717173C03D800FEA183 /* libTICoreDataSync-Mac.a */; };
 		386D4C701371712600020F72 /* TINBNote.m in Sources */ = {isa = PBXBuildFile; fileRef = 386D4C6F1371712600020F72 /* TINBNote.m */; };
 		386D4C731371712600020F72 /* TINBTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 386D4C721371712600020F72 /* TINBTag.m */; };
 		386D4C7F1371893500020F72 /* TIManagedObjectsToStringsValueTransfomer.m in Sources */ = {isa = PBXBuildFile; fileRef = 386D4C7E1371893500020F72 /* TIManagedObjectsToStringsValueTransfomer.m */; };
@@ -24,21 +26,19 @@
 		386F07E413715D0800D4F31B /* NotebookAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 386F07E313715D0800D4F31B /* NotebookAppDelegate.m */; };
 		386F07E713715D0800D4F31B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 386F07E513715D0800D4F31B /* MainMenu.xib */; };
 		386F07EA13715D0800D4F31B /* Notebook.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 386F07E813715D0800D4F31B /* Notebook.xcdatamodeld */; };
-		389E1C7213856B9800E9E7C1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389E1C7113856B9800E9E7C1 /* SystemConfiguration.framework */; };
-		389E1C7413856B9E00E9E7C1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389E1C7313856B9E00E9E7C1 /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		13E94DE4163ED1660058A989 /* PBXContainerItemProxy */ = {
+		13954716173C03D800FEA183 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 13E94DDD163ED1660058A989 /* TICoreDataSync-Mac.xcodeproj */;
+			containerPortal = 13954712173C03D700FEA183 /* TICoreDataSync-Mac.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 13B393371626183700D7C7C0;
 			remoteInfo = "TICoreDataSync-Mac";
 		};
-		13E94DE6163ED18F0058A989 /* PBXContainerItemProxy */ = {
+		13954724173C149700FEA183 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 13E94DDD163ED1660058A989 /* TICoreDataSync-Mac.xcodeproj */;
+			containerPortal = 13954712173C03D700FEA183 /* TICoreDataSync-Mac.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B393361626183700D7C7C0;
 			remoteInfo = "TICoreDataSync-Mac";
@@ -46,14 +46,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		13A9691D1663FECF008CB958 /* TICDSSyncChange.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TICDSSyncChange.xcdatamodel; sourceTree = "<group>"; };
-		13A969211663FECF008CB958 /* TICDSSyncChangeSet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TICDSSyncChangeSet.xcdatamodel; sourceTree = "<group>"; };
-		13A969351663FECF008CB958 /* deviceInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = deviceInfo.plist; sourceTree = "<group>"; };
-		13A969361663FECF008CB958 /* documentInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = documentInfo.plist; sourceTree = "<group>"; };
-		13A969371663FECF008CB958 /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
-		13E94DDD163ED1660058A989 /* TICoreDataSync-Mac.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "TICoreDataSync-Mac.xcodeproj"; path = "../../TICoreDataSync-Mac.xcodeproj"; sourceTree = "<group>"; };
-		13E94DE9163ED1ED0058A989 /* TICDSSyncChange.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; name = TICDSSyncChange.xcdatamodel; path = "../../../TICoreDataSync/03 Internal Data Model/TICDSSyncChange.xcdatamodel"; sourceTree = "<group>"; };
-		13E94DEB163ED1ED0058A989 /* TICDSSyncChangeSet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TICDSSyncChangeSet.xcdatamodel; sourceTree = "<group>"; };
+		1347B730173C4B5A0070A08E /* TICDSSyncChange.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TICDSSyncChange.xcdatamodel; sourceTree = "<group>"; };
+		1347B734173C4B5A0070A08E /* TICDSSyncChangeSet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TICDSSyncChangeSet.xcdatamodel; sourceTree = "<group>"; };
+		1347B774173C4B5A0070A08E /* deviceInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = deviceInfo.plist; sourceTree = "<group>"; };
+		1347B775173C4B5A0070A08E /* documentInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = documentInfo.plist; sourceTree = "<group>"; };
+		1347B776173C4B5A0070A08E /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
+		13954712173C03D700FEA183 /* TICoreDataSync-Mac.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "TICoreDataSync-Mac.xcodeproj"; path = "../../../TICoreDataSync-Mac.xcodeproj"; sourceTree = "<group>"; };
+		13954719173C049800FEA183 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		1395471C173C049E00FEA183 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		1395471E173C04C900FEA183 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		386D4C6E1371712600020F72 /* TINBNote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TINBNote.h; sourceTree = "<group>"; };
 		386D4C6F1371712600020F72 /* TINBNote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TINBNote.m; sourceTree = "<group>"; };
 		386D4C711371712600020F72 /* TINBTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TINBTag.h; sourceTree = "<group>"; };
@@ -74,8 +75,6 @@
 		386F07E313715D0800D4F31B /* NotebookAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotebookAppDelegate.m; sourceTree = "<group>"; };
 		386F07E613715D0800D4F31B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		386F07E913715D0800D4F31B /* Notebook.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Notebook.xcdatamodel; sourceTree = "<group>"; };
-		389E1C7113856B9800E9E7C1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		389E1C7313856B9E00E9E7C1 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,9 +82,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13E94DE8163ED1960058A989 /* libTICoreDataSync-Mac.a in Frameworks */,
-				389E1C7413856B9E00E9E7C1 /* Security.framework in Frameworks */,
-				389E1C7213856B9800E9E7C1 /* SystemConfiguration.framework in Frameworks */,
+				13954720173C04D000FEA183 /* libTICoreDataSync-Mac.a in Frameworks */,
+				1395471F173C04C900FEA183 /* libz.dylib in Frameworks */,
+				1395471D173C049E00FEA183 /* Security.framework in Frameworks */,
+				1395471A173C049800FEA183 /* SystemConfiguration.framework in Frameworks */,
 				386F07D113715D0800D4F31B /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -93,39 +93,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		13A968AC1663FECF008CB958 /* TICoreDataSync */ = {
+		1347B6B5173C4B5A0070A08E /* TICoreDataSync */ = {
 			isa = PBXGroup;
 			children = (
-				13A9691A1663FECF008CB958 /* 03 Internal Data Model */,
-				13A969341663FECF008CB958 /* 05 File Structure */,
+				1347B72D173C4B5A0070A08E /* 03 Internal Data Model */,
+				1347B773173C4B5A0070A08E /* 05 File Structure */,
 			);
 			name = TICoreDataSync;
-			path = ../../TICoreDataSync;
+			path = ../../../TICoreDataSync;
 			sourceTree = "<group>";
 		};
-		13A9691A1663FECF008CB958 /* 03 Internal Data Model */ = {
+		1347B72D173C4B5A0070A08E /* 03 Internal Data Model */ = {
 			isa = PBXGroup;
 			children = (
-				13A9691D1663FECF008CB958 /* TICDSSyncChange.xcdatamodel */,
-				13A969201663FECF008CB958 /* TICDSSyncChangeSet.xcdatamodeld */,
+				1347B730173C4B5A0070A08E /* TICDSSyncChange.xcdatamodel */,
+				1347B733173C4B5A0070A08E /* TICDSSyncChangeSet.xcdatamodeld */,
 			);
 			path = "03 Internal Data Model";
 			sourceTree = "<group>";
 		};
-		13A969341663FECF008CB958 /* 05 File Structure */ = {
+		1347B773173C4B5A0070A08E /* 05 File Structure */ = {
 			isa = PBXGroup;
 			children = (
-				13A969351663FECF008CB958 /* deviceInfo.plist */,
-				13A969361663FECF008CB958 /* documentInfo.plist */,
-				13A969371663FECF008CB958 /* ReadMe.txt */,
+				1347B774173C4B5A0070A08E /* deviceInfo.plist */,
+				1347B775173C4B5A0070A08E /* documentInfo.plist */,
+				1347B776173C4B5A0070A08E /* ReadMe.txt */,
 			);
 			path = "05 File Structure";
 			sourceTree = "<group>";
 		};
-		13E94DDE163ED1660058A989 /* Products */ = {
+		13954713173C03D700FEA183 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13E94DE5163ED1660058A989 /* libTICoreDataSync-Mac.a */,
+				13954717173C03D800FEA183 /* libTICoreDataSync-Mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -133,9 +133,9 @@
 		386F07C113715D0800D4F31B = {
 			isa = PBXGroup;
 			children = (
-				13E94DDD163ED1660058A989 /* TICoreDataSync-Mac.xcodeproj */,
+				13954712173C03D700FEA183 /* TICoreDataSync-Mac.xcodeproj */,
+				1347B6B5173C4B5A0070A08E /* TICoreDataSync */,
 				386F07D613715D0800D4F31B /* Notebook */,
-				13A968AC1663FECF008CB958 /* TICoreDataSync */,
 				386F07CF13715D0800D4F31B /* Frameworks */,
 				386F07CD13715D0800D4F31B /* Products */,
 			);
@@ -152,8 +152,9 @@
 		386F07CF13715D0800D4F31B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				389E1C7313856B9E00E9E7C1 /* Security.framework */,
-				389E1C7113856B9800E9E7C1 /* SystemConfiguration.framework */,
+				1395471E173C04C900FEA183 /* libz.dylib */,
+				1395471C173C049E00FEA183 /* Security.framework */,
+				13954719173C049800FEA183 /* SystemConfiguration.framework */,
 				386F07D013715D0800D4F31B /* Cocoa.framework */,
 				386F07D213715D0800D4F31B /* Other Frameworks */,
 			);
@@ -191,8 +192,6 @@
 		386F07D713715D0800D4F31B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				13E94DE9163ED1ED0058A989 /* TICDSSyncChange.xcdatamodel */,
-				13E94DEA163ED1ED0058A989 /* TICDSSyncChangeSet.xcdatamodeld */,
 				386F07D813715D0800D4F31B /* Notebook-Info.plist */,
 				386F07D913715D0800D4F31B /* InfoPlist.strings */,
 				386F07DC13715D0800D4F31B /* Notebook-Prefix.pch */,
@@ -216,7 +215,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				13E94DE7163ED18F0058A989 /* PBXTargetDependency */,
+				13954725173C149700FEA183 /* PBXTargetDependency */,
 			);
 			name = Notebook;
 			productName = Notebook;
@@ -229,7 +228,6 @@
 		386F07C313715D0800D4F31B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Tim Isted";
 			};
 			buildConfigurationList = 386F07C613715D0800D4F31B /* Build configuration list for PBXProject "Notebook" */;
@@ -244,8 +242,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 13E94DDE163ED1660058A989 /* Products */;
-					ProjectRef = 13E94DDD163ED1660058A989 /* TICoreDataSync-Mac.xcodeproj */;
+					ProductGroup = 13954713173C03D700FEA183 /* Products */;
+					ProjectRef = 13954712173C03D700FEA183 /* TICoreDataSync-Mac.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -256,11 +254,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		13E94DE5163ED1660058A989 /* libTICoreDataSync-Mac.a */ = {
+		13954717173C03D800FEA183 /* libTICoreDataSync-Mac.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libTICoreDataSync-Mac.a";
-			remoteRef = 13E94DE4163ED1660058A989 /* PBXContainerItemProxy */;
+			remoteRef = 13954716173C03D800FEA183 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -273,9 +271,9 @@
 				386F07DB13715D0800D4F31B /* InfoPlist.strings in Resources */,
 				386F07E113715D0800D4F31B /* Credits.rtf in Resources */,
 				386F07E713715D0800D4F31B /* MainMenu.xib in Resources */,
-				13A969801663FECF008CB958 /* deviceInfo.plist in Resources */,
-				13A969811663FECF008CB958 /* documentInfo.plist in Resources */,
-				13A969821663FECF008CB958 /* ReadMe.txt in Resources */,
+				1347B7DE173C4B5A0070A08E /* deviceInfo.plist in Resources */,
+				1347B7DF173C4B5A0070A08E /* documentInfo.plist in Resources */,
+				1347B7E0173C4B5A0070A08E /* ReadMe.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,19 +290,18 @@
 				386D4C701371712600020F72 /* TINBNote.m in Sources */,
 				386D4C731371712600020F72 /* TINBTag.m in Sources */,
 				386D4C7F1371893500020F72 /* TIManagedObjectsToStringsValueTransfomer.m in Sources */,
-				13E94DEC163ED1ED0058A989 /* TICDSSyncChange.xcdatamodel in Sources */,
-				13E94DED163ED1ED0058A989 /* TICDSSyncChangeSet.xcdatamodeld in Sources */,
-				13A969771663FECF008CB958 /* TICDSSyncChangeSet.xcdatamodeld in Sources */,
+				1347B7B9173C4B5A0070A08E /* TICDSSyncChange.xcdatamodel in Sources */,
+				1347B7BB173C4B5A0070A08E /* TICDSSyncChangeSet.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		13E94DE7163ED18F0058A989 /* PBXTargetDependency */ = {
+		13954725173C149700FEA183 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "TICoreDataSync-Mac";
-			targetProxy = 13E94DE6163ED18F0058A989 /* PBXContainerItemProxy */;
+			targetProxy = 13954724173C149700FEA183 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -339,22 +336,16 @@
 		386F07EB13715D0800D4F31B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -363,19 +354,13 @@
 		386F07EC13715D0800D4F31B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -384,17 +369,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../../**",
-				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Notebook/Notebook-Prefix.pch";
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../**";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../..\"/**";
 				INFOPLIST_FILE = "Notebook/Notebook-Info.plist";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -406,17 +386,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../../**",
-				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Notebook/Notebook-Prefix.pch";
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../**";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../..\"/**";
 				INFOPLIST_FILE = "Notebook/Notebook-Info.plist";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -448,24 +423,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		13A969201663FECF008CB958 /* TICDSSyncChangeSet.xcdatamodeld */ = {
+		1347B733173C4B5A0070A08E /* TICDSSyncChangeSet.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				13A969211663FECF008CB958 /* TICDSSyncChangeSet.xcdatamodel */,
+				1347B734173C4B5A0070A08E /* TICDSSyncChangeSet.xcdatamodel */,
 			);
-			currentVersion = 13A969211663FECF008CB958 /* TICDSSyncChangeSet.xcdatamodel */;
+			currentVersion = 1347B734173C4B5A0070A08E /* TICDSSyncChangeSet.xcdatamodel */;
 			path = TICDSSyncChangeSet.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-		13E94DEA163ED1ED0058A989 /* TICDSSyncChangeSet.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				13E94DEB163ED1ED0058A989 /* TICDSSyncChangeSet.xcdatamodel */,
-			);
-			currentVersion = 13E94DEB163ED1ED0058A989 /* TICDSSyncChangeSet.xcdatamodel */;
-			name = TICDSSyncChangeSet.xcdatamodeld;
-			path = "../../../TICoreDataSync/03 Internal Data Model/TICDSSyncChangeSet.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
