@@ -1,0 +1,2137 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>TICDSApplicationSyncManagerDelegate Protocol Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.1 (build 858)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">TICoreDataSync </a></h1>
+				<a id="developerHome" href="../index.html">Tim Isted</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">TICDSApplicationSyncManagerDelegate Protocol Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/applicationSyncManager:didBeginDeletionProcessForDocumentWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManager:didBeginDeletionProcessForDocumentWithIdentifier:</option>
+	
+	<option value="//api/name/applicationSyncManager:didBeginDownloadingDocumentWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManager:didBeginDownloadingDocumentWithIdentifier:</option>
+	
+	<option value="//api/name/applicationSyncManager:didDeleteDirectoryForDocumentWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManager:didDeleteDirectoryForDocumentWithIdentifier:</option>
+	
+	<option value="//api/name/applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:</option>
+	
+	<option value="//api/name/applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:</option>
+	
+	<option value="//api/name/applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:</option>
+	
+	<option value="//api/name/applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:</option>
+	
+	<option value="//api/name/applicationSyncManager:didFailToRegisterWithError:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManager:didFailToRegisterWithError:</option>
+	
+	<option value="//api/name/applicationSyncManager:didFailToRemoveAllSyncDataWithError:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManager:didFailToRemoveAllSyncDataWithError:</option>
+	
+	<option value="//api/name/applicationSyncManager:didFinishCheckingAndFoundPreviouslySynchronizedDocuments:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManager:didFinishCheckingAndFoundPreviouslySynchronizedDocuments:</option>
+	
+	<option value="//api/name/applicationSyncManager:didFinishDeletingDocumentWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManager:didFinishDeletingDocumentWithIdentifier:</option>
+	
+	<option value="//api/name/applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:</option>
+	
+	<option value="//api/name/applicationSyncManager:didFinishFetchingInformationForAllRegisteredDevices:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManager:didFinishFetchingInformationForAllRegisteredDevices:</option>
+	
+	<option value="//api/name/applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:</option>
+	
+	<option value="//api/name/applicationSyncManager:whileDownloadingDocumentWithIdentifier:didReportProgress:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManager:whileDownloadingDocumentWithIdentifier:didReportProgress:</option>
+	
+	<option value="//api/name/applicationSyncManager:willDeleteDirectoryForDocumentWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManager:willDeleteDirectoryForDocumentWithIdentifier:</option>
+	
+	<option value="//api/name/applicationSyncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atURL:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atURL:</option>
+	
+	<option value="//api/name/applicationSyncManagerDidBeginCheckingForPreviouslySynchronizedDocuments:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManagerDidBeginCheckingForPreviouslySynchronizedDocuments:</option>
+	
+	<option value="//api/name/applicationSyncManagerDidBeginRegistering:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManagerDidBeginRegistering:</option>
+	
+	<option value="//api/name/applicationSyncManagerDidBeginToFetchInformationForAllRegisteredDevices:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManagerDidBeginToFetchInformationForAllRegisteredDevices:</option>
+	
+	<option value="//api/name/applicationSyncManagerDidContinueRegistering:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManagerDidContinueRegistering:</option>
+	
+	<option value="//api/name/applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:</option>
+	
+	<option value="//api/name/applicationSyncManagerDidFinishRegistering:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManagerDidFinishRegistering:</option>
+	
+	<option value="//api/name/applicationSyncManagerDidFinishRemovingAllSyncData:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManagerDidFinishRemovingAllSyncData:</option>
+	
+	<option value="//api/name/applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:</option>
+	
+	<option value="//api/name/applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:</option>
+	
+	<option value="//api/name/applicationSyncManagerShouldSupportProcessingInBackgroundState:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManagerShouldSupportProcessingInBackgroundState:</option>
+	
+	<option value="//api/name/applicationSyncManagerShouldUseCompressionForWholeStoreMoves:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManagerShouldUseCompressionForWholeStoreMoves:</option>
+	
+	<option value="//api/name/applicationSyncManagerWillRemoveAllSyncData:">&nbsp;&nbsp;&nbsp;&nbsp;- applicationSyncManagerWillRemoveAllSyncData:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Registration">Registration</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Listing Previously Synchronized Documents">Listing Previously Synchronized Documents</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Downloading a Previously Synchronized Document">Downloading a Previously Synchronized Document</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Registered Client Information">Registered Client Information</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Document Deletion">Document Deletion</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Removing all Remote Sync Data">Removing all Remote Sync Data</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManager:didBeginDeletionProcessForDocumentWithIdentifier:">applicationSyncManager:didBeginDeletionProcessForDocumentWithIdentifier:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManager:didBeginDownloadingDocumentWithIdentifier:">applicationSyncManager:didBeginDownloadingDocumentWithIdentifier:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManager:didDeleteDirectoryForDocumentWithIdentifier:">applicationSyncManager:didDeleteDirectoryForDocumentWithIdentifier:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:">applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:">applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:">applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:">applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManager:didFailToRegisterWithError:">applicationSyncManager:didFailToRegisterWithError:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManager:didFailToRemoveAllSyncDataWithError:">applicationSyncManager:didFailToRemoveAllSyncDataWithError:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManager:didFinishCheckingAndFoundPreviouslySynchronizedDocuments:">applicationSyncManager:didFinishCheckingAndFoundPreviouslySynchronizedDocuments:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManager:didFinishDeletingDocumentWithIdentifier:">applicationSyncManager:didFinishDeletingDocumentWithIdentifier:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:">applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManager:didFinishFetchingInformationForAllRegisteredDevices:">applicationSyncManager:didFinishFetchingInformationForAllRegisteredDevices:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:">applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManager:whileDownloadingDocumentWithIdentifier:didReportProgress:">applicationSyncManager:whileDownloadingDocumentWithIdentifier:didReportProgress:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManager:willDeleteDirectoryForDocumentWithIdentifier:">applicationSyncManager:willDeleteDirectoryForDocumentWithIdentifier:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atURL:">applicationSyncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atURL:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManagerDidBeginCheckingForPreviouslySynchronizedDocuments:">applicationSyncManagerDidBeginCheckingForPreviouslySynchronizedDocuments:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManagerDidBeginRegistering:">applicationSyncManagerDidBeginRegistering:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManagerDidBeginToFetchInformationForAllRegisteredDevices:">applicationSyncManagerDidBeginToFetchInformationForAllRegisteredDevices:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManagerDidContinueRegistering:">applicationSyncManagerDidContinueRegistering:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:">applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManagerDidFinishRegistering:">applicationSyncManagerDidFinishRegistering:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManagerDidFinishRemovingAllSyncData:">applicationSyncManagerDidFinishRemovingAllSyncData:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:">applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:">applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManagerShouldSupportProcessingInBackgroundState:">applicationSyncManagerShouldSupportProcessingInBackgroundState:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManagerShouldUseCompressionForWholeStoreMoves:">applicationSyncManagerShouldUseCompressionForWholeStoreMoves:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationSyncManagerWillRemoveAllSyncData:">applicationSyncManagerWillRemoveAllSyncData:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="TICDSApplicationSyncManagerDelegate Protocol Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">TICDSApplicationSyncManagerDelegate Protocol Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Conforms to</td>
+	<td class="specification-value">NSObject</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">TICDSClassesAndProtocols.h</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The <code>TICDSApplicationSyncManagerDelegate</code> protocol defines the methods implemented by delegates of a <a href="../Classes/TICDSApplicationSyncManager.html"><code>TICDSApplicationSyncManager</code></a> object.</p>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						<a title="Registration" name="task_Registration"></a>
+						<h3 class="subsubtitle task-title">Registration</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManagerDidBeginRegistering:">&ndash;&nbsp;applicationSyncManagerDidBeginRegistering:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager has started the application registration process.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:">&ndash;&nbsp;applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager paused the application registration process to find out whether to use encryption for this application, because this is the first time this application has been registered.</p></span>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:">&ndash;&nbsp;applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager paused the application registration process because a password is needed to work with this application&rsquo;s encrypted data.</p></span>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManagerDidContinueRegistering:">&ndash;&nbsp;applicationSyncManagerDidContinueRegistering:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager has resumed the application registration process.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManager:didFailToRegisterWithError:">&ndash;&nbsp;applicationSyncManager:didFailToRegisterWithError:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager failed to register the application because of an error.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManagerDidFinishRegistering:">&ndash;&nbsp;applicationSyncManagerDidFinishRegistering:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager finished registering the application successfully.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManagerShouldSupportProcessingInBackgroundState:">&ndash;&nbsp;applicationSyncManagerShouldSupportProcessingInBackgroundState:</a></code>
+		<span class="tooltip"><p>Asks the delegate whether or not the application sync manager should support continued operation processing after the app has been sent to a background state. If this delegate method isn&rsquo;t implemented the application sync manager defaults to YES and will process items in the background. Background processing currently only applies to sync operations running on iOS.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManagerShouldUseCompressionForWholeStoreMoves:">&ndash;&nbsp;applicationSyncManagerShouldUseCompressionForWholeStoreMoves:</a></code>
+		<span class="tooltip"><p>Asks the delegate whether or not the application sync manager should support compressing the whole store file when transferring it between the local and remote locations. If this delegate method isn&rsquo;t implemented the application sync manager defaults to YES and will compress the whole store.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Listing Previously Synchronized Documents" name="task_Listing Previously Synchronized Documents"></a>
+						<h3 class="subsubtitle task-title">Listing Previously Synchronized Documents</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManagerDidBeginCheckingForPreviouslySynchronizedDocuments:">&ndash;&nbsp;applicationSyncManagerDidBeginCheckingForPreviouslySynchronizedDocuments:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager has started to check for available documents that have previously been synchronized.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:">&ndash;&nbsp;applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager failed to check for available documents that have previously been synchronized.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:">&ndash;&nbsp;applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager didn&rsquo;t find any available documents that have previously been synchronized.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManager:didFinishCheckingAndFoundPreviouslySynchronizedDocuments:">&ndash;&nbsp;applicationSyncManager:didFinishCheckingAndFoundPreviouslySynchronizedDocuments:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager found one or more available documents that have previously been synchronized.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Downloading a Previously Synchronized Document" name="task_Downloading a Previously Synchronized Document"></a>
+						<h3 class="subsubtitle task-title">Downloading a Previously Synchronized Document</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManager:didBeginDownloadingDocumentWithIdentifier:">&ndash;&nbsp;applicationSyncManager:didBeginDownloadingDocumentWithIdentifier:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager has started to download a requested document that has previously been synchronized.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:">&ndash;&nbsp;applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager failed to download a requested document because of an error.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atURL:">&ndash;&nbsp;applicationSyncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atURL:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager is about to replace an existing store file on disc with a newly-downloaded file.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:">&ndash;&nbsp;applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:</a></code>
+		<span class="tooltip"><p>Invoked to request the delegate to return a configured (though not yet registered) document sync manager for a downloaded document.</p></span>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:">&ndash;&nbsp;applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager finished downloading a requested document successfully.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManager:whileDownloadingDocumentWithIdentifier:didReportProgress:">&ndash;&nbsp;applicationSyncManager:whileDownloadingDocumentWithIdentifier:didReportProgress:</a></code>
+		<span class="tooltip"><p>Informs the delegate on the operation&rsquo;s progress being made in the download operation.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Registered Client Information" name="task_Registered Client Information"></a>
+						<h3 class="subsubtitle task-title">Registered Client Information</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManagerDidBeginToFetchInformationForAllRegisteredDevices:">&ndash;&nbsp;applicationSyncManagerDidBeginToFetchInformationForAllRegisteredDevices:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager has begun to fetch information on all registered devices from the remote.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:">&ndash;&nbsp;applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager failed to fetch information on clients registered to synchronize with the application.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManager:didFinishFetchingInformationForAllRegisteredDevices:">&ndash;&nbsp;applicationSyncManager:didFinishFetchingInformationForAllRegisteredDevices:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager finished fetching information for all registered devices for this application.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Document Deletion" name="task_Document Deletion"></a>
+						<h3 class="subsubtitle task-title">Document Deletion</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManager:didBeginDeletionProcessForDocumentWithIdentifier:">&ndash;&nbsp;applicationSyncManager:didBeginDeletionProcessForDocumentWithIdentifier:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager has begun the process of deleting a document from the remote.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:">&ndash;&nbsp;applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager failed to delete a document.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManager:willDeleteDirectoryForDocumentWithIdentifier:">&ndash;&nbsp;applicationSyncManager:willDeleteDirectoryForDocumentWithIdentifier:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document&rsquo;s directory is about to be removed from the remote.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManager:didDeleteDirectoryForDocumentWithIdentifier:">&ndash;&nbsp;applicationSyncManager:didDeleteDirectoryForDocumentWithIdentifier:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document&rsquo;s directory has just been removed from the remote.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManager:didFinishDeletingDocumentWithIdentifier:">&ndash;&nbsp;applicationSyncManager:didFinishDeletingDocumentWithIdentifier:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager completed the deletion process for the specified document.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Removing all Remote Sync Data" name="task_Removing all Remote Sync Data"></a>
+						<h3 class="subsubtitle task-title">Removing all Remote Sync Data</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManagerWillRemoveAllSyncData:">&ndash;&nbsp;applicationSyncManagerWillRemoveAllSyncData:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager will remove the entire remote directory structure.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManagerDidFinishRemovingAllSyncData:">&ndash;&nbsp;applicationSyncManagerDidFinishRemovingAllSyncData:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager has successfully removed the entire remote directory structure.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationSyncManager:didFailToRemoveAllSyncDataWithError:">&ndash;&nbsp;applicationSyncManager:didFailToRemoveAllSyncDataWithError:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the application sync manager failed to remove the entire remote directory structure.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManager:didBeginDeletionProcessForDocumentWithIdentifier:" title="applicationSyncManager:didBeginDeletionProcessForDocumentWithIdentifier:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManager:didBeginDeletionProcessForDocumentWithIdentifier:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager has begun the process of deleting a document from the remote.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> didBeginDeletionProcessForDocumentWithIdentifier:(NSString *)<em>anIdentifier</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The identifier for the document that will be deleted.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>When the document directory is about to be deleted, the <a href="#//api/name/applicationSyncManager:willDeleteDirectoryForDocumentWithIdentifier:"><code>applicationSyncManager:willDeleteDirectoryForDocumentWithIdentifier:</code></a> method will be called. Once the directory has been deleted, the <a href="#//api/name/applicationSyncManager:didDeleteDirectoryForDocumentWithIdentifier:"><code>applicationSyncManager:didDeleteDirectoryForDocumentWithIdentifier:</code></a> method will be called.</p>
+
+<p>At the end of the process, one of the <a href="#//api/name/applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:"><code>applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:</code></a> or <a href="#//api/name/applicationSyncManager:didFinishDeletingDocumentWithIdentifier:"><code>applicationSyncManager:didFinishDeletingDocumentWithIdentifier:</code></a> methods will be called.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManager:didBeginDownloadingDocumentWithIdentifier:" title="applicationSyncManager:didBeginDownloadingDocumentWithIdentifier:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManager:didBeginDownloadingDocumentWithIdentifier:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager has started to download a requested document that has previously been synchronized.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> didBeginDownloadingDocumentWithIdentifier:(NSString *)<em>anIdentifier</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The unique synchronization identifier of the document.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManager:didDeleteDirectoryForDocumentWithIdentifier:" title="applicationSyncManager:didDeleteDirectoryForDocumentWithIdentifier:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManager:didDeleteDirectoryForDocumentWithIdentifier:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document&rsquo;s directory has just been removed from the remote.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> didDeleteDirectoryForDocumentWithIdentifier:(NSString *)<em>anIdentifier</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The identifier of the document that was deleted.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:" title="applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager failed to check for available documents that have previously been synchronized.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> didFailToCheckForPreviouslySynchronizedDocumentsWithError:(NSError *)<em>anError</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anError</em></dt>
+			<dd><p>The error that caused the failure.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:" title="applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManager:didFailToDeleteDocumentWithIdentifier:error:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager failed to delete a document.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> didFailToDeleteDocumentWithIdentifier:(NSString *)<em>anIdentifier</em> error:(NSError *)<em>anError</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The identifier of the document that wasn&rsquo;t deleted.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anError</em></dt>
+			<dd><p>The error that caused the request process to fail.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:" title="applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManager:didFailToDownloadDocumentWithIdentifier:error:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager failed to download a requested document because of an error.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> didFailToDownloadDocumentWithIdentifier:(NSString *)<em>anIdentifier</em> error:(NSError *)<em>anError</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The unique synchronization identifier of the document.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anError</em></dt>
+			<dd><p>The error that caused the download to fail.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:" title="applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager failed to fetch information on clients registered to synchronize with the application.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> didFailToFetchInformationForAllRegisteredDevicesWithError:(NSError *)<em>anError</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anError</em></dt>
+			<dd><p>The error that caused the request process to fail.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManager:didFailToRegisterWithError:" title="applicationSyncManager:didFailToRegisterWithError:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManager:didFailToRegisterWithError:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager failed to register the application because of an error.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> didFailToRegisterWithError:(NSError *)<em>anError</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anError</em></dt>
+			<dd><p>The error that caused the registration process to fail.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManager:didFailToRemoveAllSyncDataWithError:" title="applicationSyncManager:didFailToRemoveAllSyncDataWithError:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManager:didFailToRemoveAllSyncDataWithError:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager failed to remove the entire remote directory structure.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> didFailToRemoveAllSyncDataWithError:(NSError *)<em>anError</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anError</em></dt>
+			<dd><p>The error that caused the deletion process to fail.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManager:didFinishCheckingAndFoundPreviouslySynchronizedDocuments:" title="applicationSyncManager:didFinishCheckingAndFoundPreviouslySynchronizedDocuments:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManager:didFinishCheckingAndFoundPreviouslySynchronizedDocuments:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager found one or more available documents that have previously been synchronized.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> didFinishCheckingAndFoundPreviouslySynchronizedDocuments:(NSArray *)<em>documentsArray</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>documentsArray</em></dt>
+			<dd><p>An array of <code>NSDictionary</code> objects containing information about each available document.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>One <code>NSDictionary</code> is supplied per document, containing the following keys:</p>
+
+<ol>
+<li><code>kTICDSDocumentIdentifier</code>&ndash;the unique synchronization identifier of the document.</li>
+<li><code>kTICDSDocumentDescription</code>&ndash;the description of the document, as provided when it was originally registered.</li>
+<li><code>kTICDSOriginalDeviceIdentifier</code>&ndash;the unique identifier of the client that first registered the document.</li>
+<li><code>kTICDSOriginalDeviceDescription</code>&ndash;the description of the client that first registered the document.</li>
+</ol>
+
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManager:didFinishDeletingDocumentWithIdentifier:" title="applicationSyncManager:didFinishDeletingDocumentWithIdentifier:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManager:didFinishDeletingDocumentWithIdentifier:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager completed the deletion process for the specified document.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> didFinishDeletingDocumentWithIdentifier:(NSString *)<em>anIdentifier</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The identifier of the document that was deleted.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:" title="applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager finished downloading a requested document successfully.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> didFinishDownloadingDocumentWithIdentifier:(NSString *)<em>anIdentifier</em> atURL:(NSURL *)<em>aFileURL</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The unique synchronization identifier of the document.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aFileURL</em></dt>
+			<dd><p>The location of the downloaded store file.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManager:didFinishFetchingInformationForAllRegisteredDevices:" title="applicationSyncManager:didFinishFetchingInformationForAllRegisteredDevices:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManager:didFinishFetchingInformationForAllRegisteredDevices:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager finished fetching information for all registered devices for this application.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> didFinishFetchingInformationForAllRegisteredDevices:(NSDictionary *)<em>information</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>information</em></dt>
+			<dd><p>A dictionary containing as keys the unique synchronization identifiers of each client, and as values dictionaries of information about that client.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:" title="applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Invoked to request the delegate to return a configured (though not yet registered) document sync manager for a downloaded document.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (TICDSDocumentSyncManager *)applicationSyncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:(NSString *)<em>anIdentifier</em> atURL:(NSURL *)<em>aFileURL</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The unique synchronization identifier for the document.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aFileURL</em></dt>
+			<dd><p>The location on disc of the downloaded document.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The pre-configured, unregistered sync manager for the document.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method will be called once the whole store has been replaced for the document. You should create a suitable document sync manager for the downloaded store, and <em>configure</em> it by calling <code>preConfigureWithDelegate:appSyncManager:documentIdentifier:</code>;</p><blockquote><p>%warning%<br/>
+<strong>Warning:</strong> Do not <em>register</em> the document sync manager until after the <a href="#//api/name/applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:"><code>applicationSyncManager:didFinishDownloadingDocumentWithIdentifier:atURL:</code></a> method is called.</p>
+
+<p>When you do register, you must use the full <code>registerWithDelegate:appSyncManager:managedObjectContext:documentIdentifier:description:userInfo:</code> method, and not the <code>registerConfiguredDocumentSyncManager</code> method. The latter is used for the delayed registration option; a <em>pre-configured</em> document sync manager is not the same as a <em>configured</em> document sync manager.</p></blockquote>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManager:whileDownloadingDocumentWithIdentifier:didReportProgress:" title="applicationSyncManager:whileDownloadingDocumentWithIdentifier:didReportProgress:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManager:whileDownloadingDocumentWithIdentifier:didReportProgress:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate on the operation&rsquo;s progress being made in the download operation.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> whileDownloadingDocumentWithIdentifier:(NSString *)<em>anIdentifier</em> didReportProgress:(CGFloat)<em>progress</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The unique synchronization identifier of the document.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>progress</em></dt>
+			<dd><p>The progress level (0 to 1) as reported by the operation.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManager:willDeleteDirectoryForDocumentWithIdentifier:" title="applicationSyncManager:willDeleteDirectoryForDocumentWithIdentifier:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManager:willDeleteDirectoryForDocumentWithIdentifier:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document&rsquo;s directory is about to be removed from the remote.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> willDeleteDirectoryForDocumentWithIdentifier:(NSString *)<em>anIdentifier</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The identifier of the document that will be deleted.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atURL:" title="applicationSyncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atURL:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManager:willReplaceWholeStoreFileForDocumentWithIdentifier:atURL:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager is about to replace an existing store file on disc with a newly-downloaded file.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManager:(TICDSApplicationSyncManager *)<em>aSyncManager</em> willReplaceWholeStoreFileForDocumentWithIdentifier:(NSString *)<em>anIdentifier</em> atURL:(NSURL *)<em>aFileURL</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The unique synchronization identifier of the document.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aFileURL</em></dt>
+			<dd><p>The location on disc of the existing document that will be replaced.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManagerDidBeginCheckingForPreviouslySynchronizedDocuments:" title="applicationSyncManagerDidBeginCheckingForPreviouslySynchronizedDocuments:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManagerDidBeginCheckingForPreviouslySynchronizedDocuments:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager has started to check for available documents that have previously been synchronized.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManagerDidBeginCheckingForPreviouslySynchronizedDocuments:(TICDSApplicationSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>At the end of the process, one of the <a href="#//api/name/applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:"><code>applicationSyncManager:didFailToCheckForPreviouslySynchronizedDocumentsWithError:</code></a>, <a href="#//api/name/applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:"><code>applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:</code></a>, or <a href="#//api/name/applicationSyncManager:didFinishCheckingAndFoundPreviouslySynchronizedDocuments:"><code>applicationSyncManager:didFinishCheckingAndFoundPreviouslySynchronizedDocuments:</code></a> methods will be called.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManagerDidBeginRegistering:" title="applicationSyncManagerDidBeginRegistering:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManagerDidBeginRegistering:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager has started the application registration process.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManagerDidBeginRegistering:(TICDSApplicationSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>At the end of the registration process, one of the <a href="#//api/name/applicationSyncManager:didFailToRegisterWithError:"><code>applicationSyncManager:didFailToRegisterWithError:</code></a> or <a href="#//api/name/applicationSyncManagerDidFinishRegistering:"><code>applicationSyncManagerDidFinishRegistering:</code></a> methods will be called.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManagerDidBeginToFetchInformationForAllRegisteredDevices:" title="applicationSyncManagerDidBeginToFetchInformationForAllRegisteredDevices:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManagerDidBeginToFetchInformationForAllRegisteredDevices:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager has begun to fetch information on all registered devices from the remote.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManagerDidBeginToFetchInformationForAllRegisteredDevices:(TICDSApplicationSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>At the end of the request process, one of the <a href="#//api/name/applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:"><code>applicationSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:</code></a> or <code>applicationSyncManagerDidFinishFetchingInformationForAllRegisteredDevices:</code> methods will be called.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManagerDidContinueRegistering:" title="applicationSyncManagerDidContinueRegistering:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManagerDidContinueRegistering:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager has resumed the application registration process.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManagerDidContinueRegistering:(TICDSApplicationSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:" title="applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager didn&rsquo;t find any available documents that have previously been synchronized.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManagerDidFinishCheckingAndFoundNoPreviouslySynchronizedDocuments:(TICDSApplicationSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManagerDidFinishRegistering:" title="applicationSyncManagerDidFinishRegistering:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManagerDidFinishRegistering:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager finished registering the application successfully.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManagerDidFinishRegistering:(TICDSApplicationSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManagerDidFinishRemovingAllSyncData:" title="applicationSyncManagerDidFinishRemovingAllSyncData:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManagerDidFinishRemovingAllSyncData:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager has successfully removed the entire remote directory structure.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManagerDidFinishRemovingAllSyncData:(TICDSApplicationSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:" title="applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager paused the application registration process to find out whether to use encryption for this application, because this is the first time this application has been registered.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:(TICDSApplicationSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<blockquote><p>%warning%<br/>
+<strong>Warning:</strong> You <em>must</em> call the <code>continueRegisteringWithEncryptionPassword:</code> method to indicate whether registration should use an encryption password, or stay unencrypted, otherwise the registration process will be left permanently suspended.</p></blockquote>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:" title="applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager paused the application registration process because a password is needed to work with this application&rsquo;s encrypted data.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManagerDidPauseRegistrationToRequestPasswordForEncryptedApplicationSyncData:(TICDSApplicationSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<blockquote><p>%warning%<br/>
+<strong>Warning:</strong> You <em>must</em> call the <code>continueRegisteringWithEncryptionPassword:</code> method to indicate the password to use, or the registration process will be left permanently suspended.</p></blockquote>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManagerShouldSupportProcessingInBackgroundState:" title="applicationSyncManagerShouldSupportProcessingInBackgroundState:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManagerShouldSupportProcessingInBackgroundState:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Asks the delegate whether or not the application sync manager should support continued operation processing after the app has been sent to a background state. If this delegate method isn&rsquo;t implemented the application sync manager defaults to YES and will process items in the background. Background processing currently only applies to sync operations running on iOS.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (BOOL)applicationSyncManagerShouldSupportProcessingInBackgroundState:(TICDSApplicationSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManagerShouldUseCompressionForWholeStoreMoves:" title="applicationSyncManagerShouldUseCompressionForWholeStoreMoves:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManagerShouldUseCompressionForWholeStoreMoves:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Asks the delegate whether or not the application sync manager should support compressing the whole store file when transferring it between the local and remote locations. If this delegate method isn&rsquo;t implemented the application sync manager defaults to YES and will compress the whole store.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (BOOL)applicationSyncManagerShouldUseCompressionForWholeStoreMoves:(TICDSApplicationSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationSyncManagerWillRemoveAllSyncData:" title="applicationSyncManagerWillRemoveAllSyncData:"></a>
+	<h3 class="subsubtitle method-title">applicationSyncManagerWillRemoveAllSyncData:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the application sync manager will remove the entire remote directory structure.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)applicationSyncManagerWillRemoveAllSyncData:(TICDSApplicationSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The application sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2013 Tim Isted. All rights reserved. (Last updated: 2013-05-10)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 858)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

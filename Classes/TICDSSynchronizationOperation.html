@@ -1,0 +1,855 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>TICDSSynchronizationOperation Class Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.1 (build 858)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">TICoreDataSync </a></h1>
+				<a id="developerHome" href="../index.html">Tim Isted</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">TICDSSynchronizationOperation Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/appliedSyncChangeSetsFileLocation">&nbsp;&nbsp;&nbsp;&nbsp;appliedSyncChangeSetsFileLocation</option>
+	
+	<option value="//api/name/localSyncChangesToMergeURL">&nbsp;&nbsp;&nbsp;&nbsp;localSyncChangesToMergeURL</option>
+	
+	<option value="//api/name/mostRecentConflictResolutionType">&nbsp;&nbsp;&nbsp;&nbsp;mostRecentConflictResolutionType</option>
+	
+	<option value="//api/name/paused">&nbsp;&nbsp;&nbsp;&nbsp;paused</option>
+	
+	<option value="//api/name/syncTransaction">&nbsp;&nbsp;&nbsp;&nbsp;syncTransaction</option>
+	
+	<option value="//api/name/syncTransactions">&nbsp;&nbsp;&nbsp;&nbsp;syncTransactions</option>
+	
+	<option value="//api/name/synchronizationWarnings">&nbsp;&nbsp;&nbsp;&nbsp;synchronizationWarnings</option>
+	
+	<option value="//api/name/unappliedSyncChangeSetsFileLocation">&nbsp;&nbsp;&nbsp;&nbsp;unappliedSyncChangeSetsFileLocation</option>
+	
+	<option value="//api/name/unappliedSyncChangesDirectoryLocation">&nbsp;&nbsp;&nbsp;&nbsp;unappliedSyncChangesDirectoryLocation</option>
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/configureBackgroundApplicationContextForPrimaryManagedObjectContext:">&nbsp;&nbsp;&nbsp;&nbsp;- configureBackgroundApplicationContextForPrimaryManagedObjectContext:</option>
+	
+	<option value="//api/name/initWithDelegate:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithDelegate:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Designated Initializer">Designated Initializer</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Properties">Properties</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_File Locations">File Locations</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/appliedSyncChangeSetsFileLocation">appliedSyncChangeSetsFileLocation</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/localSyncChangesToMergeURL">localSyncChangesToMergeURL</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/mostRecentConflictResolutionType">mostRecentConflictResolutionType</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/paused">paused</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncTransaction">syncTransaction</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/syncTransactions">syncTransactions</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/synchronizationWarnings">synchronizationWarnings</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/unappliedSyncChangeSetsFileLocation">unappliedSyncChangeSetsFileLocation</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/unappliedSyncChangesDirectoryLocation">unappliedSyncChangesDirectoryLocation</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/configureBackgroundApplicationContextForPrimaryManagedObjectContext:">configureBackgroundApplicationContextForPrimaryManagedObjectContext:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithDelegate:">initWithDelegate:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="TICDSSynchronizationOperation Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">TICDSSynchronizationOperation Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value"><a href="../Classes/TICDSOperation.html">TICDSOperation</a> : NSOperation</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">TICDSSynchronizationOperation.h</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The <code>TICDSSynchronizationOperation</code> class describes a generic operation used by the <code>TICoreDataSync</code> framework to synchronize changes made to a document.</p>
+
+<p>In brief, a synchronization operation applies remote sync commands and changes locally, fixing any conflicts if necessary.</p>
+
+<p>In full, the operation carries out the following tasks: (Sync Command tasks are included below, although not yet implemented)</p>
+
+<ol>
+<li>Go through each <code>SyncChangeSet</code> and:
+
+<ol>
+<li> Check for conflicts against local changes made since the last synchronization.</li>
+<li> Fix any conflicts, and build an array of conflict warnings for issues that cannot be resolved.</li>
+<li> Apply each <code>SyncChange</code> in the set to the local <code>WholeStore</code>.</li>
+<li> Add the UUID of the set to the list of <code>AppliedSyncChangeSets.ticdsync</code>.</li>
+</ol>
+</li>
+</ol>
+
+
+<p>Operations are typically created automatically by the relevant sync manager.</p>
+
+<p>You need not use one of the subclasses of <code>TICDSSynchronizationOperation</code>.</p>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						<a title="Designated Initializer" name="task_Designated Initializer"></a>
+						<h3 class="subsubtitle task-title">Designated Initializer</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithDelegate:">&ndash;&nbsp;initWithDelegate:</a></code>
+		<span class="tooltip"><p>Initialize a synchronization operation using a delegate that supports the <a href="../Protocols/TICDSSynchronizationOperationDelegate.html"><code>TICDSSynchronizationOperationDelegate</code></a> protocol.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/configureBackgroundApplicationContextForPrimaryManagedObjectContext:">&ndash;&nbsp;configureBackgroundApplicationContextForPrimaryManagedObjectContext:</a></code>
+		<span class="tooltip"><p>Configure a background context (for applying sync changes) using the same persistent store coordinator as the main application context.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Properties" name="task_Properties"></a>
+						<h3 class="subsubtitle task-title">Properties</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/synchronizationWarnings">&nbsp;&nbsp;synchronizationWarnings</a></code>
+		<span class="tooltip"><p>The warnings generated during this synchronization.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/paused">&nbsp;&nbsp;paused</a></code>
+		<span class="tooltip"><p>A boolean indicating whether the operation is currently paused awaiting an instruction to continue, e.g. for conflict resolution.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/mostRecentConflictResolutionType">&nbsp;&nbsp;mostRecentConflictResolutionType</a></code>
+		<span class="tooltip"><p>The resolution type for the most recent conflict, set before resuming the operation after a conflict is detected.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+						
+						<a title="File Locations" name="task_File Locations"></a>
+						<h3 class="subsubtitle task-title">File Locations</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/localSyncChangesToMergeURL">&nbsp;&nbsp;localSyncChangesToMergeURL</a></code>
+		<span class="tooltip"><p>The location of the <code>SyncChangesBeingSynchronized.syncchg</code> file for this synchronization operation.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/appliedSyncChangeSetsFileLocation">&nbsp;&nbsp;appliedSyncChangeSetsFileLocation</a></code>
+		<span class="tooltip"><p>The location of this document&rsquo;s <code>AppliedSyncChangeSets.ticdsync</code> file.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/unappliedSyncChangesDirectoryLocation">&nbsp;&nbsp;unappliedSyncChangesDirectoryLocation</a></code>
+		<span class="tooltip"><p>The location of the <code>UnappliedSyncChanges</code> directory for this synchronization operation.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/unappliedSyncChangeSetsFileLocation">&nbsp;&nbsp;unappliedSyncChangeSetsFileLocation</a></code>
+		<span class="tooltip"><p>The location of this document&rsquo;s <code>UnappliedSyncChangeSets.ticdsync</code> file.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncTransaction">&nbsp;&nbsp;syncTransaction</a></code>
+		<span class="tooltip"><p>The sync transaction to be used by this operation.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/syncTransactions">&nbsp;&nbsp;syncTransactions</a></code>
+		<span class="tooltip"><p>The sync transactions whose unsaved applied sync change files will be used as persistent stores to augment the applied sync changes managed object context.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/appliedSyncChangeSetsFileLocation" title="appliedSyncChangeSetsFileLocation"></a>
+	<h3 class="subsubtitle method-title">appliedSyncChangeSetsFileLocation</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The location of this document&rsquo;s <code>AppliedSyncChangeSets.ticdsync</code> file.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (strong) NSURL *appliedSyncChangeSetsFileLocation</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/localSyncChangesToMergeURL" title="localSyncChangesToMergeURL"></a>
+	<h3 class="subsubtitle method-title">localSyncChangesToMergeURL</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The location of the <code>SyncChangesBeingSynchronized.syncchg</code> file for this synchronization operation.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (strong) NSURL *localSyncChangesToMergeURL</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/mostRecentConflictResolutionType" title="mostRecentConflictResolutionType"></a>
+	<h3 class="subsubtitle method-title">mostRecentConflictResolutionType</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The resolution type for the most recent conflict, set before resuming the operation after a conflict is detected.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (assign) TICDSSyncConflictResolutionType mostRecentConflictResolutionType</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/paused" title="paused"></a>
+	<h3 class="subsubtitle method-title">paused</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>A boolean indicating whether the operation is currently paused awaiting an instruction to continue, e.g. for conflict resolution.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (assign, getter=isPaused) BOOL paused</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/syncTransaction" title="syncTransaction"></a>
+	<h3 class="subsubtitle method-title">syncTransaction</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The sync transaction to be used by this operation.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property TICDSSyncTransaction *syncTransaction</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/syncTransactions" title="syncTransactions"></a>
+	<h3 class="subsubtitle method-title">syncTransactions</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The sync transactions whose unsaved applied sync change files will be used as persistent stores to augment the applied sync changes managed object context.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property NSArray *syncTransactions</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/synchronizationWarnings" title="synchronizationWarnings"></a>
+	<h3 class="subsubtitle method-title">synchronizationWarnings</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The warnings generated during this synchronization.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (strong) NSMutableArray *synchronizationWarnings</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/unappliedSyncChangeSetsFileLocation" title="unappliedSyncChangeSetsFileLocation"></a>
+	<h3 class="subsubtitle method-title">unappliedSyncChangeSetsFileLocation</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The location of this document&rsquo;s <code>UnappliedSyncChangeSets.ticdsync</code> file.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (strong) NSURL *unappliedSyncChangeSetsFileLocation</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/unappliedSyncChangesDirectoryLocation" title="unappliedSyncChangesDirectoryLocation"></a>
+	<h3 class="subsubtitle method-title">unappliedSyncChangesDirectoryLocation</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The location of the <code>UnappliedSyncChanges</code> directory for this synchronization operation.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (strong) NSURL *unappliedSyncChangesDirectoryLocation</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/configureBackgroundApplicationContextForPrimaryManagedObjectContext:" title="configureBackgroundApplicationContextForPrimaryManagedObjectContext:"></a>
+	<h3 class="subsubtitle method-title">configureBackgroundApplicationContextForPrimaryManagedObjectContext:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Configure a background context (for applying sync changes) using the same persistent store coordinator as the main application context.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)configureBackgroundApplicationContextForPrimaryManagedObjectContext:(NSManagedObjectContext *)<em>managedObjectContext</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aPersistentStoreCoordinator</em></dt>
+			<dd><p>The persistent store coordinator to use for the background context.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/initWithDelegate:" title="initWithDelegate:"></a>
+	<h3 class="subsubtitle method-title">initWithDelegate:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Initialize a synchronization operation using a delegate that supports the <a href="../Protocols/TICDSSynchronizationOperationDelegate.html"><code>TICDSSynchronizationOperationDelegate</code></a> protocol.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (id)initWithDelegate:(NSObject&lt;TICDSSynchronizationOperationDelegate&gt; *)<em>aDelegate</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aDelegate</em></dt>
+			<dd><p>The delegate to use for this operation.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An initialized synchronization operation.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSynchronizationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2013 Tim Isted. All rights reserved. (Last updated: 2013-05-10)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 858)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

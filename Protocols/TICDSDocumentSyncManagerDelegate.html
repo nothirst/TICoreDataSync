@@ -1,0 +1,3144 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>TICDSDocumentSyncManagerDelegate Protocol Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.1 (build 858)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">TICoreDataSync </a></h1>
+				<a id="developerHome" href="../index.html">Tim Isted</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">TICDSDocumentSyncManagerDelegate Protocol Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</option>
+	
+	<option value="//api/name/documentSyncManager:didBeginDeletingSynchronizationDataFromDocumentForClientWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:didBeginDeletingSynchronizationDataFromDocumentForClientWithIdentifier:</option>
+	
+	<option value="//api/name/documentSyncManager:didBeginProcessingSyncChangesBeforeManagedObjectContextWillSave:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:didBeginProcessingSyncChangesBeforeManagedObjectContextWillSave:</option>
+	
+	<option value="//api/name/documentSyncManager:didEncounterWarningsWhileSynchronizing:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:didEncounterWarningsWhileSynchronizing:</option>
+	
+	<option value="//api/name/documentSyncManager:didFailToDeleteSynchronizationDataFromDocumentForClientWithIdentifier:withError:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:didFailToDeleteSynchronizationDataFromDocumentForClientWithIdentifier:withError:</option>
+	
+	<option value="//api/name/documentSyncManager:didFailToDownloadWholeStoreWithError:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:didFailToDownloadWholeStoreWithError:</option>
+	
+	<option value="//api/name/documentSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:</option>
+	
+	<option value="//api/name/documentSyncManager:didFailToProcessSyncChangesBeforeManagedObjectContextWillSave:withError:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:didFailToProcessSyncChangesBeforeManagedObjectContextWillSave:withError:</option>
+	
+	<option value="//api/name/documentSyncManager:didFailToRegisterWithError:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:didFailToRegisterWithError:</option>
+	
+	<option value="//api/name/documentSyncManager:didFailToSynchronizeWithError:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:didFailToSynchronizeWithError:</option>
+	
+	<option value="//api/name/documentSyncManager:didFailToUploadWholeStoreWithError:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:didFailToUploadWholeStoreWithError:</option>
+	
+	<option value="//api/name/documentSyncManager:didFailToVacuumUnneededRemoteFilesWithError:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:didFailToVacuumUnneededRemoteFilesWithError:</option>
+	
+	<option value="//api/name/documentSyncManager:didFinishDeletingSynchronizationDataFromDocumentForClientWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:didFinishDeletingSynchronizationDataFromDocumentForClientWithIdentifier:</option>
+	
+	<option value="//api/name/documentSyncManager:didFinishFetchingInformationForAllRegisteredDevices:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:didFinishFetchingInformationForAllRegisteredDevices:</option>
+	
+	<option value="//api/name/documentSyncManager:didFinishProcessingSyncChangesBeforeManagedObjectContextWillSave:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:didFinishProcessingSyncChangesBeforeManagedObjectContextWillSave:</option>
+	
+	<option value="//api/name/documentSyncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:</option>
+	
+	<option value="//api/name/documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:</option>
+	
+	<option value="//api/name/documentSyncManager:didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:description:userInfo:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:description:userInfo:</option>
+	
+	<option value="//api/name/documentSyncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:</option>
+	
+	<option value="//api/name/documentSyncManager:didReplaceStoreWithDownloadedStoreAtURL:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:didReplaceStoreWithDownloadedStoreAtURL:</option>
+	
+	<option value="//api/name/documentSyncManager:helperFileDirectoryURLForDocumentWithIdentifier:description:userInfo:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:helperFileDirectoryURLForDocumentWithIdentifier:description:userInfo:</option>
+	
+	<option value="//api/name/documentSyncManager:processedChangeNumber:outOfTotalChangeCount:fromClientWithID:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:processedChangeNumber:outOfTotalChangeCount:fromClientWithID:</option>
+	
+	<option value="//api/name/documentSyncManager:shouldBeginSynchronizingAfterManagedObjectContextDidSave:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:shouldBeginSynchronizingAfterManagedObjectContextDidSave:</option>
+	
+	<option value="//api/name/documentSyncManager:whileDownloadingWholeStoreDidReportProgress:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:whileDownloadingWholeStoreDidReportProgress:</option>
+	
+	<option value="//api/name/documentSyncManager:whileUploadingWholeStoreDidReportProgress:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:whileUploadingWholeStoreDidReportProgress:</option>
+	
+	<option value="//api/name/documentSyncManager:willReplaceStoreWithDownloadedStoreAtURL:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManager:willReplaceStoreWithDownloadedStoreAtURL:</option>
+	
+	<option value="//api/name/documentSyncManagerDidBeginDownloadingWholeStore:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerDidBeginDownloadingWholeStore:</option>
+	
+	<option value="//api/name/documentSyncManagerDidBeginFetchingInformationForAllRegisteredDevices:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerDidBeginFetchingInformationForAllRegisteredDevices:</option>
+	
+	<option value="//api/name/documentSyncManagerDidBeginRegistering:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerDidBeginRegistering:</option>
+	
+	<option value="//api/name/documentSyncManagerDidBeginSynchronizing:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerDidBeginSynchronizing:</option>
+	
+	<option value="//api/name/documentSyncManagerDidBeginUploadingWholeStore:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerDidBeginUploadingWholeStore:</option>
+	
+	<option value="//api/name/documentSyncManagerDidBeginVacuumingUnneededRemoteFiles:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerDidBeginVacuumingUnneededRemoteFiles:</option>
+	
+	<option value="//api/name/documentSyncManagerDidContinueRegistering:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerDidContinueRegistering:</option>
+	
+	<option value="//api/name/documentSyncManagerDidContinueSynchronizing:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerDidContinueSynchronizing:</option>
+	
+	<option value="//api/name/documentSyncManagerDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:</option>
+	
+	<option value="//api/name/documentSyncManagerDidFinishDownloadingWholeStore:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerDidFinishDownloadingWholeStore:</option>
+	
+	<option value="//api/name/documentSyncManagerDidFinishRegistering:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerDidFinishRegistering:</option>
+	
+	<option value="//api/name/documentSyncManagerDidFinishSynchronizing:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerDidFinishSynchronizing:</option>
+	
+	<option value="//api/name/documentSyncManagerDidFinishUploadingWholeStore:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerDidFinishUploadingWholeStore:</option>
+	
+	<option value="//api/name/documentSyncManagerDidFinishVacuumingUnneededRemoteFiles:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerDidFinishVacuumingUnneededRemoteFiles:</option>
+	
+	<option value="//api/name/documentSyncManagerShouldSupportProcessingInBackgroundState:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerShouldSupportProcessingInBackgroundState:</option>
+	
+	<option value="//api/name/documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:</option>
+	
+	<option value="//api/name/documentSyncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:</option>
+	
+	<option value="//api/name/documentSyncManagerURLForDownloadedStore:">&nbsp;&nbsp;&nbsp;&nbsp;- documentSyncManagerURLForDownloadedStore:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Registration Phase">Registration Phase</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Helper Files">Helper Files</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Whole Store Upload">Whole Store Upload</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Whole Store Download">Whole Store Download</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Synchronization">Synchronization</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Vacuuming Unneeded Files">Vacuuming Unneeded Files</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Processing after Managed Object Context Save">Processing after Managed Object Context Save</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:">documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:didBeginDeletingSynchronizationDataFromDocumentForClientWithIdentifier:">documentSyncManager:didBeginDeletingSynchronizationDataFromDocumentForClientWithIdentifier:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:didBeginProcessingSyncChangesBeforeManagedObjectContextWillSave:">documentSyncManager:didBeginProcessingSyncChangesBeforeManagedObjectContextWillSave:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:didEncounterWarningsWhileSynchronizing:">documentSyncManager:didEncounterWarningsWhileSynchronizing:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:didFailToDeleteSynchronizationDataFromDocumentForClientWithIdentifier:withError:">documentSyncManager:didFailToDeleteSynchronizationDataFromDocumentForClientWithIdentifier:withError:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:didFailToDownloadWholeStoreWithError:">documentSyncManager:didFailToDownloadWholeStoreWithError:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:">documentSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:didFailToProcessSyncChangesBeforeManagedObjectContextWillSave:withError:">documentSyncManager:didFailToProcessSyncChangesBeforeManagedObjectContextWillSave:withError:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:didFailToRegisterWithError:">documentSyncManager:didFailToRegisterWithError:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:didFailToSynchronizeWithError:">documentSyncManager:didFailToSynchronizeWithError:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:didFailToUploadWholeStoreWithError:">documentSyncManager:didFailToUploadWholeStoreWithError:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:didFailToVacuumUnneededRemoteFilesWithError:">documentSyncManager:didFailToVacuumUnneededRemoteFilesWithError:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:didFinishDeletingSynchronizationDataFromDocumentForClientWithIdentifier:">documentSyncManager:didFinishDeletingSynchronizationDataFromDocumentForClientWithIdentifier:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:didFinishFetchingInformationForAllRegisteredDevices:">documentSyncManager:didFinishFetchingInformationForAllRegisteredDevices:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:didFinishProcessingSyncChangesBeforeManagedObjectContextWillSave:">documentSyncManager:didFinishProcessingSyncChangesBeforeManagedObjectContextWillSave:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:">documentSyncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:">documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:description:userInfo:">documentSyncManager:didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:description:userInfo:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:">documentSyncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:didReplaceStoreWithDownloadedStoreAtURL:">documentSyncManager:didReplaceStoreWithDownloadedStoreAtURL:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:helperFileDirectoryURLForDocumentWithIdentifier:description:userInfo:">documentSyncManager:helperFileDirectoryURLForDocumentWithIdentifier:description:userInfo:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:processedChangeNumber:outOfTotalChangeCount:fromClientWithID:">documentSyncManager:processedChangeNumber:outOfTotalChangeCount:fromClientWithID:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:shouldBeginSynchronizingAfterManagedObjectContextDidSave:">documentSyncManager:shouldBeginSynchronizingAfterManagedObjectContextDidSave:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:whileDownloadingWholeStoreDidReportProgress:">documentSyncManager:whileDownloadingWholeStoreDidReportProgress:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:whileUploadingWholeStoreDidReportProgress:">documentSyncManager:whileUploadingWholeStoreDidReportProgress:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManager:willReplaceStoreWithDownloadedStoreAtURL:">documentSyncManager:willReplaceStoreWithDownloadedStoreAtURL:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerDidBeginDownloadingWholeStore:">documentSyncManagerDidBeginDownloadingWholeStore:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerDidBeginFetchingInformationForAllRegisteredDevices:">documentSyncManagerDidBeginFetchingInformationForAllRegisteredDevices:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerDidBeginRegistering:">documentSyncManagerDidBeginRegistering:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerDidBeginSynchronizing:">documentSyncManagerDidBeginSynchronizing:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerDidBeginUploadingWholeStore:">documentSyncManagerDidBeginUploadingWholeStore:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerDidBeginVacuumingUnneededRemoteFiles:">documentSyncManagerDidBeginVacuumingUnneededRemoteFiles:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerDidContinueRegistering:">documentSyncManagerDidContinueRegistering:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerDidContinueSynchronizing:">documentSyncManagerDidContinueSynchronizing:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:">documentSyncManagerDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerDidFinishDownloadingWholeStore:">documentSyncManagerDidFinishDownloadingWholeStore:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerDidFinishRegistering:">documentSyncManagerDidFinishRegistering:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerDidFinishSynchronizing:">documentSyncManagerDidFinishSynchronizing:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerDidFinishUploadingWholeStore:">documentSyncManagerDidFinishUploadingWholeStore:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerDidFinishVacuumingUnneededRemoteFiles:">documentSyncManagerDidFinishVacuumingUnneededRemoteFiles:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerShouldSupportProcessingInBackgroundState:">documentSyncManagerShouldSupportProcessingInBackgroundState:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:">documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:">documentSyncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/documentSyncManagerURLForDownloadedStore:">documentSyncManagerURLForDownloadedStore:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="TICDSDocumentSyncManagerDelegate Protocol Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">TICDSDocumentSyncManagerDelegate Protocol Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Conforms to</td>
+	<td class="specification-value">NSObject</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">TICDSClassesAndProtocols.h</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The <code>TICDSDocumentSyncManagerDelegate</code> protocol defines the methods implemented by delegates of a <a href="../Classes/TICDSDocumentSyncManager.html"><code>TICDSDocumentSyncManager</code></a> object.</p>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						<a title="Registration Phase" name="task_Registration Phase"></a>
+						<h3 class="subsubtitle task-title">Registration Phase</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManagerDidBeginRegistering:">&ndash;&nbsp;documentSyncManagerDidBeginRegistering:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager has started the document registration process.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:">&ndash;&nbsp;documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager paused the document registration process because the remote file structure does not yet exist for the specified document.</p></span>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:description:userInfo:">&ndash;&nbsp;documentSyncManager:didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:description:userInfo:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager paused the document registration process because the remote file structure has previously been deleted for the specified document.</p></span>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManagerDidContinueRegistering:">&ndash;&nbsp;documentSyncManagerDidContinueRegistering:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager has resumed the document registration process.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:didFailToRegisterWithError:">&ndash;&nbsp;documentSyncManager:didFailToRegisterWithError:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager failed to complete the document registration process.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManagerDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:">&ndash;&nbsp;documentSyncManagerDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the client had previously been deleted from synchronizing this document.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManagerDidFinishRegistering:">&ndash;&nbsp;documentSyncManagerDidFinishRegistering:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager finished registering the document successfully.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManagerShouldSupportProcessingInBackgroundState:">&ndash;&nbsp;documentSyncManagerShouldSupportProcessingInBackgroundState:</a></code>
+		<span class="tooltip"><p>Asks the delegate whether or not the document sync manager should support continued operation processing after the app has been sent to a background state. .</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Helper Files" name="task_Helper Files"></a>
+						<h3 class="subsubtitle task-title">Helper Files</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:helperFileDirectoryURLForDocumentWithIdentifier:description:userInfo:">&ndash;&nbsp;documentSyncManager:helperFileDirectoryURLForDocumentWithIdentifier:description:userInfo:</a></code>
+		<span class="tooltip"><p>Invoked to allow the delegate to return a custom location for a local directory to contain the helper files the <code>TICoreDataSync</code> framework uses to synchronize a document.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Whole Store Upload" name="task_Whole Store Upload"></a>
+						<h3 class="subsubtitle task-title">Whole Store Upload</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:">&ndash;&nbsp;documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:</a></code>
+		<span class="tooltip"><p>Invoked to ask the delegate whether the document sync manager should automatically initiate a Whole Store Upload at registration.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:">&ndash;&nbsp;documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</a></code>
+		<span class="tooltip"><p>Invoked to ask the delegate for the URL of the document&rsquo;s persistent store to upload.</p></span>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManagerDidBeginUploadingWholeStore:">&ndash;&nbsp;documentSyncManagerDidBeginUploadingWholeStore:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager has begun to upload the whole store file, together with necessary helper files.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:didFailToUploadWholeStoreWithError:">&ndash;&nbsp;documentSyncManager:didFailToUploadWholeStoreWithError:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager failed to upload the whole store file.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManagerDidFinishUploadingWholeStore:">&ndash;&nbsp;documentSyncManagerDidFinishUploadingWholeStore:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager finished uploading the whole store file successfully.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:whileUploadingWholeStoreDidReportProgress:">&ndash;&nbsp;documentSyncManager:whileUploadingWholeStoreDidReportProgress:</a></code>
+		<span class="tooltip"><p>Informs the delegate on the operation&rsquo;s progress being made in the upload operation.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Whole Store Download" name="task_Whole Store Download"></a>
+						<h3 class="subsubtitle task-title">Whole Store Download</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManagerURLForDownloadedStore:">&ndash;&nbsp;documentSyncManagerURLForDownloadedStore:</a></code>
+		<span class="tooltip"><p>Invoked to ask the delegate for the URL of the document&rsquo;s store once it has been downloaded.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManagerDidBeginDownloadingWholeStore:">&ndash;&nbsp;documentSyncManagerDidBeginDownloadingWholeStore:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager has begun to download the whole store file, together with necessary helper files.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:willReplaceStoreWithDownloadedStoreAtURL:">&ndash;&nbsp;documentSyncManager:willReplaceStoreWithDownloadedStoreAtURL:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager has downloaded the store to a temporary location, and is about to replace the store at the given location.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:didReplaceStoreWithDownloadedStoreAtURL:">&ndash;&nbsp;documentSyncManager:didReplaceStoreWithDownloadedStoreAtURL:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager has replaced the store at the given location with the downloaded store.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:didFailToDownloadWholeStoreWithError:">&ndash;&nbsp;documentSyncManager:didFailToDownloadWholeStoreWithError:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager failed to download the whole store file.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManagerDidFinishDownloadingWholeStore:">&ndash;&nbsp;documentSyncManagerDidFinishDownloadingWholeStore:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager finished downloading the whole store file successfully.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:whileDownloadingWholeStoreDidReportProgress:">&ndash;&nbsp;documentSyncManager:whileDownloadingWholeStoreDidReportProgress:</a></code>
+		<span class="tooltip"><p>Informs the delegate on the operation&rsquo;s progress being made in the download operation.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Synchronization" name="task_Synchronization"></a>
+						<h3 class="subsubtitle task-title">Synchronization</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManagerDidBeginSynchronizing:">&ndash;&nbsp;documentSyncManagerDidBeginSynchronizing:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager has begun to synchronize the document.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:processedChangeNumber:outOfTotalChangeCount:fromClientWithID:">&ndash;&nbsp;documentSyncManager:processedChangeNumber:outOfTotalChangeCount:fromClientWithID:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the operation has processed a sync change from a client.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:">&ndash;&nbsp;documentSyncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager paused the sychronization process because a conflict was detected.</p></span>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManagerDidContinueSynchronizing:">&ndash;&nbsp;documentSyncManagerDidContinueSynchronizing:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the synchronization process has continued after a conflict was resolved.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:">&ndash;&nbsp;documentSyncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:</a></code>
+		<span class="tooltip"><p>Informs the delegate that changes were made to managed objects in the application&rsquo;s context on a background thread during the synchronization process.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:didEncounterWarningsWhileSynchronizing:">&ndash;&nbsp;documentSyncManager:didEncounterWarningsWhileSynchronizing:</a></code>
+		<span class="tooltip"><p>Informs the delegate that warnings were generated during the synchronization process.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:didFailToSynchronizeWithError:">&ndash;&nbsp;documentSyncManager:didFailToSynchronizeWithError:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager failed to synchronize the document.</p></span>
+	</span>
+	
+	<span class="task-item-suffix">required method</span>
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManagerDidFinishSynchronizing:">&ndash;&nbsp;documentSyncManagerDidFinishSynchronizing:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager finished synchronizing the document.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Vacuuming Unneeded Files" name="task_Vacuuming Unneeded Files"></a>
+						<h3 class="subsubtitle task-title">Vacuuming Unneeded Files</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:">&ndash;&nbsp;documentSyncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:</a></code>
+		<span class="tooltip"><p>Invoked to ask the delegate whether the document sync manager should automatically remove unneeded files at registration.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManagerDidBeginVacuumingUnneededRemoteFiles:">&ndash;&nbsp;documentSyncManagerDidBeginVacuumingUnneededRemoteFiles:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager has begun to remove unneeded files from the remote.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:didFailToVacuumUnneededRemoteFilesWithError:">&ndash;&nbsp;documentSyncManager:didFailToVacuumUnneededRemoteFilesWithError:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager failed to vacuum unneeded files on the remote.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManagerDidFinishVacuumingUnneededRemoteFiles:">&ndash;&nbsp;documentSyncManagerDidFinishVacuumingUnneededRemoteFiles:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager finished vacuuming unneeded files from the remote.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManagerDidBeginFetchingInformationForAllRegisteredDevices:">&ndash;&nbsp;documentSyncManagerDidBeginFetchingInformationForAllRegisteredDevices:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager has begun to fetch information on all registered devices from the remote.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:">&ndash;&nbsp;documentSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager failed to fetch information on clients registered to synchronize with a document.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:didFinishFetchingInformationForAllRegisteredDevices:">&ndash;&nbsp;documentSyncManager:didFinishFetchingInformationForAllRegisteredDevices:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager finished fetching information for all registered devices for this document.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:didBeginDeletingSynchronizationDataFromDocumentForClientWithIdentifier:">&ndash;&nbsp;documentSyncManager:didBeginDeletingSynchronizationDataFromDocumentForClientWithIdentifier:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager has begun to delete a client&rsquo;s synchronization data from the remote document.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:didFailToDeleteSynchronizationDataFromDocumentForClientWithIdentifier:withError:">&ndash;&nbsp;documentSyncManager:didFailToDeleteSynchronizationDataFromDocumentForClientWithIdentifier:withError:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager failed to delete a client&rsquo;s synchronization data from the remote document.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:didFinishDeletingSynchronizationDataFromDocumentForClientWithIdentifier:">&ndash;&nbsp;documentSyncManager:didFinishDeletingSynchronizationDataFromDocumentForClientWithIdentifier:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager finished deleting synchronization data for a client from the document.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Processing after Managed Object Context Save" name="task_Processing after Managed Object Context Save"></a>
+						<h3 class="subsubtitle task-title">Processing after Managed Object Context Save</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:didBeginProcessingSyncChangesBeforeManagedObjectContextWillSave:">&ndash;&nbsp;documentSyncManager:didBeginProcessingSyncChangesBeforeManagedObjectContextWillSave:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the document sync manager has begun to process the changes that have occurred since the previous <code>save:</code> of the managed object context.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:didFailToProcessSyncChangesBeforeManagedObjectContextWillSave:withError:">&ndash;&nbsp;documentSyncManager:didFailToProcessSyncChangesBeforeManagedObjectContextWillSave:withError:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the sync manager failed to process the changes that have occurred since the previous <code>save:</code> of the managed object context.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:didFinishProcessingSyncChangesBeforeManagedObjectContextWillSave:">&ndash;&nbsp;documentSyncManager:didFinishProcessingSyncChangesBeforeManagedObjectContextWillSave:</a></code>
+		<span class="tooltip"><p>Informs the delegate that the sync manager finished processing the changes that have occurred since the previous <code>save:</code> of the managed object context.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/documentSyncManager:shouldBeginSynchronizingAfterManagedObjectContextDidSave:">&ndash;&nbsp;documentSyncManager:shouldBeginSynchronizingAfterManagedObjectContextDidSave:</a></code>
+		<span class="tooltip"><p>Invoked to ask the delegate whether the document sync manager should initiate Synchronization automatically after finishing processing changes in a synchronized managed object context.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:" title="documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:URLForWholeStoreToUploadForDocumentWithIdentifier:description:userInfo:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Invoked to ask the delegate for the URL of the document&rsquo;s persistent store to upload.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSURL *)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> URLForWholeStoreToUploadForDocumentWithIdentifier:(NSString *)<em>anIdentifier</em> description:(NSString *)<em>aDescription</em> userInfo:(NSDictionary *)<em>userInfo</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The unique identifier for the document (as supplied at registration).</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aDescription</em></dt>
+			<dd><p>The description of the document (as supplied at registration).</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>userInfo</em></dt>
+			<dd><p>The user info dictionary (as supplied at registration).</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The location of the store file.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:didBeginDeletingSynchronizationDataFromDocumentForClientWithIdentifier:" title="documentSyncManager:didBeginDeletingSynchronizationDataFromDocumentForClientWithIdentifier:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:didBeginDeletingSynchronizationDataFromDocumentForClientWithIdentifier:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager has begun to delete a client&rsquo;s synchronization data from the remote document.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> didBeginDeletingSynchronizationDataFromDocumentForClientWithIdentifier:(NSString *)<em>anIdentifier</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The identifier of the client that will be deleted.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>At the end of the process, one of the <a href="#//api/name/documentSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:"><code>documentSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:</code></a> or <code>documentSyncManagerDidFinishFetchingInformationForAllRegisteredDevices:</code> methods will be called.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:didBeginProcessingSyncChangesBeforeManagedObjectContextWillSave:" title="documentSyncManager:didBeginProcessingSyncChangesBeforeManagedObjectContextWillSave:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:didBeginProcessingSyncChangesBeforeManagedObjectContextWillSave:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager has begun to process the changes that have occurred since the previous <code>save:</code> of the managed object context.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> didBeginProcessingSyncChangesBeforeManagedObjectContextWillSave:(NSManagedObjectContext *)<em>aMoc</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aMoc</em></dt>
+			<dd><p>The managed object context.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>At the end of the process, one of the <a href="#//api/name/documentSyncManager:didFailToProcessSyncChangesBeforeManagedObjectContextWillSave:withError:"><code>documentSyncManager:didFailToProcessSyncChangesBeforeManagedObjectContextWillSave:withError:</code></a> or <a href="#//api/name/documentSyncManager:didFinishProcessingSyncChangesBeforeManagedObjectContextWillSave:"><code>documentSyncManager:didFinishProcessingSyncChangesBeforeManagedObjectContextWillSave:</code></a> methods will be called.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:didEncounterWarningsWhileSynchronizing:" title="documentSyncManager:didEncounterWarningsWhileSynchronizing:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:didEncounterWarningsWhileSynchronizing:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that warnings were generated during the synchronization process.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> didEncounterWarningsWhileSynchronizing:(NSArray *)<em>warnings</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>warnings</em></dt>
+			<dd><p>An array of <code>NSDictionary</code> objects containing information about each warning.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Warnings indicate that e.g., an object was changed locally but deleted remotely.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:didFailToDeleteSynchronizationDataFromDocumentForClientWithIdentifier:withError:" title="documentSyncManager:didFailToDeleteSynchronizationDataFromDocumentForClientWithIdentifier:withError:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:didFailToDeleteSynchronizationDataFromDocumentForClientWithIdentifier:withError:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager failed to delete a client&rsquo;s synchronization data from the remote document.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> didFailToDeleteSynchronizationDataFromDocumentForClientWithIdentifier:(NSString *)<em>anIdentifier</em> withError:(NSError *)<em>anError</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The identifier of the client that couldn&rsquo;t be deleted.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anError</em></dt>
+			<dd><p>The error that caused the process to fail.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:didFailToDownloadWholeStoreWithError:" title="documentSyncManager:didFailToDownloadWholeStoreWithError:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:didFailToDownloadWholeStoreWithError:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager failed to download the whole store file.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> didFailToDownloadWholeStoreWithError:(NSError *)<em>anError</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anError</em></dt>
+			<dd><p>The error that caused the download to fail.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:" title="documentSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager failed to fetch information on clients registered to synchronize with a document.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> didFailToFetchInformationForAllRegisteredDevicesWithError:(NSError *)<em>anError</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anError</em></dt>
+			<dd><p>The error that caused the request process to fail.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:didFailToProcessSyncChangesBeforeManagedObjectContextWillSave:withError:" title="documentSyncManager:didFailToProcessSyncChangesBeforeManagedObjectContextWillSave:withError:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:didFailToProcessSyncChangesBeforeManagedObjectContextWillSave:withError:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the sync manager failed to process the changes that have occurred since the previous <code>save:</code> of the managed object context.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> didFailToProcessSyncChangesBeforeManagedObjectContextWillSave:(NSManagedObjectContext *)<em>aMoc</em> withError:(NSError *)<em>anError</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aMoc</em></dt>
+			<dd><p>The managed object context.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anError</em></dt>
+			<dd><p>The error that caused processing to fail.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:didFailToRegisterWithError:" title="documentSyncManager:didFailToRegisterWithError:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:didFailToRegisterWithError:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager failed to complete the document registration process.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> didFailToRegisterWithError:(NSError *)<em>anError</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anError</em></dt>
+			<dd><p>The error that caused the registration process to fail.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:didFailToSynchronizeWithError:" title="documentSyncManager:didFailToSynchronizeWithError:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:didFailToSynchronizeWithError:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager failed to synchronize the document.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> didFailToSynchronizeWithError:(NSError *)<em>anError</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anError</em></dt>
+			<dd><p>The error that caused synchronization to fail.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<blockquote><p>%warning%<br/>
+<strong>Warning:</strong> One possible cause of failure that you should test for is that sync failed because the integrity keys do not match. In this instance, you should alert the user and initiate a download of the whole store.</p></blockquote>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:didFailToUploadWholeStoreWithError:" title="documentSyncManager:didFailToUploadWholeStoreWithError:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:didFailToUploadWholeStoreWithError:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager failed to upload the whole store file.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> didFailToUploadWholeStoreWithError:(NSError *)<em>anError</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anError</em></dt>
+			<dd><p>The error that caused the upload to fail.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:didFailToVacuumUnneededRemoteFilesWithError:" title="documentSyncManager:didFailToVacuumUnneededRemoteFilesWithError:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:didFailToVacuumUnneededRemoteFilesWithError:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager failed to vacuum unneeded files on the remote.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> didFailToVacuumUnneededRemoteFilesWithError:(NSError *)<em>anError</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anError</em></dt>
+			<dd><p>The error that caused the vacuum process to fail.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:didFinishDeletingSynchronizationDataFromDocumentForClientWithIdentifier:" title="documentSyncManager:didFinishDeletingSynchronizationDataFromDocumentForClientWithIdentifier:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:didFinishDeletingSynchronizationDataFromDocumentForClientWithIdentifier:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager finished deleting synchronization data for a client from the document.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> didFinishDeletingSynchronizationDataFromDocumentForClientWithIdentifier:(NSString *)<em>anIdentifier</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The identifier of the client that was deleted.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:didFinishFetchingInformationForAllRegisteredDevices:" title="documentSyncManager:didFinishFetchingInformationForAllRegisteredDevices:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:didFinishFetchingInformationForAllRegisteredDevices:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager finished fetching information for all registered devices for this document.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> didFinishFetchingInformationForAllRegisteredDevices:(NSDictionary *)<em>information</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>information</em></dt>
+			<dd><p>A dictionary containing as keys the unique synchronization identifiers of each client, and as values dictionaries of information about that client.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:didFinishProcessingSyncChangesBeforeManagedObjectContextWillSave:" title="documentSyncManager:didFinishProcessingSyncChangesBeforeManagedObjectContextWillSave:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:didFinishProcessingSyncChangesBeforeManagedObjectContextWillSave:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the sync manager finished processing the changes that have occurred since the previous <code>save:</code> of the managed object context.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> didFinishProcessingSyncChangesBeforeManagedObjectContextWillSave:(NSManagedObjectContext *)<em>aMoc</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aMoc</em></dt>
+			<dd><p>The managed object context.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:" title="documentSyncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that changes were made to managed objects in the application&rsquo;s context on a background thread during the synchronization process.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:(NSNotification *)<em>aNotification</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aNotification</em></dt>
+			<dd><p>The <code>NSManagedObjectContextDidSave</code> notification object containing changes made to objects.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:" title="documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:description:userInfo:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager paused the document registration process because the remote file structure does not yet exist for the specified document.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:(NSString *)<em>anIdentifier</em> description:(NSString *)<em>aDescription</em> userInfo:(NSDictionary *)<em>userInfo</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The unique identifier for the document (as supplied at registration).</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aDescription</em></dt>
+			<dd><p>The description of the document (as supplied at registration).</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>userInfo</em></dt>
+			<dd><p>The user info dictionary (as supplied at registration).</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<blockquote><p>%warning%<br/>
+<strong>Warning:</strong> You <em>must</em> call the <code>continueRegistrationByCreatingRemoteFileStructure:</code> method to indicate whether registration should continue or not.</p></blockquote>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:description:userInfo:" title="documentSyncManager:didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:description:userInfo:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:description:userInfo:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager paused the document registration process because the remote file structure has previously been deleted for the specified document.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:(NSString *)<em>anIdentifier</em> description:(NSString *)<em>aDescription</em> userInfo:(NSDictionary *)<em>userInfo</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The unique identifier for the document (as supplied at registration).</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aDescription</em></dt>
+			<dd><p>The description of the document (as supplied at registration).</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>userInfo</em></dt>
+			<dd><p>The user info dictionary (as supplied at registration).</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<blockquote><p>%warning%<br/>
+<strong>Warning:</strong> You <em>must</em> call the <code>continueRegistrationByCreatingRemoteFileStructure:</code> method to indicate whether registration should continue or not.</p></blockquote>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:" title="documentSyncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:didPauseSynchronizationAwaitingResolutionOfSyncConflict:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager paused the sychronization process because a conflict was detected.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> didPauseSynchronizationAwaitingResolutionOfSyncConflict:(id)<em>aConflict</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aConflict</em></dt>
+			<dd><p>The conflict that was detected.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<blockquote><p>%warning%<br/>
+<strong>Warning:</strong> You <em>must</em> call the <code>continueSynchronizationByResolvingConflictWithResolutionType:</code> method to indicate whether registration should continue or not.</p></blockquote>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:didReplaceStoreWithDownloadedStoreAtURL:" title="documentSyncManager:didReplaceStoreWithDownloadedStoreAtURL:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:didReplaceStoreWithDownloadedStoreAtURL:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager has replaced the store at the given location with the downloaded store.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> didReplaceStoreWithDownloadedStoreAtURL:(NSURL *)<em>aStoreURL</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aStoreURL</em></dt>
+			<dd><p>The location of the persistent store that was replaced.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>You should add the store back for the persistent store coordinator.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:helperFileDirectoryURLForDocumentWithIdentifier:description:userInfo:" title="documentSyncManager:helperFileDirectoryURLForDocumentWithIdentifier:description:userInfo:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:helperFileDirectoryURLForDocumentWithIdentifier:description:userInfo:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Invoked to allow the delegate to return a custom location for a local directory to contain the helper files the <code>TICoreDataSync</code> framework uses to synchronize a document.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSURL *)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> helperFileDirectoryURLForDocumentWithIdentifier:(NSString *)<em>anIdentifier</em> description:(NSString *)<em>aDescription</em> userInfo:(NSDictionary *)<em>userInfo</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The unique identifier for the document (as supplied at registration).</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aDescription</em></dt>
+			<dd><p>The description of the document (as supplied at registration).</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>userInfo</em></dt>
+			<dd><p>The user info dictionary (as supplied at registration).</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The <code>NSURL</code> for the location you wish to use.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If you don&rsquo;t implement this method, the default location will be <code>~/Library/Application Support/ApplicationName/Documents/documentIdentifier/</code>.</p><blockquote><p>%warning%<br/>
+<strong>Warning:</strong> The location you specify <em>must</em> already exist.</p></blockquote>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:processedChangeNumber:outOfTotalChangeCount:fromClientWithID:" title="documentSyncManager:processedChangeNumber:outOfTotalChangeCount:fromClientWithID:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:processedChangeNumber:outOfTotalChangeCount:fromClientWithID:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the operation has processed a sync change from a client.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> processedChangeNumber:(NSNumber *)<em>changeNumber</em> outOfTotalChangeCount:(NSNumber *)<em>totalChangeCount</em> fromClientWithID:(NSString *)<em>clientIdentifier</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>changeNumber</em></dt>
+			<dd><p>The number of the change that was processed so it can be presented to the user like 2 of 10.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>totalChangeCount</em></dt>
+			<dd><p>The total number of changes that will be processed.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>clientIdentifier</em></dt>
+			<dd><p>The unique identifier of the client whose changes we are processing.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:shouldBeginSynchronizingAfterManagedObjectContextDidSave:" title="documentSyncManager:shouldBeginSynchronizingAfterManagedObjectContextDidSave:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:shouldBeginSynchronizingAfterManagedObjectContextDidSave:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Invoked to ask the delegate whether the document sync manager should initiate Synchronization automatically after finishing processing changes in a synchronized managed object context.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (BOOL)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> shouldBeginSynchronizingAfterManagedObjectContextDidSave:(NSManagedObjectContext *)<em>aMoc</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aMoc</em></dt>
+			<dd><p>The managed object context that saved.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p><code>YES</code> if the document sync manager should initiate the upload, otherwise <code>NO</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:whileDownloadingWholeStoreDidReportProgress:" title="documentSyncManager:whileDownloadingWholeStoreDidReportProgress:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:whileDownloadingWholeStoreDidReportProgress:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate on the operation&rsquo;s progress being made in the download operation.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> whileDownloadingWholeStoreDidReportProgress:(CGFloat)<em>progress</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>progress</em></dt>
+			<dd><p>The progress level (0 to 1) as reported by the operation.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:whileUploadingWholeStoreDidReportProgress:" title="documentSyncManager:whileUploadingWholeStoreDidReportProgress:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:whileUploadingWholeStoreDidReportProgress:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate on the operation&rsquo;s progress being made in the upload operation.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> whileUploadingWholeStoreDidReportProgress:(CGFloat)<em>progress</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>progress</em></dt>
+			<dd><p>The progress level (0 to 1) as reported by the operation.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManager:willReplaceStoreWithDownloadedStoreAtURL:" title="documentSyncManager:willReplaceStoreWithDownloadedStoreAtURL:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManager:willReplaceStoreWithDownloadedStoreAtURL:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager has downloaded the store to a temporary location, and is about to replace the store at the given location.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManager:(TICDSDocumentSyncManager *)<em>aSyncManager</em> willReplaceStoreWithDownloadedStoreAtURL:(NSURL *)<em>aStoreURL</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aStoreURL</em></dt>
+			<dd><p>The location of the persistent store that will be replaced.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>You should remove the given store from the persistent store coordinator.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManagerDidBeginDownloadingWholeStore:" title="documentSyncManagerDidBeginDownloadingWholeStore:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManagerDidBeginDownloadingWholeStore:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager has begun to download the whole store file, together with necessary helper files.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManagerDidBeginDownloadingWholeStore:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The store will be downloaded to a temporary location; once this has happened, the <a href="#//api/name/documentSyncManager:willReplaceStoreWithDownloadedStoreAtURL:"><code>documentSyncManager:willReplaceStoreWithDownloadedStoreAtURL:</code></a> method will be called just before the store is moved to the location given by the <a href="#//api/name/documentSyncManagerURLForDownloadedStore:"><code>documentSyncManagerURLForDownloadedStore:</code></a> method to allow you to remove the store file from any persistent store coordinators. Once the file has been moved, the <a href="#//api/name/documentSyncManager:didReplaceStoreWithDownloadedStoreAtURL:"><code>documentSyncManager:didReplaceStoreWithDownloadedStoreAtURL:</code></a> method will be called.</p>
+
+<p>At the end of the download process, one of the <a href="#//api/name/documentSyncManager:didFailToDownloadWholeStoreWithError:"><code>documentSyncManager:didFailToDownloadWholeStoreWithError:</code></a> or <a href="#//api/name/documentSyncManagerDidFinishDownloadingWholeStore:"><code>documentSyncManagerDidFinishDownloadingWholeStore:</code></a> methods will be called.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManagerDidBeginFetchingInformationForAllRegisteredDevices:" title="documentSyncManagerDidBeginFetchingInformationForAllRegisteredDevices:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManagerDidBeginFetchingInformationForAllRegisteredDevices:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager has begun to fetch information on all registered devices from the remote.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManagerDidBeginFetchingInformationForAllRegisteredDevices:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>At the end of the request process, one of the <a href="#//api/name/documentSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:"><code>documentSyncManager:didFailToFetchInformationForAllRegisteredDevicesWithError:</code></a> or <code>documentSyncManagerDidFinishFetchingInformationForAllRegisteredDevices:</code> methods will be called.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManagerDidBeginRegistering:" title="documentSyncManagerDidBeginRegistering:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManagerDidBeginRegistering:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager has started the document registration process.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManagerDidBeginRegistering:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>At the end of the registration process, one of the <a href="#//api/name/documentSyncManager:didFailToRegisterWithError:"><code>documentSyncManager:didFailToRegisterWithError:</code></a> or <a href="#//api/name/documentSyncManagerDidFinishRegistering:"><code>documentSyncManagerDidFinishRegistering:</code></a> methods will be called.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManagerDidBeginSynchronizing:" title="documentSyncManagerDidBeginSynchronizing:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManagerDidBeginSynchronizing:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager has begun to synchronize the document.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManagerDidBeginSynchronizing:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>At the end of the synchronization process, one of the <a href="#//api/name/documentSyncManager:didFailToSynchronizeWithError:"><code>documentSyncManager:didFailToSynchronizeWithError:</code></a> or <a href="#//api/name/documentSyncManagerDidFinishSynchronizing:"><code>documentSyncManagerDidFinishSynchronizing:</code></a> methods will be called.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManagerDidBeginUploadingWholeStore:" title="documentSyncManagerDidBeginUploadingWholeStore:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManagerDidBeginUploadingWholeStore:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager has begun to upload the whole store file, together with necessary helper files.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManagerDidBeginUploadingWholeStore:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>At the end of the upload process, one of the <a href="#//api/name/documentSyncManager:didFailToUploadWholeStoreWithError:"><code>documentSyncManager:didFailToUploadWholeStoreWithError:</code></a> or <a href="#//api/name/documentSyncManagerDidFinishUploadingWholeStore:"><code>documentSyncManagerDidFinishUploadingWholeStore:</code></a> methods will be called.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManagerDidBeginVacuumingUnneededRemoteFiles:" title="documentSyncManagerDidBeginVacuumingUnneededRemoteFiles:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManagerDidBeginVacuumingUnneededRemoteFiles:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager has begun to remove unneeded files from the remote.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManagerDidBeginVacuumingUnneededRemoteFiles:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>At the end of the vacuum process, one of the <a href="#//api/name/documentSyncManager:didFailToVacuumUnneededRemoteFilesWithError:"><code>documentSyncManager:didFailToVacuumUnneededRemoteFilesWithError:</code></a> or <a href="#//api/name/documentSyncManagerDidFinishVacuumingUnneededRemoteFiles:"><code>documentSyncManagerDidFinishVacuumingUnneededRemoteFiles:</code></a> methods will be called.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManagerDidContinueRegistering:" title="documentSyncManagerDidContinueRegistering:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManagerDidContinueRegistering:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager has resumed the document registration process.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManagerDidContinueRegistering:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManagerDidContinueSynchronizing:" title="documentSyncManagerDidContinueSynchronizing:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManagerDidContinueSynchronizing:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the synchronization process has continued after a conflict was resolved.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManagerDidContinueSynchronizing:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManagerDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:" title="documentSyncManagerDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManagerDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the client had previously been deleted from synchronizing this document.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManagerDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>The client should alert the user, and download the store once registration has finished.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManagerDidFinishDownloadingWholeStore:" title="documentSyncManagerDidFinishDownloadingWholeStore:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManagerDidFinishDownloadingWholeStore:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager finished downloading the whole store file successfully.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManagerDidFinishDownloadingWholeStore:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManagerDidFinishRegistering:" title="documentSyncManagerDidFinishRegistering:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManagerDidFinishRegistering:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager finished registering the document successfully.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManagerDidFinishRegistering:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManagerDidFinishSynchronizing:" title="documentSyncManagerDidFinishSynchronizing:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManagerDidFinishSynchronizing:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager finished synchronizing the document.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManagerDidFinishSynchronizing:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManagerDidFinishUploadingWholeStore:" title="documentSyncManagerDidFinishUploadingWholeStore:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManagerDidFinishUploadingWholeStore:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager finished uploading the whole store file successfully.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManagerDidFinishUploadingWholeStore:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManagerDidFinishVacuumingUnneededRemoteFiles:" title="documentSyncManagerDidFinishVacuumingUnneededRemoteFiles:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManagerDidFinishVacuumingUnneededRemoteFiles:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Informs the delegate that the document sync manager finished vacuuming unneeded files from the remote.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)documentSyncManagerDidFinishVacuumingUnneededRemoteFiles:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManagerShouldSupportProcessingInBackgroundState:" title="documentSyncManagerShouldSupportProcessingInBackgroundState:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManagerShouldSupportProcessingInBackgroundState:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Asks the delegate whether or not the document sync manager should support continued operation processing after the app has been sent to a background state. .</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (BOOL)documentSyncManagerShouldSupportProcessingInBackgroundState:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:" title="documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Invoked to ask the delegate whether the document sync manager should automatically initiate a Whole Store Upload at registration.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (BOOL)documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p><code>YES</code> if the sync manager should initiate the upload, otherwise <code>NO</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:" title="documentSyncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Invoked to ask the delegate whether the document sync manager should automatically remove unneeded files at registration.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (BOOL)documentSyncManagerShouldVacuumUnneededRemoteFilesAfterDocumentRegistration:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p><code>YES</code> if the document sync manager should initiate the vacuum, otherwise <code>NO</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/documentSyncManagerURLForDownloadedStore:" title="documentSyncManagerURLForDownloadedStore:"></a>
+	<h3 class="subsubtitle method-title">documentSyncManagerURLForDownloadedStore:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Invoked to ask the delegate for the URL of the document&rsquo;s store once it has been downloaded.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSURL *)documentSyncManagerURLForDownloadedStore:(TICDSDocumentSyncManager *)<em>aSyncManager</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncManager</em></dt>
+			<dd><p>The document sync manager object that sent the message.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The location of the store file.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If this method is not implemented, the sync manager will ask the persistent store coordinator of the primary synchronized managed object context (the one specified at registration) for the location of its <code>persistentStores</code> array&rsquo;s <code>lastObject</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSClassesAndProtocols.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2013 Tim Isted. All rights reserved. (Last updated: 2013-05-10)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 858)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

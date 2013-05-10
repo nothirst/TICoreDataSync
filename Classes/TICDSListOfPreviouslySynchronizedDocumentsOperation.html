@@ -1,0 +1,1056 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>TICDSListOfPreviouslySynchronizedDocumentsOperation Class Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.1 (build 858)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">TICoreDataSync </a></h1>
+				<a id="developerHome" href="../index.html">Tim Isted</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">TICDSListOfPreviouslySynchronizedDocumentsOperation Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/availableDocumentSyncIDs">&nbsp;&nbsp;&nbsp;&nbsp;availableDocumentSyncIDs</option>
+	
+	<option value="//api/name/availableDocuments">&nbsp;&nbsp;&nbsp;&nbsp;availableDocuments</option>
+	
+	<option value="//api/name/numberOfInfoDictionariesFetched">&nbsp;&nbsp;&nbsp;&nbsp;numberOfInfoDictionariesFetched</option>
+	
+	<option value="//api/name/numberOfInfoDictionariesThatFailedToFetch">&nbsp;&nbsp;&nbsp;&nbsp;numberOfInfoDictionariesThatFailedToFetch</option>
+	
+	<option value="//api/name/numberOfInfoDictionariesToFetch">&nbsp;&nbsp;&nbsp;&nbsp;numberOfInfoDictionariesToFetch</option>
+	
+	<option value="//api/name/numberOfLastSynchronizationDatesFetched">&nbsp;&nbsp;&nbsp;&nbsp;numberOfLastSynchronizationDatesFetched</option>
+	
+	<option value="//api/name/numberOfLastSynchronizationDatesThatFailedToFetch">&nbsp;&nbsp;&nbsp;&nbsp;numberOfLastSynchronizationDatesThatFailedToFetch</option>
+	
+	<option value="//api/name/numberOfLastSynchronizationDatesToFetch">&nbsp;&nbsp;&nbsp;&nbsp;numberOfLastSynchronizationDatesToFetch</option>
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/buildArrayOfDocumentIdentifiers">&nbsp;&nbsp;&nbsp;&nbsp;- buildArrayOfDocumentIdentifiers</option>
+	
+	<option value="//api/name/builtArrayOfDocumentIdentifiers:">&nbsp;&nbsp;&nbsp;&nbsp;- builtArrayOfDocumentIdentifiers:</option>
+	
+	<option value="//api/name/fetchInfoDictionaryForDocumentWithSyncID:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchInfoDictionaryForDocumentWithSyncID:</option>
+	
+	<option value="//api/name/fetchLastSynchronizationDateForDocumentWithSyncID:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchLastSynchronizationDateForDocumentWithSyncID:</option>
+	
+	<option value="//api/name/fetchedInfoDictionary:forDocumentWithSyncID:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchedInfoDictionary:forDocumentWithSyncID:</option>
+	
+	<option value="//api/name/fetchedLastSynchronizationDate:forDocumentWithSyncID:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchedLastSynchronizationDate:forDocumentWithSyncID:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Methods Overridden by Subclasses">Methods Overridden by Subclasses</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Callbacks">Callbacks</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Properties">Properties</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Completion">Completion</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/availableDocumentSyncIDs">availableDocumentSyncIDs</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/availableDocuments">availableDocuments</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/numberOfInfoDictionariesFetched">numberOfInfoDictionariesFetched</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/numberOfInfoDictionariesThatFailedToFetch">numberOfInfoDictionariesThatFailedToFetch</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/numberOfInfoDictionariesToFetch">numberOfInfoDictionariesToFetch</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/numberOfLastSynchronizationDatesFetched">numberOfLastSynchronizationDatesFetched</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/numberOfLastSynchronizationDatesThatFailedToFetch">numberOfLastSynchronizationDatesThatFailedToFetch</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/numberOfLastSynchronizationDatesToFetch">numberOfLastSynchronizationDatesToFetch</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/buildArrayOfDocumentIdentifiers">buildArrayOfDocumentIdentifiers</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/builtArrayOfDocumentIdentifiers:">builtArrayOfDocumentIdentifiers:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchInfoDictionaryForDocumentWithSyncID:">fetchInfoDictionaryForDocumentWithSyncID:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchLastSynchronizationDateForDocumentWithSyncID:">fetchLastSynchronizationDateForDocumentWithSyncID:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchedInfoDictionary:forDocumentWithSyncID:">fetchedInfoDictionary:forDocumentWithSyncID:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchedLastSynchronizationDate:forDocumentWithSyncID:">fetchedLastSynchronizationDate:forDocumentWithSyncID:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="TICDSListOfPreviouslySynchronizedDocumentsOperation Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">TICDSListOfPreviouslySynchronizedDocumentsOperation Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value"><a href="../Classes/TICDSOperation.html">TICDSOperation</a> : NSOperation</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">TICDSListOfPreviouslySynchronizedDocumentsOperation.h</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The <code>TICDSListOfPreviouslySynchronizedDocumentsOperation</code> class describes a generic operation used by the <code>TICoreDataSync</code> framework to fetch a list of documents that have previously been synchronized for this application.</p>
+
+<p>The operation carries out the following tasks:</p>
+
+<ol>
+<li>Get a list of document identifiers for available documents.</li>
+<li>Fetch the <code>documentInfo</code> dictionary for each document.</li>
+<li>Get the most recent synchronization date for each successfully-fetched document dictionary (the most recently modified file in <code>RecentSyncs</code>).</li>
+</ol>
+
+
+<p>Operations are typically created automatically by the relevant sync manager.</p><blockquote><p>%warning%<br/>
+<strong>Warning:</strong> You must use one of the subclasses of <code>TICDSListOfPreviouslySynchronizedDocumentsOperation</code>.</p></blockquote>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						<a title="Methods Overridden by Subclasses" name="task_Methods Overridden by Subclasses"></a>
+						<h3 class="subsubtitle task-title">Methods Overridden by Subclasses</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/buildArrayOfDocumentIdentifiers">&ndash;&nbsp;buildArrayOfDocumentIdentifiers</a></code>
+		<span class="tooltip"><p>Build an array of <code>NSString</code> document identifiers for all available, previously-synchronized documents.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchInfoDictionaryForDocumentWithSyncID:">&ndash;&nbsp;fetchInfoDictionaryForDocumentWithSyncID:</a></code>
+		<span class="tooltip"><p>Fetch the <code>documentInfo</code> dictionary for the document with the specified ID.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchLastSynchronizationDateForDocumentWithSyncID:">&ndash;&nbsp;fetchLastSynchronizationDateForDocumentWithSyncID:</a></code>
+		<span class="tooltip"><p>Fetch the last synchronization date for a document with the given synchronization ID.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Callbacks" name="task_Callbacks"></a>
+						<h3 class="subsubtitle task-title">Callbacks</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/builtArrayOfDocumentIdentifiers:">&ndash;&nbsp;builtArrayOfDocumentIdentifiers:</a></code>
+		<span class="tooltip"><p>Pass back the assembled <code>NSArray</code> of <code>NSString</code> document identifiers.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchedInfoDictionary:forDocumentWithSyncID:">&ndash;&nbsp;fetchedInfoDictionary:forDocumentWithSyncID:</a></code>
+		<span class="tooltip"><p>Pass back the <code>documentInfo</code> dictionary for a given document sync identifier.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchedLastSynchronizationDate:forDocumentWithSyncID:">&ndash;&nbsp;fetchedLastSynchronizationDate:forDocumentWithSyncID:</a></code>
+		<span class="tooltip"><p>Pass back the last synchronization date for a given document sync identifier.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Properties" name="task_Properties"></a>
+						<h3 class="subsubtitle task-title">Properties</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/availableDocuments">&nbsp;&nbsp;availableDocuments</a></code>
+		<span class="tooltip"><p>An array of documents, built as information comes in.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/availableDocumentSyncIDs">&nbsp;&nbsp;availableDocumentSyncIDs</a></code>
+		<span class="tooltip"><p>An array used internally by the operation to keep track of the available document sync identifiers.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+						
+						<a title="Completion" name="task_Completion"></a>
+						<h3 class="subsubtitle task-title">Completion</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/numberOfInfoDictionariesToFetch">&nbsp;&nbsp;numberOfInfoDictionariesToFetch</a></code>
+		<span class="tooltip"><p>The total number of info dictionaries that need to be fetched.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/numberOfInfoDictionariesFetched">&nbsp;&nbsp;numberOfInfoDictionariesFetched</a></code>
+		<span class="tooltip"><p>The number of info dictionaries that have already been fetched.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/numberOfInfoDictionariesThatFailedToFetch">&nbsp;&nbsp;numberOfInfoDictionariesThatFailedToFetch</a></code>
+		<span class="tooltip"><p>The number of info dictionaries that failed to fetch because of an error.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/numberOfLastSynchronizationDatesToFetch">&nbsp;&nbsp;numberOfLastSynchronizationDatesToFetch</a></code>
+		<span class="tooltip"><p>The total number of last synchronization dates that need to be fetched.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/numberOfLastSynchronizationDatesFetched">&nbsp;&nbsp;numberOfLastSynchronizationDatesFetched</a></code>
+		<span class="tooltip"><p>The number of last synchronization dates that have already been fetched.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/numberOfLastSynchronizationDatesThatFailedToFetch">&nbsp;&nbsp;numberOfLastSynchronizationDatesThatFailedToFetch</a></code>
+		<span class="tooltip"><p>The number of last synchronization dates failed to fetch because of an error.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/availableDocumentSyncIDs" title="availableDocumentSyncIDs"></a>
+	<h3 class="subsubtitle method-title">availableDocumentSyncIDs</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>An array used internally by the operation to keep track of the available document sync identifiers.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) NSArray *availableDocumentSyncIDs</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfPreviouslySynchronizedDocumentsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/availableDocuments" title="availableDocuments"></a>
+	<h3 class="subsubtitle method-title">availableDocuments</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>An array of documents, built as information comes in.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (strong) NSMutableArray *availableDocuments</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfPreviouslySynchronizedDocumentsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/numberOfInfoDictionariesFetched" title="numberOfInfoDictionariesFetched"></a>
+	<h3 class="subsubtitle method-title">numberOfInfoDictionariesFetched</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The number of info dictionaries that have already been fetched.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) NSUInteger numberOfInfoDictionariesFetched</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfPreviouslySynchronizedDocumentsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/numberOfInfoDictionariesThatFailedToFetch" title="numberOfInfoDictionariesThatFailedToFetch"></a>
+	<h3 class="subsubtitle method-title">numberOfInfoDictionariesThatFailedToFetch</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The number of info dictionaries that failed to fetch because of an error.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) NSUInteger numberOfInfoDictionariesThatFailedToFetch</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfPreviouslySynchronizedDocumentsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/numberOfInfoDictionariesToFetch" title="numberOfInfoDictionariesToFetch"></a>
+	<h3 class="subsubtitle method-title">numberOfInfoDictionariesToFetch</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The total number of info dictionaries that need to be fetched.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) NSUInteger numberOfInfoDictionariesToFetch</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfPreviouslySynchronizedDocumentsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/numberOfLastSynchronizationDatesFetched" title="numberOfLastSynchronizationDatesFetched"></a>
+	<h3 class="subsubtitle method-title">numberOfLastSynchronizationDatesFetched</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The number of last synchronization dates that have already been fetched.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) NSUInteger numberOfLastSynchronizationDatesFetched</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfPreviouslySynchronizedDocumentsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/numberOfLastSynchronizationDatesThatFailedToFetch" title="numberOfLastSynchronizationDatesThatFailedToFetch"></a>
+	<h3 class="subsubtitle method-title">numberOfLastSynchronizationDatesThatFailedToFetch</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The number of last synchronization dates failed to fetch because of an error.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) NSUInteger numberOfLastSynchronizationDatesThatFailedToFetch</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfPreviouslySynchronizedDocumentsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/numberOfLastSynchronizationDatesToFetch" title="numberOfLastSynchronizationDatesToFetch"></a>
+	<h3 class="subsubtitle method-title">numberOfLastSynchronizationDatesToFetch</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The total number of last synchronization dates that need to be fetched.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) NSUInteger numberOfLastSynchronizationDatesToFetch</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfPreviouslySynchronizedDocumentsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/buildArrayOfDocumentIdentifiers" title="buildArrayOfDocumentIdentifiers"></a>
+	<h3 class="subsubtitle method-title">buildArrayOfDocumentIdentifiers</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Build an array of <code>NSString</code> document identifiers for all available, previously-synchronized documents.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)buildArrayOfDocumentIdentifiers</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Call <a href="#//api/name/builtArrayOfDocumentIdentifiers:"><code>builtArrayOfDocumentIdentifiers:</code></a> when the array is built.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfPreviouslySynchronizedDocumentsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/builtArrayOfDocumentIdentifiers:" title="builtArrayOfDocumentIdentifiers:"></a>
+	<h3 class="subsubtitle method-title">builtArrayOfDocumentIdentifiers:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Pass back the assembled <code>NSArray</code> of <code>NSString</code> document identifiers.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)builtArrayOfDocumentIdentifiers:(NSArray *)<em>anArray</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anArray</em></dt>
+			<dd><p>The array of identifiers. Pass <code>nil</code> if an error occurred.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>nil</code> for <code>anArray</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfPreviouslySynchronizedDocumentsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchInfoDictionaryForDocumentWithSyncID:" title="fetchInfoDictionaryForDocumentWithSyncID:"></a>
+	<h3 class="subsubtitle method-title">fetchInfoDictionaryForDocumentWithSyncID:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Fetch the <code>documentInfo</code> dictionary for the document with the specified ID.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)fetchInfoDictionaryForDocumentWithSyncID:(NSString *)<em>aSyncID</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncID</em></dt>
+			<dd><p>The synchronization identifier for the document.</p>
+
+<p>Call <a href="#//api/name/fetchedInfoDictionary:forDocumentWithSyncID:"><code>fetchedInfoDictionary:forDocumentWithSyncID:</code></a> for each document as it is fetched.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfPreviouslySynchronizedDocumentsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchLastSynchronizationDateForDocumentWithSyncID:" title="fetchLastSynchronizationDateForDocumentWithSyncID:"></a>
+	<h3 class="subsubtitle method-title">fetchLastSynchronizationDateForDocumentWithSyncID:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Fetch the last synchronization date for a document with the given synchronization ID.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)fetchLastSynchronizationDateForDocumentWithSyncID:(NSString *)<em>aSyncID</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncID</em></dt>
+			<dd><p>The synchronization identifier for the document.</p>
+
+<p>Call <a href="#//api/name/fetchedLastSynchronizationDate:forDocumentWithSyncID:"><code>fetchedLastSynchronizationDate:forDocumentWithSyncID:</code></a> when the date is fetched.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfPreviouslySynchronizedDocumentsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchedInfoDictionary:forDocumentWithSyncID:" title="fetchedInfoDictionary:forDocumentWithSyncID:"></a>
+	<h3 class="subsubtitle method-title">fetchedInfoDictionary:forDocumentWithSyncID:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Pass back the <code>documentInfo</code> dictionary for a given document sync identifier.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)fetchedInfoDictionary:(NSDictionary *)<em>anInfoDictionary</em> forDocumentWithSyncID:(NSString *)<em>aSyncID</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anInfoDictionary</em></dt>
+			<dd><p>The <code>documentInfo</code> dictionary, or <code>nil</code> if an error occurred.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncID</em></dt>
+			<dd><p>The unique synchronization identifier of the given document.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>nil</code> for <code>anInfoDictionary</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfPreviouslySynchronizedDocumentsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchedLastSynchronizationDate:forDocumentWithSyncID:" title="fetchedLastSynchronizationDate:forDocumentWithSyncID:"></a>
+	<h3 class="subsubtitle method-title">fetchedLastSynchronizationDate:forDocumentWithSyncID:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Pass back the last synchronization date for a given document sync identifier.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)fetchedLastSynchronizationDate:(NSDate *)<em>aDate</em> forDocumentWithSyncID:(NSString *)<em>aSyncID</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aDate</em></dt>
+			<dd><p>The last synchronization date, or <code>nil</code> if an error occurred.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aSyncID</em></dt>
+			<dd><p>The unique synchronization identifier of the given document.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>nil</code> for <code>aDate</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfPreviouslySynchronizedDocumentsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2013 Tim Isted. All rights reserved. (Last updated: 2013-05-10)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 858)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

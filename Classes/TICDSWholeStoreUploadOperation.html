@@ -1,0 +1,1562 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>TICDSWholeStoreUploadOperation Class Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.1 (build 858)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">TICoreDataSync </a></h1>
+				<a id="developerHome" href="../index.html">Tim Isted</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">TICDSWholeStoreUploadOperation Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/backgroundApplicationContext">&nbsp;&nbsp;&nbsp;&nbsp;backgroundApplicationContext</option>
+	
+	<option value="//api/name/localAppliedSyncChangeSetsFileLocation">&nbsp;&nbsp;&nbsp;&nbsp;localAppliedSyncChangeSetsFileLocation</option>
+	
+	<option value="//api/name/localWholeStoreFileLocation">&nbsp;&nbsp;&nbsp;&nbsp;localWholeStoreFileLocation</option>
+	
+	<option value="//api/name/primaryManagedObjectContext">&nbsp;&nbsp;&nbsp;&nbsp;primaryManagedObjectContext</option>
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/checkWhetherThisClientTemporaryWholeStoreDirectoryExists">&nbsp;&nbsp;&nbsp;&nbsp;- checkWhetherThisClientTemporaryWholeStoreDirectoryExists</option>
+	
+	<option value="//api/name/checkWhetherThisClientWholeStoreDirectoryExists">&nbsp;&nbsp;&nbsp;&nbsp;- checkWhetherThisClientWholeStoreDirectoryExists</option>
+	
+	<option value="//api/name/configureBackgroundApplicationContextForPrimaryManagedObjectContext:">&nbsp;&nbsp;&nbsp;&nbsp;- configureBackgroundApplicationContextForPrimaryManagedObjectContext:</option>
+	
+	<option value="//api/name/copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:</option>
+	
+	<option value="//api/name/copyThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectory">&nbsp;&nbsp;&nbsp;&nbsp;- copyThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectory</option>
+	
+	<option value="//api/name/createThisClientTemporaryWholeStoreDirectory">&nbsp;&nbsp;&nbsp;&nbsp;- createThisClientTemporaryWholeStoreDirectory</option>
+	
+	<option value="//api/name/createdThisClientTemporaryWholeStoreDirectoryWithSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- createdThisClientTemporaryWholeStoreDirectoryWithSuccess:</option>
+	
+	<option value="//api/name/deleteThisClientTemporaryWholeStoreDirectory">&nbsp;&nbsp;&nbsp;&nbsp;- deleteThisClientTemporaryWholeStoreDirectory</option>
+	
+	<option value="//api/name/deleteThisClientWholeStoreDirectory">&nbsp;&nbsp;&nbsp;&nbsp;- deleteThisClientWholeStoreDirectory</option>
+	
+	<option value="//api/name/deletedThisClientTemporaryWholeStoreDirectoryWithSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- deletedThisClientTemporaryWholeStoreDirectoryWithSuccess:</option>
+	
+	<option value="//api/name/deletedThisClientWholeStoreDirectoryWithSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- deletedThisClientWholeStoreDirectoryWithSuccess:</option>
+	
+	<option value="//api/name/discoveredStatusOfThisClientTemporaryWholeStoreDirectory:">&nbsp;&nbsp;&nbsp;&nbsp;- discoveredStatusOfThisClientTemporaryWholeStoreDirectory:</option>
+	
+	<option value="//api/name/discoveredStatusOfThisClientWholeStoreDirectory:">&nbsp;&nbsp;&nbsp;&nbsp;- discoveredStatusOfThisClientWholeStoreDirectory:</option>
+	
+	<option value="//api/name/uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectory">&nbsp;&nbsp;&nbsp;&nbsp;- uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectory</option>
+	
+	<option value="//api/name/uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectory">&nbsp;&nbsp;&nbsp;&nbsp;- uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectory</option>
+	
+	<option value="//api/name/uploadedAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- uploadedAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:</option>
+	
+	<option value="//api/name/uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:</option>
+	
+	<option value="//api/name/uploadingLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryMadeProgress">&nbsp;&nbsp;&nbsp;&nbsp;- uploadingLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryMadeProgress</option>
+	
+	<option value="//api/name/uploadingWholeStoreFileToThisClientTemporaryWholeStoreDirectoryMadeProgress">&nbsp;&nbsp;&nbsp;&nbsp;- uploadingWholeStoreFileToThisClientTemporaryWholeStoreDirectoryMadeProgress</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Methods Overridden by Subclasses">Methods Overridden by Subclasses</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Callbacks">Callbacks</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Properties">Properties</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/backgroundApplicationContext">backgroundApplicationContext</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/localAppliedSyncChangeSetsFileLocation">localAppliedSyncChangeSetsFileLocation</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/localWholeStoreFileLocation">localWholeStoreFileLocation</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/primaryManagedObjectContext">primaryManagedObjectContext</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/checkWhetherThisClientTemporaryWholeStoreDirectoryExists">checkWhetherThisClientTemporaryWholeStoreDirectoryExists</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/checkWhetherThisClientWholeStoreDirectoryExists">checkWhetherThisClientWholeStoreDirectoryExists</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/configureBackgroundApplicationContextForPrimaryManagedObjectContext:">configureBackgroundApplicationContextForPrimaryManagedObjectContext:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:">copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/copyThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectory">copyThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectory</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/createThisClientTemporaryWholeStoreDirectory">createThisClientTemporaryWholeStoreDirectory</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/createdThisClientTemporaryWholeStoreDirectoryWithSuccess:">createdThisClientTemporaryWholeStoreDirectoryWithSuccess:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deleteThisClientTemporaryWholeStoreDirectory">deleteThisClientTemporaryWholeStoreDirectory</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deleteThisClientWholeStoreDirectory">deleteThisClientWholeStoreDirectory</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deletedThisClientTemporaryWholeStoreDirectoryWithSuccess:">deletedThisClientTemporaryWholeStoreDirectoryWithSuccess:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deletedThisClientWholeStoreDirectoryWithSuccess:">deletedThisClientWholeStoreDirectoryWithSuccess:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/discoveredStatusOfThisClientTemporaryWholeStoreDirectory:">discoveredStatusOfThisClientTemporaryWholeStoreDirectory:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/discoveredStatusOfThisClientWholeStoreDirectory:">discoveredStatusOfThisClientWholeStoreDirectory:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectory">uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectory</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectory">uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectory</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/uploadedAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:">uploadedAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:">uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/uploadingLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryMadeProgress">uploadingLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryMadeProgress</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/uploadingWholeStoreFileToThisClientTemporaryWholeStoreDirectoryMadeProgress">uploadingWholeStoreFileToThisClientTemporaryWholeStoreDirectoryMadeProgress</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="TICDSWholeStoreUploadOperation Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">TICDSWholeStoreUploadOperation Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value"><a href="../Classes/TICDSOperation.html">TICDSOperation</a> : NSOperation</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">TICDSWholeStoreUploadOperation.h</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The <code>TICDSWholeStoreUploadOperation</code> class describes a generic operation used by the <code>TICoreDataSync</code> framework to upload the whole store for a document.</p>
+
+<p>The operation carries out the following tasks:</p>
+
+<ol>
+<li>Check whether every object in the store to upload has the <code>ticdsSyncID</code> attribute set.</li>
+<li>If not, set any missing <code>ticdsSyncID</code> attributes.</li>
+<li>Check whether a directory exists for this client inside the <code>WholeStore</code> directory inside the document&rsquo;s <code>TemporaryFiles</code> directory.</li>
+<li>If so, delete it.</li>
+<li>Create a directory for this client inside the <code>WholeStore</code> directory inside the document&rsquo;s <code>TemporaryFiles</code> directory.</li>
+<li>Upload the whole store file to this temporary directory.</li>
+<li>Upload the applied sync change sets file that goes with this whole store to this temporary directory.</li>
+<li>Check whether a directory exists for this client inside the document&rsquo;s <code>WholeStore</code> directory.</li>
+<li>If so, delete it.</li>
+<li>Copy the temporary directory the non-temporary location.</li>
+</ol>
+
+
+<p>Operations are typically created automatically by the relevant sync manager.</p><blockquote><p>%warning%<br/>
+<strong>Warning:</strong> You must use one of the subclasses of <code>TICDSWholeStoreUploadOperation</code>.</p></blockquote>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						<a title="Methods Overridden by Subclasses" name="task_Methods Overridden by Subclasses"></a>
+						<h3 class="subsubtitle task-title">Methods Overridden by Subclasses</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/checkWhetherThisClientTemporaryWholeStoreDirectoryExists">&ndash;&nbsp;checkWhetherThisClientTemporaryWholeStoreDirectoryExists</a></code>
+		<span class="tooltip"><p>Check whether a directory exists for this client inside the <code>WholeStore</code> directory inside the document&rsquo;s <code>TemporaryFiles</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/deleteThisClientTemporaryWholeStoreDirectory">&ndash;&nbsp;deleteThisClientTemporaryWholeStoreDirectory</a></code>
+		<span class="tooltip"><p>Delete the directory for this client inside the <code>WholeStore</code> directory inside the document&rsquo;s <code>TemporaryFiles</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/createThisClientTemporaryWholeStoreDirectory">&ndash;&nbsp;createThisClientTemporaryWholeStoreDirectory</a></code>
+		<span class="tooltip"><p>Create this client&rsquo;s directory inside the <code>WholeStore</code> directory inside this document&rsquo;s <code>TemporaryFiles</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectory">&ndash;&nbsp;uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectory</a></code>
+		<span class="tooltip"><p>Upload the store at <a href="#//api/name/localWholeStoreFileLocation"><code>localWholeStoreFileLocation</code></a> to the remote path <code>/Documents/documentIdentifier/TemporaryFiles/WholeStore/clientIdentifier/WholeStore.ticdsync</code>.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectory">&ndash;&nbsp;uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectory</a></code>
+		<span class="tooltip"><p>Upload the file at <a href="#//api/name/localAppliedSyncChangeSetsFileLocation"><code>localAppliedSyncChangeSetsFileLocation</code></a> to the remote path <code>/Documents/documentIdentifier/TemporaryFiles/WholeStore/clientIdentifier/AppliedSyncChangeSets.ticdsync</code>.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/checkWhetherThisClientWholeStoreDirectoryExists">&ndash;&nbsp;checkWhetherThisClientWholeStoreDirectoryExists</a></code>
+		<span class="tooltip"><p>Check whether a directory exists for this client inside the document&rsquo;s <code>WholeStore</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/deleteThisClientWholeStoreDirectory">&ndash;&nbsp;deleteThisClientWholeStoreDirectory</a></code>
+		<span class="tooltip"><p>Delete the directory for this client inside this document&rsquo;s <code>WholeStore</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/copyThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectory">&ndash;&nbsp;copyThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectory</a></code>
+		<span class="tooltip"><p>Copy the entire directory at <code>/Documents/documentIdentifier/TemporaryFiles/WholeStore/</code> to <code>/Documents/documentIdentifier/WholeStore/</code>.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Callbacks" name="task_Callbacks"></a>
+						<h3 class="subsubtitle task-title">Callbacks</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/discoveredStatusOfThisClientTemporaryWholeStoreDirectory:">&ndash;&nbsp;discoveredStatusOfThisClientTemporaryWholeStoreDirectory:</a></code>
+		<span class="tooltip"><p>Indicate the status of this client&rsquo;s directory inside the <code>WholeStore</code> directory inside the <code>TemporaryFiles</code> directory for this document.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/deletedThisClientTemporaryWholeStoreDirectoryWithSuccess:">&ndash;&nbsp;deletedThisClientTemporaryWholeStoreDirectoryWithSuccess:</a></code>
+		<span class="tooltip"><p>Indicate whether the deletion of this client&rsquo;s directory inside the <code>WholeStore</code> directory inside the document&rsquo;s <code>TemporaryFiles</code> directory was successful.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/createdThisClientTemporaryWholeStoreDirectoryWithSuccess:">&ndash;&nbsp;createdThisClientTemporaryWholeStoreDirectoryWithSuccess:</a></code>
+		<span class="tooltip"><p>Indicate whether the creation of this client&rsquo;s directory inside the <code>WholeStore</code> directory inside the document&rsquo;s <code>TemporaryFiles</code> directory was successful.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/uploadingWholeStoreFileToThisClientTemporaryWholeStoreDirectoryMadeProgress">&ndash;&nbsp;uploadingWholeStoreFileToThisClientTemporaryWholeStoreDirectoryMadeProgress</a></code>
+		<span class="tooltip"><p>Indicate that the upload of the whole store file made progress.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:">&ndash;&nbsp;uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:</a></code>
+		<span class="tooltip"><p>Indicate whether the upload of the whole store file was successful.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/uploadingLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryMadeProgress">&ndash;&nbsp;uploadingLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryMadeProgress</a></code>
+		<span class="tooltip"><p>Indicate that the upload of the whole store file made progress.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/uploadedAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:">&ndash;&nbsp;uploadedAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:</a></code>
+		<span class="tooltip"><p>Indicate whether the upload of the applied sync change sets file was successful.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/discoveredStatusOfThisClientWholeStoreDirectory:">&ndash;&nbsp;discoveredStatusOfThisClientWholeStoreDirectory:</a></code>
+		<span class="tooltip"><p>Indicate the status of this client&rsquo;s directory inside the <code>WholeStore</code> directory for this document.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/deletedThisClientWholeStoreDirectoryWithSuccess:">&ndash;&nbsp;deletedThisClientWholeStoreDirectoryWithSuccess:</a></code>
+		<span class="tooltip"><p>Indicate whether the deletion of this client&rsquo;s directory inside the document&rsquo;s <code>WholeStore</code> directory was successful.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:">&ndash;&nbsp;copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:</a></code>
+		<span class="tooltip"><p>Indicate whether the temporary WholeStore directory was copied to the non-temporary directory location successfully.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/configureBackgroundApplicationContextForPrimaryManagedObjectContext:">&ndash;&nbsp;configureBackgroundApplicationContextForPrimaryManagedObjectContext:</a></code>
+		<span class="tooltip"><p>Configure a background context (for applying sync changes) using the same persistent store coordinator as the main application context.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Properties" name="task_Properties"></a>
+						<h3 class="subsubtitle task-title">Properties</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/localWholeStoreFileLocation">&nbsp;&nbsp;localWholeStoreFileLocation</a></code>
+		<span class="tooltip"><p>The location of the whole store file to upload.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/localAppliedSyncChangeSetsFileLocation">&nbsp;&nbsp;localAppliedSyncChangeSetsFileLocation</a></code>
+		<span class="tooltip"><p>The location of the applied sync change sets file to upload.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/primaryManagedObjectContext">&nbsp;&nbsp;primaryManagedObjectContext</a></code>
+		<span class="tooltip"><p>The persistent store coordinator to use when creating the background context.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/backgroundApplicationContext">&nbsp;&nbsp;backgroundApplicationContext</a></code>
+		<span class="tooltip"><p>The managed object context to use when checking for missing ticdsSyncIDs prior to upload.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/backgroundApplicationContext" title="backgroundApplicationContext"></a>
+	<h3 class="subsubtitle method-title">backgroundApplicationContext</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The managed object context to use when checking for missing ticdsSyncIDs prior to upload.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) NSManagedObjectContext *backgroundApplicationContext</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/localAppliedSyncChangeSetsFileLocation" title="localAppliedSyncChangeSetsFileLocation"></a>
+	<h3 class="subsubtitle method-title">localAppliedSyncChangeSetsFileLocation</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The location of the applied sync change sets file to upload.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (strong) NSURL *localAppliedSyncChangeSetsFileLocation</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/localWholeStoreFileLocation" title="localWholeStoreFileLocation"></a>
+	<h3 class="subsubtitle method-title">localWholeStoreFileLocation</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The location of the whole store file to upload.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (strong) NSURL *localWholeStoreFileLocation</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/primaryManagedObjectContext" title="primaryManagedObjectContext"></a>
+	<h3 class="subsubtitle method-title">primaryManagedObjectContext</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The persistent store coordinator to use when creating the background context.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (strong) NSManagedObjectContext *primaryManagedObjectContext</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/checkWhetherThisClientTemporaryWholeStoreDirectoryExists" title="checkWhetherThisClientTemporaryWholeStoreDirectoryExists"></a>
+	<h3 class="subsubtitle method-title">checkWhetherThisClientTemporaryWholeStoreDirectoryExists</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Check whether a directory exists for this client inside the <code>WholeStore</code> directory inside the document&rsquo;s <code>TemporaryFiles</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)checkWhetherThisClientTemporaryWholeStoreDirectoryExists</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <code>discoveredStatusOfTemporaryWholeStoreDirectory:</code> to indicate the status.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/checkWhetherThisClientWholeStoreDirectoryExists" title="checkWhetherThisClientWholeStoreDirectoryExists"></a>
+	<h3 class="subsubtitle method-title">checkWhetherThisClientWholeStoreDirectoryExists</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Check whether a directory exists for this client inside the document&rsquo;s <code>WholeStore</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)checkWhetherThisClientWholeStoreDirectoryExists</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/discoveredStatusOfThisClientWholeStoreDirectory:"><code>discoveredStatusOfThisClientWholeStoreDirectory:</code></a> to indicate the status.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/configureBackgroundApplicationContextForPrimaryManagedObjectContext:" title="configureBackgroundApplicationContextForPrimaryManagedObjectContext:"></a>
+	<h3 class="subsubtitle method-title">configureBackgroundApplicationContextForPrimaryManagedObjectContext:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Configure a background context (for applying sync changes) using the same persistent store coordinator as the main application context.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)configureBackgroundApplicationContextForPrimaryManagedObjectContext:(NSManagedObjectContext *)<em>managedObjectContext</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aPersistentStoreCoordinator</em></dt>
+			<dd><p>The persistent store coordinator to use for the background context.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:" title="copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:"></a>
+	<h3 class="subsubtitle method-title">copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the temporary WholeStore directory was copied to the non-temporary directory location successfully.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:(BOOL)<em>success</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p><code>YES</code> if the directory was copied, otherwise <code>NO</code>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If not, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/copyThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectory" title="copyThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectory"></a>
+	<h3 class="subsubtitle method-title">copyThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectory</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Copy the entire directory at <code>/Documents/documentIdentifier/TemporaryFiles/WholeStore/</code> to <code>/Documents/documentIdentifier/WholeStore/</code>.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)copyThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectory</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:"><code>copiedThisClientTemporaryWholeStoreDirectoryToThisClientWholeStoreDirectoryWithSuccess:</code></a> when finished.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/createThisClientTemporaryWholeStoreDirectory" title="createThisClientTemporaryWholeStoreDirectory"></a>
+	<h3 class="subsubtitle method-title">createThisClientTemporaryWholeStoreDirectory</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Create this client&rsquo;s directory inside the <code>WholeStore</code> directory inside this document&rsquo;s <code>TemporaryFiles</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)createThisClientTemporaryWholeStoreDirectory</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/createdThisClientTemporaryWholeStoreDirectoryWithSuccess:"><code>createdThisClientTemporaryWholeStoreDirectoryWithSuccess:</code></a> to indicate whether the creation was successful.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/createdThisClientTemporaryWholeStoreDirectoryWithSuccess:" title="createdThisClientTemporaryWholeStoreDirectoryWithSuccess:"></a>
+	<h3 class="subsubtitle method-title">createdThisClientTemporaryWholeStoreDirectoryWithSuccess:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the creation of this client&rsquo;s directory inside the <code>WholeStore</code> directory inside the document&rsquo;s <code>TemporaryFiles</code> directory was successful.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)createdThisClientTemporaryWholeStoreDirectoryWithSuccess:(BOOL)<em>success</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p><code>YES</code> if the directory was created, otherwise <code>NO</code>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If not, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/deleteThisClientTemporaryWholeStoreDirectory" title="deleteThisClientTemporaryWholeStoreDirectory"></a>
+	<h3 class="subsubtitle method-title">deleteThisClientTemporaryWholeStoreDirectory</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Delete the directory for this client inside the <code>WholeStore</code> directory inside the document&rsquo;s <code>TemporaryFiles</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)deleteThisClientTemporaryWholeStoreDirectory</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/deletedThisClientTemporaryWholeStoreDirectoryWithSuccess:"><code>deletedThisClientTemporaryWholeStoreDirectoryWithSuccess:</code></a> to indicate whether the deletion was successful.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/deleteThisClientWholeStoreDirectory" title="deleteThisClientWholeStoreDirectory"></a>
+	<h3 class="subsubtitle method-title">deleteThisClientWholeStoreDirectory</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Delete the directory for this client inside this document&rsquo;s <code>WholeStore</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)deleteThisClientWholeStoreDirectory</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/deletedThisClientWholeStoreDirectoryWithSuccess:"><code>deletedThisClientWholeStoreDirectoryWithSuccess:</code></a> to indicate whether the deletion was successful.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/deletedThisClientTemporaryWholeStoreDirectoryWithSuccess:" title="deletedThisClientTemporaryWholeStoreDirectoryWithSuccess:"></a>
+	<h3 class="subsubtitle method-title">deletedThisClientTemporaryWholeStoreDirectoryWithSuccess:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the deletion of this client&rsquo;s directory inside the <code>WholeStore</code> directory inside the document&rsquo;s <code>TemporaryFiles</code> directory was successful.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)deletedThisClientTemporaryWholeStoreDirectoryWithSuccess:(BOOL)<em>success</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p><code>YES</code> if the directory was deleted, otherwise <code>NO</code>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If not, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/deletedThisClientWholeStoreDirectoryWithSuccess:" title="deletedThisClientWholeStoreDirectoryWithSuccess:"></a>
+	<h3 class="subsubtitle method-title">deletedThisClientWholeStoreDirectoryWithSuccess:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the deletion of this client&rsquo;s directory inside the document&rsquo;s <code>WholeStore</code> directory was successful.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)deletedThisClientWholeStoreDirectoryWithSuccess:(BOOL)<em>success</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p><code>YES</code> if the directory was deleted, otherwise <code>NO</code>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If not, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/discoveredStatusOfThisClientTemporaryWholeStoreDirectory:" title="discoveredStatusOfThisClientTemporaryWholeStoreDirectory:"></a>
+	<h3 class="subsubtitle method-title">discoveredStatusOfThisClientTemporaryWholeStoreDirectory:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate the status of this client&rsquo;s directory inside the <code>WholeStore</code> directory inside the <code>TemporaryFiles</code> directory for this document.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)discoveredStatusOfThisClientTemporaryWholeStoreDirectory:(TICDSRemoteFileStructureExistsResponseType)<em>status</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>status</em></dt>
+			<dd><p>The status of the directory: does exist, does not exist, or error (see <code>TICDSTypesAndEnums.h</code> for possible values).</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>TICDSRemoteFileStructureExistsResponseTypeError</code> for <code>status</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/discoveredStatusOfThisClientWholeStoreDirectory:" title="discoveredStatusOfThisClientWholeStoreDirectory:"></a>
+	<h3 class="subsubtitle method-title">discoveredStatusOfThisClientWholeStoreDirectory:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate the status of this client&rsquo;s directory inside the <code>WholeStore</code> directory for this document.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)discoveredStatusOfThisClientWholeStoreDirectory:(TICDSRemoteFileStructureExistsResponseType)<em>status</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>status</em></dt>
+			<dd><p>The status of the directory: does exist, does not exist, or error (see <code>TICDSTypesAndEnums.h</code> for possible values).</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>TICDSRemoteFileStructureExistsResponseTypeError</code> for <code>status</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectory" title="uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectory"></a>
+	<h3 class="subsubtitle method-title">uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectory</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Upload the file at <a href="#//api/name/localAppliedSyncChangeSetsFileLocation"><code>localAppliedSyncChangeSetsFileLocation</code></a> to the remote path <code>/Documents/documentIdentifier/TemporaryFiles/WholeStore/clientIdentifier/AppliedSyncChangeSets.ticdsync</code>.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)uploadLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectory</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/uploadedAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:"><code>uploadedAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:</code></a> when finished.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectory" title="uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectory"></a>
+	<h3 class="subsubtitle method-title">uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectory</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Upload the store at <a href="#//api/name/localWholeStoreFileLocation"><code>localWholeStoreFileLocation</code></a> to the remote path <code>/Documents/documentIdentifier/TemporaryFiles/WholeStore/clientIdentifier/WholeStore.ticdsync</code>.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)uploadLocalWholeStoreFileToThisClientTemporaryWholeStoreDirectory</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:"><code>uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:</code></a> when finished.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/uploadedAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:" title="uploadedAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:"></a>
+	<h3 class="subsubtitle method-title">uploadedAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the upload of the applied sync change sets file was successful.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)uploadedAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:(BOOL)<em>success</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p><code>YES</code> if the file was uploaded, otherwise <code>NO</code>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If not, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:" title="uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:"></a>
+	<h3 class="subsubtitle method-title">uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the upload of the whole store file was successful.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)uploadedWholeStoreFileToThisClientTemporaryWholeStoreDirectoryWithSuccess:(BOOL)<em>success</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p><code>YES</code> if the file was uploaded, otherwise <code>NO</code>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If not, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/uploadingLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryMadeProgress" title="uploadingLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryMadeProgress"></a>
+	<h3 class="subsubtitle method-title">uploadingLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryMadeProgress</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate that the upload of the whole store file made progress.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)uploadingLocalAppliedSyncChangeSetsFileToThisClientTemporaryWholeStoreDirectoryMadeProgress</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/uploadingWholeStoreFileToThisClientTemporaryWholeStoreDirectoryMadeProgress" title="uploadingWholeStoreFileToThisClientTemporaryWholeStoreDirectoryMadeProgress"></a>
+	<h3 class="subsubtitle method-title">uploadingWholeStoreFileToThisClientTemporaryWholeStoreDirectoryMadeProgress</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate that the upload of the whole store file made progress.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)uploadingWholeStoreFileToThisClientTemporaryWholeStoreDirectoryMadeProgress</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreUploadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2013 Tim Isted. All rights reserved. (Last updated: 2013-05-10)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 858)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

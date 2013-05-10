@@ -1,0 +1,1538 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>TICDSDocumentClientDeletionOperation Class Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.1 (build 858)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">TICoreDataSync </a></h1>
+				<a id="developerHome" href="../index.html">Tim Isted</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">TICDSDocumentClientDeletionOperation Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/clientWasFoundAndDeleted">&nbsp;&nbsp;&nbsp;&nbsp;clientWasFoundAndDeleted</option>
+	
+	<option value="//api/name/identifierOfClientToBeDeleted">&nbsp;&nbsp;&nbsp;&nbsp;identifierOfClientToBeDeleted</option>
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/checkWhetherClientDirectoryExistsInDocumentSyncChangesDirectory">&nbsp;&nbsp;&nbsp;&nbsp;- checkWhetherClientDirectoryExistsInDocumentSyncChangesDirectory</option>
+	
+	<option value="//api/name/checkWhetherClientDirectoryExistsInDocumentWholeStoreDirectory">&nbsp;&nbsp;&nbsp;&nbsp;- checkWhetherClientDirectoryExistsInDocumentWholeStoreDirectory</option>
+	
+	<option value="//api/name/checkWhetherClientIdentifierFileAlreadyExistsInDocumentDeletedClientsDirectory">&nbsp;&nbsp;&nbsp;&nbsp;- checkWhetherClientIdentifierFileAlreadyExistsInDocumentDeletedClientsDirectory</option>
+	
+	<option value="//api/name/checkWhetherClientIdentifierFileExistsInRecentSyncsDirectory">&nbsp;&nbsp;&nbsp;&nbsp;- checkWhetherClientIdentifierFileExistsInRecentSyncsDirectory</option>
+	
+	<option value="//api/name/copiedClientDeviceInfoPlistToDeletedClientsDirectoryWithSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- copiedClientDeviceInfoPlistToDeletedClientsDirectoryWithSuccess:</option>
+	
+	<option value="//api/name/copyClientDeviceInfoPlistToDeletedClientsDirectory">&nbsp;&nbsp;&nbsp;&nbsp;- copyClientDeviceInfoPlistToDeletedClientsDirectory</option>
+	
+	<option value="//api/name/deleteClientDirectoryFromDocumentSyncChangesDirectory">&nbsp;&nbsp;&nbsp;&nbsp;- deleteClientDirectoryFromDocumentSyncChangesDirectory</option>
+	
+	<option value="//api/name/deleteClientDirectoryFromDocumentSyncCommandsDirectory">&nbsp;&nbsp;&nbsp;&nbsp;- deleteClientDirectoryFromDocumentSyncCommandsDirectory</option>
+	
+	<option value="//api/name/deleteClientDirectoryFromDocumentWholeStoreDirectory">&nbsp;&nbsp;&nbsp;&nbsp;- deleteClientDirectoryFromDocumentWholeStoreDirectory</option>
+	
+	<option value="//api/name/deleteClientIdentifierFileFromDeletedClientsDirectory">&nbsp;&nbsp;&nbsp;&nbsp;- deleteClientIdentifierFileFromDeletedClientsDirectory</option>
+	
+	<option value="//api/name/deleteClientIdentifierFileFromRecentSyncsDirectory">&nbsp;&nbsp;&nbsp;&nbsp;- deleteClientIdentifierFileFromRecentSyncsDirectory</option>
+	
+	<option value="//api/name/deletedClientDirectoryFromDocumentSyncChangesDirectoryWithSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- deletedClientDirectoryFromDocumentSyncChangesDirectoryWithSuccess:</option>
+	
+	<option value="//api/name/deletedClientDirectoryFromDocumentSyncCommandsDirectoryWithSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- deletedClientDirectoryFromDocumentSyncCommandsDirectoryWithSuccess:</option>
+	
+	<option value="//api/name/deletedClientDirectoryFromDocumentWholeStoreDirectoryWithSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- deletedClientDirectoryFromDocumentWholeStoreDirectoryWithSuccess:</option>
+	
+	<option value="//api/name/deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:</option>
+	
+	<option value="//api/name/deletedClientIdentifierFileFromRecentSyncsDirectoryWithSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- deletedClientIdentifierFileFromRecentSyncsDirectoryWithSuccess:</option>
+	
+	<option value="//api/name/discoveredStatusOfClientDirectoryInDocumentSyncChangesDirectory:">&nbsp;&nbsp;&nbsp;&nbsp;- discoveredStatusOfClientDirectoryInDocumentSyncChangesDirectory:</option>
+	
+	<option value="//api/name/discoveredStatusOfClientDirectoryInDocumentWholeStoreDirectory:">&nbsp;&nbsp;&nbsp;&nbsp;- discoveredStatusOfClientDirectoryInDocumentWholeStoreDirectory:</option>
+	
+	<option value="//api/name/discoveredStatusOfClientIdentifierFileInDocumentDeletedClientsDirectory:">&nbsp;&nbsp;&nbsp;&nbsp;- discoveredStatusOfClientIdentifierFileInDocumentDeletedClientsDirectory:</option>
+	
+	<option value="//api/name/discoveredStatusOfClientIdentifierFileInDocumentRecentSyncsDirectory:">&nbsp;&nbsp;&nbsp;&nbsp;- discoveredStatusOfClientIdentifierFileInDocumentRecentSyncsDirectory:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Overridden Methods">Overridden Methods</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Callbacks">Callbacks</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Properties">Properties</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/clientWasFoundAndDeleted">clientWasFoundAndDeleted</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/identifierOfClientToBeDeleted">identifierOfClientToBeDeleted</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/checkWhetherClientDirectoryExistsInDocumentSyncChangesDirectory">checkWhetherClientDirectoryExistsInDocumentSyncChangesDirectory</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/checkWhetherClientDirectoryExistsInDocumentWholeStoreDirectory">checkWhetherClientDirectoryExistsInDocumentWholeStoreDirectory</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/checkWhetherClientIdentifierFileAlreadyExistsInDocumentDeletedClientsDirectory">checkWhetherClientIdentifierFileAlreadyExistsInDocumentDeletedClientsDirectory</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/checkWhetherClientIdentifierFileExistsInRecentSyncsDirectory">checkWhetherClientIdentifierFileExistsInRecentSyncsDirectory</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/copiedClientDeviceInfoPlistToDeletedClientsDirectoryWithSuccess:">copiedClientDeviceInfoPlistToDeletedClientsDirectoryWithSuccess:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/copyClientDeviceInfoPlistToDeletedClientsDirectory">copyClientDeviceInfoPlistToDeletedClientsDirectory</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deleteClientDirectoryFromDocumentSyncChangesDirectory">deleteClientDirectoryFromDocumentSyncChangesDirectory</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deleteClientDirectoryFromDocumentSyncCommandsDirectory">deleteClientDirectoryFromDocumentSyncCommandsDirectory</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deleteClientDirectoryFromDocumentWholeStoreDirectory">deleteClientDirectoryFromDocumentWholeStoreDirectory</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deleteClientIdentifierFileFromDeletedClientsDirectory">deleteClientIdentifierFileFromDeletedClientsDirectory</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deleteClientIdentifierFileFromRecentSyncsDirectory">deleteClientIdentifierFileFromRecentSyncsDirectory</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deletedClientDirectoryFromDocumentSyncChangesDirectoryWithSuccess:">deletedClientDirectoryFromDocumentSyncChangesDirectoryWithSuccess:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deletedClientDirectoryFromDocumentSyncCommandsDirectoryWithSuccess:">deletedClientDirectoryFromDocumentSyncCommandsDirectoryWithSuccess:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deletedClientDirectoryFromDocumentWholeStoreDirectoryWithSuccess:">deletedClientDirectoryFromDocumentWholeStoreDirectoryWithSuccess:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:">deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deletedClientIdentifierFileFromRecentSyncsDirectoryWithSuccess:">deletedClientIdentifierFileFromRecentSyncsDirectoryWithSuccess:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/discoveredStatusOfClientDirectoryInDocumentSyncChangesDirectory:">discoveredStatusOfClientDirectoryInDocumentSyncChangesDirectory:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/discoveredStatusOfClientDirectoryInDocumentWholeStoreDirectory:">discoveredStatusOfClientDirectoryInDocumentWholeStoreDirectory:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/discoveredStatusOfClientIdentifierFileInDocumentDeletedClientsDirectory:">discoveredStatusOfClientIdentifierFileInDocumentDeletedClientsDirectory:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/discoveredStatusOfClientIdentifierFileInDocumentRecentSyncsDirectory:">discoveredStatusOfClientIdentifierFileInDocumentRecentSyncsDirectory:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="TICDSDocumentClientDeletionOperation Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">TICDSDocumentClientDeletionOperation Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value"><a href="../Classes/TICDSOperation.html">TICDSOperation</a> : NSOperation</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">TICDSDocumentClientDeletionOperation.h</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The <code>TICDSDocumentClientDeletionOperation</code> class describes a generic operation used by the <code>TICoreDataSync</code> framework to delete the remote synchronization data used by a client to synchronize a document.</p>
+
+<p>The operation carries out the following tasks:</p>
+
+<ol>
+<li>Check whether the specified client has synchronized the document.</li>
+<li>Copy the <code>deviceInfo.plist</code> file to an <code>identifier.plist</code> file inside the document&rsquo;s <code>DeletedClients</code> directory.</li>
+<li>Delete the client&rsquo;s <code>SyncChanges</code>, <code>SyncCommands</code> and <code>WholeStore</code> directories for the document.</li>
+</ol>
+
+
+<p>Operations are typically created automatically by the relevant sync manager.</p><blockquote><p>%warning%<br/>
+<strong>Warning:</strong> You must use one of the subclasses of <a href="../Classes/TICDSDocumentDeletionOperation.html"><code>TICDSDocumentDeletionOperation</code></a>.</p></blockquote>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						<a title="Overridden Methods" name="task_Overridden Methods"></a>
+						<h3 class="subsubtitle task-title">Overridden Methods</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/checkWhetherClientDirectoryExistsInDocumentSyncChangesDirectory">&ndash;&nbsp;checkWhetherClientDirectoryExistsInDocumentSyncChangesDirectory</a></code>
+		<span class="tooltip"><p>Check whether a directory exists for the client inside the document&rsquo;s <code>SyncChanges</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/checkWhetherClientIdentifierFileAlreadyExistsInDocumentDeletedClientsDirectory">&ndash;&nbsp;checkWhetherClientIdentifierFileAlreadyExistsInDocumentDeletedClientsDirectory</a></code>
+		<span class="tooltip"><p>Check whether an <code>identifier.plist</code> file already exists for the client in the document&rsquo;s <code>DeletedClients</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/deleteClientIdentifierFileFromDeletedClientsDirectory">&ndash;&nbsp;deleteClientIdentifierFileFromDeletedClientsDirectory</a></code>
+		<span class="tooltip"><p>Delete the client&rsquo;s <code>identifier.plist</code> file from the document&rsquo;s <code>DeletedClients</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/copyClientDeviceInfoPlistToDeletedClientsDirectory">&ndash;&nbsp;copyClientDeviceInfoPlistToDeletedClientsDirectory</a></code>
+		<span class="tooltip"><p>Copy the client&rsquo;s <code>deviceInfo.plist</code> file to an <code>identifier.plist</code> file in the document&rsquo;s <code>DeletedClients</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/deleteClientDirectoryFromDocumentSyncChangesDirectory">&ndash;&nbsp;deleteClientDirectoryFromDocumentSyncChangesDirectory</a></code>
+		<span class="tooltip"><p>Delete the client&rsquo;s directory from the document&rsquo;s <code>SyncChanges</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/deleteClientDirectoryFromDocumentSyncCommandsDirectory">&ndash;&nbsp;deleteClientDirectoryFromDocumentSyncCommandsDirectory</a></code>
+		<span class="tooltip"><p>Delete the client&rsquo;s directory from the document&rsquo;s <code>SyncCommands</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/checkWhetherClientIdentifierFileExistsInRecentSyncsDirectory">&ndash;&nbsp;checkWhetherClientIdentifierFileExistsInRecentSyncsDirectory</a></code>
+		<span class="tooltip"><p>Checks whether a file exists for the client in the document&rsquo;s <code>RecentSyncs</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/deleteClientIdentifierFileFromRecentSyncsDirectory">&ndash;&nbsp;deleteClientIdentifierFileFromRecentSyncsDirectory</a></code>
+		<span class="tooltip"><p>Delete the client&rsquo;s file from the document&rsquo;s <code>RecentSyncs</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/checkWhetherClientDirectoryExistsInDocumentWholeStoreDirectory">&ndash;&nbsp;checkWhetherClientDirectoryExistsInDocumentWholeStoreDirectory</a></code>
+		<span class="tooltip"><p>Check whether a directory exists for the client in the document&rsquo;s <code>WholeStore</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/deleteClientDirectoryFromDocumentWholeStoreDirectory">&ndash;&nbsp;deleteClientDirectoryFromDocumentWholeStoreDirectory</a></code>
+		<span class="tooltip"><p>Delete the client&rsquo;s directory from the document&rsquo;s <code>WholeStore</code> directory.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Callbacks" name="task_Callbacks"></a>
+						<h3 class="subsubtitle task-title">Callbacks</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/discoveredStatusOfClientDirectoryInDocumentSyncChangesDirectory:">&ndash;&nbsp;discoveredStatusOfClientDirectoryInDocumentSyncChangesDirectory:</a></code>
+		<span class="tooltip"><p>Indicate the status of the client&rsquo;s directory inside the document&rsquo;s <code>SyncChanges</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/discoveredStatusOfClientIdentifierFileInDocumentDeletedClientsDirectory:">&ndash;&nbsp;discoveredStatusOfClientIdentifierFileInDocumentDeletedClientsDirectory:</a></code>
+		<span class="tooltip"><p>Indicate the status of the client&rsquo;s identifier.plist inside the document&rsquo;s <code>DeletedClients</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:">&ndash;&nbsp;deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:</a></code>
+		<span class="tooltip"><p>Indicate whether the <code>identifier.plist</code> file was deleted successfully from the document&rsquo;s <code>DeletedClients</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/copiedClientDeviceInfoPlistToDeletedClientsDirectoryWithSuccess:">&ndash;&nbsp;copiedClientDeviceInfoPlistToDeletedClientsDirectoryWithSuccess:</a></code>
+		<span class="tooltip"><p>Indicate whether the client&rsquo;s <code>deviceInfo.plist</code> file was copied to an <code>identifier.plist</code> file in the document&rsquo;s <code>DeletedClients</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/deletedClientDirectoryFromDocumentSyncChangesDirectoryWithSuccess:">&ndash;&nbsp;deletedClientDirectoryFromDocumentSyncChangesDirectoryWithSuccess:</a></code>
+		<span class="tooltip"><p>Indicate whether the client&rsquo;s directory was deleted successfully from the document&rsquo;s <code>SyncChanges</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/deletedClientDirectoryFromDocumentSyncCommandsDirectoryWithSuccess:">&ndash;&nbsp;deletedClientDirectoryFromDocumentSyncCommandsDirectoryWithSuccess:</a></code>
+		<span class="tooltip"><p>Indicate whether the client&rsquo;s directory was deleted successfully from the document&rsquo;s <code>SyncCommands</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/discoveredStatusOfClientIdentifierFileInDocumentRecentSyncsDirectory:">&ndash;&nbsp;discoveredStatusOfClientIdentifierFileInDocumentRecentSyncsDirectory:</a></code>
+		<span class="tooltip"><p>Indicate the status of the client&rsquo;s file inside the document&rsquo;s <code>RecentSyncs</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/deletedClientIdentifierFileFromRecentSyncsDirectoryWithSuccess:">&ndash;&nbsp;deletedClientIdentifierFileFromRecentSyncsDirectoryWithSuccess:</a></code>
+		<span class="tooltip"><p>Indicate whether the client&rsquo;s file was deleted successfully from the document&rsquo;s <code>RecentSyncs</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/discoveredStatusOfClientDirectoryInDocumentWholeStoreDirectory:">&ndash;&nbsp;discoveredStatusOfClientDirectoryInDocumentWholeStoreDirectory:</a></code>
+		<span class="tooltip"><p>Indicate the status of the client&rsquo;s directory inside the document&rsquo;s <code>WholeStore</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/deletedClientDirectoryFromDocumentWholeStoreDirectoryWithSuccess:">&ndash;&nbsp;deletedClientDirectoryFromDocumentWholeStoreDirectoryWithSuccess:</a></code>
+		<span class="tooltip"><p>Indicate whether the client&rsquo;s directory was deleted successfully from the document&rsquo;s <code>WholeStore</code> directory.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Properties" name="task_Properties"></a>
+						<h3 class="subsubtitle task-title">Properties</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/identifierOfClientToBeDeleted">&nbsp;&nbsp;identifierOfClientToBeDeleted</a></code>
+		<span class="tooltip"><p>The identifier of the client to be deleted.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/clientWasFoundAndDeleted">&nbsp;&nbsp;clientWasFoundAndDeleted</a></code>
+		<span class="tooltip"><p>Used to indicate (once the operation completes) whether the client was found and deleted successfully.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/clientWasFoundAndDeleted" title="clientWasFoundAndDeleted"></a>
+	<h3 class="subsubtitle method-title">clientWasFoundAndDeleted</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Used to indicate (once the operation completes) whether the client was found and deleted successfully.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (assign) BOOL clientWasFoundAndDeleted</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentClientDeletionOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/identifierOfClientToBeDeleted" title="identifierOfClientToBeDeleted"></a>
+	<h3 class="subsubtitle method-title">identifierOfClientToBeDeleted</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The identifier of the client to be deleted.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (copy) NSString *identifierOfClientToBeDeleted</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentClientDeletionOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/checkWhetherClientDirectoryExistsInDocumentSyncChangesDirectory" title="checkWhetherClientDirectoryExistsInDocumentSyncChangesDirectory"></a>
+	<h3 class="subsubtitle method-title">checkWhetherClientDirectoryExistsInDocumentSyncChangesDirectory</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Check whether a directory exists for the client inside the document&rsquo;s <code>SyncChanges</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)checkWhetherClientDirectoryExistsInDocumentSyncChangesDirectory</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/discoveredStatusOfClientDirectoryInDocumentSyncChangesDirectory:"><code>discoveredStatusOfClientDirectoryInDocumentSyncChangesDirectory:</code></a> to indicate the status.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentClientDeletionOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/checkWhetherClientDirectoryExistsInDocumentWholeStoreDirectory" title="checkWhetherClientDirectoryExistsInDocumentWholeStoreDirectory"></a>
+	<h3 class="subsubtitle method-title">checkWhetherClientDirectoryExistsInDocumentWholeStoreDirectory</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Check whether a directory exists for the client in the document&rsquo;s <code>WholeStore</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)checkWhetherClientDirectoryExistsInDocumentWholeStoreDirectory</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/discoveredStatusOfClientDirectoryInDocumentWholeStoreDirectory:"><code>discoveredStatusOfClientDirectoryInDocumentWholeStoreDirectory:</code></a> to indicate the status.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentClientDeletionOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/checkWhetherClientIdentifierFileAlreadyExistsInDocumentDeletedClientsDirectory" title="checkWhetherClientIdentifierFileAlreadyExistsInDocumentDeletedClientsDirectory"></a>
+	<h3 class="subsubtitle method-title">checkWhetherClientIdentifierFileAlreadyExistsInDocumentDeletedClientsDirectory</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Check whether an <code>identifier.plist</code> file already exists for the client in the document&rsquo;s <code>DeletedClients</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)checkWhetherClientIdentifierFileAlreadyExistsInDocumentDeletedClientsDirectory</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/discoveredStatusOfClientIdentifierFileInDocumentDeletedClientsDirectory:"><code>discoveredStatusOfClientIdentifierFileInDocumentDeletedClientsDirectory:</code></a> to indicate the status.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentClientDeletionOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/checkWhetherClientIdentifierFileExistsInRecentSyncsDirectory" title="checkWhetherClientIdentifierFileExistsInRecentSyncsDirectory"></a>
+	<h3 class="subsubtitle method-title">checkWhetherClientIdentifierFileExistsInRecentSyncsDirectory</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Checks whether a file exists for the client in the document&rsquo;s <code>RecentSyncs</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)checkWhetherClientIdentifierFileExistsInRecentSyncsDirectory</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/discoveredStatusOfClientIdentifierFileInDocumentRecentSyncsDirectory:"><code>discoveredStatusOfClientIdentifierFileInDocumentRecentSyncsDirectory:</code></a> when finished.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentClientDeletionOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/copiedClientDeviceInfoPlistToDeletedClientsDirectoryWithSuccess:" title="copiedClientDeviceInfoPlistToDeletedClientsDirectoryWithSuccess:"></a>
+	<h3 class="subsubtitle method-title">copiedClientDeviceInfoPlistToDeletedClientsDirectoryWithSuccess:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the client&rsquo;s <code>deviceInfo.plist</code> file was copied to an <code>identifier.plist</code> file in the document&rsquo;s <code>DeletedClients</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)copiedClientDeviceInfoPlistToDeletedClientsDirectoryWithSuccess:(BOOL)<em>success</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p><code>YES</code> if the file was copied successfully, or <code>NO</code> if an error occurred.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentClientDeletionOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/copyClientDeviceInfoPlistToDeletedClientsDirectory" title="copyClientDeviceInfoPlistToDeletedClientsDirectory"></a>
+	<h3 class="subsubtitle method-title">copyClientDeviceInfoPlistToDeletedClientsDirectory</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Copy the client&rsquo;s <code>deviceInfo.plist</code> file to an <code>identifier.plist</code> file in the document&rsquo;s <code>DeletedClients</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)copyClientDeviceInfoPlistToDeletedClientsDirectory</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/copiedClientDeviceInfoPlistToDeletedClientsDirectoryWithSuccess:"><code>copiedClientDeviceInfoPlistToDeletedClientsDirectoryWithSuccess:</code></a> when finished.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentClientDeletionOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/deleteClientDirectoryFromDocumentSyncChangesDirectory" title="deleteClientDirectoryFromDocumentSyncChangesDirectory"></a>
+	<h3 class="subsubtitle method-title">deleteClientDirectoryFromDocumentSyncChangesDirectory</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Delete the client&rsquo;s directory from the document&rsquo;s <code>SyncChanges</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)deleteClientDirectoryFromDocumentSyncChangesDirectory</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/deletedClientDirectoryFromDocumentSyncChangesDirectoryWithSuccess:"><code>deletedClientDirectoryFromDocumentSyncChangesDirectoryWithSuccess:</code></a> when finished.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentClientDeletionOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/deleteClientDirectoryFromDocumentSyncCommandsDirectory" title="deleteClientDirectoryFromDocumentSyncCommandsDirectory"></a>
+	<h3 class="subsubtitle method-title">deleteClientDirectoryFromDocumentSyncCommandsDirectory</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Delete the client&rsquo;s directory from the document&rsquo;s <code>SyncCommands</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)deleteClientDirectoryFromDocumentSyncCommandsDirectory</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/deletedClientDirectoryFromDocumentSyncCommandsDirectoryWithSuccess:"><code>deletedClientDirectoryFromDocumentSyncCommandsDirectoryWithSuccess:</code></a> when finished.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentClientDeletionOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/deleteClientDirectoryFromDocumentWholeStoreDirectory" title="deleteClientDirectoryFromDocumentWholeStoreDirectory"></a>
+	<h3 class="subsubtitle method-title">deleteClientDirectoryFromDocumentWholeStoreDirectory</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Delete the client&rsquo;s directory from the document&rsquo;s <code>WholeStore</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)deleteClientDirectoryFromDocumentWholeStoreDirectory</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/deletedClientDirectoryFromDocumentWholeStoreDirectoryWithSuccess:"><code>deletedClientDirectoryFromDocumentWholeStoreDirectoryWithSuccess:</code></a> when finished.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentClientDeletionOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/deleteClientIdentifierFileFromDeletedClientsDirectory" title="deleteClientIdentifierFileFromDeletedClientsDirectory"></a>
+	<h3 class="subsubtitle method-title">deleteClientIdentifierFileFromDeletedClientsDirectory</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Delete the client&rsquo;s <code>identifier.plist</code> file from the document&rsquo;s <code>DeletedClients</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)deleteClientIdentifierFileFromDeletedClientsDirectory</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:"><code>deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:</code></a> to indicate the status.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentClientDeletionOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/deleteClientIdentifierFileFromRecentSyncsDirectory" title="deleteClientIdentifierFileFromRecentSyncsDirectory"></a>
+	<h3 class="subsubtitle method-title">deleteClientIdentifierFileFromRecentSyncsDirectory</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Delete the client&rsquo;s file from the document&rsquo;s <code>RecentSyncs</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)deleteClientIdentifierFileFromRecentSyncsDirectory</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <code>blah:</code> when finished.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentClientDeletionOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/deletedClientDirectoryFromDocumentSyncChangesDirectoryWithSuccess:" title="deletedClientDirectoryFromDocumentSyncChangesDirectoryWithSuccess:"></a>
+	<h3 class="subsubtitle method-title">deletedClientDirectoryFromDocumentSyncChangesDirectoryWithSuccess:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the client&rsquo;s directory was deleted successfully from the document&rsquo;s <code>SyncChanges</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)deletedClientDirectoryFromDocumentSyncChangesDirectoryWithSuccess:(BOOL)<em>success</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p><code>YES</code> if the directory was deleted successfully, or <code>NO</code> if an error occurred.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentClientDeletionOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/deletedClientDirectoryFromDocumentSyncCommandsDirectoryWithSuccess:" title="deletedClientDirectoryFromDocumentSyncCommandsDirectoryWithSuccess:"></a>
+	<h3 class="subsubtitle method-title">deletedClientDirectoryFromDocumentSyncCommandsDirectoryWithSuccess:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the client&rsquo;s directory was deleted successfully from the document&rsquo;s <code>SyncCommands</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)deletedClientDirectoryFromDocumentSyncCommandsDirectoryWithSuccess:(BOOL)<em>success</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p><code>YES</code> if the directory was deleted successfully, or <code>NO</code> if an error occurred.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentClientDeletionOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/deletedClientDirectoryFromDocumentWholeStoreDirectoryWithSuccess:" title="deletedClientDirectoryFromDocumentWholeStoreDirectoryWithSuccess:"></a>
+	<h3 class="subsubtitle method-title">deletedClientDirectoryFromDocumentWholeStoreDirectoryWithSuccess:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the client&rsquo;s directory was deleted successfully from the document&rsquo;s <code>WholeStore</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)deletedClientDirectoryFromDocumentWholeStoreDirectoryWithSuccess:(BOOL)<em>success</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p><code>YES</code> if the directory was deleted successfully, or <code>NO</code> if an error occurred.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentClientDeletionOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:" title="deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:"></a>
+	<h3 class="subsubtitle method-title">deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the <code>identifier.plist</code> file was deleted successfully from the document&rsquo;s <code>DeletedClients</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)deletedClientIdentifierFileFromDeletedClientsDirectoryWithSuccess:(BOOL)<em>success</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p><code>YES</code> if the file was deleted successfully, or <code>NO</code> if an error occurred.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentClientDeletionOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/deletedClientIdentifierFileFromRecentSyncsDirectoryWithSuccess:" title="deletedClientIdentifierFileFromRecentSyncsDirectoryWithSuccess:"></a>
+	<h3 class="subsubtitle method-title">deletedClientIdentifierFileFromRecentSyncsDirectoryWithSuccess:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the client&rsquo;s file was deleted successfully from the document&rsquo;s <code>RecentSyncs</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)deletedClientIdentifierFileFromRecentSyncsDirectoryWithSuccess:(BOOL)<em>success</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p><code>YES</code> if the directory was deleted successfully, or <code>NO</code> if an error occurred.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentClientDeletionOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/discoveredStatusOfClientDirectoryInDocumentSyncChangesDirectory:" title="discoveredStatusOfClientDirectoryInDocumentSyncChangesDirectory:"></a>
+	<h3 class="subsubtitle method-title">discoveredStatusOfClientDirectoryInDocumentSyncChangesDirectory:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate the status of the client&rsquo;s directory inside the document&rsquo;s <code>SyncChanges</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)discoveredStatusOfClientDirectoryInDocumentSyncChangesDirectory:(TICDSRemoteFileStructureExistsResponseType)<em>status</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>status</em></dt>
+			<dd><p>The status of the directory: does exist, does not exist, or error (see <code>TICDSTypesAndEnums.h</code> for possible values).</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>TICDSRemoteFileStructureExistsResponseTypeError</code> for <code>status</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentClientDeletionOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/discoveredStatusOfClientDirectoryInDocumentWholeStoreDirectory:" title="discoveredStatusOfClientDirectoryInDocumentWholeStoreDirectory:"></a>
+	<h3 class="subsubtitle method-title">discoveredStatusOfClientDirectoryInDocumentWholeStoreDirectory:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate the status of the client&rsquo;s directory inside the document&rsquo;s <code>WholeStore</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)discoveredStatusOfClientDirectoryInDocumentWholeStoreDirectory:(TICDSRemoteFileStructureExistsResponseType)<em>status</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>status</em></dt>
+			<dd><p>The status of the directory: does exist, does not exist, or error (see <code>TICDSTypesAndEnums.h</code> for possible values).</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>TICDSRemoteFileStructureExistsResponseTypeError</code> for <code>status</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentClientDeletionOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/discoveredStatusOfClientIdentifierFileInDocumentDeletedClientsDirectory:" title="discoveredStatusOfClientIdentifierFileInDocumentDeletedClientsDirectory:"></a>
+	<h3 class="subsubtitle method-title">discoveredStatusOfClientIdentifierFileInDocumentDeletedClientsDirectory:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate the status of the client&rsquo;s identifier.plist inside the document&rsquo;s <code>DeletedClients</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)discoveredStatusOfClientIdentifierFileInDocumentDeletedClientsDirectory:(TICDSRemoteFileStructureExistsResponseType)<em>status</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>status</em></dt>
+			<dd><p>The status of the file: does exist, does not exist, or error (see <code>TICDSTypesAndEnums.h</code> for possible values).</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>TICDSRemoteFileStructureExistsResponseTypeError</code> for <code>status</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentClientDeletionOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/discoveredStatusOfClientIdentifierFileInDocumentRecentSyncsDirectory:" title="discoveredStatusOfClientIdentifierFileInDocumentRecentSyncsDirectory:"></a>
+	<h3 class="subsubtitle method-title">discoveredStatusOfClientIdentifierFileInDocumentRecentSyncsDirectory:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate the status of the client&rsquo;s file inside the document&rsquo;s <code>RecentSyncs</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)discoveredStatusOfClientIdentifierFileInDocumentRecentSyncsDirectory:(TICDSRemoteFileStructureExistsResponseType)<em>status</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>status</em></dt>
+			<dd><p>The status of the directory: does exist, does not exist, or error (see <code>TICDSTypesAndEnums.h</code> for possible values).</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>TICDSRemoteFileStructureExistsResponseTypeError</code> for <code>status</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSDocumentClientDeletionOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2013 Tim Isted. All rights reserved. (Last updated: 2013-05-10)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 858)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,1987 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>TICDSApplicationRegistrationOperation Class Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.1 (build 858)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">TICoreDataSync </a></h1>
+				<a id="developerHome" href="../index.html">Tim Isted</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">TICDSApplicationRegistrationOperation Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/appIdentifier">&nbsp;&nbsp;&nbsp;&nbsp;appIdentifier</option>
+	
+	<option value="//api/name/applicationUserInfo">&nbsp;&nbsp;&nbsp;&nbsp;applicationUserInfo</option>
+	
+	<option value="//api/name/clientDescription">&nbsp;&nbsp;&nbsp;&nbsp;clientDescription</option>
+	
+	<option value="//api/name/password">&nbsp;&nbsp;&nbsp;&nbsp;password</option>
+	
+	<option value="//api/name/paused">&nbsp;&nbsp;&nbsp;&nbsp;paused</option>
+	
+	<option value="//api/name/saltData">&nbsp;&nbsp;&nbsp;&nbsp;saltData</option>
+	
+	<option value="//api/name/shouldCreateClientDirectory">&nbsp;&nbsp;&nbsp;&nbsp;shouldCreateClientDirectory</option>
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/checkWhetherRemoteClientDeviceDirectoryExists">&nbsp;&nbsp;&nbsp;&nbsp;- checkWhetherRemoteClientDeviceDirectoryExists</option>
+	
+	<option value="//api/name/checkWhetherRemoteGlobalAppDirectoryExists">&nbsp;&nbsp;&nbsp;&nbsp;- checkWhetherRemoteGlobalAppDirectoryExists</option>
+	
+	<option value="//api/name/checkWhetherSaltFileExists">&nbsp;&nbsp;&nbsp;&nbsp;- checkWhetherSaltFileExists</option>
+	
+	<option value="//api/name/copiedReadMeTxtFileToRootOfGlobalAppDirectoryWithSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- copiedReadMeTxtFileToRootOfGlobalAppDirectoryWithSuccess:</option>
+	
+	<option value="//api/name/copyReadMeTxtFileToRootOfGlobalAppDirectoryFromPath:">&nbsp;&nbsp;&nbsp;&nbsp;- copyReadMeTxtFileToRootOfGlobalAppDirectoryFromPath:</option>
+	
+	<option value="//api/name/createRemoteClientDeviceDirectory">&nbsp;&nbsp;&nbsp;&nbsp;- createRemoteClientDeviceDirectory</option>
+	
+	<option value="//api/name/createRemoteGlobalAppDirectoryStructure">&nbsp;&nbsp;&nbsp;&nbsp;- createRemoteGlobalAppDirectoryStructure</option>
+	
+	<option value="//api/name/createdRemoteClientDeviceDirectoryWithSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- createdRemoteClientDeviceDirectoryWithSuccess:</option>
+	
+	<option value="//api/name/createdRemoteGlobalAppDirectoryStructureWithSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- createdRemoteGlobalAppDirectoryStructureWithSuccess:</option>
+	
+	<option value="//api/name/discoveredStatusOfRemoteGlobalAppDirectory:">&nbsp;&nbsp;&nbsp;&nbsp;- discoveredStatusOfRemoteGlobalAppDirectory:</option>
+	
+	<option value="//api/name/discoveredStatusOfSaltFile:">&nbsp;&nbsp;&nbsp;&nbsp;- discoveredStatusOfSaltFile:</option>
+	
+	<option value="//api/name/fetchPasswordTestData">&nbsp;&nbsp;&nbsp;&nbsp;- fetchPasswordTestData</option>
+	
+	<option value="//api/name/fetchSaltData">&nbsp;&nbsp;&nbsp;&nbsp;- fetchSaltData</option>
+	
+	<option value="//api/name/fetchedPasswordTestData:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchedPasswordTestData:</option>
+	
+	<option value="//api/name/fetchedSaltData:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchedSaltData:</option>
+	
+	<option value="//api/name/initWithDelegate:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithDelegate:</option>
+	
+	<option value="//api/name/savePasswordTestData:">&nbsp;&nbsp;&nbsp;&nbsp;- savePasswordTestData:</option>
+	
+	<option value="//api/name/saveRemoteClientDeviceInfoPlistFromDictionary:">&nbsp;&nbsp;&nbsp;&nbsp;- saveRemoteClientDeviceInfoPlistFromDictionary:</option>
+	
+	<option value="//api/name/saveSaltDataToRemote:">&nbsp;&nbsp;&nbsp;&nbsp;- saveSaltDataToRemote:</option>
+	
+	<option value="//api/name/savedPasswordTestDataWithSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- savedPasswordTestDataWithSuccess:</option>
+	
+	<option value="//api/name/savedRemoteClientDeviceInfoPlistWithSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- savedRemoteClientDeviceInfoPlistWithSuccess:</option>
+	
+	<option value="//api/name/savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Designated Initializer">Designated Initializer</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Methods Overridden by Subclasses">Methods Overridden by Subclasses</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Callbacks">Callbacks</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Properties">Properties</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/appIdentifier">appIdentifier</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applicationUserInfo">applicationUserInfo</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/clientDescription">clientDescription</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/password">password</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/paused">paused</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/saltData">saltData</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/shouldCreateClientDirectory">shouldCreateClientDirectory</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/checkWhetherRemoteClientDeviceDirectoryExists">checkWhetherRemoteClientDeviceDirectoryExists</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/checkWhetherRemoteGlobalAppDirectoryExists">checkWhetherRemoteGlobalAppDirectoryExists</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/checkWhetherSaltFileExists">checkWhetherSaltFileExists</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/copiedReadMeTxtFileToRootOfGlobalAppDirectoryWithSuccess:">copiedReadMeTxtFileToRootOfGlobalAppDirectoryWithSuccess:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/copyReadMeTxtFileToRootOfGlobalAppDirectoryFromPath:">copyReadMeTxtFileToRootOfGlobalAppDirectoryFromPath:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/createRemoteClientDeviceDirectory">createRemoteClientDeviceDirectory</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/createRemoteGlobalAppDirectoryStructure">createRemoteGlobalAppDirectoryStructure</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/createdRemoteClientDeviceDirectoryWithSuccess:">createdRemoteClientDeviceDirectoryWithSuccess:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/createdRemoteGlobalAppDirectoryStructureWithSuccess:">createdRemoteGlobalAppDirectoryStructureWithSuccess:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/discoveredStatusOfRemoteGlobalAppDirectory:">discoveredStatusOfRemoteGlobalAppDirectory:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/discoveredStatusOfSaltFile:">discoveredStatusOfSaltFile:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchPasswordTestData">fetchPasswordTestData</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchSaltData">fetchSaltData</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchedPasswordTestData:">fetchedPasswordTestData:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchedSaltData:">fetchedSaltData:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithDelegate:">initWithDelegate:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/savePasswordTestData:">savePasswordTestData:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/saveRemoteClientDeviceInfoPlistFromDictionary:">saveRemoteClientDeviceInfoPlistFromDictionary:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/saveSaltDataToRemote:">saveSaltDataToRemote:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/savedPasswordTestDataWithSuccess:">savedPasswordTestDataWithSuccess:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/savedRemoteClientDeviceInfoPlistWithSuccess:">savedRemoteClientDeviceInfoPlistWithSuccess:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:">savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="TICDSApplicationRegistrationOperation Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">TICDSApplicationRegistrationOperation Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value"><a href="../Classes/TICDSOperation.html">TICDSOperation</a> : NSOperation</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">TICDSApplicationRegistrationOperation.h</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The <code>TICDSApplicationRegistrationOperation</code> class describes a generic operation used by the <code>TICoreDataSync</code> framework to register an application for future synchronization of documents.</p>
+
+<p>The operation carries out the following tasks:</p>
+
+<ol>
+<li><p>Subclass checks whether the <a href="#//api/name/appIdentifier"><code>appIdentifier</code></a> directory exists on the remote.</p>
+
+<ol>
+<li><p>If not, blitz any existing keychain items, then ask the application sync manager whether to use encryption (get a <a href="#//api/name/password">password</a>, if so), then:</p>
+
+<ol>
+<li><p>Subclass creates the <a href="#//api/name/appIdentifier"><code>appIdentifier</code></a> directory on the remote, and general file structure (directories only).</p></li>
+<li><p>Subclass saves the <code>ReadMe.txt</code> file at the root.</p></li>
+<li><p>If encryption is enabled, create the <a href="../Classes/FZACryptor.html"><code>FZACryptor</code></a> and set its <a href="#//api/name/password">password</a>.</p></li>
+<li><p>If encryption is enabled, subclass saves the generated salt file in the remote <code>Encryption</code> directory.</p></li>
+<li><p>If encryption is enabled, subclass saves a suitable file for <a href="#//api/name/password">password</a> testing in the remote <code>Encryption</code> directory.</p></li>
+<li><p>Continue by creating the client&rsquo;s directory (main step 3) inside <code>ClientDevices</code>.</p></li>
+</ol>
+</li>
+<li><p>If app has been registered before, subclass checks whether the salt file exists on the remote, and <code>shouldUseEncryption</code> is set accordingly, then:</p>
+
+<ol>
+<li><p>Subclass checks whether the client&rsquo;s directory exists inside <code>ClientDevices</code>.</p></li>
+<li><p>If not, any existing keychain items are blitzed, then:</p>
+
+<ol>
+<li><p>If encryption is disabled, continue by creating the client&rsquo;s directory (main step 3) inside <code>ClientDevices</code>.</p></li>
+<li><p>If encryption is enabled, subclass downloads the salt file and sets the <a href="#//api/name/saltData"><code>saltData</code></a> operation property.</p></li>
+<li><p>The application sync manager is asked for the <a href="#//api/name/password">password</a>.</p></li>
+<li><p>The <a href="../Classes/FZACryptor.html"><code>FZACryptor</code></a> is configured with <a href="#//api/name/password">password</a> and salt, and the test file is downloaded.</p></li>
+</ol>
+</li>
+<li><p>If the directory exists, and encryption is disabled, then operation is complete.</p></li>
+</ol>
+</li>
+<li><p> If app has been registered before, subclass checks whether the salt file exists on the remote.</p>
+
+<ol>
+<li><p>If not, encryption is disabled, so continue by checking whether the client has registered before.</p></li>
+<li><p>If salt file exists, encryption is enabled, so check whether the <a href="../Classes/FZACryptor.html"><code>FZACryptor</code></a> has a <a href="#//api/name/password">password</a> and salt.</p>
+
+<ol>
+<li><p>If not, subclass downloads the salt, the application sync manager is asked to get the <a href="#//api/name/password">password</a> from the user, then the <a href="../Classes/FZACryptor.html"><code>FZACryptor</code></a> is configured.</p></li>
+<li><p>Once downloaded, or if <a href="../Classes/FZACryptor.html"><code>FZACryptor</code></a> already has the <a href="#//api/name/password">password</a>, continue by subclass checking whether the client&rsquo;s directory exists inside <code>ClientDevices</code>.</p></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p>Subclass checks whether the client&rsquo;s directory exists inside <code>ClientDevices</code>.</p></li>
+<li><p>If not, subclass creates client&rsquo;s directory inside <code>ClientDevices</code>, then:</p>
+
+<ol>
+<li><p> <code>documentInfo.plist</code> is created, and encrypted, if necessary.</p></li>
+<li><p> Subclass uploads the <code>documentInfo.plist</code> file to the remote.</p></li>
+</ol>
+</li>
+</ol>
+
+
+<p>Operations are typically created automatically by the relevant sync manager.</p><blockquote><p>%warning%<br/>
+<strong>Warning:</strong> You must use one of the subclasses of <code>TICDSApplicationRegistrationOperation</code>.</p></blockquote>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						<a title="Designated Initializer" name="task_Designated Initializer"></a>
+						<h3 class="subsubtitle task-title">Designated Initializer</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithDelegate:">&ndash;&nbsp;initWithDelegate:</a></code>
+		<span class="tooltip"><p>Initialize an application registration operation using a delegate that supports the <a href="../Protocols/TICDSApplicationRegistrationOperationDelegate.html"><code>TICDSApplicationRegistrationOperationDelegate</code></a> protocol.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Methods Overridden by Subclasses" name="task_Methods Overridden by Subclasses"></a>
+						<h3 class="subsubtitle task-title">Methods Overridden by Subclasses</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/checkWhetherRemoteGlobalAppDirectoryExists">&ndash;&nbsp;checkWhetherRemoteGlobalAppDirectoryExists</a></code>
+		<span class="tooltip"><p>Check whether a directory exists for this application.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/createRemoteGlobalAppDirectoryStructure">&ndash;&nbsp;createRemoteGlobalAppDirectoryStructure</a></code>
+		<span class="tooltip"><p>Create global application directory structure.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/copyReadMeTxtFileToRootOfGlobalAppDirectoryFromPath:">&ndash;&nbsp;copyReadMeTxtFileToRootOfGlobalAppDirectoryFromPath:</a></code>
+		<span class="tooltip"><p>Copy the <code>ReadMe.txt</code> file from the bundle to the root of this application&rsquo;s remote directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/checkWhetherSaltFileExists">&ndash;&nbsp;checkWhetherSaltFileExists</a></code>
+		<span class="tooltip"><p>Check whether the <code>salt.ticdsync</code> file exists at the root of the application&rsquo;s remote directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchSaltData">&ndash;&nbsp;fetchSaltData</a></code>
+		<span class="tooltip"><p>Fetch the data from the <code>salt.ticdsync</code> file.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/saveSaltDataToRemote:">&ndash;&nbsp;saveSaltDataToRemote:</a></code>
+		<span class="tooltip"><p>Save the salt data to a <code>salt.ticdsync</code> file at the root of the application&rsquo;s remote directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/savePasswordTestData:">&ndash;&nbsp;savePasswordTestData:</a></code>
+		<span class="tooltip"><p>Save the test data to a <code>test.ticdsync</code> file in the <code>Encryption</code> directory at the root of the application&rsquo;s remote directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchPasswordTestData">&ndash;&nbsp;fetchPasswordTestData</a></code>
+		<span class="tooltip"><p>Fetch the test data from the <code>test.ticdsync</code> file in the <code>Encryption</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/checkWhetherRemoteClientDeviceDirectoryExists">&ndash;&nbsp;checkWhetherRemoteClientDeviceDirectoryExists</a></code>
+		<span class="tooltip"><p>Check whether the client&rsquo;s directory already exists in <code>ClientDevices</code>.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/createRemoteClientDeviceDirectory">&ndash;&nbsp;createRemoteClientDeviceDirectory</a></code>
+		<span class="tooltip"><p>Create the client&rsquo;s directory in <code>ClientDevices</code>.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/saveRemoteClientDeviceInfoPlistFromDictionary:">&ndash;&nbsp;saveRemoteClientDeviceInfoPlistFromDictionary:</a></code>
+		<span class="tooltip"><p>Save the dictionary to a <code>deviceInfo.plist</code> file in this client&rsquo;s directory inside the <code>ClientDevices</code> directory.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Callbacks" name="task_Callbacks"></a>
+						<h3 class="subsubtitle task-title">Callbacks</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/discoveredStatusOfRemoteGlobalAppDirectory:">&ndash;&nbsp;discoveredStatusOfRemoteGlobalAppDirectory:</a></code>
+		<span class="tooltip"><p>Indicate the status of the global application directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/createdRemoteGlobalAppDirectoryStructureWithSuccess:">&ndash;&nbsp;createdRemoteGlobalAppDirectoryStructureWithSuccess:</a></code>
+		<span class="tooltip"><p>Indicate whether the creation of the global app directory structure was successful.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/copiedReadMeTxtFileToRootOfGlobalAppDirectoryWithSuccess:">&ndash;&nbsp;copiedReadMeTxtFileToRootOfGlobalAppDirectoryWithSuccess:</a></code>
+		<span class="tooltip"><p>Indicate whether the <code>ReadMe.txt</code> file was copied from the bundle.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/discoveredStatusOfSaltFile:">&ndash;&nbsp;discoveredStatusOfSaltFile:</a></code>
+		<span class="tooltip"><p>Indicate the status of the <code>salt.ticdsync</code> file.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchedSaltData:">&ndash;&nbsp;fetchedSaltData:</a></code>
+		<span class="tooltip"><p>Provide the data from the <code>salt.ticdsync</code> file.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:">&ndash;&nbsp;savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:</a></code>
+		<span class="tooltip"><p>Indicate whether the salt data was saved successfully.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/savedPasswordTestDataWithSuccess:">&ndash;&nbsp;savedPasswordTestDataWithSuccess:</a></code>
+		<span class="tooltip"><p>Indicate whether the test data was saved successfuly.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchedPasswordTestData:">&ndash;&nbsp;fetchedPasswordTestData:</a></code>
+		<span class="tooltip"><p>Provide the test data from the <code>test.ticdsync</code> file.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/createdRemoteClientDeviceDirectoryWithSuccess:">&ndash;&nbsp;createdRemoteClientDeviceDirectoryWithSuccess:</a></code>
+		<span class="tooltip"><p>Indicate whether the client&rsquo;s directory was created successful in <code>ClientDevices</code>.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/savedRemoteClientDeviceInfoPlistWithSuccess:">&ndash;&nbsp;savedRemoteClientDeviceInfoPlistWithSuccess:</a></code>
+		<span class="tooltip"><p>Indicate whether the <code>deviceInfo.plist</code> file was saved successfully.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Properties" name="task_Properties"></a>
+						<h3 class="subsubtitle task-title">Properties</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/appIdentifier">&nbsp;&nbsp;appIdentifier</a></code>
+		<span class="tooltip"><p>The application identifier.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/clientDescription">&nbsp;&nbsp;clientDescription</a></code>
+		<span class="tooltip"><p>The client description.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applicationUserInfo">&nbsp;&nbsp;applicationUserInfo</a></code>
+		<span class="tooltip"><p>The user info.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/paused">&nbsp;&nbsp;paused</a></code>
+		<span class="tooltip"><p>Used to indicate whether the operation is currently paused awaiting input from the operation delegate, or in turn the application sync manager delegate.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/password">&nbsp;&nbsp;password</a></code>
+		<span class="tooltip"><p>The password to use for encryption at initial global app registration, if <code>shouldUseEncryption</code> is <code>YES</code>.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/saltData">&nbsp;&nbsp;saltData</a></code>
+		<span class="tooltip"><p>The cached salt data, set only after fetching from the remote.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/shouldCreateClientDirectory">&nbsp;&nbsp;shouldCreateClientDirectory</a></code>
+		<span class="tooltip"><p>Used mid-operation to indicate whether the client directory needs to be created after configuring encryption.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/appIdentifier" title="appIdentifier"></a>
+	<h3 class="subsubtitle method-title">appIdentifier</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The application identifier.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, copy) NSString *appIdentifier</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applicationUserInfo" title="applicationUserInfo"></a>
+	<h3 class="subsubtitle method-title">applicationUserInfo</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The user info.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) NSDictionary *applicationUserInfo</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/clientDescription" title="clientDescription"></a>
+	<h3 class="subsubtitle method-title">clientDescription</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The client description.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, copy) NSString *clientDescription</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/password" title="password"></a>
+	<h3 class="subsubtitle method-title">password</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The password to use for encryption at initial global app registration, if <code>shouldUseEncryption</code> is <code>YES</code>.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (copy) NSString *password</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/paused" title="paused"></a>
+	<h3 class="subsubtitle method-title">paused</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Used to indicate whether the operation is currently paused awaiting input from the operation delegate, or in turn the application sync manager delegate.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (assign, getter=isPaused) BOOL paused</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/saltData" title="saltData"></a>
+	<h3 class="subsubtitle method-title">saltData</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The cached salt data, set only after fetching from the remote.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) NSData *saltData</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/shouldCreateClientDirectory" title="shouldCreateClientDirectory"></a>
+	<h3 class="subsubtitle method-title">shouldCreateClientDirectory</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Used mid-operation to indicate whether the client directory needs to be created after configuring encryption.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) BOOL shouldCreateClientDirectory</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/checkWhetherRemoteClientDeviceDirectoryExists" title="checkWhetherRemoteClientDeviceDirectoryExists"></a>
+	<h3 class="subsubtitle method-title">checkWhetherRemoteClientDeviceDirectoryExists</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Check whether the client&rsquo;s directory already exists in <code>ClientDevices</code>.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)checkWhetherRemoteClientDeviceDirectoryExists</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/discoveredStatusOfRemoteClientDeviceDirectory:"><code>discoveredStatusOfRemoteClientDeviceDirectory:</code></a> to indicate the status.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/checkWhetherRemoteGlobalAppDirectoryExists" title="checkWhetherRemoteGlobalAppDirectoryExists"></a>
+	<h3 class="subsubtitle method-title">checkWhetherRemoteGlobalAppDirectoryExists</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Check whether a directory exists for this application.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)checkWhetherRemoteGlobalAppDirectoryExists</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <code>discoveredStatusOfGlobalAppDirectory:</code> to indicate the status.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/checkWhetherSaltFileExists" title="checkWhetherSaltFileExists"></a>
+	<h3 class="subsubtitle method-title">checkWhetherSaltFileExists</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Check whether the <code>salt.ticdsync</code> file exists at the root of the application&rsquo;s remote directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)checkWhetherSaltFileExists</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/discoveredStatusOfSaltFile:"><code>discoveredStatusOfSaltFile:</code></a> to indicate the status.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/copiedReadMeTxtFileToRootOfGlobalAppDirectoryWithSuccess:" title="copiedReadMeTxtFileToRootOfGlobalAppDirectoryWithSuccess:"></a>
+	<h3 class="subsubtitle method-title">copiedReadMeTxtFileToRootOfGlobalAppDirectoryWithSuccess:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the <code>ReadMe.txt</code> file was copied from the bundle.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)copiedReadMeTxtFileToRootOfGlobalAppDirectoryWithSuccess:(BOOL)<em>success</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p><code>YES</code> if the <code>ReadMe.txt</code> file was copied, otherwise <code>NO</code>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If not, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/copyReadMeTxtFileToRootOfGlobalAppDirectoryFromPath:" title="copyReadMeTxtFileToRootOfGlobalAppDirectoryFromPath:"></a>
+	<h3 class="subsubtitle method-title">copyReadMeTxtFileToRootOfGlobalAppDirectoryFromPath:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Copy the <code>ReadMe.txt</code> file from the bundle to the root of this application&rsquo;s remote directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)copyReadMeTxtFileToRootOfGlobalAppDirectoryFromPath:(NSString *)<em>aPath</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aPath</em></dt>
+			<dd><p>The local path to the <code>ReadMe.txt</code> file.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/copiedReadMeTxtFileToRootOfGlobalAppDirectoryWithSuccess:"><code>copiedReadMeTxtFileToRootOfGlobalAppDirectoryWithSuccess:</code></a> to indicate whether the copy was successful.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/createRemoteClientDeviceDirectory" title="createRemoteClientDeviceDirectory"></a>
+	<h3 class="subsubtitle method-title">createRemoteClientDeviceDirectory</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Create the client&rsquo;s directory in <code>ClientDevices</code>.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)createRemoteClientDeviceDirectory</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/createdRemoteClientDeviceDirectoryWithSuccess:"><code>createdRemoteClientDeviceDirectoryWithSuccess:</code></a> to indicate whether the creation was successful.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/createRemoteGlobalAppDirectoryStructure" title="createRemoteGlobalAppDirectoryStructure"></a>
+	<h3 class="subsubtitle method-title">createRemoteGlobalAppDirectoryStructure</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Create global application directory structure.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)createRemoteGlobalAppDirectoryStructure</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <code>createdGlobalAppDirectoryStructureWithSuccess:</code> to indicate whether the creation was successful.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/createdRemoteClientDeviceDirectoryWithSuccess:" title="createdRemoteClientDeviceDirectoryWithSuccess:"></a>
+	<h3 class="subsubtitle method-title">createdRemoteClientDeviceDirectoryWithSuccess:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the client&rsquo;s directory was created successful in <code>ClientDevices</code>.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)createdRemoteClientDeviceDirectoryWithSuccess:(BOOL)<em>success</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p><code>YES</code> if the client&rsquo;s directory was created, otherwise <code>NO</code>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If not, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/createdRemoteGlobalAppDirectoryStructureWithSuccess:" title="createdRemoteGlobalAppDirectoryStructureWithSuccess:"></a>
+	<h3 class="subsubtitle method-title">createdRemoteGlobalAppDirectoryStructureWithSuccess:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the creation of the global app directory structure was successful.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)createdRemoteGlobalAppDirectoryStructureWithSuccess:(BOOL)<em>success</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p><code>YES</code> if the directory structure was created, otherwise <code>NO</code>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If not, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/discoveredStatusOfRemoteGlobalAppDirectory:" title="discoveredStatusOfRemoteGlobalAppDirectory:"></a>
+	<h3 class="subsubtitle method-title">discoveredStatusOfRemoteGlobalAppDirectory:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate the status of the global application directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)discoveredStatusOfRemoteGlobalAppDirectory:(TICDSRemoteFileStructureExistsResponseType)<em>status</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>status</em></dt>
+			<dd><p>The status of the directory: does exist, does not exist, or error (see <code>TICDSTypesAndEnums.h</code> for possible values).</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>TICDSRemoteFileStructureExistsResponseTypeError</code> for <code>status</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/discoveredStatusOfSaltFile:" title="discoveredStatusOfSaltFile:"></a>
+	<h3 class="subsubtitle method-title">discoveredStatusOfSaltFile:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate the status of the <code>salt.ticdsync</code> file.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)discoveredStatusOfSaltFile:(TICDSRemoteFileStructureExistsResponseType)<em>status</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>status</em></dt>
+			<dd><p>The status of the file: does exist, does not exist, or error (see <code>TICDSTypesAndEnums.h</code> for possible values).</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>TICDSRemoteFileStructureExistsResponseTypeError</code> for <code>status</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchPasswordTestData" title="fetchPasswordTestData"></a>
+	<h3 class="subsubtitle method-title">fetchPasswordTestData</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Fetch the test data from the <code>test.ticdsync</code> file in the <code>Encryption</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)fetchPasswordTestData</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/fetchedPasswordTestData:"><code>fetchedPasswordTestData:</code></a> when done.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchSaltData" title="fetchSaltData"></a>
+	<h3 class="subsubtitle method-title">fetchSaltData</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Fetch the data from the <code>salt.ticdsync</code> file.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)fetchSaltData</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call `` when the data has been fetched.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchedPasswordTestData:" title="fetchedPasswordTestData:"></a>
+	<h3 class="subsubtitle method-title">fetchedPasswordTestData:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Provide the test data from the <code>test.ticdsync</code> file.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)fetchedPasswordTestData:(NSData *)<em>testData</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>testData</em></dt>
+			<dd><p>The <code>NSData</code> contents of the <code>test.ticdsync</code> file, or <code>nil</code> if an error occurred.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>nil</code> for <code>testData</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchedSaltData:" title="fetchedSaltData:"></a>
+	<h3 class="subsubtitle method-title">fetchedSaltData:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Provide the data from the <code>salt.ticdsync</code> file.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)fetchedSaltData:(NSData *)<em>saltData</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>saltData</em></dt>
+			<dd><p>The <code>NSData</code> contents of the <code>salt.ticdsync</code> file, or <code>nil</code> if an error occurred.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>nil</code> for <a href="#//api/name/saltData"><code>saltData</code></a>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/initWithDelegate:" title="initWithDelegate:"></a>
+	<h3 class="subsubtitle method-title">initWithDelegate:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Initialize an application registration operation using a delegate that supports the <a href="../Protocols/TICDSApplicationRegistrationOperationDelegate.html"><code>TICDSApplicationRegistrationOperationDelegate</code></a> protocol.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (id)initWithDelegate:(NSObject&lt;TICDSApplicationRegistrationOperationDelegate&gt; *)<em>aDelegate</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aDelegate</em></dt>
+			<dd><p>The delegate to use for this operation.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An initialized document registration operation.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/savePasswordTestData:" title="savePasswordTestData:"></a>
+	<h3 class="subsubtitle method-title">savePasswordTestData:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Save the test data to a <code>test.ticdsync</code> file in the <code>Encryption</code> directory at the root of the application&rsquo;s remote directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)savePasswordTestData:(NSData *)<em>testData</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>testData</em></dt>
+			<dd><p>The data to be saved.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <code>savedTestDataWithSuccess:</code> to indicate whether the save was successful.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/saveRemoteClientDeviceInfoPlistFromDictionary:" title="saveRemoteClientDeviceInfoPlistFromDictionary:"></a>
+	<h3 class="subsubtitle method-title">saveRemoteClientDeviceInfoPlistFromDictionary:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Save the dictionary to a <code>deviceInfo.plist</code> file in this client&rsquo;s directory inside the <code>ClientDevices</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)saveRemoteClientDeviceInfoPlistFromDictionary:(NSDictionary *)<em>aDictionary</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aDictionary</em></dt>
+			<dd><p>The dictionary to save as the <code>deviceInfo.plist</code>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/savedRemoteClientDeviceInfoPlistWithSuccess:"><code>savedRemoteClientDeviceInfoPlistWithSuccess:</code></a> to indicate whether the save was successful.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/saveSaltDataToRemote:" title="saveSaltDataToRemote:"></a>
+	<h3 class="subsubtitle method-title">saveSaltDataToRemote:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Save the salt data to a <code>salt.ticdsync</code> file at the root of the application&rsquo;s remote directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)saveSaltDataToRemote:(NSData *)<em>saltData</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>saltData</em></dt>
+			<dd><p>The data to be saved.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:"><code>savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:</code></a> to indicate whether the save was successful.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/savedPasswordTestDataWithSuccess:" title="savedPasswordTestDataWithSuccess:"></a>
+	<h3 class="subsubtitle method-title">savedPasswordTestDataWithSuccess:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the test data was saved successfuly.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)savedPasswordTestDataWithSuccess:(BOOL)<em>success</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p><code>YES</code> if the <code>test.ticdsync</code> file was saved, otherwise <code>NO</code>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If not, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/savedRemoteClientDeviceInfoPlistWithSuccess:" title="savedRemoteClientDeviceInfoPlistWithSuccess:"></a>
+	<h3 class="subsubtitle method-title">savedRemoteClientDeviceInfoPlistWithSuccess:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the <code>deviceInfo.plist</code> file was saved successfully.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)savedRemoteClientDeviceInfoPlistWithSuccess:(BOOL)<em>success</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p><code>YES</code> if the <code>deviceInfo.plist</code> file was saved, otherwise <code>NO</code>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If not, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:" title="savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:"></a>
+	<h3 class="subsubtitle method-title">savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the salt data was saved successfully.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)savedSaltDataToRootOfGlobalAppDirectoryWithSuccess:(BOOL)<em>success</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p><code>YES</code> if the <code>salt.ticdsync</code> file was saved, otherwise <code>NO</code>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If not, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSApplicationRegistrationOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2013 Tim Isted. All rights reserved. (Last updated: 2013-05-10)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 858)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

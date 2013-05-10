@@ -1,0 +1,684 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>TICDSSyncTransaction Class Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.1 (build 858)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">TICoreDataSync </a></h1>
+				<a id="developerHome" href="../index.html">Tim Isted</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">TICDSSyncTransaction Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/appliedSyncChangesFileURL">&nbsp;&nbsp;&nbsp;&nbsp;appliedSyncChangesFileURL</option>
+	
+	<option value="//api/name/delegate">&nbsp;&nbsp;&nbsp;&nbsp;delegate</option>
+	
+	<option value="//api/name/error">&nbsp;&nbsp;&nbsp;&nbsp;error</option>
+	
+	<option value="//api/name/state">&nbsp;&nbsp;&nbsp;&nbsp;state</option>
+	
+	<option value="//api/name/unsavedAppliedSyncChangesFileURL">&nbsp;&nbsp;&nbsp;&nbsp;unsavedAppliedSyncChangesFileURL</option>
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/close">&nbsp;&nbsp;&nbsp;&nbsp;- close</option>
+	
+	<option value="//api/name/initWithDocumentManagedObjectContext:unsavedAppliedSyncChangesDirectoryPath:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithDocumentManagedObjectContext:unsavedAppliedSyncChangesDirectoryPath:</option>
+	
+	<option value="//api/name/open">&nbsp;&nbsp;&nbsp;&nbsp;- open</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Designated Initializer">Designated Initializer</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/appliedSyncChangesFileURL">appliedSyncChangesFileURL</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/delegate">delegate</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/error">error</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/state">state</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/unsavedAppliedSyncChangesFileURL">unsavedAppliedSyncChangesFileURL</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/close">close</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithDocumentManagedObjectContext:unsavedAppliedSyncChangesDirectoryPath:">initWithDocumentManagedObjectContext:unsavedAppliedSyncChangesDirectoryPath:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/open">open</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="TICDSSyncTransaction Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">TICDSSyncTransaction Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value">NSObject</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">TICDSSyncTransaction.h</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The <code>TICDSSyncTransaction</code> class exists to maintain data integrity with regards to applied sync changes.</p>
+
+<p>When the <code>TICoreDataSync</code> framework creates <a href="../Classes/TICDSSynchronizationOperation.html"><code>TICDSSynchronizationOperation</code></a> instances to synchronize changes made to a document, these changes cannot be considered fully applied until the root <code>NSManagedObjectContext</code> of the application has been saved and the applied changes have been written to a persistent store.</p>
+
+<p>Prior to a synchronization process kicking off the <a href="../Classes/TICDSDocumentSyncManager.html"><code>TICDSDocumentSyncManager</code></a> creates an instance of <code>TICDSSyncTransaction</code>. This instance is handed off to the <a href="../Classes/TICDSPreSynchronizationOperation.html"><code>TICDSPreSynchronizationOperation</code></a>, <a href="../Classes/TICDSSynchronizationOperation.html"><code>TICDSSynchronizationOperation</code></a>, and <a href="../Classes/TICDSPostSynchronizationOperation.html"><code>TICDSPostSynchronizationOperation</code></a> instances. Just before the background context has been saved (the child context to the document&rsquo;s context) the <code>TICDSSyncTransaction</code> is &ldquo;opened&rdquo;.</p>
+
+<p>Once the <code>TICDSSyncTransaction</code> instance is opened it begins listening to <code>NSManagedObjectContextDidSaveNotification</code> notifications for each of the application&rsquo;s <code>NSManagedObjectContext</code> instances starting with the document&rsquo;s context and traversing up the family tree to the root context. As these contexts are saved the <code>TICDSSyncTransaction</code> instance acknowledges that save until it gets a notification from the root context. Once the root context has been saved the <code>TICDSSyncTransaction</code> instance notifies its <a href="#//api/name/delegate">delegate</a> that it can be closed.</p>
+
+<p>When the <a href="#//api/name/close">close</a> method is called the <code>TICDSSyncTransaction</code> instance migrates the unsaved applied sync changes from its <code>*.unsavedticdsync</code> store to the <code>AppliedSyncChangeSets.ticdsync</code> store and notifies its <a href="#//api/name/delegate">delegate</a> of success or failure.</p>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						
+						<h3 class="subsubtitle task-title">Other Methods</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/unsavedAppliedSyncChangesFileURL">&nbsp;&nbsp;unsavedAppliedSyncChangesFileURL</a></code>
+		<span class="tooltip"><p>The URL to the unsaved applied sync change sets file for this sync transaction.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/appliedSyncChangesFileURL">&nbsp;&nbsp;appliedSyncChangesFileURL</a></code>
+		<span class="tooltip"><p>The path to the applied sync change sets file.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/error">&nbsp;&nbsp;error</a></code>
+		<span class="tooltip"><p>Any errors that occur while this transaction is <a href="#//api/name/open">open</a> will be saved to this property.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/delegate">&nbsp;&nbsp;delegate</a></code>
+		<span class="tooltip"><p>The delegate that will receive <a href="../Protocols/TICDSSyncTransactionDelegate.html"><code>TICDSSyncTransactionDelegate</code></a> messages.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/state">&nbsp;&nbsp;state</a></code>
+		<span class="tooltip"><p>The current state of the sync transaction. Before the transaction has been opened its state will be TICDSSyncTransactionStateNotYetOpen. Once it has been opened its state will be TICDSSyncTransactionStateOpen. After the transaction has been closed successfully the state will be TICDSSyncTransactionStateClosed. If an attempt to <a href="#//api/name/close">close</a> the transaction has been made and it fails the state will be TICDSSyncTransactionStateUnableToClose. The <a href="#//api/name/error">error</a> property will most likely be non-nil as well.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+						
+						<a title="Designated Initializer" name="task_Designated Initializer"></a>
+						<h3 class="subsubtitle task-title">Designated Initializer</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithDocumentManagedObjectContext:unsavedAppliedSyncChangesDirectoryPath:">&ndash;&nbsp;initWithDocumentManagedObjectContext:unsavedAppliedSyncChangesDirectoryPath:</a></code>
+		<span class="tooltip"><p>Initialize a sync transaction with the document&rsquo;s managed object context and the path to the directory where this transaction should write its unsaved applied sync change sets file.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/open">&ndash;&nbsp;open</a></code>
+		<span class="tooltip"><p>Immediately prior to a background sync <code>NSManagedObjectContext</code> being saved by a <a href="../Classes/TICDSSynchronizationOperation.html"><code>TICDSSynchronizationOperation</code></a>, that operation&rsquo;s <code>TICDSSyncTransaction</code> should be &ldquo;opened&rdquo; by calling its open method.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/close">&ndash;&nbsp;close</a></code>
+		<span class="tooltip"><p>Once the <code>TICDSSyncTransaction</code> indicates via its <a href="#//api/name/delegate">delegate</a> that it can be closed this method can be called to close the transaction.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/appliedSyncChangesFileURL" title="appliedSyncChangesFileURL"></a>
+	<h3 class="subsubtitle method-title">appliedSyncChangesFileURL</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The path to the applied sync change sets file.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property NSURL *appliedSyncChangesFileURL</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSyncTransaction.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/delegate" title="delegate"></a>
+	<h3 class="subsubtitle method-title">delegate</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The delegate that will receive <a href="../Protocols/TICDSSyncTransactionDelegate.html"><code>TICDSSyncTransactionDelegate</code></a> messages.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (weak) id&lt;TICDSSyncTransactionDelegate&gt; delegate</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSyncTransaction.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/error" title="error"></a>
+	<h3 class="subsubtitle method-title">error</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Any errors that occur while this transaction is <a href="#//api/name/open">open</a> will be saved to this property.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property NSError *error</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSyncTransaction.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/state" title="state"></a>
+	<h3 class="subsubtitle method-title">state</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The current state of the sync transaction. Before the transaction has been opened its state will be TICDSSyncTransactionStateNotYetOpen. Once it has been opened its state will be TICDSSyncTransactionStateOpen. After the transaction has been closed successfully the state will be TICDSSyncTransactionStateClosed. If an attempt to <a href="#//api/name/close">close</a> the transaction has been made and it fails the state will be TICDSSyncTransactionStateUnableToClose. The <a href="#//api/name/error">error</a> property will most likely be non-nil as well.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property TICDSSyncTransactionState state</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSyncTransaction.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/unsavedAppliedSyncChangesFileURL" title="unsavedAppliedSyncChangesFileURL"></a>
+	<h3 class="subsubtitle method-title">unsavedAppliedSyncChangesFileURL</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The URL to the unsaved applied sync change sets file for this sync transaction.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (readonly) NSURL *unsavedAppliedSyncChangesFileURL</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSyncTransaction.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/close" title="close"></a>
+	<h3 class="subsubtitle method-title">close</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Once the <code>TICDSSyncTransaction</code> indicates via its <a href="#//api/name/delegate">delegate</a> that it can be closed this method can be called to close the transaction.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)close</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSyncTransaction.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/initWithDocumentManagedObjectContext:unsavedAppliedSyncChangesDirectoryPath:" title="initWithDocumentManagedObjectContext:unsavedAppliedSyncChangesDirectoryPath:"></a>
+	<h3 class="subsubtitle method-title">initWithDocumentManagedObjectContext:unsavedAppliedSyncChangesDirectoryPath:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Initialize a sync transaction with the document&rsquo;s managed object context and the path to the directory where this transaction should write its unsaved applied sync change sets file.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (id)initWithDocumentManagedObjectContext:(NSManagedObjectContext *)<em>managedObjectContext</em> unsavedAppliedSyncChangesDirectoryPath:(NSString *)<em>unsavedAppliedSyncChangesDirectoryPath</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>managedObjectContext</em></dt>
+			<dd><p>The document&rsquo;s managed object context, the one that was registered with the document sync manager.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>unsavedAppliedSyncChangesDirectoryPath</em></dt>
+			<dd><p>The path to the directory where the unsaved applied sync change set files will be placed. This directory location should exist before being given to the sync transaction.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An initialized synchronization operation.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSyncTransaction.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/open" title="open"></a>
+	<h3 class="subsubtitle method-title">open</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Immediately prior to a background sync <code>NSManagedObjectContext</code> being saved by a <a href="../Classes/TICDSSynchronizationOperation.html"><code>TICDSSynchronizationOperation</code></a>, that operation&rsquo;s <code>TICDSSyncTransaction</code> should be &ldquo;opened&rdquo; by calling its open method.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)open</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSSyncTransaction.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2013 Tim Isted. All rights reserved. (Last updated: 2013-05-10)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 858)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

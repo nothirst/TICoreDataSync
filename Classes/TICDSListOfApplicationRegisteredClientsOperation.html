@@ -1,0 +1,1005 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>TICDSListOfApplicationRegisteredClientsOperation Class Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.1 (build 858)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">TICoreDataSync </a></h1>
+				<a id="developerHome" href="../index.html">Tim Isted</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">TICDSListOfApplicationRegisteredClientsOperation Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/deviceInfoDictionaries">&nbsp;&nbsp;&nbsp;&nbsp;deviceInfoDictionaries</option>
+	
+	<option value="//api/name/shouldIncludeRegisteredDocuments">&nbsp;&nbsp;&nbsp;&nbsp;shouldIncludeRegisteredDocuments</option>
+	
+	<option value="//api/name/synchronizedClientIdentifiers">&nbsp;&nbsp;&nbsp;&nbsp;synchronizedClientIdentifiers</option>
+	
+	<option value="//api/name/synchronizedDocumentIdentifiers">&nbsp;&nbsp;&nbsp;&nbsp;synchronizedDocumentIdentifiers</option>
+	
+	<option value="//api/name/temporaryDeviceInfoDictionaries">&nbsp;&nbsp;&nbsp;&nbsp;temporaryDeviceInfoDictionaries</option>
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/fetchArrayOfClientUUIDStrings">&nbsp;&nbsp;&nbsp;&nbsp;- fetchArrayOfClientUUIDStrings</option>
+	
+	<option value="//api/name/fetchArrayOfClientsRegisteredForDocumentWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchArrayOfClientsRegisteredForDocumentWithIdentifier:</option>
+	
+	<option value="//api/name/fetchArrayOfDocumentUUIDStrings">&nbsp;&nbsp;&nbsp;&nbsp;- fetchArrayOfDocumentUUIDStrings</option>
+	
+	<option value="//api/name/fetchDeviceInfoDictionaryForClientWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchDeviceInfoDictionaryForClientWithIdentifier:</option>
+	
+	<option value="//api/name/fetchedArrayOfClientUUIDStrings:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchedArrayOfClientUUIDStrings:</option>
+	
+	<option value="//api/name/fetchedArrayOfClients:registeredForDocumentWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchedArrayOfClients:registeredForDocumentWithIdentifier:</option>
+	
+	<option value="//api/name/fetchedArrayOfDocumentUUIDStrings:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchedArrayOfDocumentUUIDStrings:</option>
+	
+	<option value="//api/name/fetchedDeviceInfoDictionary:forClientWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchedDeviceInfoDictionary:forClientWithIdentifier:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Overridden Methods">Overridden Methods</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Properties">Properties</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deviceInfoDictionaries">deviceInfoDictionaries</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/shouldIncludeRegisteredDocuments">shouldIncludeRegisteredDocuments</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/synchronizedClientIdentifiers">synchronizedClientIdentifiers</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/synchronizedDocumentIdentifiers">synchronizedDocumentIdentifiers</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/temporaryDeviceInfoDictionaries">temporaryDeviceInfoDictionaries</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchArrayOfClientUUIDStrings">fetchArrayOfClientUUIDStrings</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchArrayOfClientsRegisteredForDocumentWithIdentifier:">fetchArrayOfClientsRegisteredForDocumentWithIdentifier:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchArrayOfDocumentUUIDStrings">fetchArrayOfDocumentUUIDStrings</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchDeviceInfoDictionaryForClientWithIdentifier:">fetchDeviceInfoDictionaryForClientWithIdentifier:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchedArrayOfClientUUIDStrings:">fetchedArrayOfClientUUIDStrings:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchedArrayOfClients:registeredForDocumentWithIdentifier:">fetchedArrayOfClients:registeredForDocumentWithIdentifier:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchedArrayOfDocumentUUIDStrings:">fetchedArrayOfDocumentUUIDStrings:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchedDeviceInfoDictionary:forClientWithIdentifier:">fetchedDeviceInfoDictionary:forClientWithIdentifier:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="TICDSListOfApplicationRegisteredClientsOperation Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">TICDSListOfApplicationRegisteredClientsOperation Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value"><a href="../Classes/TICDSOperation.html">TICDSOperation</a> : NSOperation</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">TICDSListOfApplicationRegisteredClientsOperation.h</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The <code>TICDSListOfApplicationRegisteredClientsOperation</code> class describes a generic operation used by the <code>TICoreDataSync</code> framework to fetch a list of the client devices that are registered to synchronize with the application.</p>
+
+<p>The operation carries out the following tasks:</p>
+
+<ol>
+<li>Fetch a list of UUID identifiers of all registered clients from the application&rsquo;s <code>ClientDevices</code> directory.</li>
+<li>Fetch the <code>deviceInfo.plist</code> file for each registered client.</li>
+<li>Optionally fetch a list of document UUID identifiers and add a <code>registeredDocuments</code> key to each device dictionary, with the value being an array of document identifiers, indicating the documents that the client has registered to synchronize.</li>
+</ol>
+
+
+<p>Operations are typically created automatically by the relevant sync manager.</p><blockquote><p>%warning%<br/>
+<strong>Warning:</strong> You must use one of the subclasses of <code>TICDSListOfApplicationRegisteredClientsOperation</code>.</p></blockquote>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						<a title="Overridden Methods" name="task_Overridden Methods"></a>
+						<h3 class="subsubtitle task-title">Overridden Methods</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchArrayOfClientUUIDStrings">&ndash;&nbsp;fetchArrayOfClientUUIDStrings</a></code>
+		<span class="tooltip"><p>Fetch an array of UUID strings for each client registered to synchronize this application (the names of the directories inside the <code>ClientDevices</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchDeviceInfoDictionaryForClientWithIdentifier:">&ndash;&nbsp;fetchDeviceInfoDictionaryForClientWithIdentifier:</a></code>
+		<span class="tooltip"><p>Fetch the <code>deviceInfo.plist</code>, decrypting it if necessary, for the specified client.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchArrayOfDocumentUUIDStrings">&ndash;&nbsp;fetchArrayOfDocumentUUIDStrings</a></code>
+		<span class="tooltip"><p>Fetch an array of UUID strings for each document registered for this application.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchArrayOfClientsRegisteredForDocumentWithIdentifier:">&ndash;&nbsp;fetchArrayOfClientsRegisteredForDocumentWithIdentifier:</a></code>
+		<span class="tooltip"><p>Fetch an array of UUID strings for each client registered to synchronize with this document (the names of the directories inside the document&rsquo;s <code>SyncChanges</code> directory.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchedArrayOfClientUUIDStrings:">&ndash;&nbsp;fetchedArrayOfClientUUIDStrings:</a></code>
+		<span class="tooltip"><p>Pass back the assembled <code>NSArray</code> of <code>NSString</code> client identifiers.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchedDeviceInfoDictionary:forClientWithIdentifier:">&ndash;&nbsp;fetchedDeviceInfoDictionary:forClientWithIdentifier:</a></code>
+		<span class="tooltip"><p>Pass back the <code>NSDictionary</code> built from the contents of the <code>deviceInfo.plist</code> for the specified client.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchedArrayOfDocumentUUIDStrings:">&ndash;&nbsp;fetchedArrayOfDocumentUUIDStrings:</a></code>
+		<span class="tooltip"><p>Pass back the assembled <code>NSArray</code> of <code>NSString</code> document identifiers.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchedArrayOfClients:registeredForDocumentWithIdentifier:">&ndash;&nbsp;fetchedArrayOfClients:registeredForDocumentWithIdentifier:</a></code>
+		<span class="tooltip"><p>Pass back the assembled <code>NSArray</code> of <code>NSString</code> client identifiers for this document.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Properties" name="task_Properties"></a>
+						<h3 class="subsubtitle task-title">Properties</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/synchronizedClientIdentifiers">&nbsp;&nbsp;synchronizedClientIdentifiers</a></code>
+		<span class="tooltip"><p>An array used to keep track of the client identifiers while the operation is executing.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/temporaryDeviceInfoDictionaries">&nbsp;&nbsp;temporaryDeviceInfoDictionaries</a></code>
+		<span class="tooltip"><p>A mutable dictionary used to keep track of the <code>deviceInfo.plist</code> dictionaries for each client while the operation is executing.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/deviceInfoDictionaries">&nbsp;&nbsp;deviceInfoDictionaries</a></code>
+		<span class="tooltip"><p>The final dictionary of <code>deviceInfo.plist</code> dictionaries for each client once the operation has finished.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/synchronizedDocumentIdentifiers">&nbsp;&nbsp;synchronizedDocumentIdentifiers</a></code>
+		<span class="tooltip"><p>An array used to keep track of the document identifiers while the operation is executing.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/shouldIncludeRegisteredDocuments">&nbsp;&nbsp;shouldIncludeRegisteredDocuments</a></code>
+		<span class="tooltip"><p>A Boolean indicating whether the operation should check which documents are synchronized by each client.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/deviceInfoDictionaries" title="deviceInfoDictionaries"></a>
+	<h3 class="subsubtitle method-title">deviceInfoDictionaries</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The final dictionary of <code>deviceInfo.plist</code> dictionaries for each client once the operation has finished.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (strong) NSDictionary *deviceInfoDictionaries</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfApplicationRegisteredClientsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/shouldIncludeRegisteredDocuments" title="shouldIncludeRegisteredDocuments"></a>
+	<h3 class="subsubtitle method-title">shouldIncludeRegisteredDocuments</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>A Boolean indicating whether the operation should check which documents are synchronized by each client.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (assign) BOOL shouldIncludeRegisteredDocuments</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfApplicationRegisteredClientsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/synchronizedClientIdentifiers" title="synchronizedClientIdentifiers"></a>
+	<h3 class="subsubtitle method-title">synchronizedClientIdentifiers</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>An array used to keep track of the client identifiers while the operation is executing.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) NSMutableArray *synchronizedClientIdentifiers</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfApplicationRegisteredClientsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/synchronizedDocumentIdentifiers" title="synchronizedDocumentIdentifiers"></a>
+	<h3 class="subsubtitle method-title">synchronizedDocumentIdentifiers</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>An array used to keep track of the document identifiers while the operation is executing.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) NSMutableArray *synchronizedDocumentIdentifiers</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfApplicationRegisteredClientsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/temporaryDeviceInfoDictionaries" title="temporaryDeviceInfoDictionaries"></a>
+	<h3 class="subsubtitle method-title">temporaryDeviceInfoDictionaries</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>A mutable dictionary used to keep track of the <code>deviceInfo.plist</code> dictionaries for each client while the operation is executing.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) NSMutableDictionary *temporaryDeviceInfoDictionaries</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfApplicationRegisteredClientsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchArrayOfClientUUIDStrings" title="fetchArrayOfClientUUIDStrings"></a>
+	<h3 class="subsubtitle method-title">fetchArrayOfClientUUIDStrings</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Fetch an array of UUID strings for each client registered to synchronize this application (the names of the directories inside the <code>ClientDevices</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)fetchArrayOfClientUUIDStrings</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/fetchedArrayOfClientUUIDStrings:"><code>fetchedArrayOfClientUUIDStrings:</code></a> when finished.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfApplicationRegisteredClientsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchArrayOfClientsRegisteredForDocumentWithIdentifier:" title="fetchArrayOfClientsRegisteredForDocumentWithIdentifier:"></a>
+	<h3 class="subsubtitle method-title">fetchArrayOfClientsRegisteredForDocumentWithIdentifier:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Fetch an array of UUID strings for each client registered to synchronize with this document (the names of the directories inside the document&rsquo;s <code>SyncChanges</code> directory.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)fetchArrayOfClientsRegisteredForDocumentWithIdentifier:(NSString *)<em>anIdentifier</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/fetchedArrayOfClients:registeredForDocumentWithIdentifier:"><code>fetchedArrayOfClients:registeredForDocumentWithIdentifier:</code></a> when finished.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfApplicationRegisteredClientsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchArrayOfDocumentUUIDStrings" title="fetchArrayOfDocumentUUIDStrings"></a>
+	<h3 class="subsubtitle method-title">fetchArrayOfDocumentUUIDStrings</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Fetch an array of UUID strings for each document registered for this application.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)fetchArrayOfDocumentUUIDStrings</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/fetchedArrayOfDocumentUUIDStrings:"><code>fetchedArrayOfDocumentUUIDStrings:</code></a> when finished.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfApplicationRegisteredClientsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchDeviceInfoDictionaryForClientWithIdentifier:" title="fetchDeviceInfoDictionaryForClientWithIdentifier:"></a>
+	<h3 class="subsubtitle method-title">fetchDeviceInfoDictionaryForClientWithIdentifier:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Fetch the <code>deviceInfo.plist</code>, decrypting it if necessary, for the specified client.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)fetchDeviceInfoDictionaryForClientWithIdentifier:(NSString *)<em>anIdentifier</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The UUID synchronization identifier of the client.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/fetchedDeviceInfoDictionary:forClientWithIdentifier:"><code>fetchedDeviceInfoDictionary:forClientWithIdentifier:</code></a> when finished.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfApplicationRegisteredClientsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchedArrayOfClientUUIDStrings:" title="fetchedArrayOfClientUUIDStrings:"></a>
+	<h3 class="subsubtitle method-title">fetchedArrayOfClientUUIDStrings:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Pass back the assembled <code>NSArray</code> of <code>NSString</code> client identifiers.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)fetchedArrayOfClientUUIDStrings:(NSArray *)<em>anArray</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anArray</em></dt>
+			<dd><p>The array of identifiers, or <code>nil</code> if an error occurred.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>nil</code> for <code>anArray</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfApplicationRegisteredClientsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchedArrayOfClients:registeredForDocumentWithIdentifier:" title="fetchedArrayOfClients:registeredForDocumentWithIdentifier:"></a>
+	<h3 class="subsubtitle method-title">fetchedArrayOfClients:registeredForDocumentWithIdentifier:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Pass back the assembled <code>NSArray</code> of <code>NSString</code> client identifiers for this document.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)fetchedArrayOfClients:(NSArray *)<em>anArray</em> registeredForDocumentWithIdentifier:(NSString *)<em>anIdentifier</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anArray</em></dt>
+			<dd><p>The array of identifiers, or <code>nil</code> if an error occurred.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The identifier of the document.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>nil</code> for <code>anArray</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfApplicationRegisteredClientsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchedArrayOfDocumentUUIDStrings:" title="fetchedArrayOfDocumentUUIDStrings:"></a>
+	<h3 class="subsubtitle method-title">fetchedArrayOfDocumentUUIDStrings:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Pass back the assembled <code>NSArray</code> of <code>NSString</code> document identifiers.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)fetchedArrayOfDocumentUUIDStrings:(NSArray *)<em>anArray</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anArray</em></dt>
+			<dd><p>The array of identifiers, or <code>nil</code> if an error occurred.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>nil</code> for <code>anArray</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfApplicationRegisteredClientsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchedDeviceInfoDictionary:forClientWithIdentifier:" title="fetchedDeviceInfoDictionary:forClientWithIdentifier:"></a>
+	<h3 class="subsubtitle method-title">fetchedDeviceInfoDictionary:forClientWithIdentifier:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Pass back the <code>NSDictionary</code> built from the contents of the <code>deviceInfo.plist</code> for the specified client.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)fetchedDeviceInfoDictionary:(NSDictionary *)<em>aDictionary</em> forClientWithIdentifier:(NSString *)<em>anIdentifier</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aDictionary</em></dt>
+			<dd><p>The assembled dictionary of device information.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The UUID synchronization identifier of the client.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>nil</code> for <code>aDictionary</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSListOfApplicationRegisteredClientsOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2013 Tim Isted. All rights reserved. (Last updated: 2013-05-10)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 858)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,1042 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>TICDSWholeStoreDownloadOperation Class Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.1 (build 858)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">TICoreDataSync </a></h1>
+				<a id="developerHome" href="../index.html">Tim Isted</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">TICDSWholeStoreDownloadOperation Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/integrityKey">&nbsp;&nbsp;&nbsp;&nbsp;integrityKey</option>
+	
+	<option value="//api/name/localAppliedSyncChangeSetsFileLocation">&nbsp;&nbsp;&nbsp;&nbsp;localAppliedSyncChangeSetsFileLocation</option>
+	
+	<option value="//api/name/localWholeStoreFileLocation">&nbsp;&nbsp;&nbsp;&nbsp;localWholeStoreFileLocation</option>
+	
+	<option value="//api/name/requestedWholeStoreClientIdentifier">&nbsp;&nbsp;&nbsp;&nbsp;requestedWholeStoreClientIdentifier</option>
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/checkForMostRecentClientWholeStore">&nbsp;&nbsp;&nbsp;&nbsp;- checkForMostRecentClientWholeStore</option>
+	
+	<option value="//api/name/determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:</option>
+	
+	<option value="//api/name/downloadAppliedSyncChangeSetsFile">&nbsp;&nbsp;&nbsp;&nbsp;- downloadAppliedSyncChangeSetsFile</option>
+	
+	<option value="//api/name/downloadWholeStoreFile">&nbsp;&nbsp;&nbsp;&nbsp;- downloadWholeStoreFile</option>
+	
+	<option value="//api/name/downloadedAppliedSyncChangeSetsFileWithSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- downloadedAppliedSyncChangeSetsFileWithSuccess:</option>
+	
+	<option value="//api/name/downloadedWholeStoreFileWithSuccess:">&nbsp;&nbsp;&nbsp;&nbsp;- downloadedWholeStoreFileWithSuccess:</option>
+	
+	<option value="//api/name/downloadingAppliedSyncChangeSetsFileMadeProgress">&nbsp;&nbsp;&nbsp;&nbsp;- downloadingAppliedSyncChangeSetsFileMadeProgress</option>
+	
+	<option value="//api/name/downloadingWholeStoreFileMadeProgress">&nbsp;&nbsp;&nbsp;&nbsp;- downloadingWholeStoreFileMadeProgress</option>
+	
+	<option value="//api/name/fetchRemoteIntegrityKey">&nbsp;&nbsp;&nbsp;&nbsp;- fetchRemoteIntegrityKey</option>
+	
+	<option value="//api/name/fetchedRemoteIntegrityKey:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchedRemoteIntegrityKey:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Methods Overridden by Subclasses">Methods Overridden by Subclasses</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Callbacks">Callbacks</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Properties">Properties</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/integrityKey">integrityKey</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/localAppliedSyncChangeSetsFileLocation">localAppliedSyncChangeSetsFileLocation</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/localWholeStoreFileLocation">localWholeStoreFileLocation</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/requestedWholeStoreClientIdentifier">requestedWholeStoreClientIdentifier</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/checkForMostRecentClientWholeStore">checkForMostRecentClientWholeStore</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:">determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/downloadAppliedSyncChangeSetsFile">downloadAppliedSyncChangeSetsFile</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/downloadWholeStoreFile">downloadWholeStoreFile</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/downloadedAppliedSyncChangeSetsFileWithSuccess:">downloadedAppliedSyncChangeSetsFileWithSuccess:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/downloadedWholeStoreFileWithSuccess:">downloadedWholeStoreFileWithSuccess:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/downloadingAppliedSyncChangeSetsFileMadeProgress">downloadingAppliedSyncChangeSetsFileMadeProgress</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/downloadingWholeStoreFileMadeProgress">downloadingWholeStoreFileMadeProgress</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchRemoteIntegrityKey">fetchRemoteIntegrityKey</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchedRemoteIntegrityKey:">fetchedRemoteIntegrityKey:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="TICDSWholeStoreDownloadOperation Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">TICDSWholeStoreDownloadOperation Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value"><a href="../Classes/TICDSOperation.html">TICDSOperation</a> : NSOperation</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">TICDSWholeStoreDownloadOperation.h</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The <code>TICDSWholeStoreDownloadOperation</code> class describes a generic operation used by the <code>TICoreDataSync</code> framework to download the whole store for a document.</p>
+
+<p>The operation carries out the following tasks:</p>
+
+<ol>
+<li>If <a href="#//api/name/requestedWholeStoreClientIdentifier"><code>requestedWholeStoreClientIdentifier</code></a> is not set, determine which client uploaded a store most recently, and set <a href="#//api/name/requestedWholeStoreClientIdentifier"><code>requestedWholeStoreClientIdentifier</code></a>.</li>
+<li>Download the whole store file from the <a href="#//api/name/requestedWholeStoreClientIdentifier"><code>requestedWholeStoreClientIdentifier</code></a>&rsquo;s directory.</li>
+<li>Download the applied sync change sets file that goes with this whole store.</li>
+</ol>
+
+
+<p>Operations are typically created automatically by the relevant sync manager.</p><blockquote><p>%warning%<br/>
+<strong>Warning:</strong> You must use one of the subclasses of <code>TICDSWholeStoreDownloadOperation</code>.</p></blockquote>
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						<a title="Methods Overridden by Subclasses" name="task_Methods Overridden by Subclasses"></a>
+						<h3 class="subsubtitle task-title">Methods Overridden by Subclasses</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/checkForMostRecentClientWholeStore">&ndash;&nbsp;checkForMostRecentClientWholeStore</a></code>
+		<span class="tooltip"><p>Determine which client uploaded a WholeStore most recently.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/downloadWholeStoreFile">&ndash;&nbsp;downloadWholeStoreFile</a></code>
+		<span class="tooltip"><p>Download the store at the remote document store path to the <a href="#//api/name/localWholeStoreFileLocation"><code>localWholeStoreFileLocation</code></a>.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/downloadAppliedSyncChangeSetsFile">&ndash;&nbsp;downloadAppliedSyncChangeSetsFile</a></code>
+		<span class="tooltip"><p>Download the applied sync change sets file at the remote document store path to the <a href="#//api/name/localAppliedSyncChangeSetsFileLocation"><code>localAppliedSyncChangeSetsFileLocation</code></a>.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchRemoteIntegrityKey">&ndash;&nbsp;fetchRemoteIntegrityKey</a></code>
+		<span class="tooltip"><p>Fetch the integrity key for this document.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Callbacks" name="task_Callbacks"></a>
+						<h3 class="subsubtitle task-title">Callbacks</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:">&ndash;&nbsp;determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:</a></code>
+		<span class="tooltip"><p>Indicate which client uploaded the most recent WholeStore.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/downloadingWholeStoreFileMadeProgress">&ndash;&nbsp;downloadingWholeStoreFileMadeProgress</a></code>
+		<span class="tooltip"><p>Indicate when the download operation makes progress.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/downloadedWholeStoreFileWithSuccess:">&ndash;&nbsp;downloadedWholeStoreFileWithSuccess:</a></code>
+		<span class="tooltip"><p>Indicate whether the download of the whole store file was successful.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/downloadingAppliedSyncChangeSetsFileMadeProgress">&ndash;&nbsp;downloadingAppliedSyncChangeSetsFileMadeProgress</a></code>
+		<span class="tooltip"><p>Indicate when the download operation makes progress.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/downloadedAppliedSyncChangeSetsFileWithSuccess:">&ndash;&nbsp;downloadedAppliedSyncChangeSetsFileWithSuccess:</a></code>
+		<span class="tooltip"><p>Indicate whether the download of the applied sync change sets file was successful.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchedRemoteIntegrityKey:">&ndash;&nbsp;fetchedRemoteIntegrityKey:</a></code>
+		<span class="tooltip"><p>Pass back the remote integrity key for this document.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Properties" name="task_Properties"></a>
+						<h3 class="subsubtitle task-title">Properties</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/requestedWholeStoreClientIdentifier">&nbsp;&nbsp;requestedWholeStoreClientIdentifier</a></code>
+		<span class="tooltip"><p>The client identifier for the WholeStore to download. If this is not specified before the operation executes, the operation will determine which client uploaded a store most recently.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/localWholeStoreFileLocation">&nbsp;&nbsp;localWholeStoreFileLocation</a></code>
+		<span class="tooltip"><p>The destination for the whole store file.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/localAppliedSyncChangeSetsFileLocation">&nbsp;&nbsp;localAppliedSyncChangeSetsFileLocation</a></code>
+		<span class="tooltip"><p>The destination for the applied sync change sets file.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/integrityKey">&nbsp;&nbsp;integrityKey</a></code>
+		<span class="tooltip"><p>The integrity key of the newly-downloaded store.</p></span>
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/integrityKey" title="integrityKey"></a>
+	<h3 class="subsubtitle method-title">integrityKey</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The integrity key of the newly-downloaded store.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (copy) NSString *integrityKey</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreDownloadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/localAppliedSyncChangeSetsFileLocation" title="localAppliedSyncChangeSetsFileLocation"></a>
+	<h3 class="subsubtitle method-title">localAppliedSyncChangeSetsFileLocation</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The destination for the applied sync change sets file.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (strong) NSURL *localAppliedSyncChangeSetsFileLocation</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreDownloadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/localWholeStoreFileLocation" title="localWholeStoreFileLocation"></a>
+	<h3 class="subsubtitle method-title">localWholeStoreFileLocation</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The destination for the whole store file.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (strong) NSURL *localWholeStoreFileLocation</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreDownloadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/requestedWholeStoreClientIdentifier" title="requestedWholeStoreClientIdentifier"></a>
+	<h3 class="subsubtitle method-title">requestedWholeStoreClientIdentifier</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>The client identifier for the WholeStore to download. If this is not specified before the operation executes, the operation will determine which client uploaded a store most recently.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>@property (copy) NSString *requestedWholeStoreClientIdentifier</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreDownloadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/checkForMostRecentClientWholeStore" title="checkForMostRecentClientWholeStore"></a>
+	<h3 class="subsubtitle method-title">checkForMostRecentClientWholeStore</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Determine which client uploaded a WholeStore most recently.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)checkForMostRecentClientWholeStore</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:"><code>determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:</code></a> when finished.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreDownloadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:" title="determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:"></a>
+	<h3 class="subsubtitle method-title">determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate which client uploaded the most recent WholeStore.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)determinedMostRecentWholeStoreWasUploadedByClientWithIdentifier:(NSString *)<em>anIdentifier</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>anIdentifier</em></dt>
+			<dd><p>The identifier of the client.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurs, call <code>setError:</code> first, then specify <code>nil</code> for <code>anIdentifier</code></p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreDownloadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/downloadAppliedSyncChangeSetsFile" title="downloadAppliedSyncChangeSetsFile"></a>
+	<h3 class="subsubtitle method-title">downloadAppliedSyncChangeSetsFile</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Download the applied sync change sets file at the remote document store path to the <a href="#//api/name/localAppliedSyncChangeSetsFileLocation"><code>localAppliedSyncChangeSetsFileLocation</code></a>.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)downloadAppliedSyncChangeSetsFile</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/downloadedAppliedSyncChangeSetsFileWithSuccess:"><code>downloadedAppliedSyncChangeSetsFileWithSuccess:</code></a> when finished.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreDownloadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/downloadWholeStoreFile" title="downloadWholeStoreFile"></a>
+	<h3 class="subsubtitle method-title">downloadWholeStoreFile</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Download the store at the remote document store path to the <a href="#//api/name/localWholeStoreFileLocation"><code>localWholeStoreFileLocation</code></a>.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)downloadWholeStoreFile</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/downloadedWholeStoreFileWithSuccess:"><code>downloadedWholeStoreFileWithSuccess:</code></a> when finished.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreDownloadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/downloadedAppliedSyncChangeSetsFileWithSuccess:" title="downloadedAppliedSyncChangeSetsFileWithSuccess:"></a>
+	<h3 class="subsubtitle method-title">downloadedAppliedSyncChangeSetsFileWithSuccess:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the download of the applied sync change sets file was successful.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)downloadedAppliedSyncChangeSetsFileWithSuccess:(BOOL)<em>success</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p><code>YES</code> if the applied sync change sets file was downloaded, otherwise <code>NO</code>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If not, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreDownloadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/downloadedWholeStoreFileWithSuccess:" title="downloadedWholeStoreFileWithSuccess:"></a>
+	<h3 class="subsubtitle method-title">downloadedWholeStoreFileWithSuccess:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate whether the download of the whole store file was successful.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)downloadedWholeStoreFileWithSuccess:(BOOL)<em>success</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>success</em></dt>
+			<dd><p><code>YES</code> if the whole store file was downloaded, otherwise <code>NO</code>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If not, call <code>setError:</code> first, then specify <code>NO</code> for <code>success</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreDownloadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/downloadingAppliedSyncChangeSetsFileMadeProgress" title="downloadingAppliedSyncChangeSetsFileMadeProgress"></a>
+	<h3 class="subsubtitle method-title">downloadingAppliedSyncChangeSetsFileMadeProgress</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate when the download operation makes progress.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)downloadingAppliedSyncChangeSetsFileMadeProgress</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreDownloadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/downloadingWholeStoreFileMadeProgress" title="downloadingWholeStoreFileMadeProgress"></a>
+	<h3 class="subsubtitle method-title">downloadingWholeStoreFileMadeProgress</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Indicate when the download operation makes progress.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)downloadingWholeStoreFileMadeProgress</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreDownloadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchRemoteIntegrityKey" title="fetchRemoteIntegrityKey"></a>
+	<h3 class="subsubtitle method-title">fetchRemoteIntegrityKey</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Fetch the integrity key for this document.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)fetchRemoteIntegrityKey</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>This method must call <a href="#//api/name/fetchedRemoteIntegrityKey:"><code>fetchedRemoteIntegrityKey:</code></a> to provide the key.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreDownloadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchedRemoteIntegrityKey:" title="fetchedRemoteIntegrityKey:"></a>
+	<h3 class="subsubtitle method-title">fetchedRemoteIntegrityKey:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Pass back the remote integrity key for this document.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)fetchedRemoteIntegrityKey:(NSString *)<em>aKey</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aKey</em></dt>
+			<dd><p>The remote integrity key, or <code>nil</code> if an error occurred.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>If an error occurred, call <code>setError:</code> first, then specify <code>nil</code> for <code>aKey</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">TICDSWholeStoreDownloadOperation.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2013 Tim Isted. All rights reserved. (Last updated: 2013-05-10)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 858)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>
