@@ -18,33 +18,22 @@
     NSPersistentStoreCoordinator *__persistentStoreCoordinator;
     NSManagedObjectModel *__managedObjectModel;
     NSManagedObjectContext *__managedObjectContext;
-    
-    TICDSDocumentSyncManager *_documentSyncManager;
-    BOOL _downloadStoreAfterRegistering;
-    
-    NSUInteger _activity;
-    NSProgressIndicator *_activityIndicator;
 }
 
 @property (assign) IBOutlet NSWindow *window;
 @property (assign) IBOutlet NSArrayController *notesArrayController;
+@property (nonatomic, assign) IBOutlet NSProgressIndicator *activityIndicator;
 @property (nonatomic, assign) BOOL existingStore;
 
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
 
-- (IBAction)saveAction:sender;
-
 @property (retain) TICDSDocumentSyncManager *documentSyncManager;
-@property (nonatomic, assign, 
-           getter = shouldDownloadStoreAfterRegistering) 
-BOOL downloadStoreAfterRegistering;
+@property (nonatomic, assign, getter = shouldDownloadStoreAfterRegistering) BOOL downloadStoreAfterRegistering;
+@property (nonatomic, assign) NSInteger activity;
 
-- (NSURL *)applicationFilesDirectory;
-
+- (IBAction)saveAction:sender;
 - (IBAction)beginSynchronizing:(id)sender;
-@property (nonatomic, assign) IBOutlet 
-NSProgressIndicator *activityIndicator;
 
 @end

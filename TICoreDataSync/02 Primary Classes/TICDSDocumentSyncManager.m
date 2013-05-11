@@ -76,6 +76,22 @@
     }
 }
 
+#pragma mark - DEREGISTRATION
+
+- (void)deregisterDocumentSyncManager
+{
+    [self stopPollingRemoteStorageForChanges];
+    self.state = TICDSDocumentSyncManagerStateNotYetRegistered;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    self.documentIdentifier = nil;
+    self.documentDescription = nil;
+    self.clientIdentifier = nil;
+    self.openSyncTransactions = nil;
+    self.syncTransactionsToBeClosed = nil;
+    self.currentSyncTransaction = nil;
+    self.queuedSyncsCount = 0;
+}
+
 #pragma mark - DELAYED REGISTRATION
 
 - (void)configureWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(NSManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo
@@ -296,6 +312,8 @@
 
 - (void)registerWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(NSManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo
 {
+    self.state = TICDSDocumentSyncManagerStateRegistering;
+
     // configure the document, if necessary
     NSError *anyError;
     BOOL shouldContinue = YES;
@@ -320,11 +338,11 @@
     }
 
     if (shouldContinue == NO) {
+        self.state = TICDSDocumentSyncManagerStateNotYetRegistered;
         [self bailFromRegistrationProcessWithError:anyError];
         return;
     }
 
-    self.state = TICDSDocumentSyncManagerStateRegistering;
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to register document sync manager");
 
     [self registerPrimaryDocumentManagedObjectContext:aContext];
@@ -1745,6 +1763,11 @@
 
     syncChangesManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
     syncChangesManagedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator;
+    NSError *error = nil;
+    [syncChangesManagedObjectContext save:&error];
+    if (error != nil) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Was not able to save the freshly created MOC.");
+    }
 
     [self.syncChangesMOCs setValue:syncChangesManagedObjectContext forKey:[self keyForContext:documentManagedObjectContext]];
 
@@ -1885,10 +1908,12 @@
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Received a NSManagedObjectContextDidSaveNotification for a context that was not a child of the primary document managed object context. Returning.");
         return;
     }
-    
+
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
              [(id)self.delegate documentSyncManager:self didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:notification];
+
+             [[NSNotificationCenter defaultCenter] postNotificationName:TICDSDocumentSyncManagerDidDirtyDocumentNotification object:self];
          }];
     }
 }

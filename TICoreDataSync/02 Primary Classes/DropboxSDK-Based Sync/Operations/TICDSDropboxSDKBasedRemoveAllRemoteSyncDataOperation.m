@@ -19,6 +19,9 @@
 
 - (void)removeRemoteSyncDataDirectory
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [[self restClient] deletePath:[self applicationDirectoryPath]];
 }
 
@@ -26,17 +29,26 @@
 #pragma mark Deletion
 - (void)restClient:(DBRestClient*)client deletedPath:(NSString *)path
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
     // Should really check the path, but this is the only deletion in this operation
     [self removedRemoteSyncDataDirectoryWithSuccess:YES];
 }
 
 - (void)restClient:(DBRestClient*)client deletePathFailedWithError:(NSError*)error
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
     NSString *path = [[error userInfo] valueForKey:@"path"];
     NSInteger errorCode = [error code];
     
     if (errorCode == 503) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+#if TARGET_OS_IPHONE
+        [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
         [client deletePath:path];
         return;
     }

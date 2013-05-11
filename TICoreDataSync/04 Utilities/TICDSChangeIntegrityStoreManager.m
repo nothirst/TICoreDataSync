@@ -26,7 +26,7 @@ static NSLock *changeStoreLock = nil;
 @synthesize deletionSet = _deletionSet;
 @synthesize changeDictionary = _changeDictionary;
 
-#pragma mark - Public methods
+#pragma mark - Deletion Integrity methods
 
 + (BOOL)containsDeletionRecordForSyncID:(NSString *)ticdsSyncID
 {
@@ -34,18 +34,8 @@ static NSLock *changeStoreLock = nil;
     @synchronized(deletionStoreLock) {
         containsDeletionRecord = [[[self sharedChangeIntegrityStoreManager] deletionSet] containsObject:ticdsSyncID];
     }
-    
-    return containsDeletionRecord;
-}
 
-+ (BOOL)containsInsertionRecordForSyncID:(NSString *)ticdsSyncID;
-{
-    BOOL containsInsertionRecord = NO;
-    @synchronized(insertionStoreLock) {
-        containsInsertionRecord = [[[self sharedChangeIntegrityStoreManager] insertionSet] containsObject:ticdsSyncID];
-    }
-    
-    return containsInsertionRecord;
+    return containsDeletionRecord;
 }
 
 + (void)addSyncIDToDeletionIntegrityStore:(NSString *)ticdsSyncID
@@ -62,6 +52,18 @@ static NSLock *changeStoreLock = nil;
     }
 }
 
+#pragma mark - Insertion Integrity methods
+
++ (BOOL)containsInsertionRecordForSyncID:(NSString *)ticdsSyncID;
+{
+    BOOL containsInsertionRecord = NO;
+    @synchronized(insertionStoreLock) {
+        containsInsertionRecord = [[[self sharedChangeIntegrityStoreManager] insertionSet] containsObject:ticdsSyncID];
+    }
+
+    return containsInsertionRecord;
+}
+
 + (void)addSyncIDToInsertionIntegrityStore:(NSString *)ticdsSyncID
 {
     @synchronized(insertionStoreLock) {
@@ -76,27 +78,55 @@ static NSLock *changeStoreLock = nil;
     }
 }
 
-+ (void)addChangedProperties:(NSDictionary *)changedProperties toChangeIntegrityStoreForSyncID:(NSString *)ticdsSyncID
+#pragma mark - Change Integrity methods
+
++ (BOOL)containsChangedAttributeRecordForKey:(id)key withValue:(id)value syncID:(NSString *)ticdsSyncID
 {
-//    @synchronized(changeStoreLock) {
-//        NSMutableDictionary *previouslyChangedProperties = [[[self sharedChangeIntegrityStoreManager] changeDictionary] objectForKey:ticdsSyncID];
-//        if (previouslyChangedProperties == nil) {
-//            previouslyChangedProperties = [NSMutableDictionary dictionaryWithDictionary:changedProperties];
-//        } else {
-//            NSArray *keys = [previouslyChangedProperties allKeys];
-//            
-//        }
-//        
-//        [[[self sharedChangeIntegrityStoreManager] changeDictionary] setObject:previouslyChangedProperties forKey:ticdsSyncID];
-//    }
+    @synchronized(changeStoreLock) {
+        NSDictionary *storedAttributes = [[[self sharedChangeIntegrityStoreManager] changeDictionary] objectForKey:ticdsSyncID];
+        if (storedAttributes == nil) {
+            return NO;
+        }
+
+        id storedValue = [storedAttributes objectForKey:key];
+        if (storedValue == nil) {
+            return NO;
+        }
+
+        return [storedValue isEqual:value];
+    }
 }
 
-+ (void)removeChangedProperties:(NSDictionary *)changedProperties fromChangeIntegrityStoreForSyncID:(NSString *)ticdsSyncID
++ (void)addChangedAttributeValue:(id)value forKey:(id)key toChangeIntegrityStoreForSyncID:(NSString *)ticdsSyncID
 {
-//    @synchronized(changeStoreLock) {
-//        
-//    }
+    if (key == nil) {
+        return;
+    }
+    
+    @synchronized(changeStoreLock) {
+        NSMutableDictionary *storedAttributes = [[[self sharedChangeIntegrityStoreManager] changeDictionary] objectForKey:ticdsSyncID];
+        if (storedAttributes == nil) {
+            storedAttributes = [NSMutableDictionary dictionary];
+        }
+
+        if (value == nil) {
+            [storedAttributes removeObjectForKey:key];
+        } else {
+            [storedAttributes setObject:value forKey:key];
+        }
+
+        [[[self sharedChangeIntegrityStoreManager] changeDictionary] setObject:storedAttributes forKey:ticdsSyncID];
+    }
 }
+
++ (void)removeChangedAttributesEntryFromChangeIntegrityStoreForSyncID:(NSString *)ticdsSyncID
+{
+    @synchronized(changeStoreLock) {
+        [[[self sharedChangeIntegrityStoreManager] changeDictionary] removeObjectForKey:ticdsSyncID];
+    }
+}
+
+#pragma mark - Undo Integrity methods
 
 + (void)storeTICDSSyncID:(NSString *)ticdsSyncID forManagedObjectID:(NSManagedObjectID *)managedObjectID
 {
@@ -117,7 +147,6 @@ static NSLock *changeStoreLock = nil;
     
     return syncID;
 }
-
 
 #pragma mark - Overridden getters/setters
 
