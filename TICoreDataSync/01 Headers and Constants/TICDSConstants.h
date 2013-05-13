@@ -54,11 +54,13 @@ extern NSString * const TICDSDeletedDocumentsDirectoryName;
 extern NSString * const TICDSDeletedClientsDirectoryName;
 extern NSString * const TICDSIntegrityKeyDirectoryName;
 extern NSString * const TICDSUnappliedSyncChangesDirectoryName;
+extern NSString * const TICDSUnsavedAppliedSyncChangesDirectoryName;
 extern NSString * const TICDSUnappliedSyncCommandsDirectoryName;
 extern NSString * const TICDSUnsynchronizedSyncChangesStoreName;
 extern NSString * const TICDSSyncChangesBeingSynchronizedStoreName;
 extern NSString * const TICDSWholeStoreFilename;
 extern NSString * const TICDSAppliedSyncChangeSetsFilename;
+extern NSString * const TICDSUnsavedAppliedSyncChangeSetsFileExtension;
 extern NSString * const TICDSUnappliedChangeSetsFilename;
 extern NSString * const TICDSSyncCommandSetFileExtension;
 extern NSString * const TICDSSyncChangeSetFileExtension;
@@ -93,3 +95,7 @@ extern NSString * const TICDSApplicationSyncManagerDidIncreaseActivityNotificati
 extern NSString * const TICDSApplicationSyncManagerDidDecreaseActivityNotification;
 extern NSString * const TICDSDocumentSyncManagerDidIncreaseActivityNotification;
 extern NSString * const TICDSDocumentSyncManagerDidDecreaseActivityNotification;
+
+/** For NSDocument or UIDocument-based applications this notification is essential to ensure that the document is marked as dirty. Because TICDS disables the undo manager when applying sync changes the document's normal change tracking is also disabled. In your main application you should subscribe to this notification and call `updateChangeCount:` on the appropriate document.
+*/
+extern NSString *const TICDSDocumentSyncManagerDidDirtyDocumentNotification;

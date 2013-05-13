@@ -19,6 +19,9 @@
 
 - (void)fetchArrayOfClientUUIDStrings
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [[self restClient] loadMetadata:[self clientDevicesDirectoryPath]];
 }
 
@@ -26,11 +29,17 @@
 {
     NSString *path = [[[self clientDevicesDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSDeviceInfoPlistFilenameWithExtension];
     
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [[self restClient] loadFile:path intoPath:[[self tempFileDirectoryPath] stringByAppendingPathComponent:anIdentifier]];
 }
 
 - (void)fetchArrayOfDocumentUUIDStrings
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [[self restClient] loadMetadata:[self documentsDirectoryPath]];
 }
 
@@ -38,6 +47,9 @@
 {
     NSString *path = [[[self documentsDirectoryPath] stringByAppendingPathComponent:anIdentifier] stringByAppendingPathComponent:TICDSSyncChangesDirectoryName];
     
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [[self restClient] loadMetadata:path];
 }
 
@@ -45,6 +57,10 @@
 #pragma mark Metadata
 - (void)restClient:(DBRestClient*)client loadedMetadata:(DBMetadata*)metadata
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     NSString *path = [metadata path];
     
     if( [path isEqualToString:[self clientDevicesDirectoryPath]] ) {
@@ -97,16 +113,25 @@
 
 - (void)restClient:(DBRestClient*)client metadataUnchangedAtPath:(NSString*)path
 {
-    
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
 }
 
 - (void)restClient:(DBRestClient*)client loadMetadataFailedWithError:(NSError*)error
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     NSString *path = [[error userInfo] valueForKey:@"path"];
     NSInteger errorCode = [error code];
     
     if (errorCode == 503) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+#if TARGET_OS_IPHONE
+        [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
         [client loadMetadata:path];
         return;
     }
@@ -132,6 +157,10 @@
 #pragma mark Loading Files
 - (void)restClient:(DBRestClient*)client loadedFile:(NSString*)destPath
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     NSError *anyError = nil;
     BOOL success = YES;
     
@@ -164,12 +193,19 @@
 
 - (void)restClient:(DBRestClient *)client loadFileFailedWithError:(NSError *)error
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     NSString *path = [[error userInfo] valueForKey:@"path"];
     NSString *destinationPath = [[error userInfo] valueForKey:@"destinationPath"];
     NSInteger errorCode = error.code;
     
     if (errorCode == 503) { // Potentially bogus rate-limiting error code. Current advice from Dropbox is to retry immediately. --M.Fey, 2012-12-19
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+#if TARGET_OS_IPHONE
+        [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
         [client loadFile:path intoPath:destinationPath];
         return;
     }

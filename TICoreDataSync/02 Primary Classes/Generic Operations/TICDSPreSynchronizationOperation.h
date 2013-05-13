@@ -115,4 +115,7 @@
 /** The location of this document's `AppliedSyncChangeSets.ticdsync` file. */
 @property (strong) NSURL *appliedSyncChangeSetsFileLocation;
 
+/** The sync transactions whose unsaved applied sync change files will be used as persistent stores to augment the applied sync changes managed object context. */
+@property NSArray *syncTransactions;
+
 @end

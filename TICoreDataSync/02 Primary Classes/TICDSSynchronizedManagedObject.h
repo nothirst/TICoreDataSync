@@ -17,14 +17,14 @@
  @warning Your entity description *must* include a string attribute called `ticdsSyncID`, which the framework will use to identify each managed object instance uniquely.
  */
 
-@interface TICDSSynchronizedManagedObject : NSManagedObject {
-@private
-    
-}
+@interface TICDSSynchronizedManagedObject : NSManagedObject
 
 // If there are keys that you wish to exclude from synchronization they can be detailed in this set.
 + (NSSet *)keysForWhichSyncChangesWillNotBeCreated;
 
 @property (weak, nonatomic, readonly) NSManagedObjectContext *syncChangesMOC;
+@property (nonatomic, copy) NSString *ticdsSyncID;
+
+- (void)createSyncChange;
 
 @end

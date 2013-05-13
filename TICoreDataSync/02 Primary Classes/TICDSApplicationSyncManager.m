@@ -90,6 +90,8 @@
 
 - (void)registerConfiguredApplicationSyncManager
 {
+    [self setState:TICDSApplicationSyncManagerStateRegistering];
+
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to register application sync manager");
     [self postIncreaseActivityNotification];
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManagerDidBeginRegistering:)]) {
@@ -100,11 +102,10 @@
     
     if (self.isConfigured == NO) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Unable to register an application sync manager using registerPreConfiguredApplicationSyncManager - it hasn't already configured");
+        self.state = TICDSApplicationSyncManagerStateNotYetRegistered;
         [self bailFromRegistrationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeUnableToRegisterUnconfiguredSyncManager classAndMethod:__PRETTY_FUNCTION__]];
         return;
     }
-    
-    [self setState:TICDSApplicationSyncManagerStateRegistering];
     
     NSError *anyError = nil;
     BOOL shouldContinue = [self startRegistrationProcess:&anyError];
@@ -119,12 +120,13 @@
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from application registration process");
 
+    self.state = TICDSApplicationSyncManagerStateNotYetRegistered;
     if ([self ti_delegateRespondsToSelector:@selector(applicationSyncManager:didFailToRegisterWithError:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate applicationSyncManager:self didFailToRegisterWithError:anError];
         }];
     }
-[self postDecreaseActivityNotification];
+    [self postDecreaseActivityNotification];
 }
 
 - (BOOL)startRegistrationProcess:(NSError **)outError

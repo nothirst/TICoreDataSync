@@ -19,16 +19,25 @@
 
 - (void)findOutDateOfOldestWholeStore
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [[self restClient] loadMetadata:[self thisDocumentWholeStoreDirectoryPath]];
 }
 
 - (void)findOutLeastRecentClientSyncDate
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [[self restClient] loadMetadata:[self thisDocumentRecentSyncsDirectoryPath]];
 }
 
 - (void)removeOldSyncChangeSetFiles
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [[self restClient] loadMetadata:[self thisDocumentSyncChangesThisClientDirectoryPath]];
 }
 
@@ -36,6 +45,10 @@
 #pragma mark Metadata
 - (void)restClient:(DBRestClient*)client loadedMetadata:(DBMetadata*)metadata
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     NSString *path = [metadata path];
     
     if( [path isEqualToString:[self thisDocumentWholeStoreDirectoryPath]] ) {
@@ -57,6 +70,9 @@
                 continue;
             }
             
+#if TARGET_OS_IPHONE
+            [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
             [[self restClient] loadMetadata:[eachSubMetadata path]];
         }
         return;
@@ -145,6 +161,9 @@
                 continue;
             }
             
+#if TARGET_OS_IPHONE
+            [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
             [[self restClient] deletePath:[eachSubMetadata path]];
         }
     }
@@ -152,16 +171,26 @@
 
 - (void)restClient:(DBRestClient*)client metadataUnchangedAtPath:(NSString*)path
 {
-    
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
 }
 
 - (void)restClient:(DBRestClient*)client loadMetadataFailedWithError:(NSError*)error
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     NSString *path = [[error userInfo] valueForKey:@"path"];
     NSInteger errorCode = [error code];
     
     if (errorCode == 503) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+#if TARGET_OS_IPHONE
+        [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
+        
         [client loadMetadata:path];
         return;
     }
@@ -198,16 +227,28 @@
 #pragma mark Deletion
 - (void)restClient:(DBRestClient*)client deletedPath:(NSString *)path
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     [self handleDeletionAtPath:path];
 }
 
 - (void)restClient:(DBRestClient*)client deletePathFailedWithError:(NSError*)error
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     NSString *path = [[error userInfo] valueForKey:@"path"];
     NSInteger errorCode = [error code];
     
     if (errorCode == 503) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+#if TARGET_OS_IPHONE
+        [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
+
         [client deletePath:path];
         return;
     }

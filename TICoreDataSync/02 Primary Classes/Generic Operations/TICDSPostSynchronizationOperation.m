@@ -79,7 +79,7 @@
     BOOL success = [[self fileManager] copyItemAtPath:[self.localSyncChangesToMergeURL path] toPath:filePath error:&anyError];
 
     if (success == NO) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to move local sync changes to merge file");
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to copy local sync changes to merge file");
 
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
         [self operationDidFailToComplete];

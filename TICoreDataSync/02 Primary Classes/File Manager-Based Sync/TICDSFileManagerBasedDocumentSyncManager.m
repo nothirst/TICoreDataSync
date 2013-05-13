@@ -24,7 +24,7 @@
 }
 
 #pragma mark - Automatic Change Detection
-- (void)enableAutomaticSynchronizationAfterChangesDetectedFromOtherClients
+- (void)beginPollingRemoteStorageForChanges
 {
     if( _directoryWatcher ) {
         return;
@@ -75,6 +75,12 @@
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to schedule directory watcher on the run loop");
         return;
     }
+}
+
+- (void)stopPollingRemoteStorageForChanges
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kTIKQDirectoryWatcherObservedDirectoryActivityNotification object:_directoryWatcher];
+    _directoryWatcher = nil;
 }
 
 - (void)directoryContentsDidChange:(NSNotification *)aNotification

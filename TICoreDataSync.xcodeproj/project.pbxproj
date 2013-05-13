@@ -226,6 +226,10 @@
 		AA3A4C3A16D74D8500F64E85 /* TICDSiCloudBasedWholeStoreUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364F516D66104000F84F3 /* TICDSiCloudBasedWholeStoreUploadOperation.m */; };
 		AA3A4C3B16D74D8500F64E85 /* TICDSiCloudBasedApplicationSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364F816D66104000F84F3 /* TICDSiCloudBasedApplicationSyncManager.m */; };
 		AA3A4C3C16D74D8500F64E85 /* TICDSiCloudBasedDocumentSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364FA16D66104000F84F3 /* TICDSiCloudBasedDocumentSyncManager.m */; };
+		AA572C9B17201B7D00DF47B2 /* TICDSSyncTransaction.h in Headers */ = {isa = PBXBuildFile; fileRef = AA572C9917201B7D00DF47B2 /* TICDSSyncTransaction.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA572C9C17201B7D00DF47B2 /* TICDSSyncTransaction.h in Headers */ = {isa = PBXBuildFile; fileRef = AA572C9917201B7D00DF47B2 /* TICDSSyncTransaction.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA572C9D17201B7D00DF47B2 /* TICDSSyncTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = AA572C9A17201B7D00DF47B2 /* TICDSSyncTransaction.m */; };
+		AA572C9E17201B7D00DF47B2 /* TICDSSyncTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = AA572C9A17201B7D00DF47B2 /* TICDSSyncTransaction.m */; };
 		AA63651A16D664AA000F84F3 /* TICDSiCloudBasedApplicationRegistrationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364DD16D66104000F84F3 /* TICDSiCloudBasedApplicationRegistrationOperation.m */; };
 		AA63651B16D664AA000F84F3 /* TICDSiCloudBasedDocumentClientDeletionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364DF16D66104000F84F3 /* TICDSiCloudBasedDocumentClientDeletionOperation.m */; };
 		AA63651C16D664AA000F84F3 /* TICDSiCloudBasedDocumentDeletionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6364E116D66104000F84F3 /* TICDSiCloudBasedDocumentDeletionOperation.m */; };
@@ -582,6 +586,8 @@
 		AA25AECA170DCB1F00E5681A /* SSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSZipArchive.h; path = SSZipArchive/SSZipArchive.h; sourceTree = "<group>"; };
 		AA25AECB170DCB1F00E5681A /* SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSZipArchive.m; path = SSZipArchive/SSZipArchive.m; sourceTree = "<group>"; };
 		AA25AEEE170DCB6800E5681A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
+		AA572C9917201B7D00DF47B2 /* TICDSSyncTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSyncTransaction.h; sourceTree = "<group>"; };
+		AA572C9A17201B7D00DF47B2 /* TICDSSyncTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSyncTransaction.m; sourceTree = "<group>"; };
 		AA6364DC16D66104000F84F3 /* TICDSiCloudBasedApplicationRegistrationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSiCloudBasedApplicationRegistrationOperation.h; sourceTree = "<group>"; };
 		AA6364DD16D66104000F84F3 /* TICDSiCloudBasedApplicationRegistrationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSiCloudBasedApplicationRegistrationOperation.m; sourceTree = "<group>"; };
 		AA6364DE16D66104000F84F3 /* TICDSiCloudBasedDocumentClientDeletionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSiCloudBasedDocumentClientDeletionOperation.h; sourceTree = "<group>"; };
@@ -743,6 +749,8 @@
 				13023CC2161366E10071C497 /* TICDSDocumentSyncManager.m */,
 				13023CC3161366E10071C497 /* TICDSSyncConflict.h */,
 				13023CC4161366E10071C497 /* TICDSSyncConflict.m */,
+				AA572C9917201B7D00DF47B2 /* TICDSSyncTransaction.h */,
+				AA572C9A17201B7D00DF47B2 /* TICDSSyncTransaction.m */,
 				13023CC5161366E10071C497 /* TICDSSynchronizationOperationManagedObjectContext.h */,
 				13023CC6161366E10071C497 /* TICDSSynchronizationOperationManagedObjectContext.m */,
 				13023CC7161366E10071C497 /* TICDSSynchronizedManagedObject.h */,
@@ -1169,6 +1177,7 @@
 				AA00BACE1714511400EB08AB /* mztools.h in Headers */,
 				AA00BACF1714511400EB08AB /* unzip.h in Headers */,
 				AA00BAD01714511400EB08AB /* zip.h in Headers */,
+				AA572C9B17201B7D00DF47B2 /* TICDSSyncTransaction.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1267,6 +1276,7 @@
 				AA00BAD31714511400EB08AB /* mztools.h in Headers */,
 				AA00BAD41714511400EB08AB /* unzip.h in Headers */,
 				AA00BAD51714511400EB08AB /* zip.h in Headers */,
+				AA572C9C17201B7D00DF47B2 /* TICDSSyncTransaction.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1476,6 +1486,7 @@
 				AA7707741712D757000A29E4 /* mztools.c in Sources */,
 				AA7707781712D757000A29E4 /* unzip.c in Sources */,
 				AA77077C1712D757000A29E4 /* zip.c in Sources */,
+				AA572C9D17201B7D00DF47B2 /* TICDSSyncTransaction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1570,6 +1581,7 @@
 				AA7707751712D757000A29E4 /* mztools.c in Sources */,
 				AA7707791712D757000A29E4 /* unzip.c in Sources */,
 				AA77077D1712D757000A29E4 /* zip.c in Sources */,
+				AA572C9E17201B7D00DF47B2 /* TICDSSyncTransaction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
