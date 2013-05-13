@@ -96,7 +96,7 @@
     
        If you implement multiple documents, you'll need to return a configured (but not yet registered) sync manager.
        See the documentation for details, specifically:
-       http://timisted.github.com/TICoreDataSync/reference/html/Protocols/TICDSApplicationSyncManagerDelegate.html#//api/name/applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:
+       http://nothirst.github.io/TICoreDataSync/Protocols/TICDSApplicationSyncManagerDelegate.html#//api/name/applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:
     */
     
     return nil;
