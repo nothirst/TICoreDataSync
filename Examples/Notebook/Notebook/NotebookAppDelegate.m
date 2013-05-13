@@ -210,6 +210,15 @@
     NSLog(@"%s %@", __PRETTY_FUNCTION__, anError);
 }
 
+- (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:(NSNotification *)aNotification
+{
+    NSError *saveError = nil;
+    [self.managedObjectContext save:&saveError];
+    if (saveError != nil) {
+        NSLog(@"%s %@", __PRETTY_FUNCTION__, saveError);
+    }
+}
+
 #pragma mark - Sync Manager Activity Notification methods
 
 - (void)activityDidIncrease:(NSNotification *)aNotification

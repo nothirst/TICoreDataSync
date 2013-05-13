@@ -8,78 +8,119 @@
 
 #import "iOSNotebookAppDelegate.h"
 #import "RootViewController.h"
-#import "TICoreDataSync.h"
-#import "DropboxSettings.h"
+#import "DropboxSDK.h"
 
-#import <DropboxSDK/DropboxSDK.h>
+#define kTICDDropboxSyncKey @"fqv4grvh4a1u885"
+#define kTICDDropboxSyncSecret @"x7yo7k9bnrus87z"
 
 @interface iOSNotebookAppDelegate () <DBSessionDelegate, TICDSApplicationSyncManagerDelegate, TICDSDocumentSyncManagerDelegate>
-- (void)registerSyncManager;
 @end
 
 @implementation iOSNotebookAppDelegate
 
-#pragma mark -
-#pragma mark Initial Sync Registration
++ (void)initialize
+{
+    [TICDSLog setVerbosity:TICDSLogVerbosityEveryStep];
+}
+
+#pragma mark - Application Lifecycle
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(activityDidIncrease:) name:TICDSApplicationSyncManagerDidIncreaseActivityNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(activityDidDecrease:) name:TICDSApplicationSyncManagerDidDecreaseActivityNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(activityDidIncrease:) name:TICDSDocumentSyncManagerDidIncreaseActivityNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(activityDidDecrease:) name:TICDSDocumentSyncManagerDidDecreaseActivityNotification object:nil];
+
+    [[self window] setRootViewController:[self navigationController]];
+    [[self window] makeKeyAndVisible];
+
+    DBSession *session = [[DBSession alloc] initWithAppKey:kTICDDropboxSyncKey appSecret:kTICDDropboxSyncSecret root:kDBRootDropbox];
+    session.delegate = self;
+    [DBSession setSharedSession:session];
+    [session release];
+
+    if ([[DBSession sharedSession] isLinked]) {
+        [self registerSyncManager];
+    } else {
+        [[DBSession sharedSession] linkFromController:self.navigationController];
+    }
+
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    if ([[DBSession sharedSession] handleOpenURL:url]) {
+        if ([[DBSession sharedSession] isLinked]) {
+            NSLog(@"App linked successfully!");
+            [self registerSyncManager];
+        }
+
+        return YES;
+    }
+
+    return NO;
+}
+
+#pragma mark - Local methods
+
 - (void)registerSyncManager
 {
-    [self.managedObjectContext save:NULL];
-
-    [TICDSLog setVerbosity:TICDSLogVerbosityEveryStep];
-    
     TICDSDropboxSDKBasedApplicationSyncManager *manager = [TICDSDropboxSDKBasedApplicationSyncManager defaultApplicationSyncManager];
-    
+
     NSString *clientUuid = [[NSUserDefaults standardUserDefaults] stringForKey:@"iOSNotebookAppSyncClientUUID"];
-    
-    if( !clientUuid ) {
+    if (clientUuid == nil) {
         clientUuid = [TICDSUtilities uuidString];
         [[NSUserDefaults standardUserDefaults] setValue:clientUuid forKey:@"iOSNotebookAppSyncClientUUID"];
     }
-    
+
     NSString *deviceDescription = [[UIDevice currentDevice] name];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(activityDidIncrease:) name:TICDSApplicationSyncManagerDidIncreaseActivityNotification object:manager];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(activityDidDecrease:) name:TICDSApplicationSyncManagerDidDecreaseActivityNotification object:manager];
-    
+
     [manager registerWithDelegate:self
-              globalAppIdentifier:@"com.timisted.notebook" 
-           uniqueClientIdentifier:clientUuid 
-                      description:deviceDescription 
+              globalAppIdentifier:@"com.yourcompany.notebook"
+           uniqueClientIdentifier:clientUuid
+                      description:deviceDescription
                          userInfo:nil];
 }
 
-#pragma mark -
-#pragma mark Synchronization
 - (IBAction)beginSynchronizing:(id)sender
 {
-    [[self documentSyncManager] initiateSynchronization];
+    // Save the managed object context to cause sync change objects to be written
+    NSError *saveError = nil;
+    [self.managedObjectContext save:&saveError];
+    if (saveError != nil) {
+        NSLog(@"%s %@", __PRETTY_FUNCTION__, saveError);
+    }
+
+    [self.documentSyncManager initiateSynchronization];
 }
+
+#pragma mark - Sync Manager Activity Notification methods
 
 - (void)activityDidIncrease:(NSNotification *)aNotification
 {
-    _activity++;
-    
-    if( _activity > 0 ) {
-        [[UIApplication sharedApplication] 
-         setNetworkActivityIndicatorVisible:YES];
+    self.activity++;
+
+    if (self.activity > 0) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     }
 }
 
 - (void)activityDidDecrease:(NSNotification *)aNotification
 {
-    if( _activity > 0) {
-        _activity--;
+    if (self.activity > 0) {
+        self.activity--;
     }
-    
-    if( _activity < 1 ) {
-        [[UIApplication sharedApplication] 
-         setNetworkActivityIndicatorVisible:NO];
+
+    if (self.activity < 1) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }
 }
 
-#pragma mark -
-#pragma mark Application Sync Manager Delegate
+#pragma mark - TICDSApplicationSyncManagerDelegate methods
+
 - (void)applicationSyncManagerDidPauseRegistrationToAskWhetherToUseEncryptionForFirstTimeRegistration:(TICDSApplicationSyncManager *)aSyncManager
 {
     [aSyncManager continueRegisteringWithEncryptionPassword:@"password"];
@@ -92,37 +133,28 @@
 
 - (TICDSDocumentSyncManager *)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:(NSString *)anIdentifier atURL:(NSURL *)aFileURL
 {
-    /* Return nil because this is a non-document based app and this method will never be called.
-    
-       If you implement multiple documents, you'll need to return a configured (but not yet registered) sync manager.
-       See the documentation for details, specifically:
-       http://nothirst.github.io/TICoreDataSync/Protocols/TICDSApplicationSyncManagerDelegate.html#//api/name/applicationSyncManager:preConfiguredDocumentSyncManagerForDownloadedDocumentWithIdentifier:atURL:
-    */
-    
     return nil;
 }
 
 - (void)applicationSyncManagerDidFinishRegistering:(TICDSApplicationSyncManager *)aSyncManager
 {
-    TICDSDropboxSDKBasedDocumentSyncManager *docSyncManager = [[TICDSDropboxSDKBasedDocumentSyncManager alloc] init];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(activityDidIncrease:) name:TICDSDocumentSyncManagerDidIncreaseActivityNotification object:docSyncManager];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(activityDidDecrease:) name:TICDSDocumentSyncManagerDidDecreaseActivityNotification object:docSyncManager];
-    
     self.managedObjectContext.synchronized = YES;
-    [docSyncManager registerWithDelegate:self 
-                          appSyncManager:aSyncManager 
-                    managedObjectContext:self.managedObjectContext
-                      documentIdentifier:@"Notebook" 
-                             description:@"Application's data" 
+
+    TICDSDropboxSDKBasedDocumentSyncManager *docSyncManager = [[TICDSDropboxSDKBasedDocumentSyncManager alloc] init];
+
+    [docSyncManager registerWithDelegate:self
+                          appSyncManager:aSyncManager
+                    managedObjectContext:[self managedObjectContext]
+                      documentIdentifier:@"Notebook"
+                             description:@"Application's data"
                                 userInfo:nil];
+
     [self setDocumentSyncManager:docSyncManager];
     [docSyncManager release];
 }
 
-#pragma mark -
-#pragma mark Document Sync Manager Delegate
+#pragma mark - TICDSDocumentSyncManagerDelegate methods
+
 - (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseSynchronizationAwaitingResolutionOfSyncConflict:(id)aConflict
 {
     [aSyncManager continueSynchronizationByResolvingConflictWithResolutionType:TICDSSyncConflictResolutionTypeLocalWins];
@@ -135,136 +167,81 @@
 
 - (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseRegistrationAsRemoteFileStructureDoesNotExistForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo
 {
-    [self setDownloadStoreAfterRegistering:NO];
+    self.downloadStoreAfterRegistering = NO;
     [aSyncManager continueRegistrationByCreatingRemoteFileStructure:YES];
 }
 
 - (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didPauseRegistrationAsRemoteFileStructureWasDeletedForDocumentWithIdentifier:(NSString *)anIdentifier description:(NSString *)aDescription userInfo:(NSDictionary *)userInfo
 {
-    [self setDownloadStoreAfterRegistering:NO];
+    self.downloadStoreAfterRegistering = NO;
     [aSyncManager continueRegistrationByCreatingRemoteFileStructure:YES];
-}
-
-- (void)documentSyncManagerDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:(TICDSDocumentSyncManager *)aSyncManager
-{
-    NSLog(@"DOC WAS DELETED");
-    [self setDownloadStoreAfterRegistering:YES];
 }
 
 - (void)documentSyncManagerDidFinishRegistering:(TICDSDocumentSyncManager *)aSyncManager
 {
-    if( [self shouldDownloadStoreAfterRegistering] ) {
-        [[self documentSyncManager] initiateDownloadOfWholeStore];
+    if (self.shouldDownloadStoreAfterRegistering) {
+        [aSyncManager initiateDownloadOfWholeStore];
+    } else {
+        [aSyncManager initiateSynchronization];
     }
-    
-    //[self performSelector:@selector(removeAllRemoteSyncData) withObject:nil afterDelay:8.0];
-    //[self performSelector:@selector(getPreviouslySynchronizedClients) withObject:nil afterDelay:8.0];
-    //[self performSelector:@selector(deleteClient) withObject:nil afterDelay:8.0];
+
+    [aSyncManager beginPollingRemoteStorageForChanges];
 }
 
-- (void)removeAllRemoteSyncData
+- (void)documentSyncManagerDidDetermineThatClientHadPreviouslyBeenDeletedFromSynchronizingWithDocument:(TICDSDocumentSyncManager *)aSyncManager
 {
-    [[[self documentSyncManager] applicationSyncManager] removeAllSyncDataFromRemote];
-}
-
-- (void)getPreviouslySynchronizedClients
-{
-    [[[self documentSyncManager] applicationSyncManager] requestListOfSynchronizedClientsIncludingDocuments:YES];
-}
-
-- (void)deleteClient
-{
-    [[self documentSyncManager] deleteDocumentSynchronizationDataForClientWithIdentifier:@"B29A21AB-529A-4CBB-A603-332CAD8F2D33-715-000001314CB7EE5B"];
-}
-
-- (void)applicationSyncManager:(TICDSApplicationSyncManager *)aSyncManager didFinishFetchingInformationForAllRegisteredDevices:(NSDictionary *)information
-{
-    NSLog(@"App client info: %@", information);
+    self.downloadStoreAfterRegistering = YES;
 }
 
 - (BOOL)documentSyncManagerShouldUploadWholeStoreAfterDocumentRegistration:(TICDSDocumentSyncManager *)aSyncManager
 {
-    return ![self shouldDownloadStoreAfterRegistering];
+    return self.shouldDownloadStoreAfterRegistering == NO;
 }
 
 - (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager willReplaceStoreWithDownloadedStoreAtURL:(NSURL *)aStoreURL
 {
     NSError *anyError = nil;
-    BOOL success = [[self persistentStoreCoordinator] removePersistentStore:[[self persistentStoreCoordinator] persistentStoreForURL:aStoreURL] error:&anyError];
-    
-    if( !success ) {
-        NSLog(@"Failed to remove persistent store at %@: %@", 
-              aStoreURL, anyError);
+    BOOL success = [self.persistentStoreCoordinator removePersistentStore:[self.persistentStoreCoordinator persistentStoreForURL:aStoreURL] error:&anyError];
+
+    if (success == NO) {
+        NSLog(@"Failed to remove persistent store at %@: %@", aStoreURL, anyError);
     }
 }
 
 - (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didReplaceStoreWithDownloadedStoreAtURL:(NSURL *)aStoreURL
 {
     NSError *anyError = nil;
-    id store = [[self persistentStoreCoordinator] addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:aStoreURL options:nil error:&anyError];
-    
-    if( !store ) {
+    id store = [self.persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:aStoreURL options:nil error:&anyError];
+
+    if (store == nil) {
         NSLog(@"Failed to add persistent store at %@: %@", aStoreURL, anyError);
     }
 }
 
+- (BOOL)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager shouldBeginSynchronizingAfterManagedObjectContextDidSave:(NSManagedObjectContext *)aMoc;
+{
+    return YES;
+}
+
 - (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:(NSNotification *)aNotification
 {
-    [self.managedObjectContext save:nil];
+    NSError *saveError = nil;
+    [self.managedObjectContext save:&saveError];
+    if (saveError != nil) {
+        NSLog(@"%s %@", __PRETTY_FUNCTION__, saveError);
+    }
 }
 
 - (void)documentSyncManager:(TICDSDocumentSyncManager *)aSyncManager didFailToSynchronizeWithError:(NSError *)anError
 {
-    if( [anError code] != TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeysDoNotMatch ) {
-        return;
-    }
-    
-    [aSyncManager initiateDownloadOfWholeStore];
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, anError);
 }
 
-#pragma mark -
-#pragma mark Application Lifecycle
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+#pragma mark - DBSessionDelegate methods
+
+- (void)sessionDidReceiveAuthorizationFailure:(DBSession *)session userId:(NSString *)userId
 {
-	DBSession *session = [[DBSession alloc] initWithAppKey:kTICDDropboxSyncKey appSecret:kTICDDropboxSyncSecret root:kDBRootDropbox];
-	[session setDelegate:self];
-	[DBSession setSharedSession:session];
-	[session release];
-
-    [[self window] setRootViewController:[self navigationController]];
-    [[self window] makeKeyAndVisible];
-
-    if( [session isLinked] ) {
-        [self registerSyncManager];
-    } else {
-        [[DBSession sharedSession] linkFromController:self.navigationController];
-    }
-    
-    return YES;
-}
-
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
-{
-    if ([[DBSession sharedSession] handleOpenURL:url] == YES) {
-        if ([[DBSession sharedSession] isLinked]) {
-            NSLog(@"%s App linked successfully!", __PRETTY_FUNCTION__);
-            [self registerSyncManager];
-        } else {
-            NSLog(@"%s App was not linked successfully.", __PRETTY_FUNCTION__);
-        }
-    } else {
-        NSLog(@"%s DBSession couldn't handle opening the URL %@", __PRETTY_FUNCTION__, url);
-    }
-
-    return YES;
-}
-
-#pragma mark -
-#pragma mark DBSessionDelegate methods
-
-- (void)sessionDidReceiveAuthorizationFailure:(DBSession *)session userId:(NSString *)userId;
-{
-    NSLog(@"%s Could not create DBSession for user %@", __PRETTY_FUNCTION__, userId);
+    [[DBSession sharedSession] linkFromController:self.navigationController];
 }
 
 #pragma mark -
@@ -274,8 +251,6 @@
 @synthesize managedObjectModel=__managedObjectModel;
 @synthesize persistentStoreCoordinator=__persistentStoreCoordinator;
 @synthesize navigationController=_navigationController;
-@synthesize documentSyncManager = _documentSyncManager;
-@synthesize downloadStoreAfterRegistering = _downloadStoreAfterRegistering;
 
 #pragma mark -
 #pragma mark Apple Stuff
@@ -292,8 +267,7 @@
     [__managedObjectModel release];
     [__persistentStoreCoordinator release];
     [_navigationController release];
-    [_documentSyncManager release], _documentSyncManager = nil;
-    
+
     [super dealloc];
 }
 
@@ -372,10 +346,11 @@
     
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Notebook.sqlite"];
     
-    if( ![[NSFileManager defaultManager] fileExistsAtPath:[storeURL path]] ) {
-        [self setDownloadStoreAfterRegistering:YES];
+    /* Add the check for an existing store here... */
+    if ([[NSFileManager defaultManager] fileExistsAtPath:storeURL.path] == NO) {
+        self.downloadStoreAfterRegistering = YES;
     }
-    
+
     NSError *error = nil;
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error])
