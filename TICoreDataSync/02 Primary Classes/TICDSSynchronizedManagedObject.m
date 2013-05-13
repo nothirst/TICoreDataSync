@@ -10,16 +10,11 @@
 
 @interface TICDSSynchronizedManagedObject ()
 
-- (TICDSSyncChange *)createSyncChangeForChangeType:(TICDSSyncChangeType)aType;
-- (void)createSyncChangesForAllRelationships;
-- (void)createSyncChangeIfApplicableForRelationship:(NSRelationshipDescription *)aRelationship;
-- (void)createToOneRelationshipSyncChange:(NSRelationshipDescription *)aRelationship;
-- (void)createToManyRelationshipSyncChanges:(NSRelationshipDescription *)aRelationship;
-- (NSDictionary *)dictionaryOfAllAttributes;
-
 @end
 
 @implementation TICDSSynchronizedManagedObject
+
+@dynamic ticdsSyncID;
 
 #pragma mark - Primary Sync Change Creation
 
@@ -28,15 +23,45 @@
     return nil;
 }
 
+- (void)createSyncChange
+{
+    // if not in a synchronized MOC, or we don't have a doc sync manager, exit now
+    if (self.managedObjectContext.isSynchronized == NO || self.managedObjectContext.documentSyncManager == nil) {
+        if (self.managedObjectContext.isSynchronized == NO) {
+            TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Skipping sync change creation for %@ because our managedObjectContext is not marked as synchronized.", [self class]);
+        }
+        
+        if (self.managedObjectContext.documentSyncManager == nil) {
+            TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Skipping sync change creation for %@ because our managedObjectContext has no documentSyncManager.", [self class]);
+        }
+        
+        return;
+    }
+    
+    if ( [self isInserted] ) {
+        [self createSyncChangeForInsertion];
+    }
+    
+    if ( [self isUpdated] ) {
+        [self createSyncChangesForChangedProperties];
+    }
+    
+    if ( [self isDeleted] ) {
+        [self createSyncChangeForDeletion];
+    }
+}
+
 - (void)createSyncChangeForInsertion
 {
     // changedAttributes = a dictionary containing the values of _all_ the object's attributes at time it was saved
     // this method also creates extra sync changes for _all_ the object's relationships 
     
-    if ([TICDSChangeIntegrityStoreManager containsInsertionRecordForObjectID:[self objectID]]) {
-        [TICDSChangeIntegrityStoreManager removeObjectIDFromInsertionIntegrityStore:[self objectID]];
+    if ([TICDSChangeIntegrityStoreManager containsInsertionRecordForSyncID:self.ticdsSyncID]) {
+        [TICDSChangeIntegrityStoreManager removeSyncIDFromInsertionIntegrityStore:self.ticdsSyncID];
         return;
     }
+    
+    [TICDSChangeIntegrityStoreManager storeTICDSSyncID:self.ticdsSyncID forManagedObjectID:self.objectID];
     
     TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeObjectInserted];
     
@@ -48,8 +73,8 @@
 
 - (void)createSyncChangeForDeletion
 {
-    if ([TICDSChangeIntegrityStoreManager containsDeletionRecordForObjectID:[self objectID]]) {
-        [TICDSChangeIntegrityStoreManager removeObjectIDFromDeletionIntegrityStore:[self objectID]];
+    if ([TICDSChangeIntegrityStoreManager containsDeletionRecordForSyncID:self.ticdsSyncID]) {
+        [TICDSChangeIntegrityStoreManager removeSyncIDFromDeletionIntegrityStore:self.ticdsSyncID];
         return;
     }
 
@@ -62,7 +87,7 @@
 {
     // separate sync changes are created for each property change, whether it be relationship or attribute
     NSDictionary *changedValues = [self changedValues];
-    
+
     NSSet *propertyNamesToBeIgnored = [[self class] keysForWhichSyncChangesWillNotBeCreated];
     for( NSString *eachPropertyName in changedValues ) {
         if (propertyNamesToBeIgnored != nil && [propertyNamesToBeIgnored containsObject:eachPropertyName]) {
@@ -72,30 +97,41 @@
         
         id eachValue = [changedValues valueForKey:eachPropertyName];
         
-        NSRelationshipDescription *relationship = [[[self entity] relationshipsByName] valueForKey:eachPropertyName];
-        if( relationship ) {
-            [self createSyncChangeIfApplicableForRelationship:relationship];
+        NSRelationshipDescription *relationshipDescription = [[[self entity] relationshipsByName] valueForKey:eachPropertyName];
+        if( relationshipDescription ) {
+            [self createSyncChangeIfApplicableForRelationship:relationshipDescription];
         } else {
+            if ([TICDSChangeIntegrityStoreManager containsChangedAttributeRecordForKey:eachPropertyName withValue:eachValue syncID:self.ticdsSyncID]) {
+                continue;
+            }
+
             TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeAttributeChanged];
             TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", syncChange.objectSyncID, [self class]);
             [syncChange setRelevantKey:eachPropertyName];
             [syncChange setChangedAttributes:eachValue];
         }
     }
+
+    [TICDSChangeIntegrityStoreManager removeChangedAttributesEntryFromChangeIntegrityStoreForSyncID:self.ticdsSyncID];
 }
 
 #pragma mark - Sync Change Helper Methods
+
 - (TICDSSyncChange *)createSyncChangeForChangeType:(TICDSSyncChangeType)aType
 {
     TICDSSyncChange *syncChange = [TICDSSyncChange syncChangeOfType:aType inManagedObjectContext:[self syncChangesMOC]];
     
-    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", syncChange.objectSyncID, [self class]);
+    NSString *syncID = self.ticdsSyncID;
+    if ([syncID length] == 0) {
+        syncID = [TICDSChangeIntegrityStoreManager ticdsSyncIDForManagedObjectID:self.objectID];
+    }
 
-    [syncChange setObjectSyncID:[self valueForKey:TICDSSyncIDAttributeName]];
+    [syncChange setObjectSyncID:syncID];
     [syncChange setObjectEntityName:[[self entity] name]];
     [syncChange setLocalTimeStamp:[NSDate date]];
     [syncChange setRelevantManagedObject:self];
-    
+
+    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", syncChange.objectSyncID, [self class]);
     return syncChange;
 }
 
@@ -115,7 +151,7 @@
     // Each check makes sure there _is_ an inverse relationship before checking its type, to allow for relationships with no inverse set
     
     // Check if this is a many-to-one relationship (only sync the -to-one side)
-    if( ([aRelationship isToMany]) && inverseRelationship && (![inverseRelationship isToMany]) ) {
+    if( ([aRelationship isToMany]) && inverseRelationship && ([inverseRelationship isToMany] == NO) ) {
         return;
     }
     
@@ -125,7 +161,7 @@
     }
     
     // Check if this is a one to one relationship, and only sync the first relationship name alphabetically
-    if( (![aRelationship isToMany]) && inverseRelationship && (![inverseRelationship isToMany]) && ([[aRelationship name] caseInsensitiveCompare:[inverseRelationship name]] == NSOrderedDescending) ) {
+    if( ([aRelationship isToMany] == NO) && inverseRelationship && ([inverseRelationship isToMany] == NO) && ([[aRelationship name] caseInsensitiveCompare:[inverseRelationship name]] == NSOrderedDescending) ) {
         return;
     }
     
@@ -138,28 +174,36 @@
     // d) edge-case 1: a many-to-many relationship with the same relationship name at both ends (will currently create 2 sync changes)
     // e) edge-case 2: a one-to-one relationship with the same relationship name at both ends (will currently create 2 sync changes)
     
-    if( ![aRelationship isToMany] ) {
-        [self createToOneRelationshipSyncChange:aRelationship];
-    } else {
+    if ([aRelationship isToMany]) {
         [self createToManyRelationshipSyncChanges:aRelationship];
+    } else {
+        [self createToOneRelationshipSyncChange:aRelationship];
     }
 }
 
 - (void)createToOneRelationshipSyncChange:(NSRelationshipDescription *)aRelationship
 {
-    TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeToOneRelationshipChanged];
-    
-    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", syncChange.objectSyncID, [self class]);
+    NSString *relevantKey = [aRelationship name];
+    NSManagedObject *relatedObject = [self valueForKey:relevantKey];
 
-    [syncChange setRelatedObjectEntityName:[[aRelationship destinationEntity] name]];
-    [syncChange setRelevantKey:[aRelationship name]];
-    
-    NSManagedObject *relatedObject = [self valueForKey:[aRelationship name]];
-    
     // Check that the related object should be synchronized
-    if( [relatedObject isKindOfClass:[TICDSSynchronizedManagedObject class]] ) {
-        [syncChange setChangedRelationships:[relatedObject valueForKey:TICDSSyncIDAttributeName]];
+    if (relatedObject != nil && [relatedObject isKindOfClass:[TICDSSynchronizedManagedObject class]] == NO) {
+        return;
     }
+
+    NSString *relatedObjectEntityName = [[aRelationship destinationEntity] name];
+    NSString *relatedObjectSyncID = [relatedObject valueForKey:TICDSSyncIDAttributeName];
+
+    if ([TICDSChangeIntegrityStoreManager containsChangedAttributeRecordForKey:relevantKey withValue:relatedObjectSyncID syncID:self.ticdsSyncID]) {
+        return;
+    }
+
+    TICDSSyncChange *syncChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeToOneRelationshipChanged];
+    [syncChange setRelatedObjectEntityName:relatedObjectEntityName];
+    [syncChange setRelevantKey:relevantKey];
+    [syncChange setChangedRelationships:relatedObjectSyncID];
+
+    TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", syncChange.objectSyncID, [self class]);
 }
 
 - (void)createToManyRelationshipSyncChanges:(NSRelationshipDescription *)aRelationship
@@ -168,7 +212,7 @@
     NSDictionary *committedValues = [self committedValuesForKeys:[NSArray arrayWithObject:[aRelationship name]]];
     
     NSSet *previouslyRelatedObjects = [committedValues valueForKey:[aRelationship name]];
-    
+
     NSMutableSet *addedObjects = [NSMutableSet setWithCapacity:5];
     for( NSManagedObject *eachObject in relatedObjects ) {
         if( ![previouslyRelatedObjects containsObject:eachObject] ) {
@@ -186,35 +230,50 @@
     TICDSSyncChange *eachChange = nil;
     
     for( NSManagedObject *eachObject in addedObjects ) {
-        if( ![eachObject isKindOfClass:[TICDSSynchronizedManagedObject class]] ) {
+        if ([eachObject isKindOfClass:[TICDSSynchronizedManagedObject class]] == NO) {
             continue;
         }
+
+        NSString *relevantKey = [aRelationship name];
+        NSString *relatedObjectSyncID = [eachObject valueForKey:TICDSSyncIDAttributeName];
         
+        if ([TICDSChangeIntegrityStoreManager containsChangedAttributeRecordForKey:relevantKey withValue:relatedObjectSyncID syncID:self.ticdsSyncID]) {
+            continue;
+        }
+
         eachChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeToManyRelationshipChangedByAddingObject];
         
         TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", eachChange.objectSyncID, [self class]);
 
         [eachChange setRelatedObjectEntityName:[[aRelationship destinationEntity] name]];
-        [eachChange setRelevantKey:[aRelationship name]];
-        [eachChange setChangedRelationships:[eachObject valueForKey:TICDSSyncIDAttributeName]];
+        [eachChange setRelevantKey:relevantKey];
+        [eachChange setChangedRelationships:relatedObjectSyncID];
     }
     
     for( NSManagedObject *eachObject in removedObjects ) {
-        if( ![eachObject isKindOfClass:[TICDSSynchronizedManagedObject class]] ) {
+        if ([eachObject isKindOfClass:[TICDSSynchronizedManagedObject class]] == NO) {
             continue;
         }
         
+        NSString *relevantKey = [aRelationship name];
+        NSString *relatedObjectSyncID = [eachObject valueForKey:TICDSSyncIDAttributeName];
+
+        if ([TICDSChangeIntegrityStoreManager containsChangedAttributeRecordForKey:relevantKey withValue:relatedObjectSyncID syncID:self.ticdsSyncID]) {
+            continue;
+        }
+
         eachChange = [self createSyncChangeForChangeType:TICDSSyncChangeTypeToManyRelationshipChangedByRemovingObject];
         
         TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"[%@] %@", eachChange.objectSyncID, [self class]);
 
         [eachChange setRelatedObjectEntityName:[[aRelationship destinationEntity] name]];
-        [eachChange setRelevantKey:[aRelationship name]];
-        [eachChange setChangedRelationships:[eachObject valueForKey:TICDSSyncIDAttributeName]];
+        [eachChange setRelevantKey:relevantKey];
+        [eachChange setChangedRelationships:relatedObjectSyncID];
     }
 }
 
 #pragma mark - Dictionaries
+
 - (NSDictionary *)dictionaryOfAllAttributes
 {
     NSDictionary *objectAttributeNames = [[self entity] attributesByName];
@@ -227,38 +286,8 @@
     return attributeValues;
 }
 
-#pragma mark - Save Notification
-- (void)willSave
-{
-    [super willSave];
-
-    // if not in a synchronized MOC, or we don't have a doc sync manager, exit now
-    if (self.managedObjectContext.isSynchronized == NO || self.managedObjectContext.documentSyncManager == nil) {
-        if (self.managedObjectContext.isSynchronized == NO) {
-            TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Skipping sync change creation for %@ because our managedObjectContext is not marked as synchronized.", [self class]);
-        }
-
-        if (self.managedObjectContext.documentSyncManager == nil) {
-            TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Skipping sync change creation for %@ because our managedObjectContext has no documentSyncManager.", [self class]);
-        }
-
-        return;
-    }
-
-    if ( [self isInserted] ) {
-        [self createSyncChangeForInsertion];
-    }
-
-    if ( [self isUpdated] ) {
-        [self createSyncChangesForChangedProperties];
-    }
-
-    if ( [self isDeleted] ) {
-        [self createSyncChangeForDeletion];
-    }
-}
-
 #pragma mark - Managed Object Lifecycle
+
 - (void)awakeFromInsert
 {
     [super awakeFromInsert];
@@ -267,6 +296,7 @@
 }
 
 #pragma mark - Properties
+
 - (NSManagedObjectContext *)syncChangesMOC
 {
     TICDSDocumentSyncManager *documentSyncManager = self.managedObjectContext.documentSyncManager;

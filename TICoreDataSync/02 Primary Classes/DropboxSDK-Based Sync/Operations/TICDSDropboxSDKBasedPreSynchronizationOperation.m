@@ -40,6 +40,9 @@
     
     NSString *directoryPath = [[self thisDocumentDirectoryPath] stringByAppendingPathComponent:TICDSIntegrityKeyDirectoryName];
     
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [[self restClient] loadMetadata:directoryPath];
 }
 
@@ -51,6 +54,9 @@
         return;
     }
     
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [[self restClient] loadMetadata:[self thisDocumentSyncChangesDirectoryPath]];
 }
 
@@ -61,6 +67,9 @@
         return;
     }
     
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [[self restClient] loadMetadata:[self pathToSyncChangesDirectoryForClientWithIdentifier:anIdentifier]];
 }
 
@@ -77,6 +86,9 @@
     
     [[self clientIdentifiersForChangeSetIdentifiers] setValue:aClientIdentifier forKey:aChangeSetIdentifier];
     
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
     [[self restClient] loadFile:[self pathToSyncChangeSetWithIdentifier:aChangeSetIdentifier forClientWithIdentifier:aClientIdentifier] intoPath:[aLocation path]];
 }
 
@@ -84,6 +96,10 @@
 #pragma mark Metadata
 - (void)restClient:(DBRestClient*)client loadedMetadata:(DBMetadata*)metadata
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     if (self.isCancelled) {
         [self operationWasCancelled];
         return;
@@ -147,11 +163,17 @@
 
 - (void)restClient:(DBRestClient*)client metadataUnchangedAtPath:(NSString*)path
 {
-    
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
 }
 
 - (void)restClient:(DBRestClient*)client loadMetadataFailedWithError:(NSError*)error
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     if (self.isCancelled) {
         [self operationWasCancelled];
         return;
@@ -163,6 +185,10 @@
     
     if (errorCode == 503) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error 503, retrying immediately. %@", path);
+#if TARGET_OS_IPHONE
+        [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
+        
         [client loadMetadata:path];
         return;
     }
@@ -193,6 +219,10 @@
 #pragma mark Loading Files
 - (void)restClient:(DBRestClient*)client loadedFile:(NSString*)destPath
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     if (self.isCancelled) {
         [self operationWasCancelled];
         return;
@@ -235,6 +265,10 @@
 
 - (void)restClient:(DBRestClient *)client loadFileFailedWithError:(NSError *)error
 {
+#if TARGET_OS_IPHONE
+    [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:NO];
+#endif
+
     if (self.isCancelled) {
         [self operationWasCancelled];
         return;
@@ -248,6 +282,9 @@
         retryCount++;
         TICDSLog(TICDSLogVerbosityEveryStep, @"Failed to download %@. Going for try number %ld", path, (long)retryCount);
         [self.failedDownloadRetryDictionary setObject:[NSNumber numberWithInteger:retryCount] forKey:path];
+#if TARGET_OS_IPHONE
+        [[UIApplication sharedApplication] ticds_setNetworkActivityIndicatorVisible:YES];
+#endif
         [[self restClient] loadFile:path intoPath:downloadDestination];
         return;
     }

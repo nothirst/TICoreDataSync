@@ -24,6 +24,12 @@
 /** The managed object context for the `AppliedSyncChangeSets.ticdsync` file. */
 @property (nonatomic, strong) NSManagedObjectContext *appliedSyncChangeSetsContext;
 
+/** A `TICoreDataFactory` to access the contents of this operation's sync transaction `*.unsavedticdsync` file. */
+@property (nonatomic, strong) TICoreDataFactory *unsavedAppliedSyncChangeSetsCoreDataFactory;
+
+/** The managed object context for this operation's sync transaction `*.unsavedticdsync` file. */
+@property (nonatomic, strong) NSManagedObjectContext *unsavedAppliedSyncChangeSetsContext;
+
 /** A `TICoreDataFactory` to access the contents of the `UnappliedSyncChangeSets.ticdsync` file. */
 @property (nonatomic, strong) TICoreDataFactory *unappliedSyncChangeSetsCoreDataFactory;
 
@@ -107,10 +113,14 @@
         if (shouldContinue) {
             anyError = nil;
 
+            [self.syncTransaction open];
+            
             // Save Background Context (changes made to objects in application's context)
             __block BOOL success = NO;
             [self.backgroundApplicationContext performBlockAndWait:^{
-                success = [self.backgroundApplicationContext save:&anyError];
+                [self.backgroundApplicationContext.parentContext.undoManager disableUndoRegistration];
+                success = [[self backgroundApplicationContext] save:&anyError];
+                [self.backgroundApplicationContext.parentContext.undoManager enableUndoRegistration];
             }];
 
             if (success == NO) {
@@ -129,9 +139,9 @@
             }
 
             // Save Applied Sync Change Sets context (AppliedSyncChangeSets.ticdsync file)
-            success = [self.appliedSyncChangeSetsContext save:&anyError];
+            success = [self.unsavedAppliedSyncChangeSetsContext save:&anyError];
             if (success == NO) {
-                TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save applied sync change sets context, after saving background context: %@", anyError);
+                TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to save unsaved applied sync change sets context, after saving background context: %@", anyError);
                 [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
                 [self continueAfterApplyingUnappliedSyncChangeSetsUnsuccessfully];
                 return;
@@ -191,18 +201,18 @@
 
 - (BOOL)addSyncChangeSetToAppliedSyncChangeSets:(TICDSSyncChangeSet *)previouslyUnappliedSyncChangeSet
 {
-    NSString *syncChangeSetIdentifier = nil;
-    NSString *clientIdentifier = nil;
-    NSDate *creationDate = nil;
-    
-        syncChangeSetIdentifier = previouslyUnappliedSyncChangeSet.syncChangeSetIdentifier;
-        clientIdentifier = previouslyUnappliedSyncChangeSet.clientIdentifier;
-        creationDate = previouslyUnappliedSyncChangeSet.creationDate;
-    
+    NSString *syncChangeSetIdentifier = previouslyUnappliedSyncChangeSet.syncChangeSetIdentifier;
+    NSString *clientIdentifier = previouslyUnappliedSyncChangeSet.clientIdentifier;
+    NSDate *creationDate = previouslyUnappliedSyncChangeSet.creationDate;
+
     TICDSSyncChangeSet *appliedSyncChangeSet = [TICDSSyncChangeSet changeSetWithIdentifier:syncChangeSetIdentifier inManagedObjectContext:self.appliedSyncChangeSetsContext];
 
     if (appliedSyncChangeSet == nil) {
-        appliedSyncChangeSet = [TICDSSyncChangeSet syncChangeSetWithIdentifier:syncChangeSetIdentifier fromClient:clientIdentifier creationDate:creationDate inManagedObjectContext:self.appliedSyncChangeSetsContext];
+        appliedSyncChangeSet = [TICDSSyncChangeSet changeSetWithIdentifier:syncChangeSetIdentifier inManagedObjectContext:self.unsavedAppliedSyncChangeSetsContext];
+    }
+
+    if (appliedSyncChangeSet == nil) {
+        appliedSyncChangeSet = [TICDSSyncChangeSet syncChangeSetWithIdentifier:syncChangeSetIdentifier fromClient:clientIdentifier creationDate:creationDate inManagedObjectContext:self.unsavedAppliedSyncChangeSetsContext];
     }
 
     if (appliedSyncChangeSet == nil) {
@@ -211,7 +221,7 @@
         return NO;
     }
 
-        [appliedSyncChangeSet setLocalDateOfApplication:[NSDate date]];
+    [appliedSyncChangeSet setLocalDateOfApplication:[NSDate date]];
 
     return YES;
 }
@@ -365,22 +375,22 @@
 - (NSArray *)syncChangesAfterCheckingForConflicts:(NSArray *)syncChanges inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
 {
     NSArray *identifiersOfAffectedObjects = [syncChanges valueForKeyPath:@"@distinctUnionOfObjects.objectSyncID"];
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Affected Object identifiers: %@", [identifiersOfAffectedObjects componentsJoinedByString:@", "]);
-    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Affected Object identifiers: %@", [identifiersOfAffectedObjects componentsJoinedByString:@", "]);
+
     if (self.localSyncChangesToMergeContext == nil) {
         return syncChanges;
     }
-    
+
     NSMutableArray *syncChangesToReturn = [NSMutableArray arrayWithCapacity:[syncChanges count]];
-    
-        NSArray *syncChangesForEachObject = nil;
-        for (NSString *eachIdentifier in identifiersOfAffectedObjects) {
-            syncChangesForEachObject = [syncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"objectSyncID == %@", eachIdentifier]];
-            
-            syncChangesForEachObject = [self remoteSyncChangesForObjectWithIdentifier:eachIdentifier afterCheckingForConflictsInRemoteSyncChanges:syncChangesForEachObject inManagedObjectContext:managedObjectContext];
-            [syncChangesToReturn addObjectsFromArray:syncChangesForEachObject];
-        }
-    
+
+    NSArray *syncChangesForEachObject = nil;
+    for (NSString *eachIdentifier in identifiersOfAffectedObjects) {
+        syncChangesForEachObject = [syncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"objectSyncID == %@", eachIdentifier]];
+
+        syncChangesForEachObject = [self remoteSyncChangesForObjectWithIdentifier:eachIdentifier afterCheckingForConflictsInRemoteSyncChanges:syncChangesForEachObject inManagedObjectContext:managedObjectContext];
+        [syncChangesToReturn addObjectsFromArray:syncChangesForEachObject];
+    }
+
     return syncChangesToReturn;
 }
 
@@ -592,7 +602,9 @@
             [insertedObject setPrimitiveValue:[changedAttributes valueForKey:key] forKey:key];
             [insertedObject didChangeValueForKey:key];
         }
-        
+
+        [TICDSChangeIntegrityStoreManager addSyncIDToInsertionIntegrityStore:ticdsSyncID];
+
         TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Updated object: %@", insertedObject);
     }];
 }
@@ -625,6 +637,8 @@
         [object willChangeValueForKey:relevantKey];
         [object setPrimitiveValue:changedAttributes forKey:relevantKey];
         [object didChangeValueForKey:relevantKey];
+
+        [TICDSChangeIntegrityStoreManager addChangedAttributeValue:changedAttributes forKey:relevantKey toChangeIntegrityStoreForSyncID:objectSyncID];
         
         TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed attribute on object: %@", object);
     }];
@@ -661,8 +675,10 @@
         [object willChangeValueForKey:relevantKey];
         [object setPrimitiveValue:relatedObject forKey:relevantKey];
         [object didChangeValueForKey:relevantKey];
-        
-        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed to-one relationship on object: %@", object);
+
+        [TICDSChangeIntegrityStoreManager addChangedAttributeValue:changedRelationships forKey:relevantKey toChangeIntegrityStoreForSyncID:objectSyncID];
+
+        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed to-one relationship on object: %@[%@]", objectEntityName, objectSyncID);
     }];
 }
 
@@ -691,7 +707,7 @@
             return;
         }
         
-        // capitalize the first char of relationship name to change e.g., someObjects into SomeObjects
+        // capitalize the first char of relationship name to change e.g., someObject into SomeObject
         NSString *relationshipName = [relevantKey substringToIndex:1];
         relationshipName = [relationshipName capitalizedString];
         relationshipName = [relationshipName stringByAppendingString:[relevantKey substringFromIndex:1]];
@@ -710,7 +726,7 @@
             [self.synchronizationWarnings addObject:[TICDSUtilities syncWarningOfType:TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteRelationshipSyncChange entityName:relatedObjectEntityName relatedObjectEntityName:nil attributes:changedRelationships]];
             return;
         }
-        
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     if ([object respondsToSelector:NSSelectorFromString(selectorName)]) {
@@ -720,6 +736,8 @@
     }
 #pragma clang diagnostic pop
         
+        [TICDSChangeIntegrityStoreManager addChangedAttributeValue:changedRelationships forKey:relevantKey toChangeIntegrityStoreForSyncID:objectSyncID];
+
         TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"%@", objectEntityName);
         TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed to-many relationships on object: %@", object);
     }];
@@ -793,10 +811,10 @@
     if (_appliedSyncChangeSetsContext) {
         return _appliedSyncChangeSetsContext;
     }
-
+    
     _appliedSyncChangeSetsContext = [self.appliedSyncChangeSetsCoreDataFactory managedObjectContext];
     [_appliedSyncChangeSetsContext setUndoManager:nil];
-
+    
     return _appliedSyncChangeSetsContext;
 }
 
@@ -805,14 +823,58 @@
     if (_appliedSyncChangeSetsCoreDataFactory) {
         return _appliedSyncChangeSetsCoreDataFactory;
     }
-
+    
     TICDSLog(TICDSLogVerbosityEveryStep, @"Creating Core Data Factory (TICoreDataFactory)");
     _appliedSyncChangeSetsCoreDataFactory = [[TICoreDataFactory alloc] initWithMomdName:TICDSSyncChangeSetDataModelName];
     [_appliedSyncChangeSetsCoreDataFactory setPersistentStoreType:TICDSSyncChangeSetsCoreDataPersistentStoreType];
     [_appliedSyncChangeSetsCoreDataFactory setPersistentStoreDataPath:[self.appliedSyncChangeSetsFileLocation path]];
     [_appliedSyncChangeSetsCoreDataFactory setDelegate:self];
-
+    
+    NSError *error = nil;
+    
+    NSPersistentStoreCoordinator *persistentStoreCoordinator = _appliedSyncChangeSetsCoreDataFactory.persistentStoreCoordinator;
+    for (TICDSSyncTransaction *syncTransaction in self.syncTransactions) {
+        if (syncTransaction == self.syncTransaction) {
+            continue;
+        }
+        
+        if ([self.fileManager fileExistsAtPath:[syncTransaction.unsavedAppliedSyncChangesFileURL path]]) {
+            [persistentStoreCoordinator addPersistentStoreWithType:TICDSSyncChangeSetsCoreDataPersistentStoreType configuration:nil URL:syncTransaction.unsavedAppliedSyncChangesFileURL options:@{ NSReadOnlyPersistentStoreOption:@YES } error:&error];
+        }
+    }
+    
+    if (error != nil) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error attempting to add persistent stores to the appliedSyncChangeSets persistent store coordinator. Error: %@", error);
+    }
+    
     return _appliedSyncChangeSetsCoreDataFactory;
+}
+
+- (NSManagedObjectContext *)unsavedAppliedSyncChangeSetsContext
+{
+    if (_unsavedAppliedSyncChangeSetsContext) {
+        return _unsavedAppliedSyncChangeSetsContext;
+    }
+    
+    _unsavedAppliedSyncChangeSetsContext = [self.unsavedAppliedSyncChangeSetsCoreDataFactory managedObjectContext];
+    [_unsavedAppliedSyncChangeSetsContext setUndoManager:nil];
+    
+    return _unsavedAppliedSyncChangeSetsContext;
+}
+
+- (TICoreDataFactory *)unsavedAppliedSyncChangeSetsCoreDataFactory
+{
+    if (_unsavedAppliedSyncChangeSetsCoreDataFactory) {
+        return _unsavedAppliedSyncChangeSetsCoreDataFactory;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Creating Core Data Factory (TICoreDataFactory)");
+    _unsavedAppliedSyncChangeSetsCoreDataFactory = [[TICoreDataFactory alloc] initWithMomdName:TICDSSyncChangeSetDataModelName];
+    [_unsavedAppliedSyncChangeSetsCoreDataFactory setPersistentStoreType:TICDSSyncChangeSetsCoreDataPersistentStoreType];
+    [_unsavedAppliedSyncChangeSetsCoreDataFactory setPersistentStoreDataPath:[self.syncTransaction.unsavedAppliedSyncChangesFileURL path]];
+    [_unsavedAppliedSyncChangeSetsCoreDataFactory setDelegate:self];
+    
+    return _unsavedAppliedSyncChangeSetsCoreDataFactory;
 }
 
 - (NSManagedObjectContext *)unappliedSyncChangeSetsContext

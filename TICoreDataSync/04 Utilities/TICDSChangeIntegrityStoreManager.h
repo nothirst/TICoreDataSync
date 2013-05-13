@@ -6,8 +6,6 @@
 //  Copyright (c) 2011 No Thirst Software. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 @interface TICDSChangeIntegrityStoreManager : NSObject {
     NSMutableSet *_deletionSet;
     NSMutableDictionary *_changeDictionary;
@@ -15,16 +13,27 @@
 
 + (TICDSChangeIntegrityStoreManager *)sharedChangeIntegrityStoreManager;
 
-+ (BOOL)containsDeletionRecordForObjectID:(NSManagedObjectID *)objectID;
-+ (BOOL)containsInsertionRecordForObjectID:(NSManagedObjectID *)objectID;
+#pragma mark - Deletion Integrity methods
 
-+ (void)addObjectIDToDeletionIntegrityStore:(NSManagedObjectID *)objectID;
-+ (void)removeObjectIDFromDeletionIntegrityStore:(NSManagedObjectID *)objectID;
++ (BOOL)containsDeletionRecordForSyncID:(NSString *)ticdsSyncID;
++ (void)addSyncIDToDeletionIntegrityStore:(NSString *)ticdsSyncID;
++ (void)removeSyncIDFromDeletionIntegrityStore:(NSString *)ticdsSyncID;
 
-+ (void)addObjectIDToInsertionIntegrityStore:(NSManagedObjectID *)objectID;
-+ (void)removeObjectIDFromInsertionIntegrityStore:(NSManagedObjectID *)objectID;
+#pragma mark - Insertion Integrity methods
 
-+ (void)addChangedProperties:(NSDictionary *)changedProperties toChangeIntegrityStoreForObjectID:(NSManagedObjectID *)objectID;
-+ (void)removeChangedProperties:(NSDictionary *)changedProperties fromChangeIntegrityStoreForObjectID:(NSManagedObjectID *)objectID;
++ (BOOL)containsInsertionRecordForSyncID:(NSString *)ticdsSyncID;
++ (void)addSyncIDToInsertionIntegrityStore:(NSString *)ticdsSyncID;
++ (void)removeSyncIDFromInsertionIntegrityStore:(NSString *)ticdsSyncID;
+
+#pragma mark - Change Integrity methods
+
++ (BOOL)containsChangedAttributeRecordForKey:(id)key withValue:(id)value syncID:(NSString *)ticdsSyncID;
++ (void)addChangedAttributeValue:(id)value forKey:(id)key toChangeIntegrityStoreForSyncID:(NSString *)ticdsSyncID;
++ (void)removeChangedAttributesEntryFromChangeIntegrityStoreForSyncID:(NSString *)ticdsSyncID;
+
+#pragma mark - Undo Integrity methods
+
++ (void)storeTICDSSyncID:(NSString *)ticdsSyncID forManagedObjectID:(NSManagedObjectID *)managedObjectID;
++ (NSString *)ticdsSyncIDForManagedObjectID:(NSManagedObjectID *)managedObjectID;
 
 @end

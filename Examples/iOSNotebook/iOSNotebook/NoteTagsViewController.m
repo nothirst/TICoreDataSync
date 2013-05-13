@@ -24,29 +24,28 @@
     [[self navigationItem] setRightBarButtonItem:[self editButtonItem]];
     [[self tableView] setAllowsSelectionDuringEditing:YES];
     [self setTitle:@"Tags"];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(persistentStoresDidChange:) name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:[[[self note] managedObjectContext] 
-             persistentStoreCoordinator]];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(persistentStoresDidChange:) name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:self.note.managedObjectContext.persistentStoreCoordinator];
 }
 
 - (void)viewDidUnload
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:[[[self note] managedObjectContext] 
-             persistentStoreCoordinator]];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:self.note.managedObjectContext.persistentStoreCoordinator];
+
     [super viewDidUnload];
 }
 
-#pragma mark -
-#pragma mark Notifications
+#pragma mark - NSPersistentStoreCoordinatorStoresDidChangeNotification method
+
 - (void)persistentStoresDidChange:(NSNotification *)aNotification
 {
     NSError *anyError = nil;
-    BOOL success = [[self fetchedResultsController] performFetch:&anyError];
-    if( !success ) {
+    BOOL success = [self.fetchedResultsController performFetch:&anyError];
+    if (success == NO) {
         NSLog(@"Error fetching: %@", anyError);
     }
-    [[self tableView] reloadData];
+
+    [self.tableView reloadData];
 }
 
 #pragma mark -

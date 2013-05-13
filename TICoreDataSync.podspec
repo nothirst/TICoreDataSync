@@ -1,8 +1,8 @@
 Pod::Spec.new do |s|
   s.name         = "TICoreDataSync"
-  s.version      = "1.0.1"
+  s.version      = "1.0.2"
   s.summary      = "Automatic synchronization for Core Data Apps, between any combination of Mac OS X and iOS"
-  s.homepage	 = "http://timisted.github.com/TICoreDataSync"
+  s.homepage	 = "http://nothirst.github.io/TICoreDataSync"
   s.license      = "MIT"
   s.authors      = { "Tim Isted" => "git@timisted.com", 
   					 "Michael Fey" => "michael@fruitstandsoftware.com",

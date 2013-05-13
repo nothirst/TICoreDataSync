@@ -8,7 +8,7 @@
 
 #import "TICoreDataSync.h"
 
-@interface TICDSDocumentSyncManager () <TICoreDataFactoryDelegate>
+@interface TICDSDocumentSyncManager () <TICoreDataFactoryDelegate, TICDSSyncTransactionDelegate>
 
 - (BOOL)startDocumentConfigurationProcess:(NSError **)outError;
 - (BOOL)startDocumentRegistrationProcess:(NSError **)outError;
@@ -42,6 +42,10 @@
 @property (nonatomic, copy) NSString *clientIdentifier;
 @property (nonatomic, strong) NSDictionary *documentUserInfo;
 @property (strong) NSURL *helperFileDirectoryLocation;
+@property (nonatomic) NSMutableArray *openSyncTransactions;
+@property (nonatomic) NSMutableArray *syncTransactionsToBeClosed;
+@property TICDSSyncTransaction *currentSyncTransaction;
+@property NSInteger queuedSyncsCount;
 
 @end
 
@@ -72,15 +76,29 @@
     }
 }
 
+#pragma mark - DEREGISTRATION
+
+- (void)deregisterDocumentSyncManager
+{
+    [self stopPollingRemoteStorageForChanges];
+    self.state = TICDSDocumentSyncManagerStateNotYetRegistered;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    self.documentIdentifier = nil;
+    self.documentDescription = nil;
+    self.clientIdentifier = nil;
+    self.openSyncTransactions = nil;
+    self.syncTransactionsToBeClosed = nil;
+    self.currentSyncTransaction = nil;
+    self.queuedSyncsCount = 0;
+}
+
 #pragma mark - DELAYED REGISTRATION
 
 - (void)configureWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(NSManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo
 {
     [self preConfigureWithDelegate:aDelegate appSyncManager:anAppSyncManager documentIdentifier:aDocumentIdentifier];
 
-    self.primaryDocumentMOC = aContext;
-    self.primaryDocumentMOC.documentSyncManager = self;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(synchronizedMOCDidSave:) name:NSManagedObjectContextDidSaveNotification object:self.primaryDocumentMOC];
+    [self registerPrimaryDocumentManagedObjectContext:aContext];
 
     // setup the syncChangesMOC
     TICDSLog(TICDSLogVerbosityEveryStep, @"Creating SyncChangesMOC");
@@ -145,7 +163,14 @@
     self.delegate = aDelegate;
     self.documentIdentifier = aDocumentIdentifier;
     self.shouldUseEncryption = [anAppSyncManager shouldUseEncryption];
+    self.shouldUseCompressionForWholeStoreMoves = [anAppSyncManager shouldUseCompressionForWholeStoreMoves];
 
+    BOOL shouldProcessInBackgroundState = YES;
+    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerShouldSupportProcessingInBackgroundState:)]) {
+        shouldProcessInBackgroundState = [self.delegate documentSyncManagerShouldSupportProcessingInBackgroundState:self];
+    }
+    self.shouldContinueProcessingInBackgroundState = shouldProcessInBackgroundState;
+    
     [self postIncreaseActivityNotification];
 
     NSError *anyError = nil;
@@ -204,6 +229,11 @@
         success = [self.fileManager createDirectoryAtPath:unappliedSyncChangesPath withIntermediateDirectories:YES attributes:nil error:&anyError];
     }
 
+    NSString *unsavedAppliedSyncChangesPath = [[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnsavedAppliedSyncChangesDirectoryName];
+    if ([self.fileManager fileExistsAtPath:unsavedAppliedSyncChangesPath] == NO) {
+        success = [self.fileManager createDirectoryAtPath:unsavedAppliedSyncChangesPath withIntermediateDirectories:YES attributes:nil error:&anyError];
+    }
+    
     NSString *unappliedSyncCommandsPath = [[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnappliedSyncCommandsDirectoryName];
     if (success && ![self.fileManager fileExistsAtPath:unappliedSyncCommandsPath]) {
         success = [self.fileManager createDirectoryAtPath:unappliedSyncCommandsPath withIntermediateDirectories:YES attributes:nil error:&anyError];
@@ -282,6 +312,8 @@
 
 - (void)registerWithDelegate:(id <TICDSDocumentSyncManagerDelegate>)aDelegate appSyncManager:(TICDSApplicationSyncManager *)anAppSyncManager managedObjectContext:(NSManagedObjectContext *)aContext documentIdentifier:(NSString *)aDocumentIdentifier description:(NSString *)aDocumentDescription userInfo:(NSDictionary *)someUserInfo
 {
+    self.state = TICDSDocumentSyncManagerStateRegistering;
+
     // configure the document, if necessary
     NSError *anyError;
     BOOL shouldContinue = YES;
@@ -296,6 +328,7 @@
     self.delegate = aDelegate;
     self.documentIdentifier = aDocumentIdentifier;
     self.shouldUseEncryption = [anAppSyncManager shouldUseEncryption];
+    self.shouldUseCompressionForWholeStoreMoves = [anAppSyncManager shouldUseCompressionForWholeStoreMoves];
     NSString *userDefaultsIntegrityKey = [TICDSUtilities userDefaultsKeyForIntegrityKeyForDocumentWithIdentifier:aDocumentIdentifier];
     NSString *integrityKey = [[NSUserDefaults standardUserDefaults] valueForKey:userDefaultsIntegrityKey];
     self.integrityKey = integrityKey;
@@ -305,16 +338,14 @@
     }
 
     if (shouldContinue == NO) {
+        self.state = TICDSDocumentSyncManagerStateNotYetRegistered;
         [self bailFromRegistrationProcessWithError:anyError];
         return;
     }
 
-    self.state = TICDSDocumentSyncManagerStateRegistering;
     TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"Starting to register document sync manager");
 
-    self.primaryDocumentMOC = aContext;
-    self.primaryDocumentMOC.documentSyncManager = self;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(synchronizedMOCDidSave:) name:NSManagedObjectContextDidSaveNotification object:self.primaryDocumentMOC];
+    [self registerPrimaryDocumentManagedObjectContext:aContext];
 
     // setup the syncChangesMOC
     TICDSLog(TICDSLogVerbosityEveryStep, @"Creating SyncChangesMOC");
@@ -347,6 +378,15 @@
     }
 }
 
+- (void)registerPrimaryDocumentManagedObjectContext:(NSManagedObjectContext *)primaryManagedObjectContext
+{
+    self.primaryDocumentMOC = primaryManagedObjectContext;
+    self.primaryDocumentMOC.documentSyncManager = self;
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(synchronizedMOCWillSave:) name:NSManagedObjectContextWillSaveNotification object:self.primaryDocumentMOC];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(synchronizedMOCDidSave:) name:NSManagedObjectContextDidSaveNotification object:self.primaryDocumentMOC];
+}
+
 - (void)bailFromRegistrationProcessWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Bailing from registration process");
@@ -371,6 +411,7 @@
     }
 
     [operation setShouldUseEncryption:self.shouldUseEncryption];
+    [operation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
     operation.documentIdentifier = self.documentIdentifier;
     [operation setIntegrityKey:self.integrityKey];
     [operation setClientIdentifier:self.clientIdentifier];
@@ -501,6 +542,9 @@
     }
     [self postDecreaseActivityNotification];
 
+    self.shouldUseEncryption = [self.applicationSyncManager shouldUseEncryption];
+    self.shouldUseCompressionForWholeStoreMoves = [self.applicationSyncManager shouldUseCompressionForWholeStoreMoves];
+    
     // Upload whole store if necessary
     TICDSLog(TICDSLogVerbosityEveryStep, @"Checking whether to upload whole store after registration");
     if (self.mustUploadStoreAfterRegistration) {
@@ -513,15 +557,15 @@
         TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate denied whole store upload after registration");
     }
 
-    self.shouldUseEncryption = [self.applicationSyncManager shouldUseEncryption];
-
     TICDSLog(TICDSLogVerbosityEveryStep, @"Resuming Operation Queues");
     for ( TICDSOperation *eachOperation in [self.otherTasksQueue operations]) {
         [eachOperation setShouldUseEncryption:self.shouldUseEncryption];
+        [eachOperation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
     }
 
     for ( TICDSOperation *eachOperation in [self.synchronizationQueue operations]) {
         [eachOperation setShouldUseEncryption:self.shouldUseEncryption];
+        [eachOperation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
     }
 
     [self.otherTasksQueue setSuspended:NO];
@@ -633,15 +677,46 @@
         return;
     }
 
+    // Upload from a temporary location
+    NSString *temporaryPath = [NSTemporaryDirectory() stringByAppendingPathComponent:TICDSFrameworkName];
+    temporaryPath = [temporaryPath stringByAppendingPathComponent:[TICDSUtilities uuidString]];
+
+    // Create the temp directory for uploading
+    anyError = nil;
+    BOOL success = [self.fileManager createDirectoryAtPath:temporaryPath withIntermediateDirectories:YES attributes:nil error:&anyError];
+    if (success == NO) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create temporary directory for whole store upload: %@", anyError);
+
+        [self bailFromUploadProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        return;
+    }
+
+    NSString *tempWholeStoreFilePath = [temporaryPath stringByAppendingPathComponent:[[storeURL path] lastPathComponent]];
+    NSString *tempAppliedSyncChangesFilePath = [temporaryPath stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
+
+    success = [self.fileManager copyItemAtPath:[storeURL path] toPath:tempWholeStoreFilePath error:&anyError];
+    if (success == NO) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to copy whole store to temporary directory for whole store upload: %@", anyError);
+        [self bailFromUploadProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+        return;
+    }
+
+    if([self.fileManager fileExistsAtPath:self.localAppliedSyncChangesFilePath]) {
+        success = [self.fileManager copyItemAtPath:self.localAppliedSyncChangesFilePath toPath:tempAppliedSyncChangesFilePath error:&anyError];
+        if (success == NO) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to copy applied sync changes to temporary directory before whole store upload: %@", anyError);
+            [self bailFromUploadProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+            return;
+        }
+    }
+
     [operation setShouldUseEncryption:self.shouldUseEncryption];
-    [operation setLocalWholeStoreFileLocation:storeURL];
+    [operation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
+    [operation setLocalWholeStoreFileLocation:[NSURL fileURLWithPath:tempWholeStoreFilePath]];
 
     [operation configureBackgroundApplicationContextForPrimaryManagedObjectContext:self.primaryDocumentMOC];
 
-    NSString *appliedSyncChangeSetsFilePath = [self.helperFileDirectoryLocation path];
-    appliedSyncChangeSetsFilePath = [appliedSyncChangeSetsFilePath stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
-
-    [operation setLocalAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:appliedSyncChangeSetsFilePath]];
+    [operation setLocalAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:tempAppliedSyncChangesFilePath]];
 
     [self.otherTasksQueue addOperation:operation];
 }
@@ -654,6 +729,17 @@
 }
 
 #pragma mark Operation Communications
+
+-(void)wholeStoreUploadOperationReportedProgress:(TICDSWholeStoreUploadOperation *)anOperation;
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Whole Store Upload Operation Progress Reported: %.2f",[anOperation progress]);
+    
+    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:whileUploadingWholeStoreDidReportProgress:)]) {
+        [self runOnMainQueueWithoutDeadlocking:^{
+            [(id)self.delegate documentSyncManager:self whileUploadingWholeStoreDidReportProgress:[anOperation progress]];
+        }];
+    }
+}
 
 - (void)wholeStoreUploadOperationCompleted:(TICDSWholeStoreUploadOperation *)anOperation
 {
@@ -684,7 +770,7 @@
     [self postDecreaseActivityNotification];
 }
 
-- (void)wholeStoreUploadOperation:(TICDSDocumentRegistrationOperation *)anOperation failedToCompleteWithError:(NSError *)anError
+- (void)wholeStoreUploadOperation:(TICDSWholeStoreUploadOperation *)anOperation failedToCompleteWithError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"Whole Store Upload Operation Failed to Complete with Error: %@", anError);
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToUploadWholeStoreWithError:)]) {
@@ -752,6 +838,7 @@
     }
 
     [operation setShouldUseEncryption:self.shouldUseEncryption];
+    [operation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
 
     NSString *wholeStoreFilePath = [temporaryPath stringByAppendingPathComponent:TICDSWholeStoreFilename];
     NSString *appliedSyncChangesFilePath = [temporaryPath stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename];
@@ -772,6 +859,17 @@
 }
 
 #pragma mark Operation Communications
+
+-(void)wholeStoreDownloadOperationReportedProgress:(TICDSWholeStoreDownloadOperation *)anOperation;
+{
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Whole Store Download Operation Progress Reported: %.2f",[anOperation progress]);
+    
+    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:whileDownloadingWholeStoreDidReportProgress:)]) {
+        [self runOnMainQueueWithoutDeadlocking:^{
+            [(id)self.delegate documentSyncManager:self whileDownloadingWholeStoreDidReportProgress:[anOperation progress]];
+        }];
+    }
+}
 
 - (void)wholeStoreDownloadOperationCompleted:(TICDSWholeStoreDownloadOperation *)anOperation
 {
@@ -813,7 +911,7 @@
         [self bailFromDownloadPostProcessingWithFileManagerError:anyError];
         return;
     }
-
+    
     // Move newly downloaded AppliedSyncChanges
     if ([self.fileManager fileExistsAtPath:[[anOperation localAppliedSyncChangeSetsFileLocation] path]] && ![self.fileManager moveItemAtPath:[[anOperation localAppliedSyncChangeSetsFileLocation] path] toPath:self.localAppliedSyncChangesFilePath error:&anyError]) {
         [self bailFromDownloadPostProcessingWithFileManagerError:anyError];
@@ -867,8 +965,18 @@
 
 - (void)initiateSynchronization
 {
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Manual initiation of synchronization");
+    if (self.state == TICDSDocumentSyncManagerStateSynchronizing) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"We're already syncing, so queueing another sync.");
+        self.queuedSyncsCount = 1;
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Initiation of synchronization");
+    
+    self.state = TICDSDocumentSyncManagerStateSynchronizing;
 
+    [self beginBackgroundTask];
+    
     [self startPreSynchronizationProcess];
 }
 
@@ -886,6 +994,13 @@
          }];
     }
     [self postDecreaseActivityNotification];
+
+    self.state = TICDSDocumentSyncManagerStateAbleToSync;
+    
+    if (self.queuedSyncsCount > 0) {
+        self.queuedSyncsCount--;
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed a sync, found some queued up, but not kicking off another one in favor of letting the delegate decide what to do.");
+    }
 }
 
 - (void)startPreSynchronizationProcess
@@ -900,6 +1015,13 @@
     
     [self moveUnsynchronizedSyncChangesToMergeLocation];
     
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Creating a new sync transaction");
+    self.currentSyncTransaction = [[TICDSSyncTransaction alloc] initWithDocumentManagedObjectContext:self.primaryDocumentMOC unsavedAppliedSyncChangesDirectoryPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnsavedAppliedSyncChangesDirectoryName]];
+    self.currentSyncTransaction.appliedSyncChangesFileURL = [NSURL fileURLWithPath:self.localAppliedSyncChangesFilePath];
+    self.currentSyncTransaction.delegate = self;
+    
+    [self.openSyncTransactions addObject:self.currentSyncTransaction];
+    
     TICDSPreSynchronizationOperation *operation = [self preSynchronizationOperation];
     
     if (operation == nil) {
@@ -909,11 +1031,13 @@
     }
     
     [operation setShouldUseEncryption:self.shouldUseEncryption];
+    [operation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
     [operation setClientIdentifier:self.clientIdentifier];
     [operation setIntegrityKey:self.integrityKey];
+    operation.syncTransactions = [self.openSyncTransactions arrayByAddingObjectsFromArray:self.syncTransactionsToBeClosed];
     
     // Set locations of files
-    [operation setAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename]]];
+    [operation setAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:self.localAppliedSyncChangesFilePath]];
     [operation setUnappliedSyncChangesDirectoryLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnappliedSyncChangesDirectoryName]]];
     [operation setUnappliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnappliedChangeSetsFilename]]];
     
@@ -934,6 +1058,7 @@
     }
     
     [operation setShouldUseEncryption:self.shouldUseEncryption];
+    [operation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
     [operation setClientIdentifier:self.clientIdentifier];
     
     // Set location of sync changes to merge file
@@ -944,9 +1069,11 @@
     [operation setLocalSyncChangesToMergeURL:syncChangesToMergeLocation];
     
     // Set locations of files
-    [operation setAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename]]];
+    [operation setAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:self.localAppliedSyncChangesFilePath]];
     [operation setUnappliedSyncChangesDirectoryLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnappliedSyncChangesDirectoryName]]];
     [operation setUnappliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnappliedChangeSetsFilename]]];
+    operation.syncTransaction = self.currentSyncTransaction;
+    operation.syncTransactions = [self.openSyncTransactions arrayByAddingObjectsFromArray:self.syncTransactionsToBeClosed];
     
     // Set background context
     [operation configureBackgroundApplicationContextForPrimaryManagedObjectContext:self.primaryDocumentMOC];
@@ -968,6 +1095,7 @@
     }
     
     [operation setShouldUseEncryption:self.shouldUseEncryption];
+    [operation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
     [operation setClientIdentifier:self.clientIdentifier];
     
     // Set location of sync changes to merge file
@@ -978,7 +1106,7 @@
     [operation setLocalSyncChangesToMergeURL:syncChangesToMergeLocation];
     
     // Set locations of files
-    [operation setAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSAppliedSyncChangeSetsFilename]]];
+    [operation setAppliedSyncChangeSetsFileLocation:[NSURL fileURLWithPath:self.localAppliedSyncChangesFilePath]];
     [operation setLocalRecentSyncFileLocation:[NSURL fileURLWithPath:[[[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:self.clientIdentifier] stringByAppendingPathExtension:TICDSRecentSyncFileExtension]]];
     
     [self.synchronizationQueue addOperation:operation];
@@ -1009,27 +1137,43 @@
 
     TICDSLog(TICDSLogVerbosityEveryStep, @"Moving UnsynchronizedSyncChanges to SyncChangesBeingSynchronized");
 
+    NSManagedObjectContext *syncChangesManagedObjectContext = [self syncChangesMocForDocumentMoc:self.primaryDocumentMOC];
+    BOOL success = [syncChangesManagedObjectContext save:&anyError];
+    
+    if (success == NO) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Sync Manager failed to save Sync Changes context with error: %@", anyError);
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Sync Manager cannot continue processing any further, so bailing");
+        [self bailFromSynchronizationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataFetchError underlyingError:[TICDSError errorWithCode:TICDSErrorCodeFailedToSaveSyncChangesMOC underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__] classAndMethod:__PRETTY_FUNCTION__]];
+        
+        return;
+    }
+
     self.coreDataFactory = nil;
     [self.syncChangesMOCs setValue:nil forKey:[self keyForContext:self.primaryDocumentMOC]];
 
-    // move UnsynchronizedSyncChanges file to SyncChangesBeingSynchronized
-    BOOL success = [self.fileManager moveItemAtPath:self.unsynchronizedSyncChangesStorePath toPath:self.syncChangesBeingSynchronizedStorePath error:&anyError];
+    // Copy UnsynchronizedSyncChanges file to SyncChangesBeingSynchronized
+    success = [self.fileManager copyItemAtPath:self.unsynchronizedSyncChangesStorePath toPath:self.syncChangesBeingSynchronizedStorePath error:&anyError];
 
     if (success == NO) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to move UnsynchronizedSyncChanges.syncchg to SyncChangesBeingSynchronized.syncchg");
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to copy UnsynchronizedSyncChanges.syncchg to SyncChangesBeingSynchronized.syncchg");
         [self bailFromSynchronizationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFileManagerError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
         return;
     }
+    
+    [self.fileManager removeItemAtPath:self.unsynchronizedSyncChangesStorePath error:&anyError];
+    if (success == NO) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to remove UnsynchronizedSyncChanges.syncchg, but not absolutely fatal so continuing.");
+    }
 
     // setup the syncChangesMOC
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Re-Creating SyncChangesMOC");
-    [self addSyncChangesMocForDocumentMoc:self.primaryDocumentMOC];
-    if ([self syncChangesMocForDocumentMoc:self.primaryDocumentMOC] == nil) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create sync changes MOC");
-        [self bailFromSynchronizationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateSyncChangesMOC classAndMethod:__PRETTY_FUNCTION__]];
-        return;
-    }
-    TICDSLog(TICDSLogVerbosityEveryStep, @"Finished creating SyncChangesMOC");
+//    TICDSLog(TICDSLogVerbosityEveryStep, @"Re-Creating SyncChangesMOC");
+//    [self addSyncChangesMocForDocumentMoc:self.primaryDocumentMOC];
+//    if ([self syncChangesMocForDocumentMoc:self.primaryDocumentMOC] == nil) {
+//        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed to create sync changes MOC");
+//        [self bailFromSynchronizationProcessWithError:[TICDSError errorWithCode:TICDSErrorCodeFailedToCreateSyncChangesMOC classAndMethod:__PRETTY_FUNCTION__]];
+//        return;
+//    }
+//    TICDSLog(TICDSLogVerbosityEveryStep, @"Finished creating SyncChangesMOC");
 }
 
 - (void)synchronizationOperation:(TICDSSynchronizationOperation *)anOperation processedChangeNumber:(NSNumber *)changeNumber outOfTotalChangeCount:(NSNumber *)totalChangeCount fromClientWithID:(NSString *)clientIdentifier
@@ -1125,9 +1269,21 @@
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManagerDidFinishSynchronizing:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManagerDidFinishSynchronizing:self];
+            [self endBackgroundTask];
         }];
     }
     [self postDecreaseActivityNotification];
+
+    self.state = TICDSDocumentSyncManagerStateAbleToSync;
+    
+    self.currentSyncTransaction = nil;
+    [self processSyncTransactionsReadyToBeClosed];
+    
+    if (self.queuedSyncsCount > 0) {
+        self.queuedSyncsCount--;
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Finished a sync, found some queued up, so kicking off another one. (%ld left in the queue)", (long)self.queuedSyncsCount);
+        [self initiateSynchronization];
+    }
 }
 
 #pragma Cancellation
@@ -1141,6 +1297,13 @@
         }];
     }
     [self postDecreaseActivityNotification];
+
+    self.state = TICDSDocumentSyncManagerStateAbleToSync;
+    
+    if (self.queuedSyncsCount > 0) {
+        self.queuedSyncsCount--;
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed a sync, found some queued up, but not kicking off another one in favor of letting the delegate decide what to do.");
+    }
 }
 
 - (void)synchronizationOperationWasCancelled:(TICDSSynchronizationOperation *)anOperation
@@ -1153,6 +1316,13 @@
         }];
     }
     [self postDecreaseActivityNotification];
+
+    self.state = TICDSDocumentSyncManagerStateAbleToSync;
+    
+    if (self.queuedSyncsCount > 0) {
+        self.queuedSyncsCount--;
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed a sync, found some queued up, but not kicking off another one in favor of letting the delegate decide what to do.");
+    }
 }
 
 - (void)postSynchronizationOperationWasCancelled:(TICDSPostSynchronizationOperation *)anOperation
@@ -1162,9 +1332,17 @@
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToSynchronizeWithError:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToSynchronizeWithError:[TICDSError errorWithCode:TICDSErrorCodeTaskWasCancelled classAndMethod:__PRETTY_FUNCTION__]];
+            [self endBackgroundTask];
         }];
     }
     [self postDecreaseActivityNotification];
+
+    self.state = TICDSDocumentSyncManagerStateAbleToSync;
+    
+    if (self.queuedSyncsCount > 0) {
+        self.queuedSyncsCount--;
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed a sync, found some queued up, but not kicking off another one in favor of letting the delegate decide what to do.");
+    }
 }
 
 #pragma Failure
@@ -1183,6 +1361,13 @@
         }];
     }
     [self postDecreaseActivityNotification];
+
+    self.state = TICDSDocumentSyncManagerStateAbleToSync;
+    
+    if (self.queuedSyncsCount > 0) {
+        self.queuedSyncsCount--;
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed a sync, found some queued up, but not kicking off another one in favor of letting the delegate decide what to do.");
+    }
 }
 
 - (void)synchronizationOperation:(TICDSSynchronizationOperation *)anOperation failedToCompleteWithError:(NSError *)anError
@@ -1200,6 +1385,13 @@
         }];
     }
     [self postDecreaseActivityNotification];
+
+    self.state = TICDSDocumentSyncManagerStateAbleToSync;
+    
+    if (self.queuedSyncsCount > 0) {
+        self.queuedSyncsCount--;
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed a sync, found some queued up, but not kicking off another one in favor of letting the delegate decide what to do.");
+    }
 }
 
 - (void)postSynchronizationOperation:(TICDSPostSynchronizationOperation *)anOperation failedToCompleteWithError:(NSError *)anError
@@ -1214,9 +1406,43 @@
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToSynchronizeWithError:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
             [(id)self.delegate documentSyncManager:self didFailToSynchronizeWithError:anError];
+            [self endBackgroundTask];
         }];
     }
     [self postDecreaseActivityNotification];
+
+    self.state = TICDSDocumentSyncManagerStateAbleToSync;
+    
+    if (self.queuedSyncsCount > 0) {
+        self.queuedSyncsCount--;
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Failed a sync, found some queued up, but not kicking off another one in favor of letting the delegate decide what to do.");
+    }
+}
+
+#pragma mark Sync Transaction Closing
+
+- (void)processSyncTransactionsReadyToBeClosed
+{
+    if (self.state == TICDSDocumentSyncManagerStateSynchronizing) {
+        TICDSLog(TICDSLogVerbosityEveryStep, @"Cannot process sync transactions while synchronizing.");
+        return;
+    }
+
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Processing %ld open sync transactions.", (long)[self.syncTransactionsToBeClosed count]);
+
+    NSMutableArray *syncTransactionsToRemove = [[NSMutableArray alloc] init];
+    for (TICDSSyncTransaction *syncTransaction in self.syncTransactionsToBeClosed) {
+        [syncTransaction close];
+        if (syncTransaction.state == TICDSSyncTransactionStateClosed) {
+            [syncTransactionsToRemove addObject:syncTransaction];
+        } else if (syncTransaction.state == TICDSSyncTransactionStateUnableToClose) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Unable to close sync transaction. Error: %@", syncTransaction.error);
+        } else {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Unexpected sync transaction state: %ld", (long)syncTransaction.state);
+        }
+    }
+    
+    [self.syncTransactionsToBeClosed removeObjectsInArray:syncTransactionsToRemove];
 }
 
 #pragma mark - VACUUMING
@@ -1258,6 +1484,7 @@
     }
 
     [operation setShouldUseEncryption:self.shouldUseEncryption];
+    [operation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
 
     [self.otherTasksQueue addOperation:operation];
 }
@@ -1345,6 +1572,7 @@
     }
 
     [operation setShouldUseEncryption:self.shouldUseEncryption];
+    [operation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
 
     [self.otherTasksQueue addOperation:operation];
 }
@@ -1435,8 +1663,23 @@
 
     [operation setIdentifierOfClientToBeDeleted:anIdentifier];
     [operation setShouldUseEncryption:self.shouldUseEncryption];
+    [operation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
 
     [self.otherTasksQueue addOperation:operation];
+}
+
+#pragma mark - Polling methods
+
+- (void)beginPollingRemoteStorageForChanges
+{
+    NSLog(@"%s Not implemented by %@, you're not getting very far with this implementation. Each TICDSDocumentSyncManager subclass should implement its own version of this method.", __PRETTY_FUNCTION__, self.class);
+    [self doesNotRecognizeSelector:_cmd];
+}
+
+- (void)stopPollingRemoteStorageForChanges
+{
+    NSLog(@"%s Not implemented by %@, you're not getting very far with this implementation. Each TICDSDocumentSyncManager subclass should implement its own version of this method.", __PRETTY_FUNCTION__, self.class);
+    [self doesNotRecognizeSelector:_cmd];
 }
 
 #pragma mark Operation Generation
@@ -1520,6 +1763,11 @@
 
     syncChangesManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSConfinementConcurrencyType];
     syncChangesManagedObjectContext.persistentStoreCoordinator = persistentStoreCoordinator;
+    NSError *error = nil;
+    [syncChangesManagedObjectContext save:&error];
+    if (error != nil) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Was not able to save the freshly created MOC.");
+    }
 
     [self.syncChangesMOCs setValue:syncChangesManagedObjectContext forKey:[self keyForContext:documentManagedObjectContext]];
 
@@ -1549,51 +1797,73 @@
 
 #pragma mark - MANAGED OBJECT CONTEXT DID SAVE BEHAVIOR
 
-- (void)synchronizedMOCWillSave:(NSManagedObjectContext *)aMoc
+- (void)synchronizedMOCWillSave:(NSNotification *)notification
 {
-    // Do anything here that's needed before the application context is saved
+    NSManagedObjectContext *documentManagedObjectContext = notification.object;
+    if (documentManagedObjectContext != self.primaryDocumentMOC) {
+        NSLog(@"%s Processing a synchronizedMOCWillSave: method for a MOC that isn't the primary document MOC", __PRETTY_FUNCTION__);
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"MOC saved, so beginning post-save processing");
+    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didBeginProcessingSyncChangesBeforeManagedObjectContextWillSave:)]) {
+        [self runOnMainQueueWithoutDeadlocking:^{
+            [(id)self.delegate documentSyncManager:self didBeginProcessingSyncChangesBeforeManagedObjectContextWillSave:documentManagedObjectContext];
+        }];
+    }
+    
+    NSSet *insertedObjects = [documentManagedObjectContext insertedObjects];
+    for (TICDSSynchronizedManagedObject *insertedObject in insertedObjects) {
+        [insertedObject createSyncChange];
+    }
+    
+    NSSet *updatedObjects = [documentManagedObjectContext updatedObjects];
+    for (TICDSSynchronizedManagedObject *updatedObject in updatedObjects) {
+        [updatedObject createSyncChange];
+    }
+    
+    NSSet *deletedObjects = [documentManagedObjectContext deletedObjects];
+    for (TICDSSynchronizedManagedObject *deletedObject in deletedObjects) {
+        [deletedObject createSyncChange];
+    }
+    
+    NSError *anyError = nil;
+    BOOL success = NO;
+    
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Sync Manager will save Sync Changes context");
+    
+    NSManagedObjectContext *syncChangesManagedObjectContext = [self syncChangesMocForDocumentMoc:documentManagedObjectContext];
+    success = [syncChangesManagedObjectContext save:&anyError];
+    
+    if (success == NO) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Sync Manager failed to save Sync Changes context with error: %@", anyError);
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Sync Manager cannot continue processing any further, so bailing");
+        if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToProcessSyncChangesBeforeManagedObjectContextWillSave:withError:)]) {
+            [self runOnMainQueueWithoutDeadlocking:^{
+                [(id)self.delegate documentSyncManager:self didFailToProcessSyncChangesBeforeManagedObjectContextWillSave:documentManagedObjectContext withError:[TICDSError errorWithCode:TICDSErrorCodeFailedToSaveSyncChangesMOC underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+            }];
+        }
+        
+        return;
+    }
+    
+    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Sync Manager saved Sync Changes context successfully");
+    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFinishProcessingSyncChangesBeforeManagedObjectContextWillSave:)]) {
+        [self runOnMainQueueWithoutDeadlocking:^{
+            [(id)self.delegate documentSyncManager:self didFinishProcessingSyncChangesBeforeManagedObjectContextWillSave:documentManagedObjectContext];
+        }];
+    }
 }
 
 - (void)synchronizedMOCDidSave:(NSNotification *)notification
 {
     NSManagedObjectContext *documentManagedObjectContext = notification.object;
     if (documentManagedObjectContext != self.primaryDocumentMOC) {
-        NSLog(@"%s Processing a synchronizedMOCDidSave: method for a MOC that isn't the primary document MOC", __PRETTY_FUNCTION__);
-        return;
-    }
-    
-    TICDSLog(TICDSLogVerbosityStartAndEndOfMainPhase, @"MOC saved, so beginning post-save processing");
-    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didBeginProcessingSyncChangesAfterManagedObjectContextDidSave:)]) {
-        [self runOnMainQueueWithoutDeadlocking:^{
-             [(id)self.delegate documentSyncManager:self didBeginProcessingSyncChangesAfterManagedObjectContextDidSave:documentManagedObjectContext];
-         }];
-    }
-
-    NSError *anyError = nil;
-    BOOL success = NO;
-
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Sync Manager will save Sync Changes context");
-    NSManagedObjectContext *syncChangesManagedObjectContext = [self syncChangesMocForDocumentMoc:documentManagedObjectContext];
-    success = [syncChangesManagedObjectContext save:&anyError];
-
-    if (success == NO) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Sync Manager failed to save Sync Changes context with error: %@", anyError);
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Sync Manager cannot continue processing any further, so bailing");
-        if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFailToProcessSyncChangesAfterManagedObjectContextDidSave:withError:)]) {
-            [self runOnMainQueueWithoutDeadlocking:^{
-                 [(id)self.delegate documentSyncManager:self didFailToProcessSyncChangesAfterManagedObjectContextDidSave:documentManagedObjectContext withError:[TICDSError errorWithCode:TICDSErrorCodeFailedToSaveSyncChangesMOC underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-             }];
-        }
-
+        NSLog(@"%s Processing a synchronizedMOCWillSave: method for a MOC that isn't the primary document MOC", __PRETTY_FUNCTION__);
         return;
     }
 
-    TICDSLog(TICDSLogVerbosityStartAndEndOfEachPhase, @"Sync Manager saved Sync Changes context successfully");
-    if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didFinishProcessingSyncChangesAfterManagedObjectContextDidSave:)]) {
-        [self runOnMainQueueWithoutDeadlocking:^{
-             [(id)self.delegate documentSyncManager:self didFinishProcessingSyncChangesAfterManagedObjectContextDidSave:documentManagedObjectContext];
-         }];
-    }
+    [self processSyncTransactionsReadyToBeClosed];
 
     TICDSLog(TICDSLogVerbosityEveryStep, @"Asking delegate if we should sync after saving");
     BOOL shouldSync = [self ti_delegateRespondsToSelector:@selector(documentSyncManager:shouldBeginSynchronizingAfterManagedObjectContextDidSave:)] && [(id)self.delegate documentSyncManager:self shouldBeginSynchronizingAfterManagedObjectContextDidSave:documentManagedObjectContext];
@@ -1601,9 +1871,9 @@
         TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate denied synchronization after saving");
         return;
     }
-
+    
     TICDSLog(TICDSLogVerbosityEveryStep, @"Delegate allowed synchronization after saving");
-    [self startPreSynchronizationProcess];
+    [self initiateSynchronization];
 }
 
 #pragma mark - NOTIFICATIONS
@@ -1611,33 +1881,53 @@
 - (void)appSyncManagerDidRegister:(NSNotification *)aNotification
 {
     self.shouldUseEncryption = [self.applicationSyncManager shouldUseEncryption];
-
+    self.shouldUseCompressionForWholeStoreMoves = [self.applicationSyncManager shouldUseCompressionForWholeStoreMoves];
+    
     for ( TICDSOperation *eachOperation in [self.registrationQueue operations]) {
         [eachOperation setShouldUseEncryption:self.shouldUseEncryption];
+        [eachOperation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
     }
 
     for ( TICDSOperation *eachOperation in [self.synchronizationQueue operations]) {
         [eachOperation setShouldUseEncryption:self.shouldUseEncryption];
+        [eachOperation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
     }
 
     for ( TICDSOperation *eachOperation in [self.otherTasksQueue operations]) {
         [eachOperation setShouldUseEncryption:self.shouldUseEncryption];
+        [eachOperation setShouldUseCompressionForWholeStoreMoves:self.shouldUseCompressionForWholeStoreMoves];
     }
 
     [self.registrationQueue setSuspended:NO];
 }
 
-- (void)backgroundManagedObjectContextDidSave:(NSNotification *)aNotification
+- (void)backgroundManagedObjectContextDidSave:(NSNotification *)notification
 {
+    NSManagedObjectContext *notificationContext = [notification object];
+    if (notificationContext.parentContext != self.primaryDocumentMOC) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Received a NSManagedObjectContextDidSaveNotification for a context that was not a child of the primary document managed object context. Returning.");
+        return;
+    }
+
     if ([self ti_delegateRespondsToSelector:@selector(documentSyncManager:didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:)]) {
         [self runOnMainQueueWithoutDeadlocking:^{
-             [(id)self.delegate documentSyncManager:self didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:aNotification];
+             [(id)self.delegate documentSyncManager:self didMakeChangesToObjectsInBackgroundContextAndSaveWithNotification:notification];
+
+             [[NSNotificationCenter defaultCenter] postNotificationName:TICDSDocumentSyncManagerDidDirtyDocumentNotification object:self];
          }];
     }
 }
 
 - (void)applicationSyncManagerWillRemoveAllRemoteSyncData:(NSNotification *)aNotification
 {}
+
+#pragma mark - Other Tasks Process
+
+-(void)cancelOtherTasks;
+{
+    [self.applicationSyncManager cancelOtherTasks];
+    [self.otherTasksQueue cancelAllOperations];
+}
 
 #pragma mark - OPERATION COMMUNICATIONS
 
@@ -1710,11 +2000,63 @@
     }
 }
 
+- (void)operationReportedProgress:(TICDSOperation *)anOperation
+{
+    // For now, only supporting progress reports on whole store movements, but could be extended to any operation
+    if ([anOperation isKindOfClass:[TICDSWholeStoreUploadOperation class]]) {
+        [self wholeStoreUploadOperationReportedProgress:(id)anOperation];
+    } else if ([anOperation isKindOfClass:[TICDSWholeStoreDownloadOperation class]]) {
+        [self wholeStoreDownloadOperationReportedProgress:(id)anOperation];
+    }
+}
+
+-(BOOL)operationShouldSupportProcessingInBackgroundState:(TICDSOperation *)anOperation;
+{
+    BOOL allowProcessInBackgroundState = NO;
+    
+    if (!self.shouldContinueProcessingInBackgroundState) {
+        return allowProcessInBackgroundState;
+    }
+    
+    if ([anOperation isKindOfClass:[TICDSDocumentRegistrationOperation class]]) {
+        allowProcessInBackgroundState = NO;
+    } else if ([anOperation isKindOfClass:[TICDSWholeStoreUploadOperation class]]) {
+        allowProcessInBackgroundState = YES;
+    } else if ([anOperation isKindOfClass:[TICDSPreSynchronizationOperation class]]) {
+        allowProcessInBackgroundState = YES;
+    } else if ([anOperation isKindOfClass:[TICDSSynchronizationOperation class]]) {
+        allowProcessInBackgroundState = YES;
+    } else if ([anOperation isKindOfClass:[TICDSPostSynchronizationOperation class]]) {
+        allowProcessInBackgroundState = YES;
+    } else if ([anOperation isKindOfClass:[TICDSVacuumOperation class]]) {
+        allowProcessInBackgroundState = NO;
+    } else if ([anOperation isKindOfClass:[TICDSWholeStoreDownloadOperation class]]) {
+        allowProcessInBackgroundState = YES;
+    } else if ([anOperation isKindOfClass:[TICDSListOfDocumentRegisteredClientsOperation class]]) {
+        allowProcessInBackgroundState = NO;
+    } else if ([anOperation isKindOfClass:[TICDSDocumentClientDeletionOperation class]]) {
+        allowProcessInBackgroundState = NO;
+    }
+    return allowProcessInBackgroundState;
+}
+
 #pragma mark - TICoreDataFactory Delegate
 
 - (void)coreDataFactory:(TICoreDataFactory *)aFactory encounteredError:(NSError *)anError
 {
     TICDSLog(TICDSLogVerbosityErrorsOnly, @"TICoreDataFactory error: %@", anError);
+}
+
+#pragma mark - TICDSSyncTransactionDelegate methods
+
+- (void)syncTransactionIsReadyToBeClosed:(TICDSSyncTransaction *)syncTransaction
+{
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Received notice that sync tranaction is ready to be closed.");
+    
+    [self.syncTransactionsToBeClosed addObject:syncTransaction];
+    [self.openSyncTransactions removeObject:syncTransaction];
+    
+    [self processSyncTransactionsReadyToBeClosed];
 }
 
 #pragma mark - Initialization and Deallocation
@@ -1790,6 +2132,24 @@
     [_coreDataFactory setPersistentStoreDataPath:self.unsynchronizedSyncChangesStorePath];
 
     return _coreDataFactory;
+}
+
+- (NSMutableArray *)openSyncTransactions
+{
+    if (_openSyncTransactions == nil) {
+        _openSyncTransactions = [[NSMutableArray alloc] init];
+    }
+    
+    return _openSyncTransactions;
+}
+
+- (NSMutableArray *)syncTransactionsToBeClosed
+{
+    if (_syncTransactionsToBeClosed == nil) {
+        _syncTransactionsToBeClosed = [[NSMutableArray alloc] init];
+    }
+    
+    return _syncTransactionsToBeClosed;
 }
 
 #pragma mark - Paths
@@ -1919,10 +2279,77 @@
     return [[self.helperFileDirectoryLocation path] stringByAppendingPathComponent:TICDSUnsynchronizedSyncChangesStoreName];
 }
 
+#pragma mark - Background State Support
+
+- (void)beginBackgroundTask
+{
+#if TARGET_OS_IPHONE
+    self.backgroundTaskID = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+                                 [self endBackgroundTask];
+                             }];
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Doc Sync Manager (%@), Task ID (%i) is begining.", [self class], self.backgroundTaskID);
+#endif
+}
+
+- (void)endBackgroundTask
+{
+#if TARGET_OS_IPHONE
+    if (self.backgroundTaskID == UIBackgroundTaskInvalid) {
+        return;
+    }
+
+    switch ([[UIApplication sharedApplication] applicationState]) {
+        case UIApplicationStateActive:  {
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Doc Sync Manager (%@), Task ID (%i) is ending while app state is Active", [self class], self.backgroundTaskID);
+        }   break;
+        case UIApplicationStateInactive:  {
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Doc Sync Manager (%@), Task ID (%i) is ending while app state is Inactive", [self class], self.backgroundTaskID);
+        }   break;
+        case UIApplicationStateBackground:  {
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Doc Sync Manager (%@), Task ID (%i) is ending while app state is Background with %.0f seconds remaining", [self class], self.backgroundTaskID, [[UIApplication sharedApplication] backgroundTimeRemaining]);
+        }   break;
+        default:
+            break;
+    }
+
+    [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskID];
+    self.backgroundTaskID = UIBackgroundTaskInvalid;
+#endif
+}
+
+- (void)cancelNonBackgroundStateOperations;
+{
+#if TARGET_OS_IPHONE
+    @synchronized(self) {
+        for (TICDSOperation *op in [self.registrationQueue operations]) {
+            if (!op.shouldContinueProcessingInBackgroundState) {
+                TICDSLog(TICDSLogVerbosityEveryStep,@"Doc Sync Manager is cancelling operation %@ (id:%i) because app has gone to background state.",[self class],self.backgroundTaskID);
+                [op cancel];
+            }
+        }
+        
+        for (TICDSOperation *op in [self.synchronizationQueue operations]) {
+            if (!op.shouldContinueProcessingInBackgroundState) {
+                TICDSLog(TICDSLogVerbosityEveryStep,@"Doc Sync Manager is cancelling operation %@ (id:%i) because app has gone to background state.",[self class],self.backgroundTaskID);
+                [op cancel];
+            }
+        }
+
+        for (TICDSOperation *op in [self.otherTasksQueue operations]) {
+            if (!op.shouldContinueProcessingInBackgroundState) {
+                TICDSLog(TICDSLogVerbosityEveryStep,@"Doc Sync Manager is cancelling operation %@ (id:%i) because app has gone to background state.",[self class],self.backgroundTaskID);
+                [op cancel];
+            }
+        }
+    }
+#endif
+}
+
 #pragma mark - Properties
 
 @synthesize delegate = _delegate;
 @synthesize shouldUseEncryption = _shouldUseEncryption;
+@synthesize shouldUseCompressionForWholeStoreMoves = _shouldUseCompressionForWholeStoreMoves;
 @synthesize mustUploadStoreAfterRegistration = _mustUploadStoreAfterRegistration;
 @synthesize state = _state;
 @synthesize applicationSyncManager = _applicationSyncManager;
@@ -1939,5 +2366,9 @@
 @synthesize synchronizationQueue = _synchronizationQueue;
 @synthesize otherTasksQueue = _otherTasksQueue;
 @synthesize integrityKey = _integrityKey;
+#if TARGET_OS_IPHONE
+@synthesize backgroundTaskID = _backgroundTaskID;
+#endif
+@synthesize shouldContinueProcessingInBackgroundState = _shouldContinueProcessingInBackgroundState;
 
 @end

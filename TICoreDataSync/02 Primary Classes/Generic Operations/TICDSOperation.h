@@ -30,6 +30,8 @@
     BOOL _shouldUseEncryption;
     FZACryptor *_cryptor;
     
+    BOOL _shouldUseCompressionForWholeStoreMoves;
+    
     NSObject <TICDSOperationDelegate> *__weak _delegate;
     NSDictionary *_userInfo;
     
@@ -41,6 +43,13 @@
     NSString *_tempFileDirectoryPath;
     
     NSString *_clientIdentifier;
+    
+    CGFloat _progress;
+
+#if TARGET_OS_IPHONE
+    UIBackgroundTaskIdentifier _backgroundTaskID;
+#endif
+    BOOL _shouldContinueProcessingInBackgroundState;
 }
 
 /** @name Designated Initializer */
@@ -69,6 +78,9 @@
 /** Call this method if the operation is cancelled midway through its work. This will set the required values for `isExecuting` and `isFinished`. */
 - (void)operationWasCancelled;
 
+/** Call this method if the operation wants to announce an update in the task progress. */
+- (void)operationDidMakeProgress;
+
 /** @name Properties */
 
 /** Used to indicate whether the operation should encrypt files stored on the remote. */
@@ -76,6 +88,9 @@
 
 /** The `FZACryptor` object used to encrypt and decrypt files used by this operation, if `shouldUseEncryption` is `YES`. */
 @property (nonatomic, strong) FZACryptor *cryptor;
+
+/** Used to indicate whether the operation should use compression when moving the whole store. */
+@property (assign) BOOL shouldUseCompressionForWholeStoreMoves;
 
 /** The operation delegate. */
 @property (nonatomic, weak) NSObject <TICDSOperationDelegate> *delegate;
@@ -103,5 +118,16 @@
 
 /** The identifier of the client application (not set automatically, but may be used whenever necessary by subclasses). */
 @property (copy) NSString *clientIdentifier;
+
+/** Used to report the completion progress of the operation (eg. during device to cloud file transfers). */
+@property (nonatomic, assign) CGFloat progress;
+
+#if TARGET_OS_IPHONE
+/** Unique task identifier used when this operation must complete as a background operation */
+@property (nonatomic, assign) UIBackgroundTaskIdentifier backgroundTaskID;
+#endif
+
+/** Indicates whether the operation should be setup to continue processing after the app has been moved from the Active to Background state */
+@property (nonatomic, assign) BOOL shouldContinueProcessingInBackgroundState;
 
 @end

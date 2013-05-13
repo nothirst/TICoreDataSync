@@ -12,6 +12,7 @@
 #import "TICDSSynchronizedManagedObject.h"
 #import "TICDSSyncConflict.h"
 #import "TICDSSynchronizationOperationManagedObjectContext.h"
+#import "TICDSSyncTransaction.h"
 #import "NSManagedObjectContext+TICDSAdditions.h"
 
 #pragma mark Operations
@@ -89,3 +90,9 @@
 #import "TICoreDataFactory.h"
 #import "TIManagedObjectExtensions.h"
 #import "TIKQDirectoryWatcher.h"
+#if (TARGET_OS_IPHONE)
+#import "UIApplication+TICDSAdditions.h"
+#endif
+
+#pragma mark - Whole Store Compression
+#import "SSZipArchive.h"

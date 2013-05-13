@@ -9,17 +9,7 @@
 #import "TICoreDataSync.h"
 
 @interface iOSNotebookAppDelegate : NSObject <UIApplicationDelegate> {
-    
-    TICDSDocumentSyncManager *_documentSyncManager;
-    BOOL _downloadStoreAfterRegistering;
-    
-    NSUInteger _activity;
 }
-
-- (IBAction)beginSynchronizing:(id)sender;
-
-@property (retain) TICDSDocumentSyncManager *documentSyncManager;
-@property (nonatomic, assign, getter = shouldDownloadStoreAfterRegistering) BOOL downloadStoreAfterRegistering;
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 
@@ -27,9 +17,16 @@
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
+@property (nonatomic, retain) IBOutlet UINavigationController *navigationController;
+
+@property (retain) TICDSDocumentSyncManager *documentSyncManager;
+@property (nonatomic, assign, getter = shouldDownloadStoreAfterRegistering) BOOL downloadStoreAfterRegistering;
+@property (nonatomic, assign) NSInteger activity;
+
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 
-@property (nonatomic, retain) IBOutlet UINavigationController *navigationController;
+- (IBAction)beginSynchronizing:(id)sender;
+
 
 @end

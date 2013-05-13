@@ -10,61 +10,64 @@
 
 #pragma mark Sync Managers
 /** @name Sync Managers */
-/** The state of an Application Sync Manager 
+/** The state of an Application Sync Manager
  */
-typedef enum _TICDSApplicationSyncManagerState {
+typedef NS_ENUM(NSInteger, TICDSApplicationSyncManagerState)
+{
     TICDSApplicationSyncManagerStateUnknown = 0,
-    
+
     TICDSApplicationSyncManagerStateAbleToSync = 1,
-        
+
     /** Registration Phase */
     TICDSApplicationSyncManagerStateNotYetRegistered = -100,
     TICDSApplicationSyncManagerStateRegistering = -110,
-} TICDSApplicationSyncManagerState;
+};
 
-/** The state of a Document Sync Manager 
+/** The state of a Document Sync Manager
  */
-typedef enum _TICDSDocumentSyncManagerState {
+typedef NS_ENUM(NSInteger, TICDSDocumentSyncManagerState)
+{
     TICDSDocumentSyncManagerStateUnknown = 0,
-    
+
     TICDSDocumentSyncManagerStateAbleToSync = 1,
-    
+
     /** Registration Phase */
     TICDSDocumentSyncManagerStateNotYetRegistered = -100,
     TICDSDocumentSyncManagerStateRegistering = -110,
-    
+
     /** Helper Files */
     TICDSDocumentSyncManagerStateUnableToSyncBecauseDelegateProvidedHelperFileDirectoryDoesNotExist = -162,
     TICDSDocumentSyncManagerStateFailedToCreateDefaultHelperFileDirectory = -167,
-    
+
     /** Synchronization */
     TICDSDocumentSyncManagerStateSynchronizing = -400
-} TICDSDocumentSyncManagerState;
+};
 
 #pragma mark File Structure Existence
 /** @name File Structure Existence */
-/** Whether file structures exist or not 
+/** Whether file structures exist or not
  */
-typedef enum _TICDSRemoteFileStructureExistsResponseType {
-    
+typedef NS_ENUM(NSInteger, TICDSRemoteFileStructureExistsResponseType)
+{
     TICDSRemoteFileStructureExistsResponseTypeError = 0,
     TICDSRemoteFileStructureExistsResponseTypeDoesNotExist = -1,
     TICDSRemoteFileStructureExistsResponseTypeDoesExist = 1,
-    
-} TICDSRemoteFileStructureExistsResponseType;
+};
 
 /** Whether files or directories were deleted. */
-typedef enum _TICDSRemoteFileStructureDeletionResponseType {
+typedef NS_ENUM(NSInteger, TICDSRemoteFileStructureDeletionResponseType)
+{
     TICDSRemoteFileStructureDeletionResponseTypeError = 0,
-    TICDSRemoteFileStructureDeletionResponseTypeDeleted = -1, 
+    TICDSRemoteFileStructureDeletionResponseTypeDeleted = -1,
     TICDSRemoteFileStructureDeletionResponseTypeNotDeleted = 1,
-} TICDSRemoteFileStructureDeletionResponseType;
+};
 
 #pragma mark Logging
 /** @name Logging */
 /** Verbosity for Logging debugging output
  */
-typedef enum _TICDSLogVerbosity {
+typedef NS_ENUM(NSInteger, TICDSLogVerbosity)
+{
     TICDSLogVerbosityNoLogging = 0,
     TICDSLogVerbosityErrorsOnly = 1,
     TICDSLogVerbosityManagedObjectOutput = 9,
@@ -74,16 +77,16 @@ typedef enum _TICDSLogVerbosity {
     TICDSLogVerbosityStartAndEndOfEachOperationPhase = 60,
     TICDSLogVerbosityEveryStep = 100,
     TICDSLogVerbosityDirectoryWatcherPickUpEventIssue = 200,
-} TICDSLogVerbosity;
+};
 
 #pragma mark Errors
 /** @name Errors */
 /** Error codes
  */
-typedef enum _TICDSErrorCode {
-    
+typedef NS_ENUM(NSInteger, TICDSErrorCode)
+{
     TICDSErrorCodeNoError = 0,
-    
+
     TICDSErrorCodeMethodNotOverriddenBySubclass,
     TICDSErrorCodeFileManagerError,
     TICDSErrorCodeUnexpectedOrIncompleteFileLocationOrDirectoryStructure,
@@ -100,33 +103,36 @@ typedef enum _TICDSErrorCode {
     TICDSErrorCodeTaskWasCancelled,
     TICDSErrorCodeDropboxSDKRestClientError,
     TICDSErrorCodeEncryptionError,
+    TICDSErrorCodeCompressionError,
     TICDSErrorCodeUnableToRegisterUnconfiguredSyncManager,
     TICDSErrorCodeFZACryptorCreatedSaltDataButRespondedThatItWasNotCorrectlyConfiguredForEncryption,
     TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeysDoNotMatch,
     TICDSErrorCodeSynchronizationFailedBecauseIntegrityKeyDirectoryIsMissing,
-} TICDSErrorCode;
+};
 
-typedef enum _FZACryptorErrorCode {
+typedef NS_ENUM(NSInteger, FZACryptorErrorCode)
+{
     FZACryptorErrorCodeFailedIntegrityCheck = 10000,
-} FZACryptorErrorCode;
+};
 
 #pragma mark Operation Phases
 /** @name Operation Phases */
-/** The status of any particular phase of an operation 
+/** The status of any particular phase of an operation
  */
-typedef enum _TICDSOperationPhaseStatus {
+typedef NS_ENUM(NSInteger, TICDSOperationPhaseStatus)
+{
     TICDSOperationPhaseStatusInProgress = 0,
-    
+
     TICDSOperationPhaseStatusSuccess = 1,
     TICDSOperationPhaseStatusFailure = -1,
-    
-} TICDSOperationPhaseStatus;
+};
 
 #pragma mark Sync Changes
 /** @name Sync Changes */
 /** The type of a sync change
  */
-typedef enum _TICDSSyncChangeType {
+typedef NS_ENUM(NSInteger, TICDSSyncChangeType)
+{
     TICDSSyncChangeTypeUnknown = 0,
     TICDSSyncChangeTypeObjectInserted = 1,
     TICDSSyncChangeTypeAttributeChanged = 2,
@@ -134,14 +140,15 @@ typedef enum _TICDSSyncChangeType {
     TICDSSyncChangeTypeToManyRelationshipChangedByAddingObject = 4,
     TICDSSyncChangeTypeToManyRelationshipChangedByRemovingObject = 5,
     TICDSSyncChangeTypeObjectDeleted = 10
-} TICDSSyncChangeType;
+};
 
 #pragma mark Sync Warnings
 /** @name Sync Warnings */
 /** The type of a sync warning */
-typedef enum _TICDSSyncWarningType {
+typedef NS_ENUM(NSInteger, TICDSSyncWarningType)
+{
     TICDSSyncWarningTypeUnknown = 0,
-    
+
     TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteAttributeSyncChange = 1,
     TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteRelationshipSyncChange = 2,
     TICDSSyncWarningTypeObjectNotFoundLocallyForRemoteDeletionSyncChange = 3,
@@ -149,22 +156,34 @@ typedef enum _TICDSSyncWarningType {
     TICDSSyncWarningTypeObjectWithRelationshipsChangedLocallyAlreadyDeletedByRemoteSyncChange = 5,
     TICDSSyncWarningTypeObjectWithAttributesChangedRemotelyNowDeletedByLocalSyncChange = 6,
     TICDSSyncWarningTypeObjectWithRelationshipsChangedRemotelyNowDeletedByLocalSyncChange = 7,
-    
-} TICDSSyncWarningType;
+};
+
+#pragma mark Sync Transactions
+
+/** @name Sync Transactions */
+/** The states of a sync transaction */
+typedef NS_ENUM(NSInteger, TICDSSyncTransactionState) {
+    TICDSSyncTransactionStateNotYetOpen = -1,
+    TICDSSyncTransactionStateOpen = 1,
+    TICDSSyncTransactionStateClosed = 0,
+    TICDSSyncTransactionStateUnableToClose = -2
+};
 
 #pragma mark Sync Conflicts
 /** @name Sync Conflicts */
 
 /** The type of a sync conflict. */
-typedef enum _TICDSSyncConflictType {
+typedef NS_ENUM(NSInteger, TICDSSyncConflictType)
+{
     TICDSSyncConflictTypeUnknown = 0,
     TICDSSyncConflictRemoteAttributeChangedAndLocalAttributeChanged = 1,
-} TICDSSyncConflictType;
+};
 
 /** The resolution for a sync conflict. */
-typedef enum _TICDSSyncConflictResolutionType {
+typedef NS_ENUM(NSInteger, TICDSSyncConflictResolutionType)
+{
     TICDSSyncConflictResolutionTypeUnknown = 0,
-    
+
     TICDSSyncConflictResolutionTypeRemoteWins = 1,
     TICDSSyncConflictResolutionTypeLocalWins = 2,
-} TICDSSyncConflictResolutionType;
+};

@@ -30,32 +30,34 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject)];
     self.navigationItem.rightBarButtonItem = addButton;
     [addButton release];
-    
-    UIBarButtonItem *syncButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh  target:[[UIApplication sharedApplication] delegate] action:@selector(beginSynchronizing:)];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(persistentStoresDidChange:) name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:self.managedObjectContext.persistentStoreCoordinator];
+
+    UIBarButtonItem *syncButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:[[UIApplication sharedApplication] delegate] action:@selector(beginSynchronizing:)];
     self.navigationItem.leftBarButtonItem = syncButton;
     [syncButton release];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(persistentStoresDidChange:) name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:[[self managedObjectContext] persistentStoreCoordinator]];
 }
 
 - (void)viewDidUnload
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:[[self managedObjectContext] persistentStoreCoordinator]];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:self.managedObjectContext.persistentStoreCoordinator];
+
     [super viewDidUnload];
 }
 
-#pragma mark -
-#pragma mark Notifications
+#pragma mark - NSPersistentStoreCoordinatorStoresDidChangeNotification method
+
 - (void)persistentStoresDidChange:(NSNotification *)aNotification
 {
     NSError *anyError = nil;
-    BOOL success = [[self fetchedResultsController] performFetch:&anyError];
-    if( !success ) {
+    BOOL success = [self.fetchedResultsController performFetch:&anyError];
+    if (success == NO) {
         NSLog(@"Error fetching: %@", anyError);
     }
-    [[self tableView] reloadData];
+
+    [self.tableView reloadData];
 }
+
 
 #pragma mark -
 #pragma mark Cell Display

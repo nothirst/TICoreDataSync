@@ -109,6 +109,14 @@
 		132F69DA16B1D5310076DF58 /* NSDictionary+Dropbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 132F699516B1D5300076DF58 /* NSDictionary+Dropbox.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		132F69DB16B1D5310076DF58 /* NSString+Dropbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 132F699616B1D5300076DF58 /* NSString+Dropbox.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13371E121666B3D200470CE5 /* NSManagedObjectContext+TICDSAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 13371E111666B3D200470CE5 /* NSManagedObjectContext+TICDSAdditions.m */; };
+		1363A08F17060071007AF704 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 1363A06C17060071007AF704 /* ioapi.c */; };
+		1363A09017060071007AF704 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 1363A06E17060071007AF704 /* mztools.c */; };
+		1363A09117060071007AF704 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 1363A07017060071007AF704 /* unzip.c */; };
+		1363A09217060071007AF704 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 1363A07217060071007AF704 /* zip.c */; };
+		1363A09817060071007AF704 /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 1363A08217060071007AF704 /* SSZipArchive.m */; };
+		1363A09E170600C8007AF704 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1363A09D170600C8007AF704 /* libz.dylib */; };
+		139E30151716F73100644289 /* TICDSSyncTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 139E30141716F73100644289 /* TICDSSyncTransaction.m */; };
+		13E42CA3172AFC38006ACFD5 /* UIApplication+TICDSAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 13E42CA2172AFC38006ACFD5 /* UIApplication+TICDSAdditions.m */; };
 		13FB9BA016C2EE8F00B656F3 /* TICDSPostSynchronizationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FB9B9D16C2EE8F00B656F3 /* TICDSPostSynchronizationOperation.m */; };
 		13FB9BA116C2EE8F00B656F3 /* TICDSPreSynchronizationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FB9B9F16C2EE8F00B656F3 /* TICDSPreSynchronizationOperation.m */; };
 		13FBDD4E16C1A52F0030BDA2 /* TICDSDropboxSDKBasedPostSynchronizationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FBDD4B16C1A52F0030BDA2 /* TICDSDropboxSDKBasedPostSynchronizationOperation.m */; };
@@ -350,6 +358,22 @@
 		132F699616B1D5300076DF58 /* NSString+Dropbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Dropbox.m"; sourceTree = "<group>"; };
 		13371E101666B3D200470CE5 /* NSManagedObjectContext+TICDSAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+TICDSAdditions.h"; sourceTree = "<group>"; };
 		13371E111666B3D200470CE5 /* NSManagedObjectContext+TICDSAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+TICDSAdditions.m"; sourceTree = "<group>"; };
+		1363A06B17060071007AF704 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
+		1363A06C17060071007AF704 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
+		1363A06D17060071007AF704 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
+		1363A06E17060071007AF704 /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
+		1363A06F17060071007AF704 /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
+		1363A07017060071007AF704 /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
+		1363A07117060071007AF704 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
+		1363A07217060071007AF704 /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
+		1363A07317060071007AF704 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
+		1363A08117060071007AF704 /* SSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSZipArchive.h; sourceTree = "<group>"; };
+		1363A08217060071007AF704 /* SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSZipArchive.m; sourceTree = "<group>"; };
+		1363A09D170600C8007AF704 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		139E30131716F73100644289 /* TICDSSyncTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSSyncTransaction.h; sourceTree = "<group>"; };
+		139E30141716F73100644289 /* TICDSSyncTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSSyncTransaction.m; sourceTree = "<group>"; };
+		13E42CA1172AFC38006ACFD5 /* UIApplication+TICDSAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+TICDSAdditions.h"; sourceTree = "<group>"; };
+		13E42CA2172AFC38006ACFD5 /* UIApplication+TICDSAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+TICDSAdditions.m"; sourceTree = "<group>"; };
 		13FB9B9C16C2EE8F00B656F3 /* TICDSPostSynchronizationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSPostSynchronizationOperation.h; sourceTree = "<group>"; };
 		13FB9B9D16C2EE8F00B656F3 /* TICDSPostSynchronizationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TICDSPostSynchronizationOperation.m; sourceTree = "<group>"; };
 		13FB9B9E16C2EE8F00B656F3 /* TICDSPreSynchronizationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TICDSPreSynchronizationOperation.h; sourceTree = "<group>"; };
@@ -369,6 +393,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1363A09E170600C8007AF704 /* libz.dylib in Frameworks */,
 				13023C5D161366A30071C497 /* QuartzCore.framework in Frameworks */,
 				13023C5B1613669A0071C497 /* CoreData.framework in Frameworks */,
 				13023C59161366790071C497 /* Security.framework in Frameworks */,
@@ -400,6 +425,7 @@
 		13023C3F161363D50071C497 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1363A09D170600C8007AF704 /* libz.dylib */,
 				13023C5C161366A30071C497 /* QuartzCore.framework */,
 				13023C5A1613669A0071C497 /* CoreData.framework */,
 				13023C58161366790071C497 /* Security.framework */,
@@ -446,21 +472,23 @@
 		13023C67161366E10071C497 /* 02 Primary Classes */ = {
 			isa = PBXGroup;
 			children = (
+				13023CA4161366E10071C497 /* Generic Operations */,
 				13023C68161366E10071C497 /* DropboxSDK-Based Sync */,
 				13023C86161366E10071C497 /* File Manager-Based Sync */,
-				13023CA4161366E10071C497 /* Generic Operations */,
+				13371E101666B3D200470CE5 /* NSManagedObjectContext+TICDSAdditions.h */,
+				13371E111666B3D200470CE5 /* NSManagedObjectContext+TICDSAdditions.m */,
 				13023CBF161366E10071C497 /* TICDSApplicationSyncManager.h */,
 				13023CC0161366E10071C497 /* TICDSApplicationSyncManager.m */,
 				13023CC1161366E10071C497 /* TICDSDocumentSyncManager.h */,
 				13023CC2161366E10071C497 /* TICDSDocumentSyncManager.m */,
 				13023CC3161366E10071C497 /* TICDSSyncConflict.h */,
 				13023CC4161366E10071C497 /* TICDSSyncConflict.m */,
+				139E30131716F73100644289 /* TICDSSyncTransaction.h */,
+				139E30141716F73100644289 /* TICDSSyncTransaction.m */,
 				13023CC5161366E10071C497 /* TICDSSynchronizationOperationManagedObjectContext.h */,
 				13023CC6161366E10071C497 /* TICDSSynchronizationOperationManagedObjectContext.m */,
 				13023CC7161366E10071C497 /* TICDSSynchronizedManagedObject.h */,
 				13023CC8161366E10071C497 /* TICDSSynchronizedManagedObject.m */,
-				13371E101666B3D200470CE5 /* NSManagedObjectContext+TICDSAdditions.h */,
-				13371E111666B3D200470CE5 /* NSManagedObjectContext+TICDSAdditions.m */,
 			);
 			path = "02 Primary Classes";
 			sourceTree = "<group>";
@@ -558,10 +586,6 @@
 		13023CA4161366E10071C497 /* Generic Operations */ = {
 			isa = PBXGroup;
 			children = (
-				13FB9B9C16C2EE8F00B656F3 /* TICDSPostSynchronizationOperation.h */,
-				13FB9B9D16C2EE8F00B656F3 /* TICDSPostSynchronizationOperation.m */,
-				13FB9B9E16C2EE8F00B656F3 /* TICDSPreSynchronizationOperation.h */,
-				13FB9B9F16C2EE8F00B656F3 /* TICDSPreSynchronizationOperation.m */,
 				13023CA5161366E10071C497 /* TICDSApplicationRegistrationOperation.h */,
 				13023CA6161366E10071C497 /* TICDSApplicationRegistrationOperation.m */,
 				13023CA7161366E10071C497 /* TICDSDocumentClientDeletionOperation.h */,
@@ -578,10 +602,14 @@
 				13023CB2161366E10071C497 /* TICDSListOfPreviouslySynchronizedDocumentsOperation.m */,
 				13023CB3161366E10071C497 /* TICDSOperation.h */,
 				13023CB4161366E10071C497 /* TICDSOperation.m */,
-				13023CB5161366E10071C497 /* TICDSRemoveAllRemoteSyncDataOperation.h */,
-				13023CB6161366E10071C497 /* TICDSRemoveAllRemoteSyncDataOperation.m */,
+				13FB9B9E16C2EE8F00B656F3 /* TICDSPreSynchronizationOperation.h */,
+				13FB9B9F16C2EE8F00B656F3 /* TICDSPreSynchronizationOperation.m */,
 				13023CB7161366E10071C497 /* TICDSSynchronizationOperation.h */,
 				13023CB8161366E10071C497 /* TICDSSynchronizationOperation.m */,
+				13FB9B9C16C2EE8F00B656F3 /* TICDSPostSynchronizationOperation.h */,
+				13FB9B9D16C2EE8F00B656F3 /* TICDSPostSynchronizationOperation.m */,
+				13023CB5161366E10071C497 /* TICDSRemoveAllRemoteSyncDataOperation.h */,
+				13023CB6161366E10071C497 /* TICDSRemoveAllRemoteSyncDataOperation.m */,
 				13023CB9161366E10071C497 /* TICDSVacuumOperation.h */,
 				13023CBA161366E10071C497 /* TICDSVacuumOperation.m */,
 				13023CBB161366E10071C497 /* TICDSWholeStoreDownloadOperation.h */,
@@ -608,6 +636,7 @@
 		13023CD3161366E10071C497 /* 04 Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				1363A06317060071007AF704 /* SSZipArchive */,
 				13023CD4161366E10071C497 /* FZACryptor */,
 				13023CDD161366E10071C497 /* TICDSChangeIntegrityStoreManager.h */,
 				13023CDE161366E10071C497 /* TICDSChangeIntegrityStoreManager.m */,
@@ -657,6 +686,8 @@
 				13023CEF161366E10071C497 /* TIKQDirectoryWatcher.m */,
 				13023CF0161366E10071C497 /* TIManagedObjectExtensions.h */,
 				13023CF1161366E10071C497 /* TIManagedObjectExtensions.m */,
+				13E42CA1172AFC38006ACFD5 /* UIApplication+TICDSAdditions.h */,
+				13E42CA2172AFC38006ACFD5 /* UIApplication+TICDSAdditions.m */,
 			);
 			path = "06 External Sources";
 			sourceTree = "<group>";
@@ -807,6 +838,32 @@
 				132F692E16B1D5300076DF58 /* DropboxSDK */,
 			);
 			path = Submodules;
+			sourceTree = "<group>";
+		};
+		1363A06317060071007AF704 /* SSZipArchive */ = {
+			isa = PBXGroup;
+			children = (
+				1363A06A17060071007AF704 /* minizip */,
+				1363A08117060071007AF704 /* SSZipArchive.h */,
+				1363A08217060071007AF704 /* SSZipArchive.m */,
+			);
+			path = SSZipArchive;
+			sourceTree = "<group>";
+		};
+		1363A06A17060071007AF704 /* minizip */ = {
+			isa = PBXGroup;
+			children = (
+				1363A06B17060071007AF704 /* crypt.h */,
+				1363A06C17060071007AF704 /* ioapi.c */,
+				1363A06D17060071007AF704 /* ioapi.h */,
+				1363A06E17060071007AF704 /* mztools.c */,
+				1363A06F17060071007AF704 /* mztools.h */,
+				1363A07017060071007AF704 /* unzip.c */,
+				1363A07117060071007AF704 /* unzip.h */,
+				1363A07217060071007AF704 /* zip.c */,
+				1363A07317060071007AF704 /* zip.h */,
+			);
+			path = minizip;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -964,6 +1021,13 @@
 				13FBDD5516C1A5600030BDA2 /* TICDSFileManagerBasedPreSynchronizationOperation.m in Sources */,
 				13FB9BA016C2EE8F00B656F3 /* TICDSPostSynchronizationOperation.m in Sources */,
 				13FB9BA116C2EE8F00B656F3 /* TICDSPreSynchronizationOperation.m in Sources */,
+				1363A08F17060071007AF704 /* ioapi.c in Sources */,
+				1363A09017060071007AF704 /* mztools.c in Sources */,
+				1363A09117060071007AF704 /* unzip.c in Sources */,
+				1363A09217060071007AF704 /* zip.c in Sources */,
+				1363A09817060071007AF704 /* SSZipArchive.m in Sources */,
+				139E30151716F73100644289 /* TICDSSyncTransaction.m in Sources */,
+				13E42CA3172AFC38006ACFD5 /* UIApplication+TICDSAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

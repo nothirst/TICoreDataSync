@@ -1,7 +1,7 @@
 The projects inside this directory are "vanilla" versions of the example apps, excluding any sync framework code. They're designed for use when following the tutorials found at:
 
-http://timisted.github.com/TICoreDataSync/mac-tutorial.html
+https://github.com/nothirst/TICoreDataSync/wiki/Mac-Tutorial
 
 and 
 
-http://timisted.github.com/TICoreDataSync/ios-tutorial.html
+https://github.com/nothirst/TICoreDataSync/wiki/iOS-Tutorial
