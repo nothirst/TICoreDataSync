@@ -95,6 +95,9 @@
 		AA25AECF170DCB1F00E5681A /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = AA25AECB170DCB1F00E5681A /* SSZipArchive.m */; };
 		AA25AEEF170DCB6800E5681A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AA25AEEE170DCB6800E5681A /* libz.dylib */; };
 		AA25AEF0170DCB7600E5681A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AA25AEEE170DCB6800E5681A /* libz.dylib */; };
+		AA30577D1741351900C8E8EC /* ReadMe.txt in Resources */ = {isa = PBXBuildFile; fileRef = 13023CE8161366E10071C497 /* ReadMe.txt */; };
+		AA30577F1741352E00C8E8EC /* documentInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13023CE7161366E10071C497 /* documentInfo.plist */; };
+		AA3057801741353200C8E8EC /* deviceInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13023CE6161366E10071C497 /* deviceInfo.plist */; };
 		AA3A4BA416D6733300F64E85 /* TICDSFileManagerBasedApplicationRegistrationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13023C88161366E10071C497 /* TICDSFileManagerBasedApplicationRegistrationOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA3A4BA516D6733300F64E85 /* TICDSFileManagerBasedDocumentClientDeletionOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13023C8A161366E10071C497 /* TICDSFileManagerBasedDocumentClientDeletionOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA3A4BA616D6733300F64E85 /* TICDSFileManagerBasedDocumentDeletionOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 13023C8C161366E10071C497 /* TICDSFileManagerBasedDocumentDeletionOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1371,6 +1374,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA8BFC8516D65FA200075E5E /* InfoPlist.strings in Resources */,
+				AA30577D1741351900C8E8EC /* ReadMe.txt in Resources */,
+				AA30577F1741352E00C8E8EC /* documentInfo.plist in Resources */,
+				AA3057801741353200C8E8EC /* deviceInfo.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
