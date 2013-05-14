@@ -383,6 +383,8 @@
 		AA7C58AE16D65FFB00B6D884 /* TICDSFileManagerBasedDocumentSyncManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 13023CA3161366E10071C497 /* TICDSFileManagerBasedDocumentSyncManager.m */; };
 		AA8BFC7B16D65FA200075E5E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA8BFC7A16D65FA200075E5E /* Cocoa.framework */; };
 		AA8BFC8516D65FA200075E5E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA8BFC8316D65FA200075E5E /* InfoPlist.strings */; };
+		AA8C522C174184C100C23680 /* UIApplication+TICDSAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = AA8C522A174184BB00C23680 /* UIApplication+TICDSAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA8C522D174184C100C23680 /* UIApplication+TICDSAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8C522B174184BE00C23680 /* UIApplication+TICDSAdditions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -638,6 +640,8 @@
 		AA8BFC8216D65FA200075E5E /* TICoreDataSync-Mac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TICoreDataSync-Mac-Info.plist"; sourceTree = "<group>"; };
 		AA8BFC8416D65FA200075E5E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AA8BFC8616D65FA200075E5E /* TICoreDataSync-Mac-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TICoreDataSync-Mac-Prefix.pch"; sourceTree = "<group>"; };
+		AA8C522A174184BB00C23680 /* UIApplication+TICDSAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+TICDSAdditions.h"; sourceTree = "<group>"; };
+		AA8C522B174184BE00C23680 /* UIApplication+TICDSAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+TICDSAdditions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -956,6 +960,8 @@
 				13023CF1161366E10071C497 /* TIManagedObjectExtensions.m */,
 				AA63658516D66619000F84F3 /* TIUbiquityMonitor.h */,
 				AA63658616D66619000F84F3 /* TIUbiquityMonitor.m */,
+				AA8C522A174184BB00C23680 /* UIApplication+TICDSAdditions.h */,
+				AA8C522B174184BE00C23680 /* UIApplication+TICDSAdditions.m */,
 			);
 			path = "06 External Sources";
 			sourceTree = "<group>";
@@ -1178,6 +1184,7 @@
 				AA00BACF1714511400EB08AB /* unzip.h in Headers */,
 				AA00BAD01714511400EB08AB /* zip.h in Headers */,
 				AA572C9B17201B7D00DF47B2 /* TICDSSyncTransaction.h in Headers */,
+				AA8C522C174184C100C23680 /* UIApplication+TICDSAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1487,6 +1494,7 @@
 				AA7707781712D757000A29E4 /* unzip.c in Sources */,
 				AA77077C1712D757000A29E4 /* zip.c in Sources */,
 				AA572C9D17201B7D00DF47B2 /* TICDSSyncTransaction.m in Sources */,
+				AA8C522D174184C100C23680 /* UIApplication+TICDSAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
