@@ -5,7 +5,7 @@ Original design and implementation by Tim Isted (@[timisted](http://twitter.com/
 
 Jump to [List of Recent Changes](#recentchanges)
 
-## Does thing sync over iCloud?
+## Does this thing sync over iCloud?
 
 YES! We have an experimental feature branch being maintained by Christian Beer (@[christian_beer](https://twitter.com/christian_beer)) that you can check out here: https://github.com/nothirst/TICoreDataSync/tree/feature/iCloudBasedSync
 
