@@ -6,50 +6,50 @@ Original design and implementation by Tim Isted (@[timisted](http://twitter.com/
 Jump to [List of Recent Changes](#recentchanges)
 
 ##License
-TICoreDataSync is licensed under the **MIT** license.
+TICoreDataSync is licensed under the ([MIT License](http://en.wikipedia.org/wiki/MIT_License)).
 
 ##Summary
 
-TICoreDataSync is a collection of classes to enable synchronization via the Cloud (including Dropbox), or local wifi (coming soon), of Core Data-based applications (including document-based apps) between any number of clients running under Mac OS X or iOS. It's designed to be easy to extend if you need to synchronize via an option that isn't already supported.
+TICoreDataSync is a collection of classes to enable synchronization via the Cloud (including Dropbox) of Core Data-based applications (including document-based apps) between any number of clients running under Mac OS X or iOS. It's designed to be easy to extend if you need to synchronize via an option that isn't already supported.
 
 ##Requirements
 
 TICoreDataSync works under Mac OS X 10.7 or later and iOS 5.1 or later. 
 
-In order for synchronization to work, your model objects must inherit from [`TICDSSynchronizedManagedObject`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObject.html), and have one extra string attribute called `ticdsSyncID`, which is used to track an object across multiple clients. All model object changes that you wish to synchronize must take place inside a `NSManagedObjectContext` that is marked as `synchronized`.
+In order for synchronization to work, your model objects must inherit from [`TICDSSynchronizedManagedObject`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSSynchronizedManagedObject.html), and have one extra string attribute called `ticdsSyncID`, which is used to track an object across multiple clients. All model object changes that you wish to synchronize must take place inside a `NSManagedObjectContext` that is marked as `synchronized`.
 
-In practice, this means changing any `NSManagedObject` use in your `.xcdatamodel` to [`TICDSSynchronizedManagedObject`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObject.html), changing any custom `NSManagedObject` subclass to inherit from [`TICDSSynchronizedManagedObject`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObject.html), and marking your main `NSManagedObjectContext` as synchronized when you build your Core Data stack. Because TICoreDataSync includes its own `.xcdatamodel`s, you won't be able to build your stack by merging all the models in the bundle, you'll need to specify your data model file directly.
+In practice, this means changing any `NSManagedObject` use in your `.xcdatamodel` to [`TICDSSynchronizedManagedObject`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSSynchronizedManagedObject.html), changing any custom `NSManagedObject` subclass to inherit from [`TICDSSynchronizedManagedObject`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSSynchronizedManagedObject.html), and marking your main `NSManagedObjectContext` as `synchronized` when you build your Core Data stack. Because TICoreDataSync includes its own `.xcdatamodel`s, you won't be able to build your stack by merging all the models in the bundle, you'll need to specify your data model file directly.
 
-Your application will need to keep track of one instance of [`TICDSApplicationSyncManager`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSApplicationSyncManager.html) for the type of synchronization you wish to use in your application, and you must **register** this sync manager before you can perform any other tasks. If your application is non-document-based, you'll then need a single [`TICDSDocumentSyncManager`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSDocumentSyncManager.html) instance to handle synchronization of your application's data. If you have a document-based app, you'll need one [`TICDSDocumentSyncManager`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSDocumentSyncManager.html) per document. Again, a document sync manager must be registered before it can be used.
+Your application will need to keep track of one instance of [`TICDSApplicationSyncManager`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSApplicationSyncManager.html) for the type of synchronization you wish to use in your application, and you must **register** this sync manager before you can perform any other tasks. If your application is non-document-based, you'll then need a single [`TICDSDocumentSyncManager`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSDocumentSyncManager.html) instance to handle synchronization of your application's data. If you have a document-based app, you'll need one [`TICDSDocumentSyncManager`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSDocumentSyncManager.html) per document. Again, a document sync manager must be registered before it can be used.
 
 ##Documentation
 
 Documentation for the framework can be found at:  
-<http://timisted.github.com/TICoreDataSync>
+<http://nothirst.github.io/TICoreDataSync>
 
-This includes a [general overview](http://timisted.github.com/TICoreDataSync/overview.html) of the framework, [Mac](http://timisted.github.com/TICoreDataSync/mac-tutorial.html) and [iOS](http://timisted.github.com/TICoreDataSync/ios-tutorial.html) tutorials, information about [extending the framework](http://timisted.github.com/TICoreDataSync/extending-the-framework.html), plus reference materials including a full [Class Reference](http://timisted.github.com/TICoreDataSync/reference/html/), and a set of [diagrams](http://timisted.github.com/TICoreDataSync/operation-task-diagrams.html) illustrating the tasks performed by each underlying operation class.
+This includes a [general overview](https://github.com/nothirst/TICoreDataSync/wiki/Framework-Overview) of the framework, [Mac](https://github.com/nothirst/TICoreDataSync/wiki/Mac-Tutorial) and [iOS](https://github.com/nothirst/TICoreDataSync/wiki/iOS-Tutorial) tutorials, information about [extending the framework](https://github.com/nothirst/TICoreDataSync/wiki/Extending-the-Framework), plus reference materials including a full [Class Reference](http://nothirst.github.io/TICoreDataSync/), and a set of [diagrams](https://github.com/nothirst/TICoreDataSync/wiki/Operation-Task-Diagrams) illustrating the tasks performed by each underlying operation class.
 
 ###Xcode Docset
-The framework comes with an Xcode docset containing documentation for all TICoreDataSync classes and protocols. Each header file is marked up such that the docset can be generated by [appledoc](http://www.gentlebytes.com/home/appledocapp/).
+The framework comes with an Xcode docset containing documentation for all TICoreDataSync classes and protocols. Each header file is marked up such that the docset can be generated by [appledoc](http://gentlebytes.com/appledoc/).
 
 You can build it yourself if you have `appledoc` installed, by executing `appledoc .` in the root of the repository; this will also install the docset.
 
-Either [install the docset](http://timisted.github.com/TICoreDataSync/install-xcode-docset.html), or read the contents online:  
-<http://timisted.github.com/TICoreDataSync/reference/html/>
+Either [install the docset](https://github.com/nothirst/TICoreDataSync/wiki/Installing-the-Docset), or read the contents online:  
+<http://nothirst.github.io/TICoreDataSync/>
 
-**Note that the information at the top of the operations in the docset is out of date; refer to the [class diagrams](http://timisted.github.com/TICoreDataSync/operation-task-diagrams.html) to find out exactly what happens.**
+**Note that the information at the top of the operations in the docset is out of date; refer to the [class diagrams](https://github.com/nothirst/TICoreDataSync/wiki/Operation-Task-Diagrams) to find out exactly what happens.**
 
 ###Example Apps
 
-The repository includes several Xcode projects demonstrating the framework in Mac and iOS applications. There are two primary applications, the non-document-based Notebook for iOS and Mac, and the document-based ShoppingList for Mac only.
+The repository includes several Xcode projects demonstrating the framework in Mac and iOS applications. There are two primary applications, the non-document-based Notebook for iOS and Mac.
 
-The [Guide to Example Apps](http://timisted.github.com/TICoreDataSync/guide-to-example-apps.html) explains how these work in more detail.
+The [Guide to Example Apps](https://github.com/nothirst/TICoreDataSync/wiki/Guide-to-Example-Apps) explains how these work in more detail.
 
 ##How it Works
 
 When your primary managed object context saves, the framework jumps into action, performing the following tasks:
 
-1. Sync Change objects ([`TICDSSyncChange`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSyncChange.html)) are created for every change to any modified object: insertion, deletion, attribute changes and relationship changes. This is handled by the [`TICDSSynchronizedManagedObject`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizedManagedObject.html) class.
+1. Sync Change objects ([`TICDSSyncChange`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSSyncChange.html)) are created for every change to any modified object: insertion, deletion, attribute changes and relationship changes. This is handled by the [`TICDSSynchronizedManagedObject`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSSynchronizedManagedObject.html) class.
 
 2. These changes are saved in a private context/store and handled internally.
 
@@ -59,11 +59,11 @@ The synchronization process includes the following:
 
 1. The Document Sync Manager creates a sync operation, which begins by downloading all sets of sync change that haven't yet been applied.
 
-2. The sync operation runs through each change set in date order, and applies its changes in a background managed object context (which has the same persistent store coordinator as your primary application MOC).
+2. The sync operation runs through each change set in date order, and applies its changes in a background managed object context (which is a child context to your primary application MOC).
 
-3. If it runs into conflicts, it alerts your Sync Manager delegate ([`TICDSDocumentSyncManagerDelegate`](http://timisted.github.com/TICoreDataSync/reference/html/Protocols/TICDSDocumentSyncManagerDelegate.html) protocol), which is responsible for deciding whether the local change or the remote sync change take priority (see the **Conflicts and Warnings** section below).
+3. If it runs into conflicts, it alerts your Sync Manager delegate ([`TICDSDocumentSyncManagerDelegate`](http://nothirst.github.io/TICoreDataSync/Protocols/TICDSDocumentSyncManagerDelegate.html) protocol), which is responsible for deciding whether the local change or the remote sync change take priority (see the **Conflicts and Warnings** section below).
 
-4. The background context is saved and, since it is a child of your application's context, all the changes are automatically merged into your main context. The framework will alert you through a [`TICDSDocumentSyncManagerDelegate`](http://timisted.github.com/TICoreDataSync/reference/html/Protocols/TICDSDocumentSyncManagerDelegate.html) method.
+4. The background context is saved and, since it is a child of your application's context, all the changes are automatically merged into your main context. The framework will alert you through a [`TICDSDocumentSyncManagerDelegate`](http://nothirst.github.io/TICoreDataSync/Protocols/TICDSDocumentSyncManagerDelegate.html) method.
 
 5. Once all the remote sync changes have been applied, the local set of sync changes are pushed.
 
@@ -72,7 +72,7 @@ The synchronization process includes the following:
 If left unchecked, the sync-related files will stay on the remote indefinitely. Your application should request that a document sync manager clean up after itself every so often, perhaps at registration, or once a day/week/etc. The vacuum process will check which client synchronized *least* recently (the oldest file in the `RecentSyncs` directory), and remove all of its own sync-related files older than this date -- each client device is responsible for vacuuming the files it created. Do not initiate a vacuum after every sync, or you'll run the risk of each client triggering the next to synchronize in an infinite loop.
 
 ###Types of Sync Manager
-You never instantiate one of the [`TICDSApplicationSyncManager`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSApplicationSyncManager.html) or [`TICDSDocumentSyncManager`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSDocumentSyncManager.html) directly, but instead use one of the subclasses specific to your required method of synchronization.
+You never instantiate one of the [`TICDSApplicationSyncManager`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSApplicationSyncManager.html) or [`TICDSDocumentSyncManager`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSDocumentSyncManager.html) classes directly, but instead use one of the subclasses specific to your required method of synchronization.
 
 The framework includes a set of file-manager-based sync classes, used to synchronize with anything that can be accessed using `NSFileManager`, including a desktop **Dropbox** or network drive. Although these classes are effectively accessing a "local" volume, they never have Core Data talk directly to the files stored "remotely."
 
@@ -80,14 +80,14 @@ No matter what the type of sync, the framework downloads files to a local *helpe
 
 ###Encryption
 
-Because the framework only works with files locally rather than accessing them remotely, the framework includes optional encryption. All you need to do is provide a password in response to the two encryption-related [`TICDSApplicationSyncManagerDelegate`](http://timisted.github.com/TICoreDataSync/reference/html/Protocols/TICDSApplicationSyncManagerDelegate.html) methods.
+Because the framework only works with files locally rather than accessing them remotely, the framework includes optional encryption. All you need to do is provide a password in response to the two encryption-related [`TICDSApplicationSyncManagerDelegate`](http://nothirst.github.io/TICoreDataSync/Protocols/TICDSApplicationSyncManagerDelegate.html) methods.
 
 If encryption is enabled, every file used by the framework is encrypted, with the exception of the `AppliedSyncChangeSets` files, as these only contain UUID strings and dates.
 
 ###Conflicts and Warnings
 The synchronization process is a "rolling sync." Each client is responsible for fixing conflicts between the sync changes already pushed by previous clients, and the sync changes it wants to push.
 
-At present, the only *conflict* that you will have the option to fix is if the same object has the same attribute modified both locally and remotely, but with different attribute values (if the changed values are the same, the "conflict" is fixed automatically). You'll be alerted through a [`TICDSDocumentSyncManagerDelegate`](http://timisted.github.com/TICoreDataSync/reference/html/Protocols/TICDSDocumentSyncManagerDelegate) method; you must decide whether the local or remote change takes priority, and then call the document sync manager back so it can continue the sync.
+At present, the only *conflict* that you will have the option to fix is if the same object has the same attribute modified both locally and remotely, but with different attribute values (if the changed values are the same, the "conflict" is fixed automatically). You'll be alerted through a [`TICDSDocumentSyncManagerDelegate`](http://nothirst.github.io/TICoreDataSync/Protocols/TICDSDocumentSyncManagerDelegate) method; you must decide whether the local or remote change takes priority, and then call the document sync manager back so it can continue the sync.
 
 If the following problems occur during synchronization, you'll be given an array of *warnings* at the end of the process to alert you:
 
@@ -98,40 +98,48 @@ If the following problems occur during synchronization, you'll be given an array
 At this time, the framework does not offer the ability to fix either of these types of conflict, instead just providing post-sync warnings. This may change in a future version of the framework, but will require some thought. Consider a data model with lots of inter-related objects -- depending on cascade rules, if a conflict is detected where an object has been changed remotely but deleted locally, not only would the object need to be "undeleted" locally, all of its relationships would need to be traversed to undo cascade deletions. Similarly, if an object is changed locally that has already been deleted by other clients, the framework would need to generate insertion sync changes not only for the object itself, but for all its related "cascade" objects, and the related objects of the related objects, and so on.
 
 ###Underlying Operations
-There are currently elevent primary types of operation spawned by the Sync Manager:
+There are currently eleven primary types of operation spawned by the Sync Manager:
 
-* **Application Registration** ([`TICDSApplicationRegistrationOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSApplicationRegistrationOperation.html))
-* **Document Registration** ([`TICDSDocumentRegistrationOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSDocumentRegistrationOperation.html))
-* **Whole Store Upload** ([`TICDSWholeStoreUploadOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSWholeStoreUploadOperation.html))
-* **Whole Store Download** ([`TICDSWholeStoreDownloadOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSWholeStoreDownloadOperation.html))
-* **List of Available Documents** ([`TICDSListOfPreviouslySynchronizedDocumentsOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSListOfPreviouslySynchronizedDocumentsOperation.html))
-* **Synchronization** ([`TICDSSynchronizationOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSSynchronizationOperation.html))
-* **Vacuum** ([`TICDSVacuumOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSVacuumOperation.html))
-* **Document Deletion** ([`TICDSDocumentDeletionOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSDocumentDeletionOperation.html))
-* **List of Clients Registered to an Application** ([`TICDSListOfApplicationRegisteredClientsOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSListOfApplicationRegisteredClientsOperation.html))
-* **List of Clients Registered to a Document** ([`TICDSListOfDocumentRegisteredClientsOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSListOfDocumentRegisteredClientsOperation.html))
+* **Application Registration** ([`TICDSApplicationRegistrationOperation`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSApplicationRegistrationOperation.html))
+* **Document Registration** ([`TICDSDocumentRegistrationOperation`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSDocumentRegistrationOperation.html))
+* **Whole Store Upload** ([`TICDSWholeStoreUploadOperation`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSWholeStoreUploadOperation.html))
+* **Whole Store Download** ([`TICDSWholeStoreDownloadOperation`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSWholeStoreDownloadOperation.html))
+* **List of Available Documents** ([`TICDSListOfPreviouslySynchronizedDocumentsOperation`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSListOfPreviouslySynchronizedDocumentsOperation.html))
+* **Synchronization** ([`TICDSSynchronizationOperation`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSSynchronizationOperation.html))
+* **Vacuum** ([`TICDSVacuumOperation`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSVacuumOperation.html))
+* **Document Deletion** ([`TICDSDocumentDeletionOperation`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSDocumentDeletionOperation.html))
+* **List of Clients Registered to an Application** ([`TICDSListOfApplicationRegisteredClientsOperation`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSListOfApplicationRegisteredClientsOperation.html))
+* **List of Clients Registered to a Document** ([`TICDSListOfDocumentRegisteredClientsOperation`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSListOfDocumentRegisteredClientsOperation.html))
 * **Delete a Client's Synchronization Data from a Document**
-([`TICDSDocumentClientDeletionOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSDocumentClientDeletionOperation.html)) 
+([`TICDSDocumentClientDeletionOperation`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSDocumentClientDeletionOperation.html)) 
 
-Each of these is a generic class, designed to be overridden to add the upload/download behavior necessary to the type of sync you wish to use. If you use a [`TICDSFileManagerBasedDocumentSyncManager`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSFileManagerBasedDocumentSyncManager.html), for example, it will spawn its own `TICDSFileManagerBasedXXXOperation` objects and configure them correctly.
+Each of these is a generic class, designed to be overridden to add the upload/download behavior necessary to the type of sync you wish to use. If you use a [`TICDSFileManagerBasedDocumentSyncManager`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSFileManagerBasedDocumentSyncManager.html), for example, it will spawn its own `TICDSFileManagerBasedXXXOperation` objects and configure them correctly.
 
 All operations are (to use Apple's terminology) **concurrent** operations, and can run either on the main thread for use with e.g. asynchronous URL up/downloads (any non-transfer-related work is still carried out in the background), or entirely in the background for e.g. file-manager-based transfers.
 
-For information about the tasks performed by each operation, take a look at the [operation diagrams](http://timisted.github.com/TICoreDataSync/operation-task-diagrams.html).
+For information about the tasks performed by each operation, take a look at the [operation diagrams](https://github.com/nothirst/TICoreDataSync/wiki/Operation-Task-Diagrams).
 
 ###Expansion
-It's possible to create your own set of classes for any particular Cloud-based sync option. You'll need to subclass the Application and Document Sync Managers, as well as each of the necessary operations. Your [`TICDSApplicationSyncManager`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSApplicationSyncManager.html) and [`TICDSDocumentSyncManager`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSDocumentSyncManager.html) subclasses, and each of the operation subclasses, must override certain methods to perform the relevant task -- see the [Guide to Extending the Framework](http://timisted.github.com/TICoreDataSync/extending-the-framework.html) for more information.
+It's possible to create your own set of classes for any particular Cloud-based sync option. You'll need to subclass the Application and Document Sync Managers, as well as each of the necessary operations. Your [`TICDSApplicationSyncManager`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSApplicationSyncManager.html) and [`TICDSDocumentSyncManager`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSDocumentSyncManager.html) subclasses, and each of the operation subclasses, must override certain methods to perform the relevant task -- see the [Guide to Extending the Framework](https://github.com/nothirst/TICoreDataSync/wiki/Extending-the-Framework) for more information.
 
 ##Remote File Structure
-TICoreDataSync uses quite a few files for synchronization, and stores these at the remote location using the hierarchy described in the [Remote File Hierarchy](http://timisted.github.com/TICoreDataSync/remote-file-hierarchy.html) document.
+TICoreDataSync uses quite a few files for synchronization, and stores these at the remote location using the hierarchy described in the [Remote File Hierarchy](https://github.com/nothirst/TICoreDataSync/wiki/Remote-File-Hierarchy) document.
 
 ##To Do
 
-At present, TICoreDataSync only supports file-manager-based sync, or iOS DropboxSDK sync. WebDAV and local wifi sync options will be added soon.
+At present, TICoreDataSync only supports file-manager-based sync and DropboxSDK sync. iCloud sync is being implemented in a [feature branch](https://github.com/nothirst/TICoreDataSync/tree/feature/iCloudBasedSync).
 
 There is currently no automated functionality to remove the entire sync data directory from a remote service, nor is it yet possible to remove a client's files from synchronizing an entire application. These tasks will be added soon.
 
 ##Recent Changes <a name="recentchanges"></a>
+* **2013-05-13**
+
+    * Version 1.0.2 of the framework has been released with a number of reliability enhancements.
+    * TICDS now has a system of checks when consuming changes from other clients to ensure those changes are actually saved to disk.
+    * The framework now also creates outgoing changes in response to a `NSManagedObjectContextWillSaveNotification` instead of the `NSManagedObjectContextDidSaveNotification`.
+    * The documentation has been completely migrated over to the [project wiki](https://github.com/nothirst/TICoreDataSync/wiki) and will be maintained there from now on.
+    * The framework now supports compression of the whole store file during upload and download.
+
 * **2013-01-23**
     
     The TICDSSynchronizedManagedObjectContext class no longer exists and has been replaced by a category on NSManagedObjectContext.
@@ -157,8 +165,8 @@ There is currently no automated functionality to remove the entire sync data dir
 
     Both application and document sync managers offer the ability to delay the registration process. In a dodgy network environment, such as an iOS device, you may wish just to configure an app and doc sync manager so that changes are tracked and the user can use the app. Once they ask to sync, check whether you've registered, and if not, register at that time before performing the sync.
   
-    See the [`TICDSApplicationSyncManager`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSApplicationSyncManager.html) and [`TICDSDocumentSyncManager`](https://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSDocumentSyncManager.html) references for more information.
+    See the [`TICDSApplicationSyncManager`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSApplicationSyncManager.html) and [`TICDSDocumentSyncManager`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSDocumentSyncManager.html) references for more information.
 
 * **2011-Jun-06**
   
-    It's now possible to delete a client's data from synchronizing with a document - see [`TICDSDocumentClientDeletionOperation`](http://timisted.github.com/TICoreDataSync/reference/html/Classes/TICDSDocumentClientDeletionOperation.html), and the document sync manager `deleteDocumentSynchronizationDataForClientWithIdentifier:` method.
+    It's now possible to delete a client's data from synchronizing with a document - see [`TICDSDocumentClientDeletionOperation`](http://nothirst.github.io/TICoreDataSync/Classes/TICDSDocumentClientDeletionOperation.html), and the document sync manager `deleteDocumentSynchronizationDataForClientWithIdentifier:` method.

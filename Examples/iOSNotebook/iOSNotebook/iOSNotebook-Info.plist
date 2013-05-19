@@ -34,20 +34,14 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLIconFile</key>
-			<string>DropboxLogo</string>
-			<key>CFBundleURLName</key>
-			<string>iOS Notebook Dropbox Syncing</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>db-fqv4grvh4a1u885</string>
-			</array>
-		</dict>
-	</array>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>db-fqv4grvh4a1u885</string>
+            </array>
+        </dict>
+    </array>
 </dict>
 </plist>

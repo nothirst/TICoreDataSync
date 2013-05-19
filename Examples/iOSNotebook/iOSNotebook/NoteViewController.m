@@ -38,8 +38,8 @@
     [button addTarget:self action:@selector(editTags:) forControlEvents:UIControlEventTouchUpInside];
     [[self tagsTextField] setRightView:button];
     [[self tagsTextField] setRightViewMode:UITextFieldViewModeAlways];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(persistentStoresDidChange:) name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:[[[self note] managedObjectContext]persistentStoreCoordinator]];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(persistentStoresDidChange:) name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:self.note.managedObjectContext.persistentStoreCoordinator];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -67,27 +67,28 @@
     }
 }
 
+
 - (void)viewDidUnload
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:[[[self note] managedObjectContext]persistentStoreCoordinator]];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:self.note.managedObjectContext.persistentStoreCoordinator];
+
     [super viewDidUnload];
 }
 
-#pragma mark -
-#pragma mark Notifications
+#pragma mark - NSPersistentStoreCoordinatorStoresDidChangeNotification method
+
 - (void)persistentStoresDidChange:(NSNotification *)aNotification
 {
-    [[[self note] managedObjectContext] refreshObject:[self note] mergeChanges:YES];
-    
-    if( ![[self editingTextView] isFirstResponder] ) {
-        [[self editingTextView] setText:[[self note] content]];
+    [self.note.managedObjectContext refreshObject:self.note mergeChanges:YES];
+
+    if (self.editingTextView.isFirstResponder == NO) {
+        self.editingTextView.text = self.note.content;
     }
-    
-    if( ![[self titleTextField] isFirstResponder] ) {
-        [[self titleTextField] setText:[[self note] title]];
+
+    if ( self.titleTextField.isFirstResponder == NO) {
+        self.titleTextField.text = self.note.title;
     }
-    
+
     [self updateTags];
 }
 
