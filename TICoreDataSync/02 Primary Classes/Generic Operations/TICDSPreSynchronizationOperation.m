@@ -444,6 +444,19 @@
     [_appliedSyncChangeSetsCoreDataFactory setPersistentStoreDataPath:[self.appliedSyncChangeSetsFileLocation path]];
     [_appliedSyncChangeSetsCoreDataFactory setDelegate:self];
 
+    NSError *error = nil;
+    
+    NSPersistentStoreCoordinator *persistentStoreCoordinator = _appliedSyncChangeSetsCoreDataFactory.persistentStoreCoordinator;
+    for (TICDSSyncTransaction *syncTransaction in self.syncTransactions) {
+        if ([self.fileManager fileExistsAtPath:[syncTransaction.unsavedAppliedSyncChangesFileURL path]]) {
+            [persistentStoreCoordinator addPersistentStoreWithType:TICDSSyncChangeSetsCoreDataPersistentStoreType configuration:nil URL:syncTransaction.unsavedAppliedSyncChangesFileURL options:@{ NSReadOnlyPersistentStoreOption:@YES } error:&error];
+        }
+    }
+
+    if (error != nil) {
+        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Encountered an error attempting to add persistent stores to the appliedSyncChangeSets persistent store coordinator. Error: %@", error);
+    }
+    
     return _appliedSyncChangeSetsCoreDataFactory;
 }
 
@@ -470,7 +483,7 @@
     [_unappliedSyncChangeSetsCoreDataFactory setPersistentStoreType:TICDSSyncChangeSetsCoreDataPersistentStoreType];
     [_unappliedSyncChangeSetsCoreDataFactory setPersistentStoreDataPath:[self.unappliedSyncChangeSetsFileLocation path]];
     [_unappliedSyncChangeSetsCoreDataFactory setDelegate:self];
-
+    
     return _unappliedSyncChangeSetsCoreDataFactory;
 }
 

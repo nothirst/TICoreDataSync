@@ -14,16 +14,9 @@
 
 - (void)deleteObject:(NSManagedObject *)object
 {
-    [TICDSChangeIntegrityStoreManager addObjectIDToDeletionIntegrityStore:[object objectID]];
+    [TICDSChangeIntegrityStoreManager addSyncIDToDeletionIntegrityStore:[object valueForKey:@"ticdsSyncID"]];
     
     [super deleteObject:object];
-}
-
-- (void)insertObject:(NSManagedObject *)object
-{
-    [TICDSChangeIntegrityStoreManager addObjectIDToInsertionIntegrityStore:[object objectID]];
-    
-    [super insertObject:object];
 }
 
 @end

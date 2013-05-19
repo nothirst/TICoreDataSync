@@ -36,55 +36,55 @@
 - (void)beginCheckForMissingSyncIDAttributes
 {
     TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Checking whether there are any missing ticdsSyncIDs in any managed objects");
-    
+
     NSMutableArray *problemEntities = [NSMutableArray array];
-    
+
     [self.backgroundApplicationContext performBlockAndWait:^{
-    NSArray *allEntities = [[[[self backgroundApplicationContext] persistentStoreCoordinator] managedObjectModel] entities];
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%K == %@", TICDSSyncIDAttributeName, nil]];
-    NSUInteger objectCount = 0;
-    NSError *anyError = nil;
-    BOOL syncIDAttributeFound = NO;
-    
-    for( NSEntityDescription *eachEntity in allEntities ) {
-        syncIDAttributeFound = NO;
-        
-        for( NSString *eachKey in [eachEntity attributesByName] ) {
-            if( [eachKey isEqualToString:TICDSSyncIDAttributeName] ) {
-                syncIDAttributeFound = YES;
-            }
-        }
-        
-        if( !syncIDAttributeFound ) {
-            continue;
-        }
-        
-        [fetchRequest setEntity:eachEntity];
-        
-        objectCount = [[self backgroundApplicationContext] countForFetchRequest:fetchRequest error:&anyError];
-        
-        if( objectCount == NSNotFound ) {
-            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Unable to execute count for fetch request for entity %@: %@", [eachEntity name], anyError);
-            [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataFetchError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            [self operationDidFailToComplete];
-            return;
-        }
-        
-        if( objectCount > 0 ) {
-            [problemEntities addObject:eachEntity];
-        }
-    }
-    
-    if( [problemEntities count] < 1 ) {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"No missing ticdsSyncIDs need to be fixed");
-        [self beginCheckForThisClientTemporaryWholeStoreDirectory];
-    } else {
-        TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Missing ticdsSyncIDs need to be fixed before uploading the store");
-        [self beginSettingMissingSyncIDAttributesForEntityDescriptions:problemEntities];
-    }
-    }];
+         NSArray *allEntities = [[[[self backgroundApplicationContext] persistentStoreCoordinator] managedObjectModel] entities];
+
+         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+         [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%K == %@", TICDSSyncIDAttributeName, nil]];
+         NSUInteger objectCount = 0;
+         NSError *anyError = nil;
+         BOOL syncIDAttributeFound = NO;
+
+         for ( NSEntityDescription * eachEntity in allEntities ) {
+             syncIDAttributeFound = NO;
+
+             for ( NSString * eachKey in [eachEntity attributesByName] ) {
+                 if ( [eachKey isEqualToString:TICDSSyncIDAttributeName] ) {
+                     syncIDAttributeFound = YES;
+                 }
+             }
+
+             if ( !syncIDAttributeFound ) {
+                 continue;
+             }
+
+             [fetchRequest setEntity:eachEntity];
+
+             objectCount = [[self backgroundApplicationContext] countForFetchRequest:fetchRequest error:&anyError];
+
+             if ( objectCount == NSNotFound ) {
+                 TICDSLog(TICDSLogVerbosityErrorsOnly, @"Unable to execute count for fetch request for entity %@: %@", [eachEntity name], anyError);
+                 [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataFetchError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+                 [self operationDidFailToComplete];
+                 return;
+             }
+
+             if ( objectCount > 0 ) {
+                 [problemEntities addObject:eachEntity];
+             }
+         }
+
+         if ( [problemEntities count] < 1 ) {
+             TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"No missing ticdsSyncIDs need to be fixed");
+             [self beginCheckForThisClientTemporaryWholeStoreDirectory];
+         } else {
+             TICDSLog(TICDSLogVerbosityStartAndEndOfEachOperationPhase, @"Missing ticdsSyncIDs need to be fixed before uploading the store");
+             [self beginSettingMissingSyncIDAttributesForEntityDescriptions:problemEntities];
+         }
+     }];
 }
 
 - (void)beginSettingMissingSyncIDAttributesForEntityDescriptions:(NSArray *)someEntityDescriptions
@@ -94,29 +94,38 @@
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%K == %@", TICDSSyncIDAttributeName, nil]];
     [fetchRequest setIncludesPropertyValues:NO];
-    NSArray *results = nil;
-    NSError *anyError = nil;
+    __block NSError *anyError = nil;
     
     for( NSEntityDescription *eachEntity in someEntityDescriptions ) {
         TICDSLog(TICDSLogVerbosityEveryStep, @"Fixing missing ticdsSyncIDs in %@", [eachEntity name]);
         [fetchRequest setEntity:eachEntity];
-        results = [[self backgroundApplicationContext] executeFetchRequest:fetchRequest error:&anyError];
-        
-        if( !results ) {
-            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Unable to execute fetch request for entity %@: %@", [eachEntity name], anyError);
-            [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataFetchError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
-            [self operationDidFailToComplete];
-            return;
-        }
-        
-        for( TICDSSynchronizedManagedObject *eachObject in results ) {
-            [eachObject setValue:[TICDSUtilities uuidString] forKey:TICDSSyncIDAttributeName];
-        }
-        
-        TICDSLog(TICDSLogVerbosityEveryStep, @"Fixed missing ticdsSyncIDs in %@", [eachEntity name]);
+        [self.backgroundApplicationContext performBlockAndWait:^{
+            NSArray *results = [[self backgroundApplicationContext] executeFetchRequest:fetchRequest error:&anyError];
+            
+            if( !results ) {
+                TICDSLog(TICDSLogVerbosityErrorsOnly, @"Unable to execute fetch request for entity %@: %@", [eachEntity name], anyError);
+                [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataFetchError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
+                [self operationDidFailToComplete];
+                return;
+            }
+            
+            for( TICDSSynchronizedManagedObject *eachObject in results ) {
+                [eachObject setValue:[TICDSUtilities uuidString] forKey:TICDSSyncIDAttributeName];
+            }
+            
+            TICDSLog(TICDSLogVerbosityEveryStep, @"Fixed missing ticdsSyncIDs in %@", [eachEntity name]);
+        }];
     }
-    
-    BOOL success = [[self backgroundApplicationContext] save:&anyError];
+
+
+    __block BOOL success = NO;
+    [self.backgroundApplicationContext performBlockAndWait:^{
+        [self.backgroundApplicationContext.parentContext.undoManager disableUndoRegistration];
+        success = [[self backgroundApplicationContext] save:&anyError];
+        [self.backgroundApplicationContext.parentContext.undoManager enableUndoRegistration];
+    }];
+
+
     if( !success ) {
         TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error saving background context during missing ticdsSyncID updates: %@", anyError);
         [self setError:[TICDSError errorWithCode:TICDSErrorCodeCoreDataSaveError underlyingError:anyError classAndMethod:__PRETTY_FUNCTION__]];
@@ -394,25 +403,24 @@
 {
     _localWholeStoreFileLocation = nil;
     _localAppliedSyncChangeSetsFileLocation = nil;
-//    _primaryPersistentStoreCoordinator = nil;
     _backgroundApplicationContext = nil;
 
 }
 
 - (NSManagedObjectContext *)backgroundApplicationContext
 {
-    if( _backgroundApplicationContext ) {
+    if ( _backgroundApplicationContext ) {
         return _backgroundApplicationContext;
     }
-    
+
     _backgroundApplicationContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     [_backgroundApplicationContext performBlockAndWait:^{
-        _backgroundApplicationContext.parentContext = self.primaryManagedObjectContext;
-        [_backgroundApplicationContext setUndoManager:nil];
-    }];
-    
+         _backgroundApplicationContext.parentContext = self.primaryManagedObjectContext;
+         [_backgroundApplicationContext setUndoManager:nil];
+     }];
+
     [[NSNotificationCenter defaultCenter] addObserver:[self delegate] selector:@selector(backgroundManagedObjectContextDidSave:) name:NSManagedObjectContextDidSaveNotification object:_backgroundApplicationContext];
-    
+
     return _backgroundApplicationContext;
 }
 

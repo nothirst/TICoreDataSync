@@ -20,6 +20,9 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void(^TIUbiquityMonitorProgressBlock)(long long bytesToDownload, double percentDownloading, long long bytesToUpload, double percentUploading);
+
+
 @interface TIUbiquityMonitor : NSObject
 
 @property (readonly) long long ubiquitousBytesToUpload, ubiquitousBytesToDownload;
@@ -29,7 +32,7 @@
 
 - (id)initWithPredicate:(NSPredicate *)predicate;
 
-- (void)startMonitoringWithProgressBlock:(void(^)(long long bytesToDownload, long long bytesToUpload))progressBlock;
+- (void)startMonitoringWithProgressBlock:(TIUbiquityMonitorProgressBlock)progressBlock;
 - (void)stopMonitoring;
 
 @end
