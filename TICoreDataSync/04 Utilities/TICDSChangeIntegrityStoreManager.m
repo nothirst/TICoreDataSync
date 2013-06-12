@@ -121,6 +121,10 @@ static NSLock *changeStoreLock = nil;
 
 + (void)removeChangedAttributesEntryFromChangeIntegrityStoreForSyncID:(NSString *)ticdsSyncID
 {
+    if ([ticdsSyncID length] == 0) {
+        return;
+    }
+    
     @synchronized(changeStoreLock) {
         [[[self sharedChangeIntegrityStoreManager] changeDictionary] removeObjectForKey:ticdsSyncID];
     }
