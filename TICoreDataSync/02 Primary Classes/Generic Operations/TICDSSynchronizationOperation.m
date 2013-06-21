@@ -56,6 +56,8 @@
 
 @property (nonatomic, copy) NSString *changeSetProgressString;
 
+@property (strong) NSMapTable *affectedObjectsMapTable;
+
 /** Releases any existing `unappliedSyncChangesContext` and `unappliedSyncChangesCoreDataFactory` and sets new ones, linked to the set of sync changes specified in the given sync change set.
  
  @param aChangeSet The `TICDSSyncChangeSet` object specifying the set of changes to use.
@@ -372,6 +374,7 @@
 }
 
 #pragma mark Conflicts
+/*
 - (NSArray *)syncChangesAfterCheckingForConflicts:(NSArray *)syncChanges inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
 {
     NSArray *identifiersOfAffectedObjects = [syncChanges valueForKeyPath:@"@distinctUnionOfObjects.objectSyncID"];
@@ -391,6 +394,51 @@
         [syncChangesToReturn addObjectsFromArray:syncChangesForEachObject];
     }
 
+    return syncChangesToReturn;
+}
+ */
+
+- (NSArray *)syncChangesAfterCheckingForConflicts:(NSArray *)syncChanges inManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
+{
+    NSArray *identifiersOfAffectedObjects = [syncChanges valueForKeyPath:@"@distinctUnionOfObjects.objectSyncID"];
+    TICDSLog(TICDSLogVerbosityEveryStep, @"Affected Object identifiers: %@", [identifiersOfAffectedObjects componentsJoinedByString:@", "]);
+    
+    if (self.localSyncChangesToMergeContext == nil)
+    {
+        return syncChanges;
+    }
+    
+    NSMutableArray *syncChangesToReturn = [NSMutableArray arrayWithCapacity:[syncChanges count]];
+    NSMapTable *affectedObjectsTable = [NSMapTable strongToStrongObjectsMapTable];
+    NSString *objSyncIDKey=@"objectSyncID";
+    
+    //grouping syncCahnges by objectSyncID
+    for (id syncChange in syncChanges)
+    {
+        NSString *ticsSyncID = [syncChange valueForKey:objSyncIDKey];
+        NSMutableArray *syncChangesArray = [affectedObjectsTable objectForKey:ticsSyncID];
+        if (!syncChangesArray)
+        {
+            syncChangesArray = [NSMutableArray arrayWithObject:syncChange];
+            [affectedObjectsTable setObject:syncChangesArray forKey:ticsSyncID];
+        }
+        else
+        {
+            [syncChangesArray addObject:syncChange];
+        }
+    }
+    
+    //constructing results array
+    NSArray *syncChangesForEachObject = nil;
+    for (NSString *eachIdentifier in identifiersOfAffectedObjects)
+    {
+        syncChangesForEachObject = [affectedObjectsTable objectForKey:eachIdentifier];
+        syncChangesForEachObject = [self remoteSyncChangesForObjectWithIdentifier:eachIdentifier afterCheckingForConflictsInRemoteSyncChanges:syncChangesForEachObject inManagedObjectContext:managedObjectContext];
+        [syncChangesToReturn addObjectsFromArray:syncChangesForEachObject];
+        [affectedObjectsTable removeObjectForKey:eachIdentifier];
+    }
+    
+    [affectedObjectsTable removeAllObjects];
     return syncChangesToReturn;
 }
 
@@ -546,6 +594,8 @@
 /**
  This method always needs to be scoped within the confines of a call to performBlock: or performBlockAndWait: on the backgroundApplicationContext.
  */
+
+/*
 - (NSManagedObject *)backgroundApplicationContextObjectForEntityName:(NSString *)entityName syncIdentifier:(NSString *)aSyncIdentifier
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -559,6 +609,46 @@
     }
 
     return [results lastObject];
+}
+ */
+
+- (NSManagedObject *)backgroundApplicationContextObjectForEntityName:(NSString *)entityName syncIdentifier:(NSString *)aSyncIdentifier
+{
+    id objectID = nil;
+    objectID = [self.affectedObjectsMapTable objectForKey:aSyncIdentifier];
+    NSManagedObject *object = nil;
+    
+    if (objectID && (object = [self.backgroundApplicationContext objectRegisteredForID:objectID]))
+    {
+        if (object == nil)
+        {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error fetching affected object with SyncID: %@", aSyncIdentifier);
+        }
+    }
+    else
+    {
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        [fetchRequest setEntity:[NSEntityDescription entityForName:entityName inManagedObjectContext:self.backgroundApplicationContext]];
+        
+        NSError *anyError = nil;
+        NSArray *results = nil;
+        if (aSyncIdentifier) {
+            [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%K == %@", TICDSSyncIDAttributeName, aSyncIdentifier]];
+            results = [self.backgroundApplicationContext executeFetchRequest:fetchRequest error:&anyError];
+        } else {
+            results = nil;
+        }
+        
+        if (results == nil) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error fetching affected object: %@", anyError);
+        }
+        else
+        {
+            object = [results lastObject];
+            [self.affectedObjectsMapTable setObject:[object objectID] forKey:aSyncIdentifier];
+        }
+    }
+    return object;
 }
 
 #pragma mark Applying Changes
@@ -788,7 +878,9 @@
 #pragma mark - Initialization and Deallocation
 - (id)initWithDelegate:(NSObject<TICDSSynchronizationOperationDelegate> *)aDelegate
 {
-    return [super initWithDelegate:aDelegate];
+    self = [super initWithDelegate:aDelegate];
+    _affectedObjectsMapTable = [NSMapTable strongToStrongObjectsMapTable];
+    return self;
 }
 
 #pragma mark - Lazy Accessors
