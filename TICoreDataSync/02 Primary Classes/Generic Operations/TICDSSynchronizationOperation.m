@@ -672,13 +672,16 @@
         NSManagedObject *relatedObject = [self backgroundApplicationContextObjectForEntityName:relatedObjectEntityName syncIdentifier:changedRelationships];
         
         TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"%@", objectEntityName);
+        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changing to-one relationship on object: %@.%@ [%@]", objectEntityName, relevantKey, objectSyncID);
+
         [object willChangeValueForKey:relevantKey];
         [object setPrimitiveValue:relatedObject forKey:relevantKey];
         [object didChangeValueForKey:relevantKey];
 
+
         [TICDSChangeIntegrityStoreManager addChangedAttributeValue:changedRelationships forKey:relevantKey toChangeIntegrityStoreForSyncID:objectSyncID];
 
-        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed to-one relationship on object: %@[%@]", objectEntityName, objectSyncID);
+        TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Changed to-one relationship on object: %@.%@ [%@]", objectEntityName, relevantKey, objectSyncID);
     }];
 }
 
