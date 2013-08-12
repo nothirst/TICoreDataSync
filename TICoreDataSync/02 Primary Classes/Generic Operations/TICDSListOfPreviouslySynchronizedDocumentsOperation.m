@@ -47,7 +47,7 @@
     
     if( [anArray count] < 1 ) {
         TICDSLog(TICDSLogVerbosityStartAndEndOfMainOperationPhase, @"No documents were found");
-        [self setAvailableDocuments:[NSArray array]];
+        self.availableDocuments = [NSMutableArray array];
         [self operationDidCompleteSuccessfully];
         return;
     }
