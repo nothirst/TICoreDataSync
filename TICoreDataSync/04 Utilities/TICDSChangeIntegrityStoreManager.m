@@ -32,6 +32,11 @@ static NSLock *changeStoreLock = nil;
 {
     BOOL containsDeletionRecord = NO;
     @synchronized(deletionStoreLock) {
+        if (ticdsSyncID == nil) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Given a nil ticdsSyncID, this object cannot be tested for containment.");
+            return NO;
+        }
+
         containsDeletionRecord = [[[self sharedChangeIntegrityStoreManager] deletionSet] containsObject:ticdsSyncID];
     }
 
@@ -41,6 +46,11 @@ static NSLock *changeStoreLock = nil;
 + (void)addSyncIDToDeletionIntegrityStore:(NSString *)ticdsSyncID
 {
     @synchronized(deletionStoreLock) {
+        if (ticdsSyncID == nil) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Given a nil ticdsSyncID, this object will not be added to the integrity store.");
+            return;
+        }
+
         [[[self sharedChangeIntegrityStoreManager] deletionSet] addObject:ticdsSyncID];
     }
 }
@@ -48,6 +58,11 @@ static NSLock *changeStoreLock = nil;
 + (void)removeSyncIDFromDeletionIntegrityStore:(NSString *)ticdsSyncID
 {
     @synchronized(deletionStoreLock) {
+        if (ticdsSyncID == nil) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Given a nil ticdsSyncID, this object will not be removed from the integrity store.");
+            return;
+        }
+
         [[[self sharedChangeIntegrityStoreManager] deletionSet] removeObject:ticdsSyncID];
     }
 }
@@ -58,6 +73,11 @@ static NSLock *changeStoreLock = nil;
 {
     BOOL containsInsertionRecord = NO;
     @synchronized(insertionStoreLock) {
+        if (ticdsSyncID == nil) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Given a nil ticdsSyncID, this object cannot be tested for containment.");
+            return NO;
+        }
+
         containsInsertionRecord = [[[self sharedChangeIntegrityStoreManager] insertionSet] containsObject:ticdsSyncID];
     }
 
@@ -67,6 +87,11 @@ static NSLock *changeStoreLock = nil;
 + (void)addSyncIDToInsertionIntegrityStore:(NSString *)ticdsSyncID
 {
     @synchronized(insertionStoreLock) {
+        if (ticdsSyncID == nil) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Given a nil ticdsSyncID, this object will not be added to the integrity store.");
+            return;
+        }
+
         [[[self sharedChangeIntegrityStoreManager] insertionSet] addObject:ticdsSyncID];
     }
 }
@@ -74,6 +99,11 @@ static NSLock *changeStoreLock = nil;
 + (void)removeSyncIDFromInsertionIntegrityStore:(NSString *)ticdsSyncID
 {
     @synchronized(insertionStoreLock) {
+        if (ticdsSyncID == nil) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Given a nil ticdsSyncID, this object will not be removed from the integrity store.");
+            return;
+        }
+
         [[[self sharedChangeIntegrityStoreManager] insertionSet] removeObject:ticdsSyncID];
     }
 }
@@ -83,6 +113,11 @@ static NSLock *changeStoreLock = nil;
 + (BOOL)containsChangedAttributeRecordForKey:(id)key withValue:(id)value syncID:(NSString *)ticdsSyncID
 {
     @synchronized(changeStoreLock) {
+        if (ticdsSyncID == nil) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Given a nil ticdsSyncID, this object cannot be tested for containment.");
+            return NO;
+        }
+
         NSDictionary *storedAttributes = [[[self sharedChangeIntegrityStoreManager] changeDictionary] objectForKey:ticdsSyncID];
         if (storedAttributes == nil) {
             return NO;
@@ -104,6 +139,11 @@ static NSLock *changeStoreLock = nil;
     }
     
     @synchronized(changeStoreLock) {
+        if (ticdsSyncID == nil) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Given a nil ticdsSyncID, this object will not be added to the integrity store.");
+            return;
+        }
+
         NSMutableDictionary *storedAttributes = [[[self sharedChangeIntegrityStoreManager] changeDictionary] objectForKey:ticdsSyncID];
         if (storedAttributes == nil) {
             storedAttributes = [NSMutableDictionary dictionary];
@@ -121,11 +161,12 @@ static NSLock *changeStoreLock = nil;
 
 + (void)removeChangedAttributesEntryFromChangeIntegrityStoreForSyncID:(NSString *)ticdsSyncID
 {
-    if ([ticdsSyncID length] == 0) {
-        return;
-    }
-    
     @synchronized(changeStoreLock) {
+        if (ticdsSyncID == nil) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Given a nil ticdsSyncID, this object will not be removed from the integrity store.");
+            return;
+        }
+
         [[[self sharedChangeIntegrityStoreManager] changeDictionary] removeObjectForKey:ticdsSyncID];
     }
 }
