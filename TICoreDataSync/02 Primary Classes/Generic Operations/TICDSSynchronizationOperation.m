@@ -842,7 +842,7 @@
         }
         
         if ([self.fileManager fileExistsAtPath:[syncTransaction.unsavedAppliedSyncChangesFileURL path]]) {
-            [persistentStoreCoordinator addPersistentStoreWithType:TICDSSyncChangeSetsCoreDataPersistentStoreType configuration:nil URL:syncTransaction.unsavedAppliedSyncChangesFileURL options:@{ NSReadOnlyPersistentStoreOption:@YES } error:&error];
+            [persistentStoreCoordinator addPersistentStoreWithType:TICDSSyncChangeSetsCoreDataPersistentStoreType configuration:nil URL:syncTransaction.unsavedAppliedSyncChangesFileURL options:@{ NSReadOnlyPersistentStoreOption:@YES, NSSQLitePragmasOption:@{ @"journal_mode":@"DELETE" } } error:&error];
         }
     }
     

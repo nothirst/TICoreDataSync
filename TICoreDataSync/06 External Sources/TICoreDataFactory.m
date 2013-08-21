@@ -186,7 +186,8 @@
 {
     if( _persistentStoreOptions ) return _persistentStoreOptions;
     
-    _persistentStoreOptions = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:NSMigratePersistentStoresAutomaticallyOption];
+    _persistentStoreOptions = @{ NSMigratePersistentStoresAutomaticallyOption:@YES, NSSQLitePragmasOption:@{ @"journal_mode":@"DELETE" } };
+
     return _persistentStoreOptions;
 }
 

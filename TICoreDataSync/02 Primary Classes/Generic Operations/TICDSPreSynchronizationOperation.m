@@ -449,7 +449,7 @@
     NSPersistentStoreCoordinator *persistentStoreCoordinator = _appliedSyncChangeSetsCoreDataFactory.persistentStoreCoordinator;
     for (TICDSSyncTransaction *syncTransaction in self.syncTransactions) {
         if ([self.fileManager fileExistsAtPath:[syncTransaction.unsavedAppliedSyncChangesFileURL path]]) {
-            [persistentStoreCoordinator addPersistentStoreWithType:TICDSSyncChangeSetsCoreDataPersistentStoreType configuration:nil URL:syncTransaction.unsavedAppliedSyncChangesFileURL options:@{ NSReadOnlyPersistentStoreOption:@YES } error:&error];
+            [persistentStoreCoordinator addPersistentStoreWithType:TICDSSyncChangeSetsCoreDataPersistentStoreType configuration:nil URL:syncTransaction.unsavedAppliedSyncChangesFileURL options:@{ NSReadOnlyPersistentStoreOption:@YES, NSSQLitePragmasOption:@{ @"journal_mode":@"DELETE" } } error:&error];
         }
     }
 
