@@ -99,12 +99,12 @@
     NSString *lowercaseRecentSyncsDirectoryName = [TICDSRecentSyncsDirectoryName lowercaseString];
     for (DBDeltaEntry *entry in entries) {
         if ([entry.lowercasePath hasPrefix:lowercaseDocumentDirectoryPath]) {
-            if ([entry.lowercasePath rangeOfString:lowercaseClientIdentifier].location != NSNotFound) {
+            if (lowercaseClientIdentifier == nil || [entry.lowercasePath rangeOfString:lowercaseClientIdentifier].location != NSNotFound) {
                 TICDSLog(TICDSLogVerbosityEveryStep, @"Processing a response from the polling call, skipping changes made by this client.");
                 continue;
             }
             
-            if ([entry.lowercasePath rangeOfString:lowercaseRecentSyncsDirectoryName].location != NSNotFound) {
+            if (lowercaseRecentSyncsDirectoryName == nil || [entry.lowercasePath rangeOfString:lowercaseRecentSyncsDirectoryName].location != NSNotFound) {
                 TICDSLog(TICDSLogVerbosityEveryStep, @"Processing a response from the polling call, skipping changes to the recent syncs directory made by other clients.");
                 continue;
             }
