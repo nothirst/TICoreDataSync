@@ -337,12 +337,12 @@
             [eachChange.managedObjectContext refreshObject:eachChange mergeChanges:NO];
         }
 
-        changeCount++;
         if ([self ti_delegateRespondsToSelector:@selector(synchronizationOperation:processedChangeNumber:outOfTotalChangeCount:fromClientWithID:)]) {
             dispatch_async(dispatch_get_main_queue(), ^{
                                [(id)self.delegate synchronizationOperation:self processedChangeNumber:[NSNumber numberWithInteger:changeCount] outOfTotalChangeCount:[NSNumber numberWithInteger:[unappliedSyncChanges count]] fromClientWithID:clientIdentifier];
                            });
         }
+        changeCount++;
     }
 
     [self.backgroundApplicationContext performBlockAndWait:^{
