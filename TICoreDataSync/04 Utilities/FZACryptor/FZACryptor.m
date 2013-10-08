@@ -120,6 +120,9 @@ const NSInteger FZAFileBlockLength = 4096;
                                          code:FZACryptorErrorCodeFailedIntegrityCheck
                                      userInfo:nil];
         }
+
+        free(bytesToWrite);
+
         return NO;
     }
 
