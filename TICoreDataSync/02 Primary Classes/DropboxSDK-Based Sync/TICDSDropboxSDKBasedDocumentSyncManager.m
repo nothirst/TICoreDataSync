@@ -349,6 +349,8 @@
 #pragma mark - Initialization and Deallocation
 - (void)dealloc
 {
+    [_restClient cancelAllRequests];
+    _restClient.delegate = nil;
     _applicationDirectoryPath = nil;
 
 }
