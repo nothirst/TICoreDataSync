@@ -982,6 +982,7 @@
 
 - (void)cancelSynchronization
 {
+    [self stopPollingRemoteStorageForChanges];
     [self.synchronizationQueue cancelAllOperations];
 }
 
