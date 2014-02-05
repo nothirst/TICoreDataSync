@@ -24,7 +24,10 @@
  
  You need not use one of the subclasses of `TICDSSynchronizationOperation`. */
 @interface TICDSSynchronizationOperation : TICDSOperation
-
+{
+    NSPredicate *predicateTemplate;
+    NSPredicate *objectSyncIDPredicateTemplate;
+}
 #pragma mark Designated Initializer
 /** @name Designated Initializer */
 

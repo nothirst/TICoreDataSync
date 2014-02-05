@@ -56,6 +56,8 @@
 
 @property (nonatomic, copy) NSString *changeSetProgressString;
 
+@property (nonatomic, strong) NSMutableDictionary *affectedObjectsDictionary;
+
 /** Releases any existing `unappliedSyncChangesContext` and `unappliedSyncChangesCoreDataFactory` and sets new ones, linked to the set of sync changes specified in the given sync change set.
  
  @param aChangeSet The `TICDSSyncChangeSet` object specifying the set of changes to use.
@@ -74,7 +76,28 @@
         return;
     }
     
+    self.affectedObjectsDictionary = [NSMutableDictionary dictionary];
+    
     [self beginApplyingUnappliedSyncChangeSets];
+}
+
+- (void)dealloc
+{
+    self.affectedObjectsDictionary = nil;
+}
+
+- (NSPredicate *)predicateTemplate {
+    if (predicateTemplate == nil) {
+        predicateTemplate = [NSPredicate predicateWithFormat:@"%K == $syncID",TICDSSyncIDAttributeName];
+    }
+    return predicateTemplate;
+}
+
+- (NSPredicate *)objectSyncIDPredicateTemplate {
+    if (objectSyncIDPredicateTemplate == nil) {
+        objectSyncIDPredicateTemplate = [NSPredicate predicateWithFormat:@"objectSyncID == $syncID"];
+    }
+    return objectSyncIDPredicateTemplate;
 }
 
 #pragma mark - APPLICATION OF UNAPPLIED SYNC CHANGE SETS
@@ -382,14 +405,36 @@
     }
 
     NSMutableArray *syncChangesToReturn = [NSMutableArray arrayWithCapacity:[syncChanges count]];
-
+    NSMutableDictionary *objectsDictionaryBySyncID = [NSMutableDictionary dictionary];
+    NSString *objectSyncIDKey=@"objectSyncID";
+    
+    //grouping syncCahnges by objectSyncID
+    for (id syncChange in syncChanges)
+    {
+        NSString *ticsSyncID = [syncChange valueForKey:objectSyncIDKey];
+        NSMutableArray *syncChangesArray = [objectsDictionaryBySyncID objectForKey:ticsSyncID];
+        if (!syncChangesArray)
+        {
+            syncChangesArray = [NSMutableArray arrayWithObject:syncChange];
+            [objectsDictionaryBySyncID setObject:syncChangesArray forKey:ticsSyncID];
+        }
+        else
+        {
+            [syncChangesArray addObject:syncChange];
+        }
+    }
+    
+    //constructing results array
     NSArray *syncChangesForEachObject = nil;
-    for (NSString *eachIdentifier in identifiersOfAffectedObjects) {
-        syncChangesForEachObject = [syncChanges filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"objectSyncID == %@", eachIdentifier]];
-
+    for (NSString *eachIdentifier in identifiersOfAffectedObjects)
+    {
+        syncChangesForEachObject = [objectsDictionaryBySyncID objectForKey:eachIdentifier];
         syncChangesForEachObject = [self remoteSyncChangesForObjectWithIdentifier:eachIdentifier afterCheckingForConflictsInRemoteSyncChanges:syncChangesForEachObject inManagedObjectContext:managedObjectContext];
         [syncChangesToReturn addObjectsFromArray:syncChangesForEachObject];
+        [objectsDictionaryBySyncID removeObjectForKey:eachIdentifier];
     }
+    
+    [objectsDictionaryBySyncID removeAllObjects];
 
     return syncChangesToReturn;
 }
@@ -397,7 +442,9 @@
 - (NSArray *)remoteSyncChangesForObjectWithIdentifier:(NSString *)anIdentifier afterCheckingForConflictsInRemoteSyncChanges:(NSArray *)remoteSyncChanges inManagedObjectContext:(NSManagedObjectContext *)remoteSyncChangesManagedObjectContext
 {
     NSError *anyError = nil;
-    NSArray *localSyncChanges = [TICDSSyncChange ti_objectsMatchingPredicate:[NSPredicate predicateWithFormat:@"objectSyncID == %@", anIdentifier] inManagedObjectContext:self.localSyncChangesToMergeContext sortedByKey:@"changeType" ascending:YES error:&anyError];
+    
+    NSArray *localSyncChanges = [TICDSSyncChange ti_objectsMatchingPredicate:[[self objectSyncIDPredicateTemplate]predicateWithSubstitutionVariables:@{ @"syncID" : anIdentifier}] inManagedObjectContext:self.localSyncChangesToMergeContext sortedByKey:@"changeType" ascending:YES error:&anyError];
+
     
     // Used to trigger faults on all objects if debugging
     /*    NSArray *allSyncChanges = [TICDSSyncChange ti_allObjectsInManagedObjectContext:self.localSyncChangesToMergeContext error:&anyError];
@@ -548,17 +595,41 @@
  */
 - (NSManagedObject *)backgroundApplicationContextObjectForEntityName:(NSString *)entityName syncIdentifier:(NSString *)aSyncIdentifier
 {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    [fetchRequest setEntity:[NSEntityDescription entityForName:entityName inManagedObjectContext:self.backgroundApplicationContext]];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"%K == %@", TICDSSyncIDAttributeName, aSyncIdentifier]];
-
-    NSError *anyError = nil;
-    NSArray *results = [self.backgroundApplicationContext executeFetchRequest:fetchRequest error:&anyError];
-    if (results == nil) {
-        TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error fetching affected object: %@", anyError);
+    id objectID = nil;
+    objectID = [self.affectedObjectsDictionary objectForKey:aSyncIdentifier];
+    NSManagedObject *object = nil;
+    
+    if (objectID && (object = [self.backgroundApplicationContext objectRegisteredForID:objectID]))
+    {
+        if (object == nil)
+        {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error fetching affected object with SyncID: %@", aSyncIdentifier);
+        }
     }
-
-    return [results lastObject];
+    else
+    {
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        [fetchRequest setEntity:[NSEntityDescription entityForName:entityName inManagedObjectContext:self.backgroundApplicationContext]];
+        
+        NSError *anyError = nil;
+        NSArray *results = nil;
+        if (aSyncIdentifier) {
+            [fetchRequest setPredicate:[[self predicateTemplate]predicateWithSubstitutionVariables:@{ @"syncID" : aSyncIdentifier}]];
+            results = [self.backgroundApplicationContext executeFetchRequest:fetchRequest error:&anyError];
+        } else {
+            results = nil;
+        }
+        
+        if (results == nil) {
+            TICDSLog(TICDSLogVerbosityErrorsOnly, @"Error fetching affected object: %@", anyError);
+        }
+        else
+        {
+            object = [results lastObject];
+            [self.affectedObjectsDictionary setObject:[object objectID] forKey:aSyncIdentifier];
+        }
+    }
+    return object;
 }
 
 #pragma mark Applying Changes
@@ -591,6 +662,7 @@
         NSArray *results = [self.backgroundApplicationContext executeFetchRequest:fetchRequest error:&anyError];
         if ([results count] == 0) {
             insertedObject = [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:self.backgroundApplicationContext];
+            [self.affectedObjectsDictionary setObject:insertedObject.objectID forKey:syncChange.objectSyncID];
             TICDSLog(TICDSLogVerbosityManagedObjectOutput, @"Inserted object: %@", insertedObject);
         } else {
             insertedObject = [results lastObject];
