@@ -1863,6 +1863,13 @@
         return;
     }
 
+    for (id insertedObject in [[notification userInfo] objectForKey:NSInsertedObjectsKey]) {
+        if ([insertedObject isKindOfClass:[TICDSSynchronizedManagedObject class]]) {
+            TICDSSynchronizedManagedObject *synchronizedManagedObject = (TICDSSynchronizedManagedObject*)insertedObject;
+            [TICDSChangeIntegrityStoreManager storeTICDSSyncID:synchronizedManagedObject.ticdsSyncID forManagedObjectID:synchronizedManagedObject.objectID];
+        }
+    }
+    
     [self processSyncTransactionsReadyToBeClosed];
 
     TICDSLog(TICDSLogVerbosityEveryStep, @"Asking delegate if we should sync after saving");
