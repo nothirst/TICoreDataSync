@@ -10,8 +10,8 @@
 #import "RootViewController.h"
 #import "DropboxSDK.h"
 
-#define kTICDDropboxSyncKey @"fqv4grvh4a1u885"
-#define kTICDDropboxSyncSecret @"x7yo7k9bnrus87z"
+#define kTICDDropboxSyncKey @"0bx0jyqvnmhp249"
+#define kTICDDropboxSyncSecret @"rbym4p7gd80z39g"
 
 @interface iOSNotebookAppDelegate () <DBSessionDelegate, TICDSApplicationSyncManagerDelegate, TICDSDocumentSyncManagerDelegate>
 @end
